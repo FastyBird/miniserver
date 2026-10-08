@@ -23,7 +23,6 @@ use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Log;
 use React;
-use stdClass;
 use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 use function assert;
 use function is_bool;
@@ -80,12 +79,12 @@ final class WebSocketsExtension extends DI\CompilerExtension
 				'clients' => Schema\Expect::structure([
 					'driver' => Schema\Expect::string('@fbCore.webSockets.clients.driver.memory'),
 					'ttl' => Schema\Expect::int(0),
-				]),
+				])->castTo(Config\StorageClients::class),
 				'topics' => Schema\Expect::structure([
 					'driver' => Schema\Expect::string('@fbCore.webSockets.wamp.topics.driver.memory'),
 					'ttl' => Schema\Expect::int(0),
-				]),
-			]),
+				])->castTo(Config\StorageTopics::class),
+			])->castTo(Config\Storage::class),
 			'server' => Schema\Expect::structure([
 				'httpHost' => Schema\Expect::string('localhost'),
 				'port' => Schema\Expect::int(8_080),
@@ -93,8 +92,8 @@ final class WebSocketsExtension extends DI\CompilerExtension
 				'secured' => Schema\Expect::structure([
 					'enable' => Schema\Expect::bool(false),
 					'sslSettings' => Schema\Expect::array([]),
-				]),
-			]),
+				])->castTo(Config\ServerSecured::class),
+			])->castTo(Config\Server::class),
 			'routes' => Schema\Expect::array([]),
 			'mapping' => Schema\Expect::array([]),
 			'loop' => Schema\Expect::anyOf(
@@ -104,8 +103,8 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			'access' => Schema\Expect::structure([
 				'keys' => Schema\Expect::string()->default(null),
 				'origins' => Schema\Expect::string()->default(null),
-			]),
-		]);
+			])->castTo(Config\Access::class),
+		])->castTo(Config::class);
 	}
 
 	/**
@@ -117,13 +116,13 @@ final class WebSocketsExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$controllerFactory = $builder->addDefinition($this->prefix('controllers.factory'))
 			->setType(Controllers\ControllerFactory::class)
 			->setFactory(Controllers\ControllerFactory::class);
 
-		if ($configuration->mapping) {
+		if ($configuration->mapping !== []) {
 			$controllerFactory->addSetup('setMapping', [$configuration->mapping]);
 		}
 
@@ -247,7 +246,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$builder->addDefinition($this->prefix('commands.server'), new DI\Definitions\ServiceDefinition())
 			->setType(Commands\WsServer::class);

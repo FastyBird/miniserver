@@ -4,9 +4,9 @@ namespace FastyBird\Core\Persistence\Mapping\Driver;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Core\Configuration;
 use FastyBird\Core\Persistence\Exceptions;
 use FastyBird\Core\Persistence\Mapping\Annotation;
+use FastyBird\Core\Persistence\TimestampableConfiguration;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Cache\InvalidArgumentException;
 use function array_reverse;
@@ -55,7 +55,7 @@ final class Timestampable
 	];
 
 	public function __construct(
-		private readonly Configuration $configuration,
+		private readonly TimestampableConfiguration $configuration,
 		private readonly CacheItemPoolInterface|null $cache = null,
 	)
 	{

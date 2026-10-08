@@ -2,7 +2,7 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Security;
 
-use FastyBird\Core\Configuration;
+use FastyBird\Core\Security\Configuration;
 use LogicException;
 use Nette\Application;
 use Nette\Http;
@@ -10,10 +10,10 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * The redirect and home URLs Security\Presenters\HasAuthorization sends a refused request to,
- * as Core's root Configuration builds them today (census T10, T12-19). E5.8 (#640) splits
- * Configuration and types its children; the URLs must come out the same, through the same Nette
- * link generator. A real generator over Nette's simple router, so the URLs are what Nette makes
- * of each destination.
+ * as Security\Configuration builds them (census T10, T12-19). E5.8 (#640) split it out of Core's
+ * root Configuration and typed its children; the URLs must come out the same, through the same
+ * Nette link generator. A real generator over Nette's simple router, so the URLs are what Nette
+ * makes of each destination.
  */
 final class AuthorizationRedirectTest extends TestCase
 {

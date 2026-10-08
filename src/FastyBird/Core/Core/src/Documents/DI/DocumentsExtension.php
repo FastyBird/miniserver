@@ -8,7 +8,6 @@ use Nette\Caching;
 use Nette\DI;
 use Nette\Schema;
 use Override;
-use stdClass;
 use function array_values;
 use function assert;
 use function is_dir;
@@ -42,7 +41,7 @@ final class DocumentsExtension extends DI\CompilerExtension
 			'mapping' => Schema\Expect::arrayOf(Schema\Expect::string(), Schema\Expect::string())
 				->default([]),
 			'excludePaths' => Schema\Expect::arrayOf(Schema\Expect::string(), Schema\Expect::string()),
-		]);
+		])->castTo(Config::class);
 	}
 
 	/**
@@ -53,7 +52,7 @@ final class DocumentsExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$metadataCache = $builder->addDefinition(
 			$this->prefix('cache'),

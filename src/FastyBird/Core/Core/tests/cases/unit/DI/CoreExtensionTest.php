@@ -4,7 +4,6 @@ namespace FastyBird\Core\Tests\Cases\Unit\DI;
 
 use Error;
 use FastyBird\Core\Api\Encoding;
-use FastyBird\Core\Configuration;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange\Consumers;
@@ -17,8 +16,10 @@ use FastyBird\Core\Http\Server;
 use FastyBird\Core\Http\Subscribers as HttpSubscribers;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Subscribers as PersistenceSubscribers;
+use FastyBird\Core\Persistence\TimestampableConfiguration;
 use FastyBird\Core\Phone\Services as PhoneServices;
 use FastyBird\Core\Phone\Subscribers as PhoneSubscribers;
+use FastyBird\Core\Security\Configuration;
 use FastyBird\Core\Security\Services as SecurityServices;
 use FastyBird\Core\Tests;
 use FastyBird\Core\Values\Schemas;
@@ -129,14 +130,22 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * Assumption 12), resolved by keying every service <domainTag>.<originalRelativeKey> --
 		 * assert both halves of the collision survive as distinct services, not one silently
 		 * overwriting the other. SimpleAuth and DoctrineTimestampable used to collide the same
-		 * way over `configuration` -- the 2026-09-21 core cleanup merged those two into the one
-		 * combined FastyBird\Core\Configuration below, so this instead asserts
-		 * that single service is reachable both by type and by its service name.
+		 * way over `configuration` -- the 2026-09-21 core cleanup merged those two into one root
+		 * Configuration, and E5.8 (#640) split it again into Security\Configuration and
+		 * Persistence\TimestampableConfiguration, each registered by its owning capability, so
+		 * this asserts each is reachable both by type and by its service name.
 		 */
 
-		$mergedConfiguration = $container->getService('fbCore.configuration');
-		self::assertInstanceOf(Configuration::class, $mergedConfiguration);
-		self::assertSame($mergedConfiguration, $container->getByType(Configuration::class, false));
+		$securityConfiguration = $container->getService('fbCore.security.configuration');
+		self::assertInstanceOf(Configuration::class, $securityConfiguration);
+		self::assertSame($securityConfiguration, $container->getByType(Configuration::class, false));
+
+		$timestampableConfiguration = $container->getService('fbCore.persistence.timestampable.configuration');
+		self::assertInstanceOf(TimestampableConfiguration::class, $timestampableConfiguration);
+		self::assertSame(
+			$timestampableConfiguration,
+			$container->getByType(TimestampableConfiguration::class, false),
+		);
 
 		self::assertInstanceOf(
 			PhoneSubscribers\PhoneObjectSubscriber::class,

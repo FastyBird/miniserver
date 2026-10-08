@@ -38,7 +38,7 @@ The old sections `application`, `tools` and `wsServer` are gone. There is no liv
 
 ### Renamed service names (breaking change)
 
-Since Epic #459 (#558), every Core service is named `fbCore.<capability>.<role>`, after the capability that registers it. The root services are `fbCore.eventLoop.*`, `fbCore.ui.*`, `fbCore.cache.psr6`, `fbCore.eventDispatcher` and `fbCore.configuration`. The four unprefixed `document.*` services are now `fbCore.documents.*`. The full old-to-new table is `tools/di-maps/06-services.php`. Some examples:
+Since Epic #459 (#558), every Core service is named `fbCore.<capability>.<role>`, after the capability that registers it. The root services are `fbCore.eventLoop.*`, `fbCore.ui.*`, `fbCore.cache.psr6` and `fbCore.eventDispatcher`. The four unprefixed `document.*` services are now `fbCore.documents.*`. The full old-to-new table is `tools/di-maps/06-services.php`. Some examples:
 
 | Old name | New name |
 |---|---|
@@ -50,6 +50,8 @@ Since Epic #459 (#558), every Core service is named `fbCore.<capability>.<role>`
 | `document.factory` | `fbCore.documents.factory` |
 
 The service types are unchanged, so autowiring is not affected. Only a reference by name breaks. A `config/local.neon` that still names an old service, for example `@fbCore.jsonApi.middlewares.jsonapi` in a `decorator:` setup, fails container compilation with a missing-service error. To fix it, use the new name.
+
+Since Epic #460 (#640), the root `fbCore.configuration` service (`FastyBird\Core\Configuration`) is two services, each registered by the capability that owns its settings: `fbCore.security.configuration` (`FastyBird\Core\Security\Configuration`, from `fbCore > security`) and `fbCore.persistence.timestampable.configuration` (`FastyBird\Core\Persistence\TimestampableConfiguration`, from `fbCore > persistence > timestampable`). No configuration key changed. Code that autowires the old type must take the new one; a reference by the old name breaks as above.
 
 ### `fbCore.logging`
 

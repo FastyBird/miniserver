@@ -11,12 +11,14 @@ use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Helpers\StringFunctions;
 use FastyBird\Core\Persistence\Mapping;
 use FastyBird\Core\Persistence\Subscribers;
+use FastyBird\Core\Persistence\TimestampableConfiguration;
 use FastyBird\Core\Persistence\Utilities;
 use Nette\DI;
 use Nette\PhpGenerator;
 use Nette\Schema;
 use Nettrine\Migrations;
 use Override;
+use function assert;
 use function class_exists;
 
 /**
@@ -28,8 +30,9 @@ use function class_exists;
  * fbCore > persistence, so its services are fbCore.persistence.subscribers.entityDiscriminator,
  * fbCore.persistence.helpers.database, fbCore.persistence.utilities.doctrineDateProvider,
  * fbCore.persistence.entity.*, fbCore.persistence.crud, fbCore.persistence.timestampable.* and
- * fbCore.persistence.migrations.subscriber. The composite reads fbCore > persistence >
- * timestampable itself, for the root Configuration.
+ * fbCore.persistence.migrations.subscriber. fbCore.persistence.timestampable.configuration is the
+ * TimestampableConfiguration built from fbCore > persistence > timestampable, which the
+ * timestampable driver reads.
  *
  * Its Doctrine subscribers sit on both sides of Security's in definition order, which nettrine's
  * EventPass turns into listener order: the entity discriminator before them, the timestampable
@@ -47,8 +50,8 @@ final class PersistenceExtension extends DI\CompilerExtension
 				'lazyAssociation' => Schema\Expect::bool(false),
 				'autoMapField' => Schema\Expect::bool(true),
 				'dbFieldType' => Schema\Expect::string('datetime_immutable'),
-			]),
-		]);
+			])->castTo(Config\Timestampable::class),
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -120,16 +123,26 @@ final class PersistenceExtension extends DI\CompilerExtension
 
 	/**
 	 * The second half of loadConfiguration(), which the composite calls after Security's
-	 * definitions and the root Configuration: the timestampable driver and subscriber, and the
-	 * schema subscriber
+	 * definitions: the timestampable configuration, driver and subscriber, and the schema
+	 * subscriber
 	 */
 	public function loadTimestampable(): void
 	{
 		$builder = $this->getContainerBuilder();
+		$configuration = $this->getConfig();
+		assert($configuration instanceof Config);
 
 		/**
 		 * Timestampable
 		 */
+
+		$builder->addDefinition($this->prefix('timestampable.configuration'))
+			->setType(TimestampableConfiguration::class)
+			->setArguments([
+				'lazyAssociation' => $configuration->timestampable->lazyAssociation,
+				'autoMapField' => $configuration->timestampable->autoMapField,
+				'dbFieldType' => $configuration->timestampable->dbFieldType,
+			]);
 
 		$builder->addDefinition($this->prefix('timestampable.driver'))
 			->setType(Mapping\Driver\Timestampable::class);

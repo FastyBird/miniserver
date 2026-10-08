@@ -6,6 +6,7 @@ use Casbin;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Presenters\Events;
 use FastyBird\Core\Security\Access;
+use FastyBird\Core\Security\Configuration;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Mapping;
 use FastyBird\Core\Security\Middleware;
@@ -20,7 +21,6 @@ use Nette\PhpGenerator;
 use Nette\Schema;
 use Nettrine\ORM;
 use Override;
-use stdClass;
 use Symfony\Contracts\EventDispatcher;
 use function assert;
 use function dirname;
@@ -35,8 +35,8 @@ use const DIRECTORY_SEPARATOR;
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs as fbCore.security and reads its
  * fbCore > security section, so its services are fbCore.security.*. Nothing is registered
- * unless a token signature is configured. The composite also reads that section, for the root
- * Configuration.
+ * unless a token signature is configured, except fbCore.security.configuration, the
+ * Configuration that Presenters\HasAuthorization reads, which always is.
  *
  * In beforeCompile() it maps FastyBird\Core\Security\Entities on the default entity manager,
  * through MappingHelper::of() on this extension.
@@ -62,34 +62,34 @@ final class SecurityExtension extends DI\CompilerExtension
 			'token' => Schema\Expect::structure([
 				'issuer' => Schema\Expect::string(),
 				'signature' => Schema\Expect::string(''),
-			]),
+			])->castTo(Config\Token::class),
 			'enable' => Schema\Expect::structure([
 				'middleware' => Schema\Expect::bool(false),
 				'doctrine' => Schema\Expect::structure([
 					'mapping' => Schema\Expect::bool(false),
 					'models' => Schema\Expect::bool(false),
-				]),
+				])->castTo(Config\EnableDoctrine::class),
 				'casbin' => Schema\Expect::structure([
 					'database' => Schema\Expect::bool(false),
-				]),
+				])->castTo(Config\EnableCasbin::class),
 				'nette' => Schema\Expect::structure([
 					'application' => Schema\Expect::bool(false),
-				]),
-			]),
+				])->castTo(Config\EnableNette::class),
+			])->castTo(Config\Enable::class),
 			'application' => Schema\Expect::structure([
 				'signInUrl' => Schema\Expect::string(),
 				'homeUrl' => Schema\Expect::string('/'),
-			]),
+			])->castTo(Config\Application::class),
 			'services' => Schema\Expect::structure([
 				'identity' => Schema\Expect::bool(false),
-			]),
+			])->castTo(Config\Services::class),
 			'casbin' => Schema\Expect::structure([
 				'model' => Schema\Expect::string(
 					dirname(__DIR__, 3) . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'model.conf',
 				),
 				'policy' => Schema\Expect::string(),
-			]),
-		]);
+			])->castTo(Config\Casbin::class),
+		])->castTo(Config::class);
 	}
 
 	/**
@@ -100,7 +100,7 @@ final class SecurityExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		if ($configuration->token->signature !== '') {
 			$builder->addDefinition($this->prefix('auth'), new DI\Definitions\ServiceDefinition())
@@ -196,7 +196,7 @@ final class SecurityExtension extends DI\CompilerExtension
 
 			$modelFile = $configuration->casbin->model;
 
-			if (!is_string($modelFile) || !is_file($modelFile)) {
+			if (!is_file($modelFile)) {
 				throw new Exceptions\Logic('Casbin model file is not configured');
 			}
 
@@ -271,6 +271,24 @@ final class SecurityExtension extends DI\CompilerExtension
 					->setType(Subscribers\Application::class);
 			}
 		}
+
+		/**
+		 * Configuration -- registered unconditionally, outside the signature gate, as it was
+		 * before #640 split it out of the composite's root Configuration
+		 */
+
+		$builder->addDefinition($this->prefix('configuration'))
+			->setType(Configuration::class)
+			->setArguments([
+				'tokenIssuer' => $configuration->token->issuer,
+				'tokenSignature' => $configuration->token->signature,
+				'enableMiddleware' => $configuration->enable->middleware,
+				'enableDoctrineMapping' => $configuration->enable->doctrine->mapping,
+				'enableDoctrineModels' => $configuration->enable->doctrine->models,
+				'enableNetteApplication' => $configuration->enable->nette->application,
+				'applicationSignInUrl' => $configuration->application->signInUrl,
+				'applicationHomeUrl' => $configuration->application->homeUrl,
+			]);
 	}
 
 	/**
@@ -284,7 +302,7 @@ final class SecurityExtension extends DI\CompilerExtension
 
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$userContextServiceName = $builder->getByType(Identity\User::class);
 

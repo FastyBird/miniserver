@@ -11,7 +11,6 @@ use FastyBird\Core\Http\Subscribers;
 use Nette\DI;
 use Nette\Schema;
 use Override;
-use stdClass;
 use function assert;
 
 /**
@@ -31,12 +30,12 @@ final class HttpExtension extends DI\CompilerExtension
 			'static' => Schema\Expect::structure([
 				'publicRoot' => Schema\Expect::string()->nullable(),
 				'enabled' => Schema\Expect::bool(false),
-			]),
+			])->castTo(Config\StaticFiles::class),
 			'server' => Schema\Expect::structure([
 				'address' => Schema\Expect::string('127.0.0.1'),
 				'port' => Schema\Expect::int(8_000),
 				'certificate' => Schema\Expect::string()->nullable(),
-			]),
+			])->castTo(Config\Server::class),
 			'cors' => Schema\Expect::structure([
 				'enabled' => Schema\Expect::bool(false),
 				'allow' => Schema\Expect::structure([
@@ -54,9 +53,9 @@ final class HttpExtension extends DI\CompilerExtension
 						'Authorization',
 						'X-Requested-With',
 					]),
-				]),
-			]),
-		]);
+				])->castTo(Config\CorsAllow::class),
+			])->castTo(Config\Cors::class),
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -64,7 +63,7 @@ final class HttpExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$builder->addDefinition(
 			$this->prefix('routing.responseFactory'),
