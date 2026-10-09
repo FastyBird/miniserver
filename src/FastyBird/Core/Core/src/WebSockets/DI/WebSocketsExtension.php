@@ -126,11 +126,6 @@ final class WebSocketsExtension extends DI\CompilerExtension
 			$controllerFactory->addSetup('setMapping', [$configuration->mapping]);
 		}
 
-		if ($builder->getByType(Clients\ClientProvider::class) === null) {
-			$builder->addDefinition($this->prefix('clients.factory'))
-				->setType(Clients\ClientFactory::class);
-		}
-
 		$builder->addDefinition($this->prefix('clients.driver.memory'))
 			->setType(ClientsDrivers\InMemory::class);
 
@@ -228,10 +223,6 @@ final class WebSocketsExtension extends DI\CompilerExtension
 
 		$builder->addDefinition($this->prefix('wamp.application'))
 			->setType(Controllers\WampApplication::class);
-
-		if ($builder->getByType(Clients\ClientProvider::class) !== null) {
-			$builder->removeDefinition($builder->getByType(Clients\ClientProvider::class));
-		}
 
 		$builder->addDefinition($this->prefix('wamp.clientsFactory'))
 			->setType(Clients\WampClientFactory::class);
