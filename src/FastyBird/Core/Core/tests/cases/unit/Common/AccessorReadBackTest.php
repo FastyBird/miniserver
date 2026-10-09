@@ -62,6 +62,30 @@ final class AccessorReadBackTest extends TestCase
 	}
 
 	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function testHttpSpecializedExceptionsKeepTheirTitleAndDescription(): void
+	{
+		$request = new ServerRequest('GET', 'http://localhost/api/v1');
+
+		$notFound = new HttpExceptions\HttpNotFound($request);
+
+		self::assertSame('404 Not Found', $notFound->getTitle());
+		self::assertSame(
+			'The requested resource could not be found. Please verify the URI and try again.',
+			$notFound->getDescription(),
+		);
+
+		$notAllowed = new HttpExceptions\HttpMethodNotAllowed($request);
+
+		self::assertSame('405 Method Not Allowed', $notAllowed->getTitle());
+		self::assertSame(
+			'The request method is not supported for the requested resource.',
+			$notAllowed->getDescription(),
+		);
+	}
+
+	/**
 	 * @throws PhoneExceptions\NoValidCountry
 	 * @throws PhoneExceptions\NoValidPhone
 	 */
