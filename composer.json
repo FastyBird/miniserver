@@ -83,7 +83,6 @@
         "dg/bypass-finals": "^1.4",
         "infection/infection": "^0.31.9",
         "latte/latte": "^3.0",
-        "orisai/coding-standard": "^3.2",
         "pds/skeleton": "^1.0",
         "php-parallel-lint/php-parallel-lint": "^1.3",
         "phpstan/extension-installer": "^1.1",
@@ -95,6 +94,8 @@
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpunit": "^11.5",
         "rector/rector": "^2.6",
+        "slevomat/coding-standard": "^8.30",
+        "squizlabs/php_codesniffer": "^4.0",
         "staabm/annotate-pull-request-from-checkstyle": "^1.8",
         "symplify/vendor-patches": "^11.2",
         "tracy/tracy": "^2.9"

@@ -1,3 +1,9 @@
+<!--
+    How this repository applies the FastyBird coding standard (tools/phpcs-ruleset.xml): report
+    and cache settings, what is not scanned, the PSR-4 root map, and the shrink-only carve-outs
+    for packages the Core identity refactor has not reached yet. The standard itself - which
+    sniffs run and how each is configured - lives in tools/phpcs-ruleset.xml, not here.
+-->
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/squizlabs/php_codesniffer/phpcs.xsd">
     <!-- Show only relevant part of path -->
     <arg name="basepath" value="./.."/>
@@ -5,11 +11,14 @@
     <!-- Configure cache -->
     <arg name="cache" value="./../var/tools/PHP_CodeSniffer/cache.dat"/>
 
-    <!-- Import coding-standard -->
-    <rule ref="./vendor/orisai/coding-standard/src/ruleset-8.4.xml">
-        <exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectLinesCountBetweenDifferentAnnotationsTypes"/>
-        <exclude name="SlevomatCodingStandard.Commenting.DocCommentSpacing.IncorrectAnnotationsGroup"/>
-    </rule>
+    <!-- Report: sniff codes (-s), progress (-p), colours. `make cs` overrides parallel with the core count. -->
+    <arg value="p"/>
+    <arg value="s"/>
+    <arg name="colors"/>
+    <arg name="parallel" value="16"/>
+
+    <!-- The standard -->
+    <rule ref="./phpcs-ruleset.xml"/>
 
     <!-- Configure PSR-4 rule -->
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
@@ -179,11 +188,10 @@
         <exclude-pattern>src/FastyBird/Module/Devices/src/Subscribers/StateEntities\.php</exclude-pattern>
     </rule>
 
-    <!-- The only rule ruleset-8.4 adds over ruleset-8.2 (it arrived in the 8.3 ruleset; 8.4
-         adds nothing further). The repository has 1,633 untyped class constants across 602
-         files and zero typed ones (214 in 39 Core files, 1,419 in 563 files elsewhere), so
-         it is switched on for Core first and the remaining packages are excluded until E7 of
-         the Core identity refactor reaches them. This list
+    <!-- Typed class constants (PHP 8.3). When the rule was adopted the repository had 1,633
+         untyped class constants across 602 files and zero typed ones (214 in 39 Core files,
+         1,419 in 563 files elsewhere), so it is switched on for Core first and the remaining
+         packages are excluded until E7 of the Core identity refactor reaches them. This list
          may only shrink; deleting its last entry deletes the block. -->
     <rule ref="SlevomatCodingStandard.TypeHints.ClassConstantTypeHint">
         <exclude-pattern>src/FastyBird/Addon/*</exclude-pattern>
@@ -199,21 +207,9 @@
          class docblock) duplicating what Git and LICENSE.md already record. Core's have been
          removed (E2 of the Core identity refactor); the other six package types have not. This
          list may only shrink; deleting its last entry deletes the block, at which point the
-         sniff applies repository-wide and this comment goes with it. Owned by #462 (E7). -->
+         sniff applies repository-wide and this comment goes with it. Owned by #462 (E7). The
+         forbidden list itself is part of the standard, in tools/phpcs-ruleset.xml. -->
     <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
-        <properties>
-            <property name="forbiddenAnnotations" type="array">
-                <element value="@author"/>
-                <element value="@copyright"/>
-                <element value="@created"/>
-                <element value="@date"/>
-                <element value="@license"/>
-                <element value="@package"/>
-                <element value="@since"/>
-                <element value="@subpackage"/>
-                <element value="@version"/>
-            </property>
-        </properties>
         <exclude-pattern>src/FastyBird/Addon/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>

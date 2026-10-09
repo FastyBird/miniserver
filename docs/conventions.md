@@ -363,7 +363,8 @@ through them. These rules are kept by review, not by a gate.
 **No file header.** The licence is in `LICENSE.md`, the author in `composer.json`, and the
 namespace supersedes `@package`. `@package`, `@subpackage`, `@author`, `@copyright`,
 `@license`, `@since`, `@created`, `@version` and `@date` are forbidden. **Enforced for Core:**
-`tools/phpcs.xml` runs `SlevomatCodingStandard.Commenting.ForbiddenAnnotations` with no exclusion
+the coding standard (`tools/phpcs-ruleset.xml`) runs
+`SlevomatCodingStandard.Commenting.ForbiddenAnnotations`, and `tools/phpcs.xml` excludes nothing
 under `src/FastyBird/Core/Core`; `make cs` rejects any of these annotations there, and equally in
 the repository-root `tests/` and `bin/`, which `make cs` scans as well (#610). The other six
 package types (`Addon`, `Automator`, `Bridge`, `Connector`, `Module`, `Plugin`) are still exempt
@@ -468,16 +469,29 @@ A new interface in Core needs a row in this table, with its reason, in the PR th
     `HttpNotFound` and `HttpMethodNotAllowed` redeclare as `public protected(set)`). A
     `private(set)` property is implicitly final, so no subclass can redeclare it.
   - **An interface property with hooks** when an interface declares the accessor:
-    `public string $name { get; set; }`. The implementing class satisfies it with a plain public
-    property. A PHPUnit double of the interface stubs it with
+    `public string $name { get; set; }`, laid out as below. The implementing class satisfies it
+    with a plain public property. A PHPUnit double of the interface stubs it with
     `->method(PropertyHook::get('name'))`; a double of a class with a plain public property
     assigns it instead. No Core interface declares one since #678 collapsed
     `WebSockets\Controllers\DispatchRequest` and `WebSockets\Entities\ConnectedClient`.
-  - **PHP_CodeSniffer 3 does not tokenize property hooks** (#673). Each interface property
-    carries exactly this line directly above it, and nothing broader (no `phpcs:disable`):
-    `// phpcs:ignore Internal.ParseError.InterfaceHasMemberVar, Generic.Formatting.DisallowMultipleStatements.SameLine -- PHP_CodeSniffer 3 does not tokenize property hooks`.
-    Property hooks **with bodies** (`get => …`, `set => …`) are not used until the coding
-    standard supports them; the tooling follow-up handed off to #645 lifts both restrictions.
+  - **PHP_CodeSniffer 4 parses interface properties but not property hooks** (#675). The
+    `phpcs:ignore Internal.ParseError…` line PHP_CodeSniffer 3 needed (#673) is gone: that code no
+    longer exists, and no suppression comment is used. A single hook fits on one line
+    (`public int $revision { get; }`); two hooks go on a line each, because `{ get; set; }` on one
+    line is reported as two statements (`Generic.Formatting.DisallowMultipleStatements.SameLine`):
+
+    ```php
+    public string $name {
+    	get;
+    	set;
+    }
+    ```
+
+    Property hooks **with bodies** (`get => …`, `set(…) { … }`) are still not used. PHP_CodeSniffer
+    4.0.4 reads the `$this` and `$value` in a hook body as further property declarations, and
+    `PSR2.Classes.PropertyDeclaration` reports them (`Multiple`, `ScopeMissing`,
+    `SpacingAfterType`). The restriction lifts when PHP_CodeSniffer tokenizes hooks, or if the
+    standard gives those three codes up; #675 records the trade-off.
   - **A method** when the accessor does more than read or write the property, and always for
     Doctrine entities and their traits (hydration bypasses hooks), orisai `MappedObject`s, fluent
     setters and builders (`Http\Routing\Route::setName()`), and getters without a setter.
