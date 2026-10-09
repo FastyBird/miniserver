@@ -20,8 +20,14 @@ class Client
 	/** @var array<string> */
 	private array $roles = [];
 
+	/**
+	 * Whether the client's HTTP handshake request has been read completely
+	 */
 	public bool $httpHeadersReceived = false;
 
+	/**
+	 * The part of the HTTP handshake request received so far
+	 */
 	public string $httpBuffer = '';
 
 	private string|null $remoteAddress = null;
@@ -39,9 +45,6 @@ class Client
 		$this->parameters = new Utils\ArrayHash();
 	}
 
-	/**
-	 * The part of the HTTP handshake request received so far
-	 */
 	public function getId(): int
 	{
 		return $this->id;

@@ -8,9 +8,16 @@ namespace FastyBird\Core\WebSockets\Controllers;
 final class Request
 {
 
+	/**
+	 * The controller name
+	 */
 	public string $controllerName;
 
-	/** @var array<mixed> */
+	/**
+	 * Variables provided to the controller (usually via URL)
+	 *
+	 * @var array<mixed>
+	 */
 	public array $parameters;
 
 	/**
