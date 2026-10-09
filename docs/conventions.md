@@ -414,12 +414,18 @@ collide with the concrete class of the same name, so each interface needs a role
   - **Asymmetric visibility** when only the class writes it, or nothing does:
     `public private(set)` (`Phone\Entities\Phone::$extension`, written by `fromNumber()`), or
     `public protected(set)` when a subclass writes it or redeclares its default
-    (`Persistence\Crud\CrudManager::$flush`). A `private(set)` property is implicitly final, so
-    no subclass can redeclare it.
+    (`Persistence\Crud\CrudManager::$flush`; `Http\Exceptions\Http::$title`, whose default
+    `HttpNotFound` and `HttpMethodNotAllowed` redeclare as `public protected(set)`). A
+    `private(set)` property is implicitly final, so no subclass can redeclare it.
   - **An interface property with hooks** when an interface declares the accessor:
     `public string $controllerName { get; set; }` on `WebSockets\Controllers\DispatchRequest`.
     The implementing class satisfies it with a plain public property. A PHPUnit double of the
     interface stubs it with `->method(PropertyHook::get('controllerName'))`.
+  - **PHP_CodeSniffer 3 does not tokenize property hooks** (#673). Each interface property
+    carries exactly this line directly above it, and nothing broader (no `phpcs:disable`):
+    `// phpcs:ignore Internal.ParseError.InterfaceHasMemberVar, Generic.Formatting.DisallowMultipleStatements.SameLine -- PHP_CodeSniffer 3 does not tokenize property hooks`.
+    Property hooks **with bodies** (`get => …`, `set => …`) are not used until the coding
+    standard supports them; the tooling follow-up handed off to #645 lifts both restrictions.
   - **A method** when the accessor does more than read or write the property, and always for
     Doctrine entities and their traits (hydration bypasses hooks), orisai `MappedObject`s, fluent
     setters and builders (`Http\Routing\Route::setName()`), and getters without a setter.
