@@ -719,15 +719,22 @@
     <rule ref="Squiz.Commenting.FunctionComment.InvalidThrows">
         <message>An @throws tag must name the exception type</message>
     </rule>
-    <!-- Likewise for property docblocks: optional, any tag, PHPStan checks the type. -->
-    <rule ref="Squiz.Commenting.VariableComment">
-        <exclude name="Squiz.Commenting.VariableComment.IncorrectVarType"/>
-        <exclude name="Squiz.Commenting.VariableComment.Missing"/>
-        <exclude name="Squiz.Commenting.VariableComment.MissingVar"/>
-        <exclude name="Squiz.Commenting.VariableComment.TagNotAllowed"/>
-        <!-- Tag order is DocCommentSpacing's annotationsGroups, below. -->
-        <exclude name="Squiz.Commenting.VariableComment.VarOrder"/>
-    </rule>
+    <!--
+        Likewise for property docblocks: optional, any tag, PHPStan checks the type. Only these
+        four of Squiz's property-comment codes apply: a property comment must be a docblock, and
+        a docblock may not repeat @var or leave @var or @see empty.
+
+        This is an allow-list rather than a list of exclusions because PHP_CodeSniffer 4 reports
+        every tag other than @var and @see under its own code ([Tag]TagNotAllowed, e.g.
+        Phpstan-varTagNotAllowed), so no exclusion can cover "any tag". Naming single codes of a
+        sniff that is not otherwise included turns that sniff's other codes off. Not enforced
+        as a result: a missing docblock or @var, the @var type spelling (PHPStan's), and tag
+        order (DocCommentSpacing's annotationsGroups, below).
+    -->
+    <rule ref="Squiz.Commenting.VariableComment.WrongStyle"/>
+    <rule ref="Squiz.Commenting.VariableComment.DuplicateVar"/>
+    <rule ref="Squiz.Commenting.VariableComment.EmptySees"/>
+    <rule ref="Squiz.Commenting.VariableComment.EmptyVar"/>
 
     <rule ref="SlevomatCodingStandard.Commenting.AnnotationName"/>
     <rule ref="SlevomatCodingStandard.Commenting.DeprecatedAnnotationDeclaration"/>

@@ -17,10 +17,9 @@ have not moved since December 2024.
 **Blocks:** PHP 8.5, and it is **the remaining 8.5 blocker**: the other one,
 `lcobucci/clock`, left the lock with the `lcobucci/jwt` 5 upgrade (#643).
 `orisai/object-mapper` and `orisai/nette-object-mapper` declare `php: 7.4 - 8.4`,
-and seven further `orisai/*` packages arrive with the same ceiling.
-`composer why-not php 8.5.0` on the lock lists exactly these nine:
+and six further `orisai/*` packages arrive with the same ceiling.
+`composer why-not php 8.5.0` on the lock lists exactly these eight:
 
-    orisai/coding-standard          (dev only)
     orisai/exceptions
     orisai/nette-di
     orisai/nette-object-mapper
@@ -31,14 +30,15 @@ and seven further `orisai/*` packages arrive with the same ceiling.
     orisai/utils
 
 The `PHP 8.5 (Core)` CI job installs with `--ignore-platform-req=php+` because of
-them, and fails unless the packages refusing PHP 8.5 are exactly these nine, so a
+them, and fails unless the packages refusing PHP 8.5 are exactly these eight, so a
 new ceiling cannot slip in behind the ignore. The job becomes a required check, and
 loses the ignore, once this list is empty. PHP 8.4 is supported upstream into 2028,
 so this is a medium-term constraint, not an immediate one.
 
 **Footprint:** 497 files across 25 extensions import `Orisai\ObjectMapper`. It is
 the only `Orisai\*` namespace used in application source — every other orisai
-package is transitive, except `orisai/coding-standard`, which is tooling only.
+package is transitive. (`orisai/coding-standard`, the ninth package with this ceiling,
+left with #675: the coding standard is now written in `tools/phpcs-ruleset.xml`.)
 
     2481  #[ObjectMapper\...] attribute declarations
      652  ObjectMapper\Modifiers\FieldName

@@ -223,7 +223,7 @@ jobs:
   # keeps Core runnable on 8.5 while the dependency ceilings below are still in place.
   #
   # NOT a required check yet, on purpose. It becomes one when `composer why-not php 8.5` on
-  # the lock prints nothing -- i.e. once the nine orisai/* packages (docs/deprecations.md,
+  # the lock prints nothing -- i.e. once the eight orisai/* packages (docs/deprecations.md,
   # "orisai/object-mapper") are gone -- and at that point --ignore-platform-req=php+ and the
   # "exactly these packages" step are deleted with it, so the job runs a plain install.
   php-85-core:
@@ -289,14 +289,13 @@ jobs:
       - name: "Composer install"
         run: "composer install --no-interaction --no-progress --prefer-dist --ignore-platform-req=php+"
 
-      # Fails unless the packages that refuse this PHP are exactly the nine orisai/* ones
-      # recorded in docs/deprecations.md. A tenth package, or one of the nine disappearing,
+      # Fails unless the packages that refuse this PHP are exactly the eight orisai/* ones
+      # recorded in docs/deprecations.md. A ninth package, or one of the eight disappearing,
       # both fail: the first is a new ceiling nobody recorded, the second means the ignore
       # above is wider than it needs to be.
       - name: "Only the recorded packages refuse PHP 8.5"
         run: |
-          expected="orisai/coding-standard
-          orisai/exceptions
+          expected="orisai/exceptions
           orisai/nette-di
           orisai/nette-object-mapper
           orisai/object-mapper
