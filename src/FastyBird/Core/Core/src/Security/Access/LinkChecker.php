@@ -39,6 +39,7 @@ final readonly class LinkChecker implements Checker
 	 * @param mixed $element etc "this", ":Admin:Show:default"
 	 *
 	 * @throws Application\InvalidPresenterException
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws ReflectionException
 	 */
