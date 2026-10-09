@@ -12,6 +12,7 @@ use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
 use Nette\Http;
+use PHPUnit\Framework\MockObject\Runtime\PropertyHook;
 use PHPUnit\Framework\TestCase;
 use React\Socket;
 use RuntimeException;
@@ -38,7 +39,7 @@ final class WrapperTest extends TestCase
 		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
-		$client->method('isHttpHeadersReceived')
+		$client->method(PropertyHook::get('httpHeadersReceived'))
 			->willReturn(true);
 		$client->method('getRequest')
 			->willReturn($requestMock);
@@ -81,7 +82,7 @@ final class WrapperTest extends TestCase
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
-		$client->method('isHttpHeadersReceived')
+		$client->method(PropertyHook::get('httpHeadersReceived'))
 			->willReturn(true);
 		$client->method('getWebSocket')
 			->willReturn($webSocket);
@@ -114,7 +115,7 @@ final class WrapperTest extends TestCase
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
-		$client->method('isHttpHeadersReceived')
+		$client->method(PropertyHook::get('httpHeadersReceived'))
 			->willReturn(true);
 		$client->method('getWebSocket')
 			->willReturn($webSocket);
@@ -166,7 +167,7 @@ final class WrapperTest extends TestCase
 		$connection = $this->createMock(Socket\ConnectionInterface::class);
 
 		$client = $this->createMock(Entities\ConnectedClient::class);
-		$client->method('isHttpHeadersReceived')
+		$client->method(PropertyHook::get('httpHeadersReceived'))
 			->willReturn(true);
 		$client->method('getWebSocket')
 			->willReturn($webSocket);
@@ -196,7 +197,7 @@ final class WrapperTest extends TestCase
 		$wrapper->handleMessage($client, 'irrelevant, headers already marked received');
 
 		self::assertSame([$client, $requestMock], $received);
-		self::assertTrue($webSocket->isEstablished());
+		self::assertTrue($webSocket->established);
 	}
 
 }

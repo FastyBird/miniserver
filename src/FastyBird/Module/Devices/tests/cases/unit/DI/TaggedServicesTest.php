@@ -46,7 +46,7 @@ final class TaggedServicesTest extends Tests\Cases\Unit\BaseTestCase
 		);
 
 		self::assertNotNull($request);
-		self::assertSame('DevicesModule:Exchange', $request->getControllerName());
+		self::assertSame('DevicesModule:Exchange', $request->controllerName);
 	}
 
 	/**

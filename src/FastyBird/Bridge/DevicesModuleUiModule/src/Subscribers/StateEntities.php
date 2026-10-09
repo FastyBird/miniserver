@@ -139,7 +139,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 		DevicesModuleUiModuleDocuments\Widgets\DataSources\Property $dataSource,
 	): void
 	{
-		$this->getPublisher($this->eventLoopStatus->isRunning())->publish(
+		$this->getPublisher($this->eventLoopStatus->running)->publish(
 			Sources\Bridge::DEVICES_MODULE_UI_MODULE,
 			Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
 			$dataSource,

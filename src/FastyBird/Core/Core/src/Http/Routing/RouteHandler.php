@@ -40,7 +40,7 @@ final class RouteHandler implements RequestHandlerInterface
 
 		$request = $request->withAttribute(
 			Router::BASE_PATH,
-			$this->router->getBasePath(),
+			$this->router->basePath,
 		);
 
 		$route = $request->getAttribute(Router::ROUTE);
@@ -111,7 +111,7 @@ final class RouteHandler implements RequestHandlerInterface
 		}
 
 		$routeDefinitionCallback = function (FastRouteRouteCollector $r): void {
-			$basePath = $this->router->getBasePath();
+			$basePath = $this->router->basePath;
 
 			foreach ($this->router->getIterator() as $route) {
 				assert($route instanceof Route);

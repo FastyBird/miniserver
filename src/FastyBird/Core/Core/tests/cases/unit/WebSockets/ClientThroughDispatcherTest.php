@@ -58,8 +58,8 @@ final class ClientThroughDispatcherTest extends BaseTestCase
 
 		$this->container->getByType(Server\Wrapper::class)->handleMessage($client, 'headers already received');
 
-		self::assertTrue($client->getWebSocket()->isEstablished());
-		self::assertTrue($client->getWebSocket()->isClosing());
+		self::assertTrue($client->getWebSocket()->established);
+		self::assertTrue($client->getWebSocket()->closing);
 		self::assertNull($client->getIdentity());
 		self::assertSame(['Client access token is not valid'], $this->warnings);
 	}
@@ -82,7 +82,7 @@ final class ClientThroughDispatcherTest extends BaseTestCase
 		$this->container->getByType(Server\Wrapper::class)
 			->handleMessage($client, '[2,"call-1","/devices-module/v1/exchange",{}]');
 
-		self::assertTrue($client->getWebSocket()->isClosing());
+		self::assertTrue($client->getWebSocket()->closing);
 		self::assertNull($client->getIdentity());
 		self::assertSame(['Client access token is not valid'], $this->warnings);
 	}
@@ -167,7 +167,7 @@ final class ClientThroughDispatcherTest extends BaseTestCase
 
 		$client = new Entities\Client(634, $this->createMock(Socket\ConnectionInterface::class));
 		$client->setRequest($request);
-		$client->setHttpHeadersReceived(true);
+		$client->httpHeadersReceived = true;
 		$client->setWebSocket($webSocket);
 
 		return $client;

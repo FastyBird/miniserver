@@ -332,7 +332,7 @@ final class RequestFactory
 			static fn (): string => $rawBody ?? '',
 		);
 
-		$request->setProtocolVersion($httpVersion);
+		$request->protocolVersion = $httpVersion;
 
 		return $request;
 	}

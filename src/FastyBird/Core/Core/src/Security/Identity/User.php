@@ -43,7 +43,7 @@ class User
 
 	public function getIdentity(): UserIdentity|null
 	{
-		return $this->storage->getIdentity();
+		return $this->storage->identity;
 	}
 
 	/**
@@ -64,12 +64,12 @@ class User
 			$user = $this->authenticator->authenticate(func_get_args());
 		}
 
-		$this->storage->setIdentity($user);
+		$this->storage->identity = $user;
 	}
 
 	public function logout(): void
 	{
-		$this->storage->setIdentity(null);
+		$this->storage->identity = null;
 	}
 
 	public function isLoggedIn(): bool

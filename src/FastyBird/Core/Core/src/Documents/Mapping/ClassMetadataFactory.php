@@ -118,7 +118,7 @@ final class ClassMetadataFactory
 			if (isset($this->loadedMetadata[$className])) {
 				$parent = $this->loadedMetadata[$className];
 
-				if (!$parent->isMappedSuperclass()) {
+				if (!$parent->isMappedSuperclass) {
 					$rootDocumentFound = true;
 
 					array_unshift($visited, $className);
@@ -136,7 +136,7 @@ final class ClassMetadataFactory
 
 			$parent = $class;
 
-			if (!$class->isMappedSuperclass()) {
+			if (!$class->isMappedSuperclass) {
 				$rootDocumentFound = true;
 
 				array_unshift($visited, $className);
@@ -164,7 +164,7 @@ final class ClassMetadataFactory
 	): void
 	{
 		if ($parent !== null) {
-			$class->setInheritanceType($parent->getInheritanceType());
+			$class->inheritanceType = $parent->inheritanceType;
 			$class->setDiscriminatorColumn($parent->getDiscriminatorColumn());
 			$class->setDiscriminatorMap($parent->getDiscriminatorMap());
 			$class->addSubClasses($parent->getSubClasses());
@@ -172,7 +172,7 @@ final class ClassMetadataFactory
 
 		$this->driver->loadMetadataForClass($class);
 
-		if (!$class->isMappedSuperclass()) {
+		if (!$class->isMappedSuperclass) {
 			if ($rootDocumentFound && $class->isInheritanceTypeNone()) {
 				throw new Exceptions\InvalidArgument(sprintf(
 					'Document class "%s" is a subclass of the root document class "%s", but no inheritance mapping type was declared',
@@ -374,7 +374,7 @@ final class ClassMetadataFactory
 
 		$this->driver->loadMetadataForClass($class);
 
-		return $class->isMappedSuperclass();
+		return $class->isMappedSuperclass;
 	}
 
 	/**
@@ -393,7 +393,7 @@ final class ClassMetadataFactory
 	): void
 	{
 		// Verify inheritance
-		if (!$class->isMappedSuperclass() && !$class->isInheritanceTypeNone()) {
+		if (!$class->isMappedSuperclass && !$class->isInheritanceTypeNone()) {
 			if ($parent === null) {
 				if ($class->getDiscriminatorMap() === []) {
 					throw new Exceptions\Logic(sprintf(
@@ -434,7 +434,7 @@ final class ClassMetadataFactory
 				}
 			}
 		} elseif (
-			$class->isMappedSuperclass()
+			$class->isMappedSuperclass
 			&& $class->getName() === $class->getRootDocumentName()
 			&& (
 				$class->getDiscriminatorMap() !== []

@@ -256,7 +256,7 @@ final class ClientAuthenticationTest extends TestCase
 
 		$client = new Entities\Client(1, $this->createMock(Socket\ConnectionInterface::class));
 		$client->setRequest($request);
-		$client->setHttpHeadersReceived(true);
+		$client->httpHeadersReceived = true;
 		$client->setWebSocket($webSocket);
 
 		$dispatcher = new EventDispatcher\EventDispatcher();
@@ -513,7 +513,7 @@ final class ClientAuthenticationTest extends TestCase
 			0,
 		);
 
-		self::assertTrue($webSocket->isClosing());
+		self::assertTrue($webSocket->closing);
 	}
 
 	/**
@@ -529,7 +529,7 @@ final class ClientAuthenticationTest extends TestCase
 			1,
 		);
 
-		self::assertFalse($webSocket->isClosing());
+		self::assertFalse($webSocket->closing);
 	}
 
 	/**

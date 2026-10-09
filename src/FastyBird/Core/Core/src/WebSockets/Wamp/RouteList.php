@@ -41,10 +41,10 @@ final class RouteList extends Utils\ArrayList implements WampRouter
 			$appRequest = $route->match($httpRequest);
 
 			if ($appRequest !== null) {
-				$name = $appRequest->getControllerName();
+				$name = $appRequest->controllerName;
 
 				if (strncmp($name, 'Core:', 5)) {
-					$appRequest->setControllerName($this->module . $name);
+					$appRequest->controllerName = $this->module . $name;
 				}
 
 				return $appRequest;
@@ -67,16 +67,16 @@ final class RouteList extends Utils\ArrayList implements WampRouter
 		assert($this->cachedRoutes !== null);
 
 		if ($this->module) {
-			if (strncmp($tmp = $appRequest->getControllerName(), $this->module, strlen($this->module)) === 0) {
+			if (strncmp($tmp = $appRequest->controllerName, $this->module, strlen($this->module)) === 0) {
 				$appRequest = clone $appRequest;
-				$appRequest->setControllerName(substr($tmp, strlen($this->module)));
+				$appRequest->controllerName = substr($tmp, strlen($this->module));
 
 			} else {
 				return null;
 			}
 		}
 
-		$controller = $appRequest->getControllerName();
+		$controller = $appRequest->controllerName;
 
 		if (!isset($this->cachedRoutes[$controller])) {
 			$controller = '*';

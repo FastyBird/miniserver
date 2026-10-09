@@ -49,7 +49,7 @@ final class ServerRuntime
 		React\Socket\SocketServer|null $flashSocket = null,
 	): void
 	{
-		$client = $this->configuration->getAddress() . ':' . $this->configuration->getPort();
+		$client = $this->configuration->address . ':' . $this->configuration->port;
 
 		if ($socket === null) {
 			$socket = new React\Socket\SocketServer($client, [], $this->loop);
@@ -72,7 +72,7 @@ final class ServerRuntime
 
 			if (
 				property_exists($parsed, 'port')
-				&& $parsed->offsetGet('port') === $this->configuration->getPort()
+				&& $parsed->offsetGet('port') === $this->configuration->port
 			) {
 				$this->handlers->handleConnect($connection);
 			}
@@ -84,14 +84,14 @@ final class ServerRuntime
 
 		$flashPort = 8_843;
 
-		if ($this->configuration->getPort() === 80) {
+		if ($this->configuration->port === 80) {
 			$flashPort = 843;
 		}
 
 		if ($flashSocket === null) {
-			$flashClient = $this->configuration->getPort() === 80
+			$flashClient = $this->configuration->port === 80
 				? '0.0.0.0:' . $flashPort
-				: $this->configuration->getAddress() . ':' . $flashPort;
+				: $this->configuration->address . ':' . $flashPort;
 
 			$flashSocket = new React\Socket\SocketServer($flashClient, [], $this->loop);
 		}
@@ -126,8 +126,8 @@ final class ServerRuntime
 		$this->logger->debug(
 			sprintf(
 				'Launching WebSockets WS Server on: %s:%s',
-				$this->configuration->getAddress(),
-				$this->configuration->getPort(),
+				$this->configuration->address,
+				$this->configuration->port,
 			),
 		);
 

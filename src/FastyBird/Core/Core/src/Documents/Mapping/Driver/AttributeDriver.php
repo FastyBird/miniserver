@@ -255,10 +255,10 @@ final class AttributeDriver implements MappingDriver
 			assert($documentAttribute instanceof Documents\Mapping\Document);
 
 			if ($documentAttribute->entity !== null) {
-				$metadata->setOwningEntity($documentAttribute->entity);
+				$metadata->owningEntity = $documentAttribute->entity;
 			}
 		} elseif (isset($classAttributes[Documents\Mapping\MappedSuperclass::class])) {
-			$metadata->setIsMappedSuperclass(true);
+			$metadata->isMappedSuperclass = true;
 
 		} else {
 			throw new Exceptions\Logic(
@@ -288,9 +288,9 @@ final class AttributeDriver implements MappingDriver
 				);
 			}
 
-			$metadata->setInheritanceType($inheritanceType);
+			$metadata->inheritanceType = $inheritanceType;
 
-			if ($metadata->getInheritanceType() !== Documents\Mapping\ClassMetadata::INHERITANCE_TYPE_NONE) {
+			if ($metadata->inheritanceType !== Documents\Mapping\ClassMetadata::INHERITANCE_TYPE_NONE) {
 				// Evaluate DiscriminatorColumn attribute
 				if (isset($classAttributes[Documents\Mapping\DiscriminatorColumn::class])) {
 					$discriminatorColumnAttribute = $classAttributes[Documents\Mapping\DiscriminatorColumn::class];

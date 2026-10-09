@@ -62,7 +62,7 @@ final class Wrapper implements ServerWrapper
 	#[Override]
 	public function handleOpen(Entities\ConnectedClient $client): void
 	{
-		$client->setHttpHeadersReceived(false);
+		$client->httpHeadersReceived = false;
 	}
 
 	/**
@@ -73,16 +73,16 @@ final class Wrapper implements ServerWrapper
 	#[Override]
 	public function handleMessage(Entities\ConnectedClient $client, string $message): void
 	{
-		if (!$client->isHttpHeadersReceived()) {
-			$client->setHttpBuffer($client->getHttpBuffer() . $message);
+		if (!$client->httpHeadersReceived) {
+			$client->httpBuffer .= $message;
 
 			try {
-				if (($httpRequest = $this->requestFactory->createHttpRequest($client->getHttpBuffer())) === null) {
+				if (($httpRequest = $this->requestFactory->createHttpRequest($client->httpBuffer)) === null) {
 					return;
 				}
 
 				$client->setRequest($httpRequest);
-				$client->setHttpBuffer('');
+				$client->httpBuffer = '';
 
 			} catch (OverflowException) {
 				$this->close($client, Handshake\WampResponse::S413_REQUEST_ENTITY_TOO_LARGE);
@@ -90,7 +90,7 @@ final class Wrapper implements ServerWrapper
 				return;
 			}
 
-			$client->setHttpHeadersReceived(true);
+			$client->httpHeadersReceived = true;
 
 			$this->connectionOpen($client, $httpRequest);
 
@@ -110,7 +110,7 @@ final class Wrapper implements ServerWrapper
 	#[Override]
 	public function handleClose(Entities\ConnectedClient $client): void
 	{
-		if ($client->isHttpHeadersReceived()) {
+		if ($client->httpHeadersReceived) {
 			$this->connectionClose($client);
 		}
 	}
@@ -124,7 +124,7 @@ final class Wrapper implements ServerWrapper
 	#[Override]
 	public function handleError(Entities\ConnectedClient $client, Throwable $ex): void
 	{
-		if ($client->isHttpHeadersReceived()) {
+		if ($client->httpHeadersReceived) {
 			$this->connectionError($client, $ex);
 
 		} else {
@@ -188,7 +188,7 @@ final class Wrapper implements ServerWrapper
 		try {
 			$webSocket = $client->getWebSocket();
 
-			if ($webSocket->isEstablished()) {
+			if ($webSocket->established) {
 				// Call service event
 				$this->dispatcher->dispatch(new Events\ClientFailed($client, $client->getRequest()));
 
@@ -214,18 +214,18 @@ final class Wrapper implements ServerWrapper
 	{
 		$webSocket = $client->getWebSocket();
 
-		if ($webSocket->isClosing()) {
+		if ($webSocket->closing) {
 			return;
 		}
 
-		if ($webSocket->isEstablished() === true) {
+		if ($webSocket->established === true) {
 			// Call service event
 			$this->dispatcher->dispatch(new Events\MessageReceived($client, $client->getRequest(), $message));
 
 			// A subscriber that rejects the client -- e.g. its access token has expired or was
 			// revoked since the handshake -- closes it, and the message must not reach the
 			// application. Read back through the client, which is what the subscribers acted on.
-			if ($client->getWebSocket()->isClosing()) {
+			if ($client->getWebSocket()->closing) {
 				return;
 			}
 
@@ -285,7 +285,7 @@ final class Wrapper implements ServerWrapper
 			return null;
 		}
 
-		$webSocket->setEstablished(true);
+		$webSocket->established = true;
 
 		// Call service event
 		$this->dispatcher->dispatch(new Events\ClientConnected($client, $httpRequest));

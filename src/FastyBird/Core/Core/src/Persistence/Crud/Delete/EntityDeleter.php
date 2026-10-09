@@ -36,7 +36,7 @@ final class EntityDeleter extends Crud\CrudManager
 
 			$this->entityManager->remove($entity);
 
-			if ($this->getFlush() === true) {
+			if ($this->flush === true) {
 				$this->entityManager->flush();
 			}
 

@@ -49,8 +49,8 @@ final class ClosureRouteTest extends BaseTestCase
 		$request = $routes->match($this->request('ws://localhost/e5/closure'));
 
 		self::assertInstanceOf(Controllers\Request::class, $request);
-		self::assertSame('Core:WebSocket', $request->getControllerName());
-		self::assertSame($callback, $request->getParameters()['callback'] ?? null);
+		self::assertSame('Core:WebSocket', $request->controllerName);
+		self::assertSame($callback, $request->parameters['callback'] ?? null);
 
 		self::assertNull($routes->match($this->request('ws://localhost/e5/other')));
 	}
@@ -71,7 +71,7 @@ final class ClosureRouteTest extends BaseTestCase
 		$request = $routes->match($this->request('ws://localhost/e5/module'));
 
 		self::assertInstanceOf(Controllers\Request::class, $request);
-		self::assertSame('Probe:Exchange', $request->getControllerName());
+		self::assertSame('Probe:Exchange', $request->controllerName);
 	}
 
 	/**

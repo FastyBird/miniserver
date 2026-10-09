@@ -79,11 +79,11 @@ final class DocumentTest extends Tests\Cases\Unit\BaseTestCase
 		$eventDispatcher->addListener(
 			Events\PreLoad::class,
 			static function (Events\PreLoad $event) use ($modify): void {
-				$data = $event->getData();
+				$data = $event->data;
 
 				$data = array_merge($data, $modify);
 
-				$event->setData($data);
+				$event->data = $data;
 			},
 		);
 

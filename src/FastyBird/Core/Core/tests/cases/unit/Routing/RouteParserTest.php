@@ -157,7 +157,7 @@ final class RouteParserTest extends TestCase
 		$router->get('/api/v1/devices', static function (): void {
 		})->setName('devices.index');
 
-		$router->setBasePath('/sub');
+		$router->basePath = '/sub';
 
 		self::assertSame('/sub/api/v1/devices', $router->urlFor('devices.index'));
 	}

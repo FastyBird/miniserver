@@ -162,7 +162,7 @@ final readonly class User implements Common\EventSubscriber
 
 		// @phpstan-ignore-next-line
 		$oldValue = $property->getValue($object);
-		$newValue = $this->userStorage->getIdentity()?->getId()->toString();
+		$newValue = $this->userStorage->identity?->getId()->toString();
 
 		// @phpstan-ignore-next-line
 		$property->setValue($object, $newValue);

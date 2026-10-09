@@ -63,7 +63,7 @@ class Validator
 		$router = $this->container->getByType(Routing\Router::class);
 
 		$routeDefinitionCallback = static function (RouteCollector $r) use ($router): void {
-			$basePath = $router->getBasePath();
+			$basePath = $router->basePath;
 
 			foreach ($router->getIterator() as $route) {
 				$r->addRoute($route->getMethods(), $basePath . $route->getPattern(), $route->getIdentifier());
