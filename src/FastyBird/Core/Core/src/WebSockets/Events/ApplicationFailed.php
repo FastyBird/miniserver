@@ -15,20 +15,20 @@ final class ApplicationFailed extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private readonly Controllers\Dispatcher $application,
-		private readonly Entities\ConnectedClient $client,
+		private readonly Controllers\Application $application,
+		private readonly Entities\Client $client,
 		private readonly Handshake\Request $httpRequest,
 		private readonly Throwable $ex,
 	)
 	{
 	}
 
-	public function getApplication(): Controllers\Dispatcher
+	public function getApplication(): Controllers\Application
 	{
 		return $this->application;
 	}
 
-	public function getClient(): Entities\ConnectedClient
+	public function getClient(): Entities\Client
 	{
 		return $this->client;
 	}

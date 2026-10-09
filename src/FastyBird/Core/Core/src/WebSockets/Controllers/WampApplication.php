@@ -75,7 +75,7 @@ final class WampApplication extends Application
 	 * @throws Utils\JsonException
 	 */
 	#[Override]
-	public function handleOpen(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
+	public function handleOpen(Entities\Client $client, Handshake\Request $httpRequest): void
 	{
 		$client->addParameter('wampSession', str_replace('.', '', uniqid((string) mt_rand(), true)));
 
@@ -96,7 +96,7 @@ final class WampApplication extends Application
 	 * @throws WebSocketsExceptions\Storage
 	 */
 	#[Override]
-	public function handleClose(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
+	public function handleClose(Entities\Client $client, Handshake\Request $httpRequest): void
 	{
 		parent::handleClose($client, $httpRequest);
 
@@ -112,7 +112,7 @@ final class WampApplication extends Application
 	 */
 	#[Override]
 	public function handleMessage(
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Handshake\Request $httpRequest,
 		string $message,
 	): void
@@ -307,7 +307,7 @@ final class WampApplication extends Application
 	/**
 	 * @throws WebSocketsExceptions\Storage
 	 */
-	private function cleanTopic(EntitiesTopics\Topic $topic, Entities\ConnectedClient $client): void
+	private function cleanTopic(EntitiesTopics\Topic $topic, Entities\Client $client): void
 	{
 		$subscribedTopics = $client->getParameter('subscribedTopics', new SplObjectStorage());
 

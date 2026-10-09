@@ -19,7 +19,7 @@ use Doctrine\Common;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Core\Persistence\Providers;
+use FastyBird\Core\Persistence\Utilities;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
@@ -43,7 +43,7 @@ final class EmailEntity implements Common\EventSubscriber
 
 	public function __construct(
 		private readonly Models\Entities\Emails\EmailsRepository $emailsRepository,
-		private readonly Providers\DateProvider $dateProvider,
+		private readonly Utilities\DateTimeProvider $dateProvider,
 	)
 	{
 	}

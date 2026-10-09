@@ -93,8 +93,8 @@ class RFC6455
 	 * @throws UnderflowException
 	 */
 	public function handleMessage(
-		Entities\ConnectedClient $client,
-		Controllers\Dispatcher $application,
+		Entities\Client $client,
+		Controllers\Application $application,
 		string $data = '',
 	): void
 	{
@@ -237,7 +237,7 @@ class RFC6455
 		}
 	}
 
-	public function send(Entities\ConnectedClient $client, $payload): void
+	public function send(Entities\Client $client, $payload): void
 	{
 		if (!$client->getWebSocket()->closing) {
 			if (!$payload instanceof FrameData) {
@@ -248,7 +248,7 @@ class RFC6455
 		}
 	}
 
-	public function close(Entities\ConnectedClient $client, int|null $code = null): void
+	public function close(Entities\Client $client, int|null $code = null): void
 	{
 		if ($client->getWebSocket()->closing) {
 			return;

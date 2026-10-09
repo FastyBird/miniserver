@@ -196,7 +196,7 @@ final class PoweredByTest extends BaseTestCase
 		Entities\WebSocket $webSocket,
 		Handshake\Request $request,
 		bool $headersReceived = true,
-	): Entities\ConnectedClient&MockObject
+	): Entities\Client&MockObject
 	{
 		$connection = $this->createMock(Socket\ConnectionInterface::class);
 		$connection->method('write')
@@ -206,7 +206,7 @@ final class PoweredByTest extends BaseTestCase
 				return true;
 			});
 
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method('getId')
 			->willReturn(634);
 		$client->method(PropertyHook::get('httpHeadersReceived'))

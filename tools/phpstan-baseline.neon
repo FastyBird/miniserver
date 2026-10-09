@@ -3037,13 +3037,13 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
 
 		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Clients\\Drivers\\InMemory\:\:fetch\(\) should return bool\|FastyBird\\Core\\WebSockets\\Entities\\ConnectedClient but returns mixed\.$#'
+			message: '#^Method FastyBird\\Core\\WebSockets\\Clients\\Drivers\\InMemory\:\:fetch\(\) should return bool\|FastyBird\\Core\\WebSockets\\Entities\\Client but returns mixed\.$#'
 			identifier: return.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/Drivers/InMemory.php
 
 		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Clients\\Drivers\\InMemory\:\:fetchAll\(\) should return array\<FastyBird\\Core\\WebSockets\\Entities\\ConnectedClient\> but returns list\.$#'
+			message: '#^Method FastyBird\\Core\\WebSockets\\Clients\\Drivers\\InMemory\:\:fetchAll\(\) should return array\<FastyBird\\Core\\WebSockets\\Entities\\Client\> but returns list\.$#'
 			identifier: return.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/Drivers/InMemory.php
@@ -3067,7 +3067,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/Storage.php
 
 		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Clients\\Storage\:\:getClient\(\) should return FastyBird\\Core\\WebSockets\\Entities\\ConnectedClient but returns FastyBird\\Core\\WebSockets\\Entities\\ConnectedClient\|true\.$#'
+			message: '#^Method FastyBird\\Core\\WebSockets\\Clients\\Storage\:\:getClient\(\) should return FastyBird\\Core\\WebSockets\\Entities\\Client but returns FastyBird\\Core\\WebSockets\\Entities\\Client\|true\.$#'
 			identifier: return.type
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/Storage.php
@@ -3085,7 +3085,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/Storage.php
 
 		-
-			message: '#^PHPDoc tag @return with type array\<FastyBird\\Core\\WebSockets\\Entities\\ConnectedClient\>\|ArrayIterator is not subtype of native type ArrayIterator\.$#'
+			message: '#^PHPDoc tag @return with type array\<FastyBird\\Core\\WebSockets\\Entities\\Client\>\|ArrayIterator is not subtype of native type ArrayIterator\.$#'
 			identifier: return.phpDocType
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Clients/Storage.php
@@ -3449,12 +3449,6 @@ parameters:
 			identifier: argument.templateType
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/ControllerFactory.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Controllers\\Dispatcher\:\:getSubProtocols\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/Dispatcher.php
 
 		-
 			message: '#^Call to an undefined method ReflectionType\:\:getName\(\)\.$#'
@@ -5912,7 +5906,7 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Server/Wrapper.php
 
 		-
-			message: '#^Result of method FastyBird\\Core\\WebSockets\\Controllers\\Dispatcher\:\:handleOpen\(\) \(void\) is used\.$#'
+			message: '#^Result of method FastyBird\\Core\\WebSockets\\Controllers\\Application\:\:handleOpen\(\) \(void\) is used\.$#'
 			identifier: method.void
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Server/Wrapper.php

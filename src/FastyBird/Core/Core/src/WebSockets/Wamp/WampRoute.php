@@ -317,7 +317,7 @@ final class WampRoute implements WampRouter
 	 * Constructs absolute URL from Request object
 	 */
 	#[Override]
-	public function constructUrl(Controllers\DispatchRequest $appRequest): string|null
+	public function constructUrl(Controllers\Request $appRequest): string|null
 	{
 		$params = $appRequest->parameters;
 		$metadata = $this->metadata;

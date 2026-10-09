@@ -110,7 +110,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	 * @throws CoreExceptions\InvalidArgument
 	 */
 	public function checkSecurity(
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Handshake\Request $httpRequest,
 		array $allowedWsKeys,
 		array $allowedOrigins,
@@ -243,7 +243,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	/**
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	private function closeSession(Entities\ConnectedClient $client): void
+	private function closeSession(Entities\Client $client): void
 	{
 		$client->setIdentity(null);
 

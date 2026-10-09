@@ -88,7 +88,7 @@ final class FlashWrapper implements ServerWrapper
 	}
 
 	#[Override]
-	public function handleOpen(Entities\ConnectedClient $client): void
+	public function handleOpen(Entities\Client $client): void
 	{
 		// The Flash policy file is served entirely from handleMessage()
 	}
@@ -99,7 +99,7 @@ final class FlashWrapper implements ServerWrapper
 	 * @throws TypeError
 	 */
 	#[Override]
-	public function handleMessage(Entities\ConnectedClient $client, string $message): void
+	public function handleMessage(Entities\Client $client, string $message): void
 	{
 		if (!$this->cacheValid) {
 			$this->cache = $this->renderPolicy()->asXML();
@@ -111,13 +111,13 @@ final class FlashWrapper implements ServerWrapper
 	}
 
 	#[Override]
-	public function handleClose(Entities\ConnectedClient $client): void
+	public function handleClose(Entities\Client $client): void
 	{
 		// The connection is already closed by handleMessage() after the policy is sent
 	}
 
 	#[Override]
-	public function handleError(Entities\ConnectedClient $client, Throwable $ex): void
+	public function handleError(Entities\Client $client, Throwable $ex): void
 	{
 		$client->getConnection()->end();
 	}

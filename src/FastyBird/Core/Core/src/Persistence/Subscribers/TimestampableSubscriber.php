@@ -11,7 +11,7 @@ use Doctrine\ORM;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\Mapping\Driver;
-use FastyBird\Core\Persistence\Providers;
+use FastyBird\Core\Persistence\Utilities;
 use Override;
 use Psr\Cache\InvalidArgumentException;
 use ValueError;
@@ -35,7 +35,7 @@ final readonly class TimestampableSubscriber implements Common\EventSubscriber
 
 	public function __construct(
 		private readonly Driver\Timestampable $driver,
-		private readonly Providers\DateProvider|null $dateProvider = null,
+		private readonly Utilities\DateTimeProvider|null $dateProvider = null,
 	)
 	{
 	}

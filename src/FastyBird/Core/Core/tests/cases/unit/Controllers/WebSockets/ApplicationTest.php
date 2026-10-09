@@ -56,7 +56,7 @@ final class ApplicationTest extends TestCase
 	public function testOnOpenFiresRegisteredHandlerWithApplicationClientAndRequest(): void
 	{
 		$application = $this->createApplication();
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method('getId')
 			->willReturn(1);
 		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
@@ -77,7 +77,7 @@ final class ApplicationTest extends TestCase
 	public function testOnCloseFiresRegisteredHandlerWithApplicationClientAndRequest(): void
 	{
 		$application = $this->createApplication();
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method('getId')
 			->willReturn(1);
 		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
@@ -98,7 +98,7 @@ final class ApplicationTest extends TestCase
 	public function testOnMessageFiresRegisteredHandlerWithApplicationClientRequestAndMessage(): void
 	{
 		$application = $this->createApplication();
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
 		$received = [];
@@ -120,7 +120,7 @@ final class ApplicationTest extends TestCase
 	public function testOnErrorFiresRegisteredHandlerWithApplicationClientRequestAndException(): void
 	{
 		$application = $this->createApplication();
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->expects(self::once())
 			->method('close');
 		$httpRequest = new Handshake\Request(new Http\UrlScript('ws://localhost/'));

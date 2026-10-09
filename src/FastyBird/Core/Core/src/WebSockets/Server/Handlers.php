@@ -24,7 +24,7 @@ final class Handlers
 		Wrapper $application,
 		private FlashWrapper $flashApplication,
 		private Clients\Storage $clientStorage,
-		private Clients\ClientProvider $clientFactory,
+		private Clients\WampClientFactory $clientFactory,
 		Log\LoggerInterface|null $logger = null,
 	)
 	{

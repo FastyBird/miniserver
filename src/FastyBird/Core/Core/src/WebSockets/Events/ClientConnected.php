@@ -14,13 +14,13 @@ final class ClientConnected extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private readonly Entities\ConnectedClient $client,
+		private readonly Entities\Client $client,
 		private readonly Handshake\Request $httpRequest,
 	)
 	{
 	}
 
-	public function getClient(): Entities\ConnectedClient
+	public function getClient(): Entities\Client
 	{
 		return $this->client;
 	}

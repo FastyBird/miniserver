@@ -72,7 +72,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 * @param Topics\Topic<mixed> $topic
 	 */
 	public function actionSubscribe(
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Topics\Topic $topic,
 	): void
 	{
@@ -129,7 +129,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 */
 	public function actionCall(
 		array $args,
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Topics\Topic $topic,
 	): void
 	{
@@ -189,7 +189,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 * @throws Utils\JsonException
 	 */
 	private function handleDataSourceAction(
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Topics\Topic $topic,
 		UiDocuments\Widgets\DataSources\Actions\Action $entity,
 	): void

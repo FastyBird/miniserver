@@ -182,8 +182,8 @@ final class EventOrderTest extends BaseTestCase
 		$protocol->method('handleMessage')
 			->willReturnCallback(
 				static function (
-					Entities\ConnectedClient $client,
-					Controllers\Dispatcher $application,
+					Entities\Client $client,
+					Controllers\Application $application,
 					string $message,
 				): void {
 					$application->handleMessage($client, $client->getRequest(), $message);
@@ -314,11 +314,11 @@ final class EventOrderTest extends BaseTestCase
 	/**
 	 * A client whose HTTP headers are already received, with one request and one connection.
 	 */
-	private function client(Entities\WebSocket $webSocket): Entities\ConnectedClient&MockObject
+	private function client(Entities\WebSocket $webSocket): Entities\Client&MockObject
 	{
 		$request = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method('getId')
 			->willReturn(634);
 		$client->method(PropertyHook::get('httpHeadersReceived'))

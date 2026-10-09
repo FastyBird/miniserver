@@ -28,7 +28,7 @@ final readonly class LinkChecker implements Checker
 	public function __construct(
 		private readonly Application\IPresenterFactory $presenterFactory,
 		private readonly Application\Application $application,
-		private readonly CheckRequirements $requirementsChecker,
+		private readonly AnnotationChecker $requirementsChecker,
 	)
 	{
 	}

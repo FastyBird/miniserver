@@ -38,7 +38,7 @@ final class WrapperTest extends TestCase
 	{
 		$requestMock = new Handshake\Request(new Http\UrlScript('ws://localhost/'));
 
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method(PropertyHook::get('httpHeadersReceived'))
 			->willReturn(true);
 		$client->method('getRequest')
@@ -46,7 +46,7 @@ final class WrapperTest extends TestCase
 		$client->method('getId')
 			->willReturn(1);
 
-		$application = $this->createMock(Controllers\Dispatcher::class);
+		$application = $this->createMock(Controllers\Application::class);
 		$clientsStorage = new Clients\Storage();
 		$clientsStorage->setStorageDriver(new Clients\Drivers\InMemory());
 		$clientsStorage->addClient(1, $client);
@@ -81,7 +81,7 @@ final class WrapperTest extends TestCase
 		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method(PropertyHook::get('httpHeadersReceived'))
 			->willReturn(true);
 		$client->method('getWebSocket')
@@ -89,7 +89,7 @@ final class WrapperTest extends TestCase
 		$client->method('getRequest')
 			->willReturn($requestMock);
 
-		$application = $this->createMock(Controllers\Dispatcher::class);
+		$application = $this->createMock(Controllers\Application::class);
 		$clientsStorage = new Clients\Storage();
 
 		$dispatcher = new EventDispatcher\EventDispatcher();
@@ -114,7 +114,7 @@ final class WrapperTest extends TestCase
 		$protocol = $this->createMock(Encoding\RFC6455::class);
 		$webSocket = new Entities\WebSocket(true, false, $protocol);
 
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method(PropertyHook::get('httpHeadersReceived'))
 			->willReturn(true);
 		$client->method('getWebSocket')
@@ -122,7 +122,7 @@ final class WrapperTest extends TestCase
 		$client->method('getRequest')
 			->willReturn($requestMock);
 
-		$application = $this->createMock(Controllers\Dispatcher::class);
+		$application = $this->createMock(Controllers\Application::class);
 		$clientsStorage = new Clients\Storage();
 
 		$dispatcher = new EventDispatcher\EventDispatcher();
@@ -166,7 +166,7 @@ final class WrapperTest extends TestCase
 
 		$connection = $this->createMock(Socket\ConnectionInterface::class);
 
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method(PropertyHook::get('httpHeadersReceived'))
 			->willReturn(true);
 		$client->method('getWebSocket')
@@ -176,7 +176,7 @@ final class WrapperTest extends TestCase
 		$client->method('getConnection')
 			->willReturn($connection);
 
-		$application = $this->createMock(Controllers\Dispatcher::class);
+		$application = $this->createMock(Controllers\Application::class);
 		$application->expects(self::once())
 			->method('handleOpen')
 			->with($client, $requestMock);

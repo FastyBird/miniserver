@@ -20,7 +20,7 @@ use function sprintf;
 /**
  * A topic/channel containing connections that have subscribed to it
  *
- * @implements IteratorAggregate<int, Entities\ConnectedClient>
+ * @implements IteratorAggregate<int, Entities\Client>
  */
 final class Topic implements IteratorAggregate, Countable
 {
@@ -34,7 +34,7 @@ final class Topic implements IteratorAggregate, Countable
 
 	private string $id;
 
-	/** @var SplObjectStorage<Entities\ConnectedClient, mixed> */
+	/** @var SplObjectStorage<Entities\Client, mixed> */
 	private SplObjectStorage $subscribers;
 
 	/**
@@ -91,17 +91,17 @@ final class Topic implements IteratorAggregate, Countable
 		}
 	}
 
-	public function has(Entities\ConnectedClient $client): bool
+	public function has(Entities\Client $client): bool
 	{
 		return $this->subscribers->offsetExists($client);
 	}
 
-	public function add(Entities\ConnectedClient $client): void
+	public function add(Entities\Client $client): void
 	{
 		$this->subscribers->offsetSet($client);
 	}
 
-	public function remove(Entities\ConnectedClient $client): void
+	public function remove(Entities\Client $client): void
 	{
 		if ($this->subscribers->offsetExists($client)) {
 			$this->subscribers->offsetUnset($client);

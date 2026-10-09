@@ -32,7 +32,7 @@ use const PREG_SPLIT_NO_EMPTY;
 /**
  * Presenter & component annotation access checker
  */
-final readonly class AnnotationChecker implements Checker, CheckRequirements
+final readonly class AnnotationChecker implements Checker
 {
 
 	public function __construct(private readonly Identity\User $user)

@@ -58,7 +58,7 @@ final class RouteList extends Utils\ArrayList implements WampRouter
 	 * Constructs absolute URL from Request object
 	 */
 	#[Override]
-	public function constructUrl(Controllers\DispatchRequest $appRequest): string|null
+	public function constructUrl(Controllers\Request $appRequest): string|null
 	{
 		if ($this->cachedRoutes === null) {
 			$this->warmupCache();
