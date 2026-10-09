@@ -419,7 +419,7 @@ transitive and exclude `tests/`. None of them is kept for K4.
 | `Exchange\Consumers\Consumer` | K1, K2, K3 | 16 implementers, 15 outside Core: the 10 connectors' `Writers\Exchange`, 3 in Devices, 1 in Ui, 1 in DevicesModuleUiModule. `findByType()` at `ExchangeExtension.php:71` registers them on `Consumers\Container`. |
 | `Exchange\Publisher\MessagePublisher` | K1, K2, K3 | `Publisher\Container`, RabbitMq's and RedisDb's `Publishers\Publisher`. `findByType()` at `ExchangeExtension.php:98`. |
 | `Exchange\Publisher\Async\MessagePublisher` | K1, K2, K3 | `Async\Container`, RedisDb's `Publishers\Async\Publisher`. `findByType()` at `ExchangeExtension.php:117`. |
-| `Exchange\Factory` | K1, K2, K3 | RabbitMq's `Channels\Factory`, RedisDb's `Exchange\Factory`; none in Core. `findByType()` at `WebSocketsExtension.php:321` and `DevicesExtension.php:971,980`. |
+| `Exchange\Factory` | K1, K2, K3 | RabbitMq's `Channels\Factory`, RedisDb's `Exchange\Factory`; none in Core. `findByType()` at `WebSocketsExtension.php:312` and `DevicesExtension.php:971,980`. |
 | `Http\Routing\Handlers\Handler` | K1 | `RequestHandler`, `RequestResponseHandler`. |
 | `Persistence\Crud\CrudFactory` | K3 | `setImplement()` at `PersistenceExtension.php:112`; Nette generates the only implementation. |
 | `Persistence\Crud\Create\EntityCreatorFactory` | K3 | `setImplement()` at `PersistenceExtension.php:94`. |
@@ -436,30 +436,15 @@ transitive and exclude `tests/`. None of them is kept for K4.
 | `Values\Transformers\Transformer` | K1 | `HsbTransformer`, `HsiTransformer`, `MiredTransformer`, `RgbTransformer`. |
 | `Values\Types\Payloads\Payload` | K1 | The enums `Button`, `Cover`, `Switcher`. An enum cannot extend a class, so this is their only common type. |
 | `Values\Types\Sources\Source` | K1 | The enums `Addon`, `Automator`, `Bridge`, `Connector`, `Module`, `Plugin`. |
-| `WebSockets\Clients\ClientProvider` | K1 | `ClientFactory`, `WampClientFactory`. `WebSocketsExtension.php:129` registers `ClientFactory` and `:232` removes it again, so only `WampClientFactory` reaches a compiled container. |
-| `WebSockets\Clients\Drivers\Driver` | K3 | Selected by `fbCore > webSockets > storage > clients > driver` (`WebSocketsExtension.php:137`). Production implementer: `InMemory`. |
-| `WebSockets\Topics\Drivers\Driver` | K3 | Selected by `fbCore > webSockets > storage > topics > driver` (`WebSocketsExtension.php:214`). Production implementer: `InMemory`. |
-| `WebSockets\Controllers\RequestController` | K3 | `findByType()` at `WebSocketsExtension.php:307` tags every implementer with `CONTROLLER_TAG`, which `ControllerFactory` reads. The implementers are the abstract `Controller` and its subclasses, Devices' and Ui's `ExchangeV1` (R1: not K1 or K2). |
+| `WebSockets\Clients\Drivers\Driver` | K3 | Selected by `fbCore > webSockets > storage > clients > driver` (`WebSocketsExtension.php:132`). Production implementer: `InMemory`. |
+| `WebSockets\Topics\Drivers\Driver` | K3 | Selected by `fbCore > webSockets > storage > topics > driver` (`WebSocketsExtension.php:209`). Production implementer: `InMemory`. |
+| `WebSockets\Controllers\RequestController` | K3 | `findByType()` at `WebSocketsExtension.php:298` tags every implementer with `CONTROLLER_TAG`, which `ControllerFactory` reads. The implementers are the abstract `Controller` and its subclasses, Devices' and Ui's `ExchangeV1` (R1: not K1 or K2). |
 | `WebSockets\Controllers\Responses\ControllerResponse` | K1 | `ErrorResponse`, `MessageResponse`, `NullResponse`. |
 | `WebSockets\Encoding\FrameData` | K1 | `RFC6455\Frame`, `RFC6455\Message`. |
 | `WebSockets\Server\ServerWrapper` | K1 | `Wrapper`, `FlashWrapper`. |
-| `WebSockets\Wamp\WampRouter` | K1 | `RouteList`, `WampRoute`. The service `fbCore.webSockets.routing.router` has this type (`WebSocketsExtension.php:152`). |
+| `WebSockets\Wamp\WampRouter` | K1 | `RouteList`, `WampRoute`. The service `fbCore.webSockets.routing.router` has this type (`WebSocketsExtension.php:147`). |
 
-#### No K reason found
-
-These interfaces meet none of K1–K4. They are reported on #645 for a decision and stay until it
-is made.
-
-| Interface (FQCN under `FastyBird\Core\`) | Evidence |
-|---|---|
-| `Http\ResponseAttributes` | No implementer. It holds two constants; only `ATTR_ENTITY` is read (`ServerResponse.php:32,63`). |
-| `Persistence\Providers\DateProvider` | One implementer, `Persistence\Utilities\DateTimeProvider`, registered unconditionally (`PersistenceExtension.php:79`). Consumers: `TimestampableSubscriber`, Accounts' `Subscribers\EmailEntity`. |
-| `Security\Access\CheckRequirements` | One implementer, `AnnotationChecker`. Consumer: `LinkChecker`. |
-| `WebSockets\Controllers\DispatchRequest` | One implementer, `Controllers\Request`. |
-| `WebSockets\Controllers\Dispatcher` | Implementers: the abstract `Application` and its subclass `WampApplication`, so one under R1. `Server\Wrapper` and `Encoding\RFC6455` take it; it is autowired to `fbCore.webSockets.wamp.application`. |
-| `WebSockets\Entities\ConnectedClient` | Implementers: `Client` and its subclass `WampClient`, so one under R1. |
-
-A new interface in Core needs a row in the first table, with its reason, in the PR that adds it.
+A new interface in Core needs a row in this table, with its reason, in the PR that adds it.
 
 ## Code
 
@@ -483,9 +468,11 @@ A new interface in Core needs a row in the first table, with its reason, in the 
     `HttpNotFound` and `HttpMethodNotAllowed` redeclare as `public protected(set)`). A
     `private(set)` property is implicitly final, so no subclass can redeclare it.
   - **An interface property with hooks** when an interface declares the accessor:
-    `public string $controllerName { get; set; }` on `WebSockets\Controllers\DispatchRequest`.
-    The implementing class satisfies it with a plain public property. A PHPUnit double of the
-    interface stubs it with `->method(PropertyHook::get('controllerName'))`.
+    `public string $name { get; set; }`. The implementing class satisfies it with a plain public
+    property. A PHPUnit double of the interface stubs it with
+    `->method(PropertyHook::get('name'))`; a double of a class with a plain public property
+    assigns it instead. No Core interface declares one since #678 collapsed
+    `WebSockets\Controllers\DispatchRequest` and `WebSockets\Entities\ConnectedClient`.
   - **PHP_CodeSniffer 3 does not tokenize property hooks** (#673). Each interface property
     carries exactly this line directly above it, and nothing broader (no `phpcs:disable`):
     `// phpcs:ignore Internal.ParseError.InterfaceHasMemberVar, Generic.Formatting.DisallowMultipleStatements.SameLine -- PHP_CodeSniffer 3 does not tokenize property hooks`.
