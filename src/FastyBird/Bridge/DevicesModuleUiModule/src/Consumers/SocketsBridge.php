@@ -81,6 +81,15 @@ final class SocketsBridge implements Consumers\Consumer
 		CoreDocuments\Document|null $document,
 	): void
 	{
+		// A document with the Devices source is a command (a WAMP SET or an API write) addressed to
+		// its target, not a report: the state it writes is not pushed to the widgets, which see the
+		// result when the target reports it, under its own source. The connection state and the
+		// validity resets are reported under the connector's source for this reason. Same rule as
+		// the Devices bridge.
+		if ($source === Sources\Module::DEVICES) {
+			return;
+		}
+
 		if (
 			!in_array($routingKey, self::CONSUMER_ROUTING_KEYS, true)
 			|| (

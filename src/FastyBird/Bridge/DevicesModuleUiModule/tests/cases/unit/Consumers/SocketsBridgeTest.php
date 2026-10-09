@@ -144,7 +144,8 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 
 	/**
 	 * A channel property's state reaches the Ui subscribers as the state of the widget data source
-	 * reading it (fixture data source 32dd50e4-..., reading channel property bbcccf8c-...).
+	 * reading it (fixture data source 32dd50e4-..., reading channel property bbcccf8c-...), when a
+	 * connector reports it. SocketsBridgeCommandTest has the state a SET writes, which does not.
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DevicesModuleUiModuleExceptions\InvalidArgument
@@ -173,7 +174,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 		);
 
 		$bridge->consume(
-			Sources\Module::DEVICES,
+			Sources\Connector::VIRTUAL,
 			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
 			$this->channelPropertyState(
 				'bbcccf8c-33ab-431b-a795-d7bb38b6b6db',

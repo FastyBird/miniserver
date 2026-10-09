@@ -1,0 +1,13 @@
+#
+# A property state is written and published by this process, as the ws-server does with the
+# exchange off (the shipped value), and not carried on as an action document. The device of the
+# fixtures is read as a document, which takes the dummy device document's mapping.
+#
+
+fbDevicesModule:
+    exchange: false
+
+fbCore:
+    documents:
+        mapping:
+            FastyBird\Bridge\DevicesModuleUiModule\Tests\Fixtures\Dummy: %appDir%/fixtures/dummy
