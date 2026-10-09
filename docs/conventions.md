@@ -406,3 +406,20 @@ collide with the concrete class of the same name, so each interface needs a role
   **Active for `src/FastyBird/Core/Core` only** — the other 28 packages are excluded in
   `tools/phpcs.xml` until E7 types their remaining 1,419 constants across 563 files.
 - Constructor property promotion, enforced by `SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion`.
+- **A get/set pair is a property, not two methods** (E5.12, #644). Where a getter only returns
+  a property and a setter only assigns it, declare the property and drop both methods. Kept by
+  review, not by a gate:
+  - **A typed public property** when other classes write it (`EventLoop\Status::$running`,
+    `Http\Routing\Router::$basePath`).
+  - **Asymmetric visibility** when only the class writes it, or nothing does:
+    `public private(set)` (`Phone\Entities\Phone::$extension`, written by `fromNumber()`), or
+    `public protected(set)` when a subclass writes it or redeclares its default
+    (`Persistence\Crud\CrudManager::$flush`). A `private(set)` property is implicitly final, so
+    no subclass can redeclare it.
+  - **An interface property with hooks** when an interface declares the accessor:
+    `public string $controllerName { get; set; }` on `WebSockets\Controllers\DispatchRequest`.
+    The implementing class satisfies it with a plain public property. A PHPUnit double of the
+    interface stubs it with `->method(PropertyHook::get('controllerName'))`.
+  - **A method** when the accessor does more than read or write the property, and always for
+    Doctrine entities and their traits (hydration bypasses hooks), orisai `MappedObject`s, fluent
+    setters and builders (`Http\Routing\Route::setName()`), and getters without a setter.

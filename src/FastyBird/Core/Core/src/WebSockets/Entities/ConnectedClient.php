@@ -14,17 +14,15 @@ use React\Socket;
 interface ConnectedClient
 {
 
+	// phpcs:ignore Internal.ParseError.InterfaceHasMemberVar, Generic.Formatting.DisallowMultipleStatements.SameLine -- PHP_CodeSniffer 3 does not tokenize property hooks
+	public bool $httpHeadersReceived { get; set; }
+
+	// phpcs:ignore Internal.ParseError.InterfaceHasMemberVar, Generic.Formatting.DisallowMultipleStatements.SameLine -- PHP_CodeSniffer 3 does not tokenize property hooks
+	public string $httpBuffer { get; set; }
+
 	public function getId(): int;
 
 	public function getConnection(): Socket\ConnectionInterface;
-
-	public function setHttpHeadersReceived(bool $state): void;
-
-	public function isHttpHeadersReceived(): bool;
-
-	public function setHttpBuffer(string $buffer): void;
-
-	public function getHttpBuffer(): string;
 
 	public function setRequest(Handshake\Request $httpRequest): void;
 

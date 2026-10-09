@@ -49,7 +49,10 @@ final class AttributeDriver implements MappingDriver
 	/** @var array<int, string> */
 	private array $excludePaths = [];
 
-	private string $fileExtension = '.php';
+	/**
+	 * The file extension used to look for mapping files under
+	 */
+	public private(set) string $fileExtension = '.php';
 
 	/** @var AttributeReader<Documents\Mapping\MappingAttribute> */
 	private AttributeReader $reader;
@@ -100,22 +103,6 @@ final class AttributeDriver implements MappingDriver
 	public function getExcludePaths(): array
 	{
 		return $this->excludePaths;
-	}
-
-	/**
-	 * Gets the file extension used to look for mapping files under.
-	 */
-	public function getFileExtension(): string
-	{
-		return $this->fileExtension;
-	}
-
-	/**
-	 * Sets the file extension used to look for mapping files under.
-	 */
-	public function setFileExtension(string $fileExtension): void
-	{
-		$this->fileExtension = $fileExtension;
 	}
 
 	/**

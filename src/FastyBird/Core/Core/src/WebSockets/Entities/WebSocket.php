@@ -14,31 +14,11 @@ final class WebSocket
 	private RFC6455\Frame|null $frame = null;
 
 	public function __construct(
-		private bool $established,
-		private bool $closing,
+		public bool $established,
+		public bool $closing,
 		private Encoding\RFC6455 $protocol,
 	)
 	{
-	}
-
-	public function setEstablished(bool $state): void
-	{
-		$this->established = $state;
-	}
-
-	public function isEstablished(): bool
-	{
-		return $this->established;
-	}
-
-	public function setClosing(bool $state): void
-	{
-		$this->closing = $state;
-	}
-
-	public function isClosing(): bool
-	{
-		return $this->closing;
 	}
 
 	public function getProtocol(): Encoding\RFC6455

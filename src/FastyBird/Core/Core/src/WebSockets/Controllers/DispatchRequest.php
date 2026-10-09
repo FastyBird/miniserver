@@ -9,24 +9,18 @@ interface DispatchRequest
 {
 
 	/**
-	 * Sets the controller name
+	 * The controller name
 	 */
-	public function setControllerName(string $name): void;
+	// phpcs:ignore Internal.ParseError.InterfaceHasMemberVar, Generic.Formatting.DisallowMultipleStatements.SameLine -- PHP_CodeSniffer 3 does not tokenize property hooks
+	public string $controllerName { get; set; }
 
 	/**
-	 * Retrieve the controller name
+	 * Variables provided to the controller (usually via URL)
+	 *
+	 * @var array<mixed>
 	 */
-	public function getControllerName(): string;
-
-	/**
-	 * Sets variables provided to the controller
-	 */
-	public function setParameters(array $params): void;
-
-	/**
-	 * Returns all variables provided to the controller (usually via URL)
-	 */
-	public function getParameters(): array;
+	// phpcs:ignore Internal.ParseError.InterfaceHasMemberVar, Generic.Formatting.DisallowMultipleStatements.SameLine -- PHP_CodeSniffer 3 does not tokenize property hooks
+	public array $parameters { get; set; }
 
 	/**
 	 * Returns a parameter provided to the controller

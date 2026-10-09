@@ -37,17 +37,17 @@ final class Phone
 	/**
 	 * The extension
 	 */
-	protected string|null $extension = null;
+	public private(set) string|null $extension = null;
 
 	/**
 	 * Whether this phone number uses an italian leading zero
 	 */
-	protected bool $italianLeadingZero = false;
+	public private(set) bool $italianLeadingZero = false;
 
 	/**
 	 * The number of leading zeros of this phone number
 	 */
-	protected int|null $numberOfLeadingZeros;
+	public private(set) int|null $numberOfLeadingZeros;
 
 	/**
 	 * The raw input
@@ -79,7 +79,7 @@ final class Phone
 	 *
 	 * @var array<string>
 	 */
-	protected array $timeZones = [];
+	public private(set) array $timeZones = [];
 
 	public function __construct(
 		string $rawInput,
@@ -237,16 +237,19 @@ final class Phone
 			$carrierMapper->getNameForNumber($parsed, 'en'),
 		);
 
-		$entity->setItalianLeadingZero($parsed->hasItalianLeadingZero());
+		$entity->italianLeadingZero = $parsed->hasItalianLeadingZero();
 
-		$entity->setTimeZones($timeZonesMapper->getTimeZonesForNumber($parsed));
+		/** @var array<string> $timeZones */
+		$timeZones = $timeZonesMapper->getTimeZonesForNumber($parsed);
+
+		$entity->timeZones = $timeZones;
 
 		if ($parsed->hasExtension() && $parsed->getExtension() !== null) {
-			$entity->setExtension($parsed->getExtension());
+			$entity->extension = $parsed->getExtension();
 		}
 
 		if ($parsed->hasNumberOfLeadingZeros()) {
-			$entity->setNumberOfLeadingZeros($parsed->getNumberOfLeadingZeros());
+			$entity->numberOfLeadingZeros = $parsed->getNumberOfLeadingZeros();
 		}
 
 		return $entity;
@@ -265,36 +268,6 @@ final class Phone
 	public function getInternationalNumber(): string|null
 	{
 		return $this->internationalNumber;
-	}
-
-	public function setExtension(string $extension): void
-	{
-		$this->extension = $extension;
-	}
-
-	public function getExtension(): string|null
-	{
-		return $this->extension;
-	}
-
-	public function setItalianLeadingZero(bool $italianLeadingZero): void
-	{
-		$this->italianLeadingZero = $italianLeadingZero;
-	}
-
-	public function getItalianLeadingZero(): bool
-	{
-		return $this->italianLeadingZero;
-	}
-
-	public function setNumberOfLeadingZeros(int $numberOfLeadingZeros): void
-	{
-		$this->numberOfLeadingZeros = $numberOfLeadingZeros;
-	}
-
-	public function getNumberOfLeadingZeros(): int|null
-	{
-		return $this->numberOfLeadingZeros;
 	}
 
 	public function getRawOutput(): string|null
@@ -320,22 +293,6 @@ final class Phone
 	public function getCountry(): string|null
 	{
 		return $this->country;
-	}
-
-	/**
-	 * @param array<string> $timeZones
-	 */
-	public function setTimeZones(array $timeZones): void
-	{
-		$this->timeZones = $timeZones;
-	}
-
-	/**
-	 * @return array<string>
-	 */
-	public function getTimeZones(): array
-	{
-		return $this->timeZones;
 	}
 
 	public function isInTimeZone(string $timeZone): bool
