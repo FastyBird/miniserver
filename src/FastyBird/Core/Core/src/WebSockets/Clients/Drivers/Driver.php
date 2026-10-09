@@ -10,10 +10,10 @@ use FastyBird\Core\WebSockets\Entities;
 interface Driver
 {
 
-	public function fetch(int $id): Entities\ConnectedClient|bool;
+	public function fetch(int $id): Entities\Client|bool;
 
 	/**
-	 * @return array<Entities\ConnectedClient>
+	 * @return array<Entities\Client>
 	 */
 	public function fetchAll(): array;
 

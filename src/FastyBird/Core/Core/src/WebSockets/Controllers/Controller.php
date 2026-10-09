@@ -358,7 +358,7 @@ abstract class Controller implements RequestController
 	 *
 	 * @throws WebSocketsExceptions\ForbiddenRequest
 	 */
-	protected function authorize(Entities\ConnectedClient $client, string ...$roles): void
+	protected function authorize(Entities\Client $client, string ...$roles): void
 	{
 		if ($client->getIdentity() === null) {
 			throw new WebSocketsExceptions\ForbiddenRequest(

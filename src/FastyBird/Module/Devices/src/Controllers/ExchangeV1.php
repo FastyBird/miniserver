@@ -84,7 +84,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 * @param Topics\Topic<mixed> $topic
 	 */
 	public function actionSubscribe(
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Topics\Topic $topic,
 	): void
 	{
@@ -207,7 +207,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 */
 	public function actionCall(
 		array $args,
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Topics\Topic $topic,
 	): void
 	{
@@ -391,7 +391,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 * @throws WebSocketsExceptions\ForbiddenRequest
 	 */
 	private function authorizePropertyAction(
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Types\PropertyAction|null $action,
 	): void
 	{
@@ -414,7 +414,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 * @throws ValueError
 	 */
 	private function handleConnectorAction(
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Topics\Topic $topic,
 		DevicesDocuments\States\Connectors\Properties\Actions\Action $entity,
 	): void
@@ -504,7 +504,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 * @throws ValueError
 	 */
 	private function handleDeviceAction(
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Topics\Topic $topic,
 		DevicesDocuments\States\Devices\Properties\Actions\Action $entity,
 	): void
@@ -597,7 +597,7 @@ final class ExchangeV1 extends Controllers\Controller
 	 * @throws ValueError
 	 */
 	private function handleChannelAction(
-		Entities\ConnectedClient $client,
+		Entities\Client $client,
 		Topics\Topic $topic,
 		DevicesDocuments\States\Channels\Properties\Actions\Action $entity,
 	): void

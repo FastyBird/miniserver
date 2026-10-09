@@ -13,6 +13,8 @@ use function sprintf;
 final class ServerResponse extends Response
 {
 
+	public const string ATTR_ENTITY = '__entity__';
+
 	/** @var array<mixed> */
 	protected array $attributes = [];
 
@@ -29,7 +31,7 @@ final class ServerResponse extends Response
 	 */
 	public function getEntity(): Entity|null
 	{
-		$entity = $this->getAttribute(ResponseAttributes::ATTR_ENTITY, null);
+		$entity = $this->getAttribute(self::ATTR_ENTITY, null);
 
 		return $entity instanceof Entity ? $entity : null;
 	}
@@ -60,7 +62,7 @@ final class ServerResponse extends Response
 	 */
 	public function withEntity(Entity $entity): self
 	{
-		return $this->withAttribute(ResponseAttributes::ATTR_ENTITY, $entity);
+		return $this->withAttribute(self::ATTR_ENTITY, $entity);
 	}
 
 	/**

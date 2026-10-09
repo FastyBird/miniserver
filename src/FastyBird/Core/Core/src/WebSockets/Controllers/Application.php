@@ -10,7 +10,6 @@ use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Wamp;
-use Override;
 use Psr\EventDispatcher;
 use Psr\Log;
 use ReflectionException;
@@ -24,7 +23,7 @@ use function sprintf;
  * Application which run on server and provide creating controllers
  * with correctly params - convert message => control.
  */
-abstract class Application implements Dispatcher
+abstract class Application
 {
 
 	protected Log\LoggerInterface|Log\NullLogger|null $logger = null;
@@ -40,16 +39,21 @@ abstract class Application implements Dispatcher
 		$this->logger = $logger ?? new Log\NullLogger();
 	}
 
-	#[Override]
-	public function handleOpen(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
+	/**
+	 * When a new connection is opened it will be passed to this method
+	 */
+	public function handleOpen(Entities\Client $client, Handshake\Request $httpRequest): void
 	{
 		$this->logger->info(sprintf('New connection! (%s)', $client->getId()));
 
 		$this->dispatcher->dispatch(new Events\ConnectionOpened($this, $client, $httpRequest));
 	}
 
-	#[Override]
-	public function handleClose(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
+	/**
+	 * This is called before or after a socket is closed (depends on how it's closed)
+	 * SendMessage to $client will not result in an error if it has already been closed
+	 */
+	public function handleClose(Entities\Client $client, Handshake\Request $httpRequest): void
 	{
 		$this->dispatcher->dispatch(new Events\ConnectionClosed($this, $client, $httpRequest));
 
@@ -57,12 +61,12 @@ abstract class Application implements Dispatcher
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * If there is an error with one of the sockets, or somewhere in the application where an Exception is thrown,
+	 * the Exception is sent back down the stack, handled by the Server and bubbled back up the application through this method
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	#[Override]
-	public function handleError(Entities\ConnectedClient $client, Handshake\Request $httpRequest, Throwable $ex): void
+	public function handleError(Entities\Client $client, Handshake\Request $httpRequest, Throwable $ex): void
 	{
 		$this->logger->info(sprintf('An error (%s) has occurred: %s', $ex->getCode(), $ex->getMessage()));
 
@@ -78,15 +82,26 @@ abstract class Application implements Dispatcher
 		}
 	}
 
-	#[Override]
+	/**
+	 * Triggered when a client sends data through the socket
+	 */
 	public function handleMessage(
-		Entities\ConnectedClient $from,
+		Entities\Client $from,
 		Handshake\Request $httpRequest,
 		string $message,
 	): void
 	{
 		$this->dispatcher->dispatch(new Events\ApplicationMessageReceived($this, $from, $httpRequest, $message));
 	}
+
+	/**
+	 * If any component in a stack supports a WebSocket sub-protocol return each supported in an array
+	 *
+	 * @return array<string>
+	 *
+	 * @todo This method may be removed in future version (note that will not break code, just make some code obsolete)
+	 */
+	abstract public function getSubProtocols(): array;
 
 	/**
 	 * @throws WebSocketsExceptions\BadRequest
@@ -128,7 +143,7 @@ abstract class Application implements Dispatcher
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	protected function close(Entities\ConnectedClient $client, int $code = 400, array $additionalHeaders = []): void
+	protected function close(Entities\Client $client, int $code = 400, array $additionalHeaders = []): void
 	{
 		$headers = array_merge([
 			'X-Powered-By' => Server\ServerRuntime::VERSION,

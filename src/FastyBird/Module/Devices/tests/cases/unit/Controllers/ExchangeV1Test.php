@@ -501,9 +501,9 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function client(array|null $roles): Entities\ConnectedClient
+	private function client(array|null $roles): Entities\Client
 	{
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method('getId')->willReturn(1);
 		$client->method('getIdentity')->willReturn(
 			$roles !== null ? new Identity\PlainIdentity(self::USER) : null,
@@ -529,7 +529,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function call(Entities\ConnectedClient $client, array $args): array
+	private function call(Entities\Client $client, array $args): array
 	{
 		$recorder = $this->createMock(Publisher\MessagePublisher::class);
 		$recorder->method('publish')->willReturnCallback(

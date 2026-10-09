@@ -113,7 +113,7 @@ final class ClosureRouteTest extends BaseTestCase
 
 		$sent = [];
 
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method('getId')
 			->willReturn(634);
 		$client->method('getParameter')

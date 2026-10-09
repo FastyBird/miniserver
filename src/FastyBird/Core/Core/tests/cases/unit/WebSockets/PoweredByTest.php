@@ -13,7 +13,6 @@ use FastyBird\Core\WebSockets\Server;
 use FastyBird\Core\WebSockets\Subscribers;
 use Nette\DI;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\MockObject\Runtime\PropertyHook;
 use React\Socket;
 use RuntimeException;
 use Throwable;
@@ -196,7 +195,7 @@ final class PoweredByTest extends BaseTestCase
 		Entities\WebSocket $webSocket,
 		Handshake\Request $request,
 		bool $headersReceived = true,
-	): Entities\ConnectedClient&MockObject
+	): Entities\Client&MockObject
 	{
 		$connection = $this->createMock(Socket\ConnectionInterface::class);
 		$connection->method('write')
@@ -206,11 +205,10 @@ final class PoweredByTest extends BaseTestCase
 				return true;
 			});
 
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->method('getId')
 			->willReturn(634);
-		$client->method(PropertyHook::get('httpHeadersReceived'))
-			->willReturn($headersReceived);
+		$client->httpHeadersReceived = $headersReceived;
 		$client->method('getWebSocket')
 			->willReturn($webSocket);
 		$client->method('getRequest')

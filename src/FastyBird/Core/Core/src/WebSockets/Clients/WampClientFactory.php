@@ -3,17 +3,15 @@
 namespace FastyBird\Core\WebSockets\Clients;
 
 use FastyBird\Core\WebSockets\Entities;
-use Override;
 use React\Socket;
 
 /**
  * WAMP client connection factory
  */
-final class WampClientFactory implements ClientProvider
+final class WampClientFactory
 {
 
-	#[Override]
-	public function create(int $id, Socket\ConnectionInterface $connection): Entities\ConnectedClient
+	public function create(int $id, Socket\ConnectionInterface $connection): Entities\Client
 	{
 		return new Entities\WampClient($id, $connection);
 	}

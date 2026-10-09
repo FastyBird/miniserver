@@ -15,14 +15,14 @@ final class MessageReceived extends EventDispatcher\Event
 {
 
 	public function __construct(
-		private readonly Entities\ConnectedClient $client,
+		private readonly Entities\Client $client,
 		private readonly Handshake\Request $httpRequest,
 		private readonly string $message,
 	)
 	{
 	}
 
-	public function getClient(): Entities\ConnectedClient
+	public function getClient(): Entities\Client
 	{
 		return $this->client;
 	}

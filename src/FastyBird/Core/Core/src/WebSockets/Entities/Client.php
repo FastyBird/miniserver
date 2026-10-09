@@ -7,13 +7,12 @@ use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Controllers\Responses;
 use FastyBird\Core\WebSockets\Handshake;
 use Nette\Utils;
-use Override;
 use React\Socket;
 
 /**
  * Single client connection
  */
-class Client implements ConnectedClient
+class Client
 {
 
 	private Identity\UserIdentity|null $identity = null;
@@ -21,8 +20,14 @@ class Client implements ConnectedClient
 	/** @var array<string> */
 	private array $roles = [];
 
+	/**
+	 * Whether the client's HTTP handshake request has been read completely
+	 */
 	public bool $httpHeadersReceived = false;
 
+	/**
+	 * The part of the HTTP handshake request received so far
+	 */
 	public string $httpBuffer = '';
 
 	private string|null $remoteAddress = null;
@@ -40,37 +45,31 @@ class Client implements ConnectedClient
 		$this->parameters = new Utils\ArrayHash();
 	}
 
-	#[Override]
 	public function getId(): int
 	{
 		return $this->id;
 	}
 
-	#[Override]
 	public function getConnection(): Socket\ConnectionInterface
 	{
 		return $this->connection;
 	}
 
-	#[Override]
 	public function setRequest(Handshake\Request $httpRequest): void
 	{
 		$this->httpRequest = $httpRequest;
 	}
 
-	#[Override]
 	public function getRequest(): Handshake\Request
 	{
 		return clone $this->httpRequest;
 	}
 
-	#[Override]
 	public function setWebSocket(WebSocket $webSocket): void
 	{
 		$this->webSocket = $webSocket;
 	}
 
-	#[Override]
 	public function getWebSocket(): WebSocket
 	{
 		if ($this->webSocket === null) {
@@ -80,31 +79,21 @@ class Client implements ConnectedClient
 		return $this->webSocket;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	#[Override]
 	public function addParameter(string $key, $value): void
 	{
 		$this->parameters->offsetSet($key, $value);
 	}
 
-	#[Override]
 	public function getParameter(string $key, mixed $default = null): mixed
 	{
 		return $this->parameters->offsetExists($key) ? $this->parameters->offsetGet($key) : $default;
 	}
 
-	#[Override]
 	public function close(int|null $code = null): void
 	{
 		$this->webSocket->getProtocol()->close($this, $code);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	#[Override]
 	public function send($response): void
 	{
 		if ($response instanceof Responses\ControllerResponse) {
@@ -115,16 +104,17 @@ class Client implements ConnectedClient
 	}
 
 	/**
+	 * Keeps the identity the client's access token resolved to at its latest check, with the
+	 * role names the HTTP API would check for it. A failed check stores null, and no roles.
+	 *
 	 * @param array<string> $roles
 	 */
-	#[Override]
 	public function setIdentity(Identity\UserIdentity|null $identity, array $roles = []): void
 	{
 		$this->identity = $identity;
 		$this->roles = $identity !== null ? $roles : [];
 	}
 
-	#[Override]
 	public function getIdentity(): Identity\UserIdentity|null
 	{
 		return $this->identity;
@@ -133,7 +123,6 @@ class Client implements ConnectedClient
 	/**
 	 * @return array<string>
 	 */
-	#[Override]
 	public function getRoles(): array
 	{
 		return $this->roles;

@@ -14,7 +14,7 @@ use function sprintf;
 /**
  * Storage for manage all connections
  *
- * @implements IteratorAggregate<int, Entities\ConnectedClient>
+ * @implements IteratorAggregate<int, Entities\Client>
  */
 final class Storage implements IteratorAggregate
 {
@@ -43,7 +43,7 @@ final class Storage implements IteratorAggregate
 	 * @throws Exceptions\ClientNotFound
 	 * @throws Exceptions\Storage
 	 */
-	public function getClient(int $identifier): Entities\ConnectedClient
+	public function getClient(int $identifier): Entities\Client
 	{
 		try {
 			$result = $this->driver->fetch($identifier);
@@ -64,7 +64,7 @@ final class Storage implements IteratorAggregate
 	/**
 	 * @throws Exceptions\Storage
 	 */
-	public function addClient(int $identifier, Entities\ConnectedClient $client): void
+	public function addClient(int $identifier, Entities\Client $client): void
 	{
 		$this->logger->debug(sprintf('INSERT CLIENT ' . $identifier));
 
@@ -115,7 +115,7 @@ final class Storage implements IteratorAggregate
 	/**
 	 * @throws Exceptions\Storage
 	 */
-	public function refreshClient(Entities\ConnectedClient $client): void
+	public function refreshClient(Entities\Client $client): void
 	{
 		if ($this->hasClient($client->getId())) {
 			$this->driver->save($client->getId(), $client, $this->ttl);
@@ -125,7 +125,7 @@ final class Storage implements IteratorAggregate
 	}
 
 	/**
-	 * @return array<Entities\ConnectedClient>|ArrayIterator
+	 * @return array<Entities\Client>|ArrayIterator
 	 */
 	#[Override]
 	public function getIterator(): ArrayIterator

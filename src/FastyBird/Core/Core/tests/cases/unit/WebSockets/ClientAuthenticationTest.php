@@ -213,7 +213,7 @@ final class ClientAuthenticationTest extends TestCase
 		return new Identity\User(new Identity\UserStorage(), $enforcerFactory);
 	}
 
-	private static function identityOf(Entities\ConnectedClient $client): string|null
+	private static function identityOf(Entities\Client $client): string|null
 	{
 		return $client->getIdentity()?->getId()->toString();
 	}
@@ -263,7 +263,7 @@ final class ClientAuthenticationTest extends TestCase
 		$dispatcher->addListener(Events\MessageReceived::class, [$subscriber, 'incomingMessage']);
 
 		$wrapper = new Server\Wrapper(
-			$this->createMock(Controllers\Dispatcher::class),
+			$this->createMock(Controllers\Application::class),
 			new Clients\Storage(),
 			$dispatcher,
 		);
@@ -301,9 +301,9 @@ final class ClientAuthenticationTest extends TestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function acceptedClient(): Entities\ConnectedClient
+	private function acceptedClient(): Entities\Client
 	{
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->expects(self::never())->method('send');
 		$client->expects(self::never())->method('close');
 
@@ -313,9 +313,9 @@ final class ClientAuthenticationTest extends TestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function rejectedClient(): Entities\ConnectedClient
+	private function rejectedClient(): Entities\Client
 	{
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client->expects(self::once())
 			->method('send')
 			->with(self::callback(

@@ -247,7 +247,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 		/** @var ArrayObject<int, string> $sent */
 		$sent = new ArrayObject();
 
-		$client = $this->createMock(Entities\ConnectedClient::class);
+		$client = $this->createMock(Entities\Client::class);
 		$client
 			->method('send')
 			->willReturnCallback(static function (mixed $response) use ($sent): void {

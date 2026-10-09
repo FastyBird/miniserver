@@ -47,7 +47,7 @@ final class Wrapper implements ServerWrapper
 	private Handshake\RequestFactory $requestFactory;
 
 	public function __construct(
-		private Controllers\Dispatcher $application,
+		private Controllers\Application $application,
 		private Clients\Storage $clientsStorage,
 		private EventDispatcher\EventDispatcherInterface $dispatcher,
 	)
@@ -60,7 +60,7 @@ final class Wrapper implements ServerWrapper
 	}
 
 	#[Override]
-	public function handleOpen(Entities\ConnectedClient $client): void
+	public function handleOpen(Entities\Client $client): void
 	{
 		$client->httpHeadersReceived = false;
 	}
@@ -71,7 +71,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws Throwable
 	 */
 	#[Override]
-	public function handleMessage(Entities\ConnectedClient $client, string $message): void
+	public function handleMessage(Entities\Client $client, string $message): void
 	{
 		if (!$client->httpHeadersReceived) {
 			$client->httpBuffer .= $message;
@@ -108,7 +108,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws WebSocketsExceptions\Storage
 	 */
 	#[Override]
-	public function handleClose(Entities\ConnectedClient $client): void
+	public function handleClose(Entities\Client $client): void
 	{
 		if ($client->httpHeadersReceived) {
 			$this->connectionClose($client);
@@ -122,7 +122,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws TypeError
 	 */
 	#[Override]
-	public function handleError(Entities\ConnectedClient $client, Throwable $ex): void
+	public function handleError(Entities\Client $client, Throwable $ex): void
 	{
 		if ($client->httpHeadersReceived) {
 			$this->connectionError($client, $ex);
@@ -136,7 +136,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
-	private function connectionOpen(Entities\ConnectedClient $client, Handshake\Request $httpRequest): void
+	private function connectionOpen(Entities\Client $client, Handshake\Request $httpRequest): void
 	{
 		if (!$this->protocolsProxy->isProtocolEnabled($httpRequest)) {
 			$this->close($client);
@@ -163,7 +163,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws TypeError
 	 * @throws WebSocketsExceptions\Storage
 	 */
-	private function connectionClose(Entities\ConnectedClient $client): void
+	private function connectionClose(Entities\Client $client): void
 	{
 		try {
 			// Call service event
@@ -183,7 +183,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
-	public function connectionError(Entities\ConnectedClient $client, Throwable $ex): void
+	public function connectionError(Entities\Client $client, Throwable $ex): void
 	{
 		try {
 			$webSocket = $client->getWebSocket();
@@ -210,7 +210,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws TypeError
 	 * @throws UnderflowException
 	 */
-	private function connectionMessage(Entities\ConnectedClient $client, string $message): void
+	private function connectionMessage(Entities\Client $client, string $message): void
 	{
 		$webSocket = $client->getWebSocket();
 
@@ -244,7 +244,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
-	private function attemptUpgrade(Entities\ConnectedClient $client): mixed
+	private function attemptUpgrade(Entities\Client $client): mixed
 	{
 		$httpRequest = $client->getRequest();
 		assert($httpRequest instanceof Handshake\Request);
@@ -326,7 +326,7 @@ final class Wrapper implements ServerWrapper
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError
 	 */
-	private function close(Entities\ConnectedClient $client, int $code = 400, mixed $body = null): void
+	private function close(Entities\Client $client, int $code = 400, mixed $body = null): void
 	{
 		$response = new Handshake\WampResponse($code, [
 			'Sec-WebSocket-Version' => $this->protocolsProxy->getSupportedProtocols(),

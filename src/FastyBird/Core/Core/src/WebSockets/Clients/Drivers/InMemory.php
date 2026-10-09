@@ -20,7 +20,7 @@ final class InMemory implements Driver
 	}
 
 	#[Override]
-	public function fetch(int $id): Entities\ConnectedClient|bool
+	public function fetch(int $id): Entities\Client|bool
 	{
 		if (!$this->contains($id)) {
 			return false;

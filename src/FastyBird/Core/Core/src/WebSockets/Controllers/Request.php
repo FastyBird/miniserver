@@ -2,17 +2,22 @@
 
 namespace FastyBird\Core\WebSockets\Controllers;
 
-use Override;
-
 /**
  * Controller request
  */
-final class Request implements DispatchRequest
+final class Request
 {
 
+	/**
+	 * The controller name
+	 */
 	public string $controllerName;
 
-	/** @var array<mixed> */
+	/**
+	 * Variables provided to the controller (usually via URL)
+	 *
+	 * @var array<mixed>
+	 */
 	public array $parameters;
 
 	/**
@@ -25,7 +30,9 @@ final class Request implements DispatchRequest
 		$this->parameters = $params;
 	}
 
-	#[Override]
+	/**
+	 * Returns a parameter provided to the controller
+	 */
 	public function getParameter(string $key): mixed
 	{
 		return $this->parameters[$key] ?? null;

@@ -51,7 +51,7 @@ final class HandlersTest extends TestCase
 			});
 
 		$wrapper = new Server\Wrapper(
-			$this->createMock(Controllers\Dispatcher::class),
+			$this->createMock(Controllers\Application::class),
 			new Clients\Storage(),
 			new EventDispatcher\EventDispatcher(),
 		);
@@ -65,7 +65,7 @@ final class HandlersTest extends TestCase
 			$wrapper,
 			new Server\FlashWrapper(),
 			$storage,
-			$this->createMock(Clients\ClientProvider::class),
+			new Clients\WampClientFactory(),
 			$logger,
 		);
 
@@ -98,7 +98,7 @@ final class HandlersTest extends TestCase
 			});
 
 		$wrapper = new Server\Wrapper(
-			$this->createMock(Controllers\Dispatcher::class),
+			$this->createMock(Controllers\Application::class),
 			new Clients\Storage(),
 			new EventDispatcher\EventDispatcher(),
 		);
@@ -111,7 +111,7 @@ final class HandlersTest extends TestCase
 			$wrapper,
 			new Server\FlashWrapper(),
 			$storage,
-			$this->createMock(Clients\ClientProvider::class),
+			new Clients\WampClientFactory(),
 			$logger,
 		);
 

@@ -28,7 +28,7 @@ final readonly class LinkChecker implements Checker
 	public function __construct(
 		private readonly Application\IPresenterFactory $presenterFactory,
 		private readonly Application\Application $application,
-		private readonly CheckRequirements $requirementsChecker,
+		private readonly AnnotationChecker $requirementsChecker,
 	)
 	{
 	}
@@ -39,6 +39,7 @@ final readonly class LinkChecker implements Checker
 	 * @param mixed $element etc "this", ":Admin:Show:default"
 	 *
 	 * @throws Application\InvalidPresenterException
+	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 * @throws ReflectionException
 	 */

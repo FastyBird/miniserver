@@ -19,6 +19,6 @@ interface WampRouter
 	/**
 	 * Constructs absolute URL from Request object
 	 */
-	public function constructUrl(Controllers\DispatchRequest $appRequest): string|null;
+	public function constructUrl(Controllers\Request $appRequest): string|null;
 
 }

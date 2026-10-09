@@ -17,7 +17,7 @@ final class DummyClientsDriver implements Drivers\Driver
 	private array $containsCalls = [];
 
 	#[Override]
-	public function fetch(int $id): Entities\ConnectedClient|bool
+	public function fetch(int $id): Entities\Client|bool
 	{
 		return false;
 	}

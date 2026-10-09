@@ -3,27 +3,23 @@
 namespace FastyBird\Core\Persistence\Utilities;
 
 use DateTimeInterface;
-use FastyBird\Core\Persistence\Providers;
-use Override;
 use Psr\Clock\ClockInterface;
 
 /**
  * Date provider for doctrine timestampable
  */
-final readonly class DateTimeProvider implements Providers\DateProvider
+final readonly class DateTimeProvider
 {
 
 	public function __construct(private ClockInterface $clock)
 	{
 	}
 
-	#[Override]
 	public function getDate(): DateTimeInterface
 	{
 		return $this->clock->now();
 	}
 
-	#[Override]
 	public function getTimestamp(): int
 	{
 		return $this->clock->now()->getTimestamp();
