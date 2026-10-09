@@ -396,6 +396,71 @@ Core's `Http\Routing\` already shows why a name is needed rather than a mechanic
 collide with the concrete class of the same name, so each interface needs a role name instead
 — what it does, not what implements it.
 
+### Core's remaining interfaces
+
+Core keeps an interface only for one of the reasons K1–K4 of Epic #460 §3.1: K1, two or more
+production implementations; K2, an implementation outside Core; K3, a substitution point
+(configuration, a `findByType()` or tag collection, or a Nette `setImplement()` factory); K4, a
+third-party contract. Test doubles do not count, and an implementation that extends the sole
+other implementation does not count towards K1 or K2 (rule R1, E5 census X3). Every interface
+declared in `src/FastyBird/Core/Core/src` is listed below, by capability. Implementer counts are
+transitive and exclude `tests/`. None of them is kept for K4.
+
+| Interface (FQCN under `FastyBird\Core\`) | Kept for | Evidence |
+|---|---|---|
+| `Api\Exceptions\JsonApi` | K1 | `JsonApiError`, `JsonApiMultipleError`. `JsonApiMiddleware.php:57` catches by it. |
+| `Documents\Document` | K1, K2 | 158 implementers in 21 packages, none in Core (18 direct, in Accounts, Devices, Triggers and Ui). Devices and Ui extend it with their own `Document` interface. |
+| `Documents\CreatedAt` | K1, K2 | 129 implementers, all outside Core (14 direct, in Devices and Ui). |
+| `Documents\UpdatedAt` | K1, K2 | 129 implementers, all outside Core (14 direct, in Devices and Ui). |
+| `Documents\Owner` | K1, K2 | 140 implementers, all outside Core (18 direct, in Devices, Triggers and Ui). |
+| `Documents\Mapping\MappingAttribute` | K1 | 7 attribute classes (`Document`, `MappedSuperclass`, `DiscriminatorMap`, …). `AttributeReader.php:77` selects attributes by it. |
+| `Documents\Mapping\Driver\MappingDriver` | K1 | `AttributeDriver`, `MappingDriverChain`. |
+| `Exceptions\Exception` | K1 | 32 exception classes across Core's capabilities, for example `Exceptions\InvalidState` and `WebSockets\Exceptions\Storage`. |
+| `Exchange\Consumers\Consumer` | K1, K2, K3 | 16 implementers, 15 outside Core: the 10 connectors' `Writers\Exchange`, 3 in Devices, 1 in Ui, 1 in DevicesModuleUiModule. `findByType()` at `ExchangeExtension.php:71` registers them on `Consumers\Container`. |
+| `Exchange\Publisher\MessagePublisher` | K1, K2, K3 | `Publisher\Container`, RabbitMq's and RedisDb's `Publishers\Publisher`. `findByType()` at `ExchangeExtension.php:98`. |
+| `Exchange\Publisher\Async\MessagePublisher` | K1, K2, K3 | `Async\Container`, RedisDb's `Publishers\Async\Publisher`. `findByType()` at `ExchangeExtension.php:117`. |
+| `Exchange\Factory` | K1, K2, K3 | RabbitMq's `Channels\Factory`, RedisDb's `Exchange\Factory`; none in Core. `findByType()` at `WebSocketsExtension.php:321` and `DevicesExtension.php:971,980`. |
+| `Http\Routing\Handlers\Handler` | K1 | `RequestHandler`, `RequestResponseHandler`. |
+| `Persistence\Crud\CrudFactory` | K3 | `setImplement()` at `PersistenceExtension.php:112`; Nette generates the only implementation. |
+| `Persistence\Crud\Create\EntityCreatorFactory` | K3 | `setImplement()` at `PersistenceExtension.php:94`. |
+| `Persistence\Crud\Update\EntityUpdaterFactory` | K3 | `setImplement()` at `PersistenceExtension.php:100`. |
+| `Persistence\Crud\Delete\EntityDeleterFactory` | K3 | `setImplement()` at `PersistenceExtension.php:106`. |
+| `Persistence\Entities\CrudEntity` | K1, K2 | 155 implementers, 153 outside Core. In Core: `Security\Entities\Policies\Policy`, `Security\Entities\Tokens\Token`. Accounts, Devices, Triggers and Ui extend it with their own `Entity` interface. |
+| `Persistence\Entities\EntityCreated` | K1, K2 | 153 implementers, all outside Core (27 direct, in Accounts, Devices, Triggers, Ui, HomeKit and ApiKey). |
+| `Persistence\Entities\EntityUpdated` | K1, K2 | 153 implementers, all outside Core (27 direct, as `EntityCreated`). |
+| `Security\Access\Checker` | K1 | `AnnotationChecker`, `LatteChecker`, `LinkChecker`. |
+| `Security\Entities\Owner` | K1, K2 | 45 implementers, all outside Core (6 direct, in Devices, Triggers and Ui). |
+| `Security\Identity\Authenticator` | K2 | The one implementer is Accounts' `Security\Authenticator`. Core's `Identity\User` takes it. |
+| `Security\Identity\IdentityProvider` | K1, K2, K3 | Core's `Identity\IdentityFactory`, Accounts' `Security\IdentityFactory`. `fbCore > security > services > identity` (default `false`, `SecurityExtension.php:122`) registers Core's; otherwise Accounts registers its own. |
+| `Security\Identity\UserIdentity` | K1, K2 | Core's `PlainIdentity`, Accounts' `Entities\Identities\Identity`. |
+| `Values\Transformers\Transformer` | K1 | `HsbTransformer`, `HsiTransformer`, `MiredTransformer`, `RgbTransformer`. |
+| `Values\Types\Payloads\Payload` | K1 | The enums `Button`, `Cover`, `Switcher`. An enum cannot extend a class, so this is their only common type. |
+| `Values\Types\Sources\Source` | K1 | The enums `Addon`, `Automator`, `Bridge`, `Connector`, `Module`, `Plugin`. |
+| `WebSockets\Clients\ClientProvider` | K1 | `ClientFactory`, `WampClientFactory`. `WebSocketsExtension.php:129` registers `ClientFactory` and `:232` removes it again, so only `WampClientFactory` reaches a compiled container. |
+| `WebSockets\Clients\Drivers\Driver` | K3 | Selected by `fbCore > webSockets > storage > clients > driver` (`WebSocketsExtension.php:137`). Production implementer: `InMemory`. |
+| `WebSockets\Topics\Drivers\Driver` | K3 | Selected by `fbCore > webSockets > storage > topics > driver` (`WebSocketsExtension.php:214`). Production implementer: `InMemory`. |
+| `WebSockets\Controllers\RequestController` | K3 | `findByType()` at `WebSocketsExtension.php:307` tags every implementer with `CONTROLLER_TAG`, which `ControllerFactory` reads. The implementers are the abstract `Controller` and its subclasses, Devices' and Ui's `ExchangeV1` (R1: not K1 or K2). |
+| `WebSockets\Controllers\Responses\ControllerResponse` | K1 | `ErrorResponse`, `MessageResponse`, `NullResponse`. |
+| `WebSockets\Encoding\FrameData` | K1 | `RFC6455\Frame`, `RFC6455\Message`. |
+| `WebSockets\Server\ServerWrapper` | K1 | `Wrapper`, `FlashWrapper`. |
+| `WebSockets\Wamp\WampRouter` | K1 | `RouteList`, `WampRoute`. The service `fbCore.webSockets.routing.router` has this type (`WebSocketsExtension.php:152`). |
+
+#### No K reason found
+
+These interfaces meet none of K1–K4. They are reported on #645 for a decision and stay until it
+is made.
+
+| Interface (FQCN under `FastyBird\Core\`) | Evidence |
+|---|---|
+| `Http\ResponseAttributes` | No implementer. It holds two constants; only `ATTR_ENTITY` is read (`ServerResponse.php:32,63`). |
+| `Persistence\Providers\DateProvider` | One implementer, `Persistence\Utilities\DateTimeProvider`, registered unconditionally (`PersistenceExtension.php:79`). Consumers: `TimestampableSubscriber`, Accounts' `Subscribers\EmailEntity`. |
+| `Security\Access\CheckRequirements` | One implementer, `AnnotationChecker`. Consumer: `LinkChecker`. |
+| `WebSockets\Controllers\DispatchRequest` | One implementer, `Controllers\Request`. |
+| `WebSockets\Controllers\Dispatcher` | Implementers: the abstract `Application` and its subclass `WampApplication`, so one under R1. `Server\Wrapper` and `Encoding\RFC6455` take it; it is autowired to `fbCore.webSockets.wamp.application`. |
+| `WebSockets\Entities\ConnectedClient` | Implementers: `Client` and its subclass `WampClient`, so one under R1. |
+
+A new interface in Core needs a row in the first table, with its reason, in the PR that adds it.
+
 ## Code
 
 - `final` by default. Drop it only for a class that is actually extended.
