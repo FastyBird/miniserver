@@ -116,10 +116,12 @@ final class Message
 	{
 		// A message this process published is not consumed here: the process already handled it
 		// before publishing it, and handling it again would repeat that work. The identifier is
-		// one service per process, shared with the publisher. The answer is a nack, and the
-		// channel (Channels\Factory) re-queues a nacked message (#685).
+		// one service per process, shared with the publisher. The answer is an ack, so the broker
+		// drops the message. It must never be a nack: the channel (Channels\Factory) re-queues a
+		// nacked message, and the default queue is private to this process, so its own message
+		// would come straight back to it, forever (#685).
 		if ($senderId === $this->identifier->getIdentifier()) {
-			return self::MESSAGE_NACK;
+			return self::MESSAGE_ACK;
 		}
 
 		$source = $this->validateSource($source);

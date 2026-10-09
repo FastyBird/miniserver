@@ -23,6 +23,8 @@ use FastyBird\Plugin\RabbitMq\Exceptions;
 use FastyBird\Plugin\RabbitMq\Handlers;
 use Nette\Utils;
 use Psr\EventDispatcher;
+use TypeError;
+use ValueError;
 use function assert;
 
 /**
@@ -99,35 +101,45 @@ final class Factory implements Exchange\Factory
 			Exchange\Publisher\MessagePublisher::ROUTING_KEY_PREFIX . '.#',
 		);
 
-		$channel->consume(
-			function (Bunny\Message $message, Bunny\Channel $channel, Bunny\Client $client): void {
-				$result = $this->messagesHandler->handle($message);
+		$channel->consume($this->answer(...), $queueName);
+	}
 
-				switch ($result) {
-					case Handlers\Message::MESSAGE_ACK:
-						$channel->ack($message); // Acknowledge message
+	/**
+	 * The consumer callback of the queue: hands the delivered message to the handler and answers
+	 * the broker as the handler decides. A nack re-queues the message, so a handler may answer
+	 * MESSAGE_NACK only for a message that another consumer can take. A message the process
+	 * published itself is acknowledged, not nacked (#685).
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 * @throws TypeError
+	 * @throws ValueError
+	 */
+	public function answer(Bunny\Message $message, Bunny\Channel $channel, Bunny\Client $client): void
+	{
+		$result = $this->messagesHandler->handle($message);
 
-						break;
-					case Handlers\Message::MESSAGE_NACK:
-						$channel->nack($message); // Message will be re-queued
+		switch ($result) {
+			case Handlers\Message::MESSAGE_ACK:
+				$channel->ack($message); // Acknowledge message
 
-						break;
-					case Handlers\Message::MESSAGE_REJECT:
-						$channel->reject($message, false); // Message will be discarded
+				break;
+			case Handlers\Message::MESSAGE_NACK:
+				$channel->nack($message); // Message will be re-queued
 
-						break;
-					case Handlers\Message::MESSAGE_REJECT_AND_TERMINATE:
-						$channel->reject($message, false); // Message will be discarded
+				break;
+			case Handlers\Message::MESSAGE_REJECT:
+				$channel->reject($message, false); // Message will be discarded
 
-						$client->disconnect();
+				break;
+			case Handlers\Message::MESSAGE_REJECT_AND_TERMINATE:
+				$channel->reject($message, false); // Message will be discarded
 
-						break;
-					default:
-						throw new Exceptions\InvalidArgument('Unknown return value of message handler');
-				}
-			},
-			$queueName,
-		);
+				$client->disconnect();
+
+				break;
+			default:
+				throw new Exceptions\InvalidArgument('Unknown return value of message handler');
+		}
 	}
 
 }
