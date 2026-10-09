@@ -45,9 +45,10 @@ final class Phone
 	public private(set) bool $italianLeadingZero = false;
 
 	/**
-	 * The number of leading zeros of this phone number
+	 * The number of leading zeros of this phone number, null when libphonenumber does not
+	 * report any (it does only for two or more)
 	 */
-	public private(set) int|null $numberOfLeadingZeros;
+	public private(set) int|null $numberOfLeadingZeros = null;
 
 	/**
 	 * The raw input

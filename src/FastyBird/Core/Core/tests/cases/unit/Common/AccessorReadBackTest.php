@@ -109,6 +109,20 @@ final class AccessorReadBackTest extends TestCase
 		self::assertSame(2, $leadingZeros->numberOfLeadingZeros);
 	}
 
+	/**
+	 * fromNumber() writes the number of leading zeros only when libphonenumber reports two or
+	 * more, so any other number reads the default, null (#676)
+	 *
+	 * @throws PhoneExceptions\NoValidCountry
+	 * @throws PhoneExceptions\NoValidPhone
+	 */
+	public function testPhoneWithoutLeadingZerosReadsNull(): void
+	{
+		$phone = PhoneEntities\Phone::fromNumber('+420 777 123 456');
+
+		self::assertNull($phone->numberOfLeadingZeros);
+	}
+
 	public function testWebSocketsServerConfiguration(): void
 	{
 		$defaults = new Server\Configuration();
