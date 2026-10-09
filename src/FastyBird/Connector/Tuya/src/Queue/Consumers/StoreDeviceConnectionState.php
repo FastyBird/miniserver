@@ -117,6 +117,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			$this->deviceConnectionManager->setState(
 				$device,
 				$message->getState(),
+				Sources\Connector::TUYA,
 			);
 
 			if (
@@ -179,6 +180,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					$this->deviceConnectionManager->setState(
 						$child,
 						$message->getState(),
+						Sources\Connector::TUYA,
 					);
 
 					$findDevicePropertiesQuery = new DevicesQueries\Configuration\FindDeviceDynamicProperties();

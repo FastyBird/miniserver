@@ -62,6 +62,12 @@ final class ConnectorConnection
 	}
 
 	/**
+	 * The state is a report of what the connector sees, so it is published under the source of
+	 * whoever reports it, the connector's, and not under Devices: a document with the Devices
+	 * source is a command (a WebSocket SET, an API write) that WebSocket clients do not receive.
+	 *
+	 * @param Sources\Source $source who reports the state
+	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws CoreExceptions\Logic
@@ -78,6 +84,7 @@ final class ConnectorConnection
 	public function setState(
 		Entities\Connectors\Connector|Documents\Connectors\Connector $connector,
 		DevicesTypes\ConnectionState $state,
+		Sources\Source $source,
 	): bool
 	{
 		$currentState = $this->getState($connector);
@@ -135,7 +142,7 @@ final class ConnectorConnection
 				States\Property::ACTUAL_VALUE_FIELD => $state->value,
 				States\Property::EXPECTED_VALUE_FIELD => null,
 			]),
-			Sources\Module::DEVICES,
+			$source,
 		);
 
 		$this->logger->info(

@@ -123,7 +123,7 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 		// Check device state...
 		if ($this->deviceConnectionManager->getState($bridge) !== $state) {
 			// ... and if it is not ready, set it to ready
-			$this->deviceConnectionManager->setState($bridge, $state);
+			$this->deviceConnectionManager->setState($bridge, $state, Sources\Connector::ZIGBEE2MQTT);
 
 			if (
 				$state === DevicesTypes\ConnectionState::DISCONNECTED
@@ -181,7 +181,7 @@ final class StoreBridgeConnectionState implements Queue\Consumer
 				);
 
 				foreach ($children as $child) {
-					$this->deviceConnectionManager->setState($child, $state);
+					$this->deviceConnectionManager->setState($child, $state, Sources\Connector::ZIGBEE2MQTT);
 
 					$findDevicePropertiesQuery = new DevicesQueries\Configuration\FindDeviceDynamicProperties();
 					$findDevicePropertiesQuery->forDevice($child);
