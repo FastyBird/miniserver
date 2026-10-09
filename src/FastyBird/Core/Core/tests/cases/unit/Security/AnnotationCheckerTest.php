@@ -54,7 +54,7 @@ final class AnnotationCheckerTest extends TestCase
 			$identityDouble = $this->createMock(Identity\UserIdentity::class);
 			$identityDouble->method('getId')->willReturn(Uuid::fromString($identity));
 
-			$storage->setIdentity($identityDouble);
+			$storage->identity = $identityDouble;
 		}
 
 		return new Identity\User($storage, $this->enforcerFactory());

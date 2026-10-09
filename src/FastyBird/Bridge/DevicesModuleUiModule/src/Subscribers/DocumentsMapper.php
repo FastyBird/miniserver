@@ -89,8 +89,8 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 				],
 				true,
 			)
-			|| !array_key_exists('property', $event->getData())
-			|| !$event->getData()['property'] instanceof Uuid\UuidInterface
+			|| !array_key_exists('property', $event->data)
+			|| !$event->data['property'] instanceof Uuid\UuidInterface
 		) {
 			return;
 		}
@@ -99,7 +99,7 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 
 		if ($event->getClass() === DevicesModuleUiModuleDocuments\Widgets\DataSources\ConnectorProperty::class) {
 			$findPropertyQuery = new DevicesQueries\Configuration\FindConnectorProperties();
-			$findPropertyQuery->byId($event->getData()['property']);
+			$findPropertyQuery->byId($event->data['property']);
 
 			$property = $this->connectorsPropertiesRepository->findOneBy($findPropertyQuery);
 
@@ -116,7 +116,7 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 			}
 		} elseif ($event->getClass() === DevicesModuleUiModuleDocuments\Widgets\DataSources\DeviceProperty::class) {
 			$findPropertyQuery = new DevicesQueries\Configuration\FindDeviceProperties();
-			$findPropertyQuery->byId($event->getData()['property']);
+			$findPropertyQuery->byId($event->data['property']);
 
 			$property = $this->devicesPropertiesRepository->findOneBy($findPropertyQuery);
 
@@ -136,7 +136,7 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 			}
 		} else {
 			$findPropertyQuery = new DevicesQueries\Configuration\FindChannelProperties();
-			$findPropertyQuery->byId($event->getData()['property']);
+			$findPropertyQuery->byId($event->data['property']);
 
 			$property = $this->channelsPropertiesRepository->findOneBy($findPropertyQuery);
 
@@ -156,7 +156,7 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 			}
 		}
 
-		$data = $event->getData();
+		$data = $event->data;
 
 		if (
 			$property instanceof DevicesDocuments\Connectors\Properties\Variable
@@ -169,7 +169,7 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 			$data['value'] = $state->getRead()->getExpectedValue() ?? $state->getRead()->getActualValue();
 		}
 
-		$event->setData($data);
+		$event->data = $data;
 	}
 
 }

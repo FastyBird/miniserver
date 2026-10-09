@@ -116,7 +116,7 @@ final readonly class DocumentFactory
 			$preLoadEvent = new Events\PreLoad($data, $documentClass);
 			$this->dispatcher?->dispatch($preLoadEvent);
 
-			$document = $this->documentMapper->process($preLoadEvent->getData(), $documentClass, $options);
+			$document = $this->documentMapper->process($preLoadEvent->data, $documentClass, $options);
 
 			$postLoadEvent = new Events\PostLoad($document);
 			$this->dispatcher?->dispatch($postLoadEvent);

@@ -14,9 +14,9 @@ final class HttpMethodNotAllowed extends HttpSpecialized
 
 	protected $message = 'Method not allowed.';
 
-	protected string $title = '405 Method Not Allowed';
+	public protected(set) string $title = '405 Method Not Allowed';
 
-	protected string $description = 'The request method is not supported for the requested resource.';
+	public protected(set) string $description = 'The request method is not supported for the requested resource.';
 
 	/**
 	 * @return array<string>

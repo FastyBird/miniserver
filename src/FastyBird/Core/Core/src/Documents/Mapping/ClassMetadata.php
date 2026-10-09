@@ -42,9 +42,9 @@ final class ClassMetadata
 	private ReflectionClass $reflectionClass;
 
 	/** @var class-string<object>|null */
-	private string|null $owningEntity = null;
+	public string|null $owningEntity = null;
 
-	private bool $isMappedSuperclass = false;
+	public bool $isMappedSuperclass = false;
 
 	/** @var array<class-string<T>> */
 	private array $subClasses = [];
@@ -52,7 +52,7 @@ final class ClassMetadata
 	/** @var array<class-string<T>> */
 	private array $parentClasses = [];
 
-	private int $inheritanceType = self::INHERITANCE_TYPE_NONE;
+	public int $inheritanceType = self::INHERITANCE_TYPE_NONE;
 
 	/** @var array<string, string>|null */
 	private array|null $discriminatorColumn = null;
@@ -116,42 +116,6 @@ final class ClassMetadata
 	public function isAbstract(): bool
 	{
 		return $this->reflectionClass->isAbstract();
-	}
-
-	/**
-	 * @param class-string<object> $owner
-	 */
-	public function setOwningEntity(string $owner): void
-	{
-		$this->owningEntity = $owner;
-	}
-
-	/**
-	 * @return class-string<object>|null
-	 */
-	public function getOwningEntity(): string|null
-	{
-		return $this->owningEntity;
-	}
-
-	public function setIsMappedSuperclass(bool $isMappedSuperclass): void
-	{
-		$this->isMappedSuperclass = $isMappedSuperclass;
-	}
-
-	public function isMappedSuperclass(): bool
-	{
-		return $this->isMappedSuperclass;
-	}
-
-	public function setInheritanceType(int $type): void
-	{
-		$this->inheritanceType = $type;
-	}
-
-	public function getInheritanceType(): int
-	{
-		return $this->inheritanceType;
 	}
 
 	public function isInheritanceTypeNone(): bool

@@ -29,12 +29,12 @@ final readonly class EventLoopLifeCycle implements EventDispatcher\EventSubscrib
 
 	public function loopStarted(): void
 	{
-		$this->eventLoopStatus->setStatus(true);
+		$this->eventLoopStatus->running = true;
 	}
 
 	public function loopStopped(): void
 	{
-		$this->eventLoopStatus->setStatus(false);
+		$this->eventLoopStatus->running = false;
 	}
 
 }

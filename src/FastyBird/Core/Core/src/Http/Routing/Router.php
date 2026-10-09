@@ -31,7 +31,7 @@ class Router implements IteratorAggregate
 
 	public const string BASE_PATH = '__basePath__';
 
-	private string $basePath = '';
+	public string $basePath = '';
 
 	private ResponseFactoryInterface $responseFactory;
 
@@ -58,16 +58,6 @@ class Router implements IteratorAggregate
 		$routeHandler = new RouteHandler($this);
 
 		$this->middlewareDispatcher = new Middleware\MiddlewareDispatcher($routeHandler);
-	}
-
-	public function getBasePath(): string
-	{
-		return $this->basePath;
-	}
-
-	public function setBasePath(string $basePath): void
-	{
-		$this->basePath = $basePath;
 	}
 
 	/**

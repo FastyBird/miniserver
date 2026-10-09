@@ -18,26 +18,10 @@ final class PreLoad extends EventDispatcher\Event
 	 * @param class-string<T> $class
 	 */
 	public function __construct(
-		private array $data,
+		public array $data,
 		private readonly string $class,
 	)
 	{
-	}
-
-	/**
-	 * @return array<mixed>
-	 */
-	public function getData(): array
-	{
-		return $this->data;
-	}
-
-	/**
-	 * @param array<mixed> $data
-	 */
-	public function setData(array $data): void
-	{
-		$this->data = $data;
 	}
 
 	/**

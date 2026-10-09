@@ -200,7 +200,7 @@ final class ModuleEntities implements Common\EventSubscriber
 		}
 
 		if ($publishRoutingKey !== null) {
-			$this->getPublisher($this->eventLoopStatus->isRunning())->publish(
+			$this->getPublisher($this->eventLoopStatus->running)->publish(
 				Sources\Module::ACCOUNTS,
 				$publishRoutingKey,
 				$this->documentFactory->create(

@@ -112,7 +112,7 @@ final class RouteParser
 	 */
 	public function urlFor(string $routeName, array $data = [], array $queryParams = []): string
 	{
-		$basePath = $this->router->getBasePath();
+		$basePath = $this->router->basePath;
 		$url = $this->relativeUrlFor($routeName, $data, $queryParams);
 
 		if ($basePath !== '') {

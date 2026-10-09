@@ -17,26 +17,10 @@ use function str_starts_with;
 final class MappingDriverChain implements MappingDriver
 {
 
-	private AttributeDriver|null $defaultDriver = null;
+	public private(set) AttributeDriver|null $defaultDriver = null;
 
 	/** @var array<string, AttributeDriver> */
 	private array $drivers = [];
-
-	/**
-	 * Gets the default driver
-	 */
-	public function getDefaultDriver(): AttributeDriver|null
-	{
-		return $this->defaultDriver;
-	}
-
-	/**
-	 * Set the default driver
-	 */
-	public function setDefaultDriver(AttributeDriver|null $defaultDriver): void
-	{
-		$this->defaultDriver = $defaultDriver;
-	}
 
 	/**
 	 * Adds a nested driver

@@ -21,7 +21,7 @@ abstract class CrudManager
 	/** @var ORM\EntityManagerInterface */
 	protected Persistence\ObjectManager $entityManager;
 
-	private bool $flush = true;
+	public protected(set) bool $flush = true;
 
 	/**
 	 * @param class-string<T> $entityName
@@ -41,16 +41,6 @@ abstract class CrudManager
 
 		$this->entityManager = $entityManager;
 		$this->entityRepository = $this->entityManager->getRepository($entityName);
-	}
-
-	public function getFlush(): bool
-	{
-		return $this->flush;
-	}
-
-	public function setFlush(bool $flush): void
-	{
-		$this->flush = $flush;
 	}
 
 }

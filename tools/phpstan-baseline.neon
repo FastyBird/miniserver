@@ -3457,18 +3457,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/Dispatcher.php
 
 		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Controllers\\DispatchRequest\:\:getParameters\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/DispatchRequest.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Controllers\\DispatchRequest\:\:setParameters\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/DispatchRequest.php
-
-		-
 			message: '#^Call to an undefined method ReflectionType\:\:getName\(\)\.$#'
 			identifier: method.notFound
 			count: 1
@@ -3512,18 +3500,6 @@ parameters:
 
 		-
 			message: '#^Method FastyBird\\Core\\WebSockets\\Controllers\\Request\:\:__construct\(\) has parameter \$params with no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/Request.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Controllers\\Request\:\:getParameters\(\) return type has no value type specified in iterable type array\.$#'
-			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/Request.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Controllers\\Request\:\:setParameters\(\) has parameter \$params with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Controllers/Request.php
@@ -4052,12 +4028,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Encoding/Validator.php
 
 		-
-			message: '#^Parameter \#1 \$timeZones of method FastyBird\\Core\\Phone\\Entities\\Phone\:\:setTimeZones\(\) expects array\<string\>, array given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/Phone/Entities/Phone.php
-
-		-
 			message: '#^Cannot cast FastyBird\\Core\\WebSockets\\Controllers\\Responses\\ControllerResponse to string\.$#'
 			identifier: cast.string
 			count: 1
@@ -4288,12 +4258,6 @@ parameters:
 		-
 			message: '#^Method FastyBird\\Core\\WebSockets\\Handshake\\Request\:\:__construct\(\) has parameter \$post with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: ../src/FastyBird/Core/Core/src/WebSockets/Handshake/Request.php
-
-		-
-			message: '#^Method FastyBird\\Core\\WebSockets\\Handshake\\Request\:\:getProtocolVersion\(\) never returns null so it can be removed from the return type\.$#'
-			identifier: return.unusedType
 			count: 1
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Handshake/Request.php
 

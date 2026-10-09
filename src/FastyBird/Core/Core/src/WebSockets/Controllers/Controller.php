@@ -120,7 +120,7 @@ abstract class Controller implements RequestController
 			// STARTUP
 			$this->request = $request;
 			$this->payload ??= new stdClass();
-			$this->name = $request->getControllerName();
+			$this->name = $request->controllerName;
 
 			$this->initGlobalParameters();
 
@@ -424,7 +424,7 @@ abstract class Controller implements RequestController
 
 		$selfParams = [];
 
-		$params = $this->request->getParameters();
+		$params = $this->request->parameters;
 
 		foreach ($params as $key => $value) {
 			if (!preg_match('#^((?:[a-z0-9_]+-)*)((?!\d+\z)[a-z0-9_]+)\z#i', $key, $matches)) {

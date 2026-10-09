@@ -327,13 +327,13 @@ $wampModuleRoutes = static function () use ($boot): array {
 			continue;
 		}
 
-		$name = $request->getControllerName();
+		$name = $request->controllerName;
 		$class = $factory->getControllerClass($name);
 		$controller = $factory->createController($name);
 
 		$routes[$path] = [
 			'controllerName' => $name,
-			'parameters' => array_keys($request->getParameters()),
+			'parameters' => array_keys($request->parameters),
 			'class' => $class,
 			'created' => $controller::class,
 			'tagged' => in_array($class, $tagged, true),

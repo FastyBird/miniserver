@@ -18,18 +18,18 @@ final class RequestTest extends TestCase
 	{
 		$request = new Controllers\Request('module:module:controller');
 
-		$request->setControllerName('other:other:controller');
+		$request->controllerName = 'other:other:controller';
 
-		self::assertSame('other:other:controller', $request->getControllerName());
+		self::assertSame('other:other:controller', $request->controllerName);
 	}
 
 	public function testSetParametersChangesGetParameters(): void
 	{
 		$request = new Controllers\Request('module:module:controller', ['id' => '1']);
 
-		$request->setParameters(['id' => '2', 'action' => 'default']);
+		$request->parameters = ['id' => '2', 'action' => 'default'];
 
-		self::assertSame(['id' => '2', 'action' => 'default'], $request->getParameters());
+		self::assertSame(['id' => '2', 'action' => 'default'], $request->parameters);
 	}
 
 }

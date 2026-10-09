@@ -93,7 +93,7 @@ final class EntityCreator extends Crud\CrudManager
 
 		$this->entityManager->persist($entity);
 
-		if ($this->getFlush()) {
+		if ($this->flush) {
 			try {
 				$this->entityManager->flush();
 			} catch (ORM\Exception\ORMException $ex) {

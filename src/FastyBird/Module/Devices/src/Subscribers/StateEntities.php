@@ -252,7 +252,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 			);
 		}
 
-		$this->getPublisher($this->eventLoopStatus->isRunning())->publish(
+		$this->getPublisher($this->eventLoopStatus->running)->publish(
 			$source,
 			$routingKey,
 			$document,

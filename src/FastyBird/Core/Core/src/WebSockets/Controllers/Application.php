@@ -104,9 +104,9 @@ abstract class Application implements Dispatcher
 			throw new WebSocketsExceptions\BadRequest('Invalid message - router cant create request.');
 		}
 
-		$appRequest->setParameters(array_merge($appRequest->getParameters(), $parameters));
+		$appRequest->parameters = array_merge($appRequest->parameters, $parameters);
 
-		$controllerName = $appRequest->getControllerName();
+		$controllerName = $appRequest->controllerName;
 		$controllerClass = $this->controllerFactory->getControllerClass($controllerName);
 
 		if (!is_subclass_of($controllerClass, RequestController::class)) {

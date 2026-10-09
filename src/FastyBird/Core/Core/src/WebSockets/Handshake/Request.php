@@ -12,7 +12,7 @@ use function func_num_args;
 final class Request extends Http\Request implements Http\IRequest
 {
 
-	private float $protocolVersion;
+	public float $protocolVersion;
 
 	public function __construct(
 		private Http\UrlScript $url,
@@ -60,16 +60,6 @@ final class Request extends Http\Request implements Http\IRequest
 	public function isSecured(): bool
 	{
 		return $this->url->getScheme() === 'wss';
-	}
-
-	public function setProtocolVersion(float $version): void
-	{
-		$this->protocolVersion = $version;
-	}
-
-	public function getProtocolVersion(): float|null
-	{
-		return $this->protocolVersion;
 	}
 
 }

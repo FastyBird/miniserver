@@ -49,7 +49,10 @@ final class AttributeDriver implements MappingDriver
 	/** @var array<int, string> */
 	private array $excludePaths = [];
 
-	private string $fileExtension = '.php';
+	/**
+	 * The file extension used to look for mapping files under
+	 */
+	public private(set) string $fileExtension = '.php';
 
 	/** @var AttributeReader<Documents\Mapping\MappingAttribute> */
 	private AttributeReader $reader;
@@ -100,22 +103,6 @@ final class AttributeDriver implements MappingDriver
 	public function getExcludePaths(): array
 	{
 		return $this->excludePaths;
-	}
-
-	/**
-	 * Gets the file extension used to look for mapping files under.
-	 */
-	public function getFileExtension(): string
-	{
-		return $this->fileExtension;
-	}
-
-	/**
-	 * Sets the file extension used to look for mapping files under.
-	 */
-	public function setFileExtension(string $fileExtension): void
-	{
-		$this->fileExtension = $fileExtension;
 	}
 
 	/**
@@ -255,10 +242,10 @@ final class AttributeDriver implements MappingDriver
 			assert($documentAttribute instanceof Documents\Mapping\Document);
 
 			if ($documentAttribute->entity !== null) {
-				$metadata->setOwningEntity($documentAttribute->entity);
+				$metadata->owningEntity = $documentAttribute->entity;
 			}
 		} elseif (isset($classAttributes[Documents\Mapping\MappedSuperclass::class])) {
-			$metadata->setIsMappedSuperclass(true);
+			$metadata->isMappedSuperclass = true;
 
 		} else {
 			throw new Exceptions\Logic(
@@ -288,9 +275,9 @@ final class AttributeDriver implements MappingDriver
 				);
 			}
 
-			$metadata->setInheritanceType($inheritanceType);
+			$metadata->inheritanceType = $inheritanceType;
 
-			if ($metadata->getInheritanceType() !== Documents\Mapping\ClassMetadata::INHERITANCE_TYPE_NONE) {
+			if ($metadata->inheritanceType !== Documents\Mapping\ClassMetadata::INHERITANCE_TYPE_NONE) {
 				// Evaluate DiscriminatorColumn attribute
 				if (isset($classAttributes[Documents\Mapping\DiscriminatorColumn::class])) {
 					$discriminatorColumnAttribute = $classAttributes[Documents\Mapping\DiscriminatorColumn::class];

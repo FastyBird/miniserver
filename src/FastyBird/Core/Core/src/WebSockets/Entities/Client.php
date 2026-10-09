@@ -21,9 +21,9 @@ class Client implements ConnectedClient
 	/** @var array<string> */
 	private array $roles = [];
 
-	private bool $httpHeadersReceived = false;
+	public bool $httpHeadersReceived = false;
 
-	private string $httpBuffer = '';
+	public string $httpBuffer = '';
 
 	private string|null $remoteAddress = null;
 
@@ -50,30 +50,6 @@ class Client implements ConnectedClient
 	public function getConnection(): Socket\ConnectionInterface
 	{
 		return $this->connection;
-	}
-
-	#[Override]
-	public function setHttpHeadersReceived(bool $state): void
-	{
-		$this->httpHeadersReceived = $state;
-	}
-
-	#[Override]
-	public function isHttpHeadersReceived(): bool
-	{
-		return $this->httpHeadersReceived;
-	}
-
-	#[Override]
-	public function setHttpBuffer(string $buffer): void
-	{
-		$this->httpBuffer = $buffer;
-	}
-
-	#[Override]
-	public function getHttpBuffer(): string
-	{
-		return $this->httpBuffer;
 	}
 
 	#[Override]

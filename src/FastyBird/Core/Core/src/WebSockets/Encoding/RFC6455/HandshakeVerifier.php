@@ -37,7 +37,7 @@ final class HandshakeVerifier
 		$passes = 0;
 
 		$passes += (int) $this->verifyMethod($httpRequest->getMethod());
-		$passes += (int) $this->verifyHttpVersion($httpRequest->getProtocolVersion());
+		$passes += (int) $this->verifyHttpVersion($httpRequest->protocolVersion);
 		$passes += (int) $this->verifyRequestUri($httpRequest->getUrl()->getPath());
 		$passes += (int) $this->verifyHost((string) $httpRequest->getHeader('Host'));
 		$passes += (int) $this->verifyUpgradeRequest((string) $httpRequest->getHeader('Upgrade'));

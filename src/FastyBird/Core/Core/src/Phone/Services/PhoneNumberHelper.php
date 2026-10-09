@@ -216,7 +216,7 @@ final class PhoneNumberHelper
 		$entity = Entities\Phone::fromNumber($number, $country);
 
 		// Extract carrier name from given phone number
-		return $entity->getTimeZones();
+		return $entity->timeZones;
 	}
 
 	/**

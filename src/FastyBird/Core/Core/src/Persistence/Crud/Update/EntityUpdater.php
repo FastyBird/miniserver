@@ -55,7 +55,7 @@ final class EntityUpdater extends Crud\CrudManager
 
 		$this->entityManager->persist($entity);
 
-		if ($this->getFlush() === true) {
+		if ($this->flush === true) {
 			try {
 				$this->entityManager->flush();
 			} catch (ORM\Exception\ORMException $ex) {

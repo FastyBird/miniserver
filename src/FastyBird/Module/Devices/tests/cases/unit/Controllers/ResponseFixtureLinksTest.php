@@ -131,7 +131,7 @@ final class ResponseFixtureLinksTest extends Tests\Cases\Unit\DbTestCase
 				foreach ($router->getIterator() as $route) {
 					$collector->addRoute(
 						$route->getMethods(),
-						$router->getBasePath() . $route->getPattern(),
+						$router->basePath . $route->getPattern(),
 						$route->getIdentifier(),
 					);
 				}

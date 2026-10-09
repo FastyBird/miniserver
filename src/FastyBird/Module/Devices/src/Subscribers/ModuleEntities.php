@@ -150,19 +150,19 @@ final class ModuleEntities implements Common\EventSubscriber
 
 		// Property states cleanup
 		if ($entity instanceof Entities\Connectors\Properties\Dynamic) {
-			if ($this->eventLoopStatus->isRunning()) {
+			if ($this->eventLoopStatus->running) {
 				$this->asyncConnectorPropertiesStatesManager->delete($entity->getId());
 			} else {
 				$this->connectorPropertiesStatesManager->delete($entity->getId());
 			}
 		} elseif ($entity instanceof Entities\Devices\Properties\Dynamic) {
-			if ($this->eventLoopStatus->isRunning()) {
+			if ($this->eventLoopStatus->running) {
 				$this->asyncDevicePropertiesStatesManager->delete($entity->getId());
 			} else {
 				$this->devicePropertiesStatesManager->delete($entity->getId());
 			}
 		} elseif ($entity instanceof Entities\Channels\Properties\Dynamic) {
-			if ($this->eventLoopStatus->isRunning()) {
+			if ($this->eventLoopStatus->running) {
 				$this->asyncChannelPropertiesStatesManager->delete($entity->getId());
 			} else {
 				$this->channelPropertiesStatesManager->delete($entity->getId());
@@ -236,7 +236,7 @@ final class ModuleEntities implements Common\EventSubscriber
 		}
 
 		if ($publishRoutingKey !== null) {
-			$this->getPublisher($this->eventLoopStatus->isRunning())->publish(
+			$this->getPublisher($this->eventLoopStatus->running)->publish(
 				Sources\Module::DEVICES,
 				$publishRoutingKey,
 				$this->documentFactory->create(

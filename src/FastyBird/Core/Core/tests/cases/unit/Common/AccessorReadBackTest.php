@@ -25,7 +25,8 @@ use ReflectionException;
  * Read-back of the accessor pairs E5.12 (#644) turns into property hooks or asymmetric
  * visibility, for the classes no other test reads them back on (census T6, T12-25): each value is
  * assigned through today's setter or constructor and read through today's getter. #644 rewrites
- * the call syntax mechanically and must keep every value.
+ * the call syntax mechanically and must keep every value. The rows #644 makes `private(set)` or
+ * `protected(set)` are read back only through what their own class writes (#671, #672).
  */
 final class AccessorReadBackTest extends TestCase
 {
@@ -34,15 +35,15 @@ final class AccessorReadBackTest extends TestCase
 	{
 		$status = new EventLoop\Status();
 
-		self::assertFalse($status->isRunning());
+		self::assertFalse($status->running);
 
-		$status->setStatus(true);
+		$status->running = true;
 
-		self::assertTrue($status->isRunning());
+		self::assertTrue($status->running);
 
-		$status->setStatus(false);
+		$status->running = false;
 
-		self::assertFalse($status->isRunning());
+		self::assertFalse($status->running);
 	}
 
 	/**
@@ -53,17 +54,35 @@ final class AccessorReadBackTest extends TestCase
 		$request = new ServerRequest('GET', 'http://localhost/api/v1');
 		$exception = new HttpExceptions\Http($request, 'e5 message', 418);
 
-		self::assertSame('', $exception->getTitle());
-		self::assertSame('', $exception->getDescription());
+		self::assertSame('', $exception->title);
+		self::assertSame('', $exception->description);
 		self::assertSame($request, $exception->getRequest());
-
-		$exception->setTitle('E5 title');
-		$exception->setDescription('E5 description');
-
-		self::assertSame('E5 title', $exception->getTitle());
-		self::assertSame('E5 description', $exception->getDescription());
 		self::assertSame('e5 message', $exception->getMessage());
 		self::assertSame(418, $exception->getCode());
+	}
+
+	/**
+	 * @throws InvalidArgumentException
+	 */
+	public function testHttpSpecializedExceptionsKeepTheirTitleAndDescription(): void
+	{
+		$request = new ServerRequest('GET', 'http://localhost/api/v1');
+
+		$notFound = new HttpExceptions\HttpNotFound($request);
+
+		self::assertSame('404 Not Found', $notFound->title);
+		self::assertSame(
+			'The requested resource could not be found. Please verify the URI and try again.',
+			$notFound->description,
+		);
+
+		$notAllowed = new HttpExceptions\HttpMethodNotAllowed($request);
+
+		self::assertSame('405 Method Not Allowed', $notAllowed->title);
+		self::assertSame(
+			'The request method is not supported for the requested resource.',
+			$notAllowed->description,
+		);
 	}
 
 	/**
@@ -74,56 +93,35 @@ final class AccessorReadBackTest extends TestCase
 	{
 		$italian = PhoneEntities\Phone::fromNumber('+39 06 1234 5678');
 
-		self::assertTrue($italian->getItalianLeadingZero());
-		self::assertSame(['Europe/Rome'], $italian->getTimeZones());
+		self::assertTrue($italian->italianLeadingZero);
+		self::assertSame(['Europe/Rome'], $italian->timeZones);
 		self::assertTrue($italian->isInTimeZone('Europe/Rome'));
-		self::assertNull($italian->getExtension());
+		self::assertNull($italian->extension);
 
 		$withExtension = PhoneEntities\Phone::fromNumber('+420 777 123 456 ext. 12');
 
-		self::assertSame('12', $withExtension->getExtension());
-		self::assertFalse($withExtension->getItalianLeadingZero());
-		self::assertSame(['Europe/Prague'], $withExtension->getTimeZones());
-	}
+		self::assertSame('12', $withExtension->extension);
+		self::assertFalse($withExtension->italianLeadingZero);
+		self::assertSame(['Europe/Prague'], $withExtension->timeZones);
 
-	/**
-	 * @throws PhoneExceptions\NoValidCountry
-	 * @throws PhoneExceptions\NoValidPhone
-	 */
-	public function testPhoneSettersReadBack(): void
-	{
-		$phone = PhoneEntities\Phone::fromNumber('+420 777 123 456');
+		$leadingZeros = PhoneEntities\Phone::fromNumber('+992 00 500 8965');
 
-		$phone->setExtension('34');
-		$phone->setItalianLeadingZero(true);
-		$phone->setNumberOfLeadingZeros(2);
-		$phone->setTimeZones(['Europe/Prague', 'Europe/Vienna']);
-
-		self::assertSame('34', $phone->getExtension());
-		self::assertTrue($phone->getItalianLeadingZero());
-		self::assertSame(2, $phone->getNumberOfLeadingZeros());
-		self::assertSame(['Europe/Prague', 'Europe/Vienna'], $phone->getTimeZones());
+		self::assertSame(2, $leadingZeros->numberOfLeadingZeros);
 	}
 
 	public function testWebSocketsServerConfiguration(): void
 	{
 		$defaults = new Server\Configuration();
 
-		self::assertSame(8_080, $defaults->getPort());
-		self::assertSame('0.0.0.0', $defaults->getAddress());
+		self::assertSame(8_080, $defaults->port);
+		self::assertSame('0.0.0.0', $defaults->address);
 		self::assertFalse($defaults->isSslEnabled());
 		self::assertSame([], $defaults->getSslConfiguration());
 
 		$configuration = new Server\Configuration(8_888, '127.0.0.1');
 
-		self::assertSame(8_888, $configuration->getPort());
-		self::assertSame('127.0.0.1', $configuration->getAddress());
-
-		$configuration->setPort(9_999);
-		$configuration->setAddress('10.0.0.1');
-
-		self::assertSame(9_999, $configuration->getPort());
-		self::assertSame('10.0.0.1', $configuration->getAddress());
+		self::assertSame(8_888, $configuration->port);
+		self::assertSame('127.0.0.1', $configuration->address);
 	}
 
 	/**
@@ -133,18 +131,18 @@ final class AccessorReadBackTest extends TestCase
 	{
 		$metadata = new Mapping\ClassMetadata(DummyDocument::class);
 
-		self::assertNull($metadata->getOwningEntity());
-		self::assertFalse($metadata->isMappedSuperclass());
-		self::assertSame(Mapping\ClassMetadata::INHERITANCE_TYPE_NONE, $metadata->getInheritanceType());
+		self::assertNull($metadata->owningEntity);
+		self::assertFalse($metadata->isMappedSuperclass);
+		self::assertSame(Mapping\ClassMetadata::INHERITANCE_TYPE_NONE, $metadata->inheritanceType);
 		self::assertTrue($metadata->isInheritanceTypeNone());
 
-		$metadata->setOwningEntity(self::class);
-		$metadata->setIsMappedSuperclass(true);
-		$metadata->setInheritanceType(Mapping\ClassMetadata::INHERITANCE_TYPE_JOINED_TABLE);
+		$metadata->owningEntity = self::class;
+		$metadata->isMappedSuperclass = true;
+		$metadata->inheritanceType = Mapping\ClassMetadata::INHERITANCE_TYPE_JOINED_TABLE;
 
-		self::assertSame(self::class, $metadata->getOwningEntity());
-		self::assertTrue($metadata->isMappedSuperclass());
-		self::assertSame(Mapping\ClassMetadata::INHERITANCE_TYPE_JOINED_TABLE, $metadata->getInheritanceType());
+		self::assertSame(self::class, $metadata->owningEntity);
+		self::assertTrue($metadata->isMappedSuperclass);
+		self::assertSame(Mapping\ClassMetadata::INHERITANCE_TYPE_JOINED_TABLE, $metadata->inheritanceType);
 		self::assertFalse($metadata->isInheritanceTypeNone());
 	}
 
@@ -152,27 +150,14 @@ final class AccessorReadBackTest extends TestCase
 	{
 		$driver = new Driver\AttributeDriver();
 
-		self::assertSame('.php', $driver->getFileExtension());
-
-		$driver->setFileExtension('.inc');
-
-		self::assertSame('.inc', $driver->getFileExtension());
+		self::assertSame('.php', $driver->fileExtension);
 	}
 
 	public function testMappingDriverChainDefaultDriver(): void
 	{
 		$chain = new Driver\MappingDriverChain();
 
-		self::assertNull($chain->getDefaultDriver());
-
-		$driver = new Driver\AttributeDriver();
-		$chain->setDefaultDriver($driver);
-
-		self::assertSame($driver, $chain->getDefaultDriver());
-
-		$chain->setDefaultDriver(null);
-
-		self::assertNull($chain->getDefaultDriver());
+		self::assertNull($chain->defaultDriver);
 	}
 
 	/**
@@ -192,15 +177,7 @@ final class AccessorReadBackTest extends TestCase
 
 		};
 
-		self::assertTrue($manager->getFlush());
-
-		$manager->setFlush(false);
-
-		self::assertFalse($manager->getFlush());
-
-		$manager->setFlush(true);
-
-		self::assertTrue($manager->getFlush());
+		self::assertTrue($manager->flush);
 	}
 
 }

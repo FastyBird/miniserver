@@ -239,7 +239,7 @@ class RFC6455
 
 	public function send(Entities\ConnectedClient $client, $payload): void
 	{
-		if (!$client->getWebSocket()->isClosing()) {
+		if (!$client->getWebSocket()->closing) {
 			if (!$payload instanceof FrameData) {
 				$payload = new RFC6455\Frame($payload);
 			}
@@ -250,7 +250,7 @@ class RFC6455
 
 	public function close(Entities\ConnectedClient $client, int|null $code = null): void
 	{
-		if ($client->getWebSocket()->isClosing()) {
+		if ($client->getWebSocket()->closing) {
 			return;
 		}
 
@@ -265,7 +265,7 @@ class RFC6455
 
 		$client->getConnection()->end();
 
-		$client->getWebSocket()->setClosing(true);
+		$client->getWebSocket()->closing = true;
 	}
 
 	/**

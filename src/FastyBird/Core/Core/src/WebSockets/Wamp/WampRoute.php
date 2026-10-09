@@ -319,10 +319,10 @@ final class WampRoute implements WampRouter
 	#[Override]
 	public function constructUrl(Controllers\DispatchRequest $appRequest): string|null
 	{
-		$params = $appRequest->getParameters();
+		$params = $appRequest->parameters;
 		$metadata = $this->metadata;
 
-		$controller = $appRequest->getControllerName();
+		$controller = $appRequest->controllerName;
 		$params[self::CONTROLLER_KEY] = $controller;
 
 		if (isset($metadata[self::MODULE_KEY])) { // try split into module and [submodule:]controller parts

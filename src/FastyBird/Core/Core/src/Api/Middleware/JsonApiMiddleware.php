@@ -83,8 +83,8 @@ final class JsonApiMiddleware implements Server\MiddlewareInterface
 						null,
 						(string) $ex->getCode(),
 						(string) $ex->getCode(),
-						$ex->getTitle(),
-						$ex->getDescription(),
+						$ex->title,
+						$ex->description,
 					));
 
 				$response->getBody()

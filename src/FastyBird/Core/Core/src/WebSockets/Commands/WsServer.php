@@ -70,7 +70,7 @@ final class WsServer extends Console\Command\Command
 			$this->dispatcher?->dispatch(new Events\ServerLaunched());
 
 			$socketServer = new Socket\SocketServer(
-				$this->configuration->getAddress() . ':' . $this->configuration->getPort(),
+				$this->configuration->address . ':' . $this->configuration->port,
 				[],
 				$this->eventLoop,
 			);
