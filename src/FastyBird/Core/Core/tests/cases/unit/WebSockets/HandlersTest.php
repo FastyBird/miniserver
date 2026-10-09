@@ -65,7 +65,7 @@ final class HandlersTest extends TestCase
 			$wrapper,
 			new Server\FlashWrapper(),
 			$storage,
-			$this->createMock(Clients\WampClientFactory::class),
+			new Clients\WampClientFactory(),
 			$logger,
 		);
 
@@ -111,7 +111,7 @@ final class HandlersTest extends TestCase
 			$wrapper,
 			new Server\FlashWrapper(),
 			$storage,
-			$this->createMock(Clients\WampClientFactory::class),
+			new Clients\WampClientFactory(),
 			$logger,
 		);
 

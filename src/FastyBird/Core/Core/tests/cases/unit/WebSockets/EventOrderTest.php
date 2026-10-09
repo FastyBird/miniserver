@@ -16,7 +16,6 @@ use Nette\DI;
 use Nette\Http;
 use Override;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\MockObject\Runtime\PropertyHook;
 use React\EventLoop;
 use React\Socket;
 use ReflectionProperty;
@@ -321,8 +320,7 @@ final class EventOrderTest extends BaseTestCase
 		$client = $this->createMock(Entities\Client::class);
 		$client->method('getId')
 			->willReturn(634);
-		$client->method(PropertyHook::get('httpHeadersReceived'))
-			->willReturn(true);
+		$client->httpHeadersReceived = true;
 		$client->method('getWebSocket')
 			->willReturn($webSocket);
 		$client->method('getRequest')
