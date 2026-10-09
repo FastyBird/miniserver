@@ -115,6 +115,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			$this->deviceConnectionManager->setState(
 				$device,
 				$message->getState(),
+				Sources\Connector::HOMEKIT,
 			);
 
 			if (

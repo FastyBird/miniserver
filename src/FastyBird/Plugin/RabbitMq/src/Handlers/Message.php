@@ -114,6 +114,10 @@ final class Message
 		string|null $senderId = null,
 	): int
 	{
+		// A message this process published is not consumed here: the process already handled it
+		// before publishing it, and handling it again would repeat that work. The identifier is
+		// one service per process, shared with the publisher. The answer is a nack, and the
+		// channel (Channels\Factory) re-queues a nacked message (#685).
 		if ($senderId === $this->identifier->getIdentifier()) {
 			return self::MESSAGE_NACK;
 		}

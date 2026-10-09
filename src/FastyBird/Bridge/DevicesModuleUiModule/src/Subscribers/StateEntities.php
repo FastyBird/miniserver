@@ -76,7 +76,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 		DevicesEvents\ConnectorPropertyStateEntityCreated|DevicesEvents\DevicePropertyStateEntityCreated|DevicesEvents\ChannelPropertyStateEntityCreated $event,
 	): void
 	{
-		$this->processProperty($event->getProperty());
+		$this->processProperty($event->getProperty(), $event->getSource());
 	}
 
 	/**
@@ -87,13 +87,13 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 		DevicesEvents\ConnectorPropertyStateEntityUpdated|DevicesEvents\DevicePropertyStateEntityUpdated|DevicesEvents\ChannelPropertyStateEntityUpdated $event,
 	): void
 	{
-		$this->processProperty($event->getProperty());
+		$this->processProperty($event->getProperty(), $event->getSource());
 	}
 
 	/**
 	 * @throws UiExceptions\InvalidState
 	 */
-	private function processProperty(DevicesDocuments\Property $property): void
+	private function processProperty(DevicesDocuments\Property $property, Sources\Source $source): void
 	{
 		$findDataSources = new Queries\Configuration\FindWidgetDataSources();
 		$findDataSources->forProperty($property);
@@ -130,6 +130,15 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 				DevicesModuleUiModuleDocuments\Widgets\DataSources\Property::class,
 			);
 			assert($dataSource !== null);
+
+			// The data source document is the widget's state, built to carry the state's value (the
+			// expected one, if it has one). With the Devices source the state is a command's, and a
+			// command is not pushed to the widgets, as the SocketsBridges do not forward it: they see
+			// the result when the target reports it. The caches above are cleaned whatever the
+			// source, so that what is read from them stays current.
+			if ($source === Sources\Module::DEVICES) {
+				continue;
+			}
 
 			$this->publishDocument($dataSource);
 		}

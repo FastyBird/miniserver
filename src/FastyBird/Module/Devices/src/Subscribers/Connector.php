@@ -45,6 +45,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 	use Nette\SmartObject;
 
 	public function __construct(
+		private readonly Models\Entities\Connectors\ConnectorsRepository $connectorsEntitiesRepository,
 		private readonly Models\Configuration\Connectors\Properties\Repository $connectorsPropertiesConfigurationRepository,
 		private readonly Models\Configuration\Devices\Repository $devicesConfigurationRepository,
 		private readonly Models\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
@@ -112,6 +113,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 		$this->connectorConnectionManager->setState(
 			$event->getConnector(),
 			Types\ConnectionState::RUNNING,
+			$this->getSource($event->getConnector()),
 		);
 	}
 
@@ -135,6 +137,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 		$this->connectorConnectionManager->setState(
 			$event->getConnector(),
 			Types\ConnectionState::STOPPED,
+			$this->getSource($event->getConnector()),
 		);
 
 		$this->resetConnector(
@@ -163,6 +166,8 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 		Types\ConnectionState $state,
 	): void
 	{
+		$source = $this->getSource($connector);
+
 		$findConnectorPropertiesQuery = new Queries\Configuration\FindConnectorDynamicProperties();
 		$findConnectorPropertiesQuery->forConnector($connector);
 
@@ -175,7 +180,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 			$this->connectorPropertiesStatesManager->setValidState(
 				$property,
 				false,
-				Sources\Module::DEVICES,
+				$source,
 			);
 		}
 
@@ -185,7 +190,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 		$devices = $this->devicesConfigurationRepository->findAllBy($findDevicesQuery);
 
 		foreach ($devices as $device) {
-			$this->resetDevice($device, $state);
+			$this->resetDevice($device, $state, $source);
 		}
 	}
 
@@ -207,9 +212,10 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 	private function resetDevice(
 		Documents\Devices\Device $device,
 		Types\ConnectionState $state,
+		Sources\Source $source,
 	): void
 	{
-		$this->deviceConnectionManager->setState($device, $state);
+		$this->deviceConnectionManager->setState($device, $state, $source);
 
 		$findDevicePropertiesQuery = new Queries\Configuration\FindDeviceDynamicProperties();
 		$findDevicePropertiesQuery->forDevice($device);
@@ -223,7 +229,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 			$this->devicePropertiesStatesManager->setValidState(
 				$property,
 				false,
-				Sources\Module::DEVICES,
+				$source,
 			);
 		}
 
@@ -233,7 +239,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 		$channels = $this->channelsConfigurationRepository->findAllBy($findChannelsQuery);
 
 		foreach ($channels as $channel) {
-			$this->resetChanel($channel);
+			$this->resetChanel($channel, $source);
 		}
 	}
 
@@ -245,7 +251,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	private function resetChanel(Documents\Channels\Channel $channel): void
+	private function resetChanel(Documents\Channels\Channel $channel, Sources\Source $source): void
 	{
 		$findChannelPropertiesQuery = new Queries\Configuration\FindChannelDynamicProperties();
 		$findChannelPropertiesQuery->forChannel($channel);
@@ -259,9 +265,30 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 			$this->channelPropertiesStatesManager->setValidState(
 				$property,
 				false,
-				Sources\Module::DEVICES,
+				$source,
 			);
 		}
+	}
+
+	/**
+	 * The states this subscriber writes are the connector's own reports (its connection state, and
+	 * its properties no longer being valid once it stops), so they carry the connector's source.
+	 * A document with the Devices source is a command, and WebSocket clients do not receive it. The
+	 * connector documents carry no source of their own (their getSource() is Devices, and is part
+	 * of what they serialize to), the connector entities do.
+	 *
+	 * @throws CoreExceptions\InvalidState
+	 * @throws DevicesExceptions\InvalidState
+	 */
+	private function getSource(Documents\Connectors\Connector $connector): Sources\Source
+	{
+		$entity = $this->connectorsEntitiesRepository->find($connector->getId());
+
+		if ($entity === null) {
+			throw new DevicesExceptions\InvalidState('Connector could not be loaded to report its state');
+		}
+
+		return $entity->getSource();
 	}
 
 }

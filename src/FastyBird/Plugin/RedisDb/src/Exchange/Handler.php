@@ -113,6 +113,10 @@ final readonly class Handler
 		string|null $senderId = null,
 	): void
 	{
+		// A message this process published comes back on the channel it subscribes to, and is
+		// dropped: the process already handled it before publishing it, and handling it again
+		// would repeat that work (a connector would write its own state update back to the device).
+		// The identifier is one service per process, shared with both publishers.
 		if ($senderId === $this->identifier->getIdentifier()) {
 			return;
 		}

@@ -16,8 +16,9 @@
  *   wamp-links              the WAMP link generator, fetched by type, linking to the modules'
  *                           exchange controllers the way their SocketsBridge consumers do
  *   sockets-bridges         the Devices and Ui SocketsBridge consumers, by service name, each
- *                           consuming one exchange document, and the WAMP EVENT frames a client
- *                           subscribed to each module's exchange topic is sent
+ *                           consuming one exchange document (the Devices one a second time, with
+ *                           the Devices source), and the WAMP EVENT frames a client subscribed to
+ *                           each module's exchange topic is sent
  *
  * Run as a child process by the tests beside it; see EntityMappingTest for why the production
  * scope cannot be booted in-process.
@@ -404,19 +405,28 @@ $socketsBridges = static function () use ($boot): array {
 		$storage->addTopic($path, $topic);
 	}
 
+	$state = new DevicesDocuments\States\Channels\Properties\Property(
+		Uuid\Uuid::fromString('28bc0d38-2f7c-4a71-aa74-27b102f8df4c'),
+		Uuid\Uuid::fromString('6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a'),
+		new DevicesDocuments\States\StateValues(21.5, null),
+		new DevicesDocuments\States\StateValues(null, null),
+		false,
+		true,
+	);
+
 	$consumers = [
 		'Devices' => [
 			'fbDevicesModule.exchange.consumer.socketsBridge',
 			Sources\Connector::VIRTUAL,
 			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
-			new DevicesDocuments\States\Channels\Properties\Property(
-				Uuid\Uuid::fromString('28bc0d38-2f7c-4a71-aa74-27b102f8df4c'),
-				Uuid\Uuid::fromString('6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a'),
-				new DevicesDocuments\States\StateValues(21.5, null),
-				new DevicesDocuments\States\StateValues(null, null),
-				false,
-				true,
-			),
+			$state,
+		],
+		// the same state, written by a SET: a command for its target, which no client is sent (#679)
+		'Devices command' => [
+			'fbDevicesModule.exchange.consumer.socketsBridge',
+			Sources\Module::DEVICES,
+			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
+			$state,
 		],
 		'Ui' => [
 			'fbUiModule.exchange.consumer.socketsBridge',

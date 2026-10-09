@@ -12,8 +12,9 @@ use RuntimeException;
  * to the clients subscribed to their own module's WAMP exchange topic, and to no other (#625).
  *
  * Each client receives the WAMP EVENT frame [8, topic, message], where the message is the JSON
- * the bridge built from the routing key, the source and the document. The DevicesModuleUiModule
- * bridge needs the database for its widget data sources; its test is in that package.
+ * the bridge built from the routing key, the source and the document. A document with the Devices
+ * source is a command, and is broadcast to no client (#679). The DevicesModuleUiModule bridge
+ * needs the database for its widget data sources; its test is in that package.
  */
 final class SocketsBridgeBroadcastTest extends TestCase
 {
@@ -50,6 +51,10 @@ final class SocketsBridgeBroadcastTest extends TestCase
 							],
 						],
 					],
+					'/ui-module/v1/exchange' => [],
+				],
+				'Devices command' => [
+					'/devices-module/v1/exchange' => [],
 					'/ui-module/v1/exchange' => [],
 				],
 				'Ui' => [

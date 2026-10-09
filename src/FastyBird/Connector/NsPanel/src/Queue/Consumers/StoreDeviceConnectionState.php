@@ -117,6 +117,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			$this->deviceConnectionManager->setState(
 				$device,
 				$message->getState(),
+				Sources\Connector::NS_PANEL,
 			);
 
 			if (
@@ -185,6 +186,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 						$this->deviceConnectionManager->setState(
 							$child,
 							$message->getState(),
+							Sources\Connector::NS_PANEL,
 						);
 
 						$findDevicePropertiesQuery = new DevicesQueries\Configuration\FindDeviceDynamicProperties();
@@ -244,6 +246,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 						$this->deviceConnectionManager->setState(
 							$child,
 							$message->getState(),
+							Sources\Connector::NS_PANEL,
 						);
 					}
 				}

@@ -117,6 +117,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 			$this->deviceConnectionManager->setState(
 				$device,
 				$message->getState(),
+				Sources\Connector::SONOFF,
 			);
 
 			if (
@@ -178,6 +179,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 					$this->deviceConnectionManager->setState(
 						$child,
 						$message->getState(),
+						Sources\Connector::SONOFF,
 					);
 
 					$findDevicePropertiesQuery = new DevicesQueries\Configuration\FindDeviceDynamicProperties();

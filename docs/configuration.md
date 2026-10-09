@@ -276,6 +276,17 @@ fbRabbitMqPlugin:
 
 `exchange.name` and `queue.name` are optional and default to the plugin's own exchange name and an anonymous queue respectively.
 
+## Messages a process publishes itself, and WebSocket clients
+
+**A process skips its own messages.** RedisDb and RabbitMq stamp each message with the publishing process's sender identifier (`Utilities\IdentifierGenerator`, one service per process, a UUID generated when the service is created) and skip a message that carries their own. The process already did what the message reports before it published it, so a second pass would repeat the work: a connector's exchange writer would write the connector's own state update back to the device.
+
+- RedisDb's `Exchange\Handler` drops the message.
+- RabbitMq's `Handlers\Message` answers `MESSAGE_NACK`, and `Channels\Factory` calls `$channel->nack($message)`, which **re-queues** the message. With the default anonymous per-process queue the queue has one consumer, the process itself, so the publisher's own message can be delivered to it again, and nacked again. That is existing behaviour and is not changed here (tracked in #685); it is also why a shared queue (`queue.name`) gives no "exactly once" either.
+
+**A WebSocket SET is a command, not a broadcast.** A WAMP SET (`Devices\Controllers\ExchangeV1`) is addressed to its target, the connector or device process that owns the property, and only the target consumes it. It is not propagated to the other WebSocket clients. A document published with the `devices` source is a command (a WebSocket SET or an API write, as an action or as the state write it produces), and the Devices and DevicesModuleUiModule SocketsBridges, which forward exchange documents to WebSocket clients, skip it. So does the DevicesModuleUiModule state subscriber, which publishes a widget data source's document when the state of the property it reads changes: it still cleans the data source's caches, but publishes nothing for a `devices`-sourced change. The clients see the change when the target reports the resulting state under its own source, which is the path every change a connector reports already takes.
+
+What a connector reports about itself is not a command, so it carries the connector's source, not `devices`: its device and connector connection state (`Utilities\DeviceConnection::setState()` and `ConnectorConnection::setState()` take the source of whoever reports) and the validity reset of its properties when it starts or stops. WebSocket clients receive those, which includes Devices clients that did not before.
+
 ## Automators
 
 Both automators take no configuration -- registering the DI extension is enough to make their conditions/actions available to the triggers module:

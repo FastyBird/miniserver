@@ -114,6 +114,7 @@ final class DeviceAttribute implements Queue\Consumer
 				$this->deviceConnectionManager->setState(
 					$device,
 					DevicesTypes\ConnectionState::from($message->getValue()),
+					Sources\Connector::FB_MQTT,
 				);
 			}
 		} else {
@@ -212,6 +213,7 @@ final class DeviceAttribute implements Queue\Consumer
 				$this->deviceConnectionManager->setState(
 					$device,
 					DevicesTypes\ConnectionState::UNKNOWN,
+					Sources\Connector::FB_MQTT,
 				);
 			} else {
 				$findDevicePropertyQuery = new FbMqttQueries\Entities\FindDeviceProperties();

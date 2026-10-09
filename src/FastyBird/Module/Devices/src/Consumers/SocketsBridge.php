@@ -50,6 +50,10 @@ final readonly class SocketsBridge implements Consumers\Consumer
 		Documents\Document|null $document,
 	): void
 	{
+		// A document with the Devices source is a command (a WAMP SET or an API write, as an action
+		// or as the state write it produces) addressed to its target, the connector or device
+		// process. It is not broadcast to WebSocket clients: they see the result when the target
+		// reports it, under its own source.
 		if ($source === Sources\Module::DEVICES) {
 			return;
 		}
