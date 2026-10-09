@@ -8,7 +8,7 @@ use Nette\Utils;
 /**
  * WAMP single client connection
  */
-final class WampClient extends Client implements ConnectedClient
+final class WampClient extends Client
 {
 
 	/**
