@@ -20,9 +20,10 @@ use function assert;
 
 /**
  * The handler does not consume a message that its own process published, recognised by the
- * sender identifier the publisher stamps on it: it answers MESSAGE_NACK, which the channel turns
- * into a nack. Every other message is handed to the exchange consumers and acknowledged. The
- * identifier is one service per process, shared by the publisher and the handler, which is why
+ * sender identifier the publisher stamps on it: it answers MESSAGE_ACK, so the broker drops the
+ * message, and runs no consumer. It never answers MESSAGE_NACK, which the channel turns into a
+ * re-queue: the process's own queue would hand the message straight back (#685). Every other
+ * message is handed to the exchange consumers and acknowledged. The identifier is one service per process, shared by the publisher and the handler, which is why
  * each test builds the publisher and the handler around one generator.
  */
 final class MessageTest extends Tests\Cases\Unit\BaseTestCase
@@ -43,7 +44,7 @@ final class MessageTest extends Tests\Cases\Unit\BaseTestCase
 
 		$result = $this->createHandler($identifier, $consumer)->handle($this->publish($identifier));
 
-		self::assertSame(Handlers\Message::MESSAGE_NACK, $result);
+		self::assertSame(Handlers\Message::MESSAGE_ACK, $result);
 		self::assertSame([], $consumer->calls);
 	}
 
