@@ -32,6 +32,12 @@ Enforced by `make naming`, which checks three places: namespace segments under
 `FastyBird\Core`, declared type names under `FastyBird\Core`, and `use FastyBird\Core\... as X`
 aliases anywhere in the repository.
 
+The same namespace denylist covers Core's JS. No directory under `src/FastyBird/Core/Core/assets`
+may be named `application`, `metadata`, `tools` or any other entry of it, compared
+case-insensitively. A JS capability directory is named for what its code is (`api`, `eventBus`,
+`security`, `values`, `websockets`), exactly as in PHP. The check covers Core only; E7 widens it
+to every package's `assets/`.
+
 ## Import aliases
 
 Import without an alias where the bare name does not collide. On collision, the alias is the

@@ -126,6 +126,19 @@
  * flagged an import's alias as wrong, check 4 skips it rather than repeating the finding under
  * the `import` category.
  *
+ * CHECK 5: Core's JS asset directories (#687)
+ *
+ * The TypeScript and Vue sources of the Core package sit under src/FastyBird/Core/Core/assets,
+ * and until Epic E6 they were grouped by the libraries Core was assembled from (`application/`,
+ * `metadata/`, `tools/`), the same lineage the namespaces above carried. Check 5 walks every
+ * directory below that root and rejects one whose own name equals an entry of
+ * FB_NAMESPACE_DENYLIST, compared case-insensitively, so `tools/`, `Tools/` and `TOOLS/` are all
+ * refused. There is no second list: a former package name is the same fault in PHP and in JS.
+ * A directory is reported once, at the segment that offends; what lies below it is not
+ * reported again. The scope is Core only. Epic E7 widens it to the `assets/` of the other
+ * packages. Unlike checks 1 to 4 it has no file to scan, so it needs its own floor: a missing
+ * `assets/` root, or one with fewer than ten directories, is the tool's failure, not a pass.
+ *
  * Exit codes follow tools/check-layering.php:
  *   0  clean
  *   1  at least one violation, or the baseline has gone stale
@@ -163,6 +176,12 @@ const FB_NAMESPACE_DENYLIST = [
 	'HttpServer',
 	'IPub',
 ];
+
+/**
+ * Check 5's root, relative to the repository: the one package whose JS has been moved to the
+ * capability layout. Epic E7 widens it to every package's `assets/`.
+ */
+const FB_CORE_ASSETS_ROOT = 'src/FastyBird/Core/Core/assets';
 
 const FB_TYPE_DENYLIST = [
 	'SimpleAuth',
@@ -536,6 +555,64 @@ function fbExpectedAlias(string $name, array $siblings): string
 }
 
 /**
+ * Check 5: every directory below Core's JS assets root whose own name is a former package name.
+ * See "CHECK 5" in the file docblock.
+ *
+ * A directory is reported by its own name only, so `assets/tools` is one violation, not one for
+ * it and another for each directory beneath it. The offending names are the entries of
+ * FB_NAMESPACE_DENYLIST, compared case-insensitively.
+ *
+ * @return array<string>
+ */
+function fbCheckAssetDirectories(string $repoRoot): array
+{
+	$assetsRelative = FB_CORE_ASSETS_ROOT;
+	$assetsRoot = $repoRoot . '/' . $assetsRelative;
+
+	if (!is_dir($assetsRoot)) {
+		fbFail(sprintf('"%s" is not a directory', $assetsRoot));
+	}
+
+	$denied = array_map(strtolower(...), FB_NAMESPACE_DENYLIST);
+	$violations = [];
+	$directories = 0;
+
+	$iterator = new RecursiveIteratorIterator(
+		new RecursiveCallbackFilterIterator(
+			new RecursiveDirectoryIterator($assetsRoot, FilesystemIterator::SKIP_DOTS),
+			static fn (SplFileInfo $entry): bool => $entry->getFilename() !== 'node_modules',
+		),
+		RecursiveIteratorIterator::SELF_FIRST,
+	);
+
+	foreach ($iterator as $entry) {
+		assert($entry instanceof SplFileInfo);
+
+		if (!$entry->isDir()) {
+			continue;
+		}
+
+		$directories++;
+
+		$segment = $entry->getFilename();
+
+		if (in_array(strtolower($segment), $denied, true)) {
+			$violations[] = sprintf(
+				"assets\t%s\t%s is a former package name",
+				substr($entry->getPathname(), strlen($repoRoot) + 1),
+				$segment,
+			);
+		}
+	}
+
+	if ($directories < 10) {
+		fbFail(sprintf('found only %d directories below "%s"; expected at least 10', $directories, $assetsRelative));
+	}
+
+	return $violations;
+}
+
+/**
  * @return array<string>
  */
 function fbCheckFile(string $path, string $code, string $relative): array
@@ -751,6 +828,11 @@ if ($coreImports < 1_500) {
 // #541: same reasoning, for every import checks 3 and 4 now share, not just the Core ones.
 if ($allImportLines < 20_000) {
 	fbFail(sprintf('found only %d total import lines; expected at least 20000', $allImportLines));
+}
+
+// 5. Core's JS asset directories (#687). Not per-file, so it runs once, outside the loop.
+foreach (fbCheckAssetDirectories($repoRoot) as $violation) {
+	$violations[] = $violation;
 }
 
 sort($violations);
