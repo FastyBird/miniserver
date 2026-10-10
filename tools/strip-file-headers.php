@@ -148,7 +148,9 @@ function fbHeaderRejection(string $docblock): string|null
 	$name = implode('', $filename);
 
 	if (preg_match(FB_HEADER_FILENAME, $name) !== 1) {
-		return sprintf('its first line is not a *.php filename: "%s"', $name);
+		return count($filename) === 1
+			? sprintf('does not start with a *.php filename: "%s"', $name)
+			: sprintf('holds text besides a *.php filename before its tags: "%s"', implode(' / ', $filename));
 	}
 
 	return null;

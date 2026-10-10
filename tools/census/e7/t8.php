@@ -8,7 +8,8 @@
  * createService()/findByTag() on it. A DI extension's compile-time use of the builder is not one.
  *
  * With --snapshot <dir> (a tools/di-snapshot.php recording), each lookup is checked against the
- * compiled containers for a dependency cycle: injecting the looked-up service T into the locator's
+ * compiled containers for a dependency cycle (a service "holds the locator" when its type is the
+ * locator class or a subclass of it -- Ui's Widget hydrator is abstract): injecting the looked-up service T into the locator's
  * service S closes a cycle when T already reaches S through constructor arguments, setup calls or
  * factories. The table gives, per lookup, how many containers have such a path, the first path
  * found, and whether it already passes through a lazy definition (which breaks the construction
@@ -77,7 +78,11 @@ function e7SnapshotReach(array $container, string $from, string $to): array|null
 		$graph[$name] = array_keys($targets);
 	}
 
-	$isType = static fn (string $name, string $type): bool => ($services[$name]['type'] ?? null) === $type;
+	$isType = static function (string $name, string $type) use ($services): bool {
+		$serviceType = $services[$name]['type'] ?? null;
+
+		return is_string($serviceType) && ($serviceType === $type || (e7Reflect($serviceType) !== null && is_a($serviceType, $type, true)));
+	};
 
 	foreach (array_keys($services) as $start) {
 		if (!$isType($start, $from)) {
@@ -172,7 +177,8 @@ foreach ($byClass as $locator => $lookups) {
 			$hasLocator = false;
 
 			foreach ($container['services'] as $service) {
-				$hasLocator = $hasLocator || ($service['type'] ?? null) === $locator;
+				$serviceType = $service['type'] ?? null;
+				$hasLocator = $hasLocator || (is_string($serviceType) && ($serviceType === $locator || (e7Reflect($serviceType) !== null && is_a($serviceType, $locator, true))));
 			}
 
 			if (!$hasLocator) {
