@@ -101,15 +101,16 @@ discriminators: ## Check every Doctrine inheritance root declares an explicit di
 
 # Like `layers` and `discriminators`, plain PHP with no vendor/ dependency, so it runs on a
 # bare checkout before `composer install`. Guards the invariant that no file names a library
-# fastybird/miniserver-core was assembled from -- in a Core namespace segment, in a declared
-# type name, or in a `use FastyBird\Core\... as X` alias anywhere in the repository -- and no
-# directory under Core's JS assets (src/FastyBird/Core/Core/assets) is named after one.
+# fastybird/miniserver-core was assembled from -- in a namespace segment or a declared type
+# name of any package, or in a `use FastyBird\Core\... as X` alias anywhere in the repository
+# -- and no directory under any package's JS assets (src/FastyBird/<Type>/<Name>/assets) is
+# named after one.
 #
 # Aliases are the reason this is a gate rather than a review habit. There were 3,076 of them
 # when the Core identity refactor started, in 131 distinct forms, and they existed purely
 # because nothing checked. tools/naming-baseline.txt records the ones not yet reached; it may
 # only shrink, and a stale entry fails the gate.
-naming: ## Check no PHP file or Core JS directory names a library that Core was assembled from
+naming: ## Check no PHP file or package JS directory names a library that Core was assembled from
 	$(PRE_PHP) php tools/check-naming.php $(ARGS)
 
 phpstan: ## Analyse code with PHPStan
