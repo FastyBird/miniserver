@@ -27,12 +27,13 @@
  * `declare(strict_types = 1);` statement and the `namespace` keyword -- nothing but whitespace on
  * either side -- and its content, line by line with the leading `*` stripped, is only:
  *
- *   - the filename: one or more lines before the first tag that, joined, read `<name>.php`. Any
- *     form is accepted: the file's own name, a stale one (120 headers name a file that has since
- *     been renamed), or one split over two lines (`Plugin/ApiKey/src/Entities/TEntity.php` has
- *     ` * trait TEntity` and `.php`). A leading `class`/`interface`/`trait`/`enum` word is
- *     tolerated for that reason. The header is recognised by its shape, never by comparing the
- *     name with the file;
+ *   - the filename: one token ending in `.php`, optionally after a `class`/`interface`/`trait`/
+ *     `enum` word. It may be the file's own name or a stale one (120 headers name a file that has
+ *     since been renamed), and it may be split at the extension: the first line holds one token
+ *     and every further line before the tags is a whitespace-free fragment starting with `.`
+ *     (`Plugin/ApiKey/src/Entities/TEntity.php` has ` * trait TEntity` and `.php`). Any other
+ *     second line -- ` * Bootstrap` + ` * Foo.php` -- is prose, and the docblock is left alone.
+ *     The header is recognised by its shape, never by comparing the name with the file;
  *   - the nine forbidden tags, @package @subpackage @author @copyright @license @since @created
  *     @version @date, with any value;
  *   - blank `*` lines.
@@ -42,7 +43,8 @@
  *
  * ANY OTHER SHAPE IS LEFT ALONE AND REPORTED: a docblock in that position holding anything else
  * (a prose line, another tag, a filename after a tag), or a docblock before the namespace that is
- * not directly between declare and namespace but still carries a forbidden tag. Fixing those is a
+ * not directly between declare and namespace but still carries a forbidden tag. A file without a
+ * namespace has no header to judge: its docblocks are left alone and never reported. Fixing those is a
  * hand decision (#462 §15.1: by hand if the content is still only the filename and tags,
  * otherwise an escalation, §15.2). A forbidden tag in a class or member docblock is not a header
  * and is not this tool's business: `make csf` removes it once the package's ForbiddenAnnotations
@@ -70,7 +72,12 @@ const FB_HEADER_FORBIDDEN_TAGS = [
 
 const FB_HEADER_DEFAULT_SCOPE = ['src', 'tests', 'bin', 'public', 'migrations'];
 
-const FB_HEADER_FILENAME = '/^(?:(?:class|interface|trait|enum)\s+)?[A-Za-z0-9_.\/-]+\.php$/';
+// The first filename line: one token, optionally after a class/interface/trait/enum word.
+const FB_HEADER_FILENAME = '/^(?:(?:class|interface|trait|enum)\s+)?([A-Za-z0-9_.\/-]+)$/';
+
+// A continuation line of a split filename: a fragment of the extension, which starts with the dot
+// and holds no whitespace (` * trait TEntity` + `.php`). Anything else on a second line is prose.
+const FB_HEADER_FILENAME_CONTINUATION = '/^\.[A-Za-z0-9_.\/-]*$/';
 
 function fbHeaderFail(string $message): never
 {
@@ -145,12 +152,22 @@ function fbHeaderRejection(string $docblock): string|null
 		return 'has no filename line';
 	}
 
-	$name = implode('', $filename);
+	if (preg_match(FB_HEADER_FILENAME, $filename[0], $match) !== 1) {
+		return sprintf('does not start with a *.php filename: "%s"', implode(' / ', $filename));
+	}
 
-	if (preg_match(FB_HEADER_FILENAME, $name) !== 1) {
-		return count($filename) === 1
-			? sprintf('does not start with a *.php filename: "%s"', $name)
-			: sprintf('holds text besides a *.php filename before its tags: "%s"', implode(' / ', $filename));
+	$name = $match[1];
+
+	foreach (array_slice($filename, 1) as $continuation) {
+		if (preg_match(FB_HEADER_FILENAME_CONTINUATION, $continuation) !== 1) {
+			return sprintf('holds text besides a *.php filename before its tags: "%s"', implode(' / ', $filename));
+		}
+
+		$name .= $continuation;
+	}
+
+	if (!str_ends_with($name, '.php')) {
+		return sprintf('does not start with a *.php filename: "%s"', implode(' / ', $filename));
 	}
 
 	return null;
@@ -181,21 +198,26 @@ function fbHeaderAnalyse(string $code): array
 		return -1;
 	};
 
-	// A forbidden tag in a docblock before the namespace keyword, wherever it sits.
+	// A forbidden tag in a docblock before the namespace keyword, wherever it sits. A file with no
+	// namespace has no file header in this sense: a docblock there documents the code after it (a
+	// class docblock is `make cs`'s business, ForbiddenAnnotations), so it is neither removed nor
+	// reported.
 	$forbiddenBeforeNamespace = null;
+	$candidate = null;
 
 	foreach ($tokens as $token) {
 		if ($token->is(T_NAMESPACE)) {
+			$forbiddenBeforeNamespace = $candidate;
+
 			break;
 		}
 
 		if (
-			$token->is(T_DOC_COMMENT)
+			$candidate === null
+			&& $token->is(T_DOC_COMMENT)
 			&& preg_match('/^\s*\*?\s*@(' . implode('|', FB_HEADER_FORBIDDEN_TAGS) . ')\b/mi', $token->text) === 1
 		) {
-			$forbiddenBeforeNamespace = $token;
-
-			break;
+			$candidate = $token;
 		}
 	}
 
