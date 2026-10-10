@@ -20,8 +20,8 @@
  * @return array<string, array{0: string, 1: string, 2?: bool}>
  */
 
-$stateReader = 'The storage-backend contract the module reads a state through; its only implementation is the RedisDb bridge (K2) and the module resolves it by type (K3). The module\'s own caching facade beside it is already `%s`, so the contract is named for its side of the split: it reads.';
-$stateWriter = 'The storage-backend contract the module writes a state through (create/update/delete); implemented only by the RedisDb bridge (K2), resolved by type (K3). The facade beside it is already `%s`; the contract is named for what it does: it writes.';
+$stateReader = 'The storage-backend contract the module reads a state through; its only implementation is in the RedisDb bridge (K2), and the module\'s caching facade takes it as an optional, autowired constructor argument. That facade is already `%s`, so the contract is named for its side of the split: it reads.';
+$stateWriter = 'The storage-backend contract the module writes a state through (create/update/delete); its only implementation is in the RedisDb bridge (K2), taken by the facade as an optional, autowired constructor argument. The facade is already `%s`; the contract is named for what it does: it writes.';
 $finder = 'Gives a controller `%s()`: load the entity named by the request\'s URL id or answer 404. Named for the capability. A bare `Finders\\%s` would read as the entity `Entities\\…\\%s` the same controllers import.';
 $hasParams = 'The default implementation of the `Entities\\EntityParams` interface beside it (the JSON `params` column and its accessors). Core\'s pattern: interface `X`, trait `HasX` (`Persistence\\Entities\\EntityCreated` / `HasEntityCreated`). A bare drop collides with that interface.';
 $hasId = 'Gives an entity `getId()`%s, part of the package\'s `Entities\\Entity` contract. A bare drop collides with that interface. Alternatives: `HasId`, `IdentifiesEntity`.';
@@ -29,7 +29,7 @@ $parameter = 'The default implementation of the display-parameter interface `Par
 $loads = 'Gives a presenter `load%1$s()` and `load%2$s()`, which put the %3$s documents into the template. A bare `Presenters\\%1$s` would read as a presenter class next to `%1$sPresenter`.';
 
 return [
-	// ---- Module/Devices: the 12 state-store contracts (K2 + K3) --------------------------------
+	// ---- Module/Devices: the 12 state-store contracts (K2) -------------------------------------
 	'FastyBird\\Module\\Devices\\Models\\States\\Connectors\\IRepository' => ['Reader', sprintf($stateReader, 'Connectors\\Repository')],
 	'FastyBird\\Module\\Devices\\Models\\States\\Connectors\\IManager' => ['Writer', sprintf($stateWriter, 'Connectors\\Manager')],
 	'FastyBird\\Module\\Devices\\Models\\States\\Connectors\\Async\\IRepository' => ['Reader', sprintf($stateReader, 'Connectors\\Async\\Repository') . ' Async: the methods return promises.'],
@@ -43,7 +43,7 @@ return [
 	'FastyBird\\Module\\Devices\\Models\\States\\Channels\\Async\\IRepository' => ['Reader', sprintf($stateReader, 'Channels\\Async\\Repository') . ' Async: the methods return promises.'],
 	'FastyBird\\Module\\Devices\\Models\\States\\Channels\\Async\\IManager' => ['Writer', sprintf($stateWriter, 'Channels\\Async\\Manager') . ' Async: the methods return promises.'],
 
-	// ---- Module/Triggers: the 4 state-store contracts (K2 + K3) --------------------------------
+	// ---- Module/Triggers: the 4 state-store contracts (K2) ------------------------------------
 	'FastyBird\\Module\\Triggers\\Models\\States\\IActionsRepository' => ['ActionsReader', sprintf($stateReader, 'ActionsRepository') . ' Same split as Devices\' `Reader`/`Writer`; the plural stays because the namespace holds actions and conditions side by side.'],
 	'FastyBird\\Module\\Triggers\\Models\\States\\IActionsManager' => ['ActionsWriter', sprintf($stateWriter, 'ActionsManager')],
 	'FastyBird\\Module\\Triggers\\Models\\States\\IConditionsRepository' => ['ConditionsReader', sprintf($stateReader, 'ConditionsRepository')],
