@@ -397,6 +397,14 @@ final class E7Collector extends NodeVisitorAbstract
 			];
 		}
 
+		if ($node instanceof Node\Name && !$parent instanceof Node\Stmt\Namespace_) {
+			$resolved = $node->getAttribute('resolvedName');
+
+			if ($resolved instanceof Node\Name && preg_match('/^[IT][A-Z]/', $resolved->getLast()) === 1) {
+				$this->out['prefixedRefs'][] = [$resolved->toString(), $this->file, $node->getStartLine()];
+			}
+		}
+
 		if ($node instanceof Node\Stmt\Catch_) {
 			foreach ($node->types as $type) {
 				$this->out['catches'][] = [self::fq($type), $this->file, $node->getStartLine()];
@@ -519,7 +527,7 @@ function e7Index(): array
 
 	$parser = (new ParserFactory())->createForHostVersion();
 	$collector = new E7Collector();
-	$collector->out = ['decls' => [], 'catches' => [], 'instanceofs' => [], 'lookups' => [], 'mocks' => [], 'thisCalls' => [], 'fetches' => [], 'files' => $files, 'errors' => []];
+	$collector->out = ['decls' => [], 'catches' => [], 'instanceofs' => [], 'lookups' => [], 'mocks' => [], 'thisCalls' => [], 'fetches' => [], 'prefixedRefs' => [], 'files' => $files, 'errors' => []];
 	// Two passes: NameResolver resolves a name when it enters the node that holds it, so a
 	// ::class argument is not resolved yet when the collector enters the call around it.
 	$resolver = new NodeTraverser();
