@@ -1,5 +1,5 @@
 {
-	"application": {
+	"core": {
 		"menu": {
 			"root": "MiniServer",
 			"dashboard": "Dashboard"

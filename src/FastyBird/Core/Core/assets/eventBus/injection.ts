@@ -4,7 +4,7 @@ import { Emitter } from 'mitt';
 
 import { Events } from './types';
 
-const eventBusKey: InjectionKey<Emitter<Events> | undefined> = Symbol('Tools-EventBus');
+const eventBusKey: InjectionKey<Emitter<Events> | undefined> = Symbol('Core-EventBus');
 
 export function injectEventBus(app?: App): Emitter<Events> {
 	if (app && app._context && app._context.provides && app._context.provides[eventBusKey]) {

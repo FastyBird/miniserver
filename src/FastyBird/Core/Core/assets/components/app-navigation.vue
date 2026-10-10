@@ -46,7 +46,7 @@
 					v-if="!props.collapsed"
 					#title
 				>
-					{{ t('application.menu.user') }}
+					{{ t('core.menu.user') }}
 				</template>
 
 				<el-menu-item
@@ -72,7 +72,7 @@
 				>
 					<el-icon><Icon icon="fa6-solid:right-from-bracket" /></el-icon>
 					<template #title>
-						{{ t('application.userMenu.signOut') }}
+						{{ t('core.userMenu.signOut') }}
 					</template>
 				</el-menu-item>
 			</el-menu-item-group>
@@ -123,7 +123,7 @@ const userAccount = injectAccountManager();
 
 const userMenuItems = [
 	{
-		title: t('application.userMenu.accountSettings'),
+		title: t('core.userMenu.accountSettings'),
 		icon: FasUser,
 		click: (): void => {
 			// TODO: Handle action
@@ -132,7 +132,7 @@ const userMenuItems = [
 		index: '2-1',
 	},
 	{
-		title: t('application.userMenu.passwordChange'),
+		title: t('core.userMenu.passwordChange'),
 		icon: FasLock,
 		click: (): void => {
 			// TODO: Handle action

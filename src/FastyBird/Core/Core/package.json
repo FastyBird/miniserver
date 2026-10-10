@@ -7,7 +7,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "description": "FastyBird MiniServer core application shell, shared tools, metadata and WebSockets/WAMP client for Vue 3",
+  "description": "FastyBird MiniServer core: the application shell, shared Vue composables, stores, API client and WebSockets/WAMP client for Vue 3",
   "keywords": [
     "fastybird",
     "fb",
@@ -15,7 +15,6 @@
     "ui",
     "interface",
     "vue",
-    "metadata",
     "websocket",
     "wamp"
   ],

@@ -1,6 +1,6 @@
 import { App } from 'vue';
 
-// Import library
+// The WAMP v1 client singleton, its logger and the injection key it is provided under
 import wampClient, { Client } from './Client';
 import { Logger } from './Logger';
 import { InstallFunction, PluginOptions } from './types';

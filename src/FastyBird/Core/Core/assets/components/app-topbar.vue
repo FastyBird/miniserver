@@ -56,12 +56,12 @@
 							divided
 						>
 							<div @click="onLock">
-								{{ t('application.userMenu.lockScreen') }}
+								{{ t('core.userMenu.lockScreen') }}
 							</div>
 						</el-dropdown-item>
 						<el-dropdown-item :divided="typeof userAccount?.lock !== 'function'">
 							<div @click="onSignOut">
-								{{ t('application.userMenu.signOut') }}
+								{{ t('core.userMenu.signOut') }}
 							</div>
 						</el-dropdown-item>
 					</el-dropdown-menu>

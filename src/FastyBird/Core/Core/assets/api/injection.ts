@@ -2,7 +2,7 @@ import { App, InjectionKey, inject as _inject, hasInjectionContext } from 'vue';
 
 import { AxiosInstance } from 'axios';
 
-const backendKey: InjectionKey<AxiosInstance | undefined> = Symbol('Tools-Backend');
+const backendKey: InjectionKey<AxiosInstance | undefined> = Symbol('Core-Backend');
 
 export function injectBackend(app?: App): AxiosInstance {
 	if (app && app._context && app._context.provides && app._context.provides[backendKey]) {
