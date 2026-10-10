@@ -21,11 +21,11 @@ export default defineConfig({
 	plugins: [
 		vue(),
 		vueI18n({
-			include: [resolve(__dirname, './src/FastyBird/Core/Core/assets/application/locales/**.json')],
+			include: [resolve(__dirname, './src/FastyBird/Core/Core/assets/locales/**.json')],
 		}),
 		eslint(),
 		viteVConsole({
-			entry: resolve(__dirname, './src/FastyBird/Core/Core/assets/application/main.ts'), // entry file
+			entry: resolve(__dirname, './src/FastyBird/Core/Core/assets/main.ts'), // entry file
 			localEnabled: true, // dev environment
 			enabled: false, // build production
 			config: {
