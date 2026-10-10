@@ -68,6 +68,9 @@ rectorf: ## Apply the PHPUnit annotation-to-attribute conversion, then fix codin
 # rule). Unlike `make rector`, this applies the config; pass ARGS=--dry-run to preview. Run it in
 # the application image, then `make csf`. RECTOR_CONFIG is required: without it Rector would
 # fall back to the repository-root rector.php, which is the unrelated PHPUnit conversion.
+# Epic E7 (#462) runs its two configs through the same target, limited to a type or a package by
+# E7_PACKAGE: `E7_PACKAGE=Plugin make rector-e5 RECTOR_CONFIG=tools/rector/e7-override.php`
+# (and tools/rector/e7-readonly.php); without E7_PACKAGE they cover all 28 packages' src.
 rector-e5: ## Apply an E5 Rector config: make rector-e5 RECTOR_CONFIG=tools/rector/e5-<topic>.php [ARGS=--dry-run]
 	test -n "$(RECTOR_CONFIG)" || { echo "rector-e5: set RECTOR_CONFIG=tools/rector/<config>.php" >&2; exit 2; }
 	test -f "$(RECTOR_CONFIG)" || { echo "rector-e5: $(RECTOR_CONFIG) does not exist" >&2; exit 2; }
