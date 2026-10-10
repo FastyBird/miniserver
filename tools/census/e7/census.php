@@ -8,6 +8,9 @@
  *   php tools/census/e7/census.php <table> [--package <Type>[/<Name>]]... [--<input> <file>]
  *
  *   index   the parse index's size: files, declarations, parse errors
+ *   phpcs-ruleset  write $E7_DIR/phpcs-e7.xml: tools/phpcs.xml without the six E7
+ *           exclude-patterns of the ClassConstantTypeHint and ForbiddenAnnotations blocks, which
+ *           T9's --phpcs report is produced with (see the census document, "How to reproduce")
  *   t1      every I-prefixed interface and T-prefixed trait, its users, the type its bare name
  *           would collide with, and the proposed role name from names.php
  *   t2      every interface declared in a package's src/: production implementers (transitive,
@@ -255,6 +258,20 @@ switch ($table) {
 		foreach ($index['errors'] as [$file, $error]) {
 			printf("  parse error %s: %s\n", $file, $error);
 		}
+
+		break;
+	case 'phpcs-ruleset':
+		// tools/phpcs.xml without the two E7 carve-outs, with absolute paths, for T9's counts
+		$xml = (string) file_get_contents(e7Root() . '/tools/phpcs.xml');
+		$xml = (string) preg_replace_callback(
+			'~(<rule ref="SlevomatCodingStandard\.(?:TypeHints\.ClassConstantTypeHint|Commenting\.ForbiddenAnnotations)">)(.*?)(</rule>)~s',
+			static fn (array $m): string => $m[1] . preg_replace('~\s*<exclude-pattern>src/FastyBird/(Addon|Automator|Bridge|Connector|Module|Plugin)/\*</exclude-pattern>~', '', $m[2]) . $m[3],
+			$xml,
+		);
+		$xml = str_replace(['value="./.."', 'ref="./phpcs-ruleset.xml"'], ['value="' . e7Root() . '"', 'ref="' . e7Root() . '/tools/phpcs-ruleset.xml"'], $xml);
+		$xml = (string) preg_replace('~\s*<arg name="cache"[^>]*/>~', '', $xml);
+		file_put_contents(e7Scratch() . '/phpcs-e7.xml', $xml);
+		printf("wrote %s/phpcs-e7.xml (%d E7 exclude-patterns left)\n", e7Scratch(), preg_match_all('~<exclude-pattern>src/FastyBird/(Addon|Automator|Bridge|Connector|Module|Plugin)/\*</exclude-pattern>~', $xml));
 
 		break;
 	case 't1':
