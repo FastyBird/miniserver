@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Prints the public surface of `@fastybird/miniserver-core`: one `name<TAB>kind` line for every
- * name that src/FastyBird/Core/Core/assets/entry.ts exports, sorted.
+ * name that src/FastyBird/Core/Core/assets/entry.ts exports, sorted. Given an entry argument, it
+ * prints that module's surface instead (see Usage).
  *
  * Why: the package has a single `"."` export, `./assets/entry.ts`, and four other packages
  * consume it through the bare specifier. Moving or splitting the files behind that entry must
@@ -33,19 +34,28 @@
  *
  * Usage:
  *   node scripts/js-api-surface.mjs            # the surface to stdout, one line per name
+ *   node scripts/js-api-surface.mjs <entry>    # the same for another package's entry module
+ *   node scripts/js-api-surface.mjs --entry <entry>
+ *
+ * Without an argument the entry is Core's src/FastyBird/Core/Core/assets/entry.ts, and the output
+ * is exactly what it was before the argument existed. <entry> is a path to a `.ts` module,
+ * relative to the repository root or absolute -- for Epic E7 (#462 §3 D9), the three modules whose
+ * JS directories E7.1 renames: src/FastyBird/Module/{Accounts,Devices,Ui}/assets/entry.ts. The
+ * same rules apply to any entry: the root tsconfig.json, `.vue` imports opaque, aliases followed.
  *
  * The only dependency is `typescript`, already installed for `vue-tsc`. Exit codes:
  *   0  surface printed
  *   1  the surface could not be determined (an unresolved import, an unresolved export, or an
  *      entry that does not export anything), so the output would be incomplete
  */
-import { dirname, join } from 'node:path';
+import { existsSync } from 'node:fs';
+import { dirname, isAbsolute, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import ts from 'typescript';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const ENTRY = join(ROOT, 'src', 'FastyBird', 'Core', 'Core', 'assets', 'entry.ts');
+const DEFAULT_ENTRY = join(ROOT, 'src', 'FastyBird', 'Core', 'Core', 'assets', 'entry.ts');
 const TSCONFIG = join(ROOT, 'tsconfig.json');
 
 // What every `.vue` import resolves to. A real component is a default export of unknown shape.
@@ -147,6 +157,27 @@ function kindsOf(symbol) {
 	return kinds;
 }
 
+function readEntry(args) {
+	if (args.length === 0) {
+		return DEFAULT_ENTRY;
+	}
+
+	const path = args[0] === '--entry' && args.length === 2 ? args[1] : args.length === 1 && !args[0].startsWith('-') ? args[0] : null;
+
+	if (path === null) {
+		fail('usage: node scripts/js-api-surface.mjs [[--entry] <entry.ts>]');
+	}
+
+	const entry = isAbsolute(path) ? path : resolve(ROOT, path);
+
+	if (!existsSync(entry)) {
+		fail(`${path} does not exist`);
+	}
+
+	return entry;
+}
+
+const ENTRY = readEntry(process.argv.slice(2));
 const options = readCompilerOptions();
 const program = ts.createProgram({ rootNames: [ENTRY], options, host: createHost(options) });
 const checker = program.getTypeChecker();

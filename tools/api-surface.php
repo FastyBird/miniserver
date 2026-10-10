@@ -52,6 +52,33 @@
  *
  * Write scratch manifests under var/tools/api-surface/, which var/tools/.gitignore ignores.
  *
+ * ANY OTHER PACKAGE: --package <Type>/<Name> (Epic E7, #462 §3 D9). Both modes take it:
+ *
+ *   php tools/api-surface.php --package Module/Devices --write <file>
+ *   php tools/api-surface.php --package Module/Devices --diff <base.json> [--changes <list.php>]...
+ *
+ * The namespace root is the one PSR-4 prefix of src/FastyBird/<Type>/<Name>/composer.json's
+ * `autoload` (`FastyBird\Module\Devices\`), minus its `Tests\` sub-namespace; the mirror whose
+ * freshness is checked is that package's own, vendor/<composer name>, against
+ * src/FastyBird/<Type>/<Name>/src (refresh it with `COMPOSER_MIRROR_PATH_REPOS=1 composer
+ * reinstall <composer name>`). Only the types declared under that root are recorded; a type of
+ * another package appears only by name, where a recorded type mentions it. Without --package the
+ * tool is exactly the Core tool described above.
+ *
+ * How an E7 PR uses it (#462 §13 P3): there is no frozen E7 base. E7 is long and `main` moves, so
+ * each PR writes, for every package it touches, the base manifest from a checkout of its MERGE
+ * BASE (`git merge-base origin/main HEAD`) and diffs its head against it, explained by the change
+ * list it commits under tools/api-maps/e7/<pr>-<Type>-<Name>.php (the issue number, then the
+ * package):
+ *
+ *   (merge base) php tools/api-surface.php --package Module/Devices --write var/tools/api-surface/base-Module-Devices.json
+ *   (head)       php tools/api-surface.php --package Module/Devices --diff var/tools/api-surface/base-Module-Devices.json \
+ *                    --changes tools/api-maps/e7/700-Module-Devices.php
+ *
+ * A mechanical (a-)PR's list may hold only constant types; `#[\Override]` is never recorded (below),
+ * so it needs no item. A package whose surface the PR does not change still runs the diff, with no
+ * --changes, and must exit 0.
+ *
  * WHAT IS RECORDED, per type, keyed by FQCN and sorted by it:
  *
  *   kind        class | interface | trait | enum | error
@@ -134,6 +161,8 @@ const FB_API_SOURCE = 'src/FastyBird/Core/Core/src';
 
 const FB_API_MIRROR = 'vendor/fastybird/miniserver-core';
 
+const FB_API_PACKAGE = 'fastybird/miniserver-core';
+
 const FB_API_CHANGE_KEYS = ['renamed', 'removed', 'added', 'changed'];
 
 const FB_API_MEMBER_GROUPS = ['constants', 'cases', 'properties', 'methods'];
@@ -178,26 +207,92 @@ function fbApiPhpFiles(string $directory): array
 }
 
 /**
+ * The package the manifest is built for: Core by default, or the one --package names.
+ *
+ * @param array{prefix: string, excluded: string, source: string, mirror: string, package: string}|null $set
+ *
+ * @return array{prefix: string, excluded: string, source: string, mirror: string, package: string}
+ */
+function fbApiTarget(array|null $set = null): array
+{
+	static $target = [
+		'prefix' => FB_API_PREFIX,
+		'excluded' => FB_API_EXCLUDED_PREFIX,
+		'source' => FB_API_SOURCE,
+		'mirror' => FB_API_MIRROR,
+		'package' => FB_API_PACKAGE,
+	];
+
+	if ($set !== null) {
+		$target = $set;
+	}
+
+	return $target;
+}
+
+/**
+ * Reads src/FastyBird/<Type>/<Name>/composer.json: its name and its single PSR-4 root.
+ *
+ * @return array{prefix: string, excluded: string, source: string, mirror: string, package: string}
+ */
+function fbApiPackageTarget(string $root, string $package): array
+{
+	if (preg_match('~^[A-Z][A-Za-z0-9]*/[A-Z][A-Za-z0-9]*$~', $package) !== 1) {
+		fbApiFail(sprintf('--package takes <Type>/<Name>, for example Module/Devices, not "%s"', $package));
+	}
+
+	$directory = 'src/FastyBird/' . $package;
+	$manifest = json_decode(fbApiRead($root . '/' . $directory . '/composer.json'), true);
+
+	if (!is_array($manifest) || !is_string($manifest['name'] ?? null)) {
+		fbApiFail(sprintf('%s/composer.json has no package name', $directory));
+	}
+
+	$psr4 = $manifest['autoload']['psr-4'] ?? null;
+
+	if (!is_array($psr4) || count($psr4) !== 1) {
+		fbApiFail(sprintf('%s/composer.json must declare exactly one autoload PSR-4 root', $directory));
+	}
+
+	$prefix = (string) array_key_first($psr4);
+	$path = trim((string) $psr4[$prefix], '/');
+
+	return [
+		'prefix' => $prefix,
+		'excluded' => $prefix . 'Tests\\',
+		'source' => $directory . '/' . $path,
+		'mirror' => 'vendor/' . $manifest['name'],
+		'package' => $manifest['name'],
+	];
+}
+
+/**
  * Refuses a mirror that is a symlink (it can never go stale, so it hides the drift CI sees) or a
  * copy that differs from the source tree in any file.
  */
 function fbApiCheckMirror(string $root): void
 {
-	$mirror = $root . '/' . FB_API_MIRROR;
+	$target = fbApiTarget();
+	$mirror = $root . '/' . $target['mirror'];
 
 	if (is_link($mirror)) {
 		fbApiFail(sprintf(
-			'%s is a symlink; reinstall it as a copy: COMPOSER_MIRROR_PATH_REPOS=1 composer reinstall fastybird/miniserver-core',
-			FB_API_MIRROR,
+			'%s is a symlink; reinstall it as a copy: COMPOSER_MIRROR_PATH_REPOS=1 composer reinstall %s',
+			$target['mirror'],
+			$target['package'],
 		));
 	}
 
-	$source = fbApiPhpFiles($root . '/' . FB_API_SOURCE);
+	if (!is_dir($mirror)) {
+		fbApiFail(sprintf('%s does not exist; run COMPOSER_MIRROR_PATH_REPOS=1 composer install', $target['mirror']));
+	}
+
+	$source = fbApiPhpFiles($root . '/' . $target['source']);
 	$copy = fbApiPhpFiles($mirror . '/src');
 	$stale = array_merge(array_diff($source, $copy), array_diff($copy, $source));
 
 	foreach (array_intersect($source, $copy) as $file) {
-		if (sha1_file($root . '/' . FB_API_SOURCE . '/' . $file) !== sha1_file($mirror . '/src/' . $file)) {
+		if (sha1_file($root . '/' . $target['source'] . '/' . $file) !== sha1_file($mirror . '/src/' . $file)) {
 			$stale[] = $file;
 		}
 	}
@@ -206,11 +301,12 @@ function fbApiCheckMirror(string $root): void
 		sort($stale, SORT_STRING);
 
 		fbApiFail(sprintf(
-			"%s/src differs from %s in %d file(s), e.g. %s; refresh it: COMPOSER_MIRROR_PATH_REPOS=1 composer reinstall fastybird/miniserver-core",
-			FB_API_MIRROR,
-			FB_API_SOURCE,
+			'%s/src differs from %s in %d file(s), e.g. %s; refresh it: COMPOSER_MIRROR_PATH_REPOS=1 composer reinstall %s',
+			$target['mirror'],
+			$target['source'],
 			count($stale),
 			$stale[0],
+			$target['package'],
 		));
 	}
 }
@@ -672,10 +768,11 @@ function fbApiBuild(string $root): array
 		fbApiFail('vendor/autoload.php did not return Composer\'s ClassLoader');
 	}
 
-	$directories = $loader->getPrefixesPsr4()[FB_API_PREFIX] ?? [];
+	$target = fbApiTarget();
+	$directories = $loader->getPrefixesPsr4()[$target['prefix']] ?? [];
 
 	if ($directories === []) {
-		fbApiFail(sprintf('the autoloader registers no PSR-4 directory for %s', FB_API_PREFIX));
+		fbApiFail(sprintf('the autoloader registers no PSR-4 directory for %s', $target['prefix']));
 	}
 
 	$fqcns = [];
@@ -684,12 +781,12 @@ function fbApiBuild(string $root): array
 		$directory = realpath($directory);
 
 		if ($directory === false) {
-			fbApiFail('a PSR-4 directory of ' . FB_API_PREFIX . ' does not exist');
+			fbApiFail('a PSR-4 directory of ' . $target['prefix'] . ' does not exist');
 		}
 
 		foreach (fbApiPhpFiles($directory) as $file) {
 			foreach (fbApiFileInfo($directory . '/' . $file)['types'] as $fqcn) {
-				if (str_starts_with($fqcn, FB_API_PREFIX) && !str_starts_with($fqcn, FB_API_EXCLUDED_PREFIX)) {
+				if (str_starts_with($fqcn, $target['prefix']) && !str_starts_with($fqcn, $target['excluded'])) {
 					$fqcns[$fqcn] = true;
 				}
 			}
@@ -1312,6 +1409,7 @@ $target = null;
 $headPath = null;
 $changePaths = [];
 $suggest = false;
+$package = null;
 
 for ($i = 0; $i < count($arguments); $i++) {
 	$argument = $arguments[$i];
@@ -1320,7 +1418,7 @@ for ($i = 0; $i < count($arguments); $i++) {
 		case '--write':
 		case '--diff':
 			if ($mode !== null || !isset($arguments[$i + 1])) {
-				fbApiFail('usage: --write <file> | --diff <base.json> [--head <head.json>] [--changes <list.php>]... [--suggest]');
+				fbApiFail('usage: [--package <Type>/<Name>] --write <file> | --diff <base.json> [--head <head.json>] [--changes <list.php>]... [--suggest]');
 			}
 
 			$mode = substr($argument, 2);
@@ -1339,13 +1437,25 @@ for ($i = 0; $i < count($arguments); $i++) {
 			$suggest = true;
 
 			break;
+		case '--package':
+			if ($package !== null) {
+				fbApiFail('--package may be given once');
+			}
+
+			$package = $arguments[++$i] ?? fbApiFail('--package needs <Type>/<Name>');
+
+			break;
 		default:
 			fbApiFail(sprintf('unknown argument "%s"', $argument));
 	}
 }
 
 if ($mode === null || $target === null) {
-	fbApiFail('usage: --write <file> | --diff <base.json> [--head <head.json>] [--changes <list.php>]... [--suggest]');
+	fbApiFail('usage: [--package <Type>/<Name>] --write <file> | --diff <base.json> [--head <head.json>] [--changes <list.php>]... [--suggest]');
+}
+
+if ($package !== null) {
+	fbApiTarget(fbApiPackageTarget($root, $package));
 }
 
 if ($mode === 'write') {
