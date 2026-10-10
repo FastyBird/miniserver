@@ -1,2 +1,2 @@
-// Re-export library types
 export * from './types';
+export * from './utilities';

@@ -4,8 +4,6 @@ import { Router } from 'vue-router';
 
 import { Pinia } from 'pinia';
 
-export * from '../composables/types';
-
 export interface IExtensionOptions<I18T extends Record<string, unknown>> {
 	router: Router;
 	meta: {

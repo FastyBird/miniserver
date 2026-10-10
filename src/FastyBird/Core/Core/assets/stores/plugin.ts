@@ -1,6 +1,7 @@
 import { App } from 'vue';
 
-import { StoresManager, provideStoresManager } from '../stores';
+import { provideStoresManager } from './injection';
+import { StoresManager } from './manager';
 
 export default {
 	install: async (app: App): Promise<void> => {

@@ -27,8 +27,8 @@
 <script setup lang="ts">
 import { useNamespace } from 'element-plus';
 
-import LogoBird from '../assets/images/fb_bird.svg?component';
-import LogoFastyBird from '../assets/images/fb_fastybird.svg?component';
+import LogoBird from '../images/fb_bird.svg?component';
+import LogoFastyBird from '../images/fb_fastybird.svg?component';
 
 import AppNavigation from './app-navigation.vue';
 import { IAppSidebarProps } from './app-sidebar.types';

@@ -10,15 +10,17 @@ import { extensions } from '@config/extensions';
 import { addCollection } from '@iconify/vue';
 import { createHead } from '@unhead/vue/client';
 
-import { IExtensionsOptions, backendPlugin, eventBusPlugin, extensionsPlugin, storesPlugin } from '../tools';
-import { createWampV1Client } from '../websockets';
-
 import App from './App.vue';
+import { backendPlugin } from './api';
+import { eventBusPlugin } from './eventBus';
+import { IExtensionsOptions, extensionsPlugin } from './extensions';
 import { iconCollections } from './icons.generated';
 import i18n from './locales';
 import router from './router';
+import { storesPlugin } from './stores';
 import './styles/base.scss';
 import './styles/element-plus.scss';
+import { createWampV1Client } from './websockets';
 
 // Register the trimmed, offline Iconify collections (see icons.generated.ts)
 // before anything renders, so <Icon icon="fa6-...:..."/> never falls back to

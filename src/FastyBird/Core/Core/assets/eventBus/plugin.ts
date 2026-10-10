@@ -2,7 +2,8 @@ import { App } from 'vue';
 
 import mitt, { Emitter } from 'mitt';
 
-import { Events, provideEventBus } from '../eventBus';
+import { provideEventBus } from './injection';
+import { Events } from './types';
 
 export default {
 	install: (app: App): void => {

@@ -1,6 +1,6 @@
 import { App } from 'vue';
 
-import { IExtensionsOptions } from '../types';
+import { IExtensionsOptions } from './types';
 
 export default {
 	install: async (app: App, options: IExtensionsOptions<any>): Promise<void> => {

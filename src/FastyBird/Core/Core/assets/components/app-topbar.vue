@@ -79,9 +79,9 @@ import { ElButton, ElDropdown, ElDropdownItem, ElDropdownMenu, ElHeader, ElSwitc
 
 import { Icon } from '@iconify/vue';
 
-import { IAccountManager } from '../../tools';
-import { IAccountDetails, injectAccountManager, useDarkMode } from '../../tools';
 import { AppGravatar, FB_BREADCRUMBS_TARGET } from '../components';
+import { useDarkMode } from '../composables';
+import { IAccountDetails, IAccountManager, injectAccountManager } from '../security';
 
 import { IAppTopbarProps } from './app-topbar.types';
 

@@ -1,8 +1,7 @@
 import { Handler } from 'mitt';
 
-import { Events, injectEventBus } from '../eventBus';
-
-import { UseEventBus } from './types';
+import { injectEventBus } from './injection';
+import { Events, UseEventBus } from './types';
 
 export function useEventBus(): UseEventBus {
 	const eventBus = injectEventBus();

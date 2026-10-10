@@ -73,11 +73,12 @@ import { ElAside, ElContainer, ElDrawer, ElMain, useNamespace, vLoading } from '
 
 import { useHead } from '@unhead/vue';
 
-import { injectAccountManager, useBreakpoints, useEventBus } from '../tools';
-import { useWampV1Client } from '../websockets';
-
-import Logo from './assets/images/fb_row.svg?component';
 import { AppBar, AppNavigation, AppSidebar, AppTopbar } from './components';
+import { useBreakpoints } from './composables';
+import { useEventBus } from './eventBus';
+import Logo from './images/fb_row.svg?component';
+import { injectAccountManager } from './security';
+import { useWampV1Client } from './websockets';
 
 const router = useRouter();
 const ns = useNamespace('app');

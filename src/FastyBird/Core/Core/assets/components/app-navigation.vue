@@ -90,9 +90,9 @@ import { ElIcon, ElMenu, ElMenuItem, ElMenuItemGroup, ElScrollbar, useNamespace 
 
 import { Icon } from '@iconify/vue';
 
-import { injectAccountManager } from '../../tools';
-import { useBreakpoints } from '../../tools';
-import { useMenu } from '../composables';
+import { useBreakpoints } from '../composables';
+import { useMenu } from '../composables/useMenu';
+import { injectAccountManager } from '../security';
 
 import { IAppNavigationProps } from './app-navigation.types';
 

@@ -1,4 +1,4 @@
-import { ButtonPayload, CoverPayload, SwitchPayload } from '../../metadata';
+import { ButtonPayload, CoverPayload, SwitchPayload } from '../types';
 
 export const flattenValue = (
 	value: string | number | boolean | ButtonPayload | CoverPayload | SwitchPayload | Date | null

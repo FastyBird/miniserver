@@ -2,9 +2,10 @@ import { App } from 'vue';
 
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
-import { ModulePrefix } from '../../metadata';
-import { provideBackend } from '../backend';
-import { useBackend } from '../composables';
+import { ModulePrefix } from '../values';
+
+import { provideBackend } from './injection';
+import { useBackend } from './useBackend';
 
 interface IAxiosOptions {
 	apiPrefix: string;
