@@ -66,7 +66,7 @@ final class UrlFormatTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertTrue($response instanceof Http\Response);
 		self::assertSame(StatusCodeInterface::STATUS_OK, $response->getStatusCode());
-		Tests\Tools\JsonAssert::assertFixtureMatch(
+		Tests\Support\JsonAssert::assertFixtureMatch(
 			$fixture,
 			(string) $response->getBody(),
 			static fn (string $expectation): string => str_replace(

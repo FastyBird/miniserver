@@ -53,7 +53,7 @@
   "autoload-dev": {
     "psr-4": {
       "FastyBird\\Plugin\\RedisDbCache\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-      "FastyBird\\Plugin\\RedisDbCache\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Plugin\\RedisDbCache\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

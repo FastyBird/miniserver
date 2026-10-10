@@ -89,7 +89,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 			$actual[$channel->getIdentifier()] = $channelData;
 		}
 
-		Tests\Tools\JsonAssert::assertFixtureMatch(
+		Tests\Support\JsonAssert::assertFixtureMatch(
 			$expectedChannels,
 			Utils\Json::encode($actual),
 		);
@@ -109,7 +109,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 			}
 		}
 
-		Tests\Tools\JsonAssert::assertFixtureMatch(
+		Tests\Support\JsonAssert::assertFixtureMatch(
 			$expectedChannelsProperties,
 			Utils\Json::encode($actual),
 		);

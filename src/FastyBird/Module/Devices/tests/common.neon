@@ -59,7 +59,7 @@ contributteTranslation:
 nettrineDbal:
 	connections:
 		default:
-			wrapperClass: \FastyBird\Module\Devices\Tests\Tools\ConnectionWrapper
+			wrapperClass: \FastyBird\Module\Devices\Tests\Support\ConnectionWrapper
 
 nettrineOrm:
 	managers:

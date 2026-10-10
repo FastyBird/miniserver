@@ -113,7 +113,7 @@
         (Runner/ErrorHandler.php, Event/Value/Test/Issue/IssueTrigger.php): a PHP
         deprecation raised while compiling or running a file in the <include> set
         below, or in the test file itself, is "direct"; one raised in any other file
-        (vendor/, or a tests/tools or tests/fixtures helper) is "indirect", and this
+        (vendor/, or a tests/support or tests/fixtures helper) is "indirect", and this
         attribute drops it. A userland E_USER_DEPRECATED is "direct" when
         first-party code called the deprecated API and "indirect" when vendor code
         called vendor code.

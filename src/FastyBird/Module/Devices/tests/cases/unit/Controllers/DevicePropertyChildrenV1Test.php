@@ -63,7 +63,7 @@ final class DevicePropertyChildrenV1Test extends Tests\Cases\Unit\DbTestCase
 
 		self::assertTrue($response instanceof Http\Response);
 		self::assertSame($statusCode, $response->getStatusCode());
-		Tests\Tools\JsonAssert::assertFixtureMatch(
+		Tests\Support\JsonAssert::assertFixtureMatch(
 			$fixture,
 			(string) $response->getBody(),
 		);

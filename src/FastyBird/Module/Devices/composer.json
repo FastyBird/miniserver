@@ -67,7 +67,7 @@
       "FastyBird\\Module\\Devices\\Tests\\Cases\\Unit\\": "tests/cases/unit",
       "FastyBird\\Module\\Devices\\Tests\\Fixtures\\": "tests/fixtures",
       "FastyBird\\Module\\Devices\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-      "FastyBird\\Module\\Devices\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Module\\Devices\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

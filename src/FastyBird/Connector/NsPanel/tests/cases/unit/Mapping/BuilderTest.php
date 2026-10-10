@@ -31,7 +31,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertCount(14, $categories->getCategories());
 
-		Tests\Tools\JsonAssert::assertFixtureMatch(
+		Tests\Support\JsonAssert::assertFixtureMatch(
 			__DIR__ . '/../../../../resources/categories.json',
 			Nette\Utils\Json::encode(
 				array_map(
@@ -58,7 +58,7 @@ final class BuilderTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertCount(23, $capabilities->getGroups());
 
-		Tests\Tools\JsonAssert::assertFixtureMatch(
+		Tests\Support\JsonAssert::assertFixtureMatch(
 			__DIR__ . '/../../../../resources/capabilities.json',
 			Nette\Utils\Json::encode(
 				array_map(

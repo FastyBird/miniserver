@@ -48,7 +48,7 @@
   "autoload-dev": {
     "psr-4": {
       "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-      "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

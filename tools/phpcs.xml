@@ -31,89 +31,89 @@
                 <element key="src/FastyBird/Addon/VirtualThermostat/tests/cases/unit" value="FastyBird\Addon\VirtualThermostat\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Addon/VirtualThermostat/tests/fixtures" value="FastyBird\Addon\VirtualThermostat\Tests\Fixtures"/>
                 <element key="src/FastyBird/Addon/VirtualThermostat/tests/fixtures/dummy" value="FastyBird\Addon\VirtualThermostat\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Addon/VirtualThermostat/tests/tools" value="FastyBird\Addon\VirtualThermostat\Tests\Tools"/>
+                <element key="src/FastyBird/Addon/VirtualThermostat/tests/support" value="FastyBird\Addon\VirtualThermostat\Tests\Support"/>
 
                 <element key="src/FastyBird/Automator/DateTime/src" value="FastyBird\Automator\DateTime"/>
                 <element key="src/FastyBird/Automator/DateTime/tests/cases/unit" value="FastyBird\Automator\DateTime\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Automator/DateTime/tests/tools" value="FastyBird\Automator\DateTime\Tests\Tools"/>
+                <element key="src/FastyBird/Automator/DateTime/tests/support" value="FastyBird\Automator\DateTime\Tests\Support"/>
 
                 <element key="src/FastyBird/Automator/DevicesModule/src" value="FastyBird\Automator\DevicesModule"/>
                 <element key="src/FastyBird/Automator/DevicesModule/tests/cases/unit" value="FastyBird\Automator\DevicesModule\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Automator/DevicesModule/tests/tools" value="FastyBird\Automator\DevicesModule\Tests\Tools"/>
+                <element key="src/FastyBird/Automator/DevicesModule/tests/support" value="FastyBird\Automator\DevicesModule\Tests\Support"/>
 
                 <element key="src/FastyBird/Bridge/DevicesModuleUiModule/src" value="FastyBird\Bridge\DevicesModuleUiModule"/>
                 <element key="src/FastyBird/Bridge/DevicesModuleUiModule/tests/cases/unit" value="FastyBird\Bridge\DevicesModuleUiModule\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Bridge/DevicesModuleUiModule/tests/fixtures" value="FastyBird\Bridge\DevicesModuleUiModule\Tests\Fixtures"/>
                 <element key="src/FastyBird/Bridge/DevicesModuleUiModule/tests/fixtures/dummy" value="FastyBird\Bridge\DevicesModuleUiModule\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Bridge/DevicesModuleUiModule/tests/tools" value="FastyBird\Bridge\DevicesModuleUiModule\Tests\Tools"/>
+                <element key="src/FastyBird/Bridge/DevicesModuleUiModule/tests/support" value="FastyBird\Bridge\DevicesModuleUiModule\Tests\Support"/>
 
                 <element key="src/FastyBird/Bridge/RedisDbPluginDevicesModule/src" value="FastyBird\Bridge\RedisDbPluginDevicesModule"/>
                 <element key="src/FastyBird/Bridge/RedisDbPluginDevicesModule/tests/cases/unit" value="FastyBird\Bridge\RedisDbPluginDevicesModule\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Bridge/RedisDbPluginDevicesModule/tests/tools" value="FastyBird\Bridge\RedisDbPluginDevicesModule\Tests\Tools"/>
+                <element key="src/FastyBird/Bridge/RedisDbPluginDevicesModule/tests/support" value="FastyBird\Bridge\RedisDbPluginDevicesModule\Tests\Support"/>
 
                 <element key="src/FastyBird/Bridge/RedisDbPluginTriggersModule/src" value="FastyBird\Bridge\RedisDbPluginTriggersModule"/>
                 <element key="src/FastyBird/Bridge/RedisDbPluginTriggersModule/tests/cases/unit" value="FastyBird\Bridge\RedisDbPluginTriggersModule\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Bridge/RedisDbPluginTriggersModule/tests/tools" value="FastyBird\Bridge\RedisDbPluginTriggersModule\Tests\Tools"/>
+                <element key="src/FastyBird/Bridge/RedisDbPluginTriggersModule/tests/support" value="FastyBird\Bridge\RedisDbPluginTriggersModule\Tests\Support"/>
 
                 <element key="src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/src" value="FastyBird\Bridge\ShellyConnectorHomeKitConnector"/>
                 <element key="src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/cases/unit" value="FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/fixtures" value="FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Fixtures"/>
                 <element key="src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/fixtures/dummy" value="FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/tools" value="FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Tools"/>
+                <element key="src/FastyBird/Bridge/ShellyConnectorHomeKitConnector/tests/support" value="FastyBird\Bridge\ShellyConnectorHomeKitConnector\Tests\Support"/>
 
                 <element key="src/FastyBird/Bridge/VieraConnectorHomeKitConnector/src" value="FastyBird\Bridge\VieraConnectorHomeKitConnector"/>
                 <element key="src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/cases/unit" value="FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/fixtures" value="FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Fixtures"/>
                 <element key="src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/fixtures/dummy" value="FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/tools" value="FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Tools"/>
+                <element key="src/FastyBird/Bridge/VieraConnectorHomeKitConnector/tests/support" value="FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Support"/>
 
                 <element key="src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/src" value="FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector"/>
                 <element key="src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tests/cases/unit" value="FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tests/fixtures" value="FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Fixtures"/>
                 <element key="src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tests/fixtures/dummy" value="FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tests/tools" value="FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Tools"/>
+                <element key="src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector/tests/support" value="FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/FbMqtt/src" value="FastyBird\Connector\FbMqtt"/>
                 <element key="src/FastyBird/Connector/FbMqtt/tests/cases/unit" value="FastyBird\Connector\FbMqtt\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Connector/FbMqtt/tests/tools" value="FastyBird\Connector\FbMqtt\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/FbMqtt/tests/support" value="FastyBird\Connector\FbMqtt\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/HomeKit/src" value="FastyBird\Connector\HomeKit"/>
                 <element key="src/FastyBird/Connector/HomeKit/tests/cases/unit" value="FastyBird\Connector\HomeKit\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Connector/HomeKit/tests/tools" value="FastyBird\Connector\HomeKit\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/HomeKit/tests/support" value="FastyBird\Connector\HomeKit\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/Modbus/src" value="FastyBird\Connector\Modbus"/>
                 <element key="src/FastyBird/Connector/Modbus/tests/cases/unit" value="FastyBird\Connector\Modbus\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Connector/Modbus/tests/tools" value="FastyBird\Connector\Modbus\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/Modbus/tests/support" value="FastyBird\Connector\Modbus\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/NsPanel/src" value="FastyBird\Connector\NsPanel"/>
                 <element key="src/FastyBird/Connector/NsPanel/tests/cases/unit" value="FastyBird\Connector\NsPanel\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Connector/NsPanel/tests/tools" value="FastyBird\Connector\NsPanel\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/NsPanel/tests/support" value="FastyBird\Connector\NsPanel\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/Shelly/src" value="FastyBird\Connector\Shelly"/>
                 <element key="src/FastyBird/Connector/Shelly/tests/cases/unit" value="FastyBird\Connector\Shelly\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Connector/Shelly/tests/tools" value="FastyBird\Connector\Shelly\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/Shelly/tests/support" value="FastyBird\Connector\Shelly\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/Sonoff/src" value="FastyBird\Connector\Sonoff"/>
                 <element key="src/FastyBird/Connector/Sonoff/tests/cases/unit" value="FastyBird\Connector\Sonoff\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Connector/Sonoff/tests/tools" value="FastyBird\Connector\Sonoff\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/Sonoff/tests/support" value="FastyBird\Connector\Sonoff\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/Tuya/src" value="FastyBird\Connector\Tuya"/>
                 <element key="src/FastyBird/Connector/Tuya/tests/cases/unit" value="FastyBird\Connector\Tuya\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Connector/Tuya/tests/tools" value="FastyBird\Connector\Tuya\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/Tuya/tests/support" value="FastyBird\Connector\Tuya\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/Viera/src" value="FastyBird\Connector\Viera"/>
                 <element key="src/FastyBird/Connector/Viera/tests/cases/unit" value="FastyBird\Connector\Viera\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Connector/Viera/tests/tools" value="FastyBird\Connector\Viera\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/Viera/tests/support" value="FastyBird\Connector\Viera\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/Virtual/src" value="FastyBird\Connector\Virtual"/>
                 <element key="src/FastyBird/Connector/Virtual/tests/cases/unit" value="FastyBird\Connector\Virtual\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Connector/Virtual/tests/fixtures" value="FastyBird\Connector\Virtual\Tests\Fixtures"/>
                 <element key="src/FastyBird/Connector/Virtual/tests/fixtures/dummy" value="FastyBird\Connector\Virtual\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Connector/Virtual/tests/tools" value="FastyBird\Connector\Virtual\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/Virtual/tests/support" value="FastyBird\Connector\Virtual\Tests\Support"/>
 
                 <element key="src/FastyBird/Connector/Zigbee2Mqtt/src" value="FastyBird\Connector\Zigbee2Mqtt"/>
                 <element key="src/FastyBird/Connector/Zigbee2Mqtt/tests/cases/unit" value="FastyBird\Connector\Zigbee2Mqtt\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Connector/Zigbee2Mqtt/tests/tools" value="FastyBird\Connector\Zigbee2Mqtt\Tests\Tools"/>
+                <element key="src/FastyBird/Connector/Zigbee2Mqtt/tests/support" value="FastyBird\Connector\Zigbee2Mqtt\Tests\Support"/>
 
                 <element key="src/FastyBird/Core/Core/src" value="FastyBird\Core"/>
                 <element key="src/FastyBird/Core/Core/tests/cases/unit" value="FastyBird\Core\Tests\Cases\Unit"/>
@@ -124,29 +124,29 @@
                 <element key="src/FastyBird/Module/Accounts/src" value="FastyBird\Module\Accounts"/>
                 <element key="src/FastyBird/Module/Accounts/tests/cases/unit" value="FastyBird\Module\Accounts\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Module/Accounts/tests/fixtures" value="FastyBird\Module\Accounts\Tests\Fixtures"/>
-                <element key="src/FastyBird/Module/Accounts/tests/tools" value="FastyBird\Module\Accounts\Tests\Tools"/>
+                <element key="src/FastyBird/Module/Accounts/tests/support" value="FastyBird\Module\Accounts\Tests\Support"/>
 
                 <element key="src/FastyBird/Module/Devices/src" value="FastyBird\Module\Devices"/>
                 <element key="src/FastyBird/Module/Devices/tests/cases/unit" value="FastyBird\Module\Devices\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Module/Devices/tests/fixtures" value="FastyBird\Module\Devices\Tests\Fixtures"/>
                 <element key="src/FastyBird/Module/Devices/tests/fixtures/dummy" value="FastyBird\Module\Devices\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Module/Devices/tests/tools" value="FastyBird\Module\Devices\Tests\Tools"/>
+                <element key="src/FastyBird/Module/Devices/tests/support" value="FastyBird\Module\Devices\Tests\Support"/>
 
                 <element key="src/FastyBird/Module/Triggers/src" value="FastyBird\Module\Triggers"/>
                 <element key="src/FastyBird/Module/Triggers/tests/cases/unit" value="FastyBird\Module\Triggers\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Module/Triggers/tests/fixtures" value="FastyBird\Module\Triggers\Tests\Fixtures"/>
                 <element key="src/FastyBird/Module/Triggers/tests/fixtures/dummy" value="FastyBird\Module\Triggers\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Module/Triggers/tests/tools" value="FastyBird\Module\Triggers\Tests\Tools"/>
+                <element key="src/FastyBird/Module/Triggers/tests/support" value="FastyBird\Module\Triggers\Tests\Support"/>
 
                 <element key="src/FastyBird/Module/Ui/src" value="FastyBird\Module\Ui"/>
                 <element key="src/FastyBird/Module/Ui/tests/cases/unit" value="FastyBird\Module\Ui\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Module/Ui/tests/fixtures" value="FastyBird\Module\Ui\Tests\Fixtures"/>
                 <element key="src/FastyBird/Module/Ui/tests/fixtures/dummy" value="FastyBird\Module\Ui\Tests\Fixtures\Dummy"/>
-                <element key="src/FastyBird/Module/Ui/tests/tools" value="FastyBird\Module\Ui\Tests\Tools"/>
+                <element key="src/FastyBird/Module/Ui/tests/support" value="FastyBird\Module\Ui\Tests\Support"/>
 
                 <element key="src/FastyBird/Plugin/ApiKey/src" value="FastyBird\Plugin\ApiKey"/>
                 <element key="src/FastyBird/Plugin/ApiKey/tests/cases/unit" value="FastyBird\Plugin\ApiKey\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Plugin/ApiKey/tests/tools" value="FastyBird\Plugin\ApiKey\Tests\Tools"/>
+                <element key="src/FastyBird/Plugin/ApiKey/tests/support" value="FastyBird\Plugin\ApiKey\Tests\Support"/>
 
                 <element key="src/FastyBird/Plugin/CouchDb/src" value="FastyBird\Plugin\CouchDb"/>
                 <element key="src/FastyBird/Plugin/CouchDb/tests/cases/unit" value="FastyBird\Plugin\CouchDb\Tests\Cases\Unit"/>
@@ -164,7 +164,7 @@
 
                 <element key="src/FastyBird/Plugin/RedisDbCache/src" value="FastyBird\Plugin\RedisDbCache"/>
                 <element key="src/FastyBird/Plugin/RedisDbCache/tests/cases/unit" value="FastyBird\Plugin\RedisDbCache\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Plugin/RedisDbCache/tests/tools" value="FastyBird\Plugin\RedisDbCache\Tests\Tools"/>
+                <element key="src/FastyBird/Plugin/RedisDbCache/tests/support" value="FastyBird\Plugin\RedisDbCache\Tests\Support"/>
             </property>
         </properties>
     </rule>

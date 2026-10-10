@@ -63,7 +63,7 @@
   "autoload-dev": {
     "psr-4": {
       "FastyBird\\Connector\\Shelly\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-      "FastyBird\\Connector\\Shelly\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Connector\\Shelly\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

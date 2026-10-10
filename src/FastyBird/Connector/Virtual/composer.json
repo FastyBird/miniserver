@@ -57,7 +57,7 @@
   "autoload-dev": {
     "psr-4": {
       "FastyBird\\Connector\\Virtual\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-      "FastyBird\\Connector\\Virtual\\Tests\\Tools\\": "tests/tools",
+      "FastyBird\\Connector\\Virtual\\Tests\\Support\\": "tests/support",
       "FastyBird\\Connector\\Virtual\\Tests\\Fixtures\\": "tests/fixtures"
     }
   },

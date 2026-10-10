@@ -57,7 +57,7 @@ final class AccessTest extends Tests\Cases\Unit\DbTestCase
 
 		$response = $router->handle($request);
 
-		Tests\Tools\JsonAssert::assertFixtureMatch(
+		Tests\Support\JsonAssert::assertFixtureMatch(
 			$fixture,
 			(string) $response->getBody(),
 		);
