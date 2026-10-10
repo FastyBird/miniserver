@@ -2,7 +2,7 @@ import { App, InjectionKey, inject as _inject, hasInjectionContext } from 'vue';
 
 import { IAccountManager } from './types';
 
-const accountManagerKey: InjectionKey<IAccountManager | undefined> = Symbol('Tools-AccountManager');
+const accountManagerKey: InjectionKey<IAccountManager | undefined> = Symbol('Core-AccountManager');
 
 export function injectAccountManager(app?: App): IAccountManager | undefined {
 	if (app && app._context && app._context.provides && app._context.provides[accountManagerKey]) {

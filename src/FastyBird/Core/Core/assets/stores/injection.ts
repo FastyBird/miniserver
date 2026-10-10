@@ -2,7 +2,7 @@ import { App, InjectionKey, inject as _inject, hasInjectionContext } from 'vue';
 
 import { StoresManager } from './manager';
 
-const storesManagerKey: InjectionKey<StoresManager | undefined> = Symbol('Tools-StoresManager');
+const storesManagerKey: InjectionKey<StoresManager | undefined> = Symbol('Core-StoresManager');
 
 export function injectStoresManager(app?: App): StoresManager {
 	if (app && app._context && app._context.provides && app._context.provides[storesManagerKey]) {

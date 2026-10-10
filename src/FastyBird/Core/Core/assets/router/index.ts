@@ -16,11 +16,11 @@ const routes: RouteRecordRaw[] = [
 		meta: {
 			title: 'MiniServer',
 		},
-		redirect: () => ({ name: 'application-home' }),
+		redirect: () => ({ name: 'core-home' }),
 		children: [
 			{
 				path: '',
-				name: 'application-home',
+				name: 'core-home',
 				component: () => import('../views/view-home.vue'),
 				meta: {
 					guards: ['authenticated'],

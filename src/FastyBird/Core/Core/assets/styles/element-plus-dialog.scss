@@ -1,5 +1,5 @@
-// Ported verbatim from Library/WebUi's packages/theme-chalk/src/fb-dialog.scss.
-// Still load-bearing: settings-account-dialog.vue, settings-password-dialog.vue
+// The dialog header and footer styles shared by the Accounts and Devices dialogs.
+// Load-bearing: settings-account-dialog.vue, settings-password-dialog.vue
 // (Module/Accounts) and property-default-property-settings-add.vue,
 // property-default-property-settings-edit.vue (Module/Devices) inline the former
 // FbDialogHeader/FbDialogFooter markup directly and generate their class names via
