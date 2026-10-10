@@ -12,9 +12,9 @@ import { v4 as uuid } from 'uuid';
 import { IStoresManager, ModulePrefix, injectStoresManager } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.identity.json';
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { accountsStoreKey } from '../../configuration';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { IIdentitiesStateSemaphore, IdentitiesStoreSetup, IdentityDocument, IdentityState, RoutingKeys } from '../../types';
 import { IAccount } from '../accounts/types';
 

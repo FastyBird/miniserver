@@ -11,8 +11,8 @@ import { v4 as uuid } from 'uuid';
 import { ModulePrefix, wampClient } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.widget.dataSource.json';
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { useWidgets } from '../../models';
 import { ActionRoutes, ExchangeCommand, RoutingKeys, WidgetDataSourceDocument } from '../../types';
 import { DB_TABLE_WIDGETS_DATA_SOURCES, addRecord, getAllRecords, getRecord, removeRecord } from '../../utilities/database';

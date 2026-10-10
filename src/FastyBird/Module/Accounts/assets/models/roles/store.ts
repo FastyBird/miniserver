@@ -12,8 +12,8 @@ import { v4 as uuid } from 'uuid';
 import { ModulePrefix } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.role.json';
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { IRolesStateSemaphore, RoleDocument, RolesStoreSetup, RoutingKeys } from '../../types';
 import { IPlainRelation } from '../types';
 

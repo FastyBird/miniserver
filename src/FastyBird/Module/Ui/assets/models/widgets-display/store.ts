@@ -12,8 +12,8 @@ import { v4 as uuid } from 'uuid';
 import { ModulePrefix } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.widget.display.json';
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { useWidgets } from '../../models';
 import { RoutingKeys, WidgetDisplayDocument } from '../../types';
 import { DB_TABLE_WIDGETS_DISPLAY, addRecord, getAllRecords, getRecord, removeRecord } from '../../utilities/database';
