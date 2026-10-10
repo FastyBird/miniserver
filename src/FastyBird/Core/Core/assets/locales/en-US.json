@@ -2,7 +2,14 @@
 	"core": {
 		"menu": {
 			"root": "MiniServer",
-			"dashboard": "Dashboard"
+			"dashboard": "Dashboard",
+			"user": "Your account"
+		},
+		"userMenu": {
+			"accountSettings": "Account settings",
+			"passwordChange": "Password change",
+			"lockScreen": "Lock screen",
+			"signOut": "Sign out"
 		}
 	}
 }
