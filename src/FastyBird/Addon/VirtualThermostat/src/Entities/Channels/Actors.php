@@ -29,7 +29,7 @@ use function assert;
 class Actors extends VirtualEntities\Channels\Channel
 {
 
-	public const TYPE = 'virtual-thermostat-addon-actors';
+	public const string TYPE = 'virtual-thermostat-addon-actors';
 
 	public function __construct(
 		VirtualThermostatEntities\Devices\Device $device,

@@ -69,7 +69,7 @@ use function str_starts_with;
 class Thermostat implements VirtualDrivers\Driver
 {
 
-	private const PROCESSING_DEBOUNCE_DELAY = 150.0;
+	private const float PROCESSING_DEBOUNCE_DELAY = 150.0;
 
 	/** @var array<string, bool|null> */
 	private array $heaters = [];

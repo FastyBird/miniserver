@@ -35,7 +35,7 @@ final class Sensors extends VirtualSchemas\Channels\Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Addon::VIRTUAL_THERMOSTAT->value . '/channel/' . Entities\Channels\Sensors::TYPE;
+	public const string SCHEMA_TYPE = Sources\Addon::VIRTUAL_THERMOSTAT->value . '/channel/' . Entities\Channels\Sensors::TYPE;
 
 	public function getEntityClass(): string
 	{

@@ -39,25 +39,25 @@ use function str_starts_with;
 class Device extends VirtualEntities\Devices\Device
 {
 
-	public const TYPE = 'virtual-thermostat-addon';
+	public const string TYPE = 'virtual-thermostat-addon';
 
-	public const MINIMUM_TEMPERATURE = 7.0;
+	public const float MINIMUM_TEMPERATURE = 7.0;
 
-	public const MAXIMUM_ROOM_TEMPERATURE = 1_000.0;
+	public const float MAXIMUM_ROOM_TEMPERATURE = 1_000.0;
 
-	public const MAXIMUM_FLOOR_TEMPERATURE = 1_000.0;
+	public const float MAXIMUM_FLOOR_TEMPERATURE = 1_000.0;
 
-	public const MAXIMUM_SET_ROOM_TEMPERATURE = 35.0;
+	public const float MAXIMUM_SET_ROOM_TEMPERATURE = 35.0;
 
-	public const MAXIMUM_SET_FLOOR_TEMPERATURE = 30.0;
+	public const float MAXIMUM_SET_FLOOR_TEMPERATURE = 30.0;
 
-	public const TARGET_TEMPERATURE = 20.0;
+	public const float TARGET_TEMPERATURE = 20.0;
 
-	public const PRECISION = 0.1;
+	public const float PRECISION = 0.1;
 
-	public const COLD_TOLERANCE = 0.3;
+	public const float COLD_TOLERANCE = 0.3;
 
-	public const HOT_TOLERANCE = 0.3;
+	public const float HOT_TOLERANCE = 0.3;
 
 	protected string $device_type = self::TYPE;
 

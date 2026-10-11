@@ -26,8 +26,8 @@ namespace FastyBird\Addon\VirtualThermostat;
 final class Constants
 {
 
-	public const MANUFACTURER = 'FastyBird';
+	public const string MANUFACTURER = 'FastyBird';
 
-	public const PRESET_CHANNEL_PATTERN = '/^preset(_(?P<preset>[a-zA-Z_]+))?$/';
+	public const string PRESET_CHANNEL_PATTERN = '/^preset(_(?P<preset>[a-zA-Z_]+))?$/';
 
 }

@@ -30,7 +30,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 interface ThermostatFactory extends DriverFactory
 {
 
-	public const DEVICE_TYPE = Entities\Devices\Device::TYPE;
+	public const string DEVICE_TYPE = Entities\Devices\Device::TYPE;
 
 	public function create(DevicesDocuments\Devices\Device $device): Thermostat;
 

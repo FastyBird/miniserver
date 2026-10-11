@@ -43,7 +43,7 @@ use const DIRECTORY_SEPARATOR;
 class VirtualThermostatExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbVirtualThermostatAddon';
+	public const string NAME = 'fbVirtualThermostatAddon';
 
 	public static function register(
 		Boot\Configurator $config,

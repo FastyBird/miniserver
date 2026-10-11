@@ -30,7 +30,7 @@ use function assert;
 class State extends VirtualEntities\Channels\Channel
 {
 
-	public const TYPE = 'virtual-thermostat-addon-state';
+	public const string TYPE = 'virtual-thermostat-addon-state';
 
 	public function __construct(
 		VirtualThermostatEntities\Devices\Device $device,

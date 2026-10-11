@@ -35,7 +35,7 @@ use function is_numeric;
 class Preset extends VirtualEntities\Channels\Channel
 {
 
-	public const TYPE = 'virtual-thermostat-addon-preset';
+	public const string TYPE = 'virtual-thermostat-addon-preset';
 
 	public function __construct(
 		VirtualThermostatEntities\Devices\Device $device,

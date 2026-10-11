@@ -29,7 +29,7 @@ use function assert;
 class Sensors extends VirtualEntities\Channels\Channel
 {
 
-	public const TYPE = 'virtual-thermostat-addon-sensors';
+	public const string TYPE = 'virtual-thermostat-addon-sensors';
 
 	public function __construct(
 		VirtualThermostatEntities\Devices\Device $device,
