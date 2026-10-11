@@ -20,6 +20,7 @@ use FastyBird\Module\Accounts\Router;
 use FastyBird\Module\Accounts\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
+use Override;
 use Psr\Http\Message;
 use Throwable;
 use function strtolower;
@@ -154,6 +155,7 @@ final class AccountV1 extends BaseV1
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

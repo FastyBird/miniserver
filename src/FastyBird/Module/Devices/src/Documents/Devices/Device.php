@@ -11,6 +11,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -104,6 +105,7 @@ abstract class Device implements DevicesDocuments\Document, CoreDocuments\Owner,
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -176,6 +178,7 @@ abstract class Device implements DevicesDocuments\Document, CoreDocuments\Owner,
 		return $this->channels;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -213,6 +216,7 @@ abstract class Device implements DevicesDocuments\Document, CoreDocuments\Owner,
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;

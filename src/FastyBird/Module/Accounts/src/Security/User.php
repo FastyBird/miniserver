@@ -4,6 +4,7 @@ namespace FastyBird\Module\Accounts\Security;
 
 use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts\Entities;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -12,6 +13,7 @@ use Ramsey\Uuid;
 class User extends Identity\User
 {
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface|null
 	{
 		return $this->getAccount()?->getId();

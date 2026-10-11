@@ -4,6 +4,7 @@ namespace FastyBird\Module\Devices\Schemas\Devices;
 
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities;
+use Override;
 
 /**
  * Generic device entity schema
@@ -23,6 +24,7 @@ final class Generic extends Device
 		return Entities\Devices\Generic::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

@@ -4,6 +4,7 @@ namespace FastyBird\Module\Accounts\Utilities;
 
 use FastyBird\Module\Accounts\Security;
 use Nette\Utils;
+use Override;
 use Tracy;
 use const DIRECTORY_SEPARATOR;
 
@@ -20,6 +21,7 @@ class UserPanel implements Tracy\IBarPanel
 	/**
 	 * Renders tab
 	 */
+	#[Override]
 	public function getTab(): string
 	{
 		return Utils\Helpers::capture(function (): void {
@@ -33,6 +35,7 @@ class UserPanel implements Tracy\IBarPanel
 	/**
 	 * Renders panel
 	 */
+	#[Override]
 	public function getPanel(): string
 	{
 		return Utils\Helpers::capture(function (): void {

@@ -10,6 +10,7 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -84,6 +85,7 @@ abstract class Widget implements UiDocuments\Document, CoreDocuments\Owner, Core
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -130,6 +132,7 @@ abstract class Widget implements UiDocuments\Document, CoreDocuments\Owner, Core
 		return $this->groups;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -157,6 +160,7 @@ abstract class Widget implements UiDocuments\Document, CoreDocuments\Owner, Core
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::UI;

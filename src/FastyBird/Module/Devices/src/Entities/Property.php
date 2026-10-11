@@ -18,6 +18,7 @@ use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -679,6 +680,7 @@ abstract class Property implements Entity,
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		$data = [
@@ -766,6 +768,7 @@ abstract class Property implements Entity,
 		return null;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Module
 	{
 		return Sources\Module::DEVICES;

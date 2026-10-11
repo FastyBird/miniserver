@@ -23,6 +23,7 @@ use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use Throwable;
@@ -437,6 +438,7 @@ final class SessionV1 extends BaseV1
 	 *
 	 * @Secured\User(loggedIn)
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

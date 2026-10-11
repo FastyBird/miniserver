@@ -9,6 +9,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 use function sprintf;
@@ -95,6 +96,7 @@ final readonly class Action implements CoreDocuments\Document
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		$data = [

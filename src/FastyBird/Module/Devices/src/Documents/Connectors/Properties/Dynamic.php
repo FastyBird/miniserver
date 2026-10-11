@@ -10,6 +10,7 @@ use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -90,6 +91,7 @@ final class Dynamic extends Property
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

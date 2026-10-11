@@ -12,6 +12,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Types;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -390,6 +391,7 @@ abstract class Device implements DevicesEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -430,6 +432,7 @@ abstract class Device implements DevicesEntities\Entity,
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;
@@ -438,6 +441,7 @@ abstract class Device implements DevicesEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

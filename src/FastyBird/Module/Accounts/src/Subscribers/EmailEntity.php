@@ -11,6 +11,7 @@ use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use Nette;
+use Override;
 use function array_key_exists;
 use function array_merge;
 use function count;
@@ -33,6 +34,7 @@ final class EmailEntity implements Common\EventSubscriber
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

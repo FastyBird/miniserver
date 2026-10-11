@@ -5,6 +5,7 @@ namespace FastyBird\Module\Devices\Entities\Connectors\Properties;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
+use Override;
 
 #[ORM\Entity]
 class Variable extends Property
@@ -20,6 +21,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function setSettable(bool $settable): void
 	{
 		throw new Exceptions\InvalidState('Settable flag is allowed only for dynamic properties');
@@ -28,6 +30,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function isSettable(): bool
 	{
 		throw new Exceptions\InvalidState('Settable flag is allowed only for dynamic properties');
@@ -36,6 +39,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function setQueryable(bool $queryable): void
 	{
 		throw new Exceptions\InvalidState('Queryable flag is allowed only for dynamic properties');
@@ -44,6 +48,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function isQueryable(): bool
 	{
 		throw new Exceptions\InvalidState('Queryable flag is allowed only for dynamic properties');

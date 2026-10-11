@@ -10,6 +10,7 @@ use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use Nette;
+use Override;
 
 /**
  * Doctrine entities events
@@ -28,6 +29,7 @@ final class DashboardEntity implements Common\EventSubscriber
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

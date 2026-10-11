@@ -17,6 +17,7 @@ use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Types;
 use Nette;
 use Nette\Utils;
+use Override;
 use ReflectionClass;
 use function count;
 use function is_a;
@@ -51,6 +52,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	 *
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

@@ -16,6 +16,7 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Router;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;
+use Override;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
@@ -52,6 +53,7 @@ final class Dynamic extends Property
 		return Entities\Devices\Properties\Dynamic::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -71,6 +73,7 @@ final class Dynamic extends Property
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -102,6 +105,7 @@ final class Dynamic extends Property
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -129,6 +133,7 @@ final class Dynamic extends Property
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -174,6 +179,7 @@ final class Dynamic extends Property
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

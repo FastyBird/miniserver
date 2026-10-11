@@ -8,6 +8,7 @@ use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities as UiEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -83,6 +84,7 @@ abstract class DataSource implements UiEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -97,6 +99,7 @@ abstract class DataSource implements UiEntities\Entity,
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::UI;
@@ -105,6 +108,7 @@ abstract class DataSource implements UiEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

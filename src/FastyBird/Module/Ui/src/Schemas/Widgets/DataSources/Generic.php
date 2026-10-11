@@ -4,6 +4,7 @@ namespace FastyBird\Module\Ui\Schemas\Widgets\DataSources;
 
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities;
+use Override;
 
 /**
  * Generic data source entity schema
@@ -23,6 +24,7 @@ final class Generic extends DataSource
 		return Entities\Widgets\DataSources\Generic::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

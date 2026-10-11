@@ -8,6 +8,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -82,6 +83,7 @@ final readonly class Email implements Documents\Document
 		return Sources\Module::ACCOUNTS;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

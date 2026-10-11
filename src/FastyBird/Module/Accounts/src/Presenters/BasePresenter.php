@@ -4,6 +4,7 @@ namespace FastyBird\Module\Accounts\Presenters;
 
 use FastyBird\Core\Presenters;
 use Nette\Application;
+use Override;
 
 /**
  * Base module presenter
@@ -11,6 +12,7 @@ use Nette\Application;
 abstract class BasePresenter extends Presenters\BasePresenter
 {
 
+	#[Override]
 	public function formatTemplateFiles(): array
 	{
 		[, $presenter] = Application\Helpers::splitName($this->getName() ?? '');

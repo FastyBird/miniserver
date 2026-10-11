@@ -5,6 +5,7 @@ namespace FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Exceptions;
 use Nette;
 use Nette\Utils;
+use Override;
 use function hash;
 
 /**
@@ -120,6 +121,7 @@ final class Password
 		return hash('sha512', $salt . self::SEPARATOR . $password);
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->hash;

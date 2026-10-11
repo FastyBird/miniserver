@@ -10,6 +10,7 @@ use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
 use Nette\Utils;
+use Override;
 use Throwable;
 
 /**
@@ -26,6 +27,7 @@ final readonly class SocketsBridge implements Consumers\Consumer
 	{
 	}
 
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

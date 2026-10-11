@@ -19,6 +19,7 @@ use FastyBird\Module\Devices\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Throwable;
 use function end;
@@ -386,6 +387,7 @@ final class ChannelsV1 extends BaseV1
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

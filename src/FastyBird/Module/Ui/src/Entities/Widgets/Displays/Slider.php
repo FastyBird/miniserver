@@ -5,6 +5,7 @@ namespace FastyBird\Module\Ui\Entities\Widgets\Displays;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Ui\Entities;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -49,6 +50,7 @@ class Slider extends Display implements Entities\Widgets\Displays\Parameters\Min
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

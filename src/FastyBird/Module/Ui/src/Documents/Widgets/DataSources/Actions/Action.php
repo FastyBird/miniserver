@@ -9,6 +9,7 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -42,6 +43,7 @@ final readonly class Action implements UiDocuments\Document
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->dataSource;
@@ -67,6 +69,7 @@ final readonly class Action implements UiDocuments\Document
 		return $this->expectedValue;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -79,6 +82,7 @@ final readonly class Action implements UiDocuments\Document
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;

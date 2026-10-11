@@ -13,6 +13,7 @@ use FastyBird\Module\Ui\Entities as UiEntities;
 use FastyBird\Module\Ui\Entities\Dashboards\Tabs\Tab;
 use FastyBird\Module\Ui\Exceptions;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -302,6 +303,7 @@ abstract class Widget implements UiEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -338,6 +340,7 @@ abstract class Widget implements UiEntities\Entity,
 		return [];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::UI;
@@ -346,6 +349,7 @@ abstract class Widget implements UiEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

@@ -9,6 +9,7 @@ use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;
+use Override;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
@@ -33,6 +34,7 @@ final class Variable extends Property
 		return Entities\Connectors\Properties\Variable::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -52,6 +54,7 @@ final class Variable extends Property
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,

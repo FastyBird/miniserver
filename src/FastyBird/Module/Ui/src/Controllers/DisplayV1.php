@@ -13,6 +13,7 @@ use FastyBird\Module\Ui\Router;
 use FastyBird\Module\Ui\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Throwable;
 use function strval;
@@ -125,6 +126,7 @@ final class DisplayV1 extends BaseV1
 	 * @throws Exception
 	 * @throws Exceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

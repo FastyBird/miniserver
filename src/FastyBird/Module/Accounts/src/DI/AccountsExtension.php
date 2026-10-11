@@ -23,6 +23,7 @@ use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use Tracy;
 use function array_keys;
@@ -52,6 +53,7 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -320,6 +322,7 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

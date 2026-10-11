@@ -5,6 +5,7 @@ namespace FastyBird\Module\Ui\Schemas\Widgets\Display;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities;
 use Neomerx\JsonApi;
+use Override;
 use function array_merge;
 
 /**
@@ -21,6 +22,7 @@ final class AnalogValue extends Display
 	 */
 	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/display/' . Entities\Widgets\Displays\AnalogValue::TYPE;
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -38,6 +40,7 @@ final class AnalogValue extends Display
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,

@@ -5,6 +5,7 @@ namespace FastyBird\Module\Devices\Entities\Channels\Properties;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
+use Override;
 use function array_map;
 use function array_merge;
 use function sprintf;
@@ -23,6 +24,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function getParent(): Property|null
 	{
 		throw new Exceptions\InvalidState(
@@ -33,6 +35,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function setParent(Property $property): void
 	{
 		throw new Exceptions\InvalidState(
@@ -43,6 +46,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function removeParent(): void
 	{
 		throw new Exceptions\InvalidState(
@@ -53,6 +57,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function setSettable(bool $settable): void
 	{
 		throw new Exceptions\InvalidState('Settable flag is allowed only for dynamic properties');
@@ -61,6 +66,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function isSettable(): bool
 	{
 		throw new Exceptions\InvalidState('Settable flag is allowed only for dynamic properties');
@@ -69,6 +75,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function setQueryable(bool $queryable): void
 	{
 		throw new Exceptions\InvalidState('Queryable flag is allowed only for dynamic properties');
@@ -77,6 +84,7 @@ class Variable extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function isQueryable(): bool
 	{
 		throw new Exceptions\InvalidState('Queryable flag is allowed only for dynamic properties');
@@ -85,6 +93,7 @@ class Variable extends Property
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

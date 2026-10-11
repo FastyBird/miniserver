@@ -5,6 +5,7 @@ namespace FastyBird\Module\Ui\Entities\Widgets\Displays;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Ui\Entities;
+use Override;
 use function array_merge;
 
 #[ORM\Entity]
@@ -24,6 +25,7 @@ class GroupedButton extends Display implements Entities\Widgets\Displays\Paramet
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

@@ -7,6 +7,7 @@ use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -52,6 +53,7 @@ final class Control implements Documents\Document, Documents\Owner
 		return $this->name;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

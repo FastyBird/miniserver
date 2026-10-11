@@ -7,6 +7,7 @@ use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -71,6 +72,7 @@ abstract class Condition implements Documents\Document, Documents\Owner
 		return $this->isFulfilled;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -8,6 +8,7 @@ use FastyBird\Module\Ui\Events;
 use FastyBird\Module\Ui\Types;
 use Nette;
 use Nette\Caching as NetteCaching;
+use Override;
 use Symfony\Component\EventDispatcher;
 
 /**
@@ -24,6 +25,7 @@ final class ConfigurationCache implements EventDispatcher\EventSubscriberInterfa
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

@@ -10,6 +10,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Security\Entities\Policies;
 use FastyBird\Core\Security\Types;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 use function assert;
@@ -137,6 +138,7 @@ class Role extends Policies\Policy implements AccountsEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -152,6 +154,7 @@ class Role extends Policies\Policy implements AccountsEntities\Entity,
 	/**
 	 * Convert role object to string
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->getName();

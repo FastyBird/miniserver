@@ -14,6 +14,7 @@ use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Types;
 use FastyBird\Module\Devices\Utilities;
 use Nette;
+use Override;
 use Symfony\Component\EventDispatcher;
 use TypeError;
 use ValueError;
@@ -42,6 +43,7 @@ final class Connector implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

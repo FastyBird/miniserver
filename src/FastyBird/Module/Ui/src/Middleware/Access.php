@@ -6,6 +6,7 @@ use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -25,6 +26,7 @@ final class Access implements MiddlewareInterface
 	/**
 	 * @throws ApiExceptions\JsonApiError
 	 */
+	#[Override]
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
 	{
 		try {

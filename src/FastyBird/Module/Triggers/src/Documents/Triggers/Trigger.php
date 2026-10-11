@@ -7,6 +7,7 @@ use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -86,6 +87,7 @@ abstract class Trigger implements Documents\Document, Documents\Owner
 		return $this->isTriggered;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

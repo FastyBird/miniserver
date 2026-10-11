@@ -7,6 +7,7 @@ use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -74,6 +75,7 @@ class Slider extends UiDocuments\Widgets\Displays\Display
 		return $this->precision;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

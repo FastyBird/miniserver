@@ -6,6 +6,7 @@ use DateTimeInterface;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function is_bool;
 
@@ -79,6 +80,7 @@ abstract class Property implements Documents\Document, Documents\CreatedAt, Docu
 		return $this->valid;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

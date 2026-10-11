@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -109,6 +110,7 @@ class Details implements AccountsEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -118,6 +120,7 @@ class Details implements AccountsEntities\Entity,
 		];
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->firstName . ' ' . $this->lastName;

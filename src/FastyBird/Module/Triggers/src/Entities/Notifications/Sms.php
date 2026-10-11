@@ -7,6 +7,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Phone\Entities as PhoneEntities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -58,6 +59,7 @@ class Sms extends Notification
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

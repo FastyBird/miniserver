@@ -20,6 +20,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\States;
 use Nette;
 use Nette\Caching as NetteCaching;
+use Override;
 use Symfony\Component\EventDispatcher;
 
 /**
@@ -46,6 +47,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

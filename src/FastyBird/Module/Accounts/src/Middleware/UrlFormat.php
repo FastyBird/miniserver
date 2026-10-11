@@ -9,6 +9,7 @@ use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Localization;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -37,6 +38,7 @@ final readonly class UrlFormat implements MiddlewareInterface
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 */
+	#[Override]
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
 	{
 		$response = $handler->handle($request);

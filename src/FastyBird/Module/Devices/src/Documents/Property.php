@@ -18,6 +18,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -183,6 +184,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -304,6 +306,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -328,6 +331,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;

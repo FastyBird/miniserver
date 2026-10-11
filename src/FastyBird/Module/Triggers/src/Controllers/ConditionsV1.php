@@ -20,6 +20,7 @@ use FastyBird\Module\Triggers\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use Throwable;
@@ -440,6 +441,7 @@ final class ConditionsV1 extends BaseV1
 	 * @throws TriggersExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

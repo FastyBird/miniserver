@@ -8,6 +8,7 @@ use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Types;
+use Override;
 use function is_string;
 
 /**
@@ -44,6 +45,7 @@ final class Authenticator implements Identity\Authenticator
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
+	#[Override]
 	public function authenticate(array $credentials): Identity\UserIdentity
 	{
 		[$username, $password] = $credentials + [null, null];

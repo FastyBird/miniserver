@@ -9,6 +9,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -76,6 +77,7 @@ class Control implements DevicesEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -90,6 +92,7 @@ class Control implements DevicesEntities\Entity,
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Module
 	{
 		return Sources\Module::DEVICES;
@@ -98,6 +101,7 @@ class Control implements DevicesEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

@@ -7,6 +7,7 @@ use FastyBird\Core\Phone\Entities as PhoneEntities;
 use FastyBird\Core\Phone\Exceptions;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -44,6 +45,7 @@ final class Sms extends Notification
 	 * @throws Exceptions\NoValidCountry
 	 * @throws Exceptions\NoValidPhone
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

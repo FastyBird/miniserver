@@ -11,6 +11,7 @@ use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Types;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -215,6 +216,7 @@ class Email implements AccountsEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -229,6 +231,7 @@ class Email implements AccountsEntities\Entity,
 		];
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->address;

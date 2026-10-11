@@ -29,6 +29,7 @@ use Nette\Caching as NetteCaching;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
@@ -56,6 +57,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -593,6 +595,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -57,6 +58,7 @@ class Email extends Notification
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

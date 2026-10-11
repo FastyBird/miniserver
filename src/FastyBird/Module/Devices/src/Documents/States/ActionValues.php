@@ -7,6 +7,7 @@ use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
+use Override;
 use function array_merge;
 
 /**
@@ -57,6 +58,7 @@ final readonly class ActionValues implements Documents\Document
 		return $this->expectedValue;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		$data = [];

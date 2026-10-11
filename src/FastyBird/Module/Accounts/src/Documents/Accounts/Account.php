@@ -10,6 +10,7 @@ use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -143,6 +144,7 @@ final readonly class Account implements Documents\Document
 		return Sources\Module::ACCOUNTS;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

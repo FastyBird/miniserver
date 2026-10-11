@@ -7,6 +7,7 @@ use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Schemas;
+use Override;
 
 #[ORM\Entity]
 #[ORM\Table(
@@ -28,6 +29,7 @@ class Generic extends DataSource
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Module
 	{
 		return Sources\Module::UI;

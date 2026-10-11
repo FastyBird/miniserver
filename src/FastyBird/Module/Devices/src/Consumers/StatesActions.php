@@ -17,6 +17,7 @@ use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types;
 use Nette\Utils;
+use Override;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -55,6 +56,7 @@ final class StatesActions implements Consumers\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

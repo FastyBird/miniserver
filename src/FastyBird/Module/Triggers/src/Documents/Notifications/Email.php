@@ -5,6 +5,7 @@ namespace FastyBird\Module\Triggers\Documents\Notifications;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -34,6 +35,7 @@ final class Email extends Notification
 		return $this->email;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

@@ -11,6 +11,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Types;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -234,6 +235,7 @@ class Account implements AccountsEntities\Entity,
 	 *
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -254,6 +256,7 @@ class Account implements AccountsEntities\Entity,
 	 * @throws Utils\JsonException
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

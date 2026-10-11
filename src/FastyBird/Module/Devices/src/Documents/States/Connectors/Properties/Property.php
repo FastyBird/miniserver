@@ -7,6 +7,7 @@ use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -43,6 +44,7 @@ final class Property extends Devices\Documents\States\Property
 		return $this->connector;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

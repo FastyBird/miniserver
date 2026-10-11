@@ -10,6 +10,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Security\Entities\Tokens;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
+use Override;
 use Ramsey\Uuid;
 use function sprintf;
 
@@ -84,6 +85,7 @@ class RefreshToken extends Tokens\Token implements
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

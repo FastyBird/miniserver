@@ -12,6 +12,7 @@ use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Types;
 use Nette\Caching as NetteCaching;
+use Override;
 
 /**
  * Exchange to sockets bridge consumer
@@ -30,6 +31,7 @@ final readonly class ModuleEntities implements Consumers\Consumer
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

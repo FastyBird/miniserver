@@ -5,6 +5,7 @@ namespace FastyBird\Module\Triggers\Schemas\Notifications;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers\Entities;
 use Neomerx\JsonApi;
+use Override;
 use function array_merge;
 
 /**
@@ -21,6 +22,7 @@ final class Sms extends Notification
 	 */
 	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/notification/' . Entities\Notifications\Sms::TYPE;
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -36,6 +38,7 @@ final class Sms extends Notification
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,

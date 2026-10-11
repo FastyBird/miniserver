@@ -10,6 +10,7 @@ use FastyBird\Core\Security\Queries;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use Lcobucci\JWT;
+use Override;
 
 /**
  * Application identity factory
@@ -26,6 +27,7 @@ readonly class IdentityFactory implements Identity\IdentityProvider
 	 * @throws PersistenceExceptions\Query
 	 * @throws AccountsExceptions\InvalidState
 	 */
+	#[Override]
 	public function create(JWT\Token $token): Identity\UserIdentity|null
 	{
 		/** @var Queries\FindTokens<Entities\Tokens\AccessToken> $findToken */

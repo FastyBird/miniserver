@@ -13,6 +13,7 @@ use FastyBird\Module\Triggers\Queries;
 use FastyBird\Module\Triggers\Router;
 use FastyBird\Module\Triggers\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use function strtolower;
@@ -113,6 +114,7 @@ final class TriggerControlsV1 extends BaseV1
 	 * @throws TriggersExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

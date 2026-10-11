@@ -4,6 +4,7 @@ namespace FastyBird\Module\Devices\Schemas\Connectors;
 
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities;
+use Override;
 
 /**
  * Generic connector entity schema
@@ -23,6 +24,7 @@ final class Generic extends Connector
 		return Entities\Connectors\Generic::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

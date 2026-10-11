@@ -11,6 +11,7 @@ use FastyBird\Module\Devices\Router;
 use FastyBird\Module\Devices\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use function strval;
@@ -88,6 +89,7 @@ final class ConnectorControlsV1 extends BaseV1
 	 * @throws Exception
 	 * @throws Exceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

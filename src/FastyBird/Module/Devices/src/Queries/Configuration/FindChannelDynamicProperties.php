@@ -5,6 +5,7 @@ namespace FastyBird\Module\Devices\Queries\Configuration;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -26,6 +27,7 @@ class FindChannelDynamicProperties extends FindChannelProperties
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function forParent(
 		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Variable $parent,
 	): void
@@ -36,6 +38,7 @@ class FindChannelDynamicProperties extends FindChannelProperties
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function byParentId(Uuid\UuidInterface $parentId): void
 	{
 		throw new Exceptions\InvalidState('Searching by parent is not allowed for this type of property');

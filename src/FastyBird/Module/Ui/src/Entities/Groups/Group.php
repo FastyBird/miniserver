@@ -11,6 +11,7 @@ use FastyBird\Core\Security\Entities as SecurityEntities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities as UiEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -176,6 +177,7 @@ class Group implements UiEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -196,6 +198,7 @@ class Group implements UiEntities\Entity,
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::UI;
@@ -204,6 +207,7 @@ class Group implements UiEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

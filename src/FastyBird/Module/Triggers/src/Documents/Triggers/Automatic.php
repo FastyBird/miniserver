@@ -5,6 +5,7 @@ namespace FastyBird\Module\Triggers\Documents\Triggers;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -40,6 +41,7 @@ final class Automatic extends Trigger
 		return $this->isFulfilled;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

@@ -10,6 +10,7 @@ use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -57,6 +58,7 @@ final class Control implements DevicesDocuments\Document, CoreDocuments\Owner, C
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -72,6 +74,7 @@ final class Control implements DevicesDocuments\Document, CoreDocuments\Owner, C
 		return $this->name;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -85,6 +88,7 @@ final class Control implements DevicesDocuments\Document, CoreDocuments\Owner, C
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;

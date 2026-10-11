@@ -8,6 +8,7 @@ use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -43,6 +44,7 @@ class Button extends UiDocuments\Widgets\Displays\Display
 		return $this->icon;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

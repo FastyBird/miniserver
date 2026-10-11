@@ -7,6 +7,7 @@ use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -93,6 +94,7 @@ abstract class Condition implements TriggersEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -109,6 +111,7 @@ abstract class Condition implements TriggersEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

@@ -4,6 +4,7 @@ namespace FastyBird\Module\Ui\Schemas\Widgets;
 
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities;
+use Override;
 
 /**
  * Digital actuator widget entity schema
@@ -19,6 +20,7 @@ final class DigitalActuator extends Widget
 	 */
 	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/widget/' . Entities\Widgets\DigitalActuator::TYPE;
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
