@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindRoles.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           31.03.20
- */
-
 namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Doctrine\DBAL;
@@ -25,10 +12,6 @@ use Ramsey\Uuid;
  * Find roles entities query
  *
  * @extends  Queries\FindPolicies<Entities\Roles\Role>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindRoles extends Queries\FindPolicies
 {

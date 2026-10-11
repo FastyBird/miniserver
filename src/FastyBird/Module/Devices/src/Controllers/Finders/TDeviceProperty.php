@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TDeviceProperty.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           09.02.22
- */
-
 namespace FastyBird\Module\Devices\Controllers\Finders;
 
 use FastyBird\Core\Api\Exceptions as ApiExceptions;

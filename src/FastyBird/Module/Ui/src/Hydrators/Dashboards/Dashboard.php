@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Dashboard.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Hydrators\Dashboards;
 
 use FastyBird\Core\Api\Encoding\Objects;
@@ -25,10 +12,6 @@ use function is_scalar;
  * Dashboard entity hydrator
  *
  * @extends ApiHydrators\Hydrator<Entities\Dashboards\Dashboard>
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Dashboard extends ApiHydrators\Hydrator
 {

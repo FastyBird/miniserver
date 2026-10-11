@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Widget.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Documents\Widgets;
 
 use DateTimeInterface;
@@ -28,11 +15,6 @@ use function array_map;
 
 /**
  * Widget document
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Widget::class)]
 #[CoreDocuments\Mapping\InheritanceType('SINGLE_TABLE')]

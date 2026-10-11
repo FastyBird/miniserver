@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * AccountPresenter.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Presenters
- * @since          1.0.0
- *
- * @date           05.07.24
- */
-
 namespace FastyBird\Module\Accounts\Presenters;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -29,11 +16,6 @@ use function assert;
 
 /**
  * Account presenter
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Presenters
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */

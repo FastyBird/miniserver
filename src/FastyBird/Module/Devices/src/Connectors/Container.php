@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Connectors
- * @since          1.0.0
- *
- * @date           21.01.24
- */
-
 namespace FastyBird\Module\Devices\Connectors;
 
 use Closure;
@@ -28,11 +15,6 @@ use function array_key_exists;
 
 /**
  * Devices connectors container
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Connectors
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Container implements Connector, EventDispatcher\EventSubscriberInterface
 {

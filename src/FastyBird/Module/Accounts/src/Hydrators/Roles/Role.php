@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Role.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           03.06.20
- */
-
 namespace FastyBird\Module\Accounts\Hydrators\Roles;
 
 use FastyBird\Core\Api\Encoding\Objects;
@@ -25,10 +12,6 @@ use function is_scalar;
  * Role entity hydrator
  *
  * @extends Hydrators\Hydrator<Entities\Roles\Role>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Role extends Hydrators\Hydrator
 {

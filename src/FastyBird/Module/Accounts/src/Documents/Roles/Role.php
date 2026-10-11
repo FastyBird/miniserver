@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Role.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           01.06.22
- */
-
 namespace FastyBird\Module\Accounts\Documents\Roles;
 
 use FastyBird\Core\Documents;
@@ -25,11 +12,6 @@ use Ramsey\Uuid;
 
 /**
  * Role document
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Roles\Role::class)]
 #[Documents\Mapping\RoutingMap([

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           27.11.23
- */
-
 namespace FastyBird\Module\Devices\Documents;
 
 use DateTimeInterface;
@@ -43,11 +30,6 @@ use function strval;
 
 /**
  * Channel property document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\MappedSuperclass]
 abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt

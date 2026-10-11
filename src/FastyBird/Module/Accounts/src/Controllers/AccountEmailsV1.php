@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * AccountEmailsV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           31.03.20
- */
-
 namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
@@ -47,11 +34,6 @@ use function strval;
 
 /**
  * Emails controller
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Routes.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Router
- * @since          1.0.0
- *
- * @date           11.01.22
- */
-
 namespace FastyBird\Module\Triggers\Router;
 
 use Exception;
@@ -26,11 +13,6 @@ use function assert;
 
 /**
  * Route validator
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Validator
 {

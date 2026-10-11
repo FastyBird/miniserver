@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Repository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Models\Entities\Widgets\Displays;
 
 use Doctrine\ORM;
@@ -30,11 +17,6 @@ use function is_array;
 
 /**
  * Widget display repository
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Repository
 {

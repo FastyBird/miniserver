@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           20.01.24
- */
-
 namespace FastyBird\Module\Devices\Subscribers;
 
 use Doctrine\DBAL;
@@ -33,11 +20,6 @@ use ValueError;
 
 /**
  * Devices state entities events
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connector implements EventDispatcher\EventSubscriberInterface
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Name.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Utilities
- * @since          1.0.0
- *
- * @date           26.10.23
- */
-
 namespace FastyBird\Module\Devices\Utilities;
 
 use function array_map;
@@ -28,11 +15,6 @@ use function ucfirst;
 
 /**
  * Useful name helpers
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Utilities
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Name
 {

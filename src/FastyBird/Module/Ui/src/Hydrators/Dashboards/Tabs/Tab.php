@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Tab.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           03.08.24
- */
-
 namespace FastyBird\Module\Ui\Hydrators\Dashboards\Tabs;
 
 use FastyBird\Core\Api\Encoding\Objects;
@@ -25,10 +12,6 @@ use function is_scalar;
  * Tab entity hydrator
  *
  * @extends Hydrators\Hydrator<Entities\Dashboards\Tabs\Tab>
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Tab extends Hydrators\Hydrator
 {

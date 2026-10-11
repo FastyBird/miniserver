@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Email.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Module\Triggers\Documents\Notifications;
 
 use FastyBird\Core\Documents;
@@ -23,11 +10,6 @@ use function array_merge;
 
 /**
  * Email notification document
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Notifications\Email::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Notifications\Email::TYPE)]

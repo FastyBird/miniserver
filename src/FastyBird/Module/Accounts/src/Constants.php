@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Constants.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     common
- * @since          1.0.0
- *
- * @date           12.06.20
- */
-
 namespace FastyBird\Module\Accounts;
 
 use FastyBird\Core\Exchange\Publisher;
@@ -20,11 +7,6 @@ use FastyBird\Core\Security\Identity;
 
 /**
  * Module constants
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     common
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Constants
 {

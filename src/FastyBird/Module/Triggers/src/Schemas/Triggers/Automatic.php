@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Automatic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -32,10 +19,6 @@ use function count;
  *
  * @template T of Entities\Triggers\Automatic
  * @extends  Trigger<T>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Automatic extends Trigger
 {

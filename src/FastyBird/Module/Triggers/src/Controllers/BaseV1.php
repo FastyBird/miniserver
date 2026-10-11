@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * BaseV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           13.04.19
- */
-
 namespace FastyBird\Module\Triggers\Controllers;
 
 use Doctrine\DBAL\Connection;
@@ -46,11 +33,6 @@ use function strval;
 
 /**
  * API base controller
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class BaseV1
 {

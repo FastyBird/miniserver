@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Sms.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Schemas\Notifications;
 
 use FastyBird\Core\Values\Types\Sources;
@@ -25,10 +12,6 @@ use function array_merge;
  *
  * @template T of Entities\Notifications\Sms
  * @extends  Notification<T>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Sms extends Notification
 {

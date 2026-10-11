@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Control.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           01.10.21
- */
-
 namespace FastyBird\Module\Triggers\Schemas\Triggers\Controls;
 
 use FastyBird\Core\Api\Schemas as ApiSchemas;
@@ -29,10 +16,6 @@ use Neomerx\JsonApi;
  *
  * @template T of Entities\Triggers\Controls\Control
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Control extends ApiSchemas\JsonApiSchema
 {

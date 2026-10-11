@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindTriggerControls.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           01.10.21
- */
-
 namespace FastyBird\Module\Triggers\Queries\Entities;
 
 use Closure;
@@ -26,10 +13,6 @@ use SortDirection;
  * Find trigger properties entities query
  *
  * @extends  Query\QueryObject<Entities\Triggers\Controls\Control>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindTriggerControls extends Query\QueryObject
 {

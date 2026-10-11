@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Account.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           01.06.22
- */
-
 namespace FastyBird\Module\Accounts\Documents\Accounts;
 
 use DateTimeInterface;
@@ -28,11 +15,6 @@ use function array_map;
 
 /**
  * Account document
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Accounts\Account::class)]
 #[Documents\Mapping\RoutingMap([

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StatesActions.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Consumers
- * @since          1.0.0
- *
- * @date           22.10.22
- */
-
 namespace FastyBird\Module\Devices\Consumers;
 
 use FastyBird\Core\Documents as CoreDocuments;
@@ -38,11 +25,6 @@ use function React\Async\await;
 
 /**
  * States actions messages subscriber
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Consumers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StatesActions implements Consumers\Consumer
 {

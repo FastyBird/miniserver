@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Manager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           08.02.22
- */
-
 namespace FastyBird\Module\Devices\Models\States\Channels\Async;
 
 use DateTimeInterface;
@@ -28,11 +15,6 @@ use Throwable;
 
 /**
  * Asynchronous channel property states manager
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Manager
 {

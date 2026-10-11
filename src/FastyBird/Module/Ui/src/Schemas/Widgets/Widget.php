@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Widget.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Schemas\Widgets;
 
 use FastyBird\Core\Api\Schemas;
@@ -29,10 +16,6 @@ use function count;
  *
  * @template  T of Entities\Widgets\Widget
  * @extends   Schemas\JsonApiSchema<T>
- *
- * @package          FastyBird:UIModule!
- * @subpackage       Schemas
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Widget extends Schemas\JsonApiSchema
 {

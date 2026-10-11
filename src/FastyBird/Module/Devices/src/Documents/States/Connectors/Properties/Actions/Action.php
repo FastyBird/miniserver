@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Action.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           01.06.22
- */
-
 namespace FastyBird\Module\Devices\Documents\States\Connectors\Properties\Actions;
 
 use FastyBird\Core\Documents as CoreDocuments;
@@ -28,11 +15,6 @@ use function sprintf;
 
 /**
  * Connector property action document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([

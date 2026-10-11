@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           17.01.21
- */
-
 namespace FastyBird\Module\Devices\Schemas\Connectors;
 
 use DateTimeInterface;
@@ -30,10 +17,6 @@ use function count;
  *
  * @template T of Entities\Connectors\Connector
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Connector extends ApiSchemas\JsonApiSchema
 {

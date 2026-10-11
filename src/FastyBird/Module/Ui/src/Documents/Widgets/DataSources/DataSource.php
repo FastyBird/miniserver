@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DataSource.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Documents\Widgets\DataSources;
 
 use DateTimeInterface;
@@ -27,11 +14,6 @@ use Ramsey\Uuid;
 
 /**
  * Widget data source document
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\DataSources\DataSource::class)]
 #[CoreDocuments\Mapping\InheritanceType('JOINED_TABLE')]

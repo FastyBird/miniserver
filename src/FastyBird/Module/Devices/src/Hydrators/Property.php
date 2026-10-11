@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           02.01.22
- */
-
 namespace FastyBird\Module\Devices\Hydrators;
 
 use FastyBird\Core\Api\Encoding\Objects;
@@ -39,10 +26,6 @@ use function strval;
  *
  * @template T of Entities\Property
  * @extends  Hydrators\Hydrator<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Property extends Hydrators\Hydrator
 {

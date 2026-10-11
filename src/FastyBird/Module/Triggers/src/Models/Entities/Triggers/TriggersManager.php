@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ITriggersManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Models\Entities\Triggers;
 
 use Doctrine\DBAL;
@@ -20,7 +7,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Triggers\Entities;
-use FastyBird\Module\Triggers\Models;
 use Nette;
 use Nette\Utils;
 use ReflectionException;
@@ -28,11 +14,6 @@ use function assert;
 
 /**
  * Triggers entities manager
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class TriggersManager
 {

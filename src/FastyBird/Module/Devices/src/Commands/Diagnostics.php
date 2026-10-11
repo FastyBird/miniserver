@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Diagnostics.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           11.08.24
- */
-
 namespace FastyBird\Module\Devices\Commands;
 
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
@@ -42,11 +29,6 @@ use function usort;
 
 /**
  * Module diagnostics command
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Diagnostics extends Console\Command\Command
 {

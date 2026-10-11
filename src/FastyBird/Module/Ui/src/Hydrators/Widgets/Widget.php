@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WidgetHydrator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Hydrators\Widgets;
 
 use Contributte\Translation;
@@ -41,10 +28,6 @@ use function strval;
  *
  * @template  T of UiEntities\Widgets\Widget
  * @extends   ApiHydrators\Hydrator<T>
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Widget extends ApiHydrators\Hydrator
 {

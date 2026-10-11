@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Dynamic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           13.04.19
- */
-
 namespace FastyBird\Module\Devices\Schemas\Channels\Properties;
 
 use Exception;
@@ -27,7 +14,6 @@ use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\Schemas;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
@@ -42,10 +28,6 @@ use function count;
  *
  * @template T of Entities\Channels\Properties\Dynamic
  * @extends Property<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Dynamic extends Property
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ProfileAccount.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           19.08.20
- */
-
 namespace FastyBird\Module\Accounts\Hydrators\Accounts;
 
 use FastyBird\Core\Api\Hydrators;
@@ -22,10 +9,6 @@ use FastyBird\Module\Accounts\Entities;
  * Profile account entity hydrator
  *
  * @extends Hydrators\Hydrator<Entities\Accounts\Account>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ProfileAccount extends Hydrators\Hydrator
 {

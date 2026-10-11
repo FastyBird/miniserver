@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Variable.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           08.02.22
- */
-
 namespace FastyBird\Module\Devices\Schemas\Connectors\Properties;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -20,7 +7,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
-use FastyBird\Module\Devices\Schemas;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
@@ -33,10 +19,6 @@ use function array_merge;
  *
  * @template T of Entities\Connectors\Properties\Variable
  * @extends Property<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Variable extends Property
 {

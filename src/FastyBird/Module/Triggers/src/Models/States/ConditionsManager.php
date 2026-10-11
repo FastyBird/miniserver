@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConditionsManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           08.02.22
- */
-
 namespace FastyBird\Module\Triggers\Models\States;
 
 use FastyBird\Core\Documents as CoreDocuments;
@@ -23,7 +10,6 @@ use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
-use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\States;
 use Nette;
 use Nette\Utils;
@@ -31,11 +17,6 @@ use function array_merge;
 
 /**
  * Condition states manager
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ConditionsManager
 {

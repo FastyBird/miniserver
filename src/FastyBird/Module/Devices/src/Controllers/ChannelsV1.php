@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelsV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           13.04.19
- */
-
 namespace FastyBird\Module\Devices\Controllers;
 
 use Doctrine;
@@ -42,9 +29,6 @@ use function strval;
 
 /**
  * Device channels API controller
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
  *
  * @Secured\User(loggedIn)
  */

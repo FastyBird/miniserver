@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelsRepository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           23.04.17
- */
-
 namespace FastyBird\Module\Devices\Models\Entities\Channels;
 
 use Doctrine\ORM;
@@ -30,11 +17,6 @@ use function is_array;
 
 /**
  * Channel repository
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ChannelsRepository
 {

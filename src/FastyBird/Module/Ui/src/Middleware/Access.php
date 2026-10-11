@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Access.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Middleware
- * @since          1.0.0
- *
- * @date           24.07.20
- */
-
 namespace FastyBird\Module\Ui\Middleware;
 
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
@@ -27,11 +14,6 @@ use function strval;
 
 /**
  * Access check middleware
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Middleware
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Access implements MiddlewareInterface
 {

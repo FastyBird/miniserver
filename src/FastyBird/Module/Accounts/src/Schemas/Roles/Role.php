@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Role.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Accounts\Schemas\Roles;
 
 use Exception;
@@ -33,10 +20,6 @@ use function count;
  *
  * @template T of Entities\Roles\Role
  * @extends  Schemas\JsonApiSchema<T>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Role extends Schemas\JsonApiSchema
 {

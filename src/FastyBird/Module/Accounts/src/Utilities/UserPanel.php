@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * UserPanel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Utilities
- * @since          1.0.0
- *
- * @date           19.06.24
- */
-
 namespace FastyBird\Module\Accounts\Utilities;
 
 use FastyBird\Module\Accounts\Security;
@@ -22,11 +9,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * User panel for Debugger Bar
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Utilities
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class UserPanel implements Tracy\IBarPanel
 {

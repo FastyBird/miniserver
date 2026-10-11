@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Trigger.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
 use FastyBird\Core\Api\Schemas as ApiSchemas;
@@ -31,9 +18,6 @@ use function count;
  *
  * @template T of Entities\Triggers\Trigger
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
  */
 abstract class Trigger extends ApiSchemas\JsonApiSchema
 {

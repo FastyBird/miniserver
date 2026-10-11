@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ModuleEntities.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           28.08.20
- */
-
 namespace FastyBird\Module\Triggers\Subscribers;
 
 use Doctrine\Common;
@@ -37,11 +24,6 @@ use function str_starts_with;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ModuleEntities implements Common\EventSubscriber
 {

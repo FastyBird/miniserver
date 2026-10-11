@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DigitalValue.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Schemas\Widgets\Display;
 
 use FastyBird\Core\Values\Types\Sources;
@@ -23,10 +10,6 @@ use FastyBird\Module\Ui\Entities;
  *
  * @template T of Entities\Widgets\Displays\DigitalValue
  * @extends  Display<T>
- *
- * @package         FastyBird:UIModule!
- * @subpackage      Schemas
- * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DigitalValue extends Display
 {

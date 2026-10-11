@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TriggerControlsV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           01.10.21
- */
-
 namespace FastyBird\Module\Triggers\Controllers;
 
 use Exception;
@@ -33,11 +20,6 @@ use function strval;
 
 /**
  * Trigger controls API controller
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */

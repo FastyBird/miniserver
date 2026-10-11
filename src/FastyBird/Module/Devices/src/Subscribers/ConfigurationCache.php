@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConfigurationCache.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           11.09.24
- */
-
 namespace FastyBird\Module\Devices\Subscribers;
 
 use FastyBird\Module\Devices\Caching as DevicesCaching;
@@ -25,11 +12,6 @@ use Symfony\Component\EventDispatcher;
 
 /**
  * Module entities events
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ConfigurationCache implements EventDispatcher\EventSubscriberInterface
 {

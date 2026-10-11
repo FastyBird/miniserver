@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RoleChildrenV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           03.06.20
- */
-
 namespace FastyBird\Module\Accounts\Controllers;
 
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
@@ -28,11 +15,6 @@ use Ramsey\Uuid\Exception\InvalidArgumentException;
 
 /**
  * Role children API controller
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */

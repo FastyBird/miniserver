@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelPropertiesStates.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           23.08.22
- */
-
 namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
@@ -55,11 +42,6 @@ use function strval;
  * Useful channel dynamic property state helpers
  *
  * @extends PropertiesManager<DevicesDocuments\Channels\Properties\Dynamic, DevicesDocuments\Channels\Properties\Mapped | null, States\ChannelProperty>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ChannelPropertiesManager extends PropertiesManager
 {

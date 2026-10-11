@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TriggersExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           29.11.20
- */
-
 namespace FastyBird\Module\Triggers\DI;
 
 use Contributte\Translation;
@@ -40,11 +27,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Triggers module extension container
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class TriggersExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

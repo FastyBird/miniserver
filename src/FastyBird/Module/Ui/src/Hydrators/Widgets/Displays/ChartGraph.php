@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChartGraph.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
 use FastyBird\Core\Api\Encoding\Objects;
@@ -26,10 +13,6 @@ use function strval;
  * Chart graph widget display entity hydrator
  *
  * @extends Display<Entities\Widgets\Displays\ChartGraph>
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ChartGraph extends Display
 {

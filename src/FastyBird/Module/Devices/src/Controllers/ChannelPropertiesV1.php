@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelPropertiesV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           04.06.19
- */
-
 namespace FastyBird\Module\Devices\Controllers;
 
 use Doctrine;
@@ -43,11 +30,6 @@ use function strval;
 
 /**
  * Device channel properties API controller
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */

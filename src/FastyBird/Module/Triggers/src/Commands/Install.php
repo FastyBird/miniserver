@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Install.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           08.08.20
- */
-
 namespace FastyBird\Module\Triggers\Commands;
 
 use FastyBird\Core\Logging;
@@ -27,11 +14,6 @@ use Throwable;
 
 /**
  * Module initialize command
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Install extends Console\Command\Command
 {

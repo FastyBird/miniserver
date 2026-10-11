@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Dynamic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Module\Devices\Documents\Devices\Properties;
 
 use DateTimeInterface;
@@ -32,11 +19,6 @@ use function array_merge;
 
 /**
  * Device dynamic property document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Devices\Properties\Dynamic::class)]
 final class Dynamic extends Property

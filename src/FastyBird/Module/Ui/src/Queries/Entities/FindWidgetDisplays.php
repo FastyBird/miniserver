@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindWidgetDisplays.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Queries\Entities;
 
 use Closure;
@@ -26,10 +13,6 @@ use Ramsey\Uuid;
  *
  * @template T of Entities\Widgets\Displays\Display
  * @extends  Query\QueryObject<T>
- *
- * @package          FastyBird:UIModule!
- * @subpackage       Queries
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindWidgetDisplays extends Query\QueryObject
 {

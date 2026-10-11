@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DevicePropertiesStates.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           22.01.24
- */
-
 namespace FastyBird\Module\Devices\Models\States\Async;
 
 use DateTimeInterface;
@@ -57,11 +44,6 @@ use function strval;
  * Useful device dynamic property state helpers
  *
  * @extends Models\States\PropertiesManager<DevicesDocuments\Devices\Properties\Dynamic, DevicesDocuments\Devices\Properties\Mapped | null, States\DeviceProperty>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DevicePropertiesManager extends Models\States\PropertiesManager
 {

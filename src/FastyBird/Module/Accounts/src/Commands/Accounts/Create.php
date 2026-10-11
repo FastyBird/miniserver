@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Create.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           31.03.20
- */
-
 namespace FastyBird\Module\Accounts\Commands\Accounts;
 
 use Doctrine;
@@ -41,11 +28,6 @@ use function strval;
 
 /**
  * Account creation command
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Create extends Console\Command\Command
 {

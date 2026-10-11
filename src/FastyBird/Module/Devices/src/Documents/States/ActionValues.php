@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ActionValues.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           23.01.24
- */
-
 namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
@@ -24,11 +11,6 @@ use function array_merge;
 
 /**
  * Property set action value document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document]
 final readonly class ActionValues implements Documents\Document

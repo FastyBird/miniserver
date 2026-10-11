@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PropertiesManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           08.02.22
- */
-
 namespace FastyBird\Module\Devices\Models\Entities\Connectors\Properties;
 
 use Doctrine\DBAL;
@@ -21,7 +8,6 @@ use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;
-use FastyBird\Module\Devices\Models;
 use Nette;
 use Nette\Utils;
 use Psr\EventDispatcher;
@@ -30,11 +16,6 @@ use function assert;
 
 /**
  * Connectors properties entities manager
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class PropertiesManager
 {

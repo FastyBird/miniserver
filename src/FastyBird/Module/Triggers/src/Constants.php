@@ -1,29 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * Constants.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     common
- * @since          1.0.0
- *
- * @date           05.04.20
- */
-
 namespace FastyBird\Module\Triggers;
 
 use FastyBird\Core\Exchange\Publisher;
 
 /**
  * Service constants
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     common
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Constants
 {

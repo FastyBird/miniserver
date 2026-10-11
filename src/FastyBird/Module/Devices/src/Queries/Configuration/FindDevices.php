@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindDevices.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           14.11.23
- */
-
 namespace FastyBird\Module\Devices\Queries\Configuration;
 
 use FastyBird\Module\Devices\Documents;
@@ -29,10 +16,6 @@ use function serialize;
  *
  * @template T of Documents\Devices\Device
  * @extends  QueryObject<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindDevices extends QueryObject
 {

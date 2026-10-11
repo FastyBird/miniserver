@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * EmailEntity.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UiModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           03.08.24
- */
-
 namespace FastyBird\Module\Ui\Subscribers;
 
 use Doctrine\Common;
@@ -26,11 +13,6 @@ use Nette;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:UiModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DashboardEntity implements Common\EventSubscriber
 {

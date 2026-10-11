@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindChannelControls.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           25.11.18
- */
-
 namespace FastyBird\Module\Devices\Queries\Entities;
 
 use Closure;
@@ -26,10 +13,6 @@ use SortDirection;
  * Find channel controls entities query
  *
  * @extends  Query\QueryObject<Entities\Channels\Controls\Control>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindChannelControls extends Query\QueryObject
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindEmails.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Closure;
@@ -25,10 +12,6 @@ use Ramsey\Uuid;
  * Find accounts entities query
  *
  * @extends  Query\QueryObject<Entities\Emails\Email>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindEmails extends Query\QueryObject
 {

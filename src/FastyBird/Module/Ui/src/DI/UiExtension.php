@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * UiExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           02.12.20
- */
-
 namespace FastyBird\Module\Ui\DI;
 
 use Contributte\Translation;
@@ -50,11 +37,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * UI module
- *
- * @package        FastyBird:UIModule!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

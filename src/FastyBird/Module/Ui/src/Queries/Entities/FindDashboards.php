@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindDashboards.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           25.05.20
- */
-
 namespace FastyBird\Module\Ui\Queries\Entities;
 
 use Closure;
@@ -26,10 +13,6 @@ use Ramsey\Uuid;
  *
  * @template T of Entities\Dashboards\Dashboard
  * @extends  Query\QueryObject<T>
- *
- * @package          FastyBird:UIModule!
- * @subpackage       Queries
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindDashboards extends Query\QueryObject
 {

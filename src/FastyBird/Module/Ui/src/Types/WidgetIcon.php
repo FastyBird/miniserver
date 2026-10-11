@@ -1,27 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * WidgetIconType.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Types
- * @since          1.0.0
- *
- * @date           24.09.18
- */
-
 namespace FastyBird\Module\Ui\Types;
 
 /**
  * Widget supported icons
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Types
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 enum WidgetIcon: string
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           13.04.19
- */
-
 namespace FastyBird\Module\Devices\Schemas\Devices\Properties;
 
 use DateTimeInterface;
@@ -39,10 +26,6 @@ use function strval;
  *
  * @template T of Entities\Devices\Properties\Property
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Property extends ApiSchemas\JsonApiSchema
 {

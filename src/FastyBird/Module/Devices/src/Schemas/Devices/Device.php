@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           13.04.19
- */
-
 namespace FastyBird\Module\Devices\Schemas\Devices;
 
 use DateTimeInterface;
@@ -33,10 +20,6 @@ use Neomerx\JsonApi;
  *
  * @template T of Entities\Devices\Device
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Device extends ApiSchemas\JsonApiSchema
 {

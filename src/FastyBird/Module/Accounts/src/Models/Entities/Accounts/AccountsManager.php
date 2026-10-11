@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * AccountsManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Models\Entities\Accounts;
 
 use Doctrine\DBAL;
@@ -20,7 +7,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Accounts\Entities;
-use FastyBird\Module\Accounts\Models;
 use Nette;
 use Nette\Utils;
 use ReflectionException;
@@ -28,11 +14,6 @@ use function assert;
 
 /**
  * Accounts entities manager
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class AccountsManager
 {

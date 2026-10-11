@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Identity.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           03.04.20
- */
-
 namespace FastyBird\Module\Accounts\Schemas\Identities;
 
 use FastyBird\Core\Api\Schemas;
@@ -29,10 +16,6 @@ use Neomerx\JsonApi;
  *
  * @template T of Entities\Identities\Identity
  * @extends Schemas\JsonApiSchema<T>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Identity extends Schemas\JsonApiSchema
 {

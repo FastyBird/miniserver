@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * GroupedButton.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
 use FastyBird\Core\Api\Encoding\Objects;
@@ -29,10 +16,6 @@ use function strval;
  * Grouped button widget display entity hydrator
  *
  * @extends Display<Entities\Widgets\Displays\GroupedButton>
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class GroupedButton extends Display
 {

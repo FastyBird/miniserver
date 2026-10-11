@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * IdentityFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Security
- * @since          1.0.0
- *
- * @date           15.07.20
- */
-
 namespace FastyBird\Module\Accounts\Security;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -26,11 +13,6 @@ use Lcobucci\JWT;
 
 /**
  * Application identity factory
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Security
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class IdentityFactory implements Identity\IdentityProvider
 {

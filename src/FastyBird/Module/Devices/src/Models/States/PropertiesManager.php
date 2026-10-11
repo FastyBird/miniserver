@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PropertiesManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           16.01.24
- */
-
 namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
@@ -42,11 +29,6 @@ use function is_string;
  * @template TParent of (Documents\Connectors\Properties\Dynamic | Documents\Devices\Properties\Dynamic | Documents\Channels\Properties\Dynamic)
  * @template TChild of (Documents\Devices\Properties\Mapped | Documents\Channels\Properties\Mapped | null)
  * @template TState of States\Property
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class PropertiesManager
 {

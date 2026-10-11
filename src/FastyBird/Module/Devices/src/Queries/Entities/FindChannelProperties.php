@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindChannelProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           25.11.18
- */
-
 namespace FastyBird\Module\Devices\Queries\Entities;
 
 use Closure;
@@ -27,10 +14,6 @@ use SortDirection;
  *
  * @template T of Entities\Channels\Properties\Property
  * @extends  Query\QueryObject<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindChannelProperties extends Query\QueryObject
 {

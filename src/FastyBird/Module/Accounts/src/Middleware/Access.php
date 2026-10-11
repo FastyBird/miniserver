@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * AccountMiddleware.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Middleware
- * @since          1.0.0
- *
- * @date           01.04.20
- */
-
 namespace FastyBird\Module\Accounts\Middleware;
 
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
@@ -27,11 +14,6 @@ use function strval;
 
 /**
  * Access check middleware
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Middleware
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Access implements MiddlewareInterface
 {

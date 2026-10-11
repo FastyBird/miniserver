@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DisplayV1Controller.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Controllers;
 
 use Doctrine;
@@ -32,11 +19,6 @@ use function strval;
 
 /**
  * API widgets display controller
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */

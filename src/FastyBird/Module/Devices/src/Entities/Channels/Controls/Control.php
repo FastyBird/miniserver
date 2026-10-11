@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Control.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           19.07.19
- */
-
 namespace FastyBird\Module\Devices\Entities\Channels\Controls;
 
 use DateTimeInterface;

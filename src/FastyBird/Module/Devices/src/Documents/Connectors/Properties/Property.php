@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           27.11.23
- */
-
 namespace FastyBird\Module\Devices\Documents\Connectors\Properties;
 
 use DateTimeInterface;
@@ -32,11 +19,6 @@ use function array_merge;
 
 /**
  * Connector property document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Connectors\Properties\Property::class)]
 #[CoreDocuments\Mapping\InheritanceType('SINGLE_TABLE')]

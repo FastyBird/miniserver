@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DevicesExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           25.11.20
- */
-
 namespace FastyBird\Module\Devices\DI;
 
 use Contributte\Translation;
@@ -55,11 +42,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Devices module
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class DevicesExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

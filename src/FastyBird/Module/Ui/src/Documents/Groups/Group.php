@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Group.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Documents\Groups;
 
 use DateTimeInterface;
@@ -28,11 +15,6 @@ use function array_map;
 
 /**
  * Group document
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Groups\Group::class)]
 #[CoreDocuments\Mapping\RoutingMap([

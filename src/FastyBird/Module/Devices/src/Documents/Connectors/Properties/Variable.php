@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Variable.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Module\Devices\Documents\Connectors\Properties;
 
 use DateTimeInterface;
@@ -33,11 +20,6 @@ use function array_merge;
 
 /**
  * Connector variable property document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Connectors\Properties\Variable::class)]
 final class Variable extends Property

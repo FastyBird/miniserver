@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Exchange.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           31.05.22
- */
-
 namespace FastyBird\Module\Devices\Commands;
 
 use FastyBird\Core\Exchange as CoreExchange;
@@ -36,11 +23,6 @@ use const SIGTERM;
 
 /**
  * Module exchange command
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Exchange extends Console\Command\Command
 {

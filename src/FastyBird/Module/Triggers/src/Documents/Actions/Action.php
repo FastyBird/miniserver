@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Action.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           01.06.22
- */
-
 namespace FastyBird\Module\Triggers\Documents\Actions;
 
 use FastyBird\Core\Documents;
@@ -24,11 +11,6 @@ use Ramsey\Uuid;
 
 /**
  * Action document
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Actions\Action::class)]
 #[Documents\Mapping\InheritanceType('SINGLE_TABLE')]

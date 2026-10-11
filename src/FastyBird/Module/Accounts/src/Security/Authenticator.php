@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Authenticator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Security
- * @since          1.0.0
- *
- * @date           31.03.20
- */
-
 namespace FastyBird\Module\Accounts\Security;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -25,11 +12,6 @@ use function is_string;
 
 /**
  * Account authentication
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Security
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Authenticator implements Identity\Authenticator
 {

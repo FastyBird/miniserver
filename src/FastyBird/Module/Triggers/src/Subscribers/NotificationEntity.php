@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ActionEntity.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           05.04.20
- */
-
 namespace FastyBird\Module\Triggers\Subscribers;
 
 use Doctrine\Common;
@@ -24,11 +11,6 @@ use function array_merge;
 
 /**
  * Trigger notification entity listener
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class NotificationEntity implements Common\EventSubscriber
 {

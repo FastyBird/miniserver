@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelsPresenter.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Presenters
- * @since          1.0.0
- *
- * @date           22.06.24
- */
-
 namespace FastyBird\Module\Devices\Presenters;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -27,11 +14,6 @@ use ValueError;
 
 /**
  * Channels presenter
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Presenters
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */
