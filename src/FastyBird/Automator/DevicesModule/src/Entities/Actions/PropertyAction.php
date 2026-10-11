@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PropertyAction.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Automator\DevicesModule\Entities\Actions;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -21,6 +8,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -89,6 +77,7 @@ abstract class PropertyAction extends TriggersEntities\Actions\Action
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

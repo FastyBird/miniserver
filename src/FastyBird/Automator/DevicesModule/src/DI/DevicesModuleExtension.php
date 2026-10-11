@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DevicesModuleExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           05.11.22
- */
-
 namespace FastyBird\Automator\DevicesModule\DI;
 
 use FastyBird\Automator\DevicesModule\Hydrators;
@@ -30,16 +17,11 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Devices module automator
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DevicesModuleExtension extends NetteDI\CompilerExtension
+final class DevicesModuleExtension extends NetteDI\CompilerExtension
 {
 
-	public const NAME = 'fbDevicesModuleAutomator';
+	public const string NAME = 'fbDevicesModuleAutomator';
 
 	public static function register(
 		Boot\Configurator $config,

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PropertyAction.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           08.01.22
- */
-
 namespace FastyBird\Automator\DevicesModule\Hydrators\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
@@ -31,10 +18,6 @@ use function strval;
  *
  * @template T of Entities\Actions\PropertyAction
  * @extends  TriggersHydrators\Actions\Action<T>
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class PropertyAction extends TriggersHydrators\Actions\Action
 {

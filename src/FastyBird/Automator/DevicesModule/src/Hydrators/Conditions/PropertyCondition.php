@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PropertyCondition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Automator\DevicesModule\Hydrators\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
@@ -34,10 +21,6 @@ use function strval;
  *
  * @template T of Entities\Conditions\PropertyCondition
  * @extends  TriggersHydrators\Conditions\Condition<T>
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class PropertyCondition extends TriggersHydrators\Conditions\Condition
 {
