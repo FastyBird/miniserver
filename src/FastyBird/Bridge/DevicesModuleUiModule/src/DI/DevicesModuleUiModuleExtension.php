@@ -28,7 +28,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Redis DB devices module bridge extension
  */
-class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
+final class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 {
 
 	public const string NAME = 'fbDevicesModuleUiModuleBridge';

@@ -14,7 +14,7 @@ use function class_exists;
 /**
  * Input source service mapping configuration
  */
-readonly class InputSource implements Service
+final readonly class InputSource implements Service
 {
 
 	/**

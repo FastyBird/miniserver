@@ -14,7 +14,7 @@ use function class_exists;
 /**
  * Input switch service mapping configuration
  */
-readonly class StatelessProgrammableSwitch implements Service
+final readonly class StatelessProgrammableSwitch implements Service
 {
 
 	/**

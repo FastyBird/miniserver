@@ -10,7 +10,7 @@ use Override;
 /**
  * Basic characteristic mapping configuration
  */
-readonly class BasicCharacteristic implements Characteristic
+final readonly class BasicCharacteristic implements Characteristic
 {
 
 	/**

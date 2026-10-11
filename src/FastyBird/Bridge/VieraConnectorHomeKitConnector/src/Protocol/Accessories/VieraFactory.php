@@ -13,7 +13,7 @@ use function assert;
 /**
  * HAP viera accessory factory
  */
-class VieraFactory implements HomeKitProtocol\Accessories\AccessoryFactory
+final class VieraFactory implements HomeKitProtocol\Accessories\AccessoryFactory
 {
 
 	#[Override]

@@ -38,7 +38,7 @@ use function strval;
  * @Secured
  * @Secured\User(loggedIn)
  */
-class BridgesV1 extends BaseV1
+final class BridgesV1 extends BaseV1
 {
 
 	public function __construct(

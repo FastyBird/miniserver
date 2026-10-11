@@ -15,7 +15,7 @@ use Ramsey\Uuid;
 /**
  * Trigger action state repository
  */
-class ActionsRepository implements TriggersModels\States\ActionsReader
+final class ActionsRepository implements TriggersModels\States\ActionsReader
 {
 
 	use Nette\SmartObject;

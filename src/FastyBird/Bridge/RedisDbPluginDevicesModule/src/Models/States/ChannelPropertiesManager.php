@@ -14,7 +14,7 @@ use Ramsey\Uuid;
 /**
  * Channel property states manager
  */
-class ChannelPropertiesManager implements DevicesModels\States\Channels\Writer
+final class ChannelPropertiesManager implements DevicesModels\States\Channels\Writer
 {
 
 	use Nette\SmartObject;

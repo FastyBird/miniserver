@@ -13,7 +13,7 @@ use Ramsey\Uuid;
 /**
  * Channel property state repository
  */
-class ChannelPropertiesRepository implements DevicesModels\States\Channels\Reader
+final class ChannelPropertiesRepository implements DevicesModels\States\Channels\Reader
 {
 
 	use Nette\SmartObject;

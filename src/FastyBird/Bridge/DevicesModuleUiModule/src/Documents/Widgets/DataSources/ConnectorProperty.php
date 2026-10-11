@@ -13,7 +13,7 @@ use function array_merge;
 
 #[Documents\Mapping\Document(entity: Entities\Widgets\DataSources\ConnectorProperty::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\ConnectorProperty::TYPE)]
-class ConnectorProperty extends Property
+final class ConnectorProperty extends Property
 {
 
 	public function __construct(

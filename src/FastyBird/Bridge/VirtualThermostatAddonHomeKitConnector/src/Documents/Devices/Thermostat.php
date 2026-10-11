@@ -9,7 +9,7 @@ use Override;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Devices\Thermostat::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Thermostat::TYPE)]
-class Thermostat extends HomeKitDocuments\Devices\Device
+final class Thermostat extends HomeKitDocuments\Devices\Device
 {
 
 	#[Override]

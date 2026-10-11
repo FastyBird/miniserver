@@ -7,7 +7,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\InputSource::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\InputSource::TYPE)]
-class InputSource extends Viera
+final class InputSource extends Viera
 {
 
 	public static function getType(): string

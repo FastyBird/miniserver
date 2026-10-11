@@ -7,7 +7,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Relay::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Relay::TYPE)]
-class Relay extends Shelly
+final class Relay extends Shelly
 {
 
 	public static function getType(): string

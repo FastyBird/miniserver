@@ -16,7 +16,7 @@ use React\Promise;
 /**
  * Connector property asynchronous states manager
  */
-class ConnectorPropertiesManager implements DevicesModels\States\Connectors\Async\Writer
+final class ConnectorPropertiesManager implements DevicesModels\States\Connectors\Async\Writer
 {
 
 	use Nette\SmartObject;

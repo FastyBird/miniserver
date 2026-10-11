@@ -11,7 +11,7 @@ use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
  * @template T of Entities\Channels\Thermostat
  * @extends  HomeKitQueries\Entities\FindChannels<T>
  */
-class FindThermostatChannels extends HomeKitQueries\Entities\FindChannels
+final class FindThermostatChannels extends HomeKitQueries\Entities\FindChannels
 {
 
 }

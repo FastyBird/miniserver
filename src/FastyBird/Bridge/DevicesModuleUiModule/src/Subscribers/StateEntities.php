@@ -24,17 +24,17 @@ use function assert;
 /**
  * Devices state entities events
  */
-final class StateEntities implements EventDispatcher\EventSubscriberInterface
+final readonly class StateEntities implements EventDispatcher\EventSubscriberInterface
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly UiModels\Configuration\Widgets\DataSources\Repository $dataSourcesRepository,
-		private readonly UiCaching\Container $uiModuleCaching,
-		private readonly EventLoop\Status $eventLoopStatus,
-		private readonly Publisher\MessagePublisher $publisher,
-		private readonly Async\MessagePublisher $asyncPublisher,
+		private UiModels\Configuration\Widgets\DataSources\Repository $dataSourcesRepository,
+		private UiCaching\Container $uiModuleCaching,
+		private EventLoop\Status $eventLoopStatus,
+		private Publisher\MessagePublisher $publisher,
+		private Async\MessagePublisher $asyncPublisher,
 	)
 	{
 	}

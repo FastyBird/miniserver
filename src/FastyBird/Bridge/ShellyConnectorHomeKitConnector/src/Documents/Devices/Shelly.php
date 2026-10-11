@@ -9,7 +9,7 @@ use Override;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Devices\Shelly::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Shelly::TYPE)]
-class Shelly extends HomeKitDocuments\Devices\Device
+final class Shelly extends HomeKitDocuments\Devices\Device
 {
 
 	#[Override]

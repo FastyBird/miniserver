@@ -14,7 +14,7 @@ use function assert;
 /**
  * Redis DB triggers module bridge extension
  */
-class RedisDbPluginTriggersModuleExtension extends DI\CompilerExtension
+final class RedisDbPluginTriggersModuleExtension extends DI\CompilerExtension
 {
 
 	public const string NAME = 'fbRedisDbPluginTriggersModuleBridge';

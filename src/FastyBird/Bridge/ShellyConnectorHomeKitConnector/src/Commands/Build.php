@@ -48,7 +48,7 @@ use function usort;
 /**
  * Shelly connector to HomeKit accessory bridge builder command
  */
-class Build extends Console\Command\Command
+final class Build extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:shelly-connector-homekit-connector-bridge:build';

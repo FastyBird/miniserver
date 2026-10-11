@@ -14,7 +14,7 @@ use function assert;
 /**
  * Shelly switch service factory
  */
-class RelayFactory implements HomeKitProtocol\Services\ServiceFactory
+final class RelayFactory implements HomeKitProtocol\Services\ServiceFactory
 {
 
 	/**

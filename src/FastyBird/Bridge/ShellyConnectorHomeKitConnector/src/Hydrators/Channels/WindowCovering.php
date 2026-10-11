@@ -9,7 +9,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
  *
  * @extends Shelly<Entities\Channels\WindowCovering>
  */
-class WindowCovering extends Shelly
+final class WindowCovering extends Shelly
 {
 
 	public function getEntityName(): string

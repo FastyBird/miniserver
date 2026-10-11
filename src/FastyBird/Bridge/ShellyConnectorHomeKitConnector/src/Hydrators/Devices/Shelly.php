@@ -35,7 +35,7 @@ use function strval;
  *
  * @extends HomeKitHydrators\Devices\Device<ShellyConnectorHomeKitConnectorEntities\Devices\Shelly>
  */
-class Shelly extends HomeKitHydrators\Devices\Device
+final class Shelly extends HomeKitHydrators\Devices\Device
 {
 
 	/** @var array<int|string, string> */

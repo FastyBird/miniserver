@@ -16,7 +16,7 @@ use React\Promise;
 /**
  * Channel property asynchronous states manager
  */
-class ChannelPropertiesManager implements DevicesModels\States\Channels\Async\Writer
+final class ChannelPropertiesManager implements DevicesModels\States\Channels\Async\Writer
 {
 
 	use Nette\SmartObject;

@@ -26,18 +26,18 @@ use function count;
 /**
  * Doctrine entities events
  */
-final class ModuleEntities implements Common\EventSubscriber
+final readonly class ModuleEntities implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly UiModels\Configuration\Widgets\DataSources\Repository $dataSourcesRepository,
-		private readonly UiCaching\Container $uiModuleCaching,
-		private readonly ORM\EntityManagerInterface $entityManager,
-		private readonly EventLoop\Status $eventLoopStatus,
-		private readonly Publisher\MessagePublisher $publisher,
-		private readonly Async\MessagePublisher $asyncPublisher,
+		private UiModels\Configuration\Widgets\DataSources\Repository $dataSourcesRepository,
+		private UiCaching\Container $uiModuleCaching,
+		private ORM\EntityManagerInterface $entityManager,
+		private EventLoop\Status $eventLoopStatus,
+		private Publisher\MessagePublisher $publisher,
+		private Async\MessagePublisher $asyncPublisher,
 	)
 	{
 	}

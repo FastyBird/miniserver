@@ -11,7 +11,7 @@ use Ramsey\Uuid;
  *
  * @extends  FindWidgetDataSources<DevicesModuleUiModuleDocuments\Widgets\DataSources\ChannelProperty>
  */
-class FindWidgetChannelPropertyDataSources extends FindWidgetDataSources
+final class FindWidgetChannelPropertyDataSources extends FindWidgetDataSources
 {
 
 	public function __construct()

@@ -7,7 +7,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\InputSwitch::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\InputSwitch::TYPE)]
-class InputSwitch extends Shelly
+final class InputSwitch extends Shelly
 {
 
 	public static function getType(): string

@@ -11,7 +11,7 @@ use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
  * @template T of Documents\Channels\Viera
  * @extends  HomeKitQueries\Configuration\FindChannels<T>
  */
-class FindVieraChannels extends HomeKitQueries\Configuration\FindChannels
+final class FindVieraChannels extends HomeKitQueries\Configuration\FindChannels
 {
 
 }

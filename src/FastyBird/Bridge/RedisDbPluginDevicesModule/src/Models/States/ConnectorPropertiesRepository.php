@@ -13,7 +13,7 @@ use Ramsey\Uuid;
 /**
  * Connector property state repository
  */
-class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\Reader
+final class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\Reader
 {
 
 	use Nette\SmartObject;

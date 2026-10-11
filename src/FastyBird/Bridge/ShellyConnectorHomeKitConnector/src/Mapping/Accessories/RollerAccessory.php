@@ -12,7 +12,7 @@ use ValueError;
 /**
  * Rollers accessories mapping configuration
  */
-readonly class RollerAccessory extends Accessory
+final readonly class RollerAccessory extends Accessory
 {
 
 	/**

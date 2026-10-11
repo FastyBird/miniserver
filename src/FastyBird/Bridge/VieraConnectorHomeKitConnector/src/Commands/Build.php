@@ -36,7 +36,7 @@ use function usort;
 /**
  * Viera connector to HomeKit accessory bridge builder command
  */
-class Build extends Console\Command\Command
+final class Build extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:viera-connector-homekit-connector-bridge:build';

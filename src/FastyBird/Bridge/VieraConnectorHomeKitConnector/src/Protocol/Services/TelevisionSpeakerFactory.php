@@ -14,7 +14,7 @@ use function assert;
 /**
  * Viera television speaker service factory
  */
-class TelevisionSpeakerFactory implements HomeKitProtocol\Services\ServiceFactory
+final class TelevisionSpeakerFactory implements HomeKitProtocol\Services\ServiceFactory
 {
 
 	/**

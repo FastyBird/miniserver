@@ -13,7 +13,7 @@ use function array_merge;
 
 #[Documents\Mapping\Document(entity: Entities\Widgets\DataSources\DeviceProperty::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\DeviceProperty::TYPE)]
-class DeviceProperty extends Property
+final class DeviceProperty extends Property
 {
 
 	public function __construct(

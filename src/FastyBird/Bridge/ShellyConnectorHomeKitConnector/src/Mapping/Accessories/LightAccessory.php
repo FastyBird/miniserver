@@ -12,7 +12,7 @@ use ValueError;
 /**
  * Light accessories mapping configuration
  */
-readonly class LightAccessory extends Accessory
+final readonly class LightAccessory extends Accessory
 {
 
 	/**

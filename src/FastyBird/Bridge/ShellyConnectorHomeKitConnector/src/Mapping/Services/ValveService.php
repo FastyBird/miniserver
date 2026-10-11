@@ -14,7 +14,7 @@ use function class_exists;
 /**
  * Valve service mapping configuration
  */
-readonly class ValveService implements Service
+final readonly class ValveService implements Service
 {
 
 	/**

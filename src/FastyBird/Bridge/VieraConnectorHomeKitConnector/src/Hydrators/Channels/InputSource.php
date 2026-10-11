@@ -9,7 +9,7 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
  *
  * @extends Viera<Entities\Channels\InputSource>
  */
-class InputSource extends Viera
+final class InputSource extends Viera
 {
 
 	public function getEntityName(): string

@@ -14,7 +14,7 @@ use function assert;
 /**
  * HAP thermostat service factory
  */
-class ThermostatFactory implements HomeKitProtocol\Services\ServiceFactory
+final class ThermostatFactory implements HomeKitProtocol\Services\ServiceFactory
 {
 
 	/**

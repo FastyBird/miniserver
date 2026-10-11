@@ -14,7 +14,7 @@ use function class_exists;
 /**
  * Switch service mapping configuration
  */
-readonly class SwitchService implements Service
+final readonly class SwitchService implements Service
 {
 
 	/**

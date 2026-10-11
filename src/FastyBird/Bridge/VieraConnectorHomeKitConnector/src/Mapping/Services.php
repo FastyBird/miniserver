@@ -8,7 +8,7 @@ use Orisai\ObjectMapper;
 /**
  * Viera services mapping configuration
  */
-readonly class Services implements Mapping\Mapping
+final readonly class Services implements Mapping\Mapping
 {
 
 	/**

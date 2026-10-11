@@ -14,7 +14,7 @@ use function assert;
 /**
  * Shelly light bulb service factory
  */
-class LightbulbFactory implements HomeKitProtocol\Services\ServiceFactory
+final class LightbulbFactory implements HomeKitProtocol\Services\ServiceFactory
 {
 
 	/**

@@ -9,7 +9,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Entities;
  *
  * @extends  FindWidgetDataSources<Entities\Widgets\DataSources\ConnectorProperty>
  */
-class FindWidgetConnectorPropertyDataSources extends FindWidgetDataSources
+final class FindWidgetConnectorPropertyDataSources extends FindWidgetDataSources
 {
 
 }

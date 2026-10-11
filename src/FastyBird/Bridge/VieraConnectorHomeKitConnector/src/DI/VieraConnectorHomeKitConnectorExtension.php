@@ -30,7 +30,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Viera devices to HomeKit connector bridge extension
  */
-class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbVieraConnectorHomeKitConnectorBridge';

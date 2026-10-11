@@ -14,7 +14,7 @@ use Ramsey\Uuid;
 /**
  * Action states manager
  */
-class ActionsManager implements TriggersModels\States\ActionsWriter
+final class ActionsManager implements TriggersModels\States\ActionsWriter
 {
 
 	use Nette\SmartObject;

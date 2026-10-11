@@ -11,7 +11,7 @@ use Ramsey\Uuid;
  *
  * @extends  FindWidgetDataSources<DevicesModuleUiModuleDocuments\Widgets\DataSources\ConnectorProperty>
  */
-class FindWidgetConnectorPropertyDataSources extends FindWidgetDataSources
+final class FindWidgetConnectorPropertyDataSources extends FindWidgetDataSources
 {
 
 	public function __construct()

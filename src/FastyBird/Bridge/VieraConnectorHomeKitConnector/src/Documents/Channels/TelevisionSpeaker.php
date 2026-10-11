@@ -7,7 +7,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\TelevisionSpeaker::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\TelevisionSpeaker::TYPE)]
-class TelevisionSpeaker extends Viera
+final class TelevisionSpeaker extends Viera
 {
 
 	public static function getType(): string

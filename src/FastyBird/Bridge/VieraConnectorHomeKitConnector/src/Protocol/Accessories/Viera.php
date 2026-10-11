@@ -7,7 +7,7 @@ use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 /**
  * HAP viera device accessory
  */
-class Viera extends HomeKitProtocol\Accessories\Generic
+final class Viera extends HomeKitProtocol\Accessories\Generic
 {
 
 }

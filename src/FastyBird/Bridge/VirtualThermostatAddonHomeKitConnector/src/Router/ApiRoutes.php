@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 /**
  * Bridge API routes configuration
  */
-class ApiRoutes
+final readonly class ApiRoutes
 {
 
 	public const string URL_ITEM_ID = 'id';
@@ -19,11 +19,11 @@ class ApiRoutes
 	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
-		private readonly bool $usePrefix,
-		private readonly Controllers\BridgesV1 $bridgesV1Controller,
-		private readonly DevicesMiddleware\Access $devicesAccessControlMiddleware,
-		private readonly SecurityMiddleware\Authorization $authorizationMiddleware,
-		private readonly SecurityMiddleware\User $userMiddleware,
+		private bool $usePrefix,
+		private Controllers\BridgesV1 $bridgesV1Controller,
+		private DevicesMiddleware\Access $devicesAccessControlMiddleware,
+		private SecurityMiddleware\Authorization $authorizationMiddleware,
+		private SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

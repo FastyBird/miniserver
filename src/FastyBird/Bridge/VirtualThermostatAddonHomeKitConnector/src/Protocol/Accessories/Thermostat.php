@@ -7,7 +7,7 @@ use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 /**
  * HAP thermostat device accessory
  */
-class Thermostat extends HomeKitProtocol\Accessories\Generic
+final class Thermostat extends HomeKitProtocol\Accessories\Generic
 {
 
 }

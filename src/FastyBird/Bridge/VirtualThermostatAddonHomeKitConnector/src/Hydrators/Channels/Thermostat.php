@@ -10,7 +10,7 @@ use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
  *
  * @extends HomeKitHydrators\Channels\Channel<Entities\Channels\Thermostat>
  */
-class Thermostat extends HomeKitHydrators\Channels\Channel
+final class Thermostat extends HomeKitHydrators\Channels\Channel
 {
 
 	public function getEntityName(): string

@@ -29,7 +29,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Virtual thermostat HomeKit connector bridge extension
  */
-class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbVirtualThermostatAddonHomeKitConnectorBridge';

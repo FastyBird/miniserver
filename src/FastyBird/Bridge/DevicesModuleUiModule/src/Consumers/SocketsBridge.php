@@ -26,7 +26,7 @@ use function in_array;
 /**
  * Exchange to sockets bridge consumer
  */
-final class SocketsBridge implements Consumers\Consumer
+final readonly class SocketsBridge implements Consumers\Consumer
 {
 
 	private const array CONSUMER_ROUTING_KEYS = [
@@ -47,10 +47,10 @@ final class SocketsBridge implements Consumers\Consumer
 	];
 
 	public function __construct(
-		private readonly UiModels\Configuration\Widgets\DataSources\Repository $configurationDataSourcesRepository,
-		private readonly DevicesModuleUiModule\Logger $logger,
-		private readonly Routing\LinkGenerator $linkGenerator,
-		private readonly Topics\Storage $topicsStorage,
+		private UiModels\Configuration\Widgets\DataSources\Repository $configurationDataSourcesRepository,
+		private DevicesModuleUiModule\Logger $logger,
+		private Routing\LinkGenerator $linkGenerator,
+		private Topics\Storage $topicsStorage,
 	)
 	{
 	}

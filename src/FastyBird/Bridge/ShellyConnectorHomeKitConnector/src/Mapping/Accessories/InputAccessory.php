@@ -12,7 +12,7 @@ use ValueError;
 /**
  * Input accessories mapping configuration
  */
-readonly class InputAccessory extends Accessory
+final readonly class InputAccessory extends Accessory
 {
 
 	/**

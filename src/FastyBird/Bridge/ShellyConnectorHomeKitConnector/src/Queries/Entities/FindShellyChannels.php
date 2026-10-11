@@ -11,7 +11,7 @@ use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
  * @template T of Entities\Channels\Shelly
  * @extends  HomeKitQueries\Entities\FindChannels<T>
  */
-class FindShellyChannels extends HomeKitQueries\Entities\FindChannels
+final class FindShellyChannels extends HomeKitQueries\Entities\FindChannels
 {
 
 }

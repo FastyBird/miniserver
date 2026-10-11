@@ -9,7 +9,7 @@ use Override;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Devices\Viera::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Devices\Viera::TYPE)]
-class Viera extends HomeKitDocuments\Devices\Device
+final class Viera extends HomeKitDocuments\Devices\Device
 {
 
 	#[Override]

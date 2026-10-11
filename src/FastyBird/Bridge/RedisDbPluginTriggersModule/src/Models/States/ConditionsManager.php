@@ -14,7 +14,7 @@ use Ramsey\Uuid;
 /**
  * Condition states manager
  */
-class ConditionsManager implements TriggersModels\States\ConditionsWriter
+final class ConditionsManager implements TriggersModels\States\ConditionsWriter
 {
 
 	use Nette\SmartObject;

@@ -9,7 +9,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
  *
  * @extends Shelly<Entities\Channels\Relay>
  */
-class Relay extends Shelly
+final class Relay extends Shelly
 {
 
 	public function getEntityName(): string

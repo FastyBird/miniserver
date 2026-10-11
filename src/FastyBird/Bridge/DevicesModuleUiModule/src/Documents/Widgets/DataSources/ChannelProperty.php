@@ -13,7 +13,7 @@ use function array_merge;
 
 #[Documents\Mapping\Document(entity: Entities\Widgets\DataSources\ChannelProperty::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\ChannelProperty::TYPE)]
-class ChannelProperty extends Property
+final class ChannelProperty extends Property
 {
 
 	public function __construct(

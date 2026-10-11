@@ -7,7 +7,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 /**
  * Device property state
  */
-class DeviceProperty extends Property implements DevicesStates\DeviceProperty
+final class DeviceProperty extends Property implements DevicesStates\DeviceProperty
 {
 
 }

@@ -44,24 +44,24 @@ use function strval;
 /**
  * HomeKit device builder
  */
-class Builder
+final readonly class Builder
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly VirtualThermostatAddonHomeKitConnector\Logger $logger,
-		private readonly HomeKitHelpers\Loader $loader,
-		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		private readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		private readonly PersistenceHelpers\Database $databaseHelper,
-		private readonly Localization\Translator $translator,
+		private VirtualThermostatAddonHomeKitConnector\Logger $logger,
+		private HomeKitHelpers\Loader $loader,
+		private DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		private DevicesModels\Entities\Devices\DevicesManager $devicesManager,
+		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		private DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		private DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
+		private DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		private DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
+		private PersistenceHelpers\Database $databaseHelper,
+		private Localization\Translator $translator,
 	)
 	{
 	}

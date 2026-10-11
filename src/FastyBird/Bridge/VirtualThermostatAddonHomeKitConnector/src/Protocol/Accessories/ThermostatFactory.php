@@ -13,7 +13,7 @@ use function assert;
 /**
  * HAP thermostat accessory factory
  */
-class ThermostatFactory implements HomeKitProtocol\Accessories\AccessoryFactory
+final class ThermostatFactory implements HomeKitProtocol\Accessories\AccessoryFactory
 {
 
 	#[Override]

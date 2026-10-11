@@ -7,7 +7,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\InputButton::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\InputButton::TYPE)]
-class InputButton extends Shelly
+final class InputButton extends Shelly
 {
 
 	public static function getType(): string

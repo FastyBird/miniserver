@@ -7,7 +7,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 /**
  * Device property state
  */
-class ConnectorProperty extends Property implements DevicesStates\ConnectorProperty
+final class ConnectorProperty extends Property implements DevicesStates\ConnectorProperty
 {
 
 }

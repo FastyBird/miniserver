@@ -13,7 +13,7 @@ use function assert;
 /**
  * HAP shelly accessory factory
  */
-class ShellyFactory implements HomeKitProtocol\Accessories\AccessoryFactory
+final class ShellyFactory implements HomeKitProtocol\Accessories\AccessoryFactory
 {
 
 	#[Override]

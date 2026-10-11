@@ -7,7 +7,7 @@ use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 /**
  * HAP shelly device accessory
  */
-class Shelly extends HomeKitProtocol\Accessories\Generic
+final class Shelly extends HomeKitProtocol\Accessories\Generic
 {
 
 }

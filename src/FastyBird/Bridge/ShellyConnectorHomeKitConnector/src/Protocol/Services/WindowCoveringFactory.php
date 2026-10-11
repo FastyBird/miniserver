@@ -14,7 +14,7 @@ use function assert;
 /**
  * Shelly cover service factory
  */
-class WindowCoveringFactory implements HomeKitProtocol\Services\ServiceFactory
+final class WindowCoveringFactory implements HomeKitProtocol\Services\ServiceFactory
 {
 
 	/**

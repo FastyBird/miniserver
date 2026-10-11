@@ -14,7 +14,7 @@ use function class_exists;
 /**
  * Outlet service mapping configuration
  */
-readonly class OutletService implements Service
+final readonly class OutletService implements Service
 {
 
 	/**

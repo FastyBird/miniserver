@@ -7,7 +7,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\WindowCovering::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\WindowCovering::TYPE)]
-class WindowCovering extends Shelly
+final class WindowCovering extends Shelly
 {
 
 	public static function getType(): string

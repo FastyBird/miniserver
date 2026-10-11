@@ -15,7 +15,7 @@ use React\Promise;
 /**
  * Device property asynchronous states repository
  */
-class DevicePropertiesRepository implements DevicesModels\States\Devices\Async\Reader
+final class DevicePropertiesRepository implements DevicesModels\States\Devices\Async\Reader
 {
 
 	use Nette\SmartObject;

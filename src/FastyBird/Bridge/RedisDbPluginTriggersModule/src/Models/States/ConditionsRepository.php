@@ -15,7 +15,7 @@ use Ramsey\Uuid;
 /**
  * Trigger condition state repository
  */
-class ConditionsRepository implements TriggersModels\States\ConditionsReader
+final class ConditionsRepository implements TriggersModels\States\ConditionsReader
 {
 
 	use Nette\SmartObject;

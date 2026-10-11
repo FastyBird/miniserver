@@ -14,7 +14,7 @@ use function class_exists;
 /**
  * Window covering service mapping configuration
  */
-readonly class WindowCoveringService implements Service
+final readonly class WindowCoveringService implements Service
 {
 
 	/**

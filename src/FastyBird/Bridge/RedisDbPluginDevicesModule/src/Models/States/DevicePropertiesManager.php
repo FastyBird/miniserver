@@ -14,7 +14,7 @@ use Ramsey\Uuid;
 /**
  * Device property states manager
  */
-class DevicePropertiesManager implements DevicesModels\States\Devices\Writer
+final class DevicePropertiesManager implements DevicesModels\States\Devices\Writer
 {
 
 	use Nette\SmartObject;

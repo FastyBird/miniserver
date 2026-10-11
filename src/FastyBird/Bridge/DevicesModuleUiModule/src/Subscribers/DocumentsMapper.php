@@ -23,18 +23,18 @@ use function in_array;
 /**
  * Module documents mapper events
  */
-final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
+final readonly class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly DevicesModels\Configuration\Connectors\Properties\Repository $connectorsPropertiesRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesRepository,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesRepository,
-		private readonly DevicesModels\States\ConnectorPropertiesManager $connectorPropertiesManager,
-		private readonly DevicesModels\States\DevicePropertiesManager $devicePropertiesManager,
-		private readonly DevicesModels\States\ChannelPropertiesManager $channelPropertiesManager,
+		private DevicesModels\Configuration\Connectors\Properties\Repository $connectorsPropertiesRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesRepository,
+		private DevicesModels\States\ConnectorPropertiesManager $connectorPropertiesManager,
+		private DevicesModels\States\DevicePropertiesManager $devicePropertiesManager,
+		private DevicesModels\States\ChannelPropertiesManager $channelPropertiesManager,
 	)
 	{
 	}

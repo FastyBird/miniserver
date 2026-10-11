@@ -7,7 +7,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 /**
  * Device property state
  */
-class ChannelProperty extends Property implements DevicesStates\ChannelProperty
+final class ChannelProperty extends Property implements DevicesStates\ChannelProperty
 {
 
 }

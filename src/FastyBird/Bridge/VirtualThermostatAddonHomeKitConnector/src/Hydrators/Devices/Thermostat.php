@@ -26,7 +26,7 @@ use function strval;
  *
  * @extends HomeKitHydrators\Devices\Device<VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat>
  */
-class Thermostat extends HomeKitHydrators\Devices\Device
+final class Thermostat extends HomeKitHydrators\Devices\Device
 {
 
 	public function __construct(

@@ -14,7 +14,7 @@ use function class_exists;
 /**
  * Television speaker service mapping configuration
  */
-readonly class TelevisionSpeaker implements Service
+final readonly class TelevisionSpeaker implements Service
 {
 
 	/**

@@ -13,7 +13,7 @@ use function sprintf;
 /**
  * Gen1 mapping configuration
  */
-readonly class Gen1 implements Mapping\Mapping
+final readonly class Gen1 implements Mapping\Mapping
 {
 
 	/**

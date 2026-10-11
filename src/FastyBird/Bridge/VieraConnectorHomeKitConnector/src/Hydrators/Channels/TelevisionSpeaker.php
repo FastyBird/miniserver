@@ -9,7 +9,7 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
  *
  * @extends Viera<Entities\Channels\TelevisionSpeaker>
  */
-class TelevisionSpeaker extends Viera
+final class TelevisionSpeaker extends Viera
 {
 
 	public function getEntityName(): string

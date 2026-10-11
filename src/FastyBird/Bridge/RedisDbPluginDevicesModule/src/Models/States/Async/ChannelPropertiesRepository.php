@@ -15,7 +15,7 @@ use React\Promise;
 /**
  * Channel property asynchronous states repository
  */
-class ChannelPropertiesRepository implements DevicesModels\States\Channels\Async\Reader
+final class ChannelPropertiesRepository implements DevicesModels\States\Channels\Async\Reader
 {
 
 	use Nette\SmartObject;

@@ -5,7 +5,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Exceptions;
 use FastyBird\Module\Ui\Exceptions\Exception;
 use InvalidArgumentException as PHPInvalidArgumentException;
 
-class InvalidArgument extends PHPInvalidArgumentException implements Exception
+final class InvalidArgument extends PHPInvalidArgumentException implements Exception
 {
 
 }

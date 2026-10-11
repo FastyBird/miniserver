@@ -14,7 +14,7 @@ use function class_exists;
 /**
  * Light bulb service mapping configuration
  */
-readonly class LightbulbService implements Service
+final readonly class LightbulbService implements Service
 {
 
 	/**

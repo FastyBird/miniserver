@@ -14,7 +14,7 @@ use function assert;
 /**
  * Shelly input in button mode service factory
  */
-class InputButtonFactory implements HomeKitProtocol\Services\ServiceFactory
+final class InputButtonFactory implements HomeKitProtocol\Services\ServiceFactory
 {
 
 	/**

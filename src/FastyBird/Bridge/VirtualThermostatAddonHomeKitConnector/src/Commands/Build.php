@@ -34,7 +34,7 @@ use function usort;
 /**
  * Virtual thermostat to HomeKit accessory bridge builder command
  */
-class Build extends Console\Command\Command
+final class Build extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:virtual-thermostat-addon-homekit-connector-bridge:build';

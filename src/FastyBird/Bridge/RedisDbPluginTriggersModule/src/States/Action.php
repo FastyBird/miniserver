@@ -13,7 +13,7 @@ use function array_merge;
 /**
  * Trigger action state
  */
-class Action extends RedisDbStates\State implements TriggersStates\Action
+final class Action extends RedisDbStates\State implements TriggersStates\Action
 {
 
 	public function __construct(

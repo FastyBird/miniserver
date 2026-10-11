@@ -26,7 +26,7 @@ use function strval;
  *
  * @extends HomeKitHydrators\Devices\Device<VieraConnectorHomeKitConnectorEntities\Devices\Viera>
  */
-class Viera extends HomeKitHydrators\Devices\Device
+final class Viera extends HomeKitHydrators\Devices\Device
 {
 
 	/** @var array<int|string, string> */

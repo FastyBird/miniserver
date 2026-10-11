@@ -14,7 +14,7 @@ use Ramsey\Uuid;
 /**
  * Connector property states manager
  */
-class ConnectorPropertiesManager implements DevicesModels\States\Connectors\Writer
+final class ConnectorPropertiesManager implements DevicesModels\States\Connectors\Writer
 {
 
 	use Nette\SmartObject;

@@ -30,7 +30,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Shelly devices to HomeKit connector bridge extension
  */
-class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbShellyConnectorHomeKitConnectorBridge';

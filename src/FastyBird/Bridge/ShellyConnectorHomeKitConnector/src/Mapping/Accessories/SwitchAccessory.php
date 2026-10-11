@@ -12,7 +12,7 @@ use ValueError;
 /**
  * Switches accessories mapping configuration
  */
-readonly class SwitchAccessory extends Accessory
+final readonly class SwitchAccessory extends Accessory
 {
 
 	/**

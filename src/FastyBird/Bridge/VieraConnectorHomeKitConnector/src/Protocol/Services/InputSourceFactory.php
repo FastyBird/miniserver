@@ -14,7 +14,7 @@ use function assert;
 /**
  * Viera input source service factory
  */
-class InputSourceFactory implements HomeKitProtocol\Services\ServiceFactory
+final class InputSourceFactory implements HomeKitProtocol\Services\ServiceFactory
 {
 
 	/**

@@ -11,7 +11,7 @@ use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
  * @template T of Entities\Devices\Viera
  * @extends  HomeKitQueries\Entities\FindDevices<T>
  */
-class FindVieraDevices extends HomeKitQueries\Entities\FindDevices
+final class FindVieraDevices extends HomeKitQueries\Entities\FindDevices
 {
 
 }
