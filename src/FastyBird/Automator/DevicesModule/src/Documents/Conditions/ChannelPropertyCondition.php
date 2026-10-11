@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelPropertyCondition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Automator\DevicesModule\Documents\Conditions;
 
 use FastyBird\Automator\DevicesModule\Entities;
@@ -21,16 +8,12 @@ use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
 /**
  * Channel property condition document
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Conditions\ChannelPropertyCondition::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Conditions\ChannelPropertyCondition::TYPE)]
@@ -91,6 +74,7 @@ final class ChannelPropertyCondition extends TriggersDocuments\Conditions\Condit
 		return $this->operator;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

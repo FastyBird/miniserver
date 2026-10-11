@@ -1,45 +1,26 @@
 <?php declare(strict_types = 1);
 
-/**
- * ActionEntity.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           05.04.20
- */
-
 namespace FastyBird\Automator\DevicesModule\Subscribers;
 
 use Doctrine\Common;
 use Doctrine\ORM;
 use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Automator\DevicesModule\Exceptions;
-use Nette;
+use Override;
 use function array_merge;
 
 /**
  * Trigger condition entity listener
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ConditionEntity implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * Register events
 	 *
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindActions.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Automator\DevicesModule\Queries\Entities;
 
 use Doctrine\ORM;
@@ -25,12 +12,8 @@ use Ramsey\Uuid;
  *
  * @template T of TriggersEntities\Actions\Action
  * @extends TriggersQueries\Entities\FindActions<T>
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindActions extends TriggersQueries\Entities\FindActions
+final class FindActions extends TriggersQueries\Entities\FindActions
 {
 
 	public function forDevice(Uuid\UuidInterface $device): void

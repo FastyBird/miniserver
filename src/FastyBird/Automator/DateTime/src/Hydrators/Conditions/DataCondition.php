@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DataCondition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           08.01.22
- */
-
 namespace FastyBird\Automator\DateTime\Hydrators\Conditions;
 
 use DateTimeInterface;
@@ -22,6 +9,7 @@ use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
+use ValueError;
 use function is_scalar;
 use function strval;
 
@@ -29,10 +17,6 @@ use function strval;
  * Time condition entity hydrator
  *
  * @extends TriggersHydrators\Conditions\Condition<Entities\Conditions\DateCondition>
- *
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DataCondition extends TriggersHydrators\Conditions\Condition
 {
@@ -50,6 +34,7 @@ final class DataCondition extends TriggersHydrators\Conditions\Condition
 
 	/**
 	 * @throws Exceptions\JsonApi
+	 * @throws ValueError
 	 */
 	protected function hydrateDateAttribute(
 		Objects\StandardObject $attributes,

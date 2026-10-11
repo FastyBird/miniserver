@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TimeCondition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Automator\DateTime\Entities\Conditions;
 
 use DateTimeInterface;
@@ -23,6 +10,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 use function assert;
@@ -36,7 +24,7 @@ use function method_exists;
 class TimeCondition extends TriggersEntities\Conditions\Condition
 {
 
-	public const TYPE = 'time';
+	public const string TYPE = 'time';
 
 	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'condition_time', type: 'time', nullable: true)]
@@ -125,6 +113,7 @@ class TimeCondition extends TriggersEntities\Conditions\Condition
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

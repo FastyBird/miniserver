@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DateTimeExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           05.11.22
- */
-
 namespace FastyBird\Automator\DateTime\DI;
 
 use FastyBird\Automator\DateTime\Hydrators;
@@ -29,16 +16,11 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Date&Time automator
- *
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DateTimeExtension extends NetteDI\CompilerExtension
+final class DateTimeExtension extends NetteDI\CompilerExtension
 {
 
-	public const NAME = 'fbDateTimeAutomator';
+	public const string NAME = 'fbDateTimeAutomator';
 
 	public static function register(
 		Boot\Configurator $config,

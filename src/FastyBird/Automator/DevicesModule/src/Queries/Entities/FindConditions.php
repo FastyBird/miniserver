@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindConditions.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Automator\DevicesModule\Queries\Entities;
 
 use Doctrine\ORM;
@@ -20,6 +7,7 @@ use FastyBird\Automator\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use FastyBird\Module\Triggers\Queries as TriggersQueries;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -27,12 +15,8 @@ use Ramsey\Uuid;
  *
  * @template T of TriggersEntities\Conditions\Condition
  * @extends TriggersQueries\Entities\FindConditions<T>
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class FindConditions extends TriggersQueries\Entities\FindConditions
+final class FindConditions extends TriggersQueries\Entities\FindConditions
 {
 
 	public function forDevice(Uuid\UuidInterface $device): void
@@ -132,6 +116,7 @@ class FindConditions extends TriggersQueries\Entities\FindConditions
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function createBasicDql(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		if ($repository->getClassName() === DevicesModuleEntities\Conditions\PropertyCondition::class) {

@@ -195,7 +195,6 @@
          may only shrink; deleting its last entry deletes the block. -->
     <rule ref="SlevomatCodingStandard.TypeHints.ClassConstantTypeHint">
         <exclude-pattern>src/FastyBird/Addon/*</exclude-pattern>
-        <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
     </rule>
@@ -209,7 +208,6 @@
          forbidden list itself is part of the standard, in tools/phpcs-ruleset.xml. -->
     <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
         <exclude-pattern>src/FastyBird/Addon/*</exclude-pattern>
-        <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
     </rule>

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DateCondition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Automator\DateTime\Schemas\Conditions;
 
 use DateTimeInterface;
@@ -20,16 +7,13 @@ use FastyBird\Automator\DateTime\Entities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers\Schemas as TriggersSchemas;
 use Neomerx\JsonApi;
+use Override;
 use function array_merge;
 
 /**
  * Date condition entity schema
  *
  * @extends TriggersSchemas\Conditions\Condition<Entities\Conditions\DateCondition>
- *
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DateCondition extends TriggersSchemas\Conditions\Condition
 {
@@ -37,8 +21,9 @@ final class DateCondition extends TriggersSchemas\Conditions\Condition
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Automator::DATE_TIME->value . '/condition/' . Entities\Conditions\DateCondition::TYPE;
+	public const string SCHEMA_TYPE = Sources\Automator::DATE_TIME->value . '/condition/' . Entities\Conditions\DateCondition::TYPE;
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -54,6 +39,7 @@ final class DateCondition extends TriggersSchemas\Conditions\Condition
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
