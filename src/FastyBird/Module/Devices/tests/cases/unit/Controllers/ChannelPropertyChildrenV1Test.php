@@ -13,6 +13,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -24,6 +25,7 @@ use RuntimeException;
 final class ChannelPropertyChildrenV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
+	#[Override]
 	public function setUp(): void
 	{
 		// The shared dummy data has no mapped channel property, so no channel property has children

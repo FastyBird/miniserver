@@ -12,6 +12,7 @@ use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Wamp;
 use Nette\DI;
 use Nette\Http;
+use Override;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher;
 
@@ -45,6 +46,7 @@ final class ApplicationTest extends TestCase
 			/**
 			 * @return array<string>
 			 */
+			#[Override]
 			public function getSubProtocols(): array
 			{
 				return [];

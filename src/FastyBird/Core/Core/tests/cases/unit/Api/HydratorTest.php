@@ -10,6 +10,7 @@ use FastyBird\Core\Tests;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette;
 use Nette\Localization;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use stdClass;
 use Throwable;
@@ -95,6 +96,7 @@ final class HydratorTest extends Tests\Cases\Unit\BaseTestCase
 			$this->container->getByType(Localization\Translator::class),
 		) extends Hydrators\Hydrator {
 
+			#[Override]
 			public function getEntityName(): string
 			{
 				return stdClass::class;

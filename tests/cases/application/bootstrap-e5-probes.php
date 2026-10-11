@@ -233,6 +233,7 @@ $jsonApiCold = static function () use ($boot): array {
 			/**
 			 * @throws ApiExceptions\JsonApiError
 			 */
+			#[Override]
 			public function handle(ServerRequestInterface $request): ResponseInterface
 			{
 				throw new ApiExceptions\JsonApiError(422, 'E5 probe title', 'E5 probe detail');

@@ -23,6 +23,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -56,6 +57,7 @@ final class AccessoriesTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function setUp(): void
 	{
 		parent::setUp();
@@ -85,6 +87,7 @@ final class AccessoriesTest extends Tests\Cases\Unit\DbTestCase
 		$this->httpServer->initialize();
 	}
 
+	#[Override]
 	protected function tearDown(): void
 	{
 		parent::tearDown();

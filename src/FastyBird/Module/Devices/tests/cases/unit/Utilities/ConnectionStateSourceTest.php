@@ -19,6 +19,7 @@ use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types;
 use FastyBird\Module\Devices\Utilities;
 use Nette\Utils;
+use Override;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
@@ -60,6 +61,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 	/** @var list<array{source: int|string, routing_key: string}> */
 	private array $published = [];
 
+	#[Override]
 	public function setUp(): void
 	{
 		$this->registerDatabaseSchemaFile(__DIR__ . '/../../../sql/connector.property.dynamic.sql');

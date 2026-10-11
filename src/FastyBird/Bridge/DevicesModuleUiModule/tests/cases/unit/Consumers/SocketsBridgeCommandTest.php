@@ -32,6 +32,7 @@ use FastyBird\Module\Ui\Consumers as UiConsumers;
 use FastyBird\Module\Ui\Models as UiModels;
 use Nette\DI;
 use Nette\Utils;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -81,6 +82,7 @@ final class SocketsBridgeCommandTest extends Tests\Cases\Unit\DbTestCase
 
 	private const string DEVICE_STATE_DATA_SOURCE = 'd1a5c6e2-0b7f-4c3a-8e9d-1f2a3b4c5d6e';
 
+	#[Override]
 	public function setUp(): void
 	{
 		$this->registerDatabaseSchemaFile(__DIR__ . '/../../../sql/device.state.property.sql');

@@ -11,6 +11,7 @@ use FastyBird\Core\Persistence\Entities;
 use FastyBird\Module\Devices\DI;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
+use Override;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use function array_reverse;
@@ -64,6 +65,7 @@ abstract class DbTestCase extends TestCase
 	/** @var array<string> */
 	protected array $neonFiles = [];
 
+	#[Override]
 	public function setUp(): void
 	{
 		$this->registerDatabaseSchemaFile(__DIR__ . '/../../sql/dummy.data.sql');
@@ -334,6 +336,7 @@ abstract class DbTestCase extends TestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
+	#[Override]
 	protected function tearDown(): void
 	{
 		$this->getDb()->close();

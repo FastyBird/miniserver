@@ -13,6 +13,7 @@ use FastyBird\Plugin\RabbitMq\Handlers;
 use FastyBird\Plugin\RabbitMq\Tests;
 use FastyBird\Plugin\RabbitMq\Utilities;
 use Nette;
+use Override;
 use TypeError;
 use ValueError;
 
@@ -59,6 +60,7 @@ final class FactoryTest extends Tests\Cases\Unit\BaseTestCase
 
 			public int $calls = 0;
 
+			#[Override]
 			public function consume(
 				Sources\Source $source,
 				string $routingKey,
@@ -104,6 +106,7 @@ final class FactoryTest extends Tests\Cases\Unit\BaseTestCase
 			new Utilities\IdentifierGenerator(),
 			new class implements Consumers\Consumer {
 
+				#[Override]
 				public function consume(
 					Sources\Source $source,
 					string $routingKey,
