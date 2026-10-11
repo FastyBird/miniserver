@@ -4,6 +4,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Valve channel entity schema
@@ -25,6 +26,7 @@ final class Valve extends Shelly
 		return Entities\Channels\Valve::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

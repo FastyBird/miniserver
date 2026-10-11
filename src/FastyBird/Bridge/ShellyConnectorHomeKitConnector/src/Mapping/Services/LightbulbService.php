@@ -5,6 +5,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Services;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function assert;
@@ -54,11 +55,13 @@ readonly class LightbulbService implements Service
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getType(): HomeKitTypes\ServiceType
 	{
 		return HomeKitTypes\ServiceType::from($this->type);
 	}
 
+	#[Override]
 	public function getClass(): string
 	{
 		assert(class_exists($this->class));
@@ -66,21 +69,25 @@ readonly class LightbulbService implements Service
 		return $this->class;
 	}
 
+	#[Override]
 	public function getCategory(): HomeKitTypes\AccessoryCategory
 	{
 		return $this->category;
 	}
 
+	#[Override]
 	public function getChannel(): string|null
 	{
 		return $this->channel;
 	}
 
+	#[Override]
 	public function getIndexStart(): int|null
 	{
 		return $this->indexStart;
 	}
 
+	#[Override]
 	public function isMultiple(): bool
 	{
 		return $this->multiple;
@@ -89,6 +96,7 @@ readonly class LightbulbService implements Service
 	/**
 	 * @return array<Mapping\Characteristics\Characteristic>
 	 */
+	#[Override]
 	public function getCharacteristics(): array
 	{
 		return $this->characteristics;

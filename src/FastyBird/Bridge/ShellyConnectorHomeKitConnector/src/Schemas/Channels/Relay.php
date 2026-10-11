@@ -4,6 +4,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Relay channel entity schema
@@ -25,6 +26,7 @@ final class Relay extends Shelly
 		return Entities\Channels\Relay::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

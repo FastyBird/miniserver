@@ -5,6 +5,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Schemas\Widgets\DataSources;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Module\Ui\Schemas as UiSchemas;
 use Neomerx\JsonApi;
+use Override;
 use function array_merge;
 
 /**
@@ -28,6 +29,7 @@ abstract class Property extends UiSchemas\Widgets\DataSources\DataSource
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,

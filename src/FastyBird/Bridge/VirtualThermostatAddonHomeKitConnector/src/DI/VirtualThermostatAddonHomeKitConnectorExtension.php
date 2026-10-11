@@ -19,6 +19,7 @@ use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
@@ -46,6 +47,7 @@ class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerEx
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -213,6 +215,7 @@ class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerEx
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

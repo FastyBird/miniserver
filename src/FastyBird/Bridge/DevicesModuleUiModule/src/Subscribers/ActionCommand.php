@@ -14,6 +14,7 @@ use FastyBird\Module\Ui\Events as UiEvents;
 use FastyBird\Module\Ui\Types as UiTypes;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use Symfony\Component\EventDispatcher;
 use TypeError;
@@ -38,6 +39,7 @@ final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

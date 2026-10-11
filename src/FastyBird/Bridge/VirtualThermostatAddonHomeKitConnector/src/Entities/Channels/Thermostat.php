@@ -7,6 +7,7 @@ use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities as VirtualT
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -32,11 +33,13 @@ class Thermostat extends HomeKitEntities\Channels\Channel
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Bridge
 	{
 		return Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR;
 	}
 
+	#[Override]
 	public function getDevice(): VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat
 	{
 		assert($this->device instanceof VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat);

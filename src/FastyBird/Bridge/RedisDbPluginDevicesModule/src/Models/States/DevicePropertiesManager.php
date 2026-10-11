@@ -8,6 +8,7 @@ use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -38,6 +39,7 @@ class DevicePropertiesManager implements DevicesModels\States\Devices\Writer
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
+	#[Override]
 	public function create(Uuid\UuidInterface $id, Utils\ArrayHash $values): States\DeviceProperty
 	{
 		return $this->statesManager->create($id, $values, $this->database);
@@ -47,11 +49,13 @@ class DevicePropertiesManager implements DevicesModels\States\Devices\Writer
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
+	#[Override]
 	public function update(Uuid\UuidInterface $id, Utils\ArrayHash $values): States\DeviceProperty|false
 	{
 		return $this->statesManager->update($id, $values, $this->database);
 	}
 
+	#[Override]
 	public function delete(Uuid\UuidInterface $id): bool
 	{
 		return $this->statesManager->delete($id, $this->database);

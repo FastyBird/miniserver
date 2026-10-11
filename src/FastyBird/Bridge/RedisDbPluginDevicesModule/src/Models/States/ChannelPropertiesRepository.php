@@ -7,6 +7,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -36,6 +37,7 @@ class ChannelPropertiesRepository implements DevicesModels\States\Channels\Reade
 	/**
 	 * @throws RedisDbExceptions\InvalidState
 	 */
+	#[Override]
 	public function find(Uuid\UuidInterface $id): States\ChannelProperty|null
 	{
 		return $this->stateRepository->find($id, $this->database);

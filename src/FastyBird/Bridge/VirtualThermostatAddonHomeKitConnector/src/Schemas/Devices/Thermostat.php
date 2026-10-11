@@ -5,6 +5,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas\Device
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Schemas as HomeKitSchemas;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Thermostat device entity schema
@@ -21,11 +22,13 @@ final class Thermostat extends HomeKitSchemas\Devices\Device
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	public const string SCHEMA_TYPE = Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/device/' . Entities\Devices\Thermostat::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\Thermostat::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

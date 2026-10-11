@@ -23,6 +23,7 @@ use JsonException;
 use Nette\DI;
 use Nette\Localization;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use Throwable;
 use function assert;
@@ -73,6 +74,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 		parent::__construct($connectorsRepository, $managerRegistry, $translator, $crudReader);
 	}
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class;
@@ -87,6 +89,7 @@ class Shelly extends HomeKitHydrators\Devices\Device
 	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function hydrateConnectorRelationship(
 		Objects\RelationshipObject $relationship,
 		Objects\ResourceObjectCollection|null $included,

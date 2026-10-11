@@ -4,6 +4,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Outlet channel entity schema
@@ -25,6 +26,7 @@ final class Outlet extends Shelly
 		return Entities\Channels\Outlet::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

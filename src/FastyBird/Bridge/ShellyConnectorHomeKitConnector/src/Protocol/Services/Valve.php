@@ -5,6 +5,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Services;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use Override;
 use function is_numeric;
 
 /**
@@ -13,6 +14,7 @@ use function is_numeric;
 final class Valve extends HomeKitProtocol\Services\Generic
 {
 
+	#[Override]
 	public function recalculateCharacteristics(
 		HomeKitProtocol\Characteristics\Characteristic|null $characteristic = null,
 	): void

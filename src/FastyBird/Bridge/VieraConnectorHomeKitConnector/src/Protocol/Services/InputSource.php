@@ -4,6 +4,7 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
+use Override;
 use function assert;
 
 /**
@@ -12,6 +13,7 @@ use function assert;
 final class InputSource extends HomeKitProtocol\Services\Generic
 {
 
+	#[Override]
 	public function recalculateCharacteristics(
 		HomeKitProtocol\Characteristics\Characteristic|null $characteristic = null,
 	): void

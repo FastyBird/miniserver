@@ -8,6 +8,7 @@ use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Plugin\RedisDb\States as RedisDbStates;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 use function is_bool;
@@ -77,41 +78,49 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 		parent::__construct($id);
 	}
 
+	#[Override]
 	public function getCreatedAt(): DateTimeInterface|null
 	{
 		return $this->createdAt;
 	}
 
+	#[Override]
 	public function getUpdatedAt(): DateTimeInterface|null
 	{
 		return $this->updatedAt;
 	}
 
+	#[Override]
 	public function getActualValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->actualValue;
 	}
 
+	#[Override]
 	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->expectedValue;
 	}
 
+	#[Override]
 	public function isPending(): bool
 	{
 		return is_bool($this->pending) ? $this->pending : true;
 	}
 
+	#[Override]
 	public function getPending(): bool|DateTimeInterface
 	{
 		return $this->pending;
 	}
 
+	#[Override]
 	public function isValid(): bool
 	{
 		return $this->valid;
 	}
 
+	#[Override]
 	public static function getCreateFields(): array
 	{
 		return [
@@ -125,6 +134,7 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 		];
 	}
 
+	#[Override]
 	public static function getUpdateFields(): array
 	{
 		return [
@@ -136,6 +146,7 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 		];
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

@@ -12,6 +12,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 use Symfony\Component\EventDispatcher;
 use TypeError;
@@ -38,6 +39,7 @@ final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

@@ -4,6 +4,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Schemas\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Input switch type channel entity schema
@@ -25,6 +26,7 @@ final class InputSwitch extends Shelly
 		return Entities\Channels\InputSwitch::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

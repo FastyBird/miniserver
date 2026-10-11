@@ -18,6 +18,7 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models as UiModels;
 use Nette\Utils;
+use Override;
 use Throwable;
 use function array_merge;
 use function in_array;
@@ -57,6 +58,7 @@ final class SocketsBridge implements Consumers\Consumer
 	/**
 	 * @throws UiExceptions\InvalidState
 	 */
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

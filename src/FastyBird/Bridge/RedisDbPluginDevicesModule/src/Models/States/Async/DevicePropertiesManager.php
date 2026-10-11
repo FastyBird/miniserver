@@ -9,6 +9,7 @@ use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use React\Promise;
 
@@ -39,6 +40,7 @@ class DevicePropertiesManager implements DevicesModels\States\Devices\Async\Writ
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function create(Uuid\UuidInterface $id, Utils\ArrayHash $values): Promise\PromiseInterface
 	{
 		return $this->statesManager->create($id, $values, $this->database);
@@ -47,6 +49,7 @@ class DevicePropertiesManager implements DevicesModels\States\Devices\Async\Writ
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function update(Uuid\UuidInterface $id, Utils\ArrayHash $values): Promise\PromiseInterface
 	{
 		return $this->statesManager->update($id, $values, $this->database);
@@ -55,6 +58,7 @@ class DevicePropertiesManager implements DevicesModels\States\Devices\Async\Writ
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function delete(Uuid\UuidInterface $id): Promise\PromiseInterface
 	{
 		return $this->statesManager->delete($id, $this->database);

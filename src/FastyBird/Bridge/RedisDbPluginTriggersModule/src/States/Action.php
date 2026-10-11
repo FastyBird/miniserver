@@ -6,6 +6,7 @@ use DateTimeInterface;
 use FastyBird\Module\Triggers\States as TriggersStates;
 use FastyBird\Plugin\RedisDb\States as RedisDbStates;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -37,6 +38,7 @@ class Action extends RedisDbStates\State implements TriggersStates\Action
 		parent::__construct($id);
 	}
 
+	#[Override]
 	public function isTriggered(): bool
 	{
 		return $this->validationResult;
@@ -52,6 +54,7 @@ class Action extends RedisDbStates\State implements TriggersStates\Action
 		return $this->updatedAt;
 	}
 
+	#[Override]
 	public static function getCreateFields(): array
 	{
 		return [
@@ -62,6 +65,7 @@ class Action extends RedisDbStates\State implements TriggersStates\Action
 		];
 	}
 
+	#[Override]
 	public static function getUpdateFields(): array
 	{
 		return [
@@ -73,6 +77,7 @@ class Action extends RedisDbStates\State implements TriggersStates\Action
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge([

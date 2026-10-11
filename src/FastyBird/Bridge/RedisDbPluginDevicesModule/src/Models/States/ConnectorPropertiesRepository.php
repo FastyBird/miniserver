@@ -7,6 +7,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -36,6 +37,7 @@ class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\R
 	/**
 	 * @throws RedisDbExceptions\InvalidState
 	 */
+	#[Override]
 	public function find(Uuid\UuidInterface $id): States\ConnectorProperty|null
 	{
 		return $this->stateRepository->find($id, $this->database);

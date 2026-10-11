@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities as VieraConnectorHomeKitConnectorEntities;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -23,11 +24,13 @@ abstract class Viera extends HomeKitEntities\Channels\Channel
 		parent::__construct($device, $identifier, $name, $id);
 	}
 
+	#[Override]
 	public function getSource(): Sources\Bridge
 	{
 		return Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR;
 	}
 
+	#[Override]
 	public function getDevice(): VieraConnectorHomeKitConnectorEntities\Devices\Viera
 	{
 		assert($this->device instanceof VieraConnectorHomeKitConnectorEntities\Devices\Viera);

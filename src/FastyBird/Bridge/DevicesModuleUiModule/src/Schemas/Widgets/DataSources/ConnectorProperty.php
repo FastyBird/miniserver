@@ -15,6 +15,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Router as DevicesRouter;
 use Neomerx\JsonApi;
+use Override;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -53,6 +54,7 @@ final class ConnectorProperty extends Property
 		return DevicesModuleUiModuleEntities\Widgets\DataSources\ConnectorProperty::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -76,6 +78,7 @@ final class ConnectorProperty extends Property
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -119,6 +122,7 @@ final class ConnectorProperty extends Property
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

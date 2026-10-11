@@ -10,6 +10,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function sprintf;
 
@@ -55,11 +56,13 @@ class Shelly extends HomeKitEntities\Devices\Device
 		$this->setParents($parents);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Bridge
 	{
 		return Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR;

@@ -5,6 +5,7 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping\Characteristic
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Basic characteristic mapping configuration
@@ -109,21 +110,25 @@ readonly class BasicCharacteristic implements Characteristic
 	{
 	}
 
+	#[Override]
 	public function getType(): HomeKitTypes\CharacteristicType
 	{
 		return $this->type;
 	}
 
+	#[Override]
 	public function getChannel(): string|null
 	{
 		return $this->channel;
 	}
 
+	#[Override]
 	public function getProperty(): string|null
 	{
 		return $this->property;
 	}
 
+	#[Override]
 	public function isNullable(): bool
 	{
 		return $this->nullable;
@@ -132,6 +137,7 @@ readonly class BasicCharacteristic implements Characteristic
 	/**
 	 * @return array<HomeKitTypes\CharacteristicType>
 	 */
+	#[Override]
 	public function getRequire(): array
 	{
 		return $this->require;
@@ -140,11 +146,13 @@ readonly class BasicCharacteristic implements Characteristic
 	/**
 	 * @return string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null
 	 */
+	#[Override]
 	public function getFormat(): string|array|null
 	{
 		return $this->format;
 	}
 
+	#[Override]
 	public function getValue(): float|bool|int|string|null
 	{
 		return $this->value;

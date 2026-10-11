@@ -5,6 +5,7 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping\Services;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function assert;
@@ -45,11 +46,13 @@ readonly class InputSource implements Service
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getType(): HomeKitTypes\ServiceType
 	{
 		return HomeKitTypes\ServiceType::from($this->type);
 	}
 
+	#[Override]
 	public function getClass(): string
 	{
 		assert(class_exists($this->class));
@@ -57,11 +60,13 @@ readonly class InputSource implements Service
 		return $this->class;
 	}
 
+	#[Override]
 	public function getChannel(): string|null
 	{
 		return $this->channel;
 	}
 
+	#[Override]
 	public function isMultiple(): bool
 	{
 		return $this->multiple;
@@ -70,6 +75,7 @@ readonly class InputSource implements Service
 	/**
 	 * @return array<Mapping\Characteristics\Characteristic>
 	 */
+	#[Override]
 	public function getCharacteristics(): array
 	{
 		return $this->characteristics;

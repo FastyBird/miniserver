@@ -7,6 +7,7 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
+use Override;
 use function assert;
 
 /**
@@ -15,6 +16,7 @@ use function assert;
 class VieraFactory implements HomeKitProtocol\Accessories\AccessoryFactory
 {
 
+	#[Override]
 	public function create(
 		string $name,
 		int|null $aid,
@@ -27,6 +29,7 @@ class VieraFactory implements HomeKitProtocol\Accessories\AccessoryFactory
 		return new Viera($name, $aid, $category, $device);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\Viera::class;

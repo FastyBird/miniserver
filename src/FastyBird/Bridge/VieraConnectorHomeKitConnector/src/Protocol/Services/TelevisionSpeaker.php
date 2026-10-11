@@ -7,6 +7,7 @@ use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
+use Override;
 
 /**
  * Viera television speaker service
@@ -17,6 +18,7 @@ final class TelevisionSpeaker extends HomeKitProtocol\Services\Generic
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function recalculateCharacteristics(
 		HomeKitProtocol\Characteristics\Characteristic|null $characteristic = null,
 	): void

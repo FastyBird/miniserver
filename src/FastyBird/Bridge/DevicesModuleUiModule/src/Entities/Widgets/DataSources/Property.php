@@ -7,6 +7,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Ui\Entities as UiEntities;
+use Override;
 use function array_merge;
 use function in_array;
 
@@ -42,6 +43,7 @@ abstract class Property extends UiEntities\Widgets\DataSources\DataSource
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

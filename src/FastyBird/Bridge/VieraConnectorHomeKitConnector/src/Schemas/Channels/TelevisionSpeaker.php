@@ -4,6 +4,7 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas\Channels;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Input button type channel entity schema
@@ -25,6 +26,7 @@ final class TelevisionSpeaker extends Viera
 		return Entities\Channels\TelevisionSpeaker::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

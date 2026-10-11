@@ -7,6 +7,7 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -21,6 +22,7 @@ class TelevisionSpeakerFactory implements HomeKitProtocol\Services\ServiceFactor
 	 * @param array<string> $optionalCharacteristics
 	 * @param array<string> $virtualCharacteristics
 	 */
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $typeId,
 		HomeKitTypes\ServiceType $type,
@@ -48,6 +50,7 @@ class TelevisionSpeakerFactory implements HomeKitProtocol\Services\ServiceFactor
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\TelevisionSpeaker::class;

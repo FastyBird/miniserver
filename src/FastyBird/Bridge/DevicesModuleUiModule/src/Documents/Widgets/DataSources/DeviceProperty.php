@@ -7,6 +7,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Payloads;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -30,6 +31,7 @@ class DeviceProperty extends Property
 		parent::__construct($id, $widget, $property, $value, $owner, $createdAt, $updatedAt);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Widgets\DataSources\DeviceProperty::TYPE;
@@ -40,6 +42,7 @@ class DeviceProperty extends Property
 		return $this->device;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

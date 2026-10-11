@@ -18,6 +18,7 @@ use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models as UiModels;
 use Nette;
 use Nette\Caching as NetteCaching;
+use Override;
 use function array_map;
 use function assert;
 use function count;
@@ -41,6 +42,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	{
 	}
 
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

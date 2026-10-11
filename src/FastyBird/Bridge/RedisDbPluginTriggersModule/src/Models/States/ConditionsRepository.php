@@ -9,6 +9,7 @@ use FastyBird\Module\Triggers\Models as TriggersModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -38,6 +39,7 @@ class ConditionsRepository implements TriggersModels\States\ConditionsReader
 	/**
 	 * @throws RedisDbExceptions\InvalidState
 	 */
+	#[Override]
 	public function findOne(
 		TriggersDocuments\Conditions\Condition|TriggersEntities\Conditions\Condition $condition,
 	): States\Condition|null

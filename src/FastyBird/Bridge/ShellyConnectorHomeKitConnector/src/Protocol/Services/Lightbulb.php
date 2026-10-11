@@ -6,6 +6,7 @@ use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Values\Transformers;
 use FastyBird\Module\Devices\Types as DevicesTypes;
+use Override;
 use function is_float;
 use function is_int;
 
@@ -15,6 +16,7 @@ use function is_int;
 final class Lightbulb extends HomeKitProtocol\Services\Generic
 {
 
+	#[Override]
 	public function recalculateCharacteristics(
 		HomeKitProtocol\Characteristics\Characteristic|null $characteristic = null,
 	): void

@@ -16,6 +16,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -39,6 +40,7 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 		parent::__construct($connectorsRepository, $managerRegistry, $translator, $crudReader);
 	}
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class;
@@ -53,6 +55,7 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function hydrateConnectorRelationship(
 		Objects\RelationshipObject $relationship,
 		Objects\ResourceObjectCollection|null $included,

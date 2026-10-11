@@ -4,6 +4,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Protocol\Servi
 
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
+use Override;
 
 /**
  * HAP thermostat service
@@ -11,6 +12,7 @@ use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 final class Thermostat extends HomeKitProtocol\Services\Generic
 {
 
+	#[Override]
 	public function getCharacteristics(): array
 	{
 		$characteristics = parent::getCharacteristics();

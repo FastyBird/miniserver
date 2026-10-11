@@ -5,6 +5,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas\Channe
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Schemas as HomeKitSchemas;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Thermostat channel entity schema
@@ -26,6 +27,7 @@ final class Thermostat extends HomeKitSchemas\Channels\Channel
 		return Entities\Channels\Thermostat::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

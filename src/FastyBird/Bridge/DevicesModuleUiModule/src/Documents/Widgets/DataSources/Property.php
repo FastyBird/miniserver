@@ -10,6 +10,7 @@ use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -57,6 +58,7 @@ abstract class Property extends UiDocuments\Widgets\DataSources\DataSource
 		return $this->value;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [
