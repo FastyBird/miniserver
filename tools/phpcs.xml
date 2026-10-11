@@ -198,7 +198,6 @@
         <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
-        <exclude-pattern>src/FastyBird/Module/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Plugin/*</exclude-pattern>
     </rule>
 
@@ -214,7 +213,6 @@
         <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
-        <exclude-pattern>src/FastyBird/Module/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Plugin/*</exclude-pattern>
     </rule>
 </ruleset>
