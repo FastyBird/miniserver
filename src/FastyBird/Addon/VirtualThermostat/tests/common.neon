@@ -45,7 +45,7 @@ contributteTranslation:
 nettrineDbal:
 	connections:
 		default:
-			wrapperClass: \FastyBird\Addon\VirtualThermostat\Tests\Tools\ConnectionWrapper
+			wrapperClass: \FastyBird\Addon\VirtualThermostat\Tests\Support\ConnectionWrapper
 
 nettrineOrm:
 	managers:

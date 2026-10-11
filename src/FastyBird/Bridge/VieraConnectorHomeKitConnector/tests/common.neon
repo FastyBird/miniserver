@@ -38,7 +38,7 @@ contributteTranslation:
 nettrineDbal:
 	connections:
 		default:
-			wrapperClass: \FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Tools\ConnectionWrapper
+			wrapperClass: \FastyBird\Bridge\VieraConnectorHomeKitConnector\Tests\Support\ConnectionWrapper
 
 nettrineOrm:
 	managers:

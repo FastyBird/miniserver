@@ -61,7 +61,7 @@
       "FastyBird\\Module\\Triggers\\Tests\\Cases\\Unit\\": "tests/cases/unit",
       "FastyBird\\Module\\Triggers\\Tests\\Fixtures\\": "tests/fixtures",
       "FastyBird\\Module\\Triggers\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-      "FastyBird\\Module\\Triggers\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Module\\Triggers\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

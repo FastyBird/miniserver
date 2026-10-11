@@ -34,7 +34,7 @@ contributteTranslation:
 nettrineDbal:
 	connections:
 		default:
-			wrapperClass: \FastyBird\Bridge\RedisDbPluginDevicesModule\Tests\Tools\ConnectionWrapper
+			wrapperClass: \FastyBird\Bridge\RedisDbPluginDevicesModule\Tests\Support\ConnectionWrapper
 
 nettrineOrm:
 	managers:

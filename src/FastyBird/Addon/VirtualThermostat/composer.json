@@ -60,7 +60,7 @@
       "FastyBird\\Addon\\VirtualThermostat\\Tests\\Cases\\Unit\\": "tests/cases/unit",
       "FastyBird\\Addon\\VirtualThermostat\\Tests\\Fixtures\\": "tests/fixtures",
       "FastyBird\\Addon\\VirtualThermostat\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-      "FastyBird\\Addon\\VirtualThermostat\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Addon\\VirtualThermostat\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

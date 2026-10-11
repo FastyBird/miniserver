@@ -11,8 +11,8 @@ import { v4 as uuid } from 'uuid';
 import { ModulePrefix } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.dashboard.json';
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import {
 	IDashboardDatabaseRecord,
 	IDashboardMeta,

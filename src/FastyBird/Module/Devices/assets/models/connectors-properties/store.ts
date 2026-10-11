@@ -13,9 +13,9 @@ import { v4 as uuid } from 'uuid';
 import { IStoresManager, ModulePrefix, injectStoresManager } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.connector.property.json';
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { connectorsStoreKey } from '../../configuration';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import {
 	ConnectorPropertiesStoreSetup,
 	ConnectorPropertyDocument,

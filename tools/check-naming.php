@@ -64,7 +64,12 @@
  * have no second line of defence, and this gate is the only thing that scans them.
  *
  * Namespaces and declared type names do use denylists, because there the offending token is a
- * known, closed set of former package names. The two lists differ on purpose: `Application`,
+ * known, closed set of former package names. They apply to every package, not only Core (E7.1,
+ * #695): in `FastyBird\Core\...` every segment after `FastyBird\Core` is checked, and in
+ * `FastyBird\<Type>\<Name>\...` every segment after the package's own root. The root is exempt
+ * because it IS the package's name -- `FastyBird\Plugin\WebServer` is the WebServer plugin, not a
+ * lineage layer inside it -- but `FastyBird\Plugin\WebServer\Tools` would be refused, and so was
+ * `FastyBird\Connector\Shelly\Tests\Tools` until the test helpers became `Tests\Support`. The two lists differ on purpose: `Application`,
  * `Metadata` and `Tools` are banned as NAMESPACE SEGMENTS (they are former package names being
  * used as grouping layers) but permitted inside a declared TYPE name, where they are ordinary
  * English words -- Ratchet's WampApplication is not a reference to FastyBird:Application!.
@@ -126,18 +131,23 @@
  * flagged an import's alias as wrong, check 4 skips it rather than repeating the finding under
  * the `import` category.
  *
- * CHECK 5: Core's JS asset directories (#687)
+ * CHECK 5: every package's JS asset directories (#687, widened by #695)
  *
- * The TypeScript and Vue sources of the Core package sit under src/FastyBird/Core/Core/assets,
- * and until Epic E6 they were grouped by the libraries Core was assembled from (`application/`,
- * `metadata/`, `tools/`), the same lineage the namespaces above carried. Check 5 walks every
- * directory below that root and rejects one whose own name equals an entry of
+ * The TypeScript and Vue sources of a package sit under src/FastyBird/<Type>/<Name>/assets. Core's
+ * were grouped until Epic E6 by the libraries Core was assembled from (`application/`,
+ * `metadata/`, `tools/`), the same lineage the namespaces above carried, and the Accounts,
+ * Devices and Ui modules kept a `jsonapi/` directory until E7.1. Check 5 walks every directory
+ * below every package's assets root and rejects one whose own name equals an entry of
  * FB_NAMESPACE_DENYLIST, compared case-insensitively, so `tools/`, `Tools/` and `TOOLS/` are all
  * refused. There is no second list: a former package name is the same fault in PHP and in JS.
  * A directory is reported once, at the segment that offends; what lies below it is not
- * reported again. The scope is Core only. Epic E7 widens it to the `assets/` of the other
- * packages. Unlike checks 1 to 4 it has no file to scan, so it needs its own floor: a missing
- * `assets/` root, or one with fewer than ten directories, is the tool's failure, not a pass.
+ * reported again.
+ *
+ * Unlike checks 1 to 4 it has no file to scan, so it needs a structural floor instead of a
+ * count: every package that has a package.json (that is, a frontend) must have an `assets/`
+ * root, and a root that is missing, or holds no file at all, is the tool's failure, not a
+ * pass. So is a tree in which no package has a package.json, which would mean the walk matches
+ * nothing. A package without a package.json is still walked if it happens to have an `assets/`.
  *
  * Exit codes follow tools/check-layering.php:
  *   0  clean
@@ -178,10 +188,10 @@ const FB_NAMESPACE_DENYLIST = [
 ];
 
 /**
- * Check 5's root, relative to the repository: the one package whose JS has been moved to the
- * capability layout. Epic E7 widens it to every package's `assets/`.
+ * Where check 5 looks for packages, relative to the repository: every `<Type>/<Name>` below it
+ * is a package, and `assets/` is the root of its JS sources.
  */
-const FB_CORE_ASSETS_ROOT = 'src/FastyBird/Core/Core/assets';
+const FB_PACKAGES_ROOT = 'src/FastyBird';
 
 const FB_TYPE_DENYLIST = [
 	'SimpleAuth',
@@ -555,8 +565,8 @@ function fbExpectedAlias(string $name, array $siblings): string
 }
 
 /**
- * Check 5: every directory below Core's JS assets root whose own name is a former package name.
- * See "CHECK 5" in the file docblock.
+ * Check 5: every directory below any package's JS assets root whose own name is a former package
+ * name. See "CHECK 5" in the file docblock.
  *
  * A directory is reported by its own name only, so `assets/tools` is one violation, not one for
  * it and another for each directory beneath it. The offending names are the entries of
@@ -566,50 +576,104 @@ function fbExpectedAlias(string $name, array $siblings): string
  */
 function fbCheckAssetDirectories(string $repoRoot): array
 {
-	$assetsRelative = FB_CORE_ASSETS_ROOT;
-	$assetsRoot = $repoRoot . '/' . $assetsRelative;
-
-	if (!is_dir($assetsRoot)) {
-		fbFail(sprintf('"%s" is not a directory', $assetsRoot));
-	}
-
+	$packagesRoot = $repoRoot . '/' . FB_PACKAGES_ROOT;
 	$denied = array_map(strtolower(...), FB_NAMESPACE_DENYLIST);
 	$violations = [];
-	$directories = 0;
+	$frontends = 0;
 
-	$iterator = new RecursiveIteratorIterator(
-		new RecursiveCallbackFilterIterator(
-			new RecursiveDirectoryIterator($assetsRoot, FilesystemIterator::SKIP_DOTS),
-			static fn (SplFileInfo $entry): bool => $entry->getFilename() !== 'node_modules',
-		),
-		RecursiveIteratorIterator::SELF_FIRST,
-	);
+	$packages = glob($packagesRoot . '/*/*', GLOB_ONLYDIR);
 
-	foreach ($iterator as $entry) {
-		assert($entry instanceof SplFileInfo);
+	if ($packages === false) {
+		fbFail(sprintf('could not list the packages below "%s"', $packagesRoot));
+	}
 
-		if (!$entry->isDir()) {
+	sort($packages);
+
+	foreach ($packages as $package) {
+		$assetsRoot = $package . '/assets';
+		$assetsRelative = substr($assetsRoot, strlen($repoRoot) + 1);
+		$hasFrontend = is_file($package . '/package.json');
+
+		if ($hasFrontend) {
+			$frontends++;
+		}
+
+		if (!is_dir($assetsRoot)) {
+			if ($hasFrontend) {
+				fbFail(sprintf('"%s" is not a directory, but its package has a package.json', $assetsRelative));
+			}
+
 			continue;
 		}
 
-		$directories++;
+		$files = 0;
 
-		$segment = $entry->getFilename();
+		$iterator = new RecursiveIteratorIterator(
+			new RecursiveCallbackFilterIterator(
+				new RecursiveDirectoryIterator($assetsRoot, FilesystemIterator::SKIP_DOTS),
+				static fn (SplFileInfo $entry): bool => $entry->getFilename() !== 'node_modules',
+			),
+			RecursiveIteratorIterator::SELF_FIRST,
+		);
 
-		if (in_array(strtolower($segment), $denied, true)) {
-			$violations[] = sprintf(
-				"assets\t%s\t%s is a former package name",
-				substr($entry->getPathname(), strlen($repoRoot) + 1),
-				$segment,
-			);
+		foreach ($iterator as $entry) {
+			assert($entry instanceof SplFileInfo);
+
+			if ($entry->isFile()) {
+				$files++;
+
+				continue;
+			}
+
+			if (!$entry->isDir()) {
+				continue;
+			}
+
+			$segment = $entry->getFilename();
+
+			if (in_array(strtolower($segment), $denied, true)) {
+				$violations[] = sprintf(
+					"assets\t%s\t%s is a former package name",
+					substr($entry->getPathname(), strlen($repoRoot) + 1),
+					$segment,
+				);
+			}
+		}
+
+		if ($files === 0) {
+			fbFail(sprintf('"%s" holds no file', $assetsRelative));
 		}
 	}
 
-	if ($directories < 10) {
-		fbFail(sprintf('found only %d directories below "%s"; expected at least 10', $directories, $assetsRelative));
+	if ($frontends === 0) {
+		fbFail(sprintf('found no package with a package.json below "%s"', FB_PACKAGES_ROOT));
 	}
 
 	return $violations;
+}
+
+/**
+ * The extension types, which are the directories directly below src/FastyBird -- the second
+ * segment of every package namespace. Read from the tree rather than listed, so a new type is
+ * covered the day it exists.
+ *
+ * @return array<string>
+ */
+function fbPackageTypes(): array
+{
+	static $types = null;
+
+	if ($types === null) {
+		$directories = glob(dirname(__DIR__) . '/' . FB_PACKAGES_ROOT . '/*', GLOB_ONLYDIR);
+
+		if ($directories === false || $directories === []) {
+			fbFail(sprintf('found no extension type below "%s"', FB_PACKAGES_ROOT));
+		}
+
+		$types = array_map(basename(...), $directories);
+	}
+
+	return $types;
 }
 
 /**
@@ -627,24 +691,33 @@ function fbCheckFile(string $path, string $code, string $relative): array
 	preg_match_all('/^[ \t]*namespace\s+([A-Za-z0-9_\\\\]+)\s*[;{]/m', $code, $namespaceMatches);
 
 	$namespaces = $namespaceMatches[1];
-	$isCore = false;
+	$isPackage = false;
 
 	foreach ($namespaces as $namespace) {
-		if ($namespace === 'FastyBird\\Core' || str_starts_with($namespace, 'FastyBird\\Core\\')) {
-			$isCore = true;
+		$segments = explode('\\', $namespace);
 
-			// 1. Namespace segments, Core only.
-			foreach (explode('\\', $namespace) as $segment) {
-				if (in_array($segment, FB_NAMESPACE_DENYLIST, true)) {
-					$violations[] = sprintf("namespace\t%s\t%s in %s", $relative, $segment, $namespace);
-				}
+		// Only a package namespace counts: the application's own tests are
+		// `FastyBird\MiniServer\Tests\...`, and MiniServer is not a directory of src/FastyBird.
+		if ($segments[0] !== 'FastyBird' || !in_array($segments[1] ?? '', fbPackageTypes(), true)) {
+			continue;
+		}
+
+		$isPackage = true;
+
+		// 1. Namespace segments, every package. The package's own root is exempt, because it is
+		// the package's name: `FastyBird\Core` is two segments, `FastyBird\<Type>\<Name>` three.
+		$rootLength = ($segments[1] ?? null) === 'Core' ? 2 : 3;
+
+		foreach (array_slice($segments, $rootLength) as $segment) {
+			if (in_array($segment, FB_NAMESPACE_DENYLIST, true)) {
+				$violations[] = sprintf("namespace\t%s\t%s in %s", $relative, $segment, $namespace);
 			}
 		}
 	}
 
-	// 2. Declared type names, Core only. `[ \t]*` so an indented declaration (nested inside a
+	// 2. Declared type names, every package. `[ \t]*` so an indented declaration (nested inside a
 	// brace-syntax namespace block, for instance) is still seen.
-	if ($isCore) {
+	if ($isPackage) {
 		preg_match_all(
 			'/^[ \t]*(?:final\s+|abstract\s+|readonly\s+)*(?:class|interface|trait|enum)\s+(\w+)/m',
 			$code,
@@ -830,7 +903,7 @@ if ($allImportLines < 20_000) {
 	fbFail(sprintf('found only %d total import lines; expected at least 20000', $allImportLines));
 }
 
-// 5. Core's JS asset directories (#687). Not per-file, so it runs once, outside the loop.
+// 5. Every package's JS asset directories (#687, #695). Not per-file, so it runs once, outside the loop.
 foreach (fbCheckAssetDirectories($repoRoot) as $violation) {
 	$violations[] = $violation;
 }

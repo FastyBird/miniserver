@@ -59,7 +59,7 @@
   "autoload-dev": {
     "psr-4": {
       "FastyBird\\Connector\\Modbus\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-      "FastyBird\\Connector\\Modbus\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Connector\\Modbus\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

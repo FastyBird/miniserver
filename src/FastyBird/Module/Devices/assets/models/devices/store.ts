@@ -13,9 +13,9 @@ import { v4 as uuid } from 'uuid';
 import { IStoresManager, ModulePrefix, injectStoresManager } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.device.json';
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { channelsStoreKey, connectorsStoreKey, deviceControlsStoreKey, devicePropertiesStoreKey } from '../../configuration';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import {
 	DeviceCategory,
 	DeviceDocument,

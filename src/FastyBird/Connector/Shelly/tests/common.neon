@@ -33,7 +33,7 @@ contributteTranslation:
 nettrineDbal:
 	connections:
 		default:
-			wrapperClass: \FastyBird\Connector\Shelly\Tests\Tools\ConnectionWrapper
+			wrapperClass: \FastyBird\Connector\Shelly\Tests\Support\ConnectionWrapper
 
 nettrineOrm:
 	managers:

@@ -280,7 +280,7 @@ final class Gen2HttpApiTest extends Tests\Cases\Unit\DbTestCase
 
 					$request->getBody()->rewind();
 
-					Tests\Tools\JsonAssert::assertFixtureMatch(
+					Tests\Support\JsonAssert::assertFixtureMatch(
 						__DIR__ . '/../../../fixtures/API/Gen2Http/request/set_device_state.json',
 						$request->getBody()->getContents(),
 						static function (string $expectation) use ($actual): string {

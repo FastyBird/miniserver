@@ -11,8 +11,8 @@ import { v4 as uuid } from 'uuid';
 import { ModulePrefix } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.group.json';
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { IGroupDatabaseRecord, IGroupMeta, IGroupsInsertDataActionPayload, IGroupsLoadRecordActionPayload, IPlainRelation } from '../../models/types';
 import { GroupDocument, RoutingKeys } from '../../types';
 import { DB_TABLE_GROUPS, addRecord, getAllRecords, getRecord, removeRecord } from '../../utilities/database';

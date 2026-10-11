@@ -143,7 +143,7 @@ final class CrossScopeLinksTest extends Tests\Cases\Unit\DbTestCase
 			sprintf('GET %s answered %d', $url, $response->getStatusCode()),
 		);
 
-		return Tests\Tools\JsonAssert::jsonDecode((string) $response->getBody(), $url);
+		return Tests\Support\JsonAssert::jsonDecode((string) $response->getBody(), $url);
 	}
 
 	/**

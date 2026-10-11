@@ -54,7 +54,7 @@
   "autoload-dev": {
     "psr-4": {
       "FastyBird\\Plugin\\ApiKey\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-      "FastyBird\\Plugin\\ApiKey\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Plugin\\ApiKey\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

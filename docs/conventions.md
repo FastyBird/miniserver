@@ -28,15 +28,22 @@ code IS, or only which package once shipped it:
 differ on purpose: `Application`, `Metadata` and `Tools` are rejected as namespace segments but
 allowed inside a class name, where they are ordinary English words.
 
-Enforced by `make naming`, which checks three places: namespace segments under
-`FastyBird\Core`, declared type names under `FastyBird\Core`, and `use FastyBird\Core\... as X`
-aliases anywhere in the repository.
+Enforced by `make naming`, which checks three places: namespace segments of every package
+(`FastyBird\Core\...` and `FastyBird\<Type>\<Name>\...`), declared type names of every package,
+and `use FastyBird\Core\... as X` aliases anywhere in the repository. The package's own root is
+exempt from the segment check, because it is the package's name: `FastyBird\Plugin\WebServer` is
+the WebServer plugin, but `FastyBird\Plugin\WebServer\Tools` would be refused. The same holds for
+a package's tests: its helper classes are `FastyBird\<Type>\<Name>\Tests\Support` in `tests/support`,
+never `Tests\Tools` (E7.1, #695; Core did the same in #539).
 
-The same namespace denylist covers Core's JS. No directory under `src/FastyBird/Core/Core/assets`
-may be named `application`, `metadata`, `tools` or any other entry of it, compared
-case-insensitively. A JS capability directory is named for what its code is (`api`, `eventBus`,
-`security`, `values`, `websockets`), exactly as in PHP. The check covers Core only; E7 widens it
-to every package's `assets/`.
+The same namespace denylist covers the JS of every package. No directory under any
+`src/FastyBird/<Type>/<Name>/assets` may be named `application`, `metadata`, `tools` or any other
+entry of it, compared case-insensitively. A JS capability directory is named for what its code is
+(`api`, `eventBus`, `security`, `values`, `websockets`), exactly as in PHP: the Accounts, Devices
+and Ui modules keep their JSON:API mappers in `assets/api/`, not `assets/jsonapi/`, and the
+`JsonApi…Mapper` class names stay, because the denylist applies to directory segments only. A
+package with a `package.json` must have an `assets/` root that holds at least one file, otherwise
+the tool fails rather than passes.
 
 ## Import aliases
 

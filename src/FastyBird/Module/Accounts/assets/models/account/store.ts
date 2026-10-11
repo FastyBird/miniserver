@@ -7,9 +7,9 @@ import { Jsona } from 'jsona';
 
 import { ModulePrefix, ModuleSource, injectStoresManager } from '@fastybird/miniserver-core';
 
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { accountsStoreKey, emailsStoreKey, identitiesStoreKey, sessionStoreKey } from '../../configuration';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import {
 	AccountStoreSetup,
 	IAccount,

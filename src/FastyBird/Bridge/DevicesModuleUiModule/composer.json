@@ -50,7 +50,7 @@
       "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
       "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Fixtures\\": "tests/fixtures",
       "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-      "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Tools\\": "tests/tools"
+      "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Support\\": "tests/support"
     }
   },
   "minimum-stability": "dev",

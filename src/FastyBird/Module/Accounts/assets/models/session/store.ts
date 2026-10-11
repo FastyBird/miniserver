@@ -10,9 +10,9 @@ import lodashGet from 'lodash.get';
 
 import { ModulePrefix, injectStoresManager } from '@fastybird/miniserver-core';
 
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { accountsStoreKey } from '../../configuration';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { CookiesPlugin } from '../../types';
 import { IAccount } from '../accounts/types';
 

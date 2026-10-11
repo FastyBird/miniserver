@@ -39,7 +39,7 @@ contributteTranslation:
 nettrineDbal:
 	connections:
 		default:
-			wrapperClass: \FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Tools\ConnectionWrapper
+			wrapperClass: \FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Tests\Support\ConnectionWrapper
 
 nettrineOrm:
 	managers:

@@ -11,8 +11,8 @@ import { v4 as uuid } from 'uuid';
 import { ModulePrefix, ModuleSource } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.tab.json';
+import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';
 import { ApiError } from '../../errors';
-import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../jsonapi';
 import { IPlainRelation, ITabDatabaseRecord, ITabMeta, ITabsInsertDataActionPayload, ITabsLoadRecordActionPayload } from '../../models/types';
 import { RoutingKeys, TabDocument } from '../../types';
 import { DB_TABLE_TABS, addRecord, getAllRecords, getRecord, removeRecord } from '../../utilities/database';
