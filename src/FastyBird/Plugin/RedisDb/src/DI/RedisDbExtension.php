@@ -13,6 +13,7 @@ use FastyBird\Plugin\RedisDb\Utilities;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
+use Override;
 use stdClass;
 use function assert;
 
@@ -39,6 +40,7 @@ class RedisDbExtension extends DI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([

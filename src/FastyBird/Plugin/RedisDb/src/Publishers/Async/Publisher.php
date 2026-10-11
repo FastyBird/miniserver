@@ -12,6 +12,7 @@ use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\Utilities;
 use InvalidArgumentException;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
 use React\Promise;
@@ -40,6 +41,7 @@ final class Publisher implements Async\MessagePublisher
 	 *
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,

@@ -12,6 +12,7 @@ use FastyBird\Plugin\RabbitMq\Utilities;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
+use Override;
 use stdClass;
 use function assert;
 
@@ -38,6 +39,7 @@ class RabbitMqExtension extends DI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([

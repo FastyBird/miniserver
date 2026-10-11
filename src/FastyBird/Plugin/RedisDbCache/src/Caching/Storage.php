@@ -8,6 +8,7 @@ use JsonException;
 use Nette;
 use Nette\Caching;
 use Nette\Utils;
+use Override;
 use Predis;
 use function array_map;
 use function assert;
@@ -55,6 +56,7 @@ final class Storage implements Caching\Storage
 	/**
 	 * Read from cache
 	 */
+	#[Override]
 	public function read(string $key)
 	{
 		$stored = $this->doRead($key);
@@ -88,6 +90,7 @@ final class Storage implements Caching\Storage
 		return $values;
 	}
 
+	#[Override]
 	public function lock(string $key): void
 	{
 		// unsupported now
@@ -100,6 +103,7 @@ final class Storage implements Caching\Storage
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function write(string $key, mixed $data, array $dependencies): void
 	{
 		$meta = [
@@ -162,6 +166,7 @@ final class Storage implements Caching\Storage
 	/**
 	 * Removes item from the cache
 	 */
+	#[Override]
 	public function remove(string $key): void
 	{
 		$this->client->del($this->formatEntryKey($key));
@@ -176,6 +181,7 @@ final class Storage implements Caching\Storage
 	 *
 	 * @param array<mixed> $conditions
 	 */
+	#[Override]
 	public function clean(array $conditions): void
 	{
 		// Cleaning using file iterator

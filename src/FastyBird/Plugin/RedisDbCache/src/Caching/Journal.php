@@ -4,6 +4,7 @@ namespace FastyBird\Plugin\RedisDbCache\Caching;
 
 use FastyBird\Plugin\RedisDbCache\Clients;
 use Nette\Caching;
+use Override;
 use function array_merge;
 use function array_unique;
 use function assert;
@@ -33,6 +34,7 @@ class Journal implements Caching\Storages\Journal
 	 *
 	 * @param array<mixed> $dependencies
 	 */
+	#[Override]
 	public function write(string $key, array $dependencies): void
 	{
 		$this->cleanEntry($key);
@@ -65,6 +67,8 @@ class Journal implements Caching\Storages\Journal
 	 * @return array<mixed>|null
 	 */
 	// @phpstan-ignore method.childReturnType (Nette\Caching\Storages\Journal::clean() signature changed upstream; keeping the wider return type is a pre-existing, deliberate deviation)
+
+	#[Override]
 	public function clean(array $conditions): array|null
 	{
 		if (isset($conditions[Caching\Cache::All])) {

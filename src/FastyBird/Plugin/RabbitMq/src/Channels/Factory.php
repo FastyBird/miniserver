@@ -9,6 +9,7 @@ use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Exceptions;
 use FastyBird\Plugin\RabbitMq\Handlers;
 use Nette\Utils;
+use Override;
 use Psr\EventDispatcher;
 use TypeError;
 use ValueError;
@@ -32,6 +33,7 @@ final class Factory implements Exchange\Factory
 	{
 	}
 
+	#[Override]
 	public function create(): void
 	{
 		$client = new Bunny\Client([

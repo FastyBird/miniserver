@@ -10,6 +10,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Utilities;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
 
@@ -31,6 +32,7 @@ final class Publisher implements ExchangePublisher\MessagePublisher
 	{
 	}
 
+	#[Override]
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,

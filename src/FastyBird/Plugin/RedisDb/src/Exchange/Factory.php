@@ -8,6 +8,7 @@ use FastyBird\Core\Exchange\Events as ExchangeEvents;
 use FastyBird\Plugin\RedisDb\Connections;
 use FastyBird\Plugin\RedisDb\Events as RedisDbEvents;
 use InvalidArgumentException;
+use Override;
 use Psr\EventDispatcher;
 use React\EventLoop;
 use React\Socket;
@@ -32,6 +33,7 @@ final readonly class Factory implements Exchange\Factory
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function create(): void
 	{
 		$redis = new Redis\RedisClient(

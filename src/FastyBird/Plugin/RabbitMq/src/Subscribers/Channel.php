@@ -5,6 +5,7 @@ namespace FastyBird\Plugin\RabbitMq\Subscribers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Publishers;
+use Override;
 use Psr\Log;
 use Symfony\Component\EventDispatcher;
 
@@ -21,6 +22,7 @@ readonly class Channel implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

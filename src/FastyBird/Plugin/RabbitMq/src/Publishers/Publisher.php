@@ -12,6 +12,7 @@ use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Utilities;
 use Nette;
 use Nette\Utils;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
 
@@ -43,6 +44,7 @@ final class Publisher implements ExchangePublisher\MessagePublisher
 		$this->asyncChannel = $channel;
 	}
 
+	#[Override]
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,
