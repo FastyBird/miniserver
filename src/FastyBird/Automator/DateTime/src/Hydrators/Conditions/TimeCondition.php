@@ -9,6 +9,7 @@ use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
+use ValueError;
 use function in_array;
 use function is_array;
 use function is_scalar;
@@ -36,6 +37,7 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 
 	/**
 	 * @throws Exceptions\JsonApi
+	 * @throws ValueError
 	 */
 	protected function hydrateTimeAttribute(
 		Objects\StandardObject $attributes,

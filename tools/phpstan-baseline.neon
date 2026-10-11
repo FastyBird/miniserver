@@ -85,18 +85,6 @@ parameters:
 			path: ../src/FastyBird/Automator/DateTime/src/Entities/Conditions/TimeCondition.php
 
 		-
-			message: '#^Method FastyBird\\Automator\\DateTime\\Hydrators\\Conditions\\DataCondition\:\:hydrateDateAttribute\(\) throws checked exception ValueError but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Automator/DateTime/src/Hydrators/Conditions/DataCondition.php
-
-		-
-			message: '#^Method FastyBird\\Automator\\DateTime\\Hydrators\\Conditions\\TimeCondition\:\:hydrateTimeAttribute\(\) throws checked exception ValueError but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Automator/DateTime/src/Hydrators/Conditions/TimeCondition.php
-
-		-
 			message: '#^Method FastyBird\\Automator\\DateTime\\Schemas\\Conditions\\TimeCondition\:\:getAttributes\(\) should return iterable\<string, array\<int\>\|bool\|string\|null\> but returns array\<string, array\|bool\|string\|null\>\.$#'
 			identifier: return.type
 			count: 1
