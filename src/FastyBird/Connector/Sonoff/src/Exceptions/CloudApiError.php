@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Sonoff\Exceptions;
 
 use RuntimeException;
 
-class CloudApiError extends RuntimeException implements Exception
+final class CloudApiError extends RuntimeException implements Exception
 {
 
 }

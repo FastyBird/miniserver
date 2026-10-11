@@ -12,6 +12,6 @@ interface ClientFactory
 
 	public const string VERSION_CONSTANT_NAME = 'VERSION';
 
-	public function create(Documents\Connectors\Connector $connector): Client;
+	public function create(Documents\Connectors\Connector $connector): FbMqttV1;
 
 }

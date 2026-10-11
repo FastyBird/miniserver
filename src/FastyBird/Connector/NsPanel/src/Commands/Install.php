@@ -74,7 +74,7 @@ use function usort;
 /**
  * Connector install command
  */
-class Install extends Console\Command\Command
+final class Install extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:ns-panel-connector:install';
@@ -4258,6 +4258,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument
+	 * @throws ValueError
 	 */
 	private function provideAttributeValue(
 		Style\SymfonyStyle $io,

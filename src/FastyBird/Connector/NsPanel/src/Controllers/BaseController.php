@@ -16,8 +16,6 @@ use const DIRECTORY_SEPARATOR;
 abstract class BaseController
 {
 
-	use Nette\SmartObject;
-
 	protected NsPanel\Logger $logger;
 
 	/** @var array<string, string> */

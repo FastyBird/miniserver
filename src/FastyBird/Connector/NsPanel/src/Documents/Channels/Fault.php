@@ -8,7 +8,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Fault::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Fault::TYPE)]
-class Fault extends Channel
+final class Fault extends Channel
 {
 
 	public static function getType(): string

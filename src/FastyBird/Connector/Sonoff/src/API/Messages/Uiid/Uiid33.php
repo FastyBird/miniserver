@@ -10,11 +10,11 @@ use function array_merge;
 /**
  * UIID33 params entity
  */
-final class Uiid33 implements Uuid
+final readonly class Uiid33 implements Uuid
 {
 
-	use TDevice {
-		TDevice::toStates as toDeviceState;
+	use MapsDeviceStates {
+		MapsDeviceStates::toStates as toDeviceState;
 	}
 
 	public function __construct(
@@ -23,74 +23,74 @@ final class Uiid33 implements Uuid
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('sledOnline')]
-		private readonly string|null $statusLed,
+		private string|null $statusLed,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('fwVersion')]
-		private readonly string|null $firmwareVersion,
+		private string|null $firmwareVersion,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('chipid')]
-		private readonly string|null $chipId,
+		private string|null $chipId,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $ssid,
+		private string|null $ssid,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $rssi,
+		private int|null $rssi,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $switch,
+		private string|null $switch,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 1, max: 2, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('light_type')]
-		private readonly string|null $type,
+		private string|null $type,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 10, max: 100, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('bright')]
-		private readonly string|null $brightness,
+		private string|null $brightness,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 0, max: 255, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('colorR')]
-		private readonly string|null $red,
+		private string|null $red,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 0, max: 255, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('colorG')]
-		private readonly string|null $green,
+		private string|null $green,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 0, max: 255, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('colorB')]
-		private readonly string|null $blue,
+		private string|null $blue,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 1, max: 3, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $mode,
+		private string|null $mode,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 0, max: 100, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $speed,
+		private string|null $speed,
 	)
 	{
 	}

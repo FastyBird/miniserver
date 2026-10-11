@@ -31,7 +31,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * FastyBird MQTT connector
  */
-class FbMqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class FbMqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbFbMqttConnector';

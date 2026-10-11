@@ -31,7 +31,7 @@ use function sprintf;
 /**
  * NS panel device driver loader
  */
-readonly class Loader
+final readonly class Loader
 {
 
 	/**
@@ -187,7 +187,7 @@ readonly class Loader
 							array_map(static fn (Types\Attribute $type): string => $type->value, $createdAttributes),
 						) !== []
 					) {
-						$protocolDevice->setCorrupted(true);
+						$protocolDevice->corrupted = true;
 					}
 
 					$protocolDevice->addCapability($protocolCapability);
@@ -205,7 +205,7 @@ readonly class Loader
 						array_map(static fn (Types\Capability $type): string => $type->value, $createdCapabilities),
 					) !== []
 				) {
-					$protocolDevice->setCorrupted(true);
+					$protocolDevice->corrupted = true;
 				}
 
 				$this->devicesDriver->addDevice($protocolDevice);
@@ -227,7 +227,7 @@ readonly class Loader
 						$protocolAttribute->setActualValue(
 							Utilities\Value::flattenValue($property->getValue()),
 						);
-						$protocolAttribute->setValid(true);
+						$protocolAttribute->valid = true;
 					} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 						try {
 							$state = $this->channelPropertiesStatesManager->read(
@@ -263,7 +263,7 @@ readonly class Loader
 								$protocolAttribute->setExpectedValue(
 									Utilities\Value::flattenValue($state->getGet()->getExpectedValue()),
 								);
-								$protocolAttribute->setValid($state->isValid());
+								$protocolAttribute->valid = $state->isValid();
 							} else {
 								$this->queue->append(
 									$this->messageBuilder->create(
@@ -289,7 +289,7 @@ readonly class Loader
 								$protocolAttribute->setActualValue(
 									Utilities\Value::flattenValue($property->getDefault()),
 								);
-								$protocolAttribute->setValid(true);
+								$protocolAttribute->valid = true;
 							}
 						} catch (NsPanelExceptions\InvalidState $ex) {
 							$this->logger->warning(
@@ -335,7 +335,7 @@ readonly class Loader
 									$protocolAttribute->setExpectedValue(
 										Utilities\Value::flattenValue($state->getGet()->getExpectedValue()),
 									);
-									$protocolAttribute->setValid($state->isValid());
+									$protocolAttribute->valid = $state->isValid();
 								}
 							} catch (NsPanelExceptions\InvalidState $ex) {
 								$this->logger->warning(
@@ -365,7 +365,7 @@ readonly class Loader
 							$protocolAttribute->setActualValue(
 								Utilities\Value::flattenValue($parent->getValue()),
 							);
-							$protocolAttribute->setValid(true);
+							$protocolAttribute->valid = true;
 						}
 					}
 				}

@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Http response event
  */
-class Response extends EventDispatcher\Event
+final class Response extends EventDispatcher\Event
 {
 
 	public function __construct(

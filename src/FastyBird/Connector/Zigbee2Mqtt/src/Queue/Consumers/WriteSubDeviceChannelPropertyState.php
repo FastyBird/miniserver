@@ -22,7 +22,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette;
 use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
@@ -38,28 +37,26 @@ use function sprintf;
 /**
  * Write state to sub-device message consumer
  */
-final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
+final readonly class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	private const float WRITE_PENDING_DELAY = 2_000.0;
 
 	public function __construct(
-		protected readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		protected readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Queue\Queue $queue,
-		private readonly API\ConnectionManager $connectionManager,
-		private readonly Helpers\MessageBuilder $messageBuilder,
-		private readonly Helpers\Connectors\Connector $connectorHelper,
-		private readonly Helpers\Devices\Bridge $bridgeHelper,
-		private readonly Helpers\Devices\SubDevice $subDeviceHelper,
-		private readonly Zigbee2MqttModels\StateRepository $stateRepository,
-		private readonly Zigbee2Mqtt\Logger $logger,
-		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
-		private readonly ClockInterface $clock,
+		protected DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		protected DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private Queue\Queue $queue,
+		private API\ConnectionManager $connectionManager,
+		private Helpers\MessageBuilder $messageBuilder,
+		private Helpers\Connectors\Connector $connectorHelper,
+		private Helpers\Devices\Bridge $bridgeHelper,
+		private Helpers\Devices\SubDevice $subDeviceHelper,
+		private Zigbee2MqttModels\StateRepository $stateRepository,
+		private Zigbee2Mqtt\Logger $logger,
+		private DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
+		private ClockInterface $clock,
 	)
 	{
 	}

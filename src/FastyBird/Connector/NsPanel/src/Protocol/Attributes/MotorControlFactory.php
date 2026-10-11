@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel motor control attribute factory
  */
-class MotorControlFactory implements AttributeFactory
+final class MotorControlFactory implements AttributeFactory
 {
 
 	#[Override]

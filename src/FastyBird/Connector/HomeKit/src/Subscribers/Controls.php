@@ -12,7 +12,6 @@ use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette;
 use Nette\Utils;
 use Override;
 use ReflectionException;
@@ -20,14 +19,12 @@ use ReflectionException;
 /**
  * Doctrine entities events
  */
-final class Controls implements Common\EventSubscriber
+final readonly class Controls implements Common\EventSubscriber
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly DevicesModels\Entities\Connectors\Controls\ControlsRepository $controlsRepository,
-		private readonly DevicesModels\Entities\Connectors\Controls\ControlsManager $controlsManager,
+		private DevicesModels\Entities\Connectors\Controls\ControlsRepository $controlsRepository,
+		private DevicesModels\Entities\Connectors\Controls\ControlsManager $controlsManager,
 	)
 	{
 	}

@@ -9,7 +9,6 @@ use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette;
 use Nette\Utils;
 use Psr\Http\Message;
 use React\Promise;
@@ -36,8 +35,6 @@ use function strval;
  */
 final class Gen1HttpApi extends HttpApi
 {
-
-	use Nette\SmartObject;
 
 	private const string GET_DEVICE_INFORMATION = 'http://%s/shelly';
 

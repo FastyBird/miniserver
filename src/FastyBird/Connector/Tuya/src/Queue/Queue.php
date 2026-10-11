@@ -5,7 +5,6 @@ namespace FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Queue\Messages\Message;
 use FastyBird\Core\Values\Types\Sources;
-use Nette;
 use SplQueue;
 
 /**
@@ -13,8 +12,6 @@ use SplQueue;
  */
 final class Queue
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplQueue<Message> */
 	private SplQueue $queue;

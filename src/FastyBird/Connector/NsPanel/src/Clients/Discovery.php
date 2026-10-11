@@ -15,7 +15,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\Promise;
 use Throwable;
@@ -29,20 +28,18 @@ use function preg_match;
 /**
  * Connector sub-devices discovery client
  */
-final class Discovery
+final readonly class Discovery
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
-		private readonly API\LanApiFactory $lanApiFactory,
-		private readonly Queue\Queue $queue,
-		private readonly Helpers\MessageBuilder $messageBuilder,
-		private readonly Helpers\Devices\Gateway $gatewayHelper,
-		private readonly NsPanel\Logger $logger,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
+		private Documents\Connectors\Connector $connector,
+		private API\LanApiFactory $lanApiFactory,
+		private Queue\Queue $queue,
+		private Helpers\MessageBuilder $messageBuilder,
+		private Helpers\Devices\Gateway $gatewayHelper,
+		private NsPanel\Logger $logger,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
 	}

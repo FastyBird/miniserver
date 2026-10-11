@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Shelly\Exceptions;
 
 use RuntimeException;
 
-class HttpApiError extends RuntimeException implements Exception
+final class HttpApiError extends RuntimeException implements Exception
 {
 
 }

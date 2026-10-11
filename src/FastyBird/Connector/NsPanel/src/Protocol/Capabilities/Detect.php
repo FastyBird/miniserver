@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device detect capability
  */
-class Detect extends Capability
+final class Detect extends Capability
 {
 
 	/**

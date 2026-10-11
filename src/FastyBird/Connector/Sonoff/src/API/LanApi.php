@@ -54,8 +54,6 @@ use const DIRECTORY_SEPARATOR;
 final class LanApi
 {
 
-	use Nette\SmartObject;
-
 	public const int DEVICE_PORT = 8_081;
 
 	public const int ERROR_INVALID_JSON = 400;

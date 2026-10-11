@@ -13,7 +13,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use Nette\Utils;
 use Override;
 use function sprintf;
@@ -21,17 +20,15 @@ use function sprintf;
 /**
  * Device extension MQTT message consumer
  */
-final class ExtensionAttribute implements Queue\Consumer
+final readonly class ExtensionAttribute implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly FbMqtt\Logger $logger,
-		private readonly DevicesModels\Entities\Devices\DevicesRepository $deviceRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $propertiesManager,
-		private readonly Helpers\Database $databaseHelper,
+		private FbMqtt\Logger $logger,
+		private DevicesModels\Entities\Devices\DevicesRepository $deviceRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesManager $propertiesManager,
+		private Helpers\Database $databaseHelper,
 	)
 	{
 	}

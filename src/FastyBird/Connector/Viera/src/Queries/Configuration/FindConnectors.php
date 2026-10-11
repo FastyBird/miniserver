@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
  * @template T of Documents\Connectors\Connector
  * @extends  DevicesQueries\Configuration\FindConnectors<T>
  */
-class FindConnectors extends DevicesQueries\Configuration\FindConnectors
+final class FindConnectors extends DevicesQueries\Configuration\FindConnectors
 {
 
 }

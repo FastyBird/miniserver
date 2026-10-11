@@ -10,7 +10,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Documents;
  * @template T of Documents\Devices\SubDevice
  * @extends  FindDevices<T>
  */
-class FindSubDevices extends FindDevices
+final class FindSubDevices extends FindDevices
 {
 
 }

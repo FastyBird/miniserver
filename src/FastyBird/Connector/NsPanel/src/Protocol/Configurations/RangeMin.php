@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Range minimal value configuration
  */
-class RangeMin extends Configuration
+final class RangeMin extends Configuration
 {
 
 	public function __construct(

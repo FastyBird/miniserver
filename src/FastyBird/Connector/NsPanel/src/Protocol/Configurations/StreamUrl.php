@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Camera stream url configuration
  */
-class StreamUrl extends Configuration
+final class StreamUrl extends Configuration
 {
 
 	public function __construct(

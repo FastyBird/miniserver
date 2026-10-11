@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
  * @template T of Documents\Devices\Device
  * @extends  DevicesQueries\Configuration\FindDevices<T>
  */
-class FindDevices extends DevicesQueries\Configuration\FindDevices
+final class FindDevices extends DevicesQueries\Configuration\FindDevices
 {
 
 }

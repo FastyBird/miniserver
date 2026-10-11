@@ -8,7 +8,7 @@ use FastyBird\Connector\HomeKit\Entities;
 /**
  * HAP bridge accessory factory
  */
-class BridgeFactory
+final class BridgeFactory
 {
 
 	public function create(string $name, Documents\Connectors\Connector $connector): Bridge

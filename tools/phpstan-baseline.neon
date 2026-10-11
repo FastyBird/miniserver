@@ -475,12 +475,6 @@ parameters:
 			path: ../src/FastyBird/Connector/HomeKit/src/Connector/Connector.php
 
 		-
-			message: '#^Method FastyBird\\Connector\\HomeKit\\Controllers\\AccessoriesController\:\:identify\(\) throws checked exception FastyBird\\Core\\Exceptions\\InvalidArgument but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
-			count: 1
-			path: ../src/FastyBird/Connector/HomeKit/src/Controllers/AccessoriesController.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 2
@@ -573,12 +567,6 @@ parameters:
 		-
 			message: '#^Method FastyBird\\Connector\\HomeKit\\Controllers\\PairingController\:\:listPairings\(\) should return array\<int, array\<int, array\<int\>\|int\|string\>\> but returns list\<array\<int, array\|int\|string\>\>\.$#'
 			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Connector/HomeKit/src/Controllers/PairingController.php
-
-		-
-			message: '#^Method FastyBird\\Connector\\HomeKit\\Controllers\\PairingController\:\:listPairings\(\) throws checked exception Exception but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Connector/HomeKit/src/Controllers/PairingController.php
 
@@ -807,12 +795,6 @@ parameters:
 		-
 			message: '#^Binary operation "\^\=" between int and mixed results in an error\.$#'
 			identifier: assignOp.invalid
-			count: 1
-			path: ../src/FastyBird/Connector/Modbus/src/API/Rtu.php
-
-		-
-			message: '#^Method FastyBird\\Connector\\Modbus\\API\\Rtu\:\:readDigitalRegisters\(\) throws checked exception ValueError but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Connector/Modbus/src/API/Rtu.php
 
@@ -1185,12 +1167,6 @@ parameters:
 		-
 			message: '#^Cannot access property \$value on mixed\.$#'
 			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
-
-		-
-			message: '#^Method FastyBird\\Connector\\NsPanel\\Commands\\Install\:\:provideAttributeValue\(\) throws checked exception ValueError but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Connector/NsPanel/src/Commands/Install.php
 
@@ -2655,12 +2631,6 @@ parameters:
 		-
 			message: '#^Method FastyBird\\Connector\\Viera\\API\\TelevisionApi\:\:needsCrypto\(\) should return bool\|React\\Promise\\PromiseInterface\<bool\> but returns React\\Promise\\PromiseInterface\<mixed\>\.$#'
 			identifier: return.type
-			count: 1
-			path: ../src/FastyBird/Connector/Viera/src/API/TelevisionApi.php
-
-		-
-			message: '#^Method FastyBird\\Connector\\Viera\\API\\TelevisionApi\:\:parseGetApps\(\) throws checked exception ValueError but it''s missing from the PHPDoc @throws tag\.$#'
-			identifier: missingType.checkedException
 			count: 1
 			path: ../src/FastyBird/Connector/Viera/src/API/TelevisionApi.php
 

@@ -4,7 +4,6 @@ namespace FastyBird\Connector\HomeKit\Protocol;
 
 use Brick\Math;
 use InvalidArgumentException;
-use Nette;
 use Throwable;
 use function array_map;
 use function array_slice;
@@ -25,8 +24,6 @@ use function unpack;
  */
 final class Srp
 {
-
-	use Nette\SmartObject;
 
 	private const string N_3072
 		= 'FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD129024E08'

@@ -11,7 +11,7 @@ use function sprintf;
 /**
  * Capabilities mapping configuration
  */
-readonly class Capabilities implements Mapping\Mapping
+final readonly class Capabilities implements Mapping\Mapping
 {
 
 	/**

@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\FbMqtt\API;
 
 use FastyBird\Connector\FbMqtt;
-use Nette;
 use function preg_match;
 use function str_contains;
 use function trim;
@@ -13,8 +12,6 @@ use function trim;
  */
 final class V1Validator
 {
-
-	use Nette\SmartObject;
 
 	// TOPIC: /fb/*
 	public const string CONVENTION_PREFIX_REGEXP = '/^\/fb\/.*$/';

@@ -18,7 +18,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Http\Message\ResponseInterface;
@@ -37,8 +36,6 @@ use function is_string;
  */
 final class Http implements Server
 {
-
-	use Nette\SmartObject;
 
 	public const string REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
 

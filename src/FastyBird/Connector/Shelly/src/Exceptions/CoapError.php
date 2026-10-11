@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Shelly\Exceptions;
 
 use RuntimeException;
 
-class CoapError extends RuntimeException implements Exception
+final class CoapError extends RuntimeException implements Exception
 {
 
 }

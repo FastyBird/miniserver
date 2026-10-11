@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Sonoff\Exceptions;
 
 use RuntimeException;
 
-class NotImplemented extends RuntimeException implements Exception
+final class NotImplemented extends RuntimeException implements Exception
 {
 
 }

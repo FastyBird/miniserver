@@ -7,7 +7,7 @@ use FastyBird\Core\Http\Exceptions;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
-class HapRequestError extends Exceptions\Http implements Exception
+final class HapRequestError extends Exceptions\Http implements Exception
 {
 
 	public function __construct(

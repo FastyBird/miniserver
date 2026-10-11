@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
@@ -36,8 +35,6 @@ use function sprintf;
  */
 final class Discovery
 {
-
-	use Nette\SmartObject;
 
 	private const int DISCOVERY_TIMEOUT = 100;
 

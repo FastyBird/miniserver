@@ -10,7 +10,7 @@ use FastyBird\Connector\NsPanel\Entities;
  * @template T of Entities\Devices\ThirdPartyDevice
  * @extends  FindDevices<T>
  */
-class FindThirdPartyDevices extends FindDevices
+final class FindThirdPartyDevices extends FindDevices
 {
 
 }

@@ -17,7 +17,6 @@ use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
-use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -55,8 +54,6 @@ use const OPENSSL_RAW_DATA;
  */
 final class Discovery
 {
-
-	use Nette\SmartObject;
 
 	private const string UDP_BIND_IP = '0.0.0.0';
 

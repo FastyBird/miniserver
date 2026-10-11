@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 
 use LogicException as PHPLogicException;
 
-class MissingValue extends PHPLogicException implements Exception
+final class MissingValue extends PHPLogicException implements Exception
 {
 
 }

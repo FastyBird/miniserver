@@ -12,7 +12,7 @@ use Ramsey\Uuid;
 /**
  * NS panel thermostat mode detection attribute factory
  */
-class ThermostatModeDetectionFactory implements AttributeFactory
+final class ThermostatModeDetectionFactory implements AttributeFactory
 {
 
 	/**

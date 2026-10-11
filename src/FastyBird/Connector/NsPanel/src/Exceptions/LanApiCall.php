@@ -6,7 +6,7 @@ use Psr\Http\Message;
 use RuntimeException;
 use Throwable;
 
-class LanApiCall extends RuntimeException implements Exception
+final class LanApiCall extends RuntimeException implements Exception
 {
 
 	public function __construct(

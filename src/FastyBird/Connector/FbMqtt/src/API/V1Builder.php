@@ -5,7 +5,6 @@ namespace FastyBird\Connector\FbMqtt\API;
 use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Documents as FbMqttDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
-use Nette;
 use function str_replace;
 
 /**
@@ -13,8 +12,6 @@ use function str_replace;
  */
 final class V1Builder
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * Replace placeholders

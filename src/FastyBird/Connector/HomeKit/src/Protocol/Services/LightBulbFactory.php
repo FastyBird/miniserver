@@ -12,7 +12,7 @@ use Ramsey\Uuid;
 /**
  * HAP light bulb service factory
  */
-class LightBulbFactory implements ServiceFactory
+final class LightBulbFactory implements ServiceFactory
 {
 
 	/**

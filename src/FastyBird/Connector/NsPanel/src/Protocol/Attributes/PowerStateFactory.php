@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel power state attribute factory
  */
-class PowerStateFactory implements AttributeFactory
+final class PowerStateFactory implements AttributeFactory
 {
 
 	#[Override]

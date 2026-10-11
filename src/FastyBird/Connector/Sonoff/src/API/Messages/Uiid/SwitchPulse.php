@@ -7,7 +7,7 @@ use Orisai\ObjectMapper;
 /**
  * Switch pulse configuration entity
  */
-final class SwitchPulse implements ObjectMapper\MappedObject
+final readonly class SwitchPulse implements ObjectMapper\MappedObject
 {
 
 	private const string VALUE_ON = 'on';
@@ -16,12 +16,12 @@ final class SwitchPulse implements ObjectMapper\MappedObject
 
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_ON, self::VALUE_OFF])]
-		private readonly string $pulse,
+		private string $pulse,
 		#[ObjectMapper\Rules\IntValue(min: 500, max: 3_600_000, unsigned: true, castNumericString: true)]
 		#[ObjectMapper\Modifiers\FieldName('pulseWidth')]
-		private readonly int $width,
+		private int $width,
 		#[ObjectMapper\Rules\IntValue(min: 0, max: 10, unsigned: true, castNumericString: true)]
-		private readonly int $outlet,
+		private int $outlet,
 	)
 	{
 	}

@@ -29,7 +29,7 @@ use function usort;
  * @property-read Helpers\Device $deviceHelper
  * @property-read DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository
  */
-trait TReading
+trait ReadsRegisters
 {
 
 	/**

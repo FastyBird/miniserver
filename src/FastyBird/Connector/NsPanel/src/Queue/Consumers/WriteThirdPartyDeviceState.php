@@ -20,7 +20,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
@@ -36,8 +35,6 @@ use function strval;
  */
 final class WriteThirdPartyDeviceState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	private API\LanApi|null $lanApiApi = null;
 
@@ -106,7 +103,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 			return true;
 		}
 
-		if ($protocolDevice->isCorrupted()) {
+		if ($protocolDevice->corrupted) {
 			$this->logger->warning(
 				'Device is not correctly configured therefore could not be updated on NS Panel',
 				[
@@ -329,7 +326,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 				Utilities\Value::flattenValue($propertyToUpdate->getValue()),
 			);
 			$protocolAttribute->setExpectedValue(null);
-			$protocolAttribute->setValid(true);
+			$protocolAttribute->valid = true;
 			$protocolAttribute->setPending(false);
 
 		} elseif ($propertyToUpdate instanceof DevicesDocuments\Channels\Properties\Dynamic) {
@@ -354,7 +351,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 				Utilities\Value::flattenValue($state->getExpectedValue() ?? $state->getActualValue()),
 			);
 			$protocolAttribute->setExpectedValue(null);
-			$protocolAttribute->setValid(true);
+			$protocolAttribute->valid = true;
 			$protocolAttribute->setPending(false);
 
 		} elseif ($propertyToUpdate instanceof DevicesDocuments\Channels\Properties\Mapped) {
@@ -369,7 +366,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 					Utilities\Value::flattenValue($parent->getValue()),
 				);
 				$protocolAttribute->setExpectedValue(null);
-				$protocolAttribute->setValid(true);
+				$protocolAttribute->valid = true;
 				$protocolAttribute->setPending(false);
 
 			} elseif ($parent instanceof DevicesDocuments\Channels\Properties\Dynamic) {
@@ -385,14 +382,14 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 				$protocolAttribute->setExpectedValue(
 					Utilities\Value::flattenValue($state->getExpectedValue()),
 				);
-				$protocolAttribute->setValid($state->isValid());
+				$protocolAttribute->valid = $state->isValid();
 				$protocolAttribute->setPending($state->getPending());
 			}
 		}
 
 		$mapped = $protocolCapability->toState();
 
-		if (!$protocolDevice->isProvisioned()) {
+		if (!$protocolDevice->provisioned) {
 			return true;
 		}
 

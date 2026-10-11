@@ -16,7 +16,7 @@ use function preg_match;
 /**
  * NS panel thermostat target set point capability factory
  */
-class ThermostatTargetSetPointFactory implements CapabilityFactory
+final class ThermostatTargetSetPointFactory implements CapabilityFactory
 {
 
 	#[Override]

@@ -6,7 +6,6 @@ use Closure;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
-use Nette;
 use Nette\Utils;
 use Override;
 use Symfony\Component\EventDispatcher;
@@ -16,8 +15,6 @@ use Symfony\Component\EventDispatcher;
  */
 final class Entities implements EventDispatcher\EventSubscriberInterface
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<Closure(DevicesEntities\Connectors\Properties\Variable $property): void> */
 	public array $onUpdateSharedKey = [];

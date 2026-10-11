@@ -16,7 +16,7 @@ use function preg_match;
 /**
  * NS panel RSSI capability factory
  */
-class RssiFactory implements CapabilityFactory
+final class RssiFactory implements CapabilityFactory
 {
 
 	#[Override]

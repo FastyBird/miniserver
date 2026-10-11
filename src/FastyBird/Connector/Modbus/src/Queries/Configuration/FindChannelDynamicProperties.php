@@ -15,7 +15,7 @@ use function sprintf;
  * @template T of DevicesDocuments\Channels\Properties\Dynamic
  * @extends  DevicesQueries\Configuration\FindChannelDynamicProperties<T>
  */
-class FindChannelDynamicProperties extends DevicesQueries\Configuration\FindChannelDynamicProperties
+final class FindChannelDynamicProperties extends DevicesQueries\Configuration\FindChannelDynamicProperties
 {
 
 	/**

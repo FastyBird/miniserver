@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device fault capability
  */
-class Fault extends Capability
+final class Fault extends Capability
 {
 
 	/**

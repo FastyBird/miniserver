@@ -7,7 +7,6 @@ use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
-use Nette;
 use Override;
 use React\Socket;
 use React\Stream;
@@ -31,8 +30,6 @@ use function unpack;
  */
 final class SecureConnection extends Evenement\EventEmitter implements Socket\ConnectionInterface
 {
-
-	use Nette\SmartObject;
 
 	private const int ENCRYPTED_DATA_LENGTH = 2;
 

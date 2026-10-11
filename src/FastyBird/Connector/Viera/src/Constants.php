@@ -5,7 +5,7 @@ namespace FastyBird\Connector\Viera;
 /**
  * Connector constants
  */
-class Constants
+final class Constants
 {
 
 	/** array<string, Types\ChannelPropertyIdentifier> */

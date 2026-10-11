@@ -23,7 +23,6 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
-use Nette;
 use Override;
 use Psr\Clock\ClockInterface;
 use Random\RandomException;
@@ -42,11 +41,10 @@ use function React\Async\await;
 /**
  * Modbus RTU devices client interface
  */
-class Rtu implements Client
+final class Rtu implements Client
 {
 
-	use TReading;
-	use Nette\SmartObject;
+	use ReadsRegisters;
 
 	private const int READ_MAX_ATTEMPTS = 5;
 

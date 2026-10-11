@@ -12,7 +12,7 @@ use Throwable;
 /**
  * OpenPulsar websockets client factory
  */
-readonly class WebSocketClientFactory
+final readonly class WebSocketClientFactory
 {
 
 	public function __construct(private EventLoop\LoopInterface $eventLoop)

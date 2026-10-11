@@ -12,7 +12,7 @@ use SplObjectStorage;
 /**
  * HAP bridge accessory
  */
-class Bridge extends Accessory
+final class Bridge extends Accessory
 {
 
 	/** @var SplObjectStorage<Accessory, null> */
@@ -51,7 +51,7 @@ class Bridge extends Accessory
 			throw new Exceptions\InvalidArgument('Bridges cannot be bridged');
 		}
 
-		if ($accessory->getAid() === null) {
+		if ($accessory->aid === null) {
 			$this->accessories->rewind();
 
 			$newAid = 2;
@@ -66,7 +66,7 @@ class Bridge extends Accessory
 				}
 
 				foreach ($this->accessories as $existingAccessory) {
-					if ($existingAccessory->getAid() !== null && $existingAccessory->getAid() === $newAid) {
+					if ($existingAccessory->aid !== null && $existingAccessory->aid === $newAid) {
 						$newAid++;
 
 						continue 2;
@@ -76,17 +76,17 @@ class Bridge extends Accessory
 				$searching = false;
 			}
 
-			$accessory->setAid($newAid);
+			$accessory->aid = $newAid;
 		}
 
-		if ($accessory->getAid() === $this->getAid()) {
+		if ($accessory->aid === $this->aid) {
 			throw new Exceptions\InvalidArgument('Accessory added to bridge could not have same AID');
 		}
 
 		$this->accessories->rewind();
 
 		foreach ($this->accessories as $existingAccessory) {
-			if ($existingAccessory->getAid() === $accessory->getAid()) {
+			if ($existingAccessory->aid === $accessory->aid) {
 				throw new Exceptions\InvalidArgument('Duplicate AID found when attempting to add accessory');
 			}
 		}
@@ -115,7 +115,7 @@ class Bridge extends Accessory
 		$this->accessories->rewind();
 
 		foreach ($this->accessories as $accessory) {
-			if ($accessory->getAid() === $aid) {
+			if ($accessory->aid === $aid) {
 				return $accessory;
 			}
 		}

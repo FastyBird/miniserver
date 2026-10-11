@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Tuya\Exceptions;
 
 use RuntimeException as PHPRuntimeException;
 
-class Runtime extends PHPRuntimeException implements Exception
+final class Runtime extends PHPRuntimeException implements Exception
 {
 
 }

@@ -12,6 +12,6 @@ interface ClientFactory
 
 	public const string MODE_CONSTANT_NAME = 'MODE';
 
-	public function create(Documents\Connectors\Connector $connector): Client;
+	public function create(Documents\Connectors\Connector $connector): Mqtt;
 
 }

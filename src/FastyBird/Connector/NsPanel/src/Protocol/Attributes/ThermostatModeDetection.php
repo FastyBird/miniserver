@@ -12,7 +12,7 @@ use function sprintf;
 /**
  * Thermostat mode detection attribute
  */
-class ThermostatModeDetection extends Attribute
+final class ThermostatModeDetection extends Attribute
 {
 
 	/**

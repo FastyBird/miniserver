@@ -14,7 +14,6 @@ use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
 use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
@@ -25,6 +24,7 @@ use React\Socket;
 use RuntimeException;
 use SimpleXMLElement;
 use Throwable;
+use ValueError;
 use function array_combine;
 use function array_fill;
 use function array_key_exists;
@@ -67,8 +67,6 @@ use function unpack;
  */
 final class TelevisionApi
 {
-
-	use Nette\SmartObject;
 
 	private const int EVENTS_TIMEOUT = 10;
 
@@ -297,6 +295,7 @@ final class TelevisionApi
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\TelevisionApiCall
 	 * @throws Exceptions\TelevisionApiError
+	 * @throws ValueError
 	 */
 	public function getApps(
 		bool $async = true,
@@ -1625,6 +1624,7 @@ final class TelevisionApi
 	/**
 	 * @throws Exceptions\TelevisionApiCall
 	 * @throws Exceptions\TelevisionApiError
+	 * @throws ValueError
 	 */
 	private function parseGetApps(
 		Message\RequestInterface $request,

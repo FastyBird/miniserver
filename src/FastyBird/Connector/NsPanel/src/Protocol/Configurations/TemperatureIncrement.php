@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Thermostat temperature increment step configuration
  */
-class TemperatureIncrement extends Configuration
+final class TemperatureIncrement extends Configuration
 {
 
 	public function __construct(

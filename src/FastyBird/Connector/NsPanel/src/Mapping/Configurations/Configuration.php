@@ -11,7 +11,7 @@ use function array_filter;
 /**
  * Basic configuration interface
  */
-readonly class Configuration implements Mapping\Mapping
+final readonly class Configuration implements Mapping\Mapping
 {
 
 	/**

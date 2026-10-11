@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette;
 use Nette\Utils;
 use Override;
 use TypeError;
@@ -28,19 +27,17 @@ use function React\Async\await;
 /**
  * Store device state message consumer
  */
-final class StoreDeviceState implements Queue\Consumer
+final readonly class StoreDeviceState implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Protocol\Driver $devicesDriver,
-		private readonly NsPanel\Logger $logger,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Helpers\Database $databaseHelper,
+		private Protocol\Driver $devicesDriver,
+		private NsPanel\Logger $logger,
+		private DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		private DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private Helpers\Database $databaseHelper,
 	)
 	{
 	}

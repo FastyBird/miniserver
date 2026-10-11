@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * Thermostat lower set point scale configuration
  */
-class SupportedDetectionLowerSetPointScale extends Configuration
+final class SupportedDetectionLowerSetPointScale extends Configuration
 {
 
 	public function __construct(

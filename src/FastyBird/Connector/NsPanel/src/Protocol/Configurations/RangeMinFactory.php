@@ -16,7 +16,7 @@ use function is_numeric;
 /**
  * NS panel range min value capability configuration factory
  */
-class RangeMinFactory implements ConfigurationFactory
+final class RangeMinFactory implements ConfigurationFactory
 {
 
 	#[Override]

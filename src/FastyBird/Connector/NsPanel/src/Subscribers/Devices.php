@@ -8,7 +8,6 @@ use Doctrine\Persistence;
 use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
-use Nette;
 use Override;
 
 /**
@@ -16,8 +15,6 @@ use Override;
  */
 final class Devices implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	#[Override]
 	public function getSubscribedEvents(): array

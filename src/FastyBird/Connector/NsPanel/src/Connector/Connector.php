@@ -17,7 +17,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
-use Nette;
 use Override;
 use React\EventLoop;
 use React\Promise;
@@ -34,8 +33,6 @@ use function React\Async\async;
 final class Connector implements DevicesConnectors\Connector
 {
 
-	use Nette\SmartObject;
-
 	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 
 	private const int DRIVER_RELOAD_INTERVAL = 60;
@@ -43,7 +40,7 @@ final class Connector implements DevicesConnectors\Connector
 	/** @var array<Clients\Client|Clients\Discovery> */
 	private array $clients = [];
 
-	private Servers\Server|null $server = null;
+	private Servers\Http|null $server = null;
 
 	private Writers\Writer|null $writer = null;
 

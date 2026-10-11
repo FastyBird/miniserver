@@ -10,7 +10,7 @@ use FastyBird\Connector\HomeKit\Entities;
  * @template  T of Entities\Channels\Battery
  * @extends   Channel<T>
  */
-class Battery extends Channel
+final class Battery extends Channel
 {
 
 	/**

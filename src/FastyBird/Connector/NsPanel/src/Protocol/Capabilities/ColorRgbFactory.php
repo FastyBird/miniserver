@@ -16,7 +16,7 @@ use function preg_match;
 /**
  * NS panel color RGB capability factory
  */
-class ColorRgbFactory implements CapabilityFactory
+final class ColorRgbFactory implements CapabilityFactory
 {
 
 	#[Override]

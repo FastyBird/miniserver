@@ -15,7 +15,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette;
 use Nette\Utils;
 use Override;
 use TypeError;
@@ -26,19 +25,17 @@ use function React\Async\await;
 /**
  * Store device property state message consumer
  */
-final class StoreDevicePropertyState implements Queue\Consumer
+final readonly class StoreDevicePropertyState implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly HomeKit\Logger $logger,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly Helpers\Database $databaseHelper,
+		private HomeKit\Logger $logger,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		private DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
+		private Helpers\Database $databaseHelper,
 	)
 	{
 	}

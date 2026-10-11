@@ -29,7 +29,7 @@ use function usort;
 /**
  * Connector execute command
  */
-class Execute extends Console\Command\Command
+final class Execute extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:modbus-connector:execute';

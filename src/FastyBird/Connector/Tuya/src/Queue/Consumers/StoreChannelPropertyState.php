@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
@@ -34,8 +33,6 @@ use function strval;
  */
 final class StoreChannelPropertyState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<string, Uuid\UuidInterface> */
 	private array $dataPointsToProperties = [];

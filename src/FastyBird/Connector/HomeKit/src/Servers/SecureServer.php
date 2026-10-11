@@ -4,7 +4,6 @@ namespace FastyBird\Connector\HomeKit\Servers;
 
 use Evenement\EventEmitter;
 use FastyBird\Connector\HomeKit\Documents;
-use Nette;
 use Override;
 use React\Socket;
 use SplObjectStorage;
@@ -15,8 +14,6 @@ use function str_replace;
  */
 final class SecureServer extends EventEmitter implements Socket\ServerInterface
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplObjectStorage<SecureConnection, null> */
 	private SplObjectStorage $activeConnections;

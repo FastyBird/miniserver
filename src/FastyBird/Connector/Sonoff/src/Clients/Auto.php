@@ -10,7 +10,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
-use Nette;
 use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
@@ -27,8 +26,6 @@ use function React\Async\async;
  */
 final class Auto extends ClientProcess implements Client
 {
-
-	use Nette\SmartObject;
 
 	private Lan $lanClient;
 

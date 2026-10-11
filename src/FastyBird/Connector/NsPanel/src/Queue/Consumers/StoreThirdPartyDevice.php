@@ -15,24 +15,22 @@ use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Override;
 
 /**
  * Store NS Panel third-party device message consumer
  */
-final class StoreThirdPartyDevice implements Queue\Consumer
+final readonly class StoreThirdPartyDevice implements Queue\Consumer
 {
 
 	use DeviceProperty;
-	use Nette\SmartObject;
 
 	public function __construct(
-		protected readonly NsPanel\Logger $logger,
-		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		protected readonly Helpers\Database $databaseHelper,
+		protected NsPanel\Logger $logger,
+		protected DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		protected Helpers\Database $databaseHelper,
 	)
 	{
 	}

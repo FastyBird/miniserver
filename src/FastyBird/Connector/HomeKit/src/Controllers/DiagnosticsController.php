@@ -111,7 +111,7 @@ final class DiagnosticsController extends BaseController
 							'actual' => $characteristic->getActualValue(),
 							'expected' => $characteristic->getExpectedValue(),
 							'is_pending' => $characteristic->isPending(),
-							'is_valid' => $characteristic->isValid(),
+							'is_valid' => $characteristic->valid,
 						],
 					];
 				}
@@ -126,7 +126,7 @@ final class DiagnosticsController extends BaseController
 
 			$result[] = [
 				'id' => $accessory->getId()->toString(),
-				'aid' => $accessory->getAid(),
+				'aid' => $accessory->aid,
 				'name' => $accessory->getName(),
 				'category' => $accessory->getCategory(),
 				'services' => $services,

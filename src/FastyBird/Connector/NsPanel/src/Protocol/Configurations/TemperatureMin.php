@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Thermostat minimal temperature configuration
  */
-class TemperatureMin extends Configuration
+final class TemperatureMin extends Configuration
 {
 
 	public function __construct(

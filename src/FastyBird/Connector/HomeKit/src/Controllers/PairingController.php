@@ -5,6 +5,7 @@ namespace FastyBird\Connector\HomeKit\Controllers;
 use Brick\Math;
 use Doctrine\DBAL;
 use Elliptic\EdDSA;
+use Exception;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
@@ -391,6 +392,7 @@ final class PairingController extends BaseController
 	}
 
 	/**
+	 * @throws Exception
 	 * @throws HomeKitExceptions\InvalidArgument
 	 * @throws HomeKitExceptions\InvalidState
 	 * @throws HomeKitExceptions\Runtime
@@ -1795,6 +1797,8 @@ final class PairingController extends BaseController
 
 	/**
 	 * @return array<int, array<int, (int|array<int>|string)>>
+	 *
+	 * @throws Exception
 	 */
 	private function listPairings(
 		Documents\Connectors\Connector $connector,

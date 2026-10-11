@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Humidity attribute
  */
-class Humidity extends Attribute
+final class Humidity extends Attribute
 {
 
 	public function __construct(

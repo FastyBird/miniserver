@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device toggle capability
  */
-class Toggle extends Capability
+final class Toggle extends Capability
 {
 
 	/**

@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device startup capability
  */
-class Startup extends Capability
+final class Startup extends Capability
 {
 
 	/**

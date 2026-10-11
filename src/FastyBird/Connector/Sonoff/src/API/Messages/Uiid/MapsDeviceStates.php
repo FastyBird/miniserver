@@ -12,7 +12,7 @@ use FastyBird\Connector\Sonoff\Types;
  * @method string|null getSsid()
  * @method int|null getRssi()
  */
-trait TDevice
+trait MapsDeviceStates
 {
 
 	/**

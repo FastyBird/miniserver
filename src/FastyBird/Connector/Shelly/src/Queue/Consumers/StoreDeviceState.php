@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette;
 use Nette\Utils;
 use Override;
 use TypeError;
@@ -32,26 +31,25 @@ use function str_starts_with;
 /**
  * Store device state message consumer
  */
-final class StoreDeviceState implements Queue\Consumer
+final readonly class StoreDeviceState implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
 	use DeviceProperty;
 
 	public function __construct(
-		protected readonly Shelly\Logger $logger,
-		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		protected readonly Helpers\Database $databaseHelper,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
+		protected Shelly\Logger $logger,
+		protected DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		protected Helpers\Database $databaseHelper,
+		private DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		private DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
+		private DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
 	)
 	{
 	}

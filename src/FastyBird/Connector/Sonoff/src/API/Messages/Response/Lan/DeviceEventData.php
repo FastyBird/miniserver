@@ -10,7 +10,7 @@ use function array_map;
 /**
  * Device info entity
  */
-final class DeviceEventData implements API\Messages\Message
+final readonly class DeviceEventData implements API\Messages\Message
 {
 
 	private const string VALUE_ON = 'on';
@@ -28,87 +28,87 @@ final class DeviceEventData implements API\Messages\Message
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('fwVersion')]
-		private readonly string|null $firmwareVersion,
+		private string|null $firmwareVersion,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $ssid = null,
+		private string|null $ssid = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $rssi = null,
+		private int|null $rssi = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $bssid = null,
+		private string|null $bssid = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $signalStrength = null,
+		private int|null $signalStrength = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('sledOnline')]
-		private readonly int|null $statusLed = null,
+		private int|null $statusLed = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $switch = null,
+		private string|null $switch = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF, self::VALUE_STAY]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $startup = null,
+		private string|null $startup = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $pulse = null,
+		private string|null $pulse = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(500, 3_599_500, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $pulseWidth = null,
+		private int|null $pulseWidth = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(0, 255, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $mode = null,
+		private int|null $mode = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(0, 100, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $brightness = null,
+		private int|null $brightness = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(0, 254, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('brightmin')]
-		private readonly int|null $minimumBrightness = null,
+		private int|null $minimumBrightness = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(1, 255, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('brightmax')]
-		private readonly int|null $maximumBrightness = null,
+		private int|null $maximumBrightness = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('subDevId')]
-		private readonly string|null $subDeviceId = null,
+		private string|null $subDeviceId = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: SwitchState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('switches')]
-		private readonly array $switchesStates = [],
+		private array $switchesStates = [],
 	)
 	{
 	}

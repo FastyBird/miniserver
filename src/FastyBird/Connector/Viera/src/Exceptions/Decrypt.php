@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Viera\Exceptions;
 
 use RuntimeException;
 
-class Decrypt extends RuntimeException implements Exception
+final class Decrypt extends RuntimeException implements Exception
 {
 
 }

@@ -11,22 +11,19 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use Override;
 use function sprintf;
 
 /**
  * Store bridge event message consumer
  */
-final class StoreBridgeEvent implements Queue\Consumer
+final readonly class StoreBridgeEvent implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Zigbee2Mqtt\Logger $logger,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private Zigbee2Mqtt\Logger $logger,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
 	)
 	{
 	}

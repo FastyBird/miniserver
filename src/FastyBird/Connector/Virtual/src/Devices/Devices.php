@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
@@ -31,10 +30,8 @@ use function React\Async\async;
 /**
  * Devices service
  */
-class Devices
+final class Devices
 {
-
-	use Nette\SmartObject;
 
 	private const float HANDLER_START_DELAY = 2.0;
 

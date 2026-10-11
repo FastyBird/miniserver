@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\API;
 
-use Nette;
 use function preg_match;
 
 /**
@@ -10,8 +9,6 @@ use function preg_match;
  */
 final class MqttValidator
 {
-
-	use Nette\SmartObject;
 
 	// TOPIC: /zigbee2mqtt/*
 	public const string TOPIC_REGEXP = '/^zigbee2mqtt\/.*$/';

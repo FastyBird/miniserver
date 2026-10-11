@@ -10,14 +10,14 @@ use function array_merge;
 /**
  * UIID3 params entity
  */
-final class Uiid3 implements Uuid
+final readonly class Uiid3 implements Uuid
 {
 
-	use TDevice {
-		TDevice::toStates as toDeviceState;
+	use MapsDeviceStates {
+		MapsDeviceStates::toStates as toDeviceState;
 	}
-	use TSwitches {
-		TSwitches::toStates as toSwitchesState;
+	use MapsMultiSwitchStates {
+		MapsMultiSwitchStates::toStates as toSwitchesState;
 	}
 
 	/**
@@ -31,45 +31,45 @@ final class Uiid3 implements Uuid
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('sledOnline')]
-		private readonly string|null $statusLed,
+		private string|null $statusLed,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('fwVersion')]
-		private readonly string|null $firmwareVersion,
+		private string|null $firmwareVersion,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('chipid')]
-		private readonly string|null $chipId,
+		private string|null $chipId,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $ssid,
+		private string|null $ssid,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $rssi,
+		private int|null $rssi,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: SwitchState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly array $switches,
+		private array $switches,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: SwitchConfiguration::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('configure')]
-		private readonly array $configuration,
+		private array $configuration,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: SwitchPulse::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly array $pulses,
+		private array $pulses,
 	)
 	{
 	}

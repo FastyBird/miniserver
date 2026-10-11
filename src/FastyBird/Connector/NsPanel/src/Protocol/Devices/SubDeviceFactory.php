@@ -20,12 +20,12 @@ use function assert;
 /**
  * NS panel sub-device factory
  */
-class SubDeviceFactory implements DeviceFactory
+final readonly class SubDeviceFactory implements DeviceFactory
 {
 
 	public function __construct(
-		private readonly Mapping\Builder $mappingBuilder,
-		private readonly Helpers\Devices\SubDevice $deviceHelper,
+		private Mapping\Builder $mappingBuilder,
+		private Helpers\Devices\SubDevice $deviceHelper,
 	)
 	{
 	}

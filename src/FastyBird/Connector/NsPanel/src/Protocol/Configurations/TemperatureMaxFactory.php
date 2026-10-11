@@ -16,7 +16,7 @@ use function is_numeric;
 /**
  * NS panel temperature max capability configuration factory
  */
-class TemperatureMaxFactory implements ConfigurationFactory
+final class TemperatureMaxFactory implements ConfigurationFactory
 {
 
 	#[Override]

@@ -15,7 +15,7 @@ use function sprintf;
  * @template T of DevicesEntities\Connectors\Properties\Property
  * @extends  DevicesQueries\Entities\FindConnectorProperties<T>
  */
-class FindConnectorProperties extends DevicesQueries\Entities\FindConnectorProperties
+final class FindConnectorProperties extends DevicesQueries\Entities\FindConnectorProperties
 {
 
 	/**

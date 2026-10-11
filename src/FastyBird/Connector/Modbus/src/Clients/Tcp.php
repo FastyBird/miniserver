@@ -23,7 +23,6 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
-use Nette;
 use Override;
 use Psr\Clock\ClockInterface;
 use Random\RandomException;
@@ -44,11 +43,10 @@ use function React\Async\await;
 /**
  * Modbus TCP devices client interface
  */
-class Tcp implements Client
+final class Tcp implements Client
 {
 
-	use TReading;
-	use Nette\SmartObject;
+	use ReadsRegisters;
 
 	private const float LOST_DELAY = 60.0; // in s - Waiting delay before another communication with device after device was lost
 

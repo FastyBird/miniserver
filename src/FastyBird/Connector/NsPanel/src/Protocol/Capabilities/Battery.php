@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device battery capability
  */
-class Battery extends Capability
+final class Battery extends Capability
 {
 
 	/**

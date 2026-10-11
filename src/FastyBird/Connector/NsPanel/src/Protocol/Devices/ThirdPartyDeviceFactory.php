@@ -21,13 +21,13 @@ use function sprintf;
 /**
  * NS panel third party device factory
  */
-class ThirdPartyDeviceFactory implements DeviceFactory
+final readonly class ThirdPartyDeviceFactory implements DeviceFactory
 {
 
 	public function __construct(
-		private readonly Mapping\Builder $mappingBuilder,
-		private readonly Helpers\Connectors\Connector $connectorHelper,
-		private readonly Helpers\Devices\ThirdPartyDevice $deviceHelper,
+		private Mapping\Builder $mappingBuilder,
+		private Helpers\Connectors\Connector $connectorHelper,
+		private Helpers\Devices\ThirdPartyDevice $deviceHelper,
 	)
 	{
 	}

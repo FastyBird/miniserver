@@ -15,7 +15,7 @@ use function sprintf;
  * @template T of DevicesDocuments\Channels\Properties\Property
  * @extends  DevicesQueries\Configuration\FindChannelProperties<T>
  */
-class FindChannelProperties extends DevicesQueries\Configuration\FindChannelProperties
+final class FindChannelProperties extends DevicesQueries\Configuration\FindChannelProperties
 {
 
 	/**

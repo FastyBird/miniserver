@@ -10,11 +10,11 @@ use function array_merge;
 /**
  * UIID18 params entity
  */
-final class Uiid18 implements Uuid
+final readonly class Uiid18 implements Uuid
 {
 
-	use TDevice {
-		TDevice::toStates as toDeviceState;
+	use MapsDeviceStates {
+		MapsDeviceStates::toStates as toDeviceState;
 	}
 
 	public function __construct(
@@ -23,54 +23,54 @@ final class Uiid18 implements Uuid
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('sledOnline')]
-		private readonly string|null $statusLed,
+		private string|null $statusLed,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('fwVersion')]
-		private readonly string|null $firmwareVersion,
+		private string|null $firmwareVersion,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('chipid')]
-		private readonly string|null $chipId,
+		private string|null $chipId,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $ssid,
+		private string|null $ssid,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $rssi,
+		private int|null $rssi,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 1, max: 10, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $dusty,
+		private int|null $dusty,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 1, max: 10, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $noise,
+		private int|null $noise,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 1, max: 10, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $light,
+		private int|null $light,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly float|null $temperature,
+		private float|null $temperature,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 1, max: 100, unsigned: true, castNumericString: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $humidity,
+		private int|null $humidity,
 	)
 	{
 	}

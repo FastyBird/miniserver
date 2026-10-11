@@ -9,7 +9,7 @@ use Orisai\ObjectMapper;
 /**
  * Categories mapping configuration
  */
-readonly class Categories implements Mapping\Mapping
+final readonly class Categories implements Mapping\Mapping
 {
 
 	/**

@@ -6,7 +6,6 @@ use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
-use Nette;
 use Ramsey\Uuid;
 use SplObjectStorage;
 use TypeError;
@@ -15,10 +14,8 @@ use ValueError;
 /**
  * HAP accessory driver service
  */
-class Driver
+final class Driver
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplObjectStorage<Protocol\Accessories\Accessory, null> */
 	private SplObjectStorage $accessories;
@@ -108,7 +105,7 @@ class Driver
 	 */
 	public function addAccessory(Accessories\Accessory $accessory): void
 	{
-		if ($accessory->getAid() === null) {
+		if ($accessory->aid === null) {
 			$this->accessories->rewind();
 
 			$newAid = 1;
@@ -123,7 +120,7 @@ class Driver
 				}
 
 				foreach ($this->accessories as $existingAccessory) {
-					if ($existingAccessory->getAid() !== null && $existingAccessory->getAid() === $newAid) {
+					if ($existingAccessory->aid !== null && $existingAccessory->aid === $newAid) {
 						$newAid++;
 
 						break;
@@ -133,13 +130,13 @@ class Driver
 				$searching = false;
 			}
 
-			$accessory->setAid($newAid);
+			$accessory->aid = $newAid;
 		}
 
 		$this->accessories->rewind();
 
 		foreach ($this->accessories as $existingAccessory) {
-			if ($existingAccessory->getAid() === $accessory->getAid()) {
+			if ($existingAccessory->aid === $accessory->aid) {
 				throw new HomeKitExceptions\InvalidArgument('Duplicate AID found when attempting to add accessory');
 			}
 		}

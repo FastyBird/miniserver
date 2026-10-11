@@ -4,7 +4,6 @@ namespace FastyBird\Connector\Virtual\Drivers;
 
 use FastyBird\Connector\Virtual\Documents;
 use FastyBird\Connector\Virtual\Exceptions;
-use Nette;
 use Throwable;
 use function array_key_exists;
 use function sprintf;
@@ -14,8 +13,6 @@ use function sprintf;
  */
 final class DriversManager
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<string, Driver> */
 	private array $drivers = [];

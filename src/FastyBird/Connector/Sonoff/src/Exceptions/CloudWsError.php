@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Sonoff\Exceptions;
 
 use RuntimeException;
 
-class CloudWsError extends RuntimeException implements Exception
+final class CloudWsError extends RuntimeException implements Exception
 {
 
 }

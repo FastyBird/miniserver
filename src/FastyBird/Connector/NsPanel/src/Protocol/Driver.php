@@ -4,7 +4,6 @@ namespace FastyBird\Connector\NsPanel\Protocol;
 
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
-use Nette;
 use Ramsey\Uuid;
 use SplObjectStorage;
 use function is_string;
@@ -12,10 +11,8 @@ use function is_string;
 /**
  * NS panel device driver service
  */
-class Driver
+final class Driver
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplObjectStorage<Protocol\Devices\Device, null> */
 	private SplObjectStorage $devices;

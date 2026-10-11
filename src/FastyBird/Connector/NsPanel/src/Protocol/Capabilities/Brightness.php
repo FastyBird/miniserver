@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device brightness capability
  */
-class Brightness extends Capability
+final class Brightness extends Capability
 {
 
 	/**

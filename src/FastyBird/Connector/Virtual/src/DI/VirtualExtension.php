@@ -32,7 +32,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Virtual connector
  */
-class VirtualExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class VirtualExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbVirtualConnector';

@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette;
 use Nette\Utils;
 use Override;
 use Throwable;
@@ -29,20 +28,19 @@ use function sprintf;
 /**
  * Device property MQTT message consumer
  */
-final class DeviceProperty implements Queue\Consumer
+final readonly class DeviceProperty implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
-	use TProperty;
+	use HandlesPropertyConfiguration;
 
 	public function __construct(
-		private readonly FbMqtt\Logger $logger,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly Helpers\Database $databaseHelper,
+		private FbMqtt\Logger $logger,
+		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
+		private Helpers\Database $databaseHelper,
 	)
 	{
 	}

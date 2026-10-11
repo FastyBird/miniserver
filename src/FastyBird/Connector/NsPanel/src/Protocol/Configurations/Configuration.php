@@ -6,7 +6,6 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
-use Nette;
 use Ramsey\Uuid;
 use function array_pop;
 use function explode;
@@ -22,8 +21,6 @@ use function is_array;
  */
 class Configuration
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param float|int|bool|string|array<int, string>|null $value

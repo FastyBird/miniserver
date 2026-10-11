@@ -41,8 +41,6 @@ use const OPENSSL_RAW_DATA;
 final class OpenPulsar
 {
 
-	use Nette\SmartObject;
-
 	private const int PING_INTERVAL = 30;
 
 	public const string WS_MESSAGE_SCHEMA_FILENAME = 'openpulsar_message.json';

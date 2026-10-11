@@ -32,7 +32,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Shelly connector
  */
-class ShellyExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class ShellyExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbShellyConnector';

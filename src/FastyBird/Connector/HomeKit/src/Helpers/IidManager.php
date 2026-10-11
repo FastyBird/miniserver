@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\HomeKit\Helpers;
 
 use FastyBird\Connector\HomeKit\Protocol;
-use Nette;
 use SplObjectStorage;
 
 /**
@@ -11,8 +10,6 @@ use SplObjectStorage;
  */
 final class IidManager
 {
-
-	use Nette\SmartObject;
 
 	private int $counter;
 

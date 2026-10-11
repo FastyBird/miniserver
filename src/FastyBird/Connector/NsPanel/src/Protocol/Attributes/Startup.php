@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Startup attribute
  */
-class Startup extends Attribute
+final class Startup extends Attribute
 {
 
 	public function __construct(

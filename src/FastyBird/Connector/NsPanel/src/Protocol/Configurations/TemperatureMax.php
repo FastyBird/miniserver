@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Thermostat maximal temperature configuration
  */
-class TemperatureMax extends Configuration
+final class TemperatureMax extends Configuration
 {
 
 	public function __construct(

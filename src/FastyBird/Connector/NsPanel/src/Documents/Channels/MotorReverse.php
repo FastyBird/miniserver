@@ -8,7 +8,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\MotorReverse::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\MotorReverse::TYPE)]
-class MotorReverse extends Channel
+final class MotorReverse extends Channel
 {
 
 	public static function getType(): string

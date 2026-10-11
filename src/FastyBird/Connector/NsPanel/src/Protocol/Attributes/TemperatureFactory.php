@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel temperature attribute factory
  */
-class TemperatureFactory implements AttributeFactory
+final class TemperatureFactory implements AttributeFactory
 {
 
 	#[Override]

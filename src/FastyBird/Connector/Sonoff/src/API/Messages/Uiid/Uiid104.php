@@ -10,11 +10,11 @@ use function array_merge;
 /**
  * UIID104 params entity
  */
-final class Uiid104 implements Uuid
+final readonly class Uiid104 implements Uuid
 {
 
-	use TDevice {
-		TDevice::toStates as toDeviceState;
+	use MapsDeviceStates {
+		MapsDeviceStates::toStates as toDeviceState;
 	}
 
 	public function __construct(
@@ -23,90 +23,90 @@ final class Uiid104 implements Uuid
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('sledOnline')]
-		private readonly string|null $statusLed,
+		private string|null $statusLed,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('fwVersion')]
-		private readonly string|null $firmwareVersion,
+		private string|null $firmwareVersion,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('chipid')]
-		private readonly string|null $chipId,
+		private string|null $chipId,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $ssid,
+		private string|null $ssid,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $rssi,
+		private int|null $rssi,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('pVer')]
-		private readonly string|null $protocolVersion,
+		private string|null $protocolVersion,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightWhiteState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightWhiteState $white,
+		private LightWhiteState $white,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightColorState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightColorState $color,
+		private LightColorState $color,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightModeState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightModeState $bright,
+		private LightModeState $bright,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightModeState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightModeState $goodNight,
+		private LightModeState $goodNight,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightModeState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightModeState $read,
+		private LightModeState $read,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightModeState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightModeState $nightLight,
+		private LightModeState $nightLight,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightModeState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightModeState $party,
+		private LightModeState $party,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightModeState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightModeState $leisure,
+		private LightModeState $leisure,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightModeState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightModeState $soft,
+		private LightModeState $soft,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: LightModeState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly LightModeState $colorful,
+		private LightModeState $colorful,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $switch,
+		private string|null $switch,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue(
 				['white', 'color', 'bright', 'goodNight', 'read', 'nightLight', 'party', 'leisure', 'soft', 'colorful'],
@@ -114,7 +114,7 @@ final class Uiid104 implements Uuid
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('ltype')]
-		private readonly string|null $type,
+		private string|null $type,
 	)
 	{
 	}

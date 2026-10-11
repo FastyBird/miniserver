@@ -7,7 +7,6 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
-use Nette;
 use Ramsey\Uuid;
 use function implode;
 use function in_array;
@@ -27,15 +26,13 @@ use function strlen;
 class Attribute
 {
 
-	use Nette\SmartObject;
-
 	protected bool|float|int|string|null $actualValue = null;
 
 	protected bool|float|int|string|null $expectedValue = null;
 
 	protected DateTimeInterface|bool $pending = false;
 
-	protected bool $valid = true;
+	public bool $valid = true;
 
 	/**
 	 * @param array<int, int|string>|null $validValues
@@ -173,16 +170,6 @@ class Attribute
 	public function isPending(): bool
 	{
 		return $this->pending instanceof DateTimeInterface || $this->pending === true;
-	}
-
-	public function setValid(bool $state): void
-	{
-		$this->valid = $state;
-	}
-
-	public function isValid(): bool
-	{
-		return $this->valid;
 	}
 
 	public function getCapability(): Protocol\Capabilities\Capability

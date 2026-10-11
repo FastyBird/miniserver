@@ -13,7 +13,7 @@ use function is_string;
 /**
  * NS panel stream url capability configuration factory
  */
-class StreamUrlFactory implements ConfigurationFactory
+final class StreamUrlFactory implements ConfigurationFactory
 {
 
 	#[Override]

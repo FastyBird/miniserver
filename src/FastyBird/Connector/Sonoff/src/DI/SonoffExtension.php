@@ -32,7 +32,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Sonoff connector
  */
-class SonoffExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class SonoffExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbSonoffConnector';

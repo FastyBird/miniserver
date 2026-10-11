@@ -10,7 +10,7 @@ use FastyBird\Connector\HomeKit\Entities;
  * @template  T of Entities\Channels\LightBulb
  * @extends   Channel<T>
  */
-class LightBulb extends Channel
+final class LightBulb extends Channel
 {
 
 	/**

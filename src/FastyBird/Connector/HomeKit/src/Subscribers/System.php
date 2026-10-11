@@ -14,7 +14,6 @@ use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
@@ -31,8 +30,6 @@ use function intval;
  */
 final class System implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<string>  */
 	private array $doUpdate = [];

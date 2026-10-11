@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette;
 use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
@@ -32,24 +31,22 @@ use function React\Async\await;
 /**
  * Write state to device message consumer
  */
-final class WriteChannelPropertyState implements Queue\Consumer
+final readonly class WriteChannelPropertyState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	private const float WRITE_PENDING_DELAY = 2_000.0;
 
 	public function __construct(
-		private readonly Queue\Queue $queue,
-		private readonly Drivers\DriversManager $driversManager,
-		private readonly Virtual\Helpers\MessageBuilder $messageBuilder,
-		private readonly Virtual\Logger $logger,
-		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly ClockInterface $clock,
+		private Queue\Queue $queue,
+		private Drivers\DriversManager $driversManager,
+		private Virtual\Helpers\MessageBuilder $messageBuilder,
+		private Virtual\Logger $logger,
+		private DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private ClockInterface $clock,
 	)
 	{
 	}

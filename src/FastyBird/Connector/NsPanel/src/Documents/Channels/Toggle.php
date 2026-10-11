@@ -12,7 +12,7 @@ use function preg_match;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Toggle::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Toggle::TYPE)]
-class Toggle extends Channel
+final class Toggle extends Channel
 {
 
 	public static function getType(): string

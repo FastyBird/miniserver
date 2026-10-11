@@ -37,8 +37,6 @@ use const DIRECTORY_SEPARATOR;
 final class LanApi
 {
 
-	use Nette\SmartObject;
-
 	public const int GATEWAY_PORT = 8_081;
 
 	private const string GET_GATEWAY_INFO_MESSAGE_SCHEMA_FILENAME = 'get_gateway_info.json';

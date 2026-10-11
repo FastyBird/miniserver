@@ -33,8 +33,6 @@ use function React\Async\async;
 final class Connector implements DevicesConnectors\Connector
 {
 
-	use Nette\SmartObject;
-
 	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 
 	private const int DRIVER_RELOAD_INTERVAL = 60;

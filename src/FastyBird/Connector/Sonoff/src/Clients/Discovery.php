@@ -46,8 +46,6 @@ use const DIRECTORY_SEPARATOR;
 final class Discovery
 {
 
-	use Nette\SmartObject;
-
 	private const int LAN_SEARCH_TIMEOUT = 60;
 
 	private EventLoop\TimerInterface|null $handlerTimer = null;

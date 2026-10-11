@@ -4,7 +4,7 @@ namespace FastyBird\Connector\NsPanel\Exceptions;
 
 use RuntimeException;
 
-class LanApiError extends RuntimeException implements Exception
+final class LanApiError extends RuntimeException implements Exception
 {
 
 }

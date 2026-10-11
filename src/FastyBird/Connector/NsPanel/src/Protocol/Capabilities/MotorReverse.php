@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device motor reverse capability
  */
-class MotorReverse extends Capability
+final class MotorReverse extends Capability
 {
 
 	/**

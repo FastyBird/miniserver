@@ -49,8 +49,6 @@ use const DIRECTORY_SEPARATOR;
 final class CloudWs
 {
 
-	use Nette\SmartObject;
-
 	private const string SOCKETS_LOGIN_API_ENDPOINT = '/dispatch/app';
 
 	private const string LOGIN_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_login.json';

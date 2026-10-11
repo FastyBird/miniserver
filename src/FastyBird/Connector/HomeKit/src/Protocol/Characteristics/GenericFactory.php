@@ -12,7 +12,7 @@ use Ramsey\Uuid;
 /**
  * HAP generic characteristic factory
  */
-class GenericFactory implements CharacteristicFactory
+final class GenericFactory implements CharacteristicFactory
 {
 
 	/**

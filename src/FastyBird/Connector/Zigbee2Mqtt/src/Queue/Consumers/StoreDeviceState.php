@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Nette\Utils;
 use Override;
 use TypeError;
@@ -32,20 +31,18 @@ use function sprintf;
 /**
  * Store device state message consumer
  */
-final class StoreDeviceState implements Queue\Consumer
+final readonly class StoreDeviceState implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Zigbee2MqttModels\StateRepository $stateRepository,
-		private readonly Zigbee2Mqtt\Logger $logger,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
+		private Zigbee2MqttModels\StateRepository $stateRepository,
+		private Zigbee2Mqtt\Logger $logger,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private DevicesUtilities\DeviceConnection $deviceConnectionManager,
 	)
 	{
 	}

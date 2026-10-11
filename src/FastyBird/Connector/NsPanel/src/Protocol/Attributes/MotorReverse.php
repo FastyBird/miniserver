@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Motor reverse attribute
  */
-class MotorReverse extends Attribute
+final class MotorReverse extends Attribute
 {
 
 	public function __construct(

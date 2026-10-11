@@ -16,7 +16,7 @@ use function is_numeric;
 /**
  * NS panel temperature increment capability configuration factory
  */
-class TemperatureIncrementFactory implements ConfigurationFactory
+final class TemperatureIncrementFactory implements ConfigurationFactory
 {
 
 	#[Override]

@@ -9,7 +9,7 @@ use Override;
 /**
  * Switch pulse configuration entity
  */
-final class SwitchPulse implements API\Messages\Message
+final readonly class SwitchPulse implements API\Messages\Message
 {
 
 	private const string VALUE_ON = 'on';
@@ -18,13 +18,13 @@ final class SwitchPulse implements API\Messages\Message
 
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_ON, self::VALUE_OFF])]
-		private readonly string $pulse,
+		private string $pulse,
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_ON, self::VALUE_OFF])]
-		private readonly string $switch,
+		private string $switch,
 		#[ObjectMapper\Rules\IntValue(min: 500, max: 3_599_500, unsigned: true)]
-		private readonly int $width,
+		private int $width,
 		#[ObjectMapper\Rules\IntValue(min: 0, max: 10, unsigned: true)]
-		private readonly int $outlet,
+		private int $outlet,
 	)
 	{
 	}

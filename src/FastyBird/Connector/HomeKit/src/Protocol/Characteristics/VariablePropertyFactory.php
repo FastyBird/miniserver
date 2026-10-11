@@ -14,7 +14,7 @@ use function assert;
 /**
  * HAP channel variable property characteristic factory
  */
-class VariablePropertyFactory implements CharacteristicFactory
+final class VariablePropertyFactory implements CharacteristicFactory
 {
 
 	/**

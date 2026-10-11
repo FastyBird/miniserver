@@ -4,20 +4,17 @@ namespace FastyBird\Connector\Modbus\API\Messages\Response;
 
 use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Types;
-use Nette;
 use Override;
 
 /**
  * Write single coil register response
  */
-final class WriteMultiple implements API\Messages\Message
+final readonly class WriteMultiple implements API\Messages\Message
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly int $station,
-		private readonly Types\ModbusFunction $function,
+		private int $station,
+		private Types\ModbusFunction $function,
 	)
 	{
 	}

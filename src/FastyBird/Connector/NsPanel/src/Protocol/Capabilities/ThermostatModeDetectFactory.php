@@ -16,7 +16,7 @@ use function preg_match;
 /**
  * NS panel thermostat mode detect capability factory
  */
-class ThermostatModeDetectFactory implements CapabilityFactory
+final class ThermostatModeDetectFactory implements CapabilityFactory
 {
 
 	#[Override]

@@ -11,7 +11,7 @@ use function assert;
 /**
  * HAP generic characteristic
  */
-class Generic extends Characteristic
+final class Generic extends Characteristic
 {
 
 	public function __construct(

@@ -21,7 +21,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Nette\Utils;
 use Override;
 use ReflectionException;
@@ -34,23 +33,21 @@ use function is_array;
 /**
  * Device attributes MQTT message consumer
  */
-final class DeviceAttribute implements Queue\Consumer
+final readonly class DeviceAttribute implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly FbMqtt\Logger $logger,
-		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicePropertiesRepository,
-		private readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicePropertiesManager,
-		private readonly DevicesModels\Entities\Devices\Controls\ControlsRepository $deviceControlsRepository,
-		private readonly DevicesModels\Entities\Devices\Controls\ControlsManager $deviceControlsManager,
-		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
-		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		private readonly Helpers\Database $databaseHelper,
+		private FbMqtt\Logger $logger,
+		private DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicePropertiesRepository,
+		private DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		private DevicesModels\Entities\Devices\DevicesManager $devicesManager,
+		private DevicesModels\Entities\Devices\Properties\PropertiesManager $devicePropertiesManager,
+		private DevicesModels\Entities\Devices\Controls\ControlsRepository $deviceControlsRepository,
+		private DevicesModels\Entities\Devices\Controls\ControlsManager $deviceControlsManager,
+		private DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
+		private DevicesUtilities\DeviceConnection $deviceConnectionManager,
+		private Helpers\Database $databaseHelper,
 	)
 	{
 	}

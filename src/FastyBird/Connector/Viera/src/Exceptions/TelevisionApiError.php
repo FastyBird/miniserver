@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Viera\Exceptions;
 
 use RuntimeException;
 
-class TelevisionApiError extends RuntimeException implements Exception
+final class TelevisionApiError extends RuntimeException implements Exception
 {
 
 }

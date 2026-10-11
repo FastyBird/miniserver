@@ -4,20 +4,17 @@ namespace FastyBird\Connector\Modbus\API\Messages\Response;
 
 use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Types;
-use Nette;
 use Override;
 
 /**
  * Write single holding register response
  */
-final class WriteHoldingRegister implements API\Messages\Message
+final readonly class WriteHoldingRegister implements API\Messages\Message
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly int $station,
-		private readonly Types\ModbusFunction $function,
+		private int $station,
+		private Types\ModbusFunction $function,
 	)
 	{
 	}

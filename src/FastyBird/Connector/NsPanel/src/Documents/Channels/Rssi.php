@@ -8,7 +8,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Rssi::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Rssi::TYPE)]
-class Rssi extends Channel
+final class Rssi extends Channel
 {
 
 	public static function getType(): string

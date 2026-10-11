@@ -7,7 +7,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Battery::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Battery::TYPE)]
-class Battery extends Channel
+final class Battery extends Channel
 {
 
 	public static function getType(): string

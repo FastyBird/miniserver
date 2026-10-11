@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device thermostat mode detect capability
  */
-class ThermostatModeDetect extends Capability
+final class ThermostatModeDetect extends Capability
 {
 
 	/**

@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Nette\Utils;
 use Override;
 use TypeError;
@@ -31,25 +30,24 @@ use function preg_match;
 /**
  * Store bridge devices message consumer
  */
-final class StoreBridgeDevices implements Queue\Consumer
+final readonly class StoreBridgeDevices implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
 	use DeviceProperty;
 	use ChannelProperty;
 
 	public function __construct(
-		protected readonly Zigbee2Mqtt\Logger $logger,
-		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		protected readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		protected readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		protected readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		protected readonly Helpers\Database $databaseHelper,
-		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
-		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
-		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
+		protected Zigbee2Mqtt\Logger $logger,
+		protected DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		protected DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		protected DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		protected DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
+		protected Helpers\Database $databaseHelper,
+		private DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
+		private DevicesModels\Entities\Devices\DevicesManager $devicesManager,
+		private DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 	)
 	{
 	}

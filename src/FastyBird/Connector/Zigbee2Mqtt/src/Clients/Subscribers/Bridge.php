@@ -23,7 +23,7 @@ use function strval;
 /**
  * Zigbee2MQTT MQTT bridge messages subscriber
  */
-readonly class Bridge
+final readonly class Bridge
 {
 
 	public function __construct(

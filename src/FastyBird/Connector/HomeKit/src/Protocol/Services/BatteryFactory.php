@@ -12,7 +12,7 @@ use Ramsey\Uuid;
 /**
  * HAP battery service factory
  */
-class BatteryFactory implements ServiceFactory
+final class BatteryFactory implements ServiceFactory
 {
 
 	/**

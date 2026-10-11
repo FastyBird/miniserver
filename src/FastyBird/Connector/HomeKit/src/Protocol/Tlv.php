@@ -4,7 +4,6 @@ namespace FastyBird\Connector\HomeKit\Protocol;
 
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Types;
-use Nette;
 use TypeError;
 use ValueError;
 use function array_map;
@@ -33,8 +32,6 @@ use function unpack;
  */
 final class Tlv
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param array<int, array<int, (int|array<int>|string)>> $objects

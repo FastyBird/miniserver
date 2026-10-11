@@ -18,7 +18,7 @@ use function trim;
 /**
  * Thermostat supported modes configuration
  */
-class SupportedDetectionModes extends Configuration
+final class SupportedDetectionModes extends Configuration
 {
 
 	public function __construct(

@@ -46,7 +46,7 @@ use function usort;
 /**
  * Connector devices discovery command
  */
-class Discover extends Console\Command\Command
+final class Discover extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:viera-connector:discover';

@@ -14,7 +14,6 @@ use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use TypeError;
 use ValueError;
 use function assert;
@@ -25,13 +24,11 @@ use function is_string;
 /**
  * Useful channel helpers
  */
-final class Channel
+final readonly class Channel
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 	)
 	{
 	}

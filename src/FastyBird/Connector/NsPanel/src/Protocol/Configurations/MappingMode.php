@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * Thermostat mapping mode configuration
  */
-class MappingMode extends Configuration
+final class MappingMode extends Configuration
 {
 
 	/**

@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device percentage capability
  */
-class Percentage extends Capability
+final class Percentage extends Capability
 {
 
 	/**

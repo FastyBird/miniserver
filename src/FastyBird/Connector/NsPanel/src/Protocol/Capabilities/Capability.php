@@ -5,7 +5,6 @@ namespace FastyBird\Connector\NsPanel\Protocol\Capabilities;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types;
-use Nette;
 use Ramsey\Uuid;
 use SplObjectStorage;
 use function array_filter;
@@ -24,8 +23,6 @@ use function sprintf;
  */
 class Capability
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplObjectStorage<Protocol\Attributes\Attribute, null> */
 	private SplObjectStorage $attributes;

@@ -32,7 +32,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Zigbee2MQTT connector
  */
-class Zigbee2MqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class Zigbee2MqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbZigbee2MqttConnector';

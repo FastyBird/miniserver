@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Motor control attribute
  */
-class MotorControl extends Attribute
+final class MotorControl extends Attribute
 {
 
 	public function __construct(

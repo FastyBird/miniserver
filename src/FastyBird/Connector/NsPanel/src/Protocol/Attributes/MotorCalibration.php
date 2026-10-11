@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Motor calibration attribute
  */
-class MotorCalibration extends Attribute
+final class MotorCalibration extends Attribute
 {
 
 	public function __construct(

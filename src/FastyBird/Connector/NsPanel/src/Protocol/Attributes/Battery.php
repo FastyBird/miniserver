@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Battery attribute
  */
-class Battery extends Attribute
+final class Battery extends Attribute
 {
 
 	public function __construct(

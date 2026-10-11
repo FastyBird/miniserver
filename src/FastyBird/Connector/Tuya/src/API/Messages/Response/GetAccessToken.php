@@ -9,7 +9,7 @@ use Override;
 /**
  * OpenAPI get access token message
  */
-readonly class GetAccessToken implements API\Messages\Message
+final readonly class GetAccessToken implements API\Messages\Message
 {
 
 	public function __construct(

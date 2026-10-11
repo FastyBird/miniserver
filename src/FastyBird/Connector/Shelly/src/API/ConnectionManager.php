@@ -8,7 +8,6 @@ use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
-use Nette;
 use TypeError;
 use ValueError;
 use function array_key_exists;
@@ -18,8 +17,6 @@ use function array_key_exists;
  */
 final class ConnectionManager
 {
-
-	use Nette\SmartObject;
 
 	private Gen1HttpApi|null $gen1ApiConnection = null;
 

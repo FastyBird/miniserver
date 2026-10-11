@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\API;
 
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
-use Nette;
 use Ramsey\Uuid;
 use function array_key_exists;
 use function assert;
@@ -15,8 +14,6 @@ use function strtolower;
  */
 final class MqttParser
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @return array<string, mixed>

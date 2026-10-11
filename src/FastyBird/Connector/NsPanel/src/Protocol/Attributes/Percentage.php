@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Percentage attribute
  */
-class Percentage extends Attribute
+final class Percentage extends Attribute
 {
 
 	public function __construct(

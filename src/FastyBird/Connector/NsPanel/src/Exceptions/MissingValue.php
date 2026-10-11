@@ -4,7 +4,7 @@ namespace FastyBird\Connector\NsPanel\Exceptions;
 
 use LogicException as PHPLogicException;
 
-class MissingValue extends PHPLogicException implements Exception
+final class MissingValue extends PHPLogicException implements Exception
 {
 
 }

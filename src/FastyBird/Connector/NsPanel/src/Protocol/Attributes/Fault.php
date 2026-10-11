@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Fault attribute
  */
-class Fault extends Attribute
+final class Fault extends Attribute
 {
 
 	public function __construct(

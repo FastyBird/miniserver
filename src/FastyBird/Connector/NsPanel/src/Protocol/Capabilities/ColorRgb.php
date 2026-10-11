@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device color RGB capability
  */
-class ColorRgb extends Capability
+final class ColorRgb extends Capability
 {
 
 	/**

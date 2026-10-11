@@ -30,8 +30,6 @@ use function sprintf;
 class Service
 {
 
-	use Nette\SmartObject;
-
 	public const string HAP_PROTOCOL_INFORMATION_SERVICE_UUID = '000000A2-0000-1000-8000-0026BB765291';
 
 	private const string VIRTUAL_SERVICE_UID = '00000000-0000-0000-0000-000000000000';
@@ -52,8 +50,8 @@ class Service
 		private readonly array $requiredCharacteristics = [],
 		private readonly array $optionalCharacteristics = [],
 		private readonly array $virtualCharacteristics = [],
-		private bool $primary = false,
-		private bool $hidden = false,
+		public private(set) bool $primary = false,
+		public private(set) bool $hidden = false,
 	)
 	{
 		$this->characteristics = new SplObjectStorage();
@@ -158,26 +156,6 @@ class Service
 		return null;
 	}
 
-	public function isPrimary(): bool
-	{
-		return $this->primary;
-	}
-
-	public function setPrimary(bool $primary): void
-	{
-		$this->primary = $primary;
-	}
-
-	public function isHidden(): bool
-	{
-		return $this->hidden;
-	}
-
-	public function setHidden(bool $hidden): void
-	{
-		$this->hidden = $hidden;
-	}
-
 	public function isVirtual(): bool
 	{
 		return $this->typeId->toString() === self::VIRTUAL_SERVICE_UID;
@@ -232,7 +210,7 @@ class Service
 		$this->characteristics->rewind();
 
 		foreach ($this->characteristics as $characteristic) {
-			$characteristics[$characteristic->getName()] = $characteristic->isValid()
+			$characteristics[$characteristic->getName()] = $characteristic->valid
 				? $characteristic->getValue()
 				: $characteristic->getDefault();
 		}

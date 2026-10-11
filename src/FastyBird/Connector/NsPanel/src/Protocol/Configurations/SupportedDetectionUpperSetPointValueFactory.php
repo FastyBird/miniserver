@@ -14,7 +14,7 @@ use function is_int;
 /**
  * NS panel supported detection upper set point value capability configuration factory
  */
-class SupportedDetectionUpperSetPointValueFactory implements ConfigurationFactory
+final class SupportedDetectionUpperSetPointValueFactory implements ConfigurationFactory
 {
 
 	#[Override]

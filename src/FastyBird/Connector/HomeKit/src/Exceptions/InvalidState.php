@@ -4,7 +4,7 @@ namespace FastyBird\Connector\HomeKit\Exceptions;
 
 use RuntimeException;
 
-class InvalidState extends RuntimeException implements Exception
+final class InvalidState extends RuntimeException implements Exception
 {
 
 }

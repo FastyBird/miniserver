@@ -5,7 +5,6 @@ namespace FastyBird\Connector\Shelly\Clients;
 use FastyBird\Connector\Shelly\Documents;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
-use Nette;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use function sprintf;
@@ -13,14 +12,12 @@ use function sprintf;
 /**
  * MQTT client
  */
-final class Mqtt implements Client
+final readonly class Mqtt implements Client
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
-		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
+		private Documents\Connectors\Connector $connector,
+		private PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
 	}

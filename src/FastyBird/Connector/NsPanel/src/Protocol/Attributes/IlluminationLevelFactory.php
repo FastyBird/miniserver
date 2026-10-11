@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel illumination level attribute factory
  */
-class IlluminationLevelFactory implements AttributeFactory
+final class IlluminationLevelFactory implements AttributeFactory
 {
 
 	#[Override]

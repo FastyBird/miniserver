@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -48,8 +47,6 @@ use function strval;
  */
 final class Discovery
 {
-
-	use Nette\SmartObject;
 
 	private const string MDNS_ADDRESS = '224.0.0.251';
 

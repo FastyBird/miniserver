@@ -10,7 +10,7 @@ use FastyBird\Connector\HomeKit\Entities;
  * @template  T of Entities\Channels\Generic
  * @extends   Channel<T>
  */
-class Generic extends Channel
+final class Generic extends Channel
 {
 
 	/**

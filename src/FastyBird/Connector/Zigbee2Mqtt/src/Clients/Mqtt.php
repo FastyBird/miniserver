@@ -20,8 +20,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use InvalidArgumentException;
-use Nette;
-use Override;
 use React\Promise;
 use Throwable;
 use TypeError;
@@ -32,10 +30,8 @@ use function sprintf;
 /**
  * Zigbee2MQTT MQTT client
  */
-final class Mqtt implements Client
+final class Mqtt
 {
-
-	use Nette\SmartObject;
 
 	private Clients\Subscribers\Bridge $bridgeSubscriber;
 
@@ -76,7 +72,6 @@ final class Mqtt implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	#[Override]
 	public function connect(): Promise\PromiseInterface
 	{
 		$client = $this->getClient();
@@ -168,7 +163,6 @@ final class Mqtt implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	#[Override]
 	public function disconnect(): Promise\PromiseInterface
 	{
 		$client = $this->getClient();

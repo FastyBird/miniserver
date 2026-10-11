@@ -37,8 +37,6 @@ use const DIRECTORY_SEPARATOR;
 final class Gen1Coap
 {
 
-	use Nette\SmartObject;
-
 	private const int STATE_MESSAGE_CODE = 30;
 
 	private const string STATE_MESSAGE_SCHEMA_FILENAME = 'gen1_coap_state.json';

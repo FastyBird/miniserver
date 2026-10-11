@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Sonoff\Helpers;
 
 use FastyBird\Connector\Sonoff\Types;
-use Nette;
 use function base64_decode;
 use function base64_encode;
 use function md5;
@@ -17,8 +16,6 @@ use const OPENSSL_RAW_DATA;
  */
 final class Transformer
 {
-
-	use Nette\SmartObject;
 
 	public static function decryptMessage(string $message, string $key, string $iv = ''): string|false
 	{

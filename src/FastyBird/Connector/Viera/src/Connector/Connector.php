@@ -14,11 +14,12 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
-use Nette;
 use Override;
 use React\EventLoop;
 use React\Promise;
 use RuntimeException;
+use TypeError;
+use ValueError;
 use function assert;
 use function React\Async\async;
 
@@ -28,11 +29,9 @@ use function React\Async\async;
 final class Connector implements DevicesConnectors\Connector
 {
 
-	use Nette\SmartObject;
-
 	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 
-	private Clients\Client|Clients\Discovery|null $client = null;
+	private Clients\Television|Clients\Discovery|null $client = null;
 
 	private Writers\Writer|null $writer = null;
 
@@ -63,9 +62,13 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
+	 * @throws VieraExceptions\InvalidArgument
 	 * @throws VieraExceptions\Runtime
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\Logic
+	 * @throws TypeError
+	 * @throws ValueError
 	 */
 	#[Override]
 	public function execute(bool $standalone = true): Promise\PromiseInterface

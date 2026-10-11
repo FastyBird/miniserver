@@ -11,7 +11,7 @@ use function array_key_exists;
 /**
  * Property states cache repository
  */
-class StateRepository
+final class StateRepository
 {
 
 	/** @var array<string, bool|float|int|string|DateTimeInterface|Payloads\Payload|null> */

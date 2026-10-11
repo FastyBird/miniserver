@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Tuya\Exceptions;
 
 use LogicException;
 
-class LocalApiBusy extends LogicException implements Exception
+final class LocalApiBusy extends LogicException implements Exception
 {
 
 }

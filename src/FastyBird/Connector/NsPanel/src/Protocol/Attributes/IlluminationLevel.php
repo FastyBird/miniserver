@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Illumination level attribute
  */
-class IlluminationLevel extends Attribute
+final class IlluminationLevel extends Attribute
 {
 
 	public function __construct(

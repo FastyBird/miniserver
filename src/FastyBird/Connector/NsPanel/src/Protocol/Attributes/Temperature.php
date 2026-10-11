@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Temperature attribute
  */
-class Temperature extends Attribute
+final class Temperature extends Attribute
 {
 
 	public function __construct(

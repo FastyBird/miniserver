@@ -16,7 +16,7 @@ use function is_numeric;
 /**
  * NS panel range max value capability configuration factory
  */
-class RangeMaxFactory implements ConfigurationFactory
+final class RangeMaxFactory implements ConfigurationFactory
 {
 
 	#[Override]

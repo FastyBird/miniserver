@@ -5,7 +5,6 @@ namespace FastyBird\Connector\FbMqtt\API;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Connector\FbMqtt\Types;
-use Nette;
 use Ramsey\Uuid;
 use function array_merge;
 use function assert;
@@ -18,8 +17,6 @@ use function strtolower;
  */
 final class V1Parser
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @return array<string, mixed>

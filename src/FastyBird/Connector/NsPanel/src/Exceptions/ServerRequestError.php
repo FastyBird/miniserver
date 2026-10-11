@@ -7,7 +7,7 @@ use FastyBird\Core\Http\Exceptions;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
-class ServerRequestError extends Exceptions\Http implements Exception
+final class ServerRequestError extends Exceptions\Http implements Exception
 {
 
 	public function __construct(

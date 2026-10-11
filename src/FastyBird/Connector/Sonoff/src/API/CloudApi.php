@@ -46,8 +46,6 @@ use const DIRECTORY_SEPARATOR;
 final class CloudApi
 {
 
-	use Nette\SmartObject;
-
 	private const string USER_LOGIN_API_ENDPOINT = '/v2/user/login';
 
 	private const string USER_REFRESH_API_ENDPOINT = '/v2/user/refresh';

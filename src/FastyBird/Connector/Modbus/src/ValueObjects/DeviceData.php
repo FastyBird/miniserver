@@ -3,15 +3,12 @@
 namespace FastyBird\Connector\Modbus\ValueObjects;
 
 use FastyBird\Core\Values\Types;
-use Nette;
 
 /**
  * Data to be sent to device
  */
-class DeviceData
+final class DeviceData
 {
-
-	use Nette\SmartObject;
 
 	private Types\DataType $dataType;
 

@@ -11,7 +11,6 @@ use FastyBird\Connector\HomeKit\Queries;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Query;
-use Nette;
 use function is_array;
 
 /**
@@ -19,8 +18,6 @@ use function is_array;
  */
 final class ClientsRepository
 {
-
-	use Nette\SmartObject;
 
 	/** @var ORM\EntityRepository<Client>|null */
 	private ORM\EntityRepository|null $repository = null;

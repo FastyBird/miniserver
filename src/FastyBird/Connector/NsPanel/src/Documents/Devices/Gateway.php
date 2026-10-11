@@ -7,7 +7,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Devices\Gateway::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Devices\Gateway::TYPE)]
-class Gateway extends Device
+final class Gateway extends Device
 {
 
 	public static function getType(): string

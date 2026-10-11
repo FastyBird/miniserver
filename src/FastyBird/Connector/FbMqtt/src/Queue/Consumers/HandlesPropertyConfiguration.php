@@ -15,7 +15,7 @@ use function strval;
 /**
  * Property message consumer
  */
-trait TProperty
+trait HandlesPropertyConfiguration
 {
 
 	/**

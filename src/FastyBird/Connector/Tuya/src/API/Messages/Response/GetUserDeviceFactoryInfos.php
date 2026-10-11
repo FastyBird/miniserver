@@ -10,7 +10,7 @@ use function array_map;
 /**
  * OpenAPI get user device factory information message
  */
-readonly class GetUserDeviceFactoryInfos implements API\Messages\Message
+final readonly class GetUserDeviceFactoryInfos implements API\Messages\Message
 {
 
 	/**

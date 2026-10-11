@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\Tuya\Services;
 
-use Nette;
 use React\Datagram;
 use React\EventLoop;
 use React\Promise;
@@ -10,14 +9,10 @@ use React\Promise;
 /**
  * React datagram server factory
  */
-final class DatagramFactory
+final readonly class DatagramFactory
 {
 
-	use Nette\SmartObject;
-
-	public function __construct(
-		private readonly EventLoop\LoopInterface $eventLoop,
-	)
+	public function __construct(private EventLoop\LoopInterface $eventLoop)
 	{
 	}
 

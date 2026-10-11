@@ -10,7 +10,6 @@ use FastyBird\Connector\Zigbee2Mqtt\Exceptions as Zigbee2MqttExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
 use React\EventLoop;
 use React\Promise;
@@ -43,8 +42,6 @@ use function sprintf;
  */
 final class Client
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<Closure(Mqtt\Connection $connection): void> */
 	public array $onConnect = [];

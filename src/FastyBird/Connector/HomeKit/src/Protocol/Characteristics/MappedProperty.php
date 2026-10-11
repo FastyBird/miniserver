@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * HAP channel mapped property characteristic
  */
-class MappedProperty extends Characteristic
+final class MappedProperty extends Characteristic
 {
 
 	public function __construct(

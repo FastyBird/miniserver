@@ -9,7 +9,7 @@ use function shuffle;
 /**
  * Drivers helper
  */
-class Drivers
+final class Drivers
 {
 
 	public static function generateMacAddress(): string
