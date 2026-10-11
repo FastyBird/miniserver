@@ -46,8 +46,9 @@ csf: ## Fix PHP files coding style
 	mkdir -p var/tools/PHP_CodeSniffer
 	$(PRE_PHP) "vendor/bin/phpcbf" $(PHPCS_PATHS) --standard=$(PHPCS_CONFIG) --parallel=$(LOGICAL_CORES) $(ARGS)
 
+# ARGS is passed through like the other targets, so `make lint ARGS='-j 2'` sets the job count.
 lint:
-	$(PRE_PHP) "vendor/bin/parallel-lint" src --exclude .git --exclude vendor
+	$(PRE_PHP) "vendor/bin/parallel-lint" src --exclude .git --exclude vendor $(ARGS)
 
 # Rector is configured in rector.php for one job only: converting PHPUnit's doc-block
 # annotations to attributes across the test suites. It is not a general refactoring pass.
