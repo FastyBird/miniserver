@@ -77,4 +77,4 @@ can be corrected through the [FastyBird](https://www.fastybird.com) [IoT](https:
 
 Some of the [Zigbee2MQTT](https://www.zigbee2mqtt.io) devices could expose [List type](https://www.zigbee2mqtt.io/guide/usage/exposes.html#list)
 capability, but this capability is now not supported by this connector. If you find any device which is using this type of
-capability, feel free to open a [feature request](https://github.com/FastyBird/fastybird/issues)
+capability, feel free to open a [feature request](https://github.com/FastyBird/miniserver/issues)
