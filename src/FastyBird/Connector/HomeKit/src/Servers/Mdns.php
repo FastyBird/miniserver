@@ -64,21 +64,21 @@ final class Mdns implements Server
 
 	use Nette\SmartObject;
 
-	private const DNS_ADDRESS = '224.0.0.251';
+	private const string DNS_ADDRESS = '224.0.0.251';
 
-	private const DNS_PORT = 5_353;
+	private const int DNS_PORT = 5_353;
 
-	private const DNS_BROADCAST_INTERVAL = 60;
+	private const int DNS_BROADCAST_INTERVAL = 60;
 
-	private const HAP_SERVICE_TYPE = '_hap._tcp.local';
+	private const string HAP_SERVICE_TYPE = '_hap._tcp.local';
 
-	private const VALID_MDNS_REGEX = '/[^A-Za-z0-9\-]+/';
+	private const string VALID_MDNS_REGEX = '/[^A-Za-z0-9\-]+/';
 
-	private const IP_ADDRESS_REGEX = '/^(\d[\d.]+):(\d+)\b/';
+	private const string IP_ADDRESS_REGEX = '/^(\d[\d.]+):(\d+)\b/';
 
-	private const LEADING_TRAILING_SPACE_DASH = '/^[ -]+|[ -]+$/';
+	private const string LEADING_TRAILING_SPACE_DASH = '/^[ -]+|[ -]+$/';
 
-	private const DASH_REGEX = '/[-]+/';
+	private const string DASH_REGEX = '/[-]+/';
 
 	/** @var array<string, array<int, array<int, array<Dns\Model\Record>>>> */
 	private array $resourceRecords = [];

@@ -29,7 +29,7 @@ use FastyBird\Connector\NsPanel\Types;
 interface GatewayFactory extends ClientFactory
 {
 
-	public const MODE = Types\ClientMode::GATEWAY;
+	public const Types\ClientMode MODE = Types\ClientMode::GATEWAY;
 
 	public function create(Documents\Connectors\Connector $connector): Gateway;
 

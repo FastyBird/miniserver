@@ -28,7 +28,7 @@ use function assert;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const TYPE = 'zigbee2mqtt-connector';
+	public const string TYPE = 'zigbee2mqtt-connector';
 
 	public function __construct(
 		Zigbee2MqttEntities\Devices\Device $device,

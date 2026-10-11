@@ -29,7 +29,7 @@ use Ramsey\Uuid;
 final class DeviceAttribute extends Attribute
 {
 
-	public const ALLOWED_ATTRIBUTES = [
+	public const array ALLOWED_ATTRIBUTES = [
 		self::NAME,
 		self::STATE,
 		self::PROPERTIES,

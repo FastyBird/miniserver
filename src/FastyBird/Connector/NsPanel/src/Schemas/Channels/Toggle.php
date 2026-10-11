@@ -33,7 +33,7 @@ final class Toggle extends Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\Toggle::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\Toggle::TYPE;
 
 	public function getEntityClass(): string
 	{

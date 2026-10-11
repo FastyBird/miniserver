@@ -33,7 +33,7 @@ final class MotorReverse extends Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\MotorReverse::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\MotorReverse::TYPE;
 
 	public function getEntityClass(): string
 	{

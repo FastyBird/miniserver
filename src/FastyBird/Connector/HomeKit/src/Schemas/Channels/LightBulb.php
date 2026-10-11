@@ -34,7 +34,7 @@ final class LightBulb extends Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::HOMEKIT->value . '/channel/' . Entities\Channels\LightBulb::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::HOMEKIT->value . '/channel/' . Entities\Channels\LightBulb::TYPE;
 
 	public function getEntityClass(): string
 	{

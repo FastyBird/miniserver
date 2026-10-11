@@ -79,37 +79,37 @@ final class Gen2WsApi
 
 	use Nette\SmartObject;
 
-	private const REQUEST_SRC = 'fb_ws_client';
+	private const string REQUEST_SRC = 'fb_ws_client';
 
-	private const DEVICE_STATUS_METHOD = 'Shelly.GetStatus';
+	private const string DEVICE_STATUS_METHOD = 'Shelly.GetStatus';
 
-	private const SWITCH_SET_METHOD = 'Switch.Set';
+	private const string SWITCH_SET_METHOD = 'Switch.Set';
 
-	private const COVER_GO_TO_POSITION_METHOD = 'Cover.GoToPosition';
+	private const string COVER_GO_TO_POSITION_METHOD = 'Cover.GoToPosition';
 
-	private const LIGHT_SET_METHOD = 'Light.Set';
+	private const string LIGHT_SET_METHOD = 'Light.Set';
 
-	private const SCRIPT_SET_ENABLED_METHOD = 'Script.Start';
+	private const string SCRIPT_SET_ENABLED_METHOD = 'Script.Start';
 
-	private const SCRIPT_SET_DISABLED_METHOD = 'Script.Stop';
+	private const string SCRIPT_SET_DISABLED_METHOD = 'Script.Stop';
 
-	private const SMOKE_SET_METHOD = 'Smoke.Mute';
+	private const string SMOKE_SET_METHOD = 'Smoke.Mute';
 
-	private const NOTIFY_STATUS_METHOD = 'NotifyStatus';
+	private const string NOTIFY_STATUS_METHOD = 'NotifyStatus';
 
-	private const NOTIFY_FULL_STATUS_METHOD = 'NotifyFullStatus';
+	private const string NOTIFY_FULL_STATUS_METHOD = 'NotifyFullStatus';
 
-	private const NOTIFY_EVENT_METHOD = 'NotifyEvent';
+	private const string NOTIFY_EVENT_METHOD = 'NotifyEvent';
 
-	private const DEVICE_STATUS_MESSAGE_SCHEMA_FILENAME = 'gen2_ws_state.json';
+	private const string DEVICE_STATUS_MESSAGE_SCHEMA_FILENAME = 'gen2_ws_state.json';
 
-	private const DEVICE_EVENT_MESSAGE_SCHEMA_FILENAME = 'gen2_ws_event.json';
+	private const string DEVICE_EVENT_MESSAGE_SCHEMA_FILENAME = 'gen2_ws_event.json';
 
-	private const WAIT_FOR_REPLY_TIMEOUT = 10.0;
+	private const float WAIT_FOR_REPLY_TIMEOUT = 10.0;
 
-	private const PROPERTY_COMPONENT = '/^(?P<component>[a-zA-Z]+)_(?P<identifier>[0-9]+)(_(?P<attribute>[a-zA-Z0-9]+))?$/';
+	private const string PROPERTY_COMPONENT = '/^(?P<component>[a-zA-Z]+)_(?P<identifier>[0-9]+)(_(?P<attribute>[a-zA-Z0-9]+))?$/';
 
-	private const COMPONENT_KEY = '/^(?P<component>[a-zA-Z]+)(:(?P<channel>[0-9_]+))?$/';
+	private const string COMPONENT_KEY = '/^(?P<component>[a-zA-Z]+)(:(?P<channel>[0-9_]+))?$/';
 
 	/** @var array<Closure(): void> */
 	public array $onConnected = [];

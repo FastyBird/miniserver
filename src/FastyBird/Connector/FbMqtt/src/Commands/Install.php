@@ -59,7 +59,7 @@ use function usort;
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:fb-mqtt-connector:install';
+	public const string NAME = 'fb:fb-mqtt-connector:install';
 
 	public function __construct(
 		private readonly FbMqtt\Logger $logger,

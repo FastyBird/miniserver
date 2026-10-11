@@ -69,21 +69,21 @@ final class Discovery
 
 	use Nette\SmartObject;
 
-	private const MDNS_ADDRESS = '224.0.0.251';
+	private const string MDNS_ADDRESS = '224.0.0.251';
 
-	private const MDNS_PORT = 5_353;
+	private const int MDNS_PORT = 5_353;
 
-	private const MDNS_SEARCH_TIMEOUT = 30;
+	private const int MDNS_SEARCH_TIMEOUT = 30;
 
-	private const PROCESS_RESULTS_TIMER = 0.1;
+	private const float PROCESS_RESULTS_TIMER = 0.1;
 
-	private const MATCH_NAME = '/(?i)^(?P<type>shelly.+)-(?P<id>[0-9A-Fa-f]+)._(http|shelly)._tcp.local$/';
+	private const string MATCH_NAME = '/(?i)^(?P<type>shelly.+)-(?P<id>[0-9A-Fa-f]+)._(http|shelly)._tcp.local$/';
 
-	private const MATCH_DOMAIN = '/(?i)^(?P<type>[0-9A-Za-z]+)-(?P<id>[0-9A-Fa-f]+).local$/';
+	private const string MATCH_DOMAIN = '/(?i)^(?P<type>[0-9A-Za-z]+)-(?P<id>[0-9A-Fa-f]+).local$/';
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	private const MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
+	private const string MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	private const MATCH_IP_ADDRESS_PORT = '/^(?P<address>((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]))(:(?P<port>[0-9]{1,5}))?$/';
+	private const string MATCH_IP_ADDRESS_PORT = '/^(?P<address>((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]))(:(?P<port>[0-9]{1,5}))?$/';
 
 	/** @var array<string, ValueObjects\MdnsResult>  */
 	private array $searchResult = [];

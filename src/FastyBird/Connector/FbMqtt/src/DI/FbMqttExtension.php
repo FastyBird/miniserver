@@ -51,7 +51,7 @@ use const DIRECTORY_SEPARATOR;
 class FbMqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbFbMqttConnector';
+	public const string NAME = 'fbFbMqttConnector';
 
 	public static function register(
 		Boot\Configurator $config,

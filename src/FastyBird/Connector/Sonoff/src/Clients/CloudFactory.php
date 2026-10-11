@@ -29,7 +29,7 @@ use FastyBird\Connector\Sonoff\Types;
 interface CloudFactory extends ClientFactory
 {
 
-	public const MODE = Types\ClientMode::CLOUD;
+	public const Types\ClientMode MODE = Types\ClientMode::CLOUD;
 
 	public function create(
 		Documents\Connectors\Connector $connector,

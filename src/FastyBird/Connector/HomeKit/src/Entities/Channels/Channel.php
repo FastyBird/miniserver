@@ -36,7 +36,7 @@ use function ucwords;
 abstract class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const SERVICE_IDENTIFIER = '/^(?P<type>[a-z_]+)(?:_(?P<cnt>[0-9]+){1})$/';
+	public const string SERVICE_IDENTIFIER = '/^(?P<type>[a-z_]+)(?:_(?P<cnt>[0-9]+){1})$/';
 
 	public function __construct(
 		HomeKitEntities\Devices\Device $device,

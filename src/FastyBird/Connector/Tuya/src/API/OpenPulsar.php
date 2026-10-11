@@ -61,13 +61,13 @@ final class OpenPulsar
 
 	use Nette\SmartObject;
 
-	private const PING_INTERVAL = 30;
+	private const int PING_INTERVAL = 30;
 
-	public const WS_MESSAGE_SCHEMA_FILENAME = 'openpulsar_message.json';
+	public const string WS_MESSAGE_SCHEMA_FILENAME = 'openpulsar_message.json';
 
-	public const WS_MESSAGE_PAYLOAD_SCHEMA_FILENAME = 'openpulsar_payload.json';
+	public const string WS_MESSAGE_PAYLOAD_SCHEMA_FILENAME = 'openpulsar_payload.json';
 
-	public const WS_MESSAGE_PAYLOAD_DATA_SCHEMA_FILENAME = 'openpulsar_data.json';
+	public const string WS_MESSAGE_PAYLOAD_DATA_SCHEMA_FILENAME = 'openpulsar_data.json';
 
 	/** @var array<Closure(): void> */
 	public array $onConnected = [];

@@ -74,29 +74,29 @@ final class LanApi
 
 	use Nette\SmartObject;
 
-	public const DEVICE_PORT = 8_081;
+	public const int DEVICE_PORT = 8_081;
 
-	public const ERROR_INVALID_JSON = 400;
+	public const int ERROR_INVALID_JSON = 400;
 
-	public const ERROR_UNAUTHORIZED = 401;
+	public const int ERROR_UNAUTHORIZED = 401;
 
-	public const ERROR_DEVICE_ID_INVALID = 404;
+	public const int ERROR_DEVICE_ID_INVALID = 404;
 
-	public const ERROR_INVALID_PARAMETER = 422;
+	public const int ERROR_INVALID_PARAMETER = 422;
 
-	private const MDNS_ADDRESS = '224.0.0.251';
+	private const string MDNS_ADDRESS = '224.0.0.251';
 
-	private const MDNS_PORT = 5_353;
+	private const int MDNS_PORT = 5_353;
 
-	private const MATCH_NAME = '/^(?:[a-zA-Z]+)_(?P<id>[0-9A-Za-z]+)._ewelink._tcp.local$/';
+	private const string MATCH_NAME = '/^(?:[a-zA-Z]+)_(?P<id>[0-9A-Za-z]+)._ewelink._tcp.local$/';
 
-	private const MATCH_DOMAIN = '/^(?:[a-zA-Z]+)_(?P<id>[0-9A-Za-z]+).local$/';
+	private const string MATCH_DOMAIN = '/^(?:[a-zA-Z]+)_(?P<id>[0-9A-Za-z]+).local$/';
     // phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	private const MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
+	private const string MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
 
-	private const GET_DEVICE_INFO_MESSAGE_SCHEMA_FILENAME = 'lan_api_get_device_info.json';
+	private const string GET_DEVICE_INFO_MESSAGE_SCHEMA_FILENAME = 'lan_api_get_device_info.json';
 
-	private const SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'lan_api_set_device_state.json';
+	private const string SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'lan_api_set_device_state.json';
 
 	/** @var array<Closure(Messages\Message $message): void> */
 	public array $onMessage = [];

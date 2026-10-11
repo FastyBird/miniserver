@@ -28,7 +28,7 @@ use function assert;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const TYPE = 'tuya-connector';
+	public const string TYPE = 'tuya-connector';
 
 	public function __construct(
 		TuyaEntities\Devices\Device $device,

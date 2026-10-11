@@ -67,11 +67,11 @@ class Tcp implements Client
 	use TReading;
 	use Nette\SmartObject;
 
-	private const LOST_DELAY = 60.0; // in s - Waiting delay before another communication with device after device was lost
+	private const float LOST_DELAY = 60.0; // in s - Waiting delay before another communication with device after device was lost
 
-	private const HANDLER_START_DELAY = 2.0;
+	private const float HANDLER_START_DELAY = 2.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
 	private bool $closed = true;
 

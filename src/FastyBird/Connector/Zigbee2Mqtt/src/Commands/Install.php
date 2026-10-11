@@ -63,7 +63,7 @@ use function usort;
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:zigbee2mqtt-connector:install';
+	public const string NAME = 'fb:zigbee2mqtt-connector:install';
 
 	private Input\InputInterface|null $input = null;
 

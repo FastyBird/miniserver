@@ -52,7 +52,7 @@ use const DIRECTORY_SEPARATOR;
 class Zigbee2MqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbZigbee2MqttConnector';
+	public const string NAME = 'fbZigbee2MqttConnector';
 
 	public static function register(
 		Boot\Configurator $config,

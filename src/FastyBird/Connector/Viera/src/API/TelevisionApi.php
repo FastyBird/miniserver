@@ -88,21 +88,21 @@ final class TelevisionApi
 
 	use Nette\SmartObject;
 
-	private const EVENTS_TIMEOUT = 10;
+	private const int EVENTS_TIMEOUT = 10;
 
-	private const URN_RENDERING_CONTROL = 'schemas-upnp-org:service:RenderingControl:1';
+	private const string URN_RENDERING_CONTROL = 'schemas-upnp-org:service:RenderingControl:1';
 
-	private const URN_REMOTE_CONTROL = 'panasonic-com:service:p00NetworkControl:1';
+	private const string URN_REMOTE_CONTROL = 'panasonic-com:service:p00NetworkControl:1';
 
-	private const URL_CONTROL_DMR = '/dmr/control_0';
+	private const string URL_CONTROL_DMR = '/dmr/control_0';
 
-	private const URL_CONTROL_NRC = '/nrc/control_0';
+	private const string URL_CONTROL_NRC = '/nrc/control_0';
 
-	private const URL_EVENT_NRC = '/nrc/event_0';
+	private const string URL_EVENT_NRC = '/nrc/event_0';
 
-	private const URL_CONTROL_NRC_DDD = '/nrc/ddd.xml';
+	private const string URL_CONTROL_NRC_DDD = '/nrc/ddd.xml';
 
-	private const URL_CONTROL_NRC_DEF = '/nrc/sdd_0.xml';
+	private const string URL_CONTROL_NRC_DEF = '/nrc/sdd_0.xml';
 
 	/** @var array<Closure(Messages\Message $message): void> */
 	public array $onMessage = [];

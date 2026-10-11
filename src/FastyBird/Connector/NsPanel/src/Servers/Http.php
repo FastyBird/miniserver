@@ -44,11 +44,11 @@ final class Http implements Server
 
 	use Nette\SmartObject;
 
-	public const REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
+	public const string REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
 
-	public const JSON_CONTENT_TYPE = 'application/json';
+	public const string JSON_CONTENT_TYPE = 'application/json';
 
-	private const LISTENING_ADDRESS = '0.0.0.0';
+	private const string LISTENING_ADDRESS = '0.0.0.0';
 
 	private Socket\ServerInterface|null $socket = null;
 

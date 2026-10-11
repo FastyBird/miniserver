@@ -29,9 +29,9 @@ use Orisai\ObjectMapper;
 final class SwitchPulse implements API\Messages\Message
 {
 
-	private const VALUE_ON = 'on';
+	private const string VALUE_ON = 'on';
 
-	private const VALUE_OFF = 'off';
+	private const string VALUE_OFF = 'off';
 
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_ON, self::VALUE_OFF])]

@@ -37,7 +37,7 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'homekit-connector';
+	public const string TYPE = 'homekit-connector';
 
 	/** @var Common\Collections\Collection<int, HomeKitEntities\Clients\Client> */
 	#[Attribute\Crud(writable: true)]

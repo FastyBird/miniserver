@@ -39,11 +39,11 @@ use function is_string;
 class Device extends DevicesEntities\Devices\Device
 {
 
-	public const TYPE = 'tuya-connector';
+	public const string TYPE = 'tuya-connector';
 
-	public const STATE_READING_DELAY = 300.0;
+	public const float STATE_READING_DELAY = 300.0;
 
-	public const HEARTBEAT_DELAY = 150.0;
+	public const float HEARTBEAT_DELAY = 150.0;
 
 	private self|null $gateway = null;
 

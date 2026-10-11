@@ -45,7 +45,7 @@ use Throwable;
 class Event extends Periodic implements Writer, ComponentEventDispatcher\EventSubscriberInterface
 {
 
-	public const NAME = 'event';
+	public const string NAME = 'event';
 
 	public function __construct(
 		HomeKitDocuments\Connectors\Connector $connector,

@@ -28,7 +28,7 @@ use FastyBird\Connector\Tuya\Documents;
 interface ClientFactory
 {
 
-	public const MODE_CONSTANT_NAME = 'MODE';
+	public const string MODE_CONSTANT_NAME = 'MODE';
 
 	public function create(Documents\Connectors\Connector $connector): Client;
 

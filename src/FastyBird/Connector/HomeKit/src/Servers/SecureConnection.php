@@ -51,17 +51,17 @@ final class SecureConnection extends Evenement\EventEmitter implements Socket\Co
 
 	use Nette\SmartObject;
 
-	private const ENCRYPTED_DATA_LENGTH = 2;
+	private const int ENCRYPTED_DATA_LENGTH = 2;
 
-	private const AUTH_TAG_LENGTH = 16;
+	private const int AUTH_TAG_LENGTH = 16;
 
-	private const SALT_CONTROL = 'Control-Salt';
+	private const string SALT_CONTROL = 'Control-Salt';
 
-	private const INFO_CONTROL_WRITE = 'Control-Write-Encryption-Key';
+	private const string INFO_CONTROL_WRITE = 'Control-Write-Encryption-Key';
 
-	private const INFO_CONTROL_READ = 'Control-Read-Encryption-Key';
+	private const string INFO_CONTROL_READ = 'Control-Read-Encryption-Key';
 
-	private const ENCRYPTED_CHUNK_MAX_SIZE = 1_024;
+	private const int ENCRYPTED_CHUNK_MAX_SIZE = 1_024;
 
 	private int $securedRequestCnt = 0;
 

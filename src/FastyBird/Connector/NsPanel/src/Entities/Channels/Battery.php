@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class Battery extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-battery';
+	public const string TYPE = 'ns-panel-connector-battery';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

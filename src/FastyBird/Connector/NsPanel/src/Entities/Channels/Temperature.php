@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class Temperature extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-temperature';
+	public const string TYPE = 'ns-panel-connector-temperature';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

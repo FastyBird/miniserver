@@ -37,7 +37,7 @@ use function is_string;
 class SubDevice extends Device
 {
 
-	public const TYPE = 'zigbee2mqtt-connector-sub-device';
+	public const string TYPE = 'zigbee2mqtt-connector-sub-device';
 
 	/**
 	 * @throws Zigbee2MqttExceptions\InvalidState

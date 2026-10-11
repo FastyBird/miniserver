@@ -37,16 +37,16 @@ final class MqttBuilder
 	/**
 	 * Replace placeholders
 	 */
-	private const BASE_TOPIC_REPLACE_STRING = '{BASE_TOPIC}';
+	private const string BASE_TOPIC_REPLACE_STRING = '{BASE_TOPIC}';
 
-	private const DEVICE_REPLACE_STRING = '{DEVICE_ID}';
+	private const string DEVICE_REPLACE_STRING = '{DEVICE_ID}';
 
-	private const PROPERTY_REPLACE_STRING = '{PROPERTY_ID}';
+	private const string PROPERTY_REPLACE_STRING = '{PROPERTY_ID}';
 
 	/**
 	 * Exchange topics
 	 */
-	private const DEVICE_PROPERTY_TOPIC
+	private const string DEVICE_PROPERTY_TOPIC
 		= self::BASE_TOPIC_REPLACE_STRING
 		. Zigbee2Mqtt\Constants::MQTT_TOPIC_DELIMITER
 		. self::DEVICE_REPLACE_STRING

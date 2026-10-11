@@ -28,7 +28,7 @@ use function assert;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const TYPE = 'fb-mqtt-connector';
+	public const string TYPE = 'fb-mqtt-connector';
 
 	public function __construct(
 		FbMqttEntities\Devices\Device $device,

@@ -28,7 +28,7 @@ use FastyBird\Connector\Virtual\Documents;
 interface DriverFactory
 {
 
-	public const DEVICE_TYPE = null;
+	public const ?string DEVICE_TYPE = null;
 
 	public function create(Documents\Devices\Device $device): Driver;
 

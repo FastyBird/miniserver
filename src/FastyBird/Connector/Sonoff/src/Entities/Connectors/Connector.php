@@ -34,7 +34,7 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'sonoff-connector';
+	public const string TYPE = 'sonoff-connector';
 
 	public static function getType(): string
 	{

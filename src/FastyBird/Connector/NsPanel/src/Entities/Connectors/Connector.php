@@ -34,7 +34,7 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'ns-panel-connector';
+	public const string TYPE = 'ns-panel-connector';
 
 	public static function getType(): string
 	{

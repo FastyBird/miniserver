@@ -59,7 +59,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 
 	use Nette\SmartObject;
 
-	private const WRITE_PENDING_DELAY = 2_000.0;
+	private const float WRITE_PENDING_DELAY = 2_000.0;
 
 	private API\LanApi|null $lanApiApi = null;
 

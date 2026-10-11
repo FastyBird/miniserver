@@ -56,7 +56,7 @@ use function usort;
 class Execute extends Console\Command\Command
 {
 
-	public const NAME = 'fb:homekit-connector:execute';
+	public const string NAME = 'fb:homekit-connector:execute';
 
 	public function __construct(
 		private readonly Helpers\Connector $connectorHelper,

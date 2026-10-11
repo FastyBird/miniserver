@@ -30,7 +30,7 @@ use function preg_match;
 class Startup extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-startup';
+	public const string TYPE = 'ns-panel-connector-startup';
 
 	/**
 	 * @throws Exceptions\InvalidState

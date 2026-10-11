@@ -29,46 +29,46 @@ final class Constants
 	/**
 	 * Zigbee2MQTT topics subscribe format
 	 */
-	public const BRIDGE_TOPIC = '%s/#';
+	public const string BRIDGE_TOPIC = '%s/#';
 
 	/**
 	 * MQTT topic delimiter
 	 */
-	public const MQTT_TOPIC_DELIMITER = '/';
+	public const string MQTT_TOPIC_DELIMITER = '/';
 
 	/**
 	 * MQTT message QOS values
 	 */
-	public const MQTT_API_QOS_0 = 0;
+	public const int MQTT_API_QOS_0 = 0;
 
-	public const MQTT_API_QOS_1 = 1;
+	public const int MQTT_API_QOS_1 = 1;
 
-	public const MQTT_API_QOS_2 = 2;
+	public const int MQTT_API_QOS_2 = 2;
 
-	public const VALUE_NOT_AVAILABLE = 'n/a';
+	public const string VALUE_NOT_AVAILABLE = 'n/a';
 
-	public const CHANNEL_IDENTIFIER_REGEX = '/^(?P<type>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/';
+	public const string CHANNEL_IDENTIFIER_REGEX = '/^(?P<type>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/';
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const CHANNEL_SPECIAL_IDENTIFIER_REGEX = '/^(?P<type>(light|switch|fan|cover|lock|climate){1})_(?P<subtype>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/';
+	public const string CHANNEL_SPECIAL_IDENTIFIER_REGEX = '/^(?P<type>(light|switch|fan|cover|lock|climate){1})_(?P<subtype>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/';
 
-	public const IEEE_ADDRESS_REGEX = '/^0x([a-zA-Z0-9]+)$/';
+	public const string IEEE_ADDRESS_REGEX = '/^0x([a-zA-Z0-9]+)$/';
 
-	public const EVENT_CONNECT = 'connect';
+	public const string EVENT_CONNECT = 'connect';
 
-	public const EVENT_DISCONNECT = 'disconnect';
+	public const string EVENT_DISCONNECT = 'disconnect';
 
-	public const EVENT_CLOSE = 'close';
+	public const string EVENT_CLOSE = 'close';
 
-	public const EVENT_WARNING = 'warning';
+	public const string EVENT_WARNING = 'warning';
 
-	public const EVENT_ERROR = 'error';
+	public const string EVENT_ERROR = 'error';
 
-	public const EVENT_MESSAGE = 'message';
+	public const string EVENT_MESSAGE = 'message';
 
-	public const EVENT_PUBLISH = 'publish';
+	public const string EVENT_PUBLISH = 'publish';
 
-	public const EVENT_SUBSCRIBE = 'subscribe';
+	public const string EVENT_SUBSCRIBE = 'subscribe';
 
-	public const EVENT_UNSUBSCRIBE = 'unsubscribe';
+	public const string EVENT_UNSUBSCRIBE = 'unsubscribe';
 
 }

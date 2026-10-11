@@ -59,17 +59,17 @@ final class Discovery
 
 	use Nette\SmartObject;
 
-	private const MCAST_HOST = '239.255.255.250';
+	private const string MCAST_HOST = '239.255.255.250';
 
-	private const MCAST_PORT = 1_900;
+	private const int MCAST_PORT = 1_900;
 
-	private const SEARCH_TIMEOUT = 5;
+	private const int SEARCH_TIMEOUT = 5;
 
-	private const PROCESS_RESULTS_TIMER = 0.1;
+	private const float PROCESS_RESULTS_TIMER = 0.1;
 
-	private const MATCH_DEVICE_LOCATION = '/LOCATION:\s(?<location>[\da-zA-Z:\/.]+)/';
+	private const string MATCH_DEVICE_LOCATION = '/LOCATION:\s(?<location>[\da-zA-Z:\/.]+)/';
 
-	private const MATCH_DEVICE_ID = '/USN:\suuid:(?<usn>[\da-zA-Z-]+)::urn/';
+	private const string MATCH_DEVICE_ID = '/USN:\suuid:(?<usn>[\da-zA-Z-]+)::urn/';
 
 	/** @var array<string, ValueObjects\LocalDevice> */
 	private array $searchResult = [];

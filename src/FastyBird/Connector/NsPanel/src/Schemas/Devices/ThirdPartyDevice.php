@@ -33,7 +33,7 @@ final class ThirdPartyDevice extends Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/device/' . Entities\Devices\ThirdPartyDevice::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/device/' . Entities\Devices\ThirdPartyDevice::TYPE;
 
 	public function getEntityClass(): string
 	{

@@ -57,7 +57,7 @@ use const DIRECTORY_SEPARATOR;
 class HomeKitExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbHomeKitConnector';
+	public const string NAME = 'fbHomeKitConnector';
 
 	public static function register(
 		Boot\Configurator $config,

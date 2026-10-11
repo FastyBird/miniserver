@@ -29,7 +29,7 @@ use FastyBird\Connector\Sonoff\Types;
 interface LanFactory extends ClientFactory
 {
 
-	public const MODE = Types\ClientMode::LAN;
+	public const Types\ClientMode MODE = Types\ClientMode::LAN;
 
 	public function create(Documents\Connectors\Connector $connector, bool $autoMode = false): Lan;
 

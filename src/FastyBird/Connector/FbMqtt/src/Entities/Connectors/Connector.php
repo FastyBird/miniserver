@@ -34,7 +34,7 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'fb-mqtt-connector';
+	public const string TYPE = 'fb-mqtt-connector';
 
 	public static function getType(): string
 	{

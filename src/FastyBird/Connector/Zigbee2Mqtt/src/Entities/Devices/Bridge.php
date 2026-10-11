@@ -30,9 +30,9 @@ use function is_string;
 class Bridge extends Device
 {
 
-	public const TYPE = 'zigbee2mqtt-connector-bridge';
+	public const string TYPE = 'zigbee2mqtt-connector-bridge';
 
-	public const BASE_TOPIC = 'zigbee2mqtt';
+	public const string BASE_TOPIC = 'zigbee2mqtt';
 
 	public static function getType(): string
 	{

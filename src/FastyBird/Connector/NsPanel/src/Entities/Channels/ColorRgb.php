@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class ColorRgb extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-color-rgb';
+	public const string TYPE = 'ns-panel-connector-color-rgb';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

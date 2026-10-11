@@ -56,9 +56,9 @@ class Rtu
 
 	use Nette\SmartObject;
 
-	private const MODBUS_ADU = 'C1station/C1function/C*data/';
+	private const string MODBUS_ADU = 'C1station/C1function/C*data/';
 
-	private const MODBUS_ERROR = 'C1station/C1error/C1exception/';
+	private const string MODBUS_ERROR = 'C1station/C1error/C1exception/';
 
 	private API\Interfaces\Serial $interface;
 

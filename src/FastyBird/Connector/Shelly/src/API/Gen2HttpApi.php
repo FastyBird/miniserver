@@ -47,35 +47,35 @@ final class Gen2HttpApi extends HttpApi
 
 	use Nette\SmartObject;
 
-	private const GET_DEVICE_INFORMATION_ENDPOINT = 'http://%s/rpc/Shelly.GetDeviceInfo';
+	private const string GET_DEVICE_INFORMATION_ENDPOINT = 'http://%s/rpc/Shelly.GetDeviceInfo';
 
-	private const GET_DEVICE_CONFIGURATION_ENDPOINT = 'http://%s/rpc/Shelly.GetConfig';
+	private const string GET_DEVICE_CONFIGURATION_ENDPOINT = 'http://%s/rpc/Shelly.GetConfig';
 
-	private const GET_DEVICE_STATE_ENDPOINT = 'http://%s/rpc/Shelly.GetStatus';
+	private const string GET_DEVICE_STATE_ENDPOINT = 'http://%s/rpc/Shelly.GetStatus';
 
-	private const SET_DEVICE_STATE_ENDPOINT = 'http://%s/rpc';
+	private const string SET_DEVICE_STATE_ENDPOINT = 'http://%s/rpc';
 
-	private const GET_DEVICE_INFORMATION_MESSAGE_SCHEMA_FILENAME = 'gen2_http_shelly.json';
+	private const string GET_DEVICE_INFORMATION_MESSAGE_SCHEMA_FILENAME = 'gen2_http_shelly.json';
 
-	private const GET_DEVICE_CONFIG_MESSAGE_SCHEMA_FILENAME = 'gen2_http_config.json';
+	private const string GET_DEVICE_CONFIG_MESSAGE_SCHEMA_FILENAME = 'gen2_http_config.json';
 
-	private const GET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'gen2_http_state.json';
+	private const string GET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'gen2_http_state.json';
 
-	private const PROPERTY_COMPONENT = '/^(?P<component>[a-zA-Z]+)_(?P<identifier>[0-9]+)(_(?P<attribute>[a-zA-Z0-9]+))?$/';
+	private const string PROPERTY_COMPONENT = '/^(?P<component>[a-zA-Z]+)_(?P<identifier>[0-9]+)(_(?P<attribute>[a-zA-Z0-9]+))?$/';
 
-	private const COMPONENT_KEY = '/^(?P<component>[a-zA-Z]+)(:(?P<channel>[0-9_]+))?$/';
+	private const string COMPONENT_KEY = '/^(?P<component>[a-zA-Z]+)(:(?P<channel>[0-9_]+))?$/';
 
-	private const SWITCH_SET_METHOD = 'Switch.Set';
+	private const string SWITCH_SET_METHOD = 'Switch.Set';
 
-	private const COVER_GO_TO_POSITION_METHOD = 'Cover.GoToPosition';
+	private const string COVER_GO_TO_POSITION_METHOD = 'Cover.GoToPosition';
 
-	private const LIGHT_SET_METHOD = 'Light.Set';
+	private const string LIGHT_SET_METHOD = 'Light.Set';
 
-	private const SCRIPT_SET_ENABLED_METHOD = 'Script.Start';
+	private const string SCRIPT_SET_ENABLED_METHOD = 'Script.Start';
 
-	private const SCRIPT_SET_DISABLED_METHOD = 'Script.Stop';
+	private const string SCRIPT_SET_DISABLED_METHOD = 'Script.Stop';
 
-	private const SMOKE_SET_METHOD = 'Smoke.Mute';
+	private const string SMOKE_SET_METHOD = 'Smoke.Mute';
 
 	/**
 	 * @return ($async is true ? Promise\PromiseInterface<Messages\Response\Gen2\GetDeviceInformation> : Messages\Response\Gen2\GetDeviceInformation)

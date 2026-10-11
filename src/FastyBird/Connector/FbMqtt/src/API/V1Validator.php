@@ -35,33 +35,33 @@ final class V1Validator
 	use Nette\SmartObject;
 
 	// TOPIC: /fb/*
-	public const CONVENTION_PREFIX_REGEXP = '/^\/fb\/.*$/';
+	public const string CONVENTION_PREFIX_REGEXP = '/^\/fb\/.*$/';
 
 	// TOPIC: /fb/v1/*
-	public const API_VERSION_REGEXP = '/^\/fb\/v1\/.*$/';
+	public const string API_VERSION_REGEXP = '/^\/fb\/v1\/.*$/';
 
 	// TOPIC: /fb/v1/<device>/$channel/<channel>/*
-	public const CHANNEL_PARTIAL_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$channel\/([a-z0-9-]+)\/.*$/';
+	public const string CHANNEL_PARTIAL_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$channel\/([a-z0-9-]+)\/.*$/';
 
 	// TOPIC: /fb/v1/<device>/<$state|$name|$properties|$controls|$channels|$extensions>
-	public const DEVICE_ATTRIBUTE_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$(state|name|properties|controls|channels|extensions)$/';
+	public const string DEVICE_ATTRIBUTE_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$(state|name|properties|controls|channels|extensions)$/';
 
 	// TOPIC: /fb/v1/<device>/$hw/<mac-address|manufacturer|model|version>
-	public const DEVICE_HW_INFO_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$hw\/(mac-address|manufacturer|model|version)$/';
+	public const string DEVICE_HW_INFO_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$hw\/(mac-address|manufacturer|model|version)$/';
 
 	// TOPIC: /fb/v1/<device>/$fw/<manufacturer|name|version>
-	public const DEVICE_FW_INFO_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$fw\/(manufacturer|name|version)$/';
+	public const string DEVICE_FW_INFO_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$fw\/(manufacturer|name|version)$/';
 
 	// TOPIC: /fb/v1/<device>/$property/<property-name>[/<$name|$settable|$queryable|$data-type|$format|$unit>]
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const DEVICE_PROPERTY_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$property\/([a-z0-9-]+)((\/\$)(name|settable|queryable|data-type|format|unit))?$/';
+	public const string DEVICE_PROPERTY_REGEXP = '/^\/fb\/v1\/([a-z0-9-]+)\/\$property\/([a-z0-9-]+)((\/\$)(name|settable|queryable|data-type|format|unit))?$/';
 
 	// TOPIC: /fb/v1/*/$channel/<channel>/<$name|$properties|$controls>
-	public const CHANNEL_ATTRIBUTE_REGEXP = '/\/(.*)\/\$channel\/([a-z0-9-]+)\/\$(name|properties|controls)$/';
+	public const string CHANNEL_ATTRIBUTE_REGEXP = '/\/(.*)\/\$channel\/([a-z0-9-]+)\/\$(name|properties|controls)$/';
 
 	// TOPIC: /fb/v1/*/$channel/<channel>/$property/<property-name>[/<$name|$settable|$queryable|$data-type|$format|$unit>]
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const CHANNEL_PROPERTY_REGEXP = '/\/(.*)\/\$channel\/([a-z0-9-]+)\/\$property\/([a-z0-9-]+)((\/\$)(name|settable|queryable|data-type|format|unit))?$/';
+	public const string CHANNEL_PROPERTY_REGEXP = '/\/(.*)\/\$channel\/([a-z0-9-]+)\/\$property\/([a-z0-9-]+)((\/\$)(name|settable|queryable|data-type|format|unit))?$/';
 
 	public static function validate(string $topic): bool
 	{

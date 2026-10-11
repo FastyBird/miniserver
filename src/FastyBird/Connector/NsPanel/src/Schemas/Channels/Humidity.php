@@ -33,7 +33,7 @@ final class Humidity extends Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\Humidity::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\Humidity::TYPE;
 
 	public function getEntityClass(): string
 	{

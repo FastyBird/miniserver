@@ -29,7 +29,7 @@ use FastyBird\Connector\FbMqtt\Types;
 interface FbMqttV1Factory extends ClientFactory
 {
 
-	public const VERSION = Types\ProtocolVersion::VERSION_1;
+	public const Types\ProtocolVersion VERSION = Types\ProtocolVersion::VERSION_1;
 
 	public function create(Documents\Connectors\Connector $connector): FbMqttV1;
 

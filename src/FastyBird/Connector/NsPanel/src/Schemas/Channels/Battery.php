@@ -33,7 +33,7 @@ final class Battery extends Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\Battery::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\Battery::TYPE;
 
 	public function getEntityClass(): string
 	{

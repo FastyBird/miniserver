@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class Brightness extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-brightness';
+	public const string TYPE = 'ns-panel-connector-brightness';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

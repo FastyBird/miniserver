@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class Thermostat extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-thermostat';
+	public const string TYPE = 'ns-panel-connector-thermostat';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

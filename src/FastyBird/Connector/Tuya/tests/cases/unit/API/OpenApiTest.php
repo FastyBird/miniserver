@@ -24,11 +24,11 @@ use function strval;
 final class OpenApiTest extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const ACCESS_ID = 'MftAcceHZL11BpOR';
+	private const string ACCESS_ID = 'MftAcceHZL11BpOR';
 
-	private const ACCESS_SECRET = 'dBCQZohQNR2U4rW9';
+	private const string ACCESS_SECRET = 'dBCQZohQNR2U4rW9';
 
-	private const UID = 'Bjhq01pE7q4ijNMN';
+	private const string UID = 'Bjhq01pE7q4ijNMN';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

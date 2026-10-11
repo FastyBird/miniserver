@@ -71,9 +71,9 @@ use function usort;
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:modbus-connector:install';
+	public const string NAME = 'fb:modbus-connector:install';
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	private const MATCH_IP_ADDRESS_PORT = '/^(?P<address>((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]))(:(?P<port>[0-9]{1,5}))?$/';
+	private const string MATCH_IP_ADDRESS_PORT = '/^(?P<address>((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]))(:(?P<port>[0-9]{1,5}))?$/';
 
 	public function __construct(
 		private readonly Modbus\Logger $logger,

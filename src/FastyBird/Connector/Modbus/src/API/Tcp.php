@@ -60,15 +60,15 @@ class Tcp
 
 	use Nette\SmartObject;
 
-	private const MODBUS_ADU = 'n1transaction/n1protocol/n1length/C1station/C1function/C*data/';
+	private const string MODBUS_ADU = 'n1transaction/n1protocol/n1length/C1station/C1function/C*data/';
 
-	private const MODBUS_ERROR = 'n1transaction/n1protocol/n1length/C1station/C1error/C1exception/';
+	private const string MODBUS_ERROR = 'n1transaction/n1protocol/n1length/C1station/C1error/C1exception/';
 
-	private const PROTOCOL_ID = 0;
+	private const int PROTOCOL_ID = 0;
 
-	private const MAX_TRANSACTION_ID = 0xFFFF; // 65535 as dec
+	private const int MAX_TRANSACTION_ID = 0xFFFF; // 65535 as dec
 
-	private const CONNECTION_TIMEOUT = 0.2;
+	private const float CONNECTION_TIMEOUT = 0.2;
 
 	public function __construct(
 		private readonly EventLoop\LoopInterface $eventLoop,

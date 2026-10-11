@@ -34,7 +34,7 @@ final class Gateway extends Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/device/' . Entities\Devices\Gateway::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/device/' . Entities\Devices\Gateway::TYPE;
 
 	public function getEntityClass(): string
 	{

@@ -33,7 +33,7 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'shelly-connector';
+	public const string TYPE = 'shelly-connector';
 
 	public static function getType(): string
 	{

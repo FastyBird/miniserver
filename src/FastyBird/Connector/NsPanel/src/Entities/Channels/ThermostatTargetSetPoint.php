@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class ThermostatTargetSetPoint extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-thermostat-target-set-point';
+	public const string TYPE = 'ns-panel-connector-thermostat-target-set-point';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

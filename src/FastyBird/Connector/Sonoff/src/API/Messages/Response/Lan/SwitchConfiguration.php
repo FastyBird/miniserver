@@ -29,11 +29,11 @@ use Orisai\ObjectMapper;
 final class SwitchConfiguration implements API\Messages\Message
 {
 
-	private const VALUE_ON = 'on';
+	private const string VALUE_ON = 'on';
 
-	private const VALUE_OFF = 'off';
+	private const string VALUE_OFF = 'off';
 
-	private const VALUE_STAY = 'stay';
+	private const string VALUE_STAY = 'stay';
 
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_ON, self::VALUE_OFF, self::VALUE_STAY])]

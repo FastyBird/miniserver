@@ -30,9 +30,9 @@ use FastyBird\Core\Http\Routing;
 class Router extends Routing\Router
 {
 
-	public const URL_GATEWAY_ID = 'gateway';
+	public const string URL_GATEWAY_ID = 'gateway';
 
-	public const URL_DEVICE_ID = 'device';
+	public const string URL_DEVICE_ID = 'device';
 
 	/**
 	 * @throws Exceptions\Runtime

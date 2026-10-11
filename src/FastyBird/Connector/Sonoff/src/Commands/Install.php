@@ -61,7 +61,7 @@ use function usort;
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:sonoff-connector:install';
+	public const string NAME = 'fb:sonoff-connector:install';
 
 	private Input\InputInterface|null $input = null;
 

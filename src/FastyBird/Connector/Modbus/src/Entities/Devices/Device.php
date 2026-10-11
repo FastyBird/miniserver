@@ -36,7 +36,7 @@ use function is_string;
 class Device extends DevicesEntities\Devices\Device
 {
 
-	public const TYPE = 'modbus-connector';
+	public const string TYPE = 'modbus-connector';
 
 	public function __construct(
 		string $identifier,

@@ -29,7 +29,7 @@ use function assert;
 class Device extends DevicesEntities\Devices\Device
 {
 
-	public const TYPE = 'fb-mqtt-connector';
+	public const string TYPE = 'fb-mqtt-connector';
 
 	public function __construct(
 		string $identifier,

@@ -48,7 +48,7 @@ final class Crypto
 
 	use Nette\SmartObject;
 
-	public const SIGNATURE_BYTES_LENGTH = 32;
+	public const int SIGNATURE_BYTES_LENGTH = 32;
 
 	/**
 	 * @throws Exceptions\Encrypt

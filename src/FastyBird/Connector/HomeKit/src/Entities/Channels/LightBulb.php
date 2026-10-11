@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class LightBulb extends Channel
 {
 
-	public const TYPE = 'homekit-connector-light-bulb';
+	public const string TYPE = 'homekit-connector-light-bulb';
 
 	public static function getType(): string
 	{

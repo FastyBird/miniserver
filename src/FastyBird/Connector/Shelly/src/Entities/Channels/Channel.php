@@ -28,7 +28,7 @@ use function assert;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const TYPE = 'shelly-connector';
+	public const string TYPE = 'shelly-connector';
 
 	public function __construct(
 		ShellyEntities\Devices\Device $device,

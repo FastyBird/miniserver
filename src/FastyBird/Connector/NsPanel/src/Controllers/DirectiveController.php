@@ -50,7 +50,7 @@ use function strval;
 final class DirectiveController extends BaseController
 {
 
-	private const SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'set_device_state.json';
+	private const string SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'set_device_state.json';
 
 	public function __construct(
 		private readonly Queue\Queue $queue,

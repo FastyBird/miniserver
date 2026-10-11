@@ -52,7 +52,7 @@ use const DIRECTORY_SEPARATOR;
 class TuyaExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbTuyaConnector';
+	public const string NAME = 'fbTuyaConnector';
 
 	public static function register(
 		Boot\Configurator $config,

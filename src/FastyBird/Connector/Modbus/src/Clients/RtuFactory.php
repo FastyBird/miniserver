@@ -29,7 +29,7 @@ use FastyBird\Connector\Modbus\Types;
 interface RtuFactory extends ClientFactory
 {
 
-	public const MODE = Types\ClientMode::RTU;
+	public const Types\ClientMode MODE = Types\ClientMode::RTU;
 
 	public function create(Documents\Connectors\Connector $connector): Rtu;
 

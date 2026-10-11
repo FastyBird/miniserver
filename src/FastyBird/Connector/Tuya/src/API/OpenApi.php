@@ -71,67 +71,67 @@ final class OpenApi
 
 	use Nette\SmartObject;
 
-	private const VERSION = '0.1.0';
+	private const string VERSION = '0.1.0';
 
-	private const TUYA_ERROR_CODE_TOKEN_INVALID = 1_010;
+	private const int TUYA_ERROR_CODE_TOKEN_INVALID = 1_010;
 
-	private const TUYA_ERROR_CODE_API_ACCESS_NOT_ALLOWED = 1_114;
+	private const int TUYA_ERROR_CODE_API_ACCESS_NOT_ALLOWED = 1_114;
 
-	private const GET_ACCESS_TOKEN_API_ENDPOINT = '/v1.0/token';
+	private const string GET_ACCESS_TOKEN_API_ENDPOINT = '/v1.0/token';
 
-	private const REFRESH_ACCESS_TOKEN_API_ENDPOINT = '/v1.0/token/%s';
+	private const string REFRESH_ACCESS_TOKEN_API_ENDPOINT = '/v1.0/token/%s';
 
-	private const GET_USER_DEVICES_API_ENDPOINT = '/v1.0/users/%s/devices';
+	private const string GET_USER_DEVICES_API_ENDPOINT = '/v1.0/users/%s/devices';
 
-	private const GET_USER_DEVICE_DETAIL_API_ENDPOINT = '/v1.0/devices/%s';
+	private const string GET_USER_DEVICE_DETAIL_API_ENDPOINT = '/v1.0/devices/%s';
 
-	private const GET_USER_DEVICES_FACTORY_INFOS_API_ENDPOINT = '/v1.0/devices/factory-infos';
+	private const string GET_USER_DEVICES_FACTORY_INFOS_API_ENDPOINT = '/v1.0/devices/factory-infos';
 
-	private const GET_USER_DEVICE_SPECIFICATIONS_API_ENDPOINT = '/v1.0/devices/%s/specifications';
+	private const string GET_USER_DEVICE_SPECIFICATIONS_API_ENDPOINT = '/v1.0/devices/%s/specifications';
 
-	private const GET_USER_DEVICE_STATE_API_ENDPOINT = '/v1.0/devices/%s/status';
+	private const string GET_USER_DEVICE_STATE_API_ENDPOINT = '/v1.0/devices/%s/status';
 
-	private const GET_USER_DEVICE_CHILDREN_DEVICES_API_ENDPOINT = '/v1.0/devices/%s/sub-devices';
+	private const string GET_USER_DEVICE_CHILDREN_DEVICES_API_ENDPOINT = '/v1.0/devices/%s/sub-devices';
 
-	private const GET_DEVICES_API_ENDPOINT = '/v1.3/iot-03/devices';
+	private const string GET_DEVICES_API_ENDPOINT = '/v1.3/iot-03/devices';
 
-	private const GET_DEVICES_FACTORY_INFOS_API_ENDPOINT = '/v1.0/iot-03/devices/factory-infos';
+	private const string GET_DEVICES_FACTORY_INFOS_API_ENDPOINT = '/v1.0/iot-03/devices/factory-infos';
 
-	private const GET_DEVICE_DETAIL_API_ENDPOINT = '/v1.1/iot-03/devices/%s';
+	private const string GET_DEVICE_DETAIL_API_ENDPOINT = '/v1.1/iot-03/devices/%s';
 
-	private const GET_DEVICE_SPECIFICATION_API_ENDPOINT = '/v1.2/iot-03/devices/%s/specification';
+	private const string GET_DEVICE_SPECIFICATION_API_ENDPOINT = '/v1.2/iot-03/devices/%s/specification';
 
-	private const GET_DEVICE_STATE_API_ENDPOINT = '/v1.0/iot-03/devices/%s/status';
+	private const string GET_DEVICE_STATE_API_ENDPOINT = '/v1.0/iot-03/devices/%s/status';
 
-	private const SET_DEVICE_STATE_API_ENDPOINT = '/v1.0/iot-03/devices/%s/commands';
+	private const string SET_DEVICE_STATE_API_ENDPOINT = '/v1.0/iot-03/devices/%s/commands';
 
-	private const GET_ACCESS_TOKEN_MESSAGE_SCHEMA_FILENAME = 'openapi_get_access_token.json';
+	private const string GET_ACCESS_TOKEN_MESSAGE_SCHEMA_FILENAME = 'openapi_get_access_token.json';
 
-	private const REFRESH_ACCESS_TOKEN_MESSAGE_SCHEMA_FILENAME = 'openapi_refresh_access_token.json';
+	private const string REFRESH_ACCESS_TOKEN_MESSAGE_SCHEMA_FILENAME = 'openapi_refresh_access_token.json';
 
-	private const GET_USER_DEVICES_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_devices.json';
+	private const string GET_USER_DEVICES_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_devices.json';
 
-	private const GET_USER_DEVICE_DETAIL_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_device_detail.json';
+	private const string GET_USER_DEVICE_DETAIL_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_device_detail.json';
 
-	private const GET_USER_DEVICES_FACTORY_INFOS_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_devices_factory_infos.json';
+	private const string GET_USER_DEVICES_FACTORY_INFOS_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_devices_factory_infos.json';
 
-	private const GET_USER_DEVICE_SPECIFICATIONS_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_device_specifications.json';
+	private const string GET_USER_DEVICE_SPECIFICATIONS_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_device_specifications.json';
 
-	private const GET_USER_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_device_state.json';
+	private const string GET_USER_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_device_state.json';
 
-	private const GET_USER_DEVICE_CHILDREN_DEVICES_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_device_children.json';
+	private const string GET_USER_DEVICE_CHILDREN_DEVICES_MESSAGE_SCHEMA_FILENAME = 'openapi_get_user_device_children.json';
 
-	private const GET_DEVICES_MESSAGE_SCHEMA_FILENAME = 'openapi_get_devices.json';
+	private const string GET_DEVICES_MESSAGE_SCHEMA_FILENAME = 'openapi_get_devices.json';
 
-	private const GET_DEVICES_FACTORY_INFOS_MESSAGE_SCHEMA_FILENAME = 'openapi_get_devices_factory_infos.json';
+	private const string GET_DEVICES_FACTORY_INFOS_MESSAGE_SCHEMA_FILENAME = 'openapi_get_devices_factory_infos.json';
 
-	private const GET_DEVICE_DETAIL_MESSAGE_SCHEMA_FILENAME = 'openapi_get_device_detail.json';
+	private const string GET_DEVICE_DETAIL_MESSAGE_SCHEMA_FILENAME = 'openapi_get_device_detail.json';
 
-	private const GET_DEVICE_SPECIFICATION_MESSAGE_SCHEMA_FILENAME = 'openapi_get_device_specification.json';
+	private const string GET_DEVICE_SPECIFICATION_MESSAGE_SCHEMA_FILENAME = 'openapi_get_device_specification.json';
 
-	private const GET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'openapi_get_device_state.json';
+	private const string GET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'openapi_get_device_state.json';
 
-	private const SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'openapi_set_device_state.json';
+	private const string SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'openapi_set_device_state.json';
 
 	private string $devChannel = 'fastybird_iot';
 

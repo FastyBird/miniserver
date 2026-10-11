@@ -33,7 +33,7 @@ use function is_numeric;
 abstract class Device extends DevicesEntities\Devices\Device
 {
 
-	public const STATE_PROCESSING_DELAY = 120.0;
+	public const float STATE_PROCESSING_DELAY = 120.0;
 
 	public function __construct(
 		string $identifier,

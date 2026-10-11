@@ -57,9 +57,9 @@ final class Gen1Coap
 
 	use Nette\SmartObject;
 
-	private const STATE_MESSAGE_CODE = 30;
+	private const int STATE_MESSAGE_CODE = 30;
 
-	private const STATE_MESSAGE_SCHEMA_FILENAME = 'gen1_coap_state.json';
+	private const string STATE_MESSAGE_SCHEMA_FILENAME = 'gen1_coap_state.json';
 
 	/** @var array<Closure(Messages\Message $message): void> */
 	public array $onMessage = [];

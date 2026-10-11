@@ -48,7 +48,7 @@ use function str_starts_with;
 class Exchange extends Periodic implements Writer, Consumers\Consumer
 {
 
-	public const NAME = 'exchange';
+	public const string NAME = 'exchange';
 
 	public function __construct(
 		TuyaDocuments\Connectors\Connector $connector,

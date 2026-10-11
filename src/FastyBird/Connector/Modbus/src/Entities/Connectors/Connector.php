@@ -36,7 +36,7 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'modbus-connector';
+	public const string TYPE = 'modbus-connector';
 
 	public static function getType(): string
 	{

@@ -47,13 +47,13 @@ abstract class ClientProcess
 
 	use Nette\SmartObject;
 
-	protected const HANDLER_START_DELAY = 2.0;
+	protected const float HANDLER_START_DELAY = 2.0;
 
-	protected const HANDLER_PROCESSING_INTERVAL = 0.01;
+	protected const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	protected const CMD_STATE = 'state';
+	protected const string CMD_STATE = 'state';
 
-	protected const CMD_HEARTBEAT = 'heartbeat';
+	protected const string CMD_HEARTBEAT = 'heartbeat';
 
 	/** @var array<string, Documents\Devices\Device>  */
 	protected array $devices = [];

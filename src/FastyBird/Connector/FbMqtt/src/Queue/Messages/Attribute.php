@@ -38,17 +38,17 @@ use function strtolower;
 abstract class Attribute implements Message
 {
 
-	public const NAME = 'name';
+	public const string NAME = 'name';
 
-	public const PROPERTIES = 'properties';
+	public const string PROPERTIES = 'properties';
 
-	public const STATE = 'state';
+	public const string STATE = 'state';
 
-	public const CHANNELS = 'channels';
+	public const string CHANNELS = 'channels';
 
-	public const EXTENSIONS = 'extensions';
+	public const string EXTENSIONS = 'extensions';
 
-	public const CONTROLS = 'controls';
+	public const string CONTROLS = 'controls';
 
 	public function __construct(
 		#[Rules\UuidValue()]

@@ -30,7 +30,7 @@ use function array_merge;
 final class ChannelAttribute extends Attribute
 {
 
-	public const ALLOWED_ATTRIBUTES = [
+	public const array ALLOWED_ATTRIBUTES = [
 		self::NAME,
 		self::PROPERTIES,
 		self::CONTROLS,

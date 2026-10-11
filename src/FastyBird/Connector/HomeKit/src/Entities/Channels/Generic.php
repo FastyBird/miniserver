@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class Generic extends Channel
 {
 
-	public const TYPE = 'homekit-connector';
+	public const string TYPE = 'homekit-connector';
 
 	public static function getType(): string
 	{

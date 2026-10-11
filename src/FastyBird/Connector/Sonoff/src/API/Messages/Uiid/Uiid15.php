@@ -34,11 +34,11 @@ final class Uiid15 implements Uuid
 		TDevice::toStates as toDeviceState;
 	}
 
-	public const DEVICE_TYPE_NORMAL = 'normal';
+	public const string DEVICE_TYPE_NORMAL = 'normal';
 
-	public const DEVICE_TYPE_TEMPERATURE = 'temperature';
+	public const string DEVICE_TYPE_TEMPERATURE = 'temperature';
 
-	public const DEVICE_TYPE_HUMIDITY = 'humidity';
+	public const string DEVICE_TYPE_HUMIDITY = 'humidity';
 
 	public function __construct(
 		#[ObjectMapper\Rules\AnyOf([

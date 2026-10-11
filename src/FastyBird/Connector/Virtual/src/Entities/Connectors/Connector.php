@@ -27,7 +27,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'virtual-connector';
+	public const string TYPE = 'virtual-connector';
 
 	public static function getType(): string
 	{

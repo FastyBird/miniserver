@@ -35,7 +35,7 @@ final class HttpClientFactory
 
 	use Nette\SmartObject;
 
-	private const CONNECTION_TIMEOUT = 10;
+	private const int CONNECTION_TIMEOUT = 10;
 
 	private GuzzleHttp\Client|null $client = null;
 

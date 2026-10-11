@@ -55,7 +55,7 @@ use function usort;
 class Discover extends Console\Command\Command
 {
 
-	public const NAME = 'fb:sonoff-connector:discover';
+	public const string NAME = 'fb:sonoff-connector:discover';
 
 	private DateTimeInterface|null $executedTime = null;
 

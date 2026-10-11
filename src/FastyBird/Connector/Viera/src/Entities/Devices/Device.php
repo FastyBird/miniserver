@@ -38,11 +38,11 @@ use function is_string;
 class Device extends DevicesEntities\Devices\Device
 {
 
-	public const TYPE = 'viera-connector';
+	public const string TYPE = 'viera-connector';
 
-	public const DEFAULT_PORT = 55_000;
+	public const int DEFAULT_PORT = 55_000;
 
-	public const STATE_READING_DELAY = 300.0;
+	public const float STATE_READING_DELAY = 300.0;
 
 	public function __construct(
 		string $identifier,

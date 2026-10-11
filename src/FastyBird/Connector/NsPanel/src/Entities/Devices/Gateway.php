@@ -32,11 +32,11 @@ use function is_string;
 class Gateway extends NsPanelEntities\Devices\Device
 {
 
-	public const TYPE = 'ns-panel-connector-gateway';
+	public const string TYPE = 'ns-panel-connector-gateway';
 
-	public const STATE_READING_DELAY = 300.0;
+	public const float STATE_READING_DELAY = 300.0;
 
-	public const HEARTBEAT_DELAY = 150.0;
+	public const float HEARTBEAT_DELAY = 150.0;
 
 	public static function getType(): string
 	{

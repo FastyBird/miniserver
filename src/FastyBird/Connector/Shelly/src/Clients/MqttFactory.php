@@ -29,7 +29,7 @@ use FastyBird\Connector\Shelly\Types;
 interface MqttFactory extends ClientFactory
 {
 
-	public const MODE = Types\ClientMode::MQTT;
+	public const Types\ClientMode MODE = Types\ClientMode::MQTT;
 
 	public function create(Documents\Connectors\Connector $connector): Mqtt;
 

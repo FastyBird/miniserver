@@ -26,6 +26,6 @@ namespace FastyBird\Connector\Virtual;
 final class Constants
 {
 
-	public const MANUFACTURER = 'FastyBird';
+	public const string MANUFACTURER = 'FastyBird';
 
 }

@@ -33,7 +33,7 @@ final class ThermostatModeDetect extends Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\ThermostatModeDetect::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\ThermostatModeDetect::TYPE;
 
 	public function getEntityClass(): string
 	{

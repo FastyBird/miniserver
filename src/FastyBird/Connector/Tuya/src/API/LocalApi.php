@@ -86,27 +86,27 @@ final class LocalApi
 
 	use Nette\SmartObject;
 
-	public const DP_QUERY_MESSAGE_SCHEMA_FILENAME = 'localapi_dp_query.json';
+	public const string DP_QUERY_MESSAGE_SCHEMA_FILENAME = 'localapi_dp_query.json';
 
-	public const DP_STATE_MESSAGE_SCHEMA_FILENAME = 'localapi_dp_state.json';
+	public const string DP_STATE_MESSAGE_SCHEMA_FILENAME = 'localapi_dp_state.json';
 
-	public const WIFI_QUERY_MESSAGE_SCHEMA_FILENAME = 'localapi_wifi_query.json';
+	public const string WIFI_QUERY_MESSAGE_SCHEMA_FILENAME = 'localapi_wifi_query.json';
 
-	private const SOCKET_PORT = 6_668;
+	private const int SOCKET_PORT = 6_668;
 
-	private const HEARTBEAT_INTERVAL = 7.0;
+	private const float HEARTBEAT_INTERVAL = 7.0;
 
-	private const HEARTBEAT_SEQ_NO = -100;
+	private const int HEARTBEAT_SEQ_NO = -100;
 
-	private const HEARTBEAT_TIMEOUT = 10.0;
+	private const float HEARTBEAT_TIMEOUT = 10.0;
 
-	private const WAIT_FOR_REPLY_TIMEOUT = 5.0;
+	private const float WAIT_FOR_REPLY_TIMEOUT = 5.0;
 
-	private const MESSAGE_PREFIX = [0, 0, 85, 170];
+	private const array MESSAGE_PREFIX = [0, 0, 85, 170];
 
-	private const MESSAGE_SUFFIX = [0, 0, 170, 85];
+	private const array MESSAGE_SUFFIX = [0, 0, 170, 85];
 
-	private const NO_PROTOCOL_HEADER_COMMANDS = [
+	private const array NO_PROTOCOL_HEADER_COMMANDS = [
 		Types\LocalDeviceCommand::DP_QUERY,
 		Types\LocalDeviceCommand::DP_QUERY_NEW,
 		Types\LocalDeviceCommand::UPDATE_DPS,

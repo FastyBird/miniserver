@@ -92,7 +92,7 @@ use function usort;
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:homekit-connector:install';
+	public const string NAME = 'fb:homekit-connector:install';
 
 	public function __construct(
 		private readonly HomeKitHelpers\Loader $loader,

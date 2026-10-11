@@ -48,7 +48,7 @@ final class Subscriber
 
 	use Nette\SmartObject;
 
-	private const PUBLISH_EVENT_DELAY = 0.5;
+	private const float PUBLISH_EVENT_DELAY = 0.5;
 
 	/** @var SplObjectStorage<Socket\ConnectionInterface, string> */
 	private SplObjectStorage $connections;

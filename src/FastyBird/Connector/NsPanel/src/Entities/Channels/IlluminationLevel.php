@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class IlluminationLevel extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-illumination-level';
+	public const string TYPE = 'ns-panel-connector-illumination-level';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

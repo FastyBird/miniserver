@@ -52,7 +52,7 @@ use const DIRECTORY_SEPARATOR;
 class SonoffExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbSonoffConnector';
+	public const string NAME = 'fbSonoffConnector';
 
 	public static function register(
 		Boot\Configurator $config,

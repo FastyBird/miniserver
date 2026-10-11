@@ -28,7 +28,7 @@ use function assert;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const TYPE = 'sonoff-connector';
+	public const string TYPE = 'sonoff-connector';
 
 	public function __construct(
 		SonoffEntities\Devices\Device $device,

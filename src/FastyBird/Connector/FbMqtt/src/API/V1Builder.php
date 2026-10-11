@@ -37,18 +37,18 @@ final class V1Builder
 	/**
 	 * Replace placeholders
 	 */
-	private const DEVICE_REPLACE_STRING = '{DEVICE_ID}';
+	private const string DEVICE_REPLACE_STRING = '{DEVICE_ID}';
 
-	private const CHANNEL_REPLACE_STRING = '{CHANNEL_ID}';
+	private const string CHANNEL_REPLACE_STRING = '{CHANNEL_ID}';
 
-	private const PROPERTY_REPLACE_STRING = '{PROPERTY_ID}';
+	private const string PROPERTY_REPLACE_STRING = '{PROPERTY_ID}';
 
-	private const CONTROL_REPLACE_STRING = '{CONTROL}';
+	private const string CONTROL_REPLACE_STRING = '{CONTROL}';
 
 	/**
 	 * Exchange topics
 	 */
-	private const DEVICE_PROPERTY_TOPIC
+	private const string DEVICE_PROPERTY_TOPIC
 		= FbMqtt\Constants::MQTT_API_PREFIX
 		. FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX
 		. FbMqtt\Constants::MQTT_TOPIC_DELIMITER
@@ -60,7 +60,7 @@ final class V1Builder
 		. FbMqtt\Constants::MQTT_TOPIC_DELIMITER
 		. 'set';
 
-	private const DEVICE_CONTROL_SET_TOPIC
+	private const string DEVICE_CONTROL_SET_TOPIC
 		= FbMqtt\Constants::MQTT_API_PREFIX
 		. FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX
 		. FbMqtt\Constants::MQTT_TOPIC_DELIMITER
@@ -72,7 +72,7 @@ final class V1Builder
 		. FbMqtt\Constants::MQTT_TOPIC_DELIMITER
 		. 'set';
 
-	private const CHANNEL_PROPERTY_TOPIC
+	private const string CHANNEL_PROPERTY_TOPIC
 		= FbMqtt\Constants::MQTT_API_PREFIX
 		. FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX
 		. FbMqtt\Constants::MQTT_TOPIC_DELIMITER
@@ -88,7 +88,7 @@ final class V1Builder
 		. FbMqtt\Constants::MQTT_TOPIC_DELIMITER
 		. 'set';
 
-	private const CHANNEL_CONTROL_SET_TOPIC
+	private const string CHANNEL_CONTROL_SET_TOPIC
 		= FbMqtt\Constants::MQTT_API_PREFIX
 		. FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX
 		. FbMqtt\Constants::MQTT_TOPIC_DELIMITER

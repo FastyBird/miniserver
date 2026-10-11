@@ -34,7 +34,7 @@ use function is_int;
 class Device extends DevicesEntities\Devices\Device
 {
 
-	public const TYPE = 'homekit-connector';
+	public const string TYPE = 'homekit-connector';
 
 	public function __construct(
 		string $identifier,

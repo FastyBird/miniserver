@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class MotorCalibration extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-motor-calibration';
+	public const string TYPE = 'ns-panel-connector-motor-calibration';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

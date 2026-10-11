@@ -54,13 +54,13 @@ abstract class Periodic implements Writer
 
 	use Nette\SmartObject;
 
-	private const HANDLER_START_DELAY = 5.0;
+	private const float HANDLER_START_DELAY = 5.0;
 
-	private const HANDLER_DEBOUNCE_INTERVAL = 2_500.0;
+	private const float HANDLER_DEBOUNCE_INTERVAL = 2_500.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	private const HANDLER_PENDING_DELAY = 2_000.0;
+	private const float HANDLER_PENDING_DELAY = 2_000.0;
 
 	/** @var array<string, VieraDocuments\Devices\Device>  */
 	private array $devices = [];

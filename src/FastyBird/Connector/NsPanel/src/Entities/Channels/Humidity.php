@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class Humidity extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-humidity';
+	public const string TYPE = 'ns-panel-connector-humidity';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

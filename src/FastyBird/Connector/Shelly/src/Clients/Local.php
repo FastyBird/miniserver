@@ -62,17 +62,17 @@ final class Local implements Client
 
 	use Nette\SmartObject;
 
-	private const HANDLER_START_DELAY = 2.0;
+	private const float HANDLER_START_DELAY = 2.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	private const RECONNECT_COOL_DOWN_TIME = 300.0;
+	private const float RECONNECT_COOL_DOWN_TIME = 300.0;
 
-	private const DEVICE_RECONNECT_COOL_DOWN_TIME = 300.0;
+	private const float DEVICE_RECONNECT_COOL_DOWN_TIME = 300.0;
 
-	private const COMPONENT_KEY = '/^(?P<component>[a-zA-Z]+)(:(?P<channel>[0-9_]+))?$/';
+	private const string COMPONENT_KEY = '/^(?P<component>[a-zA-Z]+)(:(?P<channel>[0-9_]+))?$/';
 
-	private const CMD_STATE = 'state';
+	private const string CMD_STATE = 'state';
 
 	/** @var array<string, ShellyDocuments\Devices\Device>  */
 	private array $devices = [];

@@ -66,7 +66,7 @@ final class Discovery
 
 	use Nette\SmartObject;
 
-	private const LAN_SEARCH_TIMEOUT = 60;
+	private const int LAN_SEARCH_TIMEOUT = 60;
 
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 

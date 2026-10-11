@@ -33,7 +33,7 @@ final class ColorTemperature extends Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\ColorTemperature::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\ColorTemperature::TYPE;
 
 	public function getEntityClass(): string
 	{

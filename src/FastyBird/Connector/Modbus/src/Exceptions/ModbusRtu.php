@@ -32,7 +32,7 @@ use function sprintf;
 class ModbusRtu extends PhpException implements Exception
 {
 
-	public const EXCEPTION_CODES = [
+	public const array EXCEPTION_CODES = [
 		0x00 => 'Undefined failure code',
 		0x01 => 'Illegal function',
 		0x02 => 'Illegal data address',

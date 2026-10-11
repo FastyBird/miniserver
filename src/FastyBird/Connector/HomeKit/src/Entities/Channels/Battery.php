@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class Battery extends Channel
 {
 
-	public const TYPE = 'homekit-connector-battery';
+	public const string TYPE = 'homekit-connector-battery';
 
 	public static function getType(): string
 	{

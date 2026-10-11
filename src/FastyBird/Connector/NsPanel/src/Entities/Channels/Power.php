@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class Power extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-power';
+	public const string TYPE = 'ns-panel-connector-power';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

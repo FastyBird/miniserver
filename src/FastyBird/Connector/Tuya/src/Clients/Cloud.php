@@ -59,15 +59,15 @@ final class Cloud implements Client
 
 	use Nette\SmartObject;
 
-	private const HANDLER_START_DELAY = 2.0;
+	private const float HANDLER_START_DELAY = 2.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	public const REFRESH_SLEEP_DELAY = 300.0;
+	public const float REFRESH_SLEEP_DELAY = 300.0;
 
-	private const CMD_STATE = 'state';
+	private const string CMD_STATE = 'state';
 
-	private const CMD_HEARTBEAT = 'heartbeat';
+	private const string CMD_HEARTBEAT = 'heartbeat';
 
 	/** @var array<string, Documents\Devices\Device>  */
 	private array $devices = [];

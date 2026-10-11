@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class CameraStream extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-camera-stream';
+	public const string TYPE = 'ns-panel-connector-camera-stream';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

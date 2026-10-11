@@ -54,15 +54,15 @@ abstract class Periodic
 
 	use Nette\SmartObject;
 
-	public const NAME = 'periodic';
+	public const string NAME = 'periodic';
 
-	private const HANDLER_START_DELAY = 5.0;
+	private const float HANDLER_START_DELAY = 5.0;
 
-	private const HANDLER_DEBOUNCE_INTERVAL = 2_500.0;
+	private const float HANDLER_DEBOUNCE_INTERVAL = 2_500.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	private const HANDLER_PENDING_DELAY = 2_000.0;
+	private const float HANDLER_PENDING_DELAY = 2_000.0;
 
 	/** @var array<string, ModbusDocuments\Devices\Device>  */
 	private array $devices = [];

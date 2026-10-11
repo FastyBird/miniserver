@@ -32,7 +32,7 @@ use function is_string;
 class ThirdPartyDevice extends NsPanelEntities\Devices\Device
 {
 
-	public const TYPE = 'ns-panel-connector-third-party-device';
+	public const string TYPE = 'ns-panel-connector-third-party-device';
 
 	public function __construct(
 		string $identifier,

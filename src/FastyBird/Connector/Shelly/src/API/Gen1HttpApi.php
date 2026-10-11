@@ -57,25 +57,25 @@ final class Gen1HttpApi extends HttpApi
 
 	use Nette\SmartObject;
 
-	private const GET_DEVICE_INFORMATION = 'http://%s/shelly';
+	private const string GET_DEVICE_INFORMATION = 'http://%s/shelly';
 
-	private const GET_DEVICE_DESCRIPTION = 'http://%s/cit/d';
+	private const string GET_DEVICE_DESCRIPTION = 'http://%s/cit/d';
 
-	private const GET_DEVICE_STATE = 'http://%s/status';
+	private const string GET_DEVICE_STATE = 'http://%s/status';
 
-	private const SET_DEVICE_STATE = 'http://%s/%s/%s?%s=%s';
+	private const string SET_DEVICE_STATE = 'http://%s/%s/%s?%s=%s';
 
-	private const GET_DEVICE_INFORMATION_MESSAGE_SCHEMA_FILENAME = 'gen1_http_shelly.json';
+	private const string GET_DEVICE_INFORMATION_MESSAGE_SCHEMA_FILENAME = 'gen1_http_shelly.json';
 
-	private const GET_DEVICE_DESCRIPTION_MESSAGE_SCHEMA_FILENAME = 'gen1_http_description.json';
+	private const string GET_DEVICE_DESCRIPTION_MESSAGE_SCHEMA_FILENAME = 'gen1_http_description.json';
 
-	private const GET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'gen1_http_state.json';
+	private const string GET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'gen1_http_state.json';
 
-	private const CHANNEL_BLOCK = '/^(?P<identifier>[0-9]+)_(?P<description>[a-zA-Z]+)(_(?P<channel>[0-9]+))?$/';
+	private const string CHANNEL_BLOCK = '/^(?P<identifier>[0-9]+)_(?P<description>[a-zA-Z]+)(_(?P<channel>[0-9]+))?$/';
 
-	private const PROPERTY_SENSOR = '/^(?P<identifier>[0-9]+)_(?P<type>[a-zA-Z]{1,3})_(?P<description>[a-zA-Z0-9]+)$/';
+	private const string PROPERTY_SENSOR = '/^(?P<identifier>[0-9]+)_(?P<type>[a-zA-Z]{1,3})_(?P<description>[a-zA-Z0-9]+)$/';
 
-	private const SENSORS_UNIT = [
+	private const array SENSORS_UNIT = [
 		'W' => 'W',
 		'Wmin' => 'Wmin',
 		'Wh' => 'Wh',
@@ -91,7 +91,7 @@ final class Gen1HttpApi extends HttpApi
 		'pct' => '%',
 	];
 
-	private const WRITABLE_SENSORS = [
+	private const array WRITABLE_SENSORS = [
 		ShellyTypes\SensorDescription::MODE->value,
 		ShellyTypes\SensorDescription::OUTPUT->value,
 		ShellyTypes\SensorDescription::ROLLER->value,

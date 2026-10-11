@@ -46,19 +46,19 @@ final class PropertyAttribute implements Message
 
 	use Nette\SmartObject;
 
-	public const NAME = 'name';
+	public const string NAME = 'name';
 
-	public const SETTABLE = 'settable';
+	public const string SETTABLE = 'settable';
 
-	public const QUERYABLE = 'queryable';
+	public const string QUERYABLE = 'queryable';
 
-	public const DATA_TYPE = 'data-type';
+	public const string DATA_TYPE = 'data-type';
 
-	public const FORMAT = 'format';
+	public const string FORMAT = 'format';
 
-	public const UNIT = 'unit';
+	public const string UNIT = 'unit';
 
-	public const ALLOWED_ATTRIBUTES = [
+	public const array ALLOWED_ATTRIBUTES = [
 		self::NAME,
 		self::SETTABLE,
 		self::QUERYABLE,
@@ -67,7 +67,7 @@ final class PropertyAttribute implements Message
 		self::UNIT,
 	];
 
-	public const FORMAT_ALLOWED_PAYLOADS = [
+	public const array FORMAT_ALLOWED_PAYLOADS = [
 		'rgb',
 		'hsv',
 	];

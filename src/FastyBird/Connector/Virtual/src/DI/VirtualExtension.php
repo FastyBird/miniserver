@@ -52,7 +52,7 @@ use const DIRECTORY_SEPARATOR;
 class VirtualExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbVirtualConnector';
+	public const string NAME = 'fbVirtualConnector';
 
 	public static function register(
 		Boot\Configurator $config,

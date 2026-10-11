@@ -59,7 +59,7 @@ use const DIRECTORY_SEPARATOR;
 class NsPanelExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbNsPanelConnector';
+	public const string NAME = 'fbNsPanelConnector';
 
 	public static function register(
 		Boot\Configurator $config,

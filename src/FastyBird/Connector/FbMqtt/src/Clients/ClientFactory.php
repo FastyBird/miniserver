@@ -28,7 +28,7 @@ use FastyBird\Connector\FbMqtt\Documents;
 interface ClientFactory
 {
 
-	public const VERSION_CONSTANT_NAME = 'VERSION';
+	public const string VERSION_CONSTANT_NAME = 'VERSION';
 
 	public function create(Documents\Connectors\Connector $connector): Client;
 

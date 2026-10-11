@@ -29,7 +29,7 @@ use FastyBird\Connector\Modbus\Types;
 interface TcpFactory extends ClientFactory
 {
 
-	public const MODE = Types\ClientMode::TCP;
+	public const Types\ClientMode MODE = Types\ClientMode::TCP;
 
 	public function create(Documents\Connectors\Connector $connector): Tcp;
 

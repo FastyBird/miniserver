@@ -34,7 +34,7 @@ final class Connector extends DevicesSchemas\Connectors\Connector
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::SHELLY->value . '/connector/' . Entities\Connectors\Connector::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::SHELLY->value . '/connector/' . Entities\Connectors\Connector::TYPE;
 
 	public function getEntityClass(): string
 	{

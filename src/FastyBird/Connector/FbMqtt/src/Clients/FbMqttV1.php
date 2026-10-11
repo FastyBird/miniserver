@@ -46,10 +46,10 @@ use function str_contains;
 final class FbMqttV1 implements Client
 {
 
-	public const MQTT_SYSTEM_TOPIC = '$SYS/broker/log/#';
+	public const string MQTT_SYSTEM_TOPIC = '$SYS/broker/log/#';
 
 	// MQTT api topics subscribe format
-	public const DEVICES_TOPICS = [
+	public const array DEVICES_TOPICS = [
 		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+',
 		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+/+',
 		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+',
@@ -59,7 +59,7 @@ final class FbMqttV1 implements Client
 	];
 
 	// When new client is connected, broker send specific payload
-	private const NEW_CLIENT_MESSAGE_PAYLOAD = 'New client connected from';
+	private const string NEW_CLIENT_MESSAGE_PAYLOAD = 'New client connected from';
 
 	public function __construct(
 		private readonly Documents\Connectors\Connector $connector,

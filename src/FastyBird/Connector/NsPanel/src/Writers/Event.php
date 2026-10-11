@@ -37,7 +37,7 @@ use Throwable;
 class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberInterface
 {
 
-	public const NAME = 'event';
+	public const string NAME = 'event';
 
 	public static function getSubscribedEvents(): array
 	{

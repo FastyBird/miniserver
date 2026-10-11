@@ -67,7 +67,7 @@ use function usort;
 class Discover extends Console\Command\Command
 {
 
-	public const NAME = 'fb:viera-connector:discover';
+	public const string NAME = 'fb:viera-connector:discover';
 
 	private string|null $challengeKey = null;
 

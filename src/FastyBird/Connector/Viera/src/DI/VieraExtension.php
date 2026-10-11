@@ -52,7 +52,7 @@ use const DIRECTORY_SEPARATOR;
 class VieraExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbVieraConnector';
+	public const string NAME = 'fbVieraConnector';
 
 	public static function register(
 		Boot\Configurator $config,

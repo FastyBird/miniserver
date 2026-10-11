@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class Rssi extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-rssi';
+	public const string TYPE = 'ns-panel-connector-rssi';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

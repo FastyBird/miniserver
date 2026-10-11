@@ -76,16 +76,16 @@ final class Discovery
 
 	use Nette\SmartObject;
 
-	private const UDP_BIND_IP = '0.0.0.0';
+	private const string UDP_BIND_IP = '0.0.0.0';
 
-	private const UDP_PORT = [
+	private const array UDP_PORT = [
 		TuyaTypes\DeviceProtocolVersion::V31->value => 6_666,
 		TuyaTypes\DeviceProtocolVersion::V32_PLUS->value => 6_667,
 	];
 
-	private const UDP_TIMEOUT = 5;
+	private const int UDP_TIMEOUT = 5;
 
-	private const GATEWAY_CATEGORIES = [
+	private const array GATEWAY_CATEGORIES = [
 		'bywg',
 		'zigbee',
 		'wg2',

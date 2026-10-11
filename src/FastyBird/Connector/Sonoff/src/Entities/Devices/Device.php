@@ -40,7 +40,7 @@ use function is_string;
 class Device extends DevicesEntities\Devices\Device
 {
 
-	public const TYPE = 'sonoff-connector';
+	public const string TYPE = 'sonoff-connector';
 
 	public function __construct(
 		string $identifier,

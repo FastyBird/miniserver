@@ -28,7 +28,7 @@ use function assert;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const TYPE = 'viera-connector';
+	public const string TYPE = 'viera-connector';
 
 	public function __construct(
 		VieraEntities\Devices\Device $device,

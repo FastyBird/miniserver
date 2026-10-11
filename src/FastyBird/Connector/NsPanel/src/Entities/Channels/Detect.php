@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class Detect extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-detect';
+	public const string TYPE = 'ns-panel-connector-detect';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

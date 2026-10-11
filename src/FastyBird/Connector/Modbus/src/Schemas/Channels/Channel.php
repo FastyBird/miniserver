@@ -34,7 +34,7 @@ final class Channel extends DevicesSchemas\Channels\Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Connector::MODBUS->value . '/channel/' . Entities\Channels\Channel::TYPE;
+	public const string SCHEMA_TYPE = Sources\Connector::MODBUS->value . '/channel/' . Entities\Channels\Channel::TYPE;
 
 	public function getEntityClass(): string
 	{

@@ -26,7 +26,7 @@ use Ramsey\Uuid;
 class Percentage extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-percentage';
+	public const string TYPE = 'ns-panel-connector-percentage';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

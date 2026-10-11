@@ -57,9 +57,9 @@ final class Discovery
 
 	use Nette\SmartObject;
 
-	private const DISCOVERY_TIMEOUT = 100;
+	private const int DISCOVERY_TIMEOUT = 100;
 
-	public const DISCOVERY_TOPIC = '%s/bridge/request/permit_join';
+	public const string DISCOVERY_TOPIC = '%s/bridge/request/permit_join';
 
 	private Documents\Devices\Bridge|null $onlyBridge = null;
 

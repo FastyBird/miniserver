@@ -57,13 +57,13 @@ final class Http implements Server
 
 	use Nette\SmartObject;
 
-	public const REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
+	public const string REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
 
-	public const PAIRING_CONTENT_TYPE = 'application/pairing+tlv8';
+	public const string PAIRING_CONTENT_TYPE = 'application/pairing+tlv8';
 
-	public const JSON_CONTENT_TYPE = 'application/hap+json';
+	public const string JSON_CONTENT_TYPE = 'application/hap+json';
 
-	private const LISTENING_ADDRESS = '0.0.0.0';
+	private const string LISTENING_ADDRESS = '0.0.0.0';
 
 	private SecureServer|null $socket = null;
 

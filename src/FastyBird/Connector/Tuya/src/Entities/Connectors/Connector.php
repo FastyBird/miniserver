@@ -33,7 +33,7 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'tuya-connector';
+	public const string TYPE = 'tuya-connector';
 
 	public static function getType(): string
 	{

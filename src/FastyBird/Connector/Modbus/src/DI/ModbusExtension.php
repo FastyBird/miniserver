@@ -52,7 +52,7 @@ use const DIRECTORY_SEPARATOR;
 class ModbusExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbModbusConnector';
+	public const string NAME = 'fbModbusConnector';
 
 	public static function register(
 		Boot\Configurator $config,

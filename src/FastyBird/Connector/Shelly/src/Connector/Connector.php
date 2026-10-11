@@ -52,7 +52,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	use Nette\SmartObject;
 
-	private const QUEUE_PROCESSING_INTERVAL = 0.01;
+	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 
 	private Clients\Client|Clients\Discovery|null $client = null;
 

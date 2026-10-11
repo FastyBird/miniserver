@@ -34,13 +34,13 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'zigbee2mqtt-connector';
+	public const string TYPE = 'zigbee2mqtt-connector';
 
-	public const DEFAULT_SERVER_ADDRESS = '127.0.0.1';
+	public const string DEFAULT_SERVER_ADDRESS = '127.0.0.1';
 
-	public const DEFAULT_SERVER_PORT = 1_883;
+	public const int DEFAULT_SERVER_PORT = 1_883;
 
-	public const DEFAULT_SERVER_SECURED_PORT = 8_883;
+	public const int DEFAULT_SERVER_SECURED_PORT = 8_883;
 
 	public static function getType(): string
 	{

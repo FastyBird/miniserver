@@ -31,17 +31,17 @@ use Ramsey\Uuid;
 final class ExtensionAttribute implements Message
 {
 
-	public const MAC_ADDRESS = 'mac-address';
+	public const string MAC_ADDRESS = 'mac-address';
 
-	public const MANUFACTURER = 'manufacturer';
+	public const string MANUFACTURER = 'manufacturer';
 
-	public const MODEL = 'model';
+	public const string MODEL = 'model';
 
-	public const VERSION = 'version';
+	public const string VERSION = 'version';
 
-	public const NAME = 'name';
+	public const string NAME = 'name';
 
-	public const ALLOWED_PARAMETERS = [
+	public const array ALLOWED_PARAMETERS = [
 		self::MAC_ADDRESS,
 		self::MANUFACTURER,
 		self::MODEL,
