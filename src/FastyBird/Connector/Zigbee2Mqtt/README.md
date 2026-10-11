@@ -14,7 +14,7 @@ which is integrating [Zigbee2MQTT](https://www.zigbee2mqtt.io) bridges.
 ### Features:
 
 - [Zigbee2MQTT](https://www.zigbee2mqtt.io) devices support with autodiscovery
-- Integration with the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/devices-module) for easy management and monitoring of Zigbee2MQTT devices
+- Integration with the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](../../Module/Devices/README.md) for easy management and monitoring of Zigbee2MQTT devices
 - Advanced device management features, such as controlling power status, measuring energy consumption, and reading sensor data
 - [{JSON:API}](https://jsonapi.org/) schemas for full API access, providing a standardized and consistent way for developers to access and manipulate Zigbee2MQTT powered device data
 - Regular updates with new features and bug fixes, ensuring that the Zigbee2MQTT Connector is always up-to-date and reliable.
@@ -29,12 +29,7 @@ PHP extension.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/zigbee2mqtt-connector
-```
+This connector is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbZigbee2MqttConnector` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 
@@ -50,19 +45,19 @@ FastyBird is an Open Source IOT solution built from decoupled components with po
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome
-contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome
+contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
 to us or you could reach us on [X newtwork](https://x.com/fastybird) for any idea that can improve the project.
 
 Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 

@@ -27,11 +27,11 @@ Application library is tested against PHP 8.4.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
+This plugin is part of [MiniServer](https://github.com/FastyBird/miniserver) but is not registered by default. To enable it, register its DI extension in `config/local.neon`, as described in [Configuration](../../../../docs/configuration.md#redis-backed-state-storage-redisdb-plugin):
 
-```sh
-composer require fastybird/redisdb-plugin
+```neon
+extensions:
+    fbRedisDbPlugin: FastyBird\Plugin\RedisDb\DI\RedisDbExtension
 ```
 
 # FastyBird
@@ -48,19 +48,19 @@ FastyBird is an Open Source IOT solution built from decoupled components with po
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome
-contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome
+contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
 to us or you could reach us on [X newtwork](https://x.com/fastybird) for any idea that can improve the project.
 
 Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 

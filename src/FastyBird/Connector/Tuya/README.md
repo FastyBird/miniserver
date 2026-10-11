@@ -15,7 +15,7 @@ which is integrating [Tuya](https://www.tuya.com) devices.
 
 - The Tuya Connector offers support for both local and cloud-based communication with Tuya devices, providing users with a versatile and flexible way to connect and control a wide range of Tuya devices in their home or office.
 - Automated device discovery feature, which automatically detects and adds Tuya devices to the FastyBird ecosystem
-- Tuya Connector management for the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/devices-module), allowing users to easily manage and monitor Tuya devices
+- Tuya Connector management for the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](../../Module/Devices/README.md), allowing users to easily manage and monitor Tuya devices
 - Advanced device management features, such as controlling power status, measuring energy consumption, and reading sensor data
 - [{JSON:API}](https://jsonapi.org/) schemas for full API access, providing a standardized and consistent way for developers to access and manipulate Tuya device data
 - Regular updates with new features and bug fixes, ensuring that the Tuya Connector is always up-to-date and reliable.
@@ -30,12 +30,7 @@ PHP extension.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/tuya-connector
-```
+This connector is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbTuyaConnector` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 
@@ -51,19 +46,19 @@ FastyBird is an Open Source IOT solution built from decoupled components with po
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome
-contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome
+contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
 to us or you could reach us on [X newtwork](https://x.com/fastybird) for any idea that can improve the project.
 
 Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 

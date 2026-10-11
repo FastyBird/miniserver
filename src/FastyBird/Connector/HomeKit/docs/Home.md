@@ -36,7 +36,7 @@ container automatically.
 All services, helpers, etc. are written to be self-descriptive :wink:.
 
 > [!TIP]
-To better understand what some parts of the connector meant to be used for, please refer to the [Naming Convention](Naming-Convention) page.
+To better understand what some parts of the connector meant to be used for, please refer to the [Naming Convention](Naming-Convention.md) page.
 
 ## Using Connector
 
@@ -44,7 +44,7 @@ The connector is ready to be used as is. Has configured all services in applicat
 some other services or bridges.
 
 > [!TIP]
-Find fundamental details regarding the installation and configuration of this connector on the [Configuration](Configuration) page.
+Find fundamental details regarding the installation and configuration of this connector on the [Configuration](Configuration.md) page.
 
 This connector is equipped with interactive console. With this console commands you could manage almost all connector features.
 

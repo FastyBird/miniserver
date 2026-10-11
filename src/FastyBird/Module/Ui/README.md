@@ -17,7 +17,7 @@ extension for managing visual components and widgets used for IoT controls and u
 - Groups management
 - Widgets management
 - [{JSON:API}](https://jsonapi.org/) schemas for full api access
-- User access [check & validation](https://github.com/FastyBird/simple-auth)
+- User access [check & validation](../../Core/Core/README.md)
 - Multilingual
 - User interface integration via [Vue 3](https://vuejs.org) components
 - Integrated connector worker for PHP based connectors
@@ -35,12 +35,7 @@ against [ECMAScript 6](https://www.w3schools.com/JS/js_es6.asp)
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/ui-module
-```
+This module is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbUiModule` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 **@fastybird/ui-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
@@ -58,19 +53,19 @@ FastyBird is an Open Source IOT solution built from decoupled components with po
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome
-contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome
+contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
 to us or you could reach us on [X newtwork](https://x.com/fastybird) for any idea that can improve the project.
 
 Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 

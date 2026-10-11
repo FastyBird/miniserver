@@ -22,16 +22,19 @@ in [PHP](https://www.php.net) on top of the [Nette framework](https://nette.org)
 
 ## Installation
 
-The best way to install **fastybird/apikey-plugin** is using [Composer](http://getcomposer.org/):
+This plugin is part of [MiniServer](https://github.com/FastyBird/miniserver) but is not registered by default. To enable it, register its DI extension in `config/local.neon`, as described in [Configuration](../../../../docs/configuration.md#api-key-authentication-apikey-plugin):
 
-```sh
-composer require fastybird/apikey-plugin
+```neon
+extensions:
+    fbApiKeyPlugin: FastyBird\Plugin\ApiKey\DI\ApiKeyExtension
 ```
+
+The plugin takes no configuration; registering the DI extension is enough.
 
 ## Documentation
 
 Learn how to create, manage and use api keys
-in [documentation](https://github.com/FastyBird/apikey-plugin/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 
@@ -47,11 +50,11 @@ Documentation is available on [miniserver.fastybird.com/docs](https://miniserver
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs
 or [mail](mailto:code@fastybird.com) or [Tweet](https://twitter.com/fastybird) us for any idea that can improve the
 project.
 
@@ -59,7 +62,7 @@ Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 

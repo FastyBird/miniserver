@@ -2,7 +2,7 @@
 
 To integrate [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem devices
 with Thermostat Device Addon, you will need to configure at least one virtual connector. How to configure Virtual connector,
-please refer to [Virtual connector manual](https://github.com/FastyBird/virtual-connector/wiki).
+please refer to [Virtual connector manual](../../../Connector/Virtual/docs/Home.md).
 
 The thermostat device can be configured using the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things)
 user interface or through the console.

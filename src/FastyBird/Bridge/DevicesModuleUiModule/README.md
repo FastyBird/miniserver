@@ -9,7 +9,7 @@
 ## What is Devices module & UI module bridge?
 
 Devices module & UI module bridge is extension for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem
-which is creating bridge between [Devices module](https://github.com/FastyBird/devices-module) and [UI module](https://github.com/FastyBird/ui-module).
+which is creating bridge between [Devices module](../../Module/Devices/README.md) and [UI module](../../Module/Ui/README.md).
 
 ### Features:
 
@@ -26,16 +26,12 @@ Devices module & UI module bridge is tested against PHP 8.4.
 
 ## Installation
 
-The best way to install **fastybird/devices-module-ui-module-bridge** is using [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/devices-module-ui-module-bridge
-```
+This bridge is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbDevicesModuleUiModuleBridge` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 ## Documentation
 
 Learn how to build bridge between Devices module and UI module
-in [documentation](https://github.com/FastyBird/devices-module-ui-module-bridge/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 
@@ -51,11 +47,11 @@ Documentation is available on [miniserver.fastybird.com/docs](https://miniserver
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs
 or [mail](mailto:code@fastybird.com) or [Tweet](https://twitter.com/fastybird) us for any idea that can improve the
 project.
 
@@ -63,7 +59,7 @@ Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 
