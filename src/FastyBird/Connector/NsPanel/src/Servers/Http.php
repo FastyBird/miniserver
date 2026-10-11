@@ -9,7 +9,6 @@ use FastyBird\Connector\NsPanel\Middleware;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
-use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -21,7 +20,7 @@ use Throwable;
 /**
  * Connector HTTP communication server
  */
-final class Http implements Server
+final class Http
 {
 
 	public const string REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
@@ -43,7 +42,6 @@ final class Http implements Server
 	{
 	}
 
-	#[Override]
 	public function connect(): void
 	{
 		try {
@@ -124,7 +122,6 @@ final class Http implements Server
 		});
 	}
 
-	#[Override]
 	public function disconnect(): void
 	{
 		$this->logger->debug(

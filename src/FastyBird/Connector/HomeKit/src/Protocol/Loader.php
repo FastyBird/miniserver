@@ -210,19 +210,19 @@ final class Loader
 		usort(
 			$bridgedAccessories,
 			static function (Protocol\Accessories\Generic $a, Protocol\Accessories\Generic $b) {
-				if ($a->getAid() === null) {
+				if ($a->aid === null) {
 					return 1;
 				}
 
-				if ($b->getAid() === null) {
+				if ($b->aid === null) {
 					return -1;
 				}
 
-				if ($a->getAid() === $b->getAid()) {
+				if ($a->aid === $b->aid) {
 					return 0;
 				}
 
-				return $a->getAid() <=> $b->getAid();
+				return $a->aid <=> $b->aid;
 			},
 		);
 
@@ -254,7 +254,7 @@ final class Loader
 								HomeKitTypes\DevicePropertyIdentifier::AID->value,
 							),
 							'dataType' => ValuesTypes\DataType::UCHAR,
-							'value' => $accessory->getAid(),
+							'value' => $accessory->aid,
 							'device' => $device,
 						]));
 					},
@@ -271,7 +271,7 @@ final class Loader
 
 					if ($property instanceof DevicesDocuments\Channels\Properties\Variable) {
 						$characteristic->setActualValue($property->getValue());
-						$characteristic->setValid(true);
+						$characteristic->valid = true;
 					} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 						try {
 							$state = $this->channelPropertiesStatesManager->read(
@@ -297,7 +297,7 @@ final class Loader
 								);
 
 								$characteristic->setActualValue($property->getDefault());
-								$characteristic->setValid(true);
+								$characteristic->valid = true;
 							} elseif ($state instanceof DevicesDocuments\States\Channels\Properties\Property) {
 								$this->queue->append(
 									$this->messageBuilder->create(
@@ -314,7 +314,7 @@ final class Loader
 
 								$characteristic->setActualValue($state->getGet()->getActualValue());
 								$characteristic->setExpectedValue($state->getGet()->getExpectedValue());
-								$characteristic->setValid($state->isValid());
+								$characteristic->valid = $state->isValid();
 							}
 						} catch (HomeKitExceptions\InvalidState $ex) {
 							$this->logger->warning(
@@ -356,7 +356,7 @@ final class Loader
 								if ($state instanceof DevicesDocuments\States\Channels\Properties\Property) {
 									$characteristic->setActualValue($state->getRead()->getActualValue());
 									$characteristic->setExpectedValue($state->getRead()->getExpectedValue());
-									$characteristic->setValid($state->isValid());
+									$characteristic->valid = $state->isValid();
 								}
 							} catch (HomeKitExceptions\InvalidState $ex) {
 								$this->logger->warning(
@@ -384,7 +384,7 @@ final class Loader
 							}
 						} elseif ($parent instanceof DevicesDocuments\Channels\Properties\Variable) {
 							$characteristic->setActualValue($parent->getValue());
-							$characteristic->setValid(true);
+							$characteristic->valid = true;
 						}
 					}
 				}

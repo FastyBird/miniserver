@@ -441,7 +441,7 @@ final class CharacteristicsController extends BaseController
 			$characteristic->getMinValue(),
 			$characteristic->getMaxValue(),
 			$characteristic->getMinStep(),
-			$characteristic->isValid() ? $characteristic->getValue() : $characteristic->getDefault(),
+			$characteristic->valid ? $characteristic->getValue() : $characteristic->getDefault(),
 		);
 
 		if ($value === null) {
@@ -636,7 +636,7 @@ final class CharacteristicsController extends BaseController
 					$characteristic->getMinValue(),
 					$characteristic->getMaxValue(),
 					$characteristic->getMinStep(),
-					$characteristic->isValid() ? $characteristic->getValue() : $characteristic->getDefault(),
+					$characteristic->valid ? $characteristic->getValue() : $characteristic->getDefault(),
 				);
 			}
 
@@ -653,7 +653,7 @@ final class CharacteristicsController extends BaseController
 							$row->getMinValue(),
 							$row->getMaxValue(),
 							$row->getMinStep(),
-							$row->isValid() ? $row->getValue() : $row->getDefault(),
+							$row->valid ? $row->getValue() : $row->getDefault(),
 						),
 						$row->immediateNotify(),
 						$clientAddress,

@@ -13,9 +13,9 @@ use Ramsey\Uuid;
 final class ThirdPartyDevice extends Device
 {
 
-	private bool $provisioned = false;
+	public bool $provisioned = false;
 
-	private bool $corrupted = false;
+	public bool $corrupted = false;
 
 	/**
 	 * @param array<int, Types\Capability> $requiredCapabilities
@@ -33,7 +33,7 @@ final class ThirdPartyDevice extends Device
 		string $model,
 		string $firmwareVersion,
 		private readonly string $serviceAddress,
-		private bool $online = false,
+		public private(set) bool $online = false,
 		array $requiredCapabilities = [],
 		array $optionalCapabilities = [],
 	)
@@ -63,36 +63,6 @@ final class ThirdPartyDevice extends Device
 		return $this->serviceAddress;
 	}
 
-	public function isOnline(): bool
-	{
-		return $this->online;
-	}
-
-	public function setOnline(bool $online): void
-	{
-		$this->online = $online;
-	}
-
-	public function isProvisioned(): bool
-	{
-		return $this->provisioned;
-	}
-
-	public function setProvisioned(bool $provisioned): void
-	{
-		$this->provisioned = $provisioned;
-	}
-
-	public function setCorrupted(bool $corrupted): void
-	{
-		$this->corrupted = $corrupted;
-	}
-
-	public function isCorrupted(): bool
-	{
-		return $this->corrupted;
-	}
-
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
@@ -102,7 +72,7 @@ final class ThirdPartyDevice extends Device
 		$representation = parent::toRepresentation();
 
 		$representation['service_address'] = $this->getServiceAddress();
-		$representation['online'] = $this->isOnline();
+		$representation['online'] = $this->online;
 
 		return $representation;
 	}

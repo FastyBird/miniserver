@@ -31,7 +31,7 @@ use function sprintf;
 final readonly class ChannelProperty implements Queue\Consumer
 {
 
-	use TProperty;
+	use HandlesPropertyConfiguration;
 
 	public function __construct(
 		private FbMqtt\Logger $logger,

@@ -10,6 +10,6 @@ use FastyBird\Connector\Viera\Documents;
 interface ClientFactory
 {
 
-	public function create(Documents\Connectors\Connector $connector): Client;
+	public function create(Documents\Connectors\Connector $connector): Television;
 
 }

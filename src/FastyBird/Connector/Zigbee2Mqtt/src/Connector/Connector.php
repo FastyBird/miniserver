@@ -35,7 +35,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 
-	/** @var array<Clients\Client|Clients\Discovery> */
+	/** @var array<Clients\Mqtt|Clients\Discovery> */
 	private array $clients = [];
 
 	private Writers\Writer|null $writer = null;

@@ -105,7 +105,7 @@ final class Driver
 	 */
 	public function addAccessory(Accessories\Accessory $accessory): void
 	{
-		if ($accessory->getAid() === null) {
+		if ($accessory->aid === null) {
 			$this->accessories->rewind();
 
 			$newAid = 1;
@@ -120,7 +120,7 @@ final class Driver
 				}
 
 				foreach ($this->accessories as $existingAccessory) {
-					if ($existingAccessory->getAid() !== null && $existingAccessory->getAid() === $newAid) {
+					if ($existingAccessory->aid !== null && $existingAccessory->aid === $newAid) {
 						$newAid++;
 
 						break;
@@ -130,13 +130,13 @@ final class Driver
 				$searching = false;
 			}
 
-			$accessory->setAid($newAid);
+			$accessory->aid = $newAid;
 		}
 
 		$this->accessories->rewind();
 
 		foreach ($this->accessories as $existingAccessory) {
-			if ($existingAccessory->getAid() === $accessory->getAid()) {
+			if ($existingAccessory->aid === $accessory->aid) {
 				throw new HomeKitExceptions\InvalidArgument('Duplicate AID found when attempting to add accessory');
 			}
 		}

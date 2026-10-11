@@ -10,6 +10,6 @@ use FastyBird\Connector\NsPanel\Documents;
 interface ServerFactory
 {
 
-	public function create(Documents\Connectors\Connector $connector): Server;
+	public function create(Documents\Connectors\Connector $connector): Http;
 
 }

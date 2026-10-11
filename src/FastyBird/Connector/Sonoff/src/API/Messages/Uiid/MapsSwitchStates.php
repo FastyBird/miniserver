@@ -12,7 +12,7 @@ use FastyBird\Connector\Sonoff\Types;
  * @method string|null getPulse()
  * @method int|null getPulseWidth()
  */
-trait TSwitch
+trait MapsSwitchStates
 {
 
 	/**

@@ -32,7 +32,7 @@ class Attribute
 
 	protected DateTimeInterface|bool $pending = false;
 
-	protected bool $valid = true;
+	public bool $valid = true;
 
 	/**
 	 * @param array<int, int|string>|null $validValues
@@ -170,16 +170,6 @@ class Attribute
 	public function isPending(): bool
 	{
 		return $this->pending instanceof DateTimeInterface || $this->pending === true;
-	}
-
-	public function setValid(bool $state): void
-	{
-		$this->valid = $state;
-	}
-
-	public function isValid(): bool
-	{
-		return $this->valid;
 	}
 
 	public function getCapability(): Protocol\Capabilities\Capability

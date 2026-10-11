@@ -34,7 +34,7 @@ final class Connector implements DevicesConnectors\Connector
 
 	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 
-	private FbMqtt\Clients\Client|null $client = null;
+	private FbMqtt\Clients\FbMqttV1|null $client = null;
 
 	private Writers\Writer|null $writer = null;
 
@@ -159,6 +159,14 @@ final class Connector implements DevicesConnectors\Connector
 		);
 	}
 
+	/**
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws FbMqttExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws TypeError
+	 * @throws ValueError
+	 */
 	#[Override]
 	public function terminate(): void
 	{

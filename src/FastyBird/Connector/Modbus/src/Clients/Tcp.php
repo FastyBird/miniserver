@@ -46,7 +46,7 @@ use function React\Async\await;
 final class Tcp implements Client
 {
 
-	use TReading;
+	use ReadsRegisters;
 
 	private const float LOST_DELAY = 60.0; // in s - Waiting delay before another communication with device after device was lost
 

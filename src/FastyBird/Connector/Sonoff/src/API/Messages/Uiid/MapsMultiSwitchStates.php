@@ -13,7 +13,7 @@ use function array_merge;
  * @method array<SwitchConfiguration> getConfiguration()
  * @method array<SwitchPulse> getPulses()
  */
-trait TSwitches
+trait MapsMultiSwitchStates
 {
 
 	/**

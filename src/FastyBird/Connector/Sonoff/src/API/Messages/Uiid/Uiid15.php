@@ -13,8 +13,8 @@ use function array_merge;
 final readonly class Uiid15 implements Uuid
 {
 
-	use TDevice {
-		TDevice::toStates as toDeviceState;
+	use MapsDeviceStates {
+		MapsDeviceStates::toStates as toDeviceState;
 	}
 
 	public const string DEVICE_TYPE_NORMAL = 'normal';

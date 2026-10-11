@@ -58,7 +58,7 @@ class Characteristic
 
 	private DateTimeInterface|bool $pending = false;
 
-	private bool $valid = true;
+	public bool $valid = true;
 
 	/**
 	 * @param array<Types\CharacteristicPermission> $permissions
@@ -264,16 +264,6 @@ class Characteristic
 		return $this->typeId->toString() === self::VIRTUAL_CHARACTERISTIC_UID;
 	}
 
-	public function setValid(bool $state): void
-	{
-		$this->valid = $state;
-	}
-
-	public function isValid(): bool
-	{
-		return $this->valid;
-	}
-
 	/**
 	 * @return array<string, (int|array<int>|float|string)>
 	 */
@@ -355,7 +345,7 @@ class Characteristic
 				$this->minValue,
 				$this->maxValue,
 				$this->minStep,
-				$this->isValid() ? $this->getValue() : $this->getDefault(),
+				$this->valid ? $this->getValue() : $this->getDefault(),
 			);
 		}
 
@@ -405,7 +395,7 @@ class Characteristic
 		return sprintf(
 			'<characteristic name=%s value=%s properties=%s>',
 			$this->name,
-			Utilities\Value::flattenValue($this->isValid() ? $this->getValue() : $this->getDefault()),
+			Utilities\Value::flattenValue($this->valid ? $this->getValue() : $this->getDefault()),
 			Nette\Utils\Json::encode($properties),
 		);
 	}

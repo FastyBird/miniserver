@@ -40,7 +40,7 @@ final class Connector implements DevicesConnectors\Connector
 	/** @var array<Clients\Client|Clients\Discovery> */
 	private array $clients = [];
 
-	private Servers\Server|null $server = null;
+	private Servers\Http|null $server = null;
 
 	private Writers\Writer|null $writer = null;
 

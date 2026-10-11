@@ -232,7 +232,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 						if ($message->getState() !== null) {
 							$characteristic->setActualValue($message->getState()->getActualValue());
 							$characteristic->setExpectedValue($message->getState()->getExpectedValue());
-							$characteristic->setValid($message->getState()->isValid());
+							$characteristic->valid = $message->getState()->isValid();
 						} else {
 							$this->logger->warning(
 								'State entity is missing in event entity',
@@ -259,13 +259,13 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 						}
 					} elseif ($parent instanceof DevicesDocuments\Channels\Properties\Variable) {
 						$characteristic->setActualValue($parent->getValue());
-						$characteristic->setValid(true);
+						$characteristic->valid = true;
 					}
 				} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 					if ($message->getState() !== null) {
 						$characteristic->setActualValue($message->getState()->getActualValue());
 						$characteristic->setExpectedValue($message->getState()->getExpectedValue());
-						$characteristic->setValid($message->getState()->isValid());
+						$characteristic->valid = $message->getState()->isValid();
 					} else {
 						$this->logger->warning(
 							'State entity is missing in event entity',
@@ -292,7 +292,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 					}
 				} elseif ($property instanceof DevicesDocuments\Channels\Properties\Variable) {
 					$characteristic->setActualValue($property->getValue());
-					$characteristic->setValid(true);
+					$characteristic->valid = true;
 				}
 
 				break 2;
@@ -303,7 +303,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 
 		foreach ($characteristicService?->getCharacteristics() ?? [] as $characteristic) {
 			$this->subscriber->publish(
-				intval($accessory->getAid()),
+				intval($accessory->aid),
 				intval($accessory->getIidManager()->getIid($characteristic)),
 				Protocol\Transformer::toClient(
 					$characteristic->getProperty(),
@@ -313,7 +313,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 					$characteristic->getMinValue(),
 					$characteristic->getMaxValue(),
 					$characteristic->getMinStep(),
-					$characteristic->isValid() ? $characteristic->getValue() : $characteristic->getDefault(),
+					$characteristic->valid ? $characteristic->getValue() : $characteristic->getDefault(),
 				),
 				$characteristic->immediateNotify(),
 			);

@@ -30,7 +30,7 @@ abstract class Accessory
 
 	public function __construct(
 		protected string $name,
-		protected int|null $aid,
+		public int|null $aid,
 		protected Types\AccessoryCategory $category,
 	)
 	{
@@ -44,16 +44,6 @@ abstract class Accessory
 	public function getName(): string
 	{
 		return $this->name;
-	}
-
-	public function getAid(): int|null
-	{
-		return $this->aid;
-	}
-
-	public function setAid(int $aid): void
-	{
-		$this->aid = $aid;
 	}
 
 	public function getCategory(): Types\AccessoryCategory

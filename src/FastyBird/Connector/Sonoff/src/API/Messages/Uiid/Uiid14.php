@@ -12,11 +12,11 @@ use function array_merge;
 final readonly class Uiid14 implements Uuid
 {
 
-	use TDevice {
-		TDevice::toStates as toDeviceState;
+	use MapsDeviceStates {
+		MapsDeviceStates::toStates as toDeviceState;
 	}
-	use TSwitch {
-		TSwitch::toStates as toSwitchState;
+	use MapsSwitchStates {
+		MapsSwitchStates::toStates as toSwitchState;
 	}
 
 	public function __construct(

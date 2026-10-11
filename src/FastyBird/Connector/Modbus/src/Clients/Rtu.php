@@ -44,7 +44,7 @@ use function React\Async\await;
 final class Rtu implements Client
 {
 
-	use TReading;
+	use ReadsRegisters;
 
 	private const int READ_MAX_ATTEMPTS = 5;
 

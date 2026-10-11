@@ -95,7 +95,7 @@ final class Device implements Client
 					continue;
 				}
 
-				if ($protocolDevice->isCorrupted()) {
+				if ($protocolDevice->corrupted) {
 					$this->queue->append(
 						$this->messageBuilder->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -191,7 +191,7 @@ final class Device implements Client
 											),
 										);
 
-										$deviceToSync->setProvisioned(true);
+										$deviceToSync->provisioned = true;
 									}
 								},
 							)
@@ -225,7 +225,7 @@ final class Device implements Client
 									),
 								);
 
-								$deviceToSync->setProvisioned(false);
+								$deviceToSync->provisioned = false;
 							});
 					}
 
@@ -534,7 +534,7 @@ final class Device implements Client
 					continue;
 				}
 
-				$protocolDevice->setProvisioned(false);
+				$protocolDevice->provisioned = false;
 
 				if ($protocolDevice->getGatewayIdentifier() === null) {
 					$this->queue->append(

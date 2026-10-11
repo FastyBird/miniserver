@@ -14,8 +14,8 @@ use function array_merge;
 final readonly class Uiid34 implements Uuid
 {
 
-	use TDevice {
-		TDevice::toStates as toDeviceState;
+	use MapsDeviceStates {
+		MapsDeviceStates::toStates as toDeviceState;
 	}
 
 	/**
