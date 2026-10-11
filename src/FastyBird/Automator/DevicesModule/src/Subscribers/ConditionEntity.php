@@ -7,6 +7,7 @@ use Doctrine\ORM;
 use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Automator\DevicesModule\Exceptions;
 use Nette;
+use Override;
 use function array_merge;
 
 /**
@@ -22,6 +23,7 @@ final class ConditionEntity implements Common\EventSubscriber
 	 *
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

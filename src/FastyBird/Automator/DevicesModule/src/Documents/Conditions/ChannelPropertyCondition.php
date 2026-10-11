@@ -8,6 +8,7 @@ use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -73,6 +74,7 @@ final class ChannelPropertyCondition extends TriggersDocuments\Conditions\Condit
 		return $this->operator;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

@@ -7,6 +7,7 @@ use FastyBird\Automator\DevicesModule\Entities as DevicesModuleEntities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use FastyBird\Module\Triggers\Queries as TriggersQueries;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -115,6 +116,7 @@ class FindConditions extends TriggersQueries\Entities\FindConditions
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function createBasicDql(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		if ($repository->getClassName() === DevicesModuleEntities\Conditions\PropertyCondition::class) {

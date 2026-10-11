@@ -8,6 +8,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Triggers\Schemas as TriggersSchemas;
 use Neomerx\JsonApi;
+use Override;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -26,6 +27,7 @@ final class ChannelPropertyCondition extends TriggersSchemas\Conditions\Conditio
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	public const string SCHEMA_TYPE = Sources\Automator::DEVICE_MODULE->value . '/condition/' . Entities\Conditions\ChannelPropertyCondition::TYPE;
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -45,6 +47,7 @@ final class ChannelPropertyCondition extends TriggersSchemas\Conditions\Conditio
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,

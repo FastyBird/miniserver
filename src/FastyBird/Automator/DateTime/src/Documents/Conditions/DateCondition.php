@@ -7,6 +7,7 @@ use FastyBird\Automator\DateTime\Entities;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -41,6 +42,7 @@ final class DateCondition extends TriggersDocuments\Conditions\Condition
 		return $this->date;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

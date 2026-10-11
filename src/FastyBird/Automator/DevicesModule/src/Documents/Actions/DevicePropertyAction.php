@@ -7,6 +7,7 @@ use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -55,6 +56,7 @@ final class DevicePropertyAction extends TriggersDocuments\Actions\Action
 		return $this->value;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

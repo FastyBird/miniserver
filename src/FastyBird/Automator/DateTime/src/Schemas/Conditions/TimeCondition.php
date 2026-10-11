@@ -7,6 +7,7 @@ use FastyBird\Automator\DateTime\Entities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers\Schemas as TriggersSchemas;
 use Neomerx\JsonApi;
+use Override;
 use function array_merge;
 
 /**
@@ -22,6 +23,7 @@ final class TimeCondition extends TriggersSchemas\Conditions\Condition
 	 */
 	public const string SCHEMA_TYPE = Sources\Automator::DATE_TIME->value . '/condition/' . Entities\Conditions\TimeCondition::TYPE;
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -37,6 +39,7 @@ final class TimeCondition extends TriggersSchemas\Conditions\Condition
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
