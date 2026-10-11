@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RabbitMqExtension.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           19.06.20
- */
-
 namespace FastyBird\Plugin\RabbitMq\DI;
 
 use FastyBird\Core\Boot;
@@ -30,11 +17,6 @@ use function assert;
 
 /**
  * Message exchange extension container
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class RabbitMqExtension extends DI\CompilerExtension
 {

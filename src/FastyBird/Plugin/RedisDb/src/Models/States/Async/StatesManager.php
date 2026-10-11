@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StatesManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           03.03.20
- */
-
 namespace FastyBird\Plugin\RedisDb\Models\States\Async;
 
 use BackedEnum;
@@ -49,10 +36,6 @@ use function sprintf;
  * Asynchronous states manager
  *
  * @template T of States\State
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Models
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class StatesManager
 {

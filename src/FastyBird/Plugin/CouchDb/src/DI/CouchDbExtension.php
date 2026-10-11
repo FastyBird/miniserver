@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CouchDbExtension.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           04.12.20
- */
-
 namespace FastyBird\Plugin\CouchDb\DI;
 
 use FastyBird\Core\Boot;
@@ -26,11 +13,6 @@ use function assert;
 
 /**
  * CouchDB state storage extension container
- *
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class CouchDbExtension extends DI\CompilerExtension
 {

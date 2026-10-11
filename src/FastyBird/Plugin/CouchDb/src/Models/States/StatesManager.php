@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StatesManager.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           03.03.20
- */
-
 namespace FastyBird\Plugin\CouchDb\Models\States;
 
 use BackedEnum;
@@ -45,11 +32,6 @@ use function sprintf;
  * States manager
  *
  * @template T of States\State
- *
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class StatesManager
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Factory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Exchange
- * @since          1.0.0
- *
- * @date           09.10.22
- */
-
 namespace FastyBird\Plugin\RedisDb\Exchange;
 
 use Clue\React\Redis;
@@ -28,10 +15,6 @@ use Throwable;
 
 /**
  * Redis DB exchange factory
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Exchange
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Factory implements Exchange\Factory
 {

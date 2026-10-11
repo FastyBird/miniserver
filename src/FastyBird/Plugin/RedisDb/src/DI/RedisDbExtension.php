@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RedisDbExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           25.02.21
- */
-
 namespace FastyBird\Plugin\RedisDb\DI;
 
 use FastyBird\Core\Boot;
@@ -31,11 +18,6 @@ use function assert;
 
 /**
  * Message exchange extension container
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class RedisDbExtension extends DI\CompilerExtension
 {

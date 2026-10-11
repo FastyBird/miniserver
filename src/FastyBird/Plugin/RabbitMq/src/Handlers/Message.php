@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Message.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Handlers
- * @since          1.0.0
- *
- * @date           26.03.23
- */
-
 namespace FastyBird\Plugin\RabbitMq\Handlers;
 
 use Bunny;
@@ -35,11 +22,6 @@ use function strval;
 
 /**
  * RabbitMQ message handler
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Handlers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Message
 {

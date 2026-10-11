@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StatesRepository.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           02.03.20
- */
-
 namespace FastyBird\Plugin\CouchDb\Models\States;
 
 use FastyBird\Core\Logging;
@@ -35,11 +22,6 @@ use function is_object;
  * State repository
  *
  * @template T of States\State
- *
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class StatesRepository
 {

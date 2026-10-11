@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Client.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Client
- * @since          1.0.0
- *
- * @date           17.09.21
- */
-
 namespace FastyBird\Plugin\RedisDb\Clients;
 
 use FastyBird\Plugin\RedisDb\Connections;
@@ -24,11 +11,6 @@ use function is_int;
 
 /**
  * Redis DB proxy client to PREDIS instance
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Client
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Client
 {

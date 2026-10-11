@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Publisher.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Publishers
- * @since          1.0.0
- *
- * @date           17.09.21
- */
-
 namespace FastyBird\Plugin\RedisDb\Publishers\Async;
 
 use DateTimeInterface;
@@ -32,11 +19,6 @@ use Throwable;
 
 /**
  * Redis DB exchange async publisher
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Publishers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Publisher implements Async\MessagePublisher
 {

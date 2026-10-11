@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Publisher.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Publisher
- * @since          1.0.0
- *
- * @date           08.03.20
- */
-
 namespace FastyBird\Plugin\RabbitMq\Publishers;
 
 use Bunny;
@@ -30,11 +17,6 @@ use Psr\Log;
 
 /**
  * RabbitMQ exchange publisher
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Publisher
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Publisher implements ExchangePublisher\MessagePublisher
 {

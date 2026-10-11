@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Journal.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Caching
- * @since          1.0.0
- *
- * @date           15.08.24
- */
-
 namespace FastyBird\Plugin\RedisDbCache\Caching;
 
 use FastyBird\Plugin\RedisDbCache\Clients;
@@ -25,11 +12,6 @@ use function is_string;
 
 /**
  * Redis cache journal
- *
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Caching
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Journal implements Caching\Storages\Journal
 {

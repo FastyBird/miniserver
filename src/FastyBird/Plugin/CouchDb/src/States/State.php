@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * State.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     States
- * @since          1.0.0
- *
- * @date           08.03.20
- */
-
 namespace FastyBird\Plugin\CouchDb\States;
 
 use FastyBird\Core\Persistence\Rules;
@@ -21,11 +8,6 @@ use Ramsey\Uuid;
 
 /**
  * Base state
- *
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     States
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class State implements ObjectMapper\MappedObject
 {

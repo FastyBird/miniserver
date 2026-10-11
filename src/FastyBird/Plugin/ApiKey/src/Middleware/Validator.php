@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Validator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Middleware
- * @since          1.0.0
- *
- * @date           21.10.22
- */
-
 namespace FastyBird\Plugin\ApiKey\Middleware;
 
 use FastyBird\Core\Api\Exceptions;
@@ -34,11 +21,6 @@ use const CASE_LOWER;
 
 /**
  * API key check middleware
- *
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Middleware
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Validator implements MiddlewareInterface
 {

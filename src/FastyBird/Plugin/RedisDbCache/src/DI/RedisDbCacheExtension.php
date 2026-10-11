@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RedisDbCacheExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           16.08.24
- */
-
 namespace FastyBird\Plugin\RedisDbCache\DI;
 
 use FastyBird\Plugin\RedisDbCache\Caching as RedisDbCacheCaching;
@@ -27,11 +14,6 @@ use function assert;
 
 /**
  * Redis DB cache extension container
- *
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class RedisDbCacheExtension extends DI\CompilerExtension
 {

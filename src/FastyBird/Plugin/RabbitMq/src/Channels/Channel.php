@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Channel
- * @since          1.0.0
- *
- * @date           26.03.23
- */
-
 namespace FastyBird\Plugin\RabbitMq\Channels;
 
 use Bunny;
@@ -23,11 +10,6 @@ use function assert;
 
 /**
  * Rabbit MQ client
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Channel
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Channel
 {
