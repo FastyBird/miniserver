@@ -10,7 +10,6 @@ use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
-use Nette;
 use Nette\Localization;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
@@ -32,8 +31,6 @@ use function usort;
  */
 final class Diagnostics extends Console\Command\Command
 {
-
-	use Nette\SmartObject;
 
 	public const string NAME = 'fb:devices-module:diagnostics';
 

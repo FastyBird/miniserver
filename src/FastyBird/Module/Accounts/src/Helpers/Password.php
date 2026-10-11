@@ -3,7 +3,6 @@
 namespace FastyBird\Module\Accounts\Helpers;
 
 use FastyBird\Module\Accounts\Exceptions;
-use Nette;
 use Nette\Utils;
 use Override;
 use function hash;
@@ -13,8 +12,6 @@ use function hash;
  */
 final class Password
 {
-
-	use Nette\SmartObject;
 
 	private const string SEPARATOR = '##';
 

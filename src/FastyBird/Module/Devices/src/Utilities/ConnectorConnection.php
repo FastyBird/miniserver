@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette;
 use Nette\Utils;
 use TypeError;
 use ValueError;
@@ -29,8 +28,6 @@ use function sprintf;
  */
 final readonly class ConnectorConnection
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Models\Entities\Connectors\ConnectorsRepository $connectorsEntitiesRepository,

@@ -10,7 +10,6 @@ use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Queries;
-use Nette;
 use Throwable;
 use function is_array;
 
@@ -19,8 +18,6 @@ use function is_array;
  */
 final class AccountsRepository
 {
-
-	use Nette\SmartObject;
 
 	/** @var ORM\EntityRepository<Entities\Accounts\Account>|null */
 	private ORM\EntityRepository|null $repository = null;

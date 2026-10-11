@@ -6,7 +6,6 @@ use DateTimeInterface;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\States;
-use Nette;
 use Nette\Utils;
 use Ramsey\Uuid;
 use Throwable;
@@ -16,8 +15,6 @@ use Throwable;
  */
 final readonly class Manager
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(private IManager|null $manager = null)
 	{

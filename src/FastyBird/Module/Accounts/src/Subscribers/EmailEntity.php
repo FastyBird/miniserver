@@ -10,7 +10,6 @@ use FastyBird\Core\Persistence\Utilities;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
-use Nette;
 use Override;
 use function array_key_exists;
 use function array_merge;
@@ -21,8 +20,6 @@ use function count;
  */
 final readonly class EmailEntity implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Models\Entities\Emails\EmailsRepository $emailsRepository,

@@ -5,15 +5,12 @@ namespace FastyBird\Module\Triggers\Models\States;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;
 use FastyBird\Module\Triggers\States;
-use Nette;
 
 /**
  * Action state repository
  */
 final readonly class ActionsRepository
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(protected IActionsRepository|null $repository = null)
 	{

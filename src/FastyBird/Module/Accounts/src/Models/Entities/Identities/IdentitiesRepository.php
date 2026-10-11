@@ -11,7 +11,6 @@ use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Types;
-use Nette;
 use Throwable;
 use function is_array;
 
@@ -20,8 +19,6 @@ use function is_array;
  */
 final class IdentitiesRepository
 {
-
-	use Nette\SmartObject;
 
 	/** @var ORM\EntityRepository<Entities\Identities\Identity>|null */
 	private ORM\EntityRepository|null $repository = null;

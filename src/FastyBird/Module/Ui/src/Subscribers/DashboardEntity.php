@@ -9,7 +9,6 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
-use Nette;
 use Override;
 
 /**
@@ -17,8 +16,6 @@ use Override;
  */
 final readonly class DashboardEntity implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Models\Entities\Dashboards\Tabs\Repository $tabsRepository,

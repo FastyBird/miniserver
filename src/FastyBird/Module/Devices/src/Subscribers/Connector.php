@@ -13,7 +13,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Types;
 use FastyBird\Module\Devices\Utilities;
-use Nette;
 use Override;
 use Symfony\Component\EventDispatcher;
 use TypeError;
@@ -24,8 +23,6 @@ use ValueError;
  */
 final readonly class Connector implements EventDispatcher\EventSubscriberInterface
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Models\Entities\Connectors\ConnectorsRepository $connectorsEntitiesRepository,

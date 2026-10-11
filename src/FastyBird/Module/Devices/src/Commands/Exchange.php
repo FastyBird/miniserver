@@ -9,7 +9,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Consumers as DevicesConsumers;
 use FastyBird\Module\Devices\Events;
-use Nette;
 use Nette\Localization;
 use Psr\EventDispatcher;
 use React\EventLoop;
@@ -26,8 +25,6 @@ use const SIGTERM;
  */
 final class Exchange extends Console\Command\Command
 {
-
-	use Nette\SmartObject;
 
 	public const string NAME = 'fb:devices-module:exchange';
 

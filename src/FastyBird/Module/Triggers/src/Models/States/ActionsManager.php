@@ -11,7 +11,6 @@ use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\States;
-use Nette;
 use Nette\Utils;
 use function array_merge;
 
@@ -20,8 +19,6 @@ use function array_merge;
  */
 final readonly class ActionsManager
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		protected CoreDocuments\DocumentFactory $documentFactory,

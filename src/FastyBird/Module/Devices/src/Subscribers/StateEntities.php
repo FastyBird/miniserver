@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\States;
-use Nette;
 use Nette\Caching as NetteCaching;
 use Override;
 use Symfony\Component\EventDispatcher;
@@ -28,8 +27,6 @@ use Symfony\Component\EventDispatcher;
  */
 final readonly class StateEntities implements EventDispatcher\EventSubscriberInterface
 {
-
-	use Nette\SmartObject;
 
 	private const string ACTION_CREATED = 'created';
 

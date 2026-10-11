@@ -18,7 +18,6 @@ use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Router;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette;
 use Nette\Localization;
 use Nette\Utils;
 use Psr\Http\Message;
@@ -37,8 +36,6 @@ use function strval;
  */
 abstract class BaseV1
 {
-
-	use Nette\SmartObject;
 
 	protected Localization\Translator $translator;
 

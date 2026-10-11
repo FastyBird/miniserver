@@ -7,7 +7,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Accounts\Entities;
-use Nette;
 use Nette\Utils;
 use ReflectionException;
 use function assert;
@@ -17,8 +16,6 @@ use function assert;
  */
 final class AccountsManager
 {
-
-	use Nette\SmartObject;
 
 	/** @var Crud\EntityCrud<Entities\Accounts\Account>|null */
 	private Crud\EntityCrud|null $entityCrud = null;

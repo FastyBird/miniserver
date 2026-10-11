@@ -10,7 +10,6 @@ use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Queries;
-use Nette;
 use Ramsey\Uuid;
 use Throwable;
 use function is_array;
@@ -20,8 +19,6 @@ use function is_array;
  */
 final class DevicesRepository
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<ORM\EntityRepository<Entities\Devices\Device>> */
 	private array $repository = [];

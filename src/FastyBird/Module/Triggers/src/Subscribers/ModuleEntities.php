@@ -15,7 +15,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Types;
-use Nette;
 use Nette\Utils;
 use Override;
 use ReflectionClass;
@@ -28,8 +27,6 @@ use function str_starts_with;
  */
 final readonly class ModuleEntities implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	private const string ACTION_CREATED = 'created';
 
