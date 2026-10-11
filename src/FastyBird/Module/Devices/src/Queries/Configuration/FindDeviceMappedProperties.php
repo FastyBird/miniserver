@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Types;
  * @template T of Documents\Devices\Properties\Mapped
  * @extends  FindDeviceProperties<T>
  */
-class FindDeviceMappedProperties extends FindDeviceProperties
+final class FindDeviceMappedProperties extends FindDeviceProperties
 {
 
 	public function __construct()

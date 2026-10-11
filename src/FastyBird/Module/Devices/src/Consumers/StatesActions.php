@@ -27,7 +27,7 @@ use function React\Async\await;
 /**
  * States actions messages subscriber
  */
-final class StatesActions implements Consumers\Consumer
+final readonly class StatesActions implements Consumers\Consumer
 {
 
 	private const array CONSUMER_ROUTING_KEYS = [
@@ -37,14 +37,14 @@ final class StatesActions implements Consumers\Consumer
 	];
 
 	public function __construct(
-		private readonly Devices\Logger $logger,
-		private readonly Models\Configuration\Connectors\Properties\Repository $connectorPropertiesConfigurationRepository,
-		private readonly Models\Configuration\Devices\Properties\Repository $devicePropertiesConfigurationRepository,
-		private readonly Models\Configuration\Channels\Properties\Repository $channelPropertiesConfigurationRepository,
-		private readonly Models\States\Async\ConnectorPropertiesManager $connectorPropertiesStatesManager,
-		private readonly Models\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly Models\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Async\MessagePublisher $publisher,
+		private Devices\Logger $logger,
+		private Models\Configuration\Connectors\Properties\Repository $connectorPropertiesConfigurationRepository,
+		private Models\Configuration\Devices\Properties\Repository $devicePropertiesConfigurationRepository,
+		private Models\Configuration\Channels\Properties\Repository $channelPropertiesConfigurationRepository,
+		private Models\States\Async\ConnectorPropertiesManager $connectorPropertiesStatesManager,
+		private Models\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
+		private Models\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private Async\MessagePublisher $publisher,
 	)
 	{
 	}

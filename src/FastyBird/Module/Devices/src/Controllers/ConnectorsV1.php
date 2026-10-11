@@ -34,7 +34,7 @@ use function strval;
  *
  * @Secured\User(loggedIn)
  */
-class ConnectorsV1 extends BaseV1
+final class ConnectorsV1 extends BaseV1
 {
 
 	public function __construct(

@@ -9,7 +9,7 @@ use Throwable;
 /**
  * Event fired when connector should be restarted
  */
-class RestartConnector extends EventDispatcher\Event
+final class RestartConnector extends EventDispatcher\Event
 {
 
 	public function __construct(

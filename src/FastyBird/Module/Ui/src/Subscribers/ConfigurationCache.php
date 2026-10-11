@@ -14,14 +14,12 @@ use Symfony\Component\EventDispatcher;
 /**
  * Module entities events
  */
-final class ConfigurationCache implements EventDispatcher\EventSubscriberInterface
+final readonly class ConfigurationCache implements EventDispatcher\EventSubscriberInterface
 {
 
 	use Nette\SmartObject;
 
-	public function __construct(
-		private readonly UiCaching\Container $moduleCaching,
-	)
+	public function __construct(private UiCaching\Container $moduleCaching)
 	{
 	}
 

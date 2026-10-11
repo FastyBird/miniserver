@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Application user
  */
-class User extends Identity\User
+final class User extends Identity\User
 {
 
 	#[Override]

@@ -23,7 +23,7 @@ use Ramsey\Uuid;
 	Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_DOCUMENT_UPDATED_ROUTING_KEY,
 	Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-class Control implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
+final readonly class Control implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {
 
 	use CoreDocuments\HasOwner;
@@ -32,28 +32,28 @@ class Control implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDoc
 
 	public function __construct(
 		#[Rules\UuidValue()]
-		private readonly Uuid\UuidInterface $id,
+		private Uuid\UuidInterface $id,
 		#[Rules\UuidValue()]
-		private readonly Uuid\UuidInterface $channel,
+		private Uuid\UuidInterface $channel,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
-		private readonly string $name,
+		private string $name,
 		#[ObjectMapper\Rules\AnyOf([
 			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
-		protected readonly Uuid\UuidInterface|null $owner = null,
+		protected Uuid\UuidInterface|null $owner = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('created_at')]
-		protected readonly DateTimeInterface|null $createdAt = null,
+		protected DateTimeInterface|null $createdAt = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('updated_at')]
-		protected readonly DateTimeInterface|null $updatedAt = null,
+		protected DateTimeInterface|null $updatedAt = null,
 	)
 	{
 	}

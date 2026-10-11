@@ -14,7 +14,7 @@ use Ramsey\Uuid;
  * @template T of Entities\Groups\Group
  * @extends  Query\QueryObject<T>
  */
-class FindGroups extends Query\QueryObject
+final class FindGroups extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

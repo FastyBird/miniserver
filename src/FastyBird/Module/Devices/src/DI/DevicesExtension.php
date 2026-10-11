@@ -44,7 +44,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Devices module
  */
-class DevicesExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class DevicesExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbDevicesModule';

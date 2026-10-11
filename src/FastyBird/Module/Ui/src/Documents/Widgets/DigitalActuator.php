@@ -8,7 +8,7 @@ use FastyBird\Module\Ui\Entities;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\DigitalActuator::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\DigitalActuator::TYPE)]
-class DigitalActuator extends UiDocuments\Widgets\Widget
+final class DigitalActuator extends UiDocuments\Widgets\Widget
 {
 
 	public static function getType(): string

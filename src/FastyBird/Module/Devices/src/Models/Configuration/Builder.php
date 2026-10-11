@@ -18,20 +18,20 @@ use function assert;
 /**
  * Configuration builder
  */
-final class Builder
+final readonly class Builder
 {
 
 	public function __construct(
-		private readonly Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,
-		private readonly Models\Entities\Connectors\Properties\PropertiesRepository $connectorsPropertiesRepository,
-		private readonly Models\Entities\Connectors\Controls\ControlsRepository $connectorsControlsRepository,
-		private readonly Models\Entities\Devices\DevicesRepository $devicesRepository,
-		private readonly Models\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		private readonly Models\Entities\Devices\Controls\ControlsRepository $devicesControlsRepository,
-		private readonly Models\Entities\Channels\ChannelsRepository $channelsRepository,
-		private readonly Models\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		private readonly Models\Entities\Channels\Controls\ControlsRepository $channelsControlsRepository,
-		private readonly DevicesCaching\Container $moduleCaching,
+		private Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,
+		private Models\Entities\Connectors\Properties\PropertiesRepository $connectorsPropertiesRepository,
+		private Models\Entities\Connectors\Controls\ControlsRepository $connectorsControlsRepository,
+		private Models\Entities\Devices\DevicesRepository $devicesRepository,
+		private Models\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		private Models\Entities\Devices\Controls\ControlsRepository $devicesControlsRepository,
+		private Models\Entities\Channels\ChannelsRepository $channelsRepository,
+		private Models\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		private Models\Entities\Channels\Controls\ControlsRepository $channelsControlsRepository,
+		private DevicesCaching\Container $moduleCaching,
 	)
 	{
 	}

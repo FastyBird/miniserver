@@ -11,7 +11,7 @@ use FastyBird\Module\Triggers\Middleware as TriggersMiddleware;
 /**
  * Module router configuration
  */
-class ApiRoutes
+final readonly class ApiRoutes
 {
 
 	public const string URL_ITEM_ID = 'id';
@@ -21,15 +21,15 @@ class ApiRoutes
 	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
-		private readonly bool $usePrefix,
-		private readonly Controllers\TriggersV1 $triggersV1Controller,
-		private readonly Controllers\ActionsV1 $actionsV1Controller,
-		private readonly Controllers\NotificationsV1 $notificationsV1Controller,
-		private readonly Controllers\ConditionsV1 $conditionsV1Controller,
-		private readonly Controllers\TriggerControlsV1 $controlsV1Controller,
-		private readonly TriggersMiddleware\Access $triggersAccessControlMiddleware,
-		private readonly SecurityMiddleware\Authorization $authorizationMiddleware,
-		private readonly SecurityMiddleware\User $userMiddleware,
+		private bool $usePrefix,
+		private Controllers\TriggersV1 $triggersV1Controller,
+		private Controllers\ActionsV1 $actionsV1Controller,
+		private Controllers\NotificationsV1 $notificationsV1Controller,
+		private Controllers\ConditionsV1 $conditionsV1Controller,
+		private Controllers\TriggerControlsV1 $controlsV1Controller,
+		private TriggersMiddleware\Access $triggersAccessControlMiddleware,
+		private SecurityMiddleware\Authorization $authorizationMiddleware,
+		private SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

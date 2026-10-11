@@ -22,23 +22,23 @@ use ValueError;
 /**
  * Devices state entities events
  */
-final class Connector implements EventDispatcher\EventSubscriberInterface
+final readonly class Connector implements EventDispatcher\EventSubscriberInterface
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Models\Entities\Connectors\ConnectorsRepository $connectorsEntitiesRepository,
-		private readonly Models\Configuration\Connectors\Properties\Repository $connectorsPropertiesConfigurationRepository,
-		private readonly Models\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly Models\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly Models\Configuration\Channels\Repository $channelsConfigurationRepository,
-		private readonly Models\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		private readonly Models\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
-		private readonly Models\States\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Utilities\ConnectorConnection $connectorConnectionManager,
-		private readonly Utilities\DeviceConnection $deviceConnectionManager,
+		private Models\Entities\Connectors\ConnectorsRepository $connectorsEntitiesRepository,
+		private Models\Configuration\Connectors\Properties\Repository $connectorsPropertiesConfigurationRepository,
+		private Models\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private Models\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private Models\Configuration\Channels\Repository $channelsConfigurationRepository,
+		private Models\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private Models\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
+		private Models\States\DevicePropertiesManager $devicePropertiesStatesManager,
+		private Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private Utilities\ConnectorConnection $connectorConnectionManager,
+		private Utilities\DeviceConnection $deviceConnectionManager,
 	)
 	{
 	}

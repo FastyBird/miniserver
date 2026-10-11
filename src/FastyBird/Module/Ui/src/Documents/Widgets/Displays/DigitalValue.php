@@ -8,7 +8,7 @@ use FastyBird\Module\Ui\Entities;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Displays\DigitalValue::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\DigitalValue::TYPE)]
-class DigitalValue extends UiDocuments\Widgets\Displays\Display
+final class DigitalValue extends UiDocuments\Widgets\Displays\Display
 {
 
 	public static function getType(): string

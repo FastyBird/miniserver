@@ -17,7 +17,7 @@ use function assert;
 /**
  * Widgets data sources entities manager
  */
-class Manager
+final class Manager
 {
 
 	use Nette\SmartObject;

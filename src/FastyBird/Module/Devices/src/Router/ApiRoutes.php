@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 /**
  * Module API routes configuration
  */
-class ApiRoutes
+final readonly class ApiRoutes
 {
 
 	public const string URL_ITEM_ID = 'id';
@@ -27,26 +27,26 @@ class ApiRoutes
 	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
-		private readonly bool $usePrefix,
-		private readonly Controllers\DevicesV1 $devicesV1Controller,
-		private readonly Controllers\DeviceParentsV1 $deviceParentsV1Controller,
-		private readonly Controllers\DeviceChildrenV1 $deviceChildrenV1Controller,
-		private readonly Controllers\DevicePropertiesV1 $devicePropertiesV1Controller,
-		private readonly Controllers\DevicePropertyChildrenV1 $devicePropertyChildrenV1Controller,
-		private readonly Controllers\DevicePropertyStateV1 $devicePropertyStateV1Controller,
-		private readonly Controllers\DeviceControlsV1 $deviceControlsV1Controller,
-		private readonly Controllers\ChannelsV1 $channelsV1Controller,
-		private readonly Controllers\ChannelPropertiesV1 $channelPropertiesV1Controller,
-		private readonly Controllers\ChannelPropertyChildrenV1 $channelPropertyChildrenV1Controller,
-		private readonly Controllers\ChannelPropertyStateV1 $channelPropertyStateV1Controller,
-		private readonly Controllers\ChannelControlsV1 $channelControlsV1Controller,
-		private readonly Controllers\ConnectorsV1 $connectorsV1Controller,
-		private readonly Controllers\ConnectorPropertiesV1 $connectorPropertiesV1Controller,
-		private readonly Controllers\ConnectorPropertyStateV1 $connectorPropertyStateV1Controller,
-		private readonly Controllers\ConnectorControlsV1 $connectorControlsV1Controller,
-		private readonly DevicesMiddleware\Access $devicesAccessControlMiddleware,
-		private readonly SecurityMiddleware\Authorization $accessControlMiddleware,
-		private readonly SecurityMiddleware\User $userMiddleware,
+		private bool $usePrefix,
+		private Controllers\DevicesV1 $devicesV1Controller,
+		private Controllers\DeviceParentsV1 $deviceParentsV1Controller,
+		private Controllers\DeviceChildrenV1 $deviceChildrenV1Controller,
+		private Controllers\DevicePropertiesV1 $devicePropertiesV1Controller,
+		private Controllers\DevicePropertyChildrenV1 $devicePropertyChildrenV1Controller,
+		private Controllers\DevicePropertyStateV1 $devicePropertyStateV1Controller,
+		private Controllers\DeviceControlsV1 $deviceControlsV1Controller,
+		private Controllers\ChannelsV1 $channelsV1Controller,
+		private Controllers\ChannelPropertiesV1 $channelPropertiesV1Controller,
+		private Controllers\ChannelPropertyChildrenV1 $channelPropertyChildrenV1Controller,
+		private Controllers\ChannelPropertyStateV1 $channelPropertyStateV1Controller,
+		private Controllers\ChannelControlsV1 $channelControlsV1Controller,
+		private Controllers\ConnectorsV1 $connectorsV1Controller,
+		private Controllers\ConnectorPropertiesV1 $connectorPropertiesV1Controller,
+		private Controllers\ConnectorPropertyStateV1 $connectorPropertyStateV1Controller,
+		private Controllers\ConnectorControlsV1 $connectorControlsV1Controller,
+		private DevicesMiddleware\Access $devicesAccessControlMiddleware,
+		private SecurityMiddleware\Authorization $accessControlMiddleware,
+		private SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

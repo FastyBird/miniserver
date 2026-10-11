@@ -17,7 +17,7 @@ use function array_key_exists;
 /**
  * Devices connectors container
  */
-class Container implements Connector, EventDispatcher\EventSubscriberInterface
+final class Container implements Connector, EventDispatcher\EventSubscriberInterface
 {
 
 	/** @var array<Closure(Sources\Source $source, string|null $reason, Throwable|null $ex): void> */

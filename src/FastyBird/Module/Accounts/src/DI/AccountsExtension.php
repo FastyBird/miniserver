@@ -35,7 +35,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Accounts module extension container
  */
-class AccountsExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class AccountsExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbAccountsModule';

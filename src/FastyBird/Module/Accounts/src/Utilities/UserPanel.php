@@ -11,10 +11,10 @@ use const DIRECTORY_SEPARATOR;
 /**
  * User panel for Debugger Bar
  */
-class UserPanel implements Tracy\IBarPanel
+final readonly class UserPanel implements Tracy\IBarPanel
 {
 
-	public function __construct(private readonly Security\User $user)
+	public function __construct(private Security\User $user)
 	{
 	}
 

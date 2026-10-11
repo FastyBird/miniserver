@@ -16,10 +16,10 @@ use function strval;
 /**
  * Access check middleware
  */
-final class Access implements MiddlewareInterface
+final readonly class Access implements MiddlewareInterface
 {
 
-	public function __construct(private readonly Localization\Translator $translator)
+	public function __construct(private Localization\Translator $translator)
 	{
 	}
 

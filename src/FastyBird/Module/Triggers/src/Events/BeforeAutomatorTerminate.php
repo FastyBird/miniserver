@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Event fired before connector has been terminated
  */
-class BeforeAutomatorTerminate extends EventDispatcher\Event
+final class BeforeAutomatorTerminate extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Entities\Triggers\Trigger $trigger)

@@ -19,7 +19,7 @@ use function assert;
  *
  * @Secured\User(loggedIn)
  */
-class AccountPresenter extends BasePresenter
+final class AccountPresenter extends BasePresenter
 {
 
 	public function __construct(

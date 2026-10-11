@@ -10,12 +10,12 @@ use Nette;
 /**
  * Condition state repository
  */
-final class ConditionsRepository
+final readonly class ConditionsRepository
 {
 
 	use Nette\SmartObject;
 
-	public function __construct(protected readonly IConditionsRepository|null $repository = null)
+	public function __construct(protected IConditionsRepository|null $repository = null)
 	{
 	}
 

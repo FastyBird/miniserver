@@ -20,13 +20,13 @@ use function sprintf;
 /**
  * Doctrine entities events
  */
-final class AccountEntity implements Common\EventSubscriber
+final readonly class AccountEntity implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Identity\EnforcerFactory $enforcerFactory,
+		private Identity\EnforcerFactory $enforcerFactory,
 	)
 	{
 	}

@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Channel property state entity was created event
  */
-class ChannelPropertyStateEntityCreated extends EventDispatcher\Event
+final class ChannelPropertyStateEntityCreated extends EventDispatcher\Event
 {
 
 	public function __construct(

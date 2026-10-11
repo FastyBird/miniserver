@@ -15,15 +15,15 @@ use Throwable;
 /**
  * Asynchronous connector property repository
  */
-final class Repository
+final readonly class Repository
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Models\States\Connectors\Repository $fallback,
-		private readonly DevicesCaching\Container $moduleCaching,
-		private readonly IRepository|null $repository = null,
+		private Models\States\Connectors\Repository $fallback,
+		private DevicesCaching\Container $moduleCaching,
+		private IRepository|null $repository = null,
 	)
 	{
 	}

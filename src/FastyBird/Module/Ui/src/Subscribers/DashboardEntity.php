@@ -15,13 +15,13 @@ use Override;
 /**
  * Doctrine entities events
  */
-final class DashboardEntity implements Common\EventSubscriber
+final readonly class DashboardEntity implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Models\Entities\Dashboards\Tabs\Repository $tabsRepository,
+		private Models\Entities\Dashboards\Tabs\Repository $tabsRepository,
 	)
 	{
 	}

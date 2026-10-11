@@ -19,14 +19,14 @@ use function count;
 /**
  * Doctrine entities events
  */
-final class EmailEntity implements Common\EventSubscriber
+final readonly class EmailEntity implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Models\Entities\Emails\EmailsRepository $emailsRepository,
-		private readonly Utilities\DateTimeProvider $dateProvider,
+		private Models\Entities\Emails\EmailsRepository $emailsRepository,
+		private Utilities\DateTimeProvider $dateProvider,
 	)
 	{
 	}

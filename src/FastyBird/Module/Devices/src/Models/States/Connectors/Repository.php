@@ -12,14 +12,14 @@ use Ramsey\Uuid;
 /**
  * Connector property repository
  */
-final class Repository
+final readonly class Repository
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly DevicesCaching\Container $moduleCaching,
-		private readonly IRepository|null $repository = null,
+		private DevicesCaching\Container $moduleCaching,
+		private IRepository|null $repository = null,
 	)
 	{
 	}

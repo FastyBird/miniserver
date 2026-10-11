@@ -14,7 +14,7 @@ use SortDirection;
  *
  * @extends  Query\QueryObject<Entities\Devices\Controls\Control>
  */
-class FindDeviceControls extends Query\QueryObject
+final class FindDeviceControls extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

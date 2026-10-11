@@ -9,7 +9,7 @@ use Throwable;
 /**
  * Event fired when connector should be terminated
  */
-class TerminateConnector extends EventDispatcher\Event
+final class TerminateConnector extends EventDispatcher\Event
 {
 
 	public function __construct(

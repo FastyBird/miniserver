@@ -17,7 +17,7 @@ use ValueError;
  *
  * @Secured\User(loggedIn)
  */
-class ChannelsPresenter extends BasePresenter
+final class ChannelsPresenter extends BasePresenter
 {
 
 	use TConnectors;

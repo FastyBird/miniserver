@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Accounts\Exceptions;
 
-class EmailIsNotValid extends InvalidArgument
+final class EmailIsNotValid extends InvalidArgument
 {
 
 }

@@ -14,12 +14,12 @@ use Throwable;
 /**
  * Device property states manager
  */
-final class Manager
+final readonly class Manager
 {
 
 	use Nette\SmartObject;
 
-	public function __construct(private readonly IManager|null $manager = null)
+	public function __construct(private IManager|null $manager = null)
 	{
 	}
 

@@ -13,7 +13,7 @@ use function assert;
 /**
  * Route validator
  */
-class Validator
+final class Validator
 {
 
 	private Routing\FastRouteDispatcher|null $routerDispatcher = null;

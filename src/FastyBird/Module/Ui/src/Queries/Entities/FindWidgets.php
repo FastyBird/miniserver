@@ -14,7 +14,7 @@ use Ramsey\Uuid;
  * @template  T of Entities\Widgets\Widget
  * @extends   Query\QueryObject<T>
  */
-class FindWidgets extends Query\QueryObject
+final class FindWidgets extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

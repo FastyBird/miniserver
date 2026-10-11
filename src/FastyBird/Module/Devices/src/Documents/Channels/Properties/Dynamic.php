@@ -22,7 +22,7 @@ use function array_merge;
  * Channel dynamic property document
  */
 #[Documents\Mapping\Document(entity: Entities\Channels\Properties\Dynamic::class)]
-class Dynamic extends Property
+final class Dynamic extends Property
 {
 
 	/**

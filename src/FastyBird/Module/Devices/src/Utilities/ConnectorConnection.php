@@ -27,18 +27,18 @@ use function sprintf;
 /**
  * Connector connection states manager
  */
-final class ConnectorConnection
+final readonly class ConnectorConnection
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Models\Entities\Connectors\ConnectorsRepository $connectorsEntitiesRepository,
-		private readonly Models\Entities\Connectors\Properties\PropertiesManager $connectorsPropertiesEntitiesManager,
-		private readonly Models\Configuration\Connectors\Properties\Repository $connectorsPropertiesConfigurationRepository,
-		private readonly Models\States\ConnectorPropertiesManager $propertiesStatesManager,
-		private readonly Helpers\Database $databaseHelper,
-		private readonly Devices\Logger $logger,
+		private Models\Entities\Connectors\ConnectorsRepository $connectorsEntitiesRepository,
+		private Models\Entities\Connectors\Properties\PropertiesManager $connectorsPropertiesEntitiesManager,
+		private Models\Configuration\Connectors\Properties\Repository $connectorsPropertiesConfigurationRepository,
+		private Models\States\ConnectorPropertiesManager $propertiesStatesManager,
+		private Helpers\Database $databaseHelper,
+		private Devices\Logger $logger,
 	)
 	{
 	}

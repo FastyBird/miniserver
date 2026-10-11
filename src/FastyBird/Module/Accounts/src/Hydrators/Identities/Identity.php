@@ -18,7 +18,7 @@ use function strval;
  *
  * @extends Hydrators\Hydrator<Entities\Identities\Identity>
  */
-class Identity extends Hydrators\Hydrator
+final class Identity extends Hydrators\Hydrator
 {
 
 	/** @var array<int|string, string> */

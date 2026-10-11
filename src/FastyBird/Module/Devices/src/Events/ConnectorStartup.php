@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * When module connector service started
  */
-class ConnectorStartup extends EventDispatcher\Event
+final class ConnectorStartup extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Documents\Connectors\Connector $connector)

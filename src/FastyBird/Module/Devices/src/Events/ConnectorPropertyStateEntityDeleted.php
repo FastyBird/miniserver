@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Connector property state entity was deleted event
  */
-class ConnectorPropertyStateEntityDeleted extends EventDispatcher\Event
+final class ConnectorPropertyStateEntityDeleted extends EventDispatcher\Event
 {
 
 	public function __construct(

@@ -10,7 +10,7 @@ use Nette;
 /**
  * Module sockets routes configuration
  */
-class SocketRoutes
+final class SocketRoutes
 {
 
 	/**

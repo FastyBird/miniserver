@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Event fired after connector has been terminated
  */
-class AfterConnectorExecutionTerminate extends EventDispatcher\Event
+final class AfterConnectorExecutionTerminate extends EventDispatcher\Event
 {
 
 	public function __construct(

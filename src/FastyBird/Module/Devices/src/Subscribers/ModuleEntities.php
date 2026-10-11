@@ -26,7 +26,7 @@ use function str_starts_with;
 /**
  * Doctrine entities events
  */
-final class ModuleEntities implements Common\EventSubscriber
+final readonly class ModuleEntities implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
@@ -38,17 +38,17 @@ final class ModuleEntities implements Common\EventSubscriber
 	private const string ACTION_DELETED = 'deleted';
 
 	public function __construct(
-		private readonly ORM\EntityManagerInterface $entityManager,
-		private readonly Models\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
-		private readonly Models\States\Async\ConnectorPropertiesManager $asyncConnectorPropertiesStatesManager,
-		private readonly Models\States\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly Models\States\Async\DevicePropertiesManager $asyncDevicePropertiesStatesManager,
-		private readonly Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly Models\States\Async\ChannelPropertiesManager $asyncChannelPropertiesStatesManager,
-		private readonly EventLoop\Status $eventLoopStatus,
-		private readonly Documents\RoutingDocumentFactory $documentFactory,
-		private readonly Publisher\MessagePublisher $publisher,
-		private readonly Async\MessagePublisher $asyncPublisher,
+		private ORM\EntityManagerInterface $entityManager,
+		private Models\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
+		private Models\States\Async\ConnectorPropertiesManager $asyncConnectorPropertiesStatesManager,
+		private Models\States\DevicePropertiesManager $devicePropertiesStatesManager,
+		private Models\States\Async\DevicePropertiesManager $asyncDevicePropertiesStatesManager,
+		private Models\States\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private Models\States\Async\ChannelPropertiesManager $asyncChannelPropertiesStatesManager,
+		private EventLoop\Status $eventLoopStatus,
+		private Documents\RoutingDocumentFactory $documentFactory,
+		private Publisher\MessagePublisher $publisher,
+		private Async\MessagePublisher $asyncPublisher,
 	)
 	{
 	}

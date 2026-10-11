@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Device property state entity was deleted event
  */
-class DevicePropertyStateEntityDeleted extends EventDispatcher\Event
+final class DevicePropertyStateEntityDeleted extends EventDispatcher\Event
 {
 
 	public function __construct(

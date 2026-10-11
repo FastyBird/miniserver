@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Triggers\Exceptions;
 
-class UniqueNotificationEmailConstraint extends InvalidState implements Exception
+final class UniqueNotificationEmailConstraint extends InvalidState implements Exception
 {
 
 }

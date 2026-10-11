@@ -15,7 +15,7 @@ use function assert;
 /**
  * User identities entities manager
  */
-class IdentitiesManager
+final class IdentitiesManager
 {
 
 	use Nette\SmartObject;

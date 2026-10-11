@@ -10,12 +10,12 @@ use Nette;
 /**
  * Action state repository
  */
-final class ActionsRepository
+final readonly class ActionsRepository
 {
 
 	use Nette\SmartObject;
 
-	public function __construct(protected readonly IActionsRepository|null $repository = null)
+	public function __construct(protected IActionsRepository|null $repository = null)
 	{
 	}
 

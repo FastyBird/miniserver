@@ -15,7 +15,7 @@ use function serialize;
  * @template T of Documents\Channels\Controls\Control
  * @extends  QueryObject<T>
  */
-class FindChannelControls extends QueryObject
+final class FindChannelControls extends QueryObject
 {
 
 	/** @var array<string> */

@@ -14,7 +14,7 @@ use Ramsey\Uuid;
  * @template T of Documents\Devices\Properties\Dynamic
  * @extends  FindDeviceProperties<T>
  */
-class FindDeviceDynamicProperties extends FindDeviceProperties
+final class FindDeviceDynamicProperties extends FindDeviceProperties
 {
 
 	public function __construct()

@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Types;
  * @template T of Documents\Channels\Properties\Mapped
  * @extends  FindChannelProperties<T>
  */
-class FindChannelMappedProperties extends FindChannelProperties
+final class FindChannelMappedProperties extends FindChannelProperties
 {
 
 	public function __construct()

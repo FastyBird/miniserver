@@ -10,7 +10,7 @@ use FastyBird\Module\Devices\Entities;
  * @template T of Entities\Connectors\Properties\Dynamic
  * @extends  FindConnectorProperties<T>
  */
-class FindConnectorDynamicProperties extends FindConnectorProperties
+final class FindConnectorDynamicProperties extends FindConnectorProperties
 {
 
 }

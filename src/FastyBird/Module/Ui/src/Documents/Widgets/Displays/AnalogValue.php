@@ -13,7 +13,7 @@ use function array_merge;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Displays\AnalogValue::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\AnalogValue::TYPE)]
-class AnalogValue extends UiDocuments\Widgets\Displays\Display
+final class AnalogValue extends UiDocuments\Widgets\Displays\Display
 {
 
 	public function __construct(

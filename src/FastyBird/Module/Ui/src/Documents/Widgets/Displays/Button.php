@@ -14,7 +14,7 @@ use function array_merge;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Displays\Button::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\Button::TYPE)]
-class Button extends UiDocuments\Widgets\Displays\Display
+final class Button extends UiDocuments\Widgets\Displays\Display
 {
 
 	public function __construct(

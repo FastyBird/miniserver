@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Doctrine entity was updated
  */
-class EntityUpdated extends EventDispatcher\Event
+final class EntityUpdated extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Entities\Entity $entity)

@@ -15,7 +15,7 @@ use function serialize;
  * @template T of Documents\Widgets\Displays\Display
  * @extends  QueryObject<T>
  */
-class FindWidgetDisplays extends QueryObject
+final class FindWidgetDisplays extends QueryObject
 {
 
 	/** @var array<string> */

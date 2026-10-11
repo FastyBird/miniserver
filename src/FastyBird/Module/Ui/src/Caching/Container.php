@@ -7,7 +7,7 @@ use Nette\Caching;
 /**
  * Module cache container
  */
-readonly class Container
+final readonly class Container
 {
 
 	public function __construct(

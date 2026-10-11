@@ -16,14 +16,14 @@ use Throwable;
 /**
  * Asynchronous device property states manager
  */
-final class Manager
+final readonly class Manager
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Models\States\Devices\Manager $fallback,
-		private readonly IManager|null $manager = null,
+		private Models\States\Devices\Manager $fallback,
+		private IManager|null $manager = null,
 	)
 	{
 	}

@@ -13,7 +13,7 @@ use function array_merge;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Displays\Gauge::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\Gauge::TYPE)]
-class Gauge extends UiDocuments\Widgets\Displays\Display
+final class Gauge extends UiDocuments\Widgets\Displays\Display
 {
 
 	public function __construct(

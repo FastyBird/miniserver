@@ -24,7 +24,7 @@ use function array_map;
 	Ui\Constants::MESSAGE_BUS_DASHBOARD_DOCUMENT_UPDATED_ROUTING_KEY,
 	Ui\Constants::MESSAGE_BUS_DASHBOARD_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-final class Dashboard implements UiDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
+final readonly class Dashboard implements UiDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {
 
 	use CoreDocuments\HasOwner;
@@ -36,42 +36,42 @@ final class Dashboard implements UiDocuments\Document, CoreDocuments\Owner, Core
 	 */
 	public function __construct(
 		#[Rules\UuidValue()]
-		private readonly Uuid\UuidInterface $id,
+		private Uuid\UuidInterface $id,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
-		private readonly string $identifier,
+		private string $identifier,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
-		private readonly string|null $name = null,
+		private string|null $name = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
-		private readonly string|null $comment = null,
+		private string|null $comment = null,
 		#[ObjectMapper\Rules\IntValue()]
-		private readonly int $priority = 0,
+		private int $priority = 0,
 		#[ObjectMapper\Rules\ArrayOf(
 			new Rules\UuidValue(),
 		)]
-		private readonly array $tabs = [],
+		private array $tabs = [],
 		#[ObjectMapper\Rules\AnyOf([
 			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
-		protected readonly Uuid\UuidInterface|null $owner = null,
+		protected Uuid\UuidInterface|null $owner = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('created_at')]
-		protected readonly DateTimeInterface|null $createdAt = null,
+		protected DateTimeInterface|null $createdAt = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('updated_at')]
-		protected readonly DateTimeInterface|null $updatedAt = null,
+		protected DateTimeInterface|null $updatedAt = null,
 	)
 	{
 	}

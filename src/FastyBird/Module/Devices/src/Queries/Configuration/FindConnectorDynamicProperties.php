@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Types;
  * @template T of Documents\Connectors\Properties\Dynamic
  * @extends  FindConnectorProperties<T>
  */
-class FindConnectorDynamicProperties extends FindConnectorProperties
+final class FindConnectorDynamicProperties extends FindConnectorProperties
 {
 
 	public function __construct()

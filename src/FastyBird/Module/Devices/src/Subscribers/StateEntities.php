@@ -26,7 +26,7 @@ use Symfony\Component\EventDispatcher;
 /**
  * Devices state entities events
  */
-final class StateEntities implements EventDispatcher\EventSubscriberInterface
+final readonly class StateEntities implements EventDispatcher\EventSubscriberInterface
 {
 
 	use Nette\SmartObject;
@@ -38,11 +38,11 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	private const string ACTION_DELETED = 'deleted';
 
 	public function __construct(
-		private readonly CoreDocuments\DocumentFactory $documentFactory,
-		private readonly DevicesCaching\Container $moduleCaching,
-		private readonly EventLoop\Status $eventLoopStatus,
-		private readonly Publisher\MessagePublisher $publisher,
-		private readonly Async\MessagePublisher $asyncPublisher,
+		private CoreDocuments\DocumentFactory $documentFactory,
+		private DevicesCaching\Container $moduleCaching,
+		private EventLoop\Status $eventLoopStatus,
+		private Publisher\MessagePublisher $publisher,
+		private Async\MessagePublisher $asyncPublisher,
 	)
 	{
 	}

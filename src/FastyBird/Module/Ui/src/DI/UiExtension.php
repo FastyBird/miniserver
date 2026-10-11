@@ -39,7 +39,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * UI module
  */
-class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbUiModule';

@@ -14,7 +14,7 @@ use Ramsey\Uuid;
  *
  * @extends  Query\QueryObject<Entities\Identities\Identity>
  */
-class FindIdentities extends Query\QueryObject
+final class FindIdentities extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

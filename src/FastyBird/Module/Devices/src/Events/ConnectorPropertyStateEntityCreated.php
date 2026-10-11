@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Connector property state entity was created event
  */
-class ConnectorPropertyStateEntityCreated extends EventDispatcher\Event
+final class ConnectorPropertyStateEntityCreated extends EventDispatcher\Event
 {
 
 	public function __construct(

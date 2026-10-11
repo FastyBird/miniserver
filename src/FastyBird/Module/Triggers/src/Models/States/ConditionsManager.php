@@ -18,15 +18,15 @@ use function array_merge;
 /**
  * Condition states manager
  */
-final class ConditionsManager
+final readonly class ConditionsManager
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		protected readonly CoreDocuments\DocumentFactory $documentFactory,
-		protected readonly IConditionsManager|null $manager = null,
-		protected readonly Publisher\MessagePublisher|null $publisher = null,
+		protected CoreDocuments\DocumentFactory $documentFactory,
+		protected IConditionsManager|null $manager = null,
+		protected Publisher\MessagePublisher|null $publisher = null,
 	)
 	{
 	}

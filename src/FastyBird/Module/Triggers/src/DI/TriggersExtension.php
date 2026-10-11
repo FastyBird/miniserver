@@ -29,7 +29,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Triggers module extension container
  */
-class TriggersExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class TriggersExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbTriggersModule';

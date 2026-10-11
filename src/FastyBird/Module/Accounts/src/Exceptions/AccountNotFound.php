@@ -4,7 +4,7 @@ namespace FastyBird\Module\Accounts\Exceptions;
 
 use FastyBird\Core\Security\Exceptions;
 
-class AccountNotFound extends Exceptions\Authentication implements Exception
+final class AccountNotFound extends Exceptions\Authentication implements Exception
 {
 
 }

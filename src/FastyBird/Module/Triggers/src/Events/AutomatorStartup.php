@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * When module automator service started
  */
-class AutomatorStartup extends EventDispatcher\Event
+final class AutomatorStartup extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Entities\Triggers\Trigger $trigger)

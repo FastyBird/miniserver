@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Entities;
  * @template T of Entities\Channels\Properties\Variable
  * @extends  FindChannelProperties<T>
  */
-class FindChannelVariableProperties extends FindChannelProperties
+final class FindChannelVariableProperties extends FindChannelProperties
 {
 
 	public function byValue(string $value): void

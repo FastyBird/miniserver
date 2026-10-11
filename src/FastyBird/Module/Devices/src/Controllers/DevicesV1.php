@@ -33,7 +33,7 @@ use function strval;
  *
  * @Secured\User(loggedIn)
  */
-class DevicesV1 extends BaseV1
+final class DevicesV1 extends BaseV1
 {
 
 	use Controllers\Finders\TConnector;

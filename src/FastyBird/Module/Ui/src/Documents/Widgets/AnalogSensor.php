@@ -8,7 +8,7 @@ use FastyBird\Module\Ui\Entities;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\AnalogSensor::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\AnalogSensor::TYPE)]
-class AnalogSensor extends UiDocuments\Widgets\Widget
+final class AnalogSensor extends UiDocuments\Widgets\Widget
 {
 
 	public static function getType(): string
