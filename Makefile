@@ -70,11 +70,15 @@ rectorf: ## Apply the PHPUnit annotation-to-attribute conversion, then fix codin
 # E7_PACKAGE: `E7_PACKAGE=Plugin make rector-e5 RECTOR_CONFIG=tools/rector/e7-override.php`
 # (and tools/rector/e7-readonly.php); without E7_PACKAGE e7-override.php covers all 29 packages' src
 # (Core included) and e7-readonly.php the 28 outside Core.
+# The target always passes --clear-cache, for dry runs and for applying alike. Rector's cache
+# (var/tools/Rector) can return stale results: in #713 a readonly run found 15 candidates instead
+# of 20 until the cache was cleared. A cleared cache costs only speed, and a repository-wide
+# rewrite runs a handful of times per PR, so a trustworthy result wins.
 rector-e5: ## Apply an E5 Rector config: make rector-e5 RECTOR_CONFIG=tools/rector/e5-<topic>.php [ARGS=--dry-run]
 	test -n "$(RECTOR_CONFIG)" || { echo "rector-e5: set RECTOR_CONFIG=tools/rector/<config>.php" >&2; exit 2; }
 	test -f "$(RECTOR_CONFIG)" || { echo "rector-e5: $(RECTOR_CONFIG) does not exist" >&2; exit 2; }
 	mkdir -p var/tools/Rector
-	$(PRE_PHP) "vendor/bin/rector" process --config="$(RECTOR_CONFIG)" --no-progress-bar $(ARGS)
+	$(PRE_PHP) "vendor/bin/rector" process --config="$(RECTOR_CONFIG)" --no-progress-bar --clear-cache $(ARGS)
 
 # Dependency-direction gate for the 34 packages under src/FastyBird. This is what replaced
 # the 34 per-package composer manifests, which were measured to be fiction (117 undeclared

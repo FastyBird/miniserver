@@ -19,6 +19,11 @@ use Rector\ValueObject\PhpVersion;
  *   make rector-e5 RECTOR_CONFIG=tools/rector/e5-<topic>.php ARGS=--dry-run   # preview
  *   make rector-e5 RECTOR_CONFIG=tools/rector/e5-<topic>.php                  # apply
  *
+ * `make rector-e5` always passes `--clear-cache`, for a preview and for an apply run alike. The
+ * cache under var/tools/Rector can return stale results (in #713 a readonly run found 15
+ * candidates instead of 20 until it was cleared), and a clear costs only speed. Never run
+ * `vendor/bin/rector` directly with one of these configs without `--clear-cache`.
+ *
  * (`make rector-e5 RECTOR_CONFIG=tools/rector/skeleton.php` itself exits 0 and prints Rector's
  * "Register rules or sets" warning: there is nothing to apply.)
  *
