@@ -6893,12 +6893,6 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Devices/Repository.php
 
 		-
-			message: '#^Possibly invalid array key type mixed\.$#'
-			identifier: array.invalidKey
-			count: 6
-			path: ../src/FastyBird/Module/Devices/src/Models/States/PropertiesManager.php
-
-		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
 			count: 11
