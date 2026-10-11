@@ -20,9 +20,9 @@
  *                    modules, `Module/Devices` is one package
  *   --list           also print every file a header was (or, with --check, would be) removed from
  *
- * Without --package the scope is every first-party PHP directory: src, tests, bin, public and
- * migrations, plus the Translations `*.neon` files below them. node_modules directories are
- * skipped.
+ * Without --package the scope is every first-party directory: src, tests, bin, public, migrations
+ * and config, with their PHP files and every `*.neon` file below them. node_modules directories
+ * are skipped.
  *
  * WHAT IS A HEADER. The file's first docblock, if and only if it sits DIRECTLY between the
  * `declare(strict_types = 1);` statement and the `namespace` keyword -- nothing but whitespace on
@@ -51,12 +51,13 @@
  * and is not this tool's business: `make csf` removes it once the package's ForbiddenAnnotations
  * carve-out in tools/phpcs.xml is gone.
  *
- * TRANSLATION FILES. The same legacy header sits at the top of the `*.neon` files in a
- * `Translations` directory below src (`src/FastyBird/<Type>/<Name>/src/**\/Translations/*.neon`; the
- * Core one is nested under `Api`). Those are in scope as well, because the
- * ForbiddenAnnotations sniff only sees PHP. A NEON header is the file's leading block of `#` comment
- * lines, followed by blank lines, if and only if the block holds at least one of the nine forbidden
- * tags and every line of it is one of:
+ * NEON FILES. The same legacy header sits at the top of the `*.neon` files: the translations
+ * (`src/FastyBird/<Type>/<Name>/src/**\/Translations/*.neon`; the Core one is nested under `Api`,
+ * #729), the shipped and test configuration (`config/common.neon`, the Core `config/*.neon` and
+ * `tests/common.neon`) and the test fixtures (#734). Every `*.neon` file below the scope is in
+ * scope, because the ForbiddenAnnotations sniff only sees PHP. A NEON header is the file's leading
+ * block of `#` comment lines, followed by blank lines, if and only if the block holds at least one
+ * of the nine forbidden tags and every line of it is one of:
  *
  *   - an empty comment line (`#`);
  *   - one of the nine forbidden tags or `@language`, with any value;
@@ -65,8 +66,10 @@
  * Removing it deletes the block and the blank lines after it, so the file starts with its first
  * key; everything after is untouched byte for byte. The other-shape rule applies here too: a
  * leading comment block with a forbidden tag in any other shape, or a forbidden tag in a comment
- * line anywhere else in the file, is left alone, reported and counted by --check. `*.neon` files
- * outside a `Translations` directory (config/, tests/common.neon) are not scanned.
+ * line anywhere else in the file, is left alone, reported and counted by --check. Only that block
+ * is a header: every other comment in a `*.neon` file (section banners, explanations) is kept, and
+ * so is a title or description of more than one line -- a file whose header also carries prose has
+ * its tags removed by hand (tests/config/dbal-test-connection.neon, #734).
  *
  * The tool is idempotent: once a header is gone the position is empty, so a second run removes
  * nothing. It only ever deletes bytes from the start of a file up to `namespace`; it never touches
@@ -88,7 +91,7 @@ const FB_HEADER_FORBIDDEN_TAGS = [
 	'date',
 ];
 
-const FB_HEADER_DEFAULT_SCOPE = ['src', 'tests', 'bin', 'public', 'migrations'];
+const FB_HEADER_DEFAULT_SCOPE = ['src', 'tests', 'bin', 'public', 'migrations', 'config'];
 
 // The first filename line: one token, optionally after a class/interface/trait/enum word.
 const FB_HEADER_FILENAME = '/^(?:(?:class|interface|trait|enum)\s+)?([A-Za-z0-9_.\/-]+)$/';
@@ -106,7 +109,7 @@ function fbHeaderFail(string $message): never
 
 /**
  * @return list<string> repository-relative paths of the PHP files below $directory or, with $neon, of
- *                      its `*.neon` files whose parent directory is named Translations; sorted
+ *                      its `*.neon` files; sorted
  */
 function fbHeaderFiles(string $root, string $directory, bool $neon = false): array
 {
@@ -127,11 +130,7 @@ function fbHeaderFiles(string $root, string $directory, bool $neon = false): arr
 		if (
 			$file instanceof SplFileInfo
 			&& $file->isFile()
-			&& (
-				$neon
-					? $file->getExtension() === 'neon' && basename($file->getPath()) === 'Translations'
-					: $file->getExtension() === 'php'
-			)
+			&& $file->getExtension() === ($neon ? 'neon' : 'php')
 		) {
 			$files[] = substr($file->getPathname(), strlen($root) + 1);
 		}
@@ -302,7 +301,7 @@ function fbHeaderAnalyse(string $code): array
 }
 
 /**
- * Analyses the leading comment block of a NEON translation file.
+ * Analyses the leading comment block of a NEON file.
  *
  * @return array{status: 'none'|'header'|'other', code: string, reason: string|null, forbidden: bool}
  */

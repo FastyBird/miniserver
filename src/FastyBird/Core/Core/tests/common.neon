@@ -1,15 +1,3 @@
-#
-# Application DI configuration
-#
-# @license        More in LICENSE.md
-# @copyright      https://www.fastybird.com
-# @author         Adam Kadlec <adam.kadlec@fastybird.com>
-# @package        FastyBird:Application!
-# @subpackage     config
-# @since          1.0.0
-#
-# @date           24.06.24
-
 includes:
     - ../../../../../tests/config/dbal-test-connection.neon
 
