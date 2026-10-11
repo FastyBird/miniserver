@@ -5,7 +5,6 @@ namespace FastyBird\Plugin\ApiKey\Entities;
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
-use FastyBird\Plugin\ApiKey\Entities as ApiKeyEntities;
 use FastyBird\Plugin\ApiKey\Types;
 use Ramsey\Uuid;
 
@@ -18,11 +17,10 @@ use Ramsey\Uuid;
 		'comment' => 'API Key plugin access keys',
 	],
 )]
-class Key implements ApiKeyEntities\Entity, PersistenceEntities\CrudEntity,
-	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
+class Key implements PersistenceEntities\CrudEntity, PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use TEntity;
+	use HasEntityId;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

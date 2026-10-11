@@ -9,7 +9,7 @@ use Ramsey\Uuid;
  *
  * @property Uuid\UuidInterface $id
  */
-trait TEntity
+trait HasEntityId
 {
 
 	public function getId(): Uuid\UuidInterface
