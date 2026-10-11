@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Discover.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           04.07.08.23
- */
-
 namespace FastyBird\Connector\Viera\Commands;
 
 use DateTimeInterface;
@@ -58,11 +45,6 @@ use function usort;
 
 /**
  * Connector devices discovery command
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Discover extends Console\Command\Command
 {

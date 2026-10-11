@@ -1,23 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * ClientsManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           13.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Models\Entities\Clients;
 
 use Doctrine\DBAL;
 use FastyBird\Connector\HomeKit\Entities;
-use FastyBird\Connector\HomeKit\Models;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
@@ -28,11 +14,6 @@ use function assert;
 
 /**
  * Clients entities manager
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ClientsManager
 {

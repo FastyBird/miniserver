@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SonoffExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\DI;
 
 use Contributte\Translation;
@@ -43,11 +30,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Sonoff connector
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class SonoffExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

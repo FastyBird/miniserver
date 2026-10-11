@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WriteDevicePropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           21.11.23
- */
-
 namespace FastyBird\Connector\Virtual\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
@@ -21,11 +8,6 @@ use Ramsey\Uuid;
 
 /**
  * Write updated device property state to device message
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class WriteDevicePropertyState implements Message
 {

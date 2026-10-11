@@ -1,29 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * PropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           18.07.22
- */
-
 namespace FastyBird\Connector\Shelly\Queue\Messages;
 
 use Orisai\ObjectMapper;
 
 /**
  * Device or channel property state message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class PropertyState implements Message
 {

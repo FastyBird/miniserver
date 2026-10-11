@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WsMessage.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     ValueObjects
- * @since          1.0.0
- *
- * @date           07.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\ValueObjects;
 
 use FastyBird\Connector\Sonoff\API;
@@ -23,11 +10,6 @@ use stdClass;
 
 /**
  * Websocket message
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     ValueObjects
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class WsMessage implements ObjectMapper\MappedObject
 {

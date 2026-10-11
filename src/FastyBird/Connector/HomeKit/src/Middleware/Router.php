@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Router.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Middleware
- * @since          1.0.0
- *
- * @date           19.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Middleware;
 
 use FastyBird\Connector\HomeKit;
@@ -36,11 +23,6 @@ use Throwable;
 
 /**
  * Connector HTTP server router middleware
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Middleware
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Router
 {

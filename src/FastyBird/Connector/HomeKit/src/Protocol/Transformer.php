@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Transformer.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           01.10.22
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol;
 
 use DateTimeInterface;
@@ -47,11 +34,6 @@ use function substr;
 
 /**
  * Value transformers
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Transformer
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * V1Parser.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           24.02.20
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\API;
 
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
@@ -25,11 +12,6 @@ use function strtolower;
 
 /**
  * MQTT topic parser
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class MqttParser
 {

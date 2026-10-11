@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SerialLinux.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           31.07.22
- */
-
 namespace FastyBird\Connector\Modbus\API\Interfaces;
 
 use FastyBird\Connector\Modbus\Exceptions;
@@ -31,11 +18,6 @@ use function vsprintf;
 
 /**
  * Serial interface using Linux file stream
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class SerialLinux extends Serial
 {

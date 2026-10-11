@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceMeterState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           03.01.23
- */
-
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen1;
 
 use DateTimeInterface;
@@ -24,11 +11,6 @@ use function intval;
 
 /**
  * Generation 1 device meter state message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class DeviceMeterState implements API\Messages\Message
 {

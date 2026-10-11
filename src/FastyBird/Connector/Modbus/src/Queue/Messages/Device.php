@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           09.12.23
- */
-
 namespace FastyBird\Connector\Modbus\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
@@ -20,11 +7,6 @@ use Ramsey\Uuid;
 
 /**
  * Base device message
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Device implements Message
 {

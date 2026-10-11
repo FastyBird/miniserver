@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Drivers.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           26.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Helpers;
 
 use function count;
@@ -21,11 +8,6 @@ use function shuffle;
 
 /**
  * Drivers helper
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Drivers
 {

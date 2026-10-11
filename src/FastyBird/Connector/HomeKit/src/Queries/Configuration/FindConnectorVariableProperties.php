@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindConnectorVariableProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           16.02.24
- */
-
 namespace FastyBird\Connector\HomeKit\Queries\Configuration;
 
 use FastyBird\Connector\HomeKit\Exceptions;
@@ -26,11 +13,6 @@ use function sprintf;
  *
  * @template T of DevicesDocuments\Connectors\Properties\Variable
  * @extends  DevicesQueries\Configuration\FindConnectorVariableProperties<T>
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queries
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindConnectorVariableProperties extends DevicesQueries\Configuration\FindConnectorVariableProperties
 {

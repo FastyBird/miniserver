@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Exchange.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           11.02.23
- */
-
 namespace FastyBird\Connector\HomeKit\Writers;
 
 use DateTimeInterface;
@@ -47,11 +34,6 @@ use function str_starts_with;
 
 /**
  * Exchange based properties writer
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Exchange extends Periodic implements Writer, Consumers\Consumer
 {

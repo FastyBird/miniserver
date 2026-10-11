@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * MessageBuilder.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           10.08.23
- */
-
 namespace FastyBird\Connector\Viera\Helpers;
 
 use FastyBird\Connector\Viera\API;
@@ -22,11 +9,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Message builder
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class MessageBuilder
 {

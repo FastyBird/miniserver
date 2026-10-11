@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           16.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Clients;
 
 use FastyBird\Connector\NsPanel;
@@ -39,11 +26,6 @@ use function strval;
 
 /**
  * Connector third-party device client
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Device implements Client
 {

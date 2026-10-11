@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConnectionManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           03.12.23
- */
-
 namespace FastyBird\Connector\FbMqtt\API;
 
 use FastyBird\Connector\FbMqtt\Documents;
@@ -26,11 +13,6 @@ use ValueError;
 
 /**
  * Client connections manager
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ConnectionManager
 {

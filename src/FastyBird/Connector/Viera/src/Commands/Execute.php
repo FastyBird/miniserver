@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Execute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           18.06.23
- */
-
 namespace FastyBird\Connector\Viera\Commands;
 
 use FastyBird\Connector\Viera\Documents;
@@ -40,11 +27,6 @@ use function usort;
 
 /**
  * Connector execute command
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Execute extends Console\Command\Command
 {

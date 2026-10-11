@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreSubDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           23.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Queue\Messages;
 
 use FastyBird\Connector\NsPanel\Types;
@@ -23,11 +10,6 @@ use function array_map;
 
 /**
  * Store NS Panel sub-device details message
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class StoreSubDevice implements Message
 {

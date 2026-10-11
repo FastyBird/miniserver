@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ModbusExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           30.01.22
- */
-
 namespace FastyBird\Connector\Modbus\DI;
 
 use Contributte\Translation;
@@ -43,11 +30,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Modbus connector
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ModbusExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

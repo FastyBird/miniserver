@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SensorRange.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           18.07.22
- */
-
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen1;
 
 use FastyBird\Connector\Shelly\API;
@@ -21,11 +8,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Parsed sensor range message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class SensorRange implements API\Messages\Message
 {

@@ -1,29 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * DevicePropertyIdentifier.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Types
- * @since          1.0.0
- *
- * @date           15.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Types;
 
 use FastyBird\Module\Devices\Types as DevicesTypes;
 
 /**
  * Device property identifier types
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Types
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 enum DevicePropertyIdentifier: string
 {

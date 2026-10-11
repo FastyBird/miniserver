@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           07.01.23
- */
-
 namespace FastyBird\Connector\Viera\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Discovery.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Commands;
 
 use DateTimeInterface;
@@ -46,11 +33,6 @@ use function usort;
 
 /**
  * Connector devices discovery command
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Discover extends Console\Command\Command
 {

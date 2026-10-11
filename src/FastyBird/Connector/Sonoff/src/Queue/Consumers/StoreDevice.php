@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CloudDiscovery.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           19.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -37,11 +24,6 @@ use function assert;
 
 /**
  * Device discovery message consumer
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreDevice implements Queue\Consumer
 {

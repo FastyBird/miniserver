@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreLocalDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           20.07.22
- */
-
 namespace FastyBird\Connector\Shelly\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -38,11 +25,6 @@ use function in_array;
 
 /**
  * Store locally found device details message consumer
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreLocalDevice implements Queue\Consumer
 {

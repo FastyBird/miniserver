@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WriteChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           18.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Queue\Consumers;
 
 use DateTimeInterface;
@@ -43,11 +30,6 @@ use function React\Async\await;
 
 /**
  * Write state to device message consumer
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class WriteChannelPropertyState implements Queue\Consumer
 {

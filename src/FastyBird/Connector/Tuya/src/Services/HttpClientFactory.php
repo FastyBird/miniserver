@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * HttpClientFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Services
- * @since          1.0.0
- *
- * @date           09.07.23
- */
-
 namespace FastyBird\Connector\Tuya\Services;
 
 use GuzzleHttp;
@@ -24,11 +11,6 @@ use React\Socket;
 
 /**
  * HTTP client factory
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Services
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class HttpClientFactory
 {

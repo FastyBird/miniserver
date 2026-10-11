@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Uiid1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           18.09.23
- */
-
 namespace FastyBird\Connector\Sonoff\API\Messages\Uiid;
 
 use Orisai\ObjectMapper;
@@ -20,11 +7,6 @@ use function array_merge;
 
 /**
  * UIID1 params entity
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Uiid1 implements Uuid
 {

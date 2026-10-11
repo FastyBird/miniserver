@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Capabilities.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           02.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Mapping;
 
 use FastyBird\Connector\NsPanel\Exceptions;
@@ -23,11 +10,6 @@ use function sprintf;
 
 /**
  * Capabilities mapping configuration
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class Capabilities implements Mapping\Mapping
 {

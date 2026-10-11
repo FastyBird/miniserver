@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceBlockDescription.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           17.07.22
- */
-
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen1;
 
 use FastyBird\Connector\Shelly\API;
@@ -23,11 +10,6 @@ use const SORT_REGULAR;
 
 /**
  * Block description message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class DeviceBlockDescription implements API\Messages\Message
 {

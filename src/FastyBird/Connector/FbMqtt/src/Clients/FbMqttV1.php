@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FbMqttV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           23.02.20
- */
-
 namespace FastyBird\Connector\FbMqtt\Clients;
 
 use BinSoul\Net\Mqtt;
@@ -37,11 +24,6 @@ use function str_contains;
 
 /**
  * FastyBird MQTT v1 client
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class FbMqttV1 implements Client
 {

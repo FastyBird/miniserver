@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SwitchPulse.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           21.09.23
- */
-
 namespace FastyBird\Connector\Sonoff\API\Messages\Response\Lan;
 
 use FastyBird\Connector\Sonoff\API;
@@ -20,11 +7,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Switch pulse configuration entity
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class SwitchPulse implements API\Messages\Message
 {

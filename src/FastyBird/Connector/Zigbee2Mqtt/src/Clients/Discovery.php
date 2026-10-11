@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Discovery.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           31.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Clients;
 
 use BinSoul\Net\Mqtt as NetMqtt;
@@ -46,11 +33,6 @@ use function sprintf;
 
 /**
  * Connector sub-devices discovery client
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Discovery
 {

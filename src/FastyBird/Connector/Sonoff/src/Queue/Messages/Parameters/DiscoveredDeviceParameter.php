@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DiscoveredDeviceParameter.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           15.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Queue\Messages\Parameters;
 
 use FastyBird\Connector\Sonoff\Queue;
@@ -22,11 +9,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Discovered device parameter entity
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class DiscoveredDeviceParameter implements Queue\Messages\Message
 {

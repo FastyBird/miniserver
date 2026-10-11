@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WriteChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           16.08.23
- */
-
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
@@ -21,11 +8,6 @@ use Ramsey\Uuid;
 
 /**
  * Write updated channel property state to hardware message
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class WriteChannelPropertyState implements Message
 {

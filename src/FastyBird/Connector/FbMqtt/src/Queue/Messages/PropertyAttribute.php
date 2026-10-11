@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PropertyAttribute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           24.02.20
- */
-
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use FastyBird\Connector\FbMqtt;
@@ -35,11 +22,6 @@ use function strtolower;
 
 /**
  * Device or channel property attribute
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class PropertyAttribute implements Message
 {

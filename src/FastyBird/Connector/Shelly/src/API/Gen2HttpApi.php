@@ -1,21 +1,7 @@
 <?php declare(strict_types = 1);
 
-/**
- * Gen2HttpApi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           24.12.22
- */
-
 namespace FastyBird\Connector\Shelly\API;
 
-use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Types;
 use Fig\Http\Message\RequestMethodInterface;
@@ -36,11 +22,6 @@ use function uniqid;
 
 /**
  * Generation 2 device http API interface
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Gen2HttpApi extends HttpApi
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Connector
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Connector\Tuya\Connector;
 
 use FastyBird\Connector\Tuya;
@@ -40,11 +27,6 @@ use function React\Async\async;
 
 /**
  * Connector service executor
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Connector
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connector implements DevicesConnectors\Connector
 {

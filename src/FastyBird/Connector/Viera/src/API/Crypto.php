@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Crypto.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           01.07.23
- */
-
 namespace FastyBird\Connector\Viera\API;
 
 use FastyBird\Connector\Viera\Exceptions;
@@ -37,11 +24,6 @@ use const OPENSSL_ZERO_PADDING;
 
 /**
  * API crypto transformers
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Crypto
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TelevisionApi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           18.06.23
- */
-
 namespace FastyBird\Connector\Viera\API;
 
 use Closure;
@@ -77,11 +64,6 @@ use function unpack;
 
 /**
  * Television api interface
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class TelevisionApi
 {

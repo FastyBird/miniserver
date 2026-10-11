@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Exchange.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           12.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Writers;
 
 use FastyBird\Connector\NsPanel;
@@ -42,11 +29,6 @@ use function str_starts_with;
 
 /**
  * Exchange based properties writer
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Exchange extends Periodic implements Writer, Consumers\Consumer
 {

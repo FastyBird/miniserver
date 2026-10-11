@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * State.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           25.01.24
- */
-
 namespace FastyBird\Connector\Tuya\Queue\Messages;
 
 use DateTimeInterface;
@@ -25,11 +12,6 @@ use function is_bool;
 
 /**
  * Property state
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class State implements Message
 {

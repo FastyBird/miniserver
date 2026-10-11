@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceProperty.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           18.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -31,11 +18,6 @@ use Ramsey\Uuid;
 
 /**
  * Device property consumer
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @property-read DevicesModels\Entities\Devices\DevicesRepository $devicesRepository
  * @property-read DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository

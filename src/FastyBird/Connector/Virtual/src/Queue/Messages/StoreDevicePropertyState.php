@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreDevicePropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           22.11.22
- */
-
 namespace FastyBird\Connector\Virtual\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
@@ -23,11 +10,6 @@ use function is_string;
 
 /**
  * Device status message
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class StoreDevicePropertyState implements Message
 {

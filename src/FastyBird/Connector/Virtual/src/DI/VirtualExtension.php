@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * VirtualExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Connector\Virtual\DI;
 
 use Contributte\Translation;
@@ -43,11 +30,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Virtual connector
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class VirtualExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

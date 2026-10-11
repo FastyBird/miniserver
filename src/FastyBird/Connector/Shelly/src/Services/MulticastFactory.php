@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * MulticastFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Services
- * @since          1.0.0
- *
- * @date           30.08.23
- */
-
 namespace FastyBird\Connector\Shelly\Services;
 
 use BadMethodCallException;
@@ -24,11 +11,6 @@ use RuntimeException;
 
 /**
  * React multicast server factory
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Services
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class MulticastFactory
 {

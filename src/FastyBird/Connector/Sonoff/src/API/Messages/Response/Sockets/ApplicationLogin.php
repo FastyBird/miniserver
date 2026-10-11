@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ApplicationLogin.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\API\Messages\Response\Sockets;
 
 use FastyBird\Connector\Sonoff\API;
@@ -20,11 +7,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Application sockets logged in entity
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class ApplicationLogin implements API\Messages\Message
 {

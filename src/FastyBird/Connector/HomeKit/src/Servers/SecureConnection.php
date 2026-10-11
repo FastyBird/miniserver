@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SecureConnection.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- * @since          1.0.0
- *
- * @date           26.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Servers;
 
 use Evenement;
@@ -40,11 +27,6 @@ use function unpack;
 
 /**
  * HTTP secured server connection wrapper
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class SecureConnection extends Evenement\EventEmitter implements Socket\ConnectionInterface
 {

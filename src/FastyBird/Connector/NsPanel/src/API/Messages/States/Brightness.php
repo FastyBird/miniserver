@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Brightness.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           09.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\API\Messages\States;
 
 use FastyBird\Connector\NsPanel\Types;
@@ -21,11 +8,6 @@ use stdClass;
 
 /**
  * Brightness control capability state
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Brightness implements State
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Network.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           23.06.23
- */
-
 namespace FastyBird\Connector\Viera\Helpers;
 
 use Socket;
@@ -27,11 +14,6 @@ use const SOL_UDP;
 
 /**
  * Useful network helpers
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Network
 {

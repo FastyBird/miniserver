@@ -1,29 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * LocalDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     ValueObjects
- * @since          1.0.0
- *
- * @date           28.08.24
- */
-
 namespace FastyBird\Connector\Tuya\ValueObjects;
 
 use Orisai\ObjectMapper;
 
 /**
  * Local device info
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     ValueObjects
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class LocalDevice implements ObjectMapper\MappedObject
 {

@@ -1,27 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * ModbusFunction.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Types
- * @since          1.0.0
- *
- * @date           03.02.23
- */
-
 namespace FastyBird\Connector\Modbus\Types;
 
 /**
  * RTU function types
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Types
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 enum ModbusFunction: int
 {

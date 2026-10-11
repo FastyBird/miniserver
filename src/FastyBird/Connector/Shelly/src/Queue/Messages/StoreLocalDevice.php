@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreLocalDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           17.07.22
- */
-
 namespace FastyBird\Connector\Shelly\Queue\Messages;
 
 use FastyBird\Connector\Shelly\Types;
@@ -25,11 +12,6 @@ use const SORT_REGULAR;
 
 /**
  * Discovered local device message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreLocalDevice extends Device
 {

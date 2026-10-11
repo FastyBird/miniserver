@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Controls.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           17.02.23
- */
-
 namespace FastyBird\Connector\Tuya\Subscribers;
 
 use Doctrine\Common;
@@ -31,11 +18,6 @@ use ReflectionException;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Controls implements Common\EventSubscriber
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Connector
- * @since          1.0.0
- *
- * @date           23.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Connector;
 
 use FastyBird\Connector\Zigbee2Mqtt;
@@ -42,11 +29,6 @@ use function React\Async\async;
 
 /**
  * Connector service executor
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Connector
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connector implements DevicesConnectors\Connector
 {

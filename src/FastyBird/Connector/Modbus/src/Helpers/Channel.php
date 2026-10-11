@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Connector\Modbus\Helpers;
 
 use DateTimeInterface;
@@ -37,11 +24,6 @@ use function is_string;
 
 /**
  * Useful channel helpers
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Channel
 {

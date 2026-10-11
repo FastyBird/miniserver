@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SubDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           01.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Helpers\Devices;
 
 use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
@@ -30,11 +17,6 @@ use function is_string;
 
 /**
  * Sub device helper
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class SubDevice
 {

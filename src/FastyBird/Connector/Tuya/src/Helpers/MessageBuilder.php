@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * MessageBuilder.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           13.08.23
- */
-
 namespace FastyBird\Connector\Tuya\Helpers;
 
 use FastyBird\Connector\Tuya\API;
@@ -22,11 +9,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Message builder
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class MessageBuilder
 {

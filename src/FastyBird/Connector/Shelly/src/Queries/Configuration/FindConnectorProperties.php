@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindConnectorProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           18.02.24
- */
-
 namespace FastyBird\Connector\Shelly\Queries\Configuration;
 
 use FastyBird\Connector\Shelly\Exceptions;
@@ -26,11 +13,6 @@ use function sprintf;
  *
  * @template T of DevicesDocuments\Connectors\Properties\Property
  * @extends  DevicesQueries\Configuration\FindConnectorProperties<T>
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queries
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindConnectorProperties extends DevicesQueries\Configuration\FindConnectorProperties
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Periodic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           11.02.23
- */
-
 namespace FastyBird\Connector\HomeKit\Writers;
 
 use DateTimeInterface;
@@ -46,11 +33,6 @@ use function React\Async\await;
 
 /**
  * Periodic properties writer
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Periodic
 {

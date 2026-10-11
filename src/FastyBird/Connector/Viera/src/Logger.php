@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Logger.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     common
- * @since          1.0.0
- *
- * @date           10.08.23
- */
-
 namespace FastyBird\Connector\Viera;
 
 use Monolog;
@@ -21,11 +8,6 @@ use Stringable;
 
 /**
  * Connector logger
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     common
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Logger implements Log\LoggerInterface
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ComponentEvent.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           14.01.23
- */
-
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use DateTimeInterface;
@@ -24,11 +11,6 @@ use function intval;
 
 /**
  * Generation 2 device component event message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class ComponentEvent implements API\Messages\Message
 {

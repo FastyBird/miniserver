@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           21.11.23
- */
-
 namespace FastyBird\Connector\Viera\Helpers;
 
 use FastyBird\Connector\Viera\Documents as VieraDocuments;
@@ -35,11 +22,6 @@ use function is_string;
 
 /**
  * Device helper
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Device
 {

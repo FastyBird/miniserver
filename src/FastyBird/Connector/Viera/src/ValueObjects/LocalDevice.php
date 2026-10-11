@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * LocalDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     ValueObjects
- * @since          1.0.0
- *
- * @date           29.08.24
- */
-
 namespace FastyBird\Connector\Viera\ValueObjects;
 
 use Orisai\ObjectMapper;
@@ -20,11 +7,6 @@ use function strtolower;
 
 /**
  * Local device info
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     ValueObjects
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class LocalDevice implements ObjectMapper\MappedObject
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           27.08.24
- */
-
 namespace FastyBird\Connector\Viera\Subscribers;
 
 use Doctrine\DBAL;
@@ -36,11 +23,6 @@ use ValueError;
 
 /**
  * Device events
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Device implements EventDispatcher\EventSubscriberInterface
 {

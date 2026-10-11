@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Execute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           30.07.22
- */
-
 namespace FastyBird\Connector\Shelly\Commands;
 
 use FastyBird\Connector\Shelly\Documents;
@@ -41,11 +28,6 @@ use function usort;
 
 /**
  * Connector execute command
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Execute extends Console\Command\Command
 {

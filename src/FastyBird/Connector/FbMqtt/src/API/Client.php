@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Client.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           23.02.20
- */
-
 namespace FastyBird\Connector\FbMqtt\API;
 
 use BinSoul\Net\Mqtt;
@@ -53,11 +40,6 @@ use function sprintf;
  *  - unsubscribe - The client unsubscribed from topic filter.
  *  - publish - A message was published.
  *  - message - A message was received.
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Client
 {

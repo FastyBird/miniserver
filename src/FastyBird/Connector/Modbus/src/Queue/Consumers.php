@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Messages.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           18.01.23
- */
-
 namespace FastyBird\Connector\Modbus\Queue;
 
 use FastyBird\Connector\Modbus;
@@ -22,11 +9,6 @@ use SplObjectStorage;
 
 /**
  * Clients message consumer proxy
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Consumers
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SetDeviceConnectionState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           31.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -39,11 +26,6 @@ use function React\Async\await;
 
 /**
  * Store device connection state message consumer
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreDeviceConnectionState implements Queue\Consumer
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RangeMin.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           05.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Protocol;
@@ -22,11 +9,6 @@ use Ramsey\Uuid;
 
 /**
  * Range minimal value configuration
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class RangeMin extends Configuration
 {

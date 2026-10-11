@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreCloudDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Connector\Tuya\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -35,11 +22,6 @@ use function assert;
 
 /**
  * Store cloud found device details message consumer
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreCloudDevice implements Queue\Consumer
 {

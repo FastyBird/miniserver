@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Entities.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           17.02.23
- */
-
 namespace FastyBird\Connector\HomeKit\Subscribers;
 
 use Closure;
@@ -25,11 +12,6 @@ use Symfony\Component\EventDispatcher;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Entities implements EventDispatcher\EventSubscriberInterface
 {

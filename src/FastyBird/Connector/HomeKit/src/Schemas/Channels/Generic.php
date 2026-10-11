@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Generic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           30.01.24
- */
-
 namespace FastyBird\Connector\HomeKit\Schemas\Channels;
 
 use FastyBird\Connector\HomeKit\Entities;
@@ -23,10 +10,6 @@ use FastyBird\Core\Values\Types\Sources;
  *
  * @template T of Entities\Channels\Generic
  * @extends  Channel<T>
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Generic extends Channel
 {

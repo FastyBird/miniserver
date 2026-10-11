@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Devices.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Devices
- * @since          1.0.0
- *
- * @date           16.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Devices;
 
 use DateTimeInterface;
@@ -43,11 +30,6 @@ use function React\Async\async;
 
 /**
  * Devices service
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Devices
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Devices
 {

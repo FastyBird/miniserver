@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Drivers
- * @since          1.0.0
- *
- * @date           16.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Drivers;
 
 use DateTimeInterface;
@@ -22,11 +9,6 @@ use React\Promise;
 
 /**
  * Device service interface
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Drivers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 interface Driver
 {

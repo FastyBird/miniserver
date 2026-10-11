@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * V1Validator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           24.02.20
- */
-
 namespace FastyBird\Connector\FbMqtt\API;
 
 use FastyBird\Connector\FbMqtt;
@@ -23,11 +10,6 @@ use function trim;
 
 /**
  * API v1 topic validator
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class V1Validator
 {

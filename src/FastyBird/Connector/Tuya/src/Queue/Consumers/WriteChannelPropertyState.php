@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WriteChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           17.08.23
- */
-
 namespace FastyBird\Connector\Tuya\Queue\Consumers;
 
 use DateTimeInterface;
@@ -48,11 +35,6 @@ use function strval;
 
 /**
  * Write state to device message consumer
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class WriteChannelPropertyState implements Queue\Consumer
 {

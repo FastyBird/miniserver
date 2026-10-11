@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindChannelProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           18.02.24
- */
-
 namespace FastyBird\Connector\Shelly\Queries\Entities;
 
 use FastyBird\Connector\Shelly\Exceptions;
@@ -26,11 +13,6 @@ use function sprintf;
  *
  * @template T of DevicesEntities\Devices\Properties\Property
  * @extends  DevicesQueries\Entities\FindDeviceProperties<T>
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queries
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindDeviceProperties extends DevicesQueries\Entities\FindDeviceProperties
 {

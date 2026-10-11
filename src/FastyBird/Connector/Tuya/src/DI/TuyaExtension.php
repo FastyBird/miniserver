@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TuyaExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Connector\Tuya\DI;
 
 use Contributte\Translation;
@@ -43,11 +30,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Tuya connector
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class TuyaExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

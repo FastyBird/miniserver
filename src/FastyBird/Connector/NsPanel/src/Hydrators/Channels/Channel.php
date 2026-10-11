@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           21.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Hydrators\Channels;
 
 use Doctrine\Persistence;
@@ -35,10 +22,6 @@ use function strval;
  *
  * @template  T of Entities\Channels\Channel
  * @extends   DevicesHydrators\Channels\Channel<T>
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Channel extends DevicesHydrators\Channels\Channel
 {

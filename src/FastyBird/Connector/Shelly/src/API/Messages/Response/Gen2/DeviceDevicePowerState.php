@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceDevicePowerState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           21.12.23
- */
-
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use FastyBird\Connector\Shelly;
@@ -24,11 +11,6 @@ use function is_string;
 
 /**
  * Generation 2 device power state message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DeviceDevicePowerState extends DeviceState implements API\Messages\Message
 {

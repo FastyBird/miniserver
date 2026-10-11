@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StateRepository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           25.02.24
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Models;
 
 use DateTimeInterface;
@@ -23,11 +10,6 @@ use function array_key_exists;
 
 /**
  * Property states cache repository
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class StateRepository
 {

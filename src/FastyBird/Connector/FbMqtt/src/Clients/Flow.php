@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Flow.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           23.02.20
- */
-
 namespace FastyBird\Connector\FbMqtt\Clients;
 
 use BinSoul\Net\Mqtt;
@@ -20,11 +7,6 @@ use React\Promise;
 
 /**
  * Decorates flows with data required for the {@see Client} class.
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Flow implements Mqtt\Flow
 {

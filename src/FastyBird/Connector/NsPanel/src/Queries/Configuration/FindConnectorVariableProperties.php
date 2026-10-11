@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindConnectorVariableProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           18.02.24
- */
-
 namespace FastyBird\Connector\NsPanel\Queries\Configuration;
 
 use FastyBird\Connector\NsPanel\Exceptions;
@@ -25,11 +12,6 @@ use function sprintf;
  *
  * @template T of DevicesDocuments\Connectors\Properties\Variable
  * @extends  FindConnectorProperties<T>
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queries
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindConnectorVariableProperties extends FindConnectorProperties
 {

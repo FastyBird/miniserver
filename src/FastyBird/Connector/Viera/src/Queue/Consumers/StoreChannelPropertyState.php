@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           01.07.23
- */
-
 namespace FastyBird\Connector\Viera\Queue\Consumers;
 
 use BackedEnum;
@@ -39,11 +26,6 @@ use function React\Async\await;
 
 /**
  * Store channel property state message consumer
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreChannelPropertyState implements Queue\Consumer
 {

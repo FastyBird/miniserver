@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Connector
- * @since          1.0.0
- *
- * @date           17.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Connector;
 
 use Doctrine\DBAL;
@@ -41,11 +28,6 @@ use function React\Async\async;
 
 /**
  * Connector service executor
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Connector
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connector implements DevicesConnectors\Connector
 {

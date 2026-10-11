@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreDeviceState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           18.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -39,11 +26,6 @@ use function React\Async\await;
 
 /**
  * Store device state message consumer
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreDeviceState implements Queue\Consumer
 {

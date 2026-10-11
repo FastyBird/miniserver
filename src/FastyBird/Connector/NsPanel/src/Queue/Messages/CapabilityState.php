@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CapabilityState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           15.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Queue\Messages;
 
 use DateTimeInterface;
@@ -22,11 +9,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Device capability state definition
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class CapabilityState implements Message
 {

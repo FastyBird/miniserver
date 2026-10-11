@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           09.12.23
- */
-
 namespace FastyBird\Connector\Modbus\Queue\Consumers;
 
 use FastyBird\Connector\Modbus;
@@ -34,11 +21,6 @@ use function React\Async\await;
 
 /**
  * Store channel property state message consumer
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreChannelPropertyState implements Queue\Consumer
 {

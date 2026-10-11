@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindChannelProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           07.12.23
- */
-
 namespace FastyBird\Connector\Modbus\Queries\Configuration;
 
 use FastyBird\Connector\Modbus\Exceptions;
@@ -26,11 +13,6 @@ use function sprintf;
  *
  * @template T of DevicesDocuments\Devices\Properties\Variable
  * @extends  DevicesQueries\Configuration\FindDeviceVariableProperties<T>
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queries
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindDeviceVariableProperties extends DevicesQueries\Configuration\FindDeviceVariableProperties
 {

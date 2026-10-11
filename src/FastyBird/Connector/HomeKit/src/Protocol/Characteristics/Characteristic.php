@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Characteristic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           13.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol\Characteristics;
 
 use DateTimeInterface;
@@ -43,11 +30,6 @@ use function strval;
  * the current temperature. Characteristics are contained in services.
  * Each characteristic has a unique type UUID and a set of properties,
  * like format, min and max values, valid values and others.
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Characteristic
 {

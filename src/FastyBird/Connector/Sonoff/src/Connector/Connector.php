@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Connector
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Connector;
 
 use BadMethodCallException;
@@ -43,11 +30,6 @@ use function React\Async\async;
 
 /**
  * Connector service executor
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Connector
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connector implements DevicesConnectors\Connector
 {

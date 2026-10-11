@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Request.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           10.08.23
- */
-
 namespace FastyBird\Connector\Viera\API;
 
 use FastyBird\Connector\Viera\Exceptions;
@@ -22,11 +9,6 @@ use RuntimeException;
 
 /**
  * HTTP request
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Request extends Psr7\Request
 {

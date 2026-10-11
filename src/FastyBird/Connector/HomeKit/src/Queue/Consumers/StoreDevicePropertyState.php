@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreDevicePropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           30.11.23
- */
-
 namespace FastyBird\Connector\HomeKit\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -37,11 +24,6 @@ use function React\Async\await;
 
 /**
  * Store device property state message consumer
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreDevicePropertyState implements Queue\Consumer
 {

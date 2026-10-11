@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Service.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           13.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Documents;
@@ -38,11 +25,6 @@ use function sprintf;
  *
  * A HAP service contains multiple characteristics.
  * For example, a TemperatureSensor service has the characteristic CurrentTemperature.
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Service
 {

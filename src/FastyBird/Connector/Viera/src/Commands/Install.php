@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Install.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           14.12.23
- */
-
 namespace FastyBird\Connector\Viera\Commands;
 
 use DateTimeInterface;
@@ -64,11 +51,6 @@ use function usort;
 
 /**
  * Connector install command
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Install extends Console\Command\Command
 {

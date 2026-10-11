@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreDevicePropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           04.09.22
- */
-
 namespace FastyBird\Connector\Virtual\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -40,11 +27,6 @@ use function React\Async\await;
 
 /**
  * Store device property state message consumer
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreDevicePropertyState implements Queue\Consumer
 {

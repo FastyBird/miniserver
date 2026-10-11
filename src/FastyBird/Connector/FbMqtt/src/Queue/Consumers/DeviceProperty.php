@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceProperty.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           05.02.22
- */
-
 namespace FastyBird\Connector\FbMqtt\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -40,11 +27,6 @@ use function sprintf;
 
 /**
  * Device property MQTT message consumer
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DeviceProperty implements Queue\Consumer
 {

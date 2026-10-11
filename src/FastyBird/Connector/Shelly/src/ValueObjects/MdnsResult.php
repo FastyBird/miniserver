@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * MdnsResult.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     ValueObjects
- * @since          1.0.0
- *
- * @date           14.07.22
- */
-
 namespace FastyBird\Connector\Shelly\ValueObjects;
 
 use Orisai\ObjectMapper;
@@ -20,11 +7,6 @@ use function strtolower;
 
 /**
  * mDNS search result
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     ValueObjects
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class MdnsResult implements ObjectMapper\MappedObject
 {

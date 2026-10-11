@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Queue.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           07.10.23
- */
-
 namespace FastyBird\Connector\Sonoff\Queue;
 
 use FastyBird\Connector\Sonoff;
@@ -22,11 +9,6 @@ use SplQueue;
 
 /**
  * Clients message consumer proxy
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Queue
 {

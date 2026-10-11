@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Install.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           17.12.23
- */
-
 namespace FastyBird\Connector\Virtual\Commands;
 
 use Doctrine\DBAL;
@@ -44,11 +31,6 @@ use function usort;
 
 /**
  * Connector install command
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Install extends Console\Command\Command
 {

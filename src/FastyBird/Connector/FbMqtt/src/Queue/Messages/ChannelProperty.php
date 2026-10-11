@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelProperty.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           05.03.20
- */
-
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use FastyBird\Connector\FbMqtt;
@@ -22,11 +9,6 @@ use function array_merge;
 
 /**
  * Device or channel property
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ChannelProperty extends Property
 {

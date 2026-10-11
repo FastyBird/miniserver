@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Television.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Viera\Clients;
 
 use DateTimeInterface;
@@ -48,11 +35,6 @@ use function React\Async\async;
 
 /**
  * Television client
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Television implements Client
 {

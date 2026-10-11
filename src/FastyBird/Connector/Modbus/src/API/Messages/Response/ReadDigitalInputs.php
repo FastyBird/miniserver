@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ReadDigitalInputs.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           03.02.23
- */
-
 namespace FastyBird\Connector\Modbus\API\Messages\Response;
 
 use FastyBird\Connector\Modbus\API;
@@ -22,11 +9,6 @@ use function array_key_exists;
 
 /**
  * Digital registers reading response
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ReadDigitalInputs implements API\Messages\Message
 {

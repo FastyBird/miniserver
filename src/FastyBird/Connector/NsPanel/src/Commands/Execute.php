@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Execute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           12.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Commands;
 
 use FastyBird\Connector\NsPanel\Documents;
@@ -41,11 +28,6 @@ use function usort;
 
 /**
  * Connector execute command
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Execute extends Console\Command\Command
 {

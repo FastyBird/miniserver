@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Cloud.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           25.08.22
- */
-
 namespace FastyBird\Connector\Tuya\Clients;
 
 use DateTimeInterface;
@@ -48,11 +35,6 @@ use function React\Async\async;
 
 /**
  * Cloud devices client
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Cloud implements Client
 {

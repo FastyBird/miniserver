@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Properties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           21.06.23
- */
-
 namespace FastyBird\Connector\Viera\Subscribers;
 
 use Doctrine\Common;
@@ -43,11 +30,6 @@ use function array_merge;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Properties implements Common\EventSubscriber
 {

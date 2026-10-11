@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelAttribute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           05.03.20
- */
-
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use Orisai\ObjectMapper;
@@ -21,11 +8,6 @@ use function array_merge;
 
 /**
  * Channel attribute
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ChannelAttribute extends Attribute
 {

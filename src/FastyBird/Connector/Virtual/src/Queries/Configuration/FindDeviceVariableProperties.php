@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindDeviceVariableProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           19.02.24
- */
-
 namespace FastyBird\Connector\Virtual\Queries\Configuration;
 
 use FastyBird\Connector\Virtual\Exceptions;
@@ -26,11 +13,6 @@ use function sprintf;
  *
  * @template T of DevicesDocuments\Devices\Properties\Variable
  * @extends  DevicesQueries\Configuration\FindDeviceVariableProperties<T>
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queries
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindDeviceVariableProperties extends DevicesQueries\Configuration\FindDeviceVariableProperties
 {

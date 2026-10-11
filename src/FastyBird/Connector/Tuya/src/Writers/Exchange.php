@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Exchange.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           14.12.22
- */
-
 namespace FastyBird\Connector\Tuya\Writers;
 
 use FastyBird\Connector\Tuya;
@@ -39,11 +26,6 @@ use function str_starts_with;
 
 /**
  * Exchange based properties writer
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Exchange extends Periodic implements Writer, Consumers\Consumer
 {

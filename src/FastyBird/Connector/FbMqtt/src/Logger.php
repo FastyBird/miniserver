@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Logger.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     common
- * @since          1.0.0
- *
- * @date           03.12.23
- */
-
 namespace FastyBird\Connector\FbMqtt;
 
 use Monolog;
@@ -21,11 +8,6 @@ use Stringable;
 
 /**
  * Connector logger
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     common
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Logger implements Log\LoggerInterface
 {

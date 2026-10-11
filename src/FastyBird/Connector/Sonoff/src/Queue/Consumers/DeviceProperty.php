@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceProperty.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           19.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -32,11 +19,6 @@ use Ramsey\Uuid;
 
 /**
  * Device ip address consumer trait
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @property-read DevicesModels\Entities\Devices\DevicesRepository $devicesRepository
  * @property-read DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository

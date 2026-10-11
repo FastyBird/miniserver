@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           21.11.23
- */
-
 namespace FastyBird\Connector\Virtual\Helpers;
 
 use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
@@ -32,11 +19,6 @@ use function is_numeric;
 
 /**
  * Device helper
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Device
 {

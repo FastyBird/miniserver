@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * State.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           18.01.23
- */
-
 namespace FastyBird\Connector\Modbus\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -36,11 +23,6 @@ use function React\Async\await;
 
 /**
  * Device state message consumer
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreDeviceConnectionState implements Queue\Consumer
 {

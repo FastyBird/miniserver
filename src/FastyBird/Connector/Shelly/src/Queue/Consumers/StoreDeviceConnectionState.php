@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreDeviceConnectionState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           12.01.23
- */
-
 namespace FastyBird\Connector\Shelly\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -36,11 +23,6 @@ use function React\Async\await;
 
 /**
  * Store device connection state message consumer
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreDeviceConnectionState implements Queue\Consumer
 {

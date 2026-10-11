@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CapabilityDescription.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           09.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Queue\Messages;
 
 use FastyBird\Connector\NsPanel\Types;
@@ -21,11 +8,6 @@ use stdClass;
 
 /**
  * Device capability description definition
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class CapabilityDescription implements Message
 {

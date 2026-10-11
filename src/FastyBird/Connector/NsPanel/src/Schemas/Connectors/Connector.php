@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           09.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Schemas\Connectors;
 
 use FastyBird\Connector\NsPanel\Entities;
@@ -23,10 +10,6 @@ use FastyBird\Module\Devices\Schemas as DevicesSchemas;
  * NS Panel connector entity schema
  *
  * @extends DevicesSchemas\Connectors\Connector<Entities\Connectors\Connector>
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connector extends DevicesSchemas\Connectors\Connector
 {

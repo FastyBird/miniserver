@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Tlv.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           20.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol;
 
 use FastyBird\Connector\HomeKit\Exceptions;
@@ -43,11 +30,6 @@ use function unpack;
 
 /**
  * Apple TLV8 utilities
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Tlv
 {

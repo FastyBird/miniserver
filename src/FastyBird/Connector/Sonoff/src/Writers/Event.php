@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Event.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           14.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Writers;
 
 use FastyBird\Connector\Sonoff\Documents;
@@ -26,11 +13,6 @@ use Throwable;
 
 /**
  * Event based properties writer
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberInterface
 {

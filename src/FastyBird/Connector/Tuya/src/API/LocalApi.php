@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * LocalApi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           31.08.22
- */
-
 namespace FastyBird\Connector\Tuya\API;
 
 use Brick\Math;
@@ -75,11 +62,6 @@ use const OPENSSL_RAW_DATA;
 
 /**
  * Local UDP device interface
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class LocalApi
 {

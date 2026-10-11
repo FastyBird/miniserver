@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Discovery.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           27.08.22
- */
-
 namespace FastyBird\Connector\Viera\Clients;
 
 use FastyBird\Connector\Viera;
@@ -48,11 +35,6 @@ use function trim;
 
 /**
  * Devices discovery client
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Discovery
 {

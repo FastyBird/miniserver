@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ThirdPartyDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           04.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Protocol\Devices;
 
 use FastyBird\Connector\NsPanel\Exceptions;
@@ -21,11 +8,6 @@ use Ramsey\Uuid;
 
 /**
  * NS panel third party device
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ThirdPartyDevice extends Device
 {

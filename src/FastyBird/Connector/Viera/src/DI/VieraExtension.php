@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * VieraExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           21.06.23
- */
-
 namespace FastyBird\Connector\Viera\DI;
 
 use Contributte\Translation;
@@ -43,11 +30,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Viera connector
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class VieraExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

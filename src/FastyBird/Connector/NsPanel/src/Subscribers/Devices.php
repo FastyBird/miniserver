@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Devices.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           15.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Subscribers;
 
 use Doctrine\Common;
@@ -25,11 +12,6 @@ use Nette;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Devices implements Common\EventSubscriber
 {

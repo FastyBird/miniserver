@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindConnectorVariableProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           18.02.24
- */
-
 namespace FastyBird\Connector\Viera\Queries\Configuration;
 
 use FastyBird\Connector\Viera\Exceptions;
@@ -26,11 +13,6 @@ use function sprintf;
  *
  * @template T of DevicesDocuments\Channels\Properties\Property
  * @extends  DevicesQueries\Configuration\FindChannelProperties<T>
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Queries
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindChannelProperties extends DevicesQueries\Configuration\FindChannelProperties
 {

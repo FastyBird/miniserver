@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           25.04.22
- */
-
 namespace FastyBird\Connector\Tuya\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
