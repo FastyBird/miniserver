@@ -17,7 +17,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Date&Time automator
  */
-class DateTimeExtension extends NetteDI\CompilerExtension
+final class DateTimeExtension extends NetteDI\CompilerExtension
 {
 
 	public const string NAME = 'fbDateTimeAutomator';

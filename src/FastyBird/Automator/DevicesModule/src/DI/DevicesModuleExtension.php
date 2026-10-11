@@ -18,7 +18,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Devices module automator
  */
-class DevicesModuleExtension extends NetteDI\CompilerExtension
+final class DevicesModuleExtension extends NetteDI\CompilerExtension
 {
 
 	public const string NAME = 'fbDevicesModuleAutomator';

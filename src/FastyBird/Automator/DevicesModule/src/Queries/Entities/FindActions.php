@@ -13,7 +13,7 @@ use Ramsey\Uuid;
  * @template T of TriggersEntities\Actions\Action
  * @extends TriggersQueries\Entities\FindActions<T>
  */
-class FindActions extends TriggersQueries\Entities\FindActions
+final class FindActions extends TriggersQueries\Entities\FindActions
 {
 
 	public function forDevice(Uuid\UuidInterface $device): void

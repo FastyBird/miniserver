@@ -2,7 +2,7 @@
 
 namespace FastyBird\Automator\DevicesModule\Exceptions;
 
-class UniqueActionConstraint extends InvalidState implements Exception
+final class UniqueActionConstraint extends InvalidState implements Exception
 {
 
 }

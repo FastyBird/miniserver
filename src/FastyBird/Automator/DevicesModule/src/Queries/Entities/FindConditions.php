@@ -16,7 +16,7 @@ use Ramsey\Uuid;
  * @template T of TriggersEntities\Conditions\Condition
  * @extends TriggersQueries\Entities\FindConditions<T>
  */
-class FindConditions extends TriggersQueries\Entities\FindConditions
+final class FindConditions extends TriggersQueries\Entities\FindConditions
 {
 
 	public function forDevice(Uuid\UuidInterface $device): void
