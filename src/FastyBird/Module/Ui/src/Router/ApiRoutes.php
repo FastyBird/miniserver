@@ -32,13 +32,13 @@ use FastyBird\Module\Ui\Middleware as UiMiddleware;
 class ApiRoutes
 {
 
-	public const URL_ITEM_ID = 'id';
+	public const string URL_ITEM_ID = 'id';
 
-	public const URL_DASHBOARD_ID = 'dashboard';
+	public const string URL_DASHBOARD_ID = 'dashboard';
 
-	public const URL_WIDGET_ID = 'widget';
+	public const string URL_WIDGET_ID = 'widget';
 
-	public const RELATION_ENTITY = 'relationEntity';
+	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
 		private readonly bool $usePrefix,

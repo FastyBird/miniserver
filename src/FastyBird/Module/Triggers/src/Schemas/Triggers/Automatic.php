@@ -43,12 +43,12 @@ final class Automatic extends Trigger
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/trigger/' . Entities\Triggers\Automatic::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/trigger/' . Entities\Triggers\Automatic::TYPE;
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_CONDITIONS = 'conditions';
+	public const string RELATIONSHIPS_CONDITIONS = 'conditions';
 
 	public function __construct(
 		Routing\Router $router,

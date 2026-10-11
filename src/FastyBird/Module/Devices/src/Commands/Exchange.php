@@ -47,7 +47,7 @@ final class Exchange extends Console\Command\Command
 
 	use Nette\SmartObject;
 
-	public const NAME = 'fb:devices-module:exchange';
+	public const string NAME = 'fb:devices-module:exchange';
 
 	/**
 	 * @param array<CoreExchange\Factory> $exchangeFactories

@@ -47,7 +47,7 @@ use function React\Async\await;
 final class StatesActions implements Consumers\Consumer
 {
 
-	private const CONSUMER_ROUTING_KEYS = [
+	private const array CONSUMER_ROUTING_KEYS = [
 		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
 		Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
 		Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,

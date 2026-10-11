@@ -49,9 +49,9 @@ use const DIRECTORY_SEPARATOR;
 class TriggersExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbTriggersModule';
+	public const string NAME = 'fbTriggersModule';
 
-	public const TRIGGER_TYPE_TAG = 'trigger_type';
+	public const string TRIGGER_TYPE_TAG = 'trigger_type';
 
 	public static function register(
 		Boot\Configurator $config,

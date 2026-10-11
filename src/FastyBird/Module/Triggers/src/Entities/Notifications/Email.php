@@ -35,7 +35,7 @@ use function array_merge;
 class Email extends Notification
 {
 
-	public const TYPE = 'email';
+	public const string TYPE = 'email';
 
 	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'notification_email', type: 'string', nullable: false)]

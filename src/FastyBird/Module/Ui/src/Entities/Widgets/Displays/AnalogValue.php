@@ -27,7 +27,7 @@ class AnalogValue extends Display implements Entities\Widgets\Displays\Parameter
 
 	use Entities\Widgets\Displays\Parameters\TPrecision;
 
-	public const TYPE = 'analog-value';
+	public const string TYPE = 'analog-value';
 
 	public static function getType(): string
 	{

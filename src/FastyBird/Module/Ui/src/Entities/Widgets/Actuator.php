@@ -21,6 +21,6 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class Actuator extends Widget
 {
 
-	public const WIDGET_GROUP = 'actuator';
+	public const string WIDGET_GROUP = 'actuator';
 
 }

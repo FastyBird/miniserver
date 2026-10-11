@@ -35,7 +35,7 @@ use function sprintf;
 class Mapped extends Property
 {
 
-	public const TYPE = Types\PropertyType::MAPPED->value;
+	public const string TYPE = Types\PropertyType::MAPPED->value;
 
 	public function __construct(
 		Entities\Channels\Channel $channel,

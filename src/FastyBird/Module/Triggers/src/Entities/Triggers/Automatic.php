@@ -35,7 +35,7 @@ use Ramsey\Uuid;
 class Automatic extends Trigger
 {
 
-	public const TYPE = 'automatic';
+	public const string TYPE = 'automatic';
 
 	/** @var Common\Collections\Collection<int, Entities\Conditions\Condition> */
 	#[Attribute\Crud(writable: true)]

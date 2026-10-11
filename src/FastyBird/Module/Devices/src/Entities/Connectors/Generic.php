@@ -25,7 +25,7 @@ use FastyBird\Module\Devices\Entities;
 class Generic extends Entities\Connectors\Connector
 {
 
-	public const TYPE = 'generic';
+	public const string TYPE = 'generic';
 
 	public static function getType(): string
 	{

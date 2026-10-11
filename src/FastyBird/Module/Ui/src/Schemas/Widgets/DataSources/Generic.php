@@ -34,7 +34,7 @@ final class Generic extends DataSource
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::UI->value . '/data-source/' . Entities\Widgets\DataSources\Generic::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/data-source/' . Entities\Widgets\DataSources\Generic::TYPE;
 
 	public function getEntityClass(): string
 	{

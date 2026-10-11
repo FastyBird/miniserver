@@ -53,7 +53,7 @@ final class Diagnostics extends Console\Command\Command
 
 	use Nette\SmartObject;
 
-	public const NAME = 'fb:devices-module:diagnostics';
+	public const string NAME = 'fb:devices-module:diagnostics';
 
 	public function __construct(
 		private readonly Models\Configuration\Connectors\Repository $connectorsConfigurationRepository,

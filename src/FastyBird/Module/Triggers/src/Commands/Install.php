@@ -36,7 +36,7 @@ use Throwable;
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:triggers-module:install';
+	public const string NAME = 'fb:triggers-module:install';
 
 	public function __construct(
 		private readonly Localization\Translator $translator,

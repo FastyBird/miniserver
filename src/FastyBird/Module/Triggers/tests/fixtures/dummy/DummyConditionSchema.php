@@ -13,7 +13,7 @@ final class DummyConditionSchema extends Schemas\Conditions\Condition
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/condition/' . DummyConditionEntity::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/condition/' . DummyConditionEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

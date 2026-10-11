@@ -34,7 +34,7 @@ final class Generic extends Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/device/' . Entities\Devices\Generic::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/device/' . Entities\Devices\Generic::TYPE;
 
 	public function getEntityClass(): string
 	{

@@ -30,7 +30,7 @@ use function file_get_contents;
 final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
+	private const string USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

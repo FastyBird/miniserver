@@ -27,7 +27,7 @@ class GroupedButton extends Display implements Entities\Widgets\Displays\Paramet
 
 	use Entities\Widgets\Displays\Parameters\TIcon;
 
-	public const TYPE = 'grouped-button';
+	public const string TYPE = 'grouped-button';
 
 	public static function getType(): string
 	{

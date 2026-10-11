@@ -41,11 +41,11 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_DEVICE = 'device';
+	public const string RELATIONSHIPS_DEVICE = 'device';
 
-	public const RELATIONSHIPS_PROPERTIES = 'properties';
+	public const string RELATIONSHIPS_PROPERTIES = 'properties';
 
-	public const RELATIONSHIPS_CONTROLS = 'controls';
+	public const string RELATIONSHIPS_CONTROLS = 'controls';
 
 	public function __construct(private readonly Routing\Router $router)
 	{

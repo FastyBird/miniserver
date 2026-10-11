@@ -34,15 +34,15 @@ use function is_string;
 final class Authenticator implements Identity\Authenticator
 {
 
-	public const IDENTITY_UID_NOT_FOUND = 110;
+	public const int IDENTITY_UID_NOT_FOUND = 110;
 
-	public const INVALID_CREDENTIAL_FOR_UID = 120;
+	public const int INVALID_CREDENTIAL_FOR_UID = 120;
 
-	public const ACCOUNT_PROFILE_BLOCKED = 210;
+	public const int ACCOUNT_PROFILE_BLOCKED = 210;
 
-	public const ACCOUNT_PROFILE_DELETED = 220;
+	public const int ACCOUNT_PROFILE_DELETED = 220;
 
-	public const ACCOUNT_PROFILE_OTHER_ERROR = 230;
+	public const int ACCOUNT_PROFILE_OTHER_ERROR = 230;
 
 	public function __construct(
 		private readonly Models\Entities\Identities\IdentitiesRepository $identitiesRepository,

@@ -32,11 +32,11 @@ use FastyBird\Module\Accounts\Middleware as AccountsMiddleware;
 class ApiRoutes
 {
 
-	public const URL_ITEM_ID = 'id';
+	public const string URL_ITEM_ID = 'id';
 
-	public const URL_ACCOUNT_ID = 'account';
+	public const string URL_ACCOUNT_ID = 'account';
 
-	public const RELATION_ENTITY = 'relationEntity';
+	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
 		private readonly bool $usePrefix,

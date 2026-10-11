@@ -28,7 +28,7 @@ use function sprintf;
 class Dynamic extends Property
 {
 
-	public const TYPE = Types\PropertyType::DYNAMIC->value;
+	public const string TYPE = Types\PropertyType::DYNAMIC->value;
 
 	public static function getType(): string
 	{

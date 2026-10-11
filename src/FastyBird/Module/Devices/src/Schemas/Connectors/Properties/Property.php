@@ -46,9 +46,9 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_CONNECTOR = 'connector';
+	public const string RELATIONSHIPS_CONNECTOR = 'connector';
 
-	public const RELATIONSHIPS_STATE = 'state';
+	public const string RELATIONSHIPS_STATE = 'state';
 
 	public function __construct(protected readonly Routing\Router $router)
 	{

@@ -36,7 +36,7 @@ use Throwable;
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:accounts-module:install';
+	public const string NAME = 'fb:accounts-module:install';
 
 	public function __construct(
 		private readonly Localization\Translator $translator,

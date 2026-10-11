@@ -24,7 +24,7 @@ use FastyBird\Module\Ui\Entities;
 class AnalogSensor extends Sensor
 {
 
-	public const TYPE = 'analog-sensor';
+	public const string TYPE = 'analog-sensor';
 
 	public static function getType(): string
 	{

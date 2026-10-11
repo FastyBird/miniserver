@@ -40,13 +40,13 @@ abstract class Widget extends Schemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_DISPLAY = 'display';
+	public const string RELATIONSHIPS_DISPLAY = 'display';
 
-	public const RELATIONSHIPS_TABS = 'tabs';
+	public const string RELATIONSHIPS_TABS = 'tabs';
 
-	public const RELATIONSHIPS_GROUPS = 'groups';
+	public const string RELATIONSHIPS_GROUPS = 'groups';
 
-	public const RELATIONSHIPS_DATA_SOURCES = 'data-sources';
+	public const string RELATIONSHIPS_DATA_SOURCES = 'data-sources';
 
 	public function __construct(protected readonly Routing\Router $router)
 	{

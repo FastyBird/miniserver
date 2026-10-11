@@ -38,7 +38,7 @@ final class SecurityHash
 
 	use Nette\SmartObject;
 
-	private const SEPARATOR = '##';
+	private const string SEPARATOR = '##';
 
 	public function __construct(private readonly ClockInterface $clock)
 	{

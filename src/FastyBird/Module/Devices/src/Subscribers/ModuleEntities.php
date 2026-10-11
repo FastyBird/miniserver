@@ -48,11 +48,11 @@ final class ModuleEntities implements Common\EventSubscriber
 
 	use Nette\SmartObject;
 
-	private const ACTION_CREATED = 'created';
+	private const string ACTION_CREATED = 'created';
 
-	private const ACTION_UPDATED = 'updated';
+	private const string ACTION_UPDATED = 'updated';
 
-	private const ACTION_DELETED = 'deleted';
+	private const string ACTION_DELETED = 'deleted';
 
 	public function __construct(
 		private readonly ORM\EntityManagerInterface $entityManager,

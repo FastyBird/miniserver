@@ -40,12 +40,12 @@ final class Identity extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/identity';
+	public const string SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/identity';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_ACCOUNT = 'account';
+	public const string RELATIONSHIPS_ACCOUNT = 'account';
 
 	public function __construct(private readonly Routing\Router $router)
 	{

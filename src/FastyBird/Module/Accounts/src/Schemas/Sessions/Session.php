@@ -42,12 +42,12 @@ final class Session extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/session';
+	public const string SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/session';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_ACCOUNT = 'account';
+	public const string RELATIONSHIPS_ACCOUNT = 'account';
 
 	public function __construct(private readonly Routing\Router $router)
 	{

@@ -30,13 +30,13 @@ use function strval;
 final class AccountsV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const ADMINISTRATOR_ACCOUNT_ID = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
+	private const string ADMINISTRATOR_ACCOUNT_ID = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
 
-	private const CHILD_USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
+	private const string CHILD_USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
 
-	private const USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
+	private const string USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
 
-	private const UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
+	private const string UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

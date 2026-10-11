@@ -64,9 +64,9 @@ use const DIRECTORY_SEPARATOR;
 class DevicesExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbDevicesModule';
+	public const string NAME = 'fbDevicesModule';
 
-	public const CONNECTOR_TYPE_TAG = 'connector_type';
+	public const string CONNECTOR_TYPE_TAG = 'connector_type';
 
 	public static function register(
 		Boot\Configurator $config,

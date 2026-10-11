@@ -27,13 +27,13 @@ use function file_get_contents;
 final class IdentitiesV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const ADMINISTRATOR_ACCOUNT_ID = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
+	private const string ADMINISTRATOR_ACCOUNT_ID = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
 
-	private const USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
+	private const string USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
 
-	private const ADMINISTRATOR_IDENTITY_ID = '77331268-efbf-bd34-49ef-bfbdefbfbd04';
+	private const string ADMINISTRATOR_IDENTITY_ID = '77331268-efbf-bd34-49ef-bfbdefbfbd04';
 
-	private const UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
+	private const string UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

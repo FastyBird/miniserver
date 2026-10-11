@@ -50,7 +50,7 @@ use function strval;
 class Create extends Console\Command\Command
 {
 
-	public const NAME = 'fb:accounts-module:create:account';
+	public const string NAME = 'fb:accounts-module:create:account';
 
 	public function __construct(
 		private readonly Models\Entities\Accounts\AccountsManager $accountsManager,

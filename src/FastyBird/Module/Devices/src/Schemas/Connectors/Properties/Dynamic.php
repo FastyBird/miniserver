@@ -52,7 +52,7 @@ final class Dynamic extends Property
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/connector/' . Types\PropertyType::DYNAMIC->value;
+	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/connector/' . Types\PropertyType::DYNAMIC->value;
 
 	public function __construct(
 		Routing\Router $router,

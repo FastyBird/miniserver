@@ -21,6 +21,6 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class Sensor extends Widget
 {
 
-	public const WIDGET_GROUP = 'sensor';
+	public const string WIDGET_GROUP = 'sensor';
 
 }

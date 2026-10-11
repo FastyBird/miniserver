@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Entities;
 class DummyDeviceEntity extends Entities\Devices\Device
 {
 
-	public const TYPE = 'dummy';
+	public const string TYPE = 'dummy';
 
 	public static function getType(): string
 	{

@@ -44,17 +44,17 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_CHANNELS = 'channels';
+	public const string RELATIONSHIPS_CHANNELS = 'channels';
 
-	public const RELATIONSHIPS_PROPERTIES = 'properties';
+	public const string RELATIONSHIPS_PROPERTIES = 'properties';
 
-	public const RELATIONSHIPS_CONTROLS = 'controls';
+	public const string RELATIONSHIPS_CONTROLS = 'controls';
 
-	public const RELATIONSHIPS_CONNECTOR = 'connector';
+	public const string RELATIONSHIPS_CONNECTOR = 'connector';
 
-	public const RELATIONSHIPS_PARENTS = 'parents';
+	public const string RELATIONSHIPS_PARENTS = 'parents';
 
-	public const RELATIONSHIPS_CHILDREN = 'children';
+	public const string RELATIONSHIPS_CHILDREN = 'children';
 
 	public function __construct(
 		protected readonly Models\Entities\Devices\DevicesRepository $devicesRepository,

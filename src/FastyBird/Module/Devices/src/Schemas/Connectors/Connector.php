@@ -41,11 +41,11 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_DEVICES = 'devices';
+	public const string RELATIONSHIPS_DEVICES = 'devices';
 
-	public const RELATIONSHIPS_PROPERTIES = 'properties';
+	public const string RELATIONSHIPS_PROPERTIES = 'properties';
 
-	public const RELATIONSHIPS_CONTROLS = 'controls';
+	public const string RELATIONSHIPS_CONTROLS = 'controls';
 
 	public function __construct(private readonly Routing\Router $router)
 	{

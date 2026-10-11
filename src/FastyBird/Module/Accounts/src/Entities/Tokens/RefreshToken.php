@@ -40,7 +40,7 @@ class RefreshToken extends Tokens\Token implements
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 
-	public const TOKEN_EXPIRATION = '+3 days';
+	public const string TOKEN_EXPIRATION = '+3 days';
 
 	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'token_valid_till', type: 'datetime_immutable', nullable: false)]

@@ -27,13 +27,13 @@ use function file_get_contents;
 final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const ADMINISTRATOR_EMAIL_ID = '32ebe3c3-0238-482e-ab79-6b1d9ee2147c';
+	private const string ADMINISTRATOR_EMAIL_ID = '32ebe3c3-0238-482e-ab79-6b1d9ee2147c';
 
-	private const ADMINISTRATOR_PRIMARY_EMAIL_ID = '0b46d3d6-c980-494a-8b40-f19e6095e610';
+	private const string ADMINISTRATOR_PRIMARY_EMAIL_ID = '0b46d3d6-c980-494a-8b40-f19e6095e610';
 
-	private const USER_EMAIL_ID = '73efbfbd-efbf-bd36-44ef-bfbdefbfbd7a';
+	private const string USER_EMAIL_ID = '73efbfbd-efbf-bd36-44ef-bfbdefbfbd7a';
 
-	private const UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
+	private const string UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

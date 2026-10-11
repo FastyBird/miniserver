@@ -52,11 +52,11 @@ use function substr;
 final class NotificationTimestampsTest extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const FROZEN_NOW = '2020-04-01 12:00:00';
+	private const string FROZEN_NOW = '2020-04-01 12:00:00';
 
-	private const TRIGGER_ID = 'c64ba1c4-0eda-4cab-87a0-4d634f7b67f4';
+	private const string TRIGGER_ID = 'c64ba1c4-0eda-4cab-87a0-4d634f7b67f4';
 
-	private const SMS_NOTIFICATION_ID = '4fe1019c-f49e-4cbf-83e6-20b394e76317';
+	private const string SMS_NOTIFICATION_ID = '4fe1019c-f49e-4cbf-83e6-20b394e76317';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

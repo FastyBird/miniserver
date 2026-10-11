@@ -23,7 +23,7 @@ use FastyBird\Module\Devices\Types;
 class Variable extends Property
 {
 
-	public const TYPE = Types\PropertyType::VARIABLE->value;
+	public const string TYPE = Types\PropertyType::VARIABLE->value;
 
 	public static function getType(): string
 	{

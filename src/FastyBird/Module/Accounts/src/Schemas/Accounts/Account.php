@@ -48,16 +48,16 @@ final class Account extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/account';
+	public const string SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/account';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_IDENTITIES = 'identities';
+	public const string RELATIONSHIPS_IDENTITIES = 'identities';
 
-	public const RELATIONSHIPS_ROLES = 'roles';
+	public const string RELATIONSHIPS_ROLES = 'roles';
 
-	public const RELATIONSHIPS_EMAILS = 'emails';
+	public const string RELATIONSHIPS_EMAILS = 'emails';
 
 	public function __construct(
 		protected readonly Routing\Router $router,

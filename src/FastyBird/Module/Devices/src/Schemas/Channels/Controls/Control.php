@@ -41,12 +41,12 @@ final class Control extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/control/channel';
+	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/control/channel';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_CHANNEL = 'channel';
+	public const string RELATIONSHIPS_CHANNEL = 'channel';
 
 	public function __construct(private readonly Routing\Router $router)
 	{

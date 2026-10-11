@@ -34,7 +34,7 @@ use FastyBird\Module\Ui\Schemas;
 class Generic extends DataSource
 {
 
-	public const TYPE = 'generic';
+	public const string TYPE = 'generic';
 
 	public static function getType(): string
 	{

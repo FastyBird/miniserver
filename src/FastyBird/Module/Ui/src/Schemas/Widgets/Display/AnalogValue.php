@@ -36,7 +36,7 @@ final class AnalogValue extends Display
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::UI->value . '/display/' . Entities\Widgets\Displays\AnalogValue::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/display/' . Entities\Widgets\Displays\AnalogValue::TYPE;
 
 	public function getType(): string
 	{

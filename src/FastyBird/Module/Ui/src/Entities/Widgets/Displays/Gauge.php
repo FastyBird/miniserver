@@ -27,7 +27,7 @@ class Gauge extends Display implements Entities\Widgets\Displays\Parameters\Prec
 
 	use Entities\Widgets\Displays\Parameters\TPrecision;
 
-	public const TYPE = 'gauge';
+	public const string TYPE = 'gauge';
 
 	public static function getType(): string
 	{

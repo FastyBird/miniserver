@@ -27,7 +27,7 @@ class Button extends Display implements Entities\Widgets\Displays\Parameters\Ico
 
 	use Entities\Widgets\Displays\Parameters\TIcon;
 
-	public const TYPE = 'button';
+	public const string TYPE = 'button';
 
 	public static function getType(): string
 	{

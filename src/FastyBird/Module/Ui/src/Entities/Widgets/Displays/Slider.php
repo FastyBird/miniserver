@@ -37,7 +37,7 @@ class Slider extends Display implements Entities\Widgets\Displays\Parameters\Min
 	use Entities\Widgets\Displays\Parameters\TStepValue;
 	use Entities\Widgets\Displays\Parameters\TPrecision;
 
-	public const TYPE = 'slider';
+	public const string TYPE = 'slider';
 
 	public function __construct(
 		Entities\Widgets\Widget $widget,

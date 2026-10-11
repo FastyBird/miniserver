@@ -27,11 +27,11 @@ use function file_get_contents;
 final class AccountIdentitiesV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const ADMINISTRATOR_IDENTITY_ID = '77331268-efbf-bd34-49ef-bfbdefbfbd04';
+	private const string ADMINISTRATOR_IDENTITY_ID = '77331268-efbf-bd34-49ef-bfbdefbfbd04';
 
-	private const USER_IDENTITY_ID = 'faf7a863-a49c-4428-a757-1de537773355';
+	private const string USER_IDENTITY_ID = 'faf7a863-a49c-4428-a757-1de537773355';
 
-	private const UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
+	private const string UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

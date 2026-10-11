@@ -24,7 +24,7 @@ use FastyBird\Module\Ui\Entities;
 class DigitalActuator extends Actuator
 {
 
-	public const TYPE = 'digital-actuator';
+	public const string TYPE = 'digital-actuator';
 
 	public static function getType(): string
 	{

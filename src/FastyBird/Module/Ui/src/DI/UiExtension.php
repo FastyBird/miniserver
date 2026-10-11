@@ -59,7 +59,7 @@ use const DIRECTORY_SEPARATOR;
 class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbUiModule';
+	public const string NAME = 'fbUiModule';
 
 	public static function register(
 		Boot\Configurator $config,

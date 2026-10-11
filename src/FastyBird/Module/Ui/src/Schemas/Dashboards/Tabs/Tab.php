@@ -40,14 +40,14 @@ final class Tab extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::UI->value . '/tab';
+	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/tab';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_DASHBOARD = 'dashboard';
+	public const string RELATIONSHIPS_DASHBOARD = 'dashboard';
 
-	public const RELATIONSHIPS_WIDGETS = 'widgets';
+	public const string RELATIONSHIPS_WIDGETS = 'widgets';
 
 	public function __construct(protected readonly Routing\Router $router)
 	{

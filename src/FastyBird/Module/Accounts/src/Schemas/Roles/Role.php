@@ -44,14 +44,14 @@ final class Role extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/role';
+	public const string SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/role';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_PARENT = 'parent';
+	public const string RELATIONSHIPS_PARENT = 'parent';
 
-	public const RELATIONSHIPS_CHILDREN = 'children';
+	public const string RELATIONSHIPS_CHILDREN = 'children';
 
 	public function __construct(
 		private readonly Policies\Repository $policiesRepository,

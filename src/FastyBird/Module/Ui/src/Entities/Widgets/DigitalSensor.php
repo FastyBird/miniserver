@@ -24,7 +24,7 @@ use FastyBird\Module\Ui\Entities;
 class DigitalSensor extends Sensor
 {
 
-	public const TYPE = 'digital-sensor';
+	public const string TYPE = 'digital-sensor';
 
 	public static function getType(): string
 	{

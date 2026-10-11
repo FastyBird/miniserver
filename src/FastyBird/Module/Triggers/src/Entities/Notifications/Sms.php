@@ -36,7 +36,7 @@ use function array_merge;
 class Sms extends Notification
 {
 
-	public const TYPE = 'sms';
+	public const string TYPE = 'sms';
 
 	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'notification_phone', type: 'phone', length: 150, nullable: false)]

@@ -41,9 +41,9 @@ abstract class Trigger extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_ACTIONS = 'actions';
+	public const string RELATIONSHIPS_ACTIONS = 'actions';
 
-	public const RELATIONSHIPS_NOTIFICATIONS = 'notifications';
+	public const string RELATIONSHIPS_NOTIFICATIONS = 'notifications';
 
 	public function __construct(
 		protected readonly Routing\Router $router,

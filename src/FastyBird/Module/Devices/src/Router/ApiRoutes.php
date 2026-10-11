@@ -32,17 +32,17 @@ use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 class ApiRoutes
 {
 
-	public const URL_ITEM_ID = 'id';
+	public const string URL_ITEM_ID = 'id';
 
-	public const URL_DEVICE_ID = 'device';
+	public const string URL_DEVICE_ID = 'device';
 
-	public const URL_CHANNEL_ID = 'channel';
+	public const string URL_CHANNEL_ID = 'channel';
 
-	public const URL_CONNECTOR_ID = 'connector';
+	public const string URL_CONNECTOR_ID = 'connector';
 
-	public const URL_PROPERTY_ID = 'property';
+	public const string URL_PROPERTY_ID = 'property';
 
-	public const RELATION_ENTITY = 'relationEntity';
+	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
 		private readonly bool $usePrefix,

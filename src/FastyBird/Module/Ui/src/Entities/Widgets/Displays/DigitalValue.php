@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class DigitalValue extends Display
 {
 
-	public const TYPE = 'digital-value';
+	public const string TYPE = 'digital-value';
 
 	public static function getType(): string
 	{

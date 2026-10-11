@@ -40,12 +40,12 @@ final class Control extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/control/trigger';
+	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/control/trigger';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_TRIGGER = 'trigger';
+	public const string RELATIONSHIPS_TRIGGER = 'trigger';
 
 	public function __construct(private readonly Routing\Router $router)
 	{

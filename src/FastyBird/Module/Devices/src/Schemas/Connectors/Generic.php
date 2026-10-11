@@ -34,7 +34,7 @@ final class Generic extends Connector
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/connector/' . Entities\Connectors\Generic::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/connector/' . Entities\Connectors\Generic::TYPE;
 
 	public function getEntityClass(): string
 	{

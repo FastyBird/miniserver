@@ -39,7 +39,7 @@ class AccessToken extends Tokens\Token implements
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 
-	public const TOKEN_EXPIRATION = '+6 hours';
+	public const string TOKEN_EXPIRATION = '+6 hours';
 
 	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(targetEntity: AccountsEntities\Identities\Identity::class)]

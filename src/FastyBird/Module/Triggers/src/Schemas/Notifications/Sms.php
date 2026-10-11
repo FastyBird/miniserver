@@ -36,7 +36,7 @@ final class Sms extends Notification
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/notification/' . Entities\Notifications\Sms::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/notification/' . Entities\Notifications\Sms::TYPE;
 
 	public function getType(): string
 	{

@@ -34,7 +34,7 @@ final class AnalogActuator extends Widget
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::UI->value . '/widget/' . Entities\Widgets\AnalogActuator::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/widget/' . Entities\Widgets\AnalogActuator::TYPE;
 
 	public function getType(): string
 	{

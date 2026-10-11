@@ -31,7 +31,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class Manual extends Trigger
 {
 
-	public const TYPE = 'manual';
+	public const string TYPE = 'manual';
 
 	public static function getType(): string
 	{

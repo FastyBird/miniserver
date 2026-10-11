@@ -13,7 +13,7 @@ final class DummyActionSchema extends Schemas\Actions\Action
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/action/' . DummyActionEntity::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/action/' . DummyActionEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

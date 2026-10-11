@@ -40,12 +40,12 @@ final class Group extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::UI->value . '/group';
+	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/group';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_WIDGETS = 'widgets';
+	public const string RELATIONSHIPS_WIDGETS = 'widgets';
 
 	public function __construct(protected readonly Routing\Router $router)
 	{

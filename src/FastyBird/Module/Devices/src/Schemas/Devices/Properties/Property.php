@@ -50,13 +50,13 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_DEVICE = 'device';
+	public const string RELATIONSHIPS_DEVICE = 'device';
 
-	public const RELATIONSHIPS_PARENT = 'parent';
+	public const string RELATIONSHIPS_PARENT = 'parent';
 
-	public const RELATIONSHIPS_CHILDREN = 'children';
+	public const string RELATIONSHIPS_CHILDREN = 'children';
 
-	public const RELATIONSHIPS_STATE = 'state';
+	public const string RELATIONSHIPS_STATE = 'state';
 
 	public function __construct(
 		protected readonly Routing\Router $router,

@@ -34,7 +34,7 @@ class ChartGraph extends Display implements Entities\Widgets\Displays\Parameters
 	use Entities\Widgets\Displays\Parameters\TStepValue;
 	use Entities\Widgets\Displays\Parameters\TPrecision;
 
-	public const TYPE = 'chart-graph';
+	public const string TYPE = 'chart-graph';
 
 	#[Attribute\Crud(writable: true)]
 	protected bool $enableMinMax;

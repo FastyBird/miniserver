@@ -53,7 +53,7 @@ final class Mapped extends Property
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/channel/' . Types\PropertyType::MAPPED->value;
+	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/channel/' . Types\PropertyType::MAPPED->value;
 
 	public function __construct(
 		Routing\Router $router,

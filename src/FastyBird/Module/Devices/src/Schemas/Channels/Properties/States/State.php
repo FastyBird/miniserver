@@ -47,12 +47,12 @@ final class State extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/channel/' . Types\PropertyType::DYNAMIC->value . '/state';
+	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/channel/' . Types\PropertyType::DYNAMIC->value . '/state';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_PROPERTY = 'property';
+	public const string RELATIONSHIPS_PROPERTY = 'property';
 
 	public function __construct(
 		private readonly Routing\Router $router,

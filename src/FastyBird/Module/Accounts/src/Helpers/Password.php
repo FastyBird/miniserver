@@ -33,7 +33,7 @@ final class Password
 
 	use Nette\SmartObject;
 
-	private const SEPARATOR = '##';
+	private const string SEPARATOR = '##';
 
 	private string $hash;
 

@@ -31,17 +31,17 @@ use Ramsey\Uuid;
 interface Property extends ObjectMapper\MappedObject
 {
 
-	public const ACTUAL_VALUE_FIELD = 'actual_value';
+	public const string ACTUAL_VALUE_FIELD = 'actual_value';
 
-	public const EXPECTED_VALUE_FIELD = 'expected_value';
+	public const string EXPECTED_VALUE_FIELD = 'expected_value';
 
-	public const PENDING_FIELD = 'pending';
+	public const string PENDING_FIELD = 'pending';
 
-	public const VALID_FIELD = 'valid';
+	public const string VALID_FIELD = 'valid';
 
-	public const CREATED_AT = 'created_at';
+	public const string CREATED_AT = 'created_at';
 
-	public const UPDATED_AT = 'updated_at';
+	public const string UPDATED_AT = 'updated_at';
 
 	public function getId(): Uuid\UuidInterface;
 

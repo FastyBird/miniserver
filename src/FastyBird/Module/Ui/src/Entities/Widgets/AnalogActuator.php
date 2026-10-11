@@ -24,7 +24,7 @@ use FastyBird\Module\Ui\Entities;
 class AnalogActuator extends Actuator
 {
 
-	public const TYPE = 'analog-actuator';
+	public const string TYPE = 'analog-actuator';
 
 	public static function getType(): string
 	{

@@ -40,12 +40,12 @@ final class Dashboard extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::UI->value . '/dashboard';
+	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/dashboard';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_TABS = 'tabs';
+	public const string RELATIONSHIPS_TABS = 'tabs';
 
 	public function __construct(protected readonly Routing\Router $router)
 	{

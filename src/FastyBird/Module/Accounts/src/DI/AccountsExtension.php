@@ -55,7 +55,7 @@ use const DIRECTORY_SEPARATOR;
 class AccountsExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbAccountsModule';
+	public const string NAME = 'fbAccountsModule';
 
 	public static function register(
 		Boot\Configurator $config,
