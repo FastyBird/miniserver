@@ -112,7 +112,8 @@ docker run --rm -v "$PWD":/app -w /app -e XDEBUG_MODE=off \
 ```
 
 `--diff` exits 1 on any difference and prints it grouped by container and service; `--map
-<file>` applies a service/tag rename map to the base first; `--allow-moves <file>` lets the
+<file>` applies a service/tag rename map and a declared change of a definition's arguments or
+`lazy` flag to the base first; `--allow-moves <file>` lets the
 listed definitions change place in the raw global order (the observable orders, the
 generated `$wiring`/`$tags` lists and every setup sequence, are still compared); `--list`
 prints the containers without compiling. Refresh the `vendor/fastybird/*` mirror first: the recording loads the
