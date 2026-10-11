@@ -19,8 +19,6 @@ use function strval;
 #[ORM\Table(
 	name: 'fb_accounts_module_identities',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'Accounts identities',
 	],
 )]

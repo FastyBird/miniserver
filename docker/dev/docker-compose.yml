@@ -157,7 +157,7 @@ services:
     networks:
       - fastybird
 
-  # DATABASE SCHEMA (schema creation is a manual step until Phase 3 adds migrations)
+  # DATABASE SCHEMA (one-shot: waits for the database, then runs migrations:migrate)
   migrations:
     container_name: fastybird-migrations
     build:

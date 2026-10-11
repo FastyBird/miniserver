@@ -15,8 +15,6 @@ use Ramsey\Uuid;
 #[ORM\Table(
 	name: 'fb_ui_module_widgets_data_sources',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'User interface widgets data sources',
 	],
 )]

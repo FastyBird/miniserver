@@ -12,8 +12,6 @@ use Ramsey\Uuid;
 #[ORM\Table(
 	name: 'fb_api_key_plugin_keys',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'API Key plugin access keys',
 	],
 )]

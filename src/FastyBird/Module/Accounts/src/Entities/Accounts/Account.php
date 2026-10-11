@@ -19,8 +19,6 @@ use function assert;
 #[ORM\Table(
 	name: 'fb_accounts_module_accounts',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'Application accounts',
 	],
 )]

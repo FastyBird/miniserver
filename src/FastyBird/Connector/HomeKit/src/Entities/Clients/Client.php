@@ -16,8 +16,6 @@ use function strval;
 #[ORM\Table(
 	name: 'fb_homekit_connector_clients',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'HomeKit connector clients',
 	],
 )]

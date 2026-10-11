@@ -22,6 +22,26 @@ All three live under the single declared volume `/data`. The container exposes p
 
 The entrypoint then waits for the database to answer, runs `php bin/fb-console.php migrations:migrate --no-interaction --allow-no-migration`, then execs supervisord with the programs below.
 
+### Databases created before the migration baseline
+
+`migrations/` holds one version, `Version20261011210849`: a baseline of the whole schema, in utf8mb4 with `utf8mb4_general_ci` on every table. It replaced the three earlier versions (`Version20260910150558`, `Version20260913085735` and `Version20260917084547`). On a database migrated with those, `migrations:migrate` fails with `Base table or view already exists`, so the entrypoint above stops. Fix such a database in one of two ways:
+
+- **Recreate it** (recommended): drop and recreate the database, empty. The next start migrates it from the baseline.
+- **Keep it**: replace the old versions with the baseline in the version table, then move the three join tables that were created in utf8mb3 to utf8mb4:
+
+  ```sh
+  php bin/fb-console.php migrations:version --delete --all --no-interaction
+  php bin/fb-console.php migrations:version --add --all --no-interaction
+  ```
+
+  ```sql
+  ALTER TABLE fb_devices_module_devices_children CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+  ALTER TABLE fb_ui_module_widgets_groups CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+  ALTER TABLE fb_ui_module_widgets_tabs CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+  ```
+
+  The database then differs from a fresh one only in the display width of its boolean columns (`tinyint(1)` instead of `tinyint`), which Doctrine treats as equal.
+
 ## Runtime processes
 
 HTTP is served by nginx in front of php-fpm; every request hits `public/index.php`. `docker/prod/supervisor/supervisord.conf` bakes in exactly five programs -- confirmed by `.github/workflows/ci-tests.yaml`'s "all five supervisor programs are RUNNING" smoke-test step:

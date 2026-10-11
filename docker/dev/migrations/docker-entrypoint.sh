@@ -2,8 +2,8 @@
 #
 # FastyBird MiniServer - development migrations entrypoint
 #
-# Waits for the database to answer, then reminds the operator that schema
-# creation is a manual step until Phase 3 adds Doctrine migrations.
+# Waits for the database to answer, then migrates it to the latest version
+# in migrations/, as the production entrypoint does.
 #
 set -e
 
@@ -24,5 +24,5 @@ do
 done
 
 echo "Database is reachable."
-echo "Schema creation is a manual step until Phase 3 adds migrations:"
-echo "  docker compose -f docker/dev/docker-compose.yml exec application php bin/fb-console.php orm:schema-tool:create"
+
+php bin/fb-console.php migrations:migrate --no-interaction --allow-no-migration

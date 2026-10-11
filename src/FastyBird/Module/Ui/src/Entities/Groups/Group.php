@@ -19,8 +19,6 @@ use function array_map;
 #[ORM\Table(
 	name: 'fb_ui_module_groups',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'Widget groups',
 	],
 )]

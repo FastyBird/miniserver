@@ -141,7 +141,12 @@ nettrineDbal:
             dbname: %database.dbname%
             user: %database.username%
             password: %database.password%
-            charset: utf8
+            charset: utf8mb4
+            # The only place table options are set. Every generated CREATE TABLE carries them
+            # explicitly, so the schema does not depend on the server's default collation.
+            defaultTableOptions:
+                charset: utf8mb4
+                collation: utf8mb4_general_ci
 
     types:
         uuid_binary: Ramsey\Uuid\Doctrine\UuidBinaryType

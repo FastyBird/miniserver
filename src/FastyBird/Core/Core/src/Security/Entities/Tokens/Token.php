@@ -17,8 +17,6 @@ use Ramsey\Uuid;
 		new ORM\Index(columns: ['token_state'], name: 'token_state_idx'),
 	],
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'name' => 'Security tokens',
 	],
 )]

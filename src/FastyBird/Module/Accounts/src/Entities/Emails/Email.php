@@ -18,8 +18,6 @@ use Ramsey\Uuid;
 #[ORM\Table(
 	name: 'fb_accounts_module_emails',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'Emails addresses',
 	],
 )]
