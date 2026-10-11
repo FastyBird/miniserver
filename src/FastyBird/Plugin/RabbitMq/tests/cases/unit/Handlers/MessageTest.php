@@ -13,6 +13,7 @@ use FastyBird\Plugin\RabbitMq\Publishers;
 use FastyBird\Plugin\RabbitMq\Tests;
 use FastyBird\Plugin\RabbitMq\Utilities;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use TypeError;
 use ValueError;
@@ -163,6 +164,7 @@ final class MessageTest extends Tests\Cases\Unit\BaseTestCase
 			/** @var list<array{0: Sources\Source, 1: string, 2: array<string, mixed>|null}> */
 			public array $calls = [];
 
+			#[Override]
 			public function consume(
 				Sources\Source $source,
 				string $routingKey,

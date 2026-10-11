@@ -8,6 +8,7 @@ use FastyBird\Plugin\RedisDbCache\Connections;
 use FastyBird\Plugin\RedisDbCache\Exceptions;
 use FastyBird\Plugin\RedisDbCache\Tests;
 use Nette\Caching as NetteCaching;
+use Override;
 use stdClass;
 use function sleep;
 use function sprintf;
@@ -21,6 +22,7 @@ final class CacheTest extends Tests\Cases\Unit\BaseTestCase
 
 	private RedisDbCacheCaching\Storage $storage;
 
+	#[Override]
 	protected function setUp(): void
 	{
 		parent::setUp();

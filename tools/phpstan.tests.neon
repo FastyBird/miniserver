@@ -28,6 +28,7 @@ parameters:
     checkMissingCallableSignature: true
     checkTooWideReturnTypesInProtectedAndPublicMethods: true
     checkInternalClassCaseSensitivity: true
+    checkMissingOverrideMethodAttribute: true
 
     bootstrapFiles:
         - phpstan-bootstrap.php

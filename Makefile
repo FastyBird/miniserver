@@ -18,13 +18,10 @@ INFECTION_CONFIG=tools/infection.json
 # the target a maintainer runs before pushing, so it is exactly the pre-push gate
 # that did not gate.
 #
-# Order matters while `cs` is deliberately red (see tools/phpcs.xml's ClassConstantTypeHint
-# comment): make stops at the first non-zero recipe line, and `cs` exits 2 on the 214 known
-# findings every time. The cheap, always-green guards -- `layers`, `discriminators`, `naming`
-# -- run first so a maintainer still gets their signal instead of `make qa` dying on the first
-# line and never reaching them. `phpstan` runs before `cs` for the same reason: it is expected
-# to pass, and `cs` -- the one recipe line expected to fail -- runs last so it does not hide
-# the others.
+# Order matters: make stops at the first non-zero recipe line. The cheap guards -- `layers`,
+# `discriminators`, `naming` -- run first, so a violation of the dependency direction, a
+# discriminator map or the naming rules is reported at once rather than after minutes of static
+# analysis; `phpstan` follows, then `cs`. All five are expected to be green on `main`.
 qa: ## Check code quality - coding style and static analysis
 	make layers
 	make discriminators
@@ -70,7 +67,8 @@ rectorf: ## Apply the PHPUnit annotation-to-attribute conversion, then fix codin
 # fall back to the repository-root rector.php, which is the unrelated PHPUnit conversion.
 # Epic E7 (#462) runs its two configs through the same target, limited to a type or a package by
 # E7_PACKAGE: `E7_PACKAGE=Plugin make rector-e5 RECTOR_CONFIG=tools/rector/e7-override.php`
-# (and tools/rector/e7-readonly.php); without E7_PACKAGE they cover all 28 packages' src.
+# (and tools/rector/e7-readonly.php); without E7_PACKAGE e7-override.php covers all 29 packages' src
+# (Core included) and e7-readonly.php the 28 outside Core.
 rector-e5: ## Apply an E5 Rector config: make rector-e5 RECTOR_CONFIG=tools/rector/e5-<topic>.php [ARGS=--dry-run]
 	test -n "$(RECTOR_CONFIG)" || { echo "rector-e5: set RECTOR_CONFIG=tools/rector/<config>.php" >&2; exit 2; }
 	test -f "$(RECTOR_CONFIG)" || { echo "rector-e5: $(RECTOR_CONFIG) does not exist" >&2; exit 2; }
@@ -107,13 +105,14 @@ discriminators: ## Check every Doctrine inheritance root declares an explicit di
 # fastybird/miniserver-core was assembled from -- in a namespace segment or a declared type
 # name of any package, or in a `use FastyBird\Core\... as X` alias anywhere in the repository
 # -- and no directory under any package's JS assets (src/FastyBird/<Type>/<Name>/assets) is
-# named after one.
+# named after one. It also refuses a Hungarian prefix on a declaration, in every package: an
+# `interface I[A-Z]...` or a `trait T[A-Z]...` (check 6, #704).
 #
 # Aliases are the reason this is a gate rather than a review habit. There were 3,076 of them
 # when the Core identity refactor started, in 131 distinct forms, and they existed purely
-# because nothing checked. tools/naming-baseline.txt records the ones not yet reached; it may
-# only shrink, and a stale entry fails the gate.
-naming: ## Check no PHP file or package JS directory names a library that Core was assembled from
+# because nothing checked. tools/naming-baseline.txt is empty now that every package has been
+# reached; nothing may be added to it, and a stale entry fails the gate.
+naming: ## Check no file names a library Core was assembled from, and no interface or trait carries an I or T prefix
 	$(PRE_PHP) php tools/check-naming.php $(ARGS)
 
 phpstan: ## Analyse code with PHPStan

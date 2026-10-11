@@ -6,6 +6,7 @@ use Doctrine\Common\EventManager;
 use Doctrine\DBAL;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Driver;
+use Override;
 use WeakReference;
 use function assert;
 use function bin2hex;
@@ -58,6 +59,7 @@ class ConnectionWrapper extends DBAL\Connection
 	 *
 	 * @throws DBAL\Exception
 	 */
+	#[Override]
 	public function connect(): Driver\Connection
 	{
 		// Taken BEFORE the parent call, because the two majors signal "was already connected"

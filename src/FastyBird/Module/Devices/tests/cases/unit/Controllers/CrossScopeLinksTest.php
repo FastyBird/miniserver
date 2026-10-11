@@ -13,6 +13,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
+use Override;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use React\Http\Message\ServerRequest;
@@ -47,6 +48,7 @@ final class CrossScopeLinksTest extends Tests\Cases\Unit\DbTestCase
 
 	private const string FOREIGN_DEVICE = '4f9a1c2e-7b3d-4e8f-a6c5-1d2e3f4a5b6c';
 
+	#[Override]
 	public function setUp(): void
 	{
 		// A device on the dummy connector with a mapped property whose parent is on the first

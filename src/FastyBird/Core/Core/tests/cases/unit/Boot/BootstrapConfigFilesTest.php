@@ -4,6 +4,7 @@ namespace FastyBird\Core\Tests\Cases\Unit\Boot;
 
 use FastyBird\Core\Boot;
 use Nette;
+use Override;
 use PHPUnit\Framework\TestCase;
 use function file_put_contents;
 use function mkdir;
@@ -18,6 +19,7 @@ final class BootstrapConfigFilesTest extends TestCase
 
 	private string $workDir;
 
+	#[Override]
 	protected function setUp(): void
 	{
 		parent::setUp();
@@ -49,6 +51,7 @@ final class BootstrapConfigFilesTest extends TestCase
 	/**
 	 * @throws Nette\IOException
 	 */
+	#[Override]
 	protected function tearDown(): void
 	{
 		Nette\Utils\FileSystem::delete($this->workDir);

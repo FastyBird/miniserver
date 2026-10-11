@@ -5,6 +5,7 @@ namespace FastyBird\Connector\HomeKit\Tests\Cases\Unit\Protocol;
 use Brick\Math;
 use Exception;
 use FastyBird\Connector\HomeKit\Protocol;
+use Override;
 use PHPUnit\Framework\TestCase;
 use function hex2bin;
 use function pack;
@@ -99,6 +100,7 @@ final class SrpTest extends TestCase
 	/**
 	 * @throws Exception
 	 */
+	#[Override]
 	public function setUp(): void
 	{
 		parent::setUp();

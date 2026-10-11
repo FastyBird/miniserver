@@ -8,6 +8,7 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 use PHPUnit\Framework\TestCase;
 use function count;
 
@@ -216,6 +217,7 @@ final class ExchangeContainerTest extends TestCase
 			{
 			}
 
+			#[Override]
 			public function publish(
 				Sources\Source $source,
 				string $routingKey,
@@ -253,6 +255,7 @@ final class ExchangeContainerTest extends TestCase
 			{
 			}
 
+			#[Override]
 			public function consume(
 				Sources\Source $source,
 				string $routingKey,

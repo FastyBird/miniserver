@@ -6,6 +6,7 @@ use Error;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Exceptions;
 use Nette;
+use Override;
 use PHPUnit\Framework\TestCase;
 use function constant;
 use function defined;
@@ -22,6 +23,7 @@ abstract class BaseTestCase extends TestCase
 	 * @throws Exceptions\InvalidState
 	 * @throws Error
 	 */
+	#[Override]
 	protected function setUp(): void
 	{
 		parent::setUp();

@@ -1,8 +1,9 @@
 <!--
     How this repository applies the FastyBird coding standard (tools/phpcs-ruleset.xml): report
-    and cache settings, what is not scanned, the PSR-4 root map, and the shrink-only carve-outs
-    for packages the Core identity refactor has not reached yet. The standard itself - which
-    sniffs run and how each is configured - lives in tools/phpcs-ruleset.xml, not here.
+    and cache settings, what is not scanned, the PSR-4 root map, and the two files exempt from
+    LineLength. No sniff is scoped to a package type: the standard applies to every package, its
+    tests, and the repository-root tests/ and bin/. The standard itself - which sniffs run and
+    how each is configured - lives in tools/phpcs-ruleset.xml, not here.
 -->
 <ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/squizlabs/php_codesniffer/phpcs.xsd">
     <!-- Show only relevant part of path -->
@@ -181,9 +182,10 @@
     <exclude-pattern>^tools/*</exclude-pattern>
     <exclude-pattern>^tests/stubs/*</exclude-pattern>
 
-    <!--Exclude rules/files -->
+    <!-- The only per-file exemption. Each of the two Devices files holds a line that cannot be
+         shortened: an IP-address regular expression constant, and parameter types that are
+         unions of fully qualified document classes. A new entry needs a reason here. -->
     <rule ref="SlevomatCodingStandard.Files.LineLength.LineTooLong">
-        <!--Modules -->
         <exclude-pattern>src/FastyBird/Module/Devices/src/Entities/Property\.php</exclude-pattern>
         <exclude-pattern>src/FastyBird/Module/Devices/src/Subscribers/StateEntities\.php</exclude-pattern>
     </rule>

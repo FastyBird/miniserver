@@ -16,6 +16,7 @@ use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -30,6 +31,7 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 
 	private const string PROPERTY_ID = '1b17bcaa-a19e-45f0-98b5-6a3b2c5d0ab9';
 
+	#[Override]
 	public function setUp(): void
 	{
 		// The shared dummy data has only variable connector properties, and only a dynamic one has a state

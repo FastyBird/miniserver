@@ -12,6 +12,7 @@ use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -23,6 +24,7 @@ use RuntimeException;
 final class RouterTest extends Tests\Cases\Unit\DbTestCase
 {
 
+	#[Override]
 	public function setUp(): void
 	{
 		$this->registerNeonConfigurationFile(__DIR__ . '/prefixedRoutes.neon');

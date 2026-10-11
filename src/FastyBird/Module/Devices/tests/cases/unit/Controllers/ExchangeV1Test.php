@@ -19,6 +19,7 @@ use FastyBird\Module\Devices\Types;
 use Nette\DI;
 use Nette\Http;
 use Nette\Utils;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -94,6 +95,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	/** @var list<array{source: int|string, routing_key: string, document: class-string|null, data: array<string, mixed>|null}> */
 	private array $publishedDocuments = [];
 
+	#[Override]
 	public function setUp(): void
 	{
 		$this->registerNeonConfigurationFile(__DIR__ . '/exchange.neon');

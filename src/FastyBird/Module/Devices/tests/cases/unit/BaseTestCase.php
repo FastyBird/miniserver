@@ -7,6 +7,7 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\Exceptions;
 use FastyBird\Module\Devices\DI;
 use Nette;
+use Override;
 use PHPUnit\Framework\TestCase;
 use function constant;
 use function defined;
@@ -109,6 +110,7 @@ abstract class BaseTestCase extends TestCase
 		}
 	}
 
+	#[Override]
 	protected function tearDown(): void
 	{
 		$this->container = null; // Release the container; the next test builds its own instance
