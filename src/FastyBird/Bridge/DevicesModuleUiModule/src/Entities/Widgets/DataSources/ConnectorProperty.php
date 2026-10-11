@@ -15,8 +15,6 @@ use function array_merge;
 #[ORM\Table(
 	name: 'fb_devices_module_ui_module_bridge_connectors_data_sources',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'Widget data source connection to connector',
 	],
 )]

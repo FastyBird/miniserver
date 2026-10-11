@@ -15,8 +15,6 @@ use Ramsey\Uuid;
 		new ORM\Index(columns: ['policy_type'], name: 'policy_type_idx'),
 	],
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'Casbin policies',
 	],
 )]

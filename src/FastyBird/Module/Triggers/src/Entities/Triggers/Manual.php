@@ -10,8 +10,6 @@ use Override;
 #[ORM\Table(
 	name: 'fb_triggers_module_triggers_manual',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'Manual triggers',
 	],
 )]

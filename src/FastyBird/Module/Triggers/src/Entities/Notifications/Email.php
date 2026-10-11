@@ -14,8 +14,6 @@ use function array_merge;
 #[ORM\Table(
 	name: 'fb_triggers_module_notifications_emails',
 	options: [
-		'collate' => 'utf8mb4_general_ci',
-		'charset' => 'utf8mb4',
 		'comment' => 'Emails notifications',
 	],
 )]
