@@ -11,7 +11,6 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
-use Nette;
 use Override;
 use Ramsey\Uuid;
 use Symfony\Component\EventDispatcher;
@@ -25,8 +24,6 @@ use function in_array;
  */
 final readonly class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private DevicesModels\Configuration\Connectors\Properties\Repository $connectorsPropertiesRepository,

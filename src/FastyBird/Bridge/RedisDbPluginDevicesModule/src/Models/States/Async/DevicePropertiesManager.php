@@ -7,7 +7,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
@@ -18,8 +17,6 @@ use React\Promise;
  */
 final class DevicePropertiesManager implements DevicesModels\States\Devices\Async\Writer
 {
-
-	use Nette\SmartObject;
 
 	/** @var RedisDbModels\States\Async\StatesManager<States\DeviceProperty> */
 	private RedisDbModels\States\Async\StatesManager $statesManager;

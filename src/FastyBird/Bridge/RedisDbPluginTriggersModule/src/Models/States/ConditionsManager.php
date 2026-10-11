@@ -6,7 +6,6 @@ use FastyBird\Bridge\RedisDbPluginTriggersModule\States;
 use FastyBird\Module\Triggers\Models as TriggersModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
-use Nette;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
@@ -16,8 +15,6 @@ use Ramsey\Uuid;
  */
 final class ConditionsManager implements TriggersModels\States\ConditionsWriter
 {
-
-	use Nette\SmartObject;
 
 	/** @var RedisDbModels\States\StatesManager<States\Condition> */
 	private RedisDbModels\States\StatesManager $statesManager;

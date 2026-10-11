@@ -6,7 +6,6 @@ use FastyBird\Bridge\RedisDbPluginDevicesModule\States;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
-use Nette;
 use Override;
 use Ramsey\Uuid;
 
@@ -15,8 +14,6 @@ use Ramsey\Uuid;
  */
 final class DevicePropertiesRepository implements DevicesModels\States\Devices\Reader
 {
-
-	use Nette\SmartObject;
 
 	/** @var RedisDbModels\States\StatesRepository<States\DeviceProperty> */
 	private RedisDbModels\States\StatesRepository $stateRepository;

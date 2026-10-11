@@ -53,8 +53,6 @@ use function strval;
 final readonly class Builder
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
 		private ShellyConnectorHomeKitConnector\Logger $logger,
 		private Mapping\Builder $mappingBuilder,

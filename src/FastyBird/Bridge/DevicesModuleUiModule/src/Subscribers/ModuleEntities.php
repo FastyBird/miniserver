@@ -16,7 +16,6 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Caching as UiCaching;
 use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models as UiModels;
-use Nette;
 use Nette\Caching as NetteCaching;
 use Override;
 use function array_map;
@@ -28,8 +27,6 @@ use function count;
  */
 final readonly class ModuleEntities implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private UiModels\Configuration\Widgets\DataSources\Repository $dataSourcesRepository,

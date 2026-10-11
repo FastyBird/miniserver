@@ -6,7 +6,6 @@ use FastyBird\Bridge\RedisDbPluginDevicesModule\States;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
-use Nette;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
@@ -16,8 +15,6 @@ use Ramsey\Uuid;
  */
 final class ChannelPropertiesManager implements DevicesModels\States\Channels\Writer
 {
-
-	use Nette\SmartObject;
 
 	/** @var RedisDbModels\States\StatesManager<States\ChannelProperty> */
 	private RedisDbModels\States\StatesManager $statesManager;

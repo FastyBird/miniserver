@@ -8,7 +8,6 @@ use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use FastyBird\Module\Triggers\Models as TriggersModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
-use Nette;
 use Override;
 use Ramsey\Uuid;
 
@@ -17,8 +16,6 @@ use Ramsey\Uuid;
  */
 final class ActionsRepository implements TriggersModels\States\ActionsReader
 {
-
-	use Nette\SmartObject;
 
 	/** @var RedisDbModels\States\StatesRepository<States\Action> */
 	private RedisDbModels\States\StatesRepository $stateRepository;

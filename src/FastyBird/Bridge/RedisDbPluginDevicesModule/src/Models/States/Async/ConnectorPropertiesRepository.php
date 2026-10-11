@@ -7,7 +7,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use InvalidArgumentException;
-use Nette;
 use Override;
 use Ramsey\Uuid;
 use React\Promise;
@@ -17,8 +16,6 @@ use React\Promise;
  */
 final class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\Async\Reader
 {
-
-	use Nette\SmartObject;
 
 	/** @var RedisDbModels\States\Async\StatesRepository<States\ConnectorProperty> */
 	private RedisDbModels\States\Async\StatesRepository $stateRepository;

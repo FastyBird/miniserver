@@ -47,8 +47,6 @@ use function strval;
 final readonly class Builder
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
 		private VirtualThermostatAddonHomeKitConnector\Logger $logger,
 		private HomeKitHelpers\Loader $loader,

@@ -59,8 +59,6 @@ use function strval;
 final readonly class Builder
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
 		private VieraConnectorHomeKitConnector\Logger $logger,
 		private Mapping\Builder $mappingBuilder,

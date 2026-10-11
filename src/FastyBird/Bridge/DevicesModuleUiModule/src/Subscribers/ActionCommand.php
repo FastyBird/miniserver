@@ -12,7 +12,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Ui\Events as UiEvents;
 use FastyBird\Module\Ui\Types as UiTypes;
-use Nette;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
@@ -25,8 +24,6 @@ use ValueError;
  */
 final readonly class ActionCommand implements EventDispatcher\EventSubscriberInterface
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private DevicesModels\Configuration\Connectors\Properties\Repository $connectorPropertiesConfigurationRepository,
