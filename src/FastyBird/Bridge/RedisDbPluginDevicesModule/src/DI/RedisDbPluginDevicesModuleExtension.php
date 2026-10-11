@@ -34,7 +34,7 @@ use function assert;
 class RedisDbPluginDevicesModuleExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbRedisDbPluginDevicesModuleBridge';
+	public const string NAME = 'fbRedisDbPluginDevicesModuleBridge';
 
 	public static function register(
 		Boot\Configurator $config,

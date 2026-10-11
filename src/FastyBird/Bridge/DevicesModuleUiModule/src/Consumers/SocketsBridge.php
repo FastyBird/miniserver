@@ -46,7 +46,7 @@ use function in_array;
 final class SocketsBridge implements Consumers\Consumer
 {
 
-	private const CONSUMER_ROUTING_KEYS = [
+	private const array CONSUMER_ROUTING_KEYS = [
 		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
 		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
 		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,

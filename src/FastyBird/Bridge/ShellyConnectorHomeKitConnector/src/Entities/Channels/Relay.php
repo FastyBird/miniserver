@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class Relay extends Shelly
 {
 
-	public const TYPE = 'shelly-connector-homekit-connector-bridge-relay';
+	public const string TYPE = 'shelly-connector-homekit-connector-bridge-relay';
 
 	public static function getType(): string
 	{

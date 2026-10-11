@@ -28,7 +28,7 @@ use function assert;
 class Thermostat extends HomeKitEntities\Channels\Channel
 {
 
-	public const TYPE = 'virtual-thermostat-addon-homekit-connector-bridge';
+	public const string TYPE = 'virtual-thermostat-addon-homekit-connector-bridge';
 
 	public function __construct(
 		VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $device,

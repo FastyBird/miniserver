@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 class DummyChannelEntity extends DevicesEntities\Channels\Channel
 {
 
-	public const TYPE = 'dummy';
+	public const string TYPE = 'dummy';
 
 	public static function getType(): string
 	{

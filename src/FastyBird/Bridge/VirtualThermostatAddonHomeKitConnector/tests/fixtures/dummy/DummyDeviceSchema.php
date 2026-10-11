@@ -11,7 +11,7 @@ final class DummyDeviceSchema extends DevicesSchemas\Devices\Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/device/' . DummyDeviceEntity::TYPE;
+	public const string SCHEMA_TYPE = Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/device/' . DummyDeviceEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

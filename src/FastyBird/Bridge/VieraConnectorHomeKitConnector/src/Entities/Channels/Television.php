@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class Television extends Viera
 {
 
-	public const TYPE = 'viera-connector-homekit-connector-bridge-television';
+	public const string TYPE = 'viera-connector-homekit-connector-bridge-television';
 
 	public static function getType(): string
 	{

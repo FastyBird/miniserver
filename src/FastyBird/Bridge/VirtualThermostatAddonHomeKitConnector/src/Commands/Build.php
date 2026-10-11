@@ -55,7 +55,7 @@ use function usort;
 class Build extends Console\Command\Command
 {
 
-	public const NAME = 'fb:virtual-thermostat-addon-homekit-connector-bridge:build';
+	public const string NAME = 'fb:virtual-thermostat-addon-homekit-connector-bridge:build';
 
 	public function __construct(
 		private readonly VirtualThermostatAddonHomeKitConnector\Logger $logger,

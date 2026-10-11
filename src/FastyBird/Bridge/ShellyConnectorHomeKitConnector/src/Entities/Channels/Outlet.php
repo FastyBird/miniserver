@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class Outlet extends Shelly
 {
 
-	public const TYPE = 'shelly-connector-homekit-connector-bridge-outlet';
+	public const string TYPE = 'shelly-connector-homekit-connector-bridge-outlet';
 
 	public static function getType(): string
 	{

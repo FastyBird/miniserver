@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class InputSource extends Viera
 {
 
-	public const TYPE = 'viera-connector-homekit-connector-bridge-input-source';
+	public const string TYPE = 'viera-connector-homekit-connector-bridge-input-source';
 
 	public static function getType(): string
 	{

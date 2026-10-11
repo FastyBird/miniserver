@@ -36,7 +36,7 @@ final class Shelly extends HomeKitSchemas\Devices\Device
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value . '/device/' . Entities\Devices\Shelly::TYPE;
+	public const string SCHEMA_TYPE = Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value . '/device/' . Entities\Devices\Shelly::TYPE;
 
 	public function getEntityClass(): string
 	{

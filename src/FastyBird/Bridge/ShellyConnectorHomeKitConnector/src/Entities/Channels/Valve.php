@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class Valve extends Shelly
 {
 
-	public const TYPE = 'shelly-connector-homekit-connector-bridge-valve';
+	public const string TYPE = 'shelly-connector-homekit-connector-bridge-valve';
 
 	public static function getType(): string
 	{

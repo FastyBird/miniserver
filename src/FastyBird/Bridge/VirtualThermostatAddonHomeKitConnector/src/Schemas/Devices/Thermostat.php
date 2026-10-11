@@ -36,7 +36,7 @@ final class Thermostat extends HomeKitSchemas\Devices\Device
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/device/' . Entities\Devices\Thermostat::TYPE;
+	public const string SCHEMA_TYPE = Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/device/' . Entities\Devices\Thermostat::TYPE;
 
 	public function getEntityClass(): string
 	{

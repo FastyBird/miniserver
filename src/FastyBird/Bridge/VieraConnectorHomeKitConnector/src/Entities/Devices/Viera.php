@@ -31,7 +31,7 @@ use function sprintf;
 class Viera extends HomeKitEntities\Devices\Device
 {
 
-	public const TYPE = 'viera-connector-homekit-connector-bridge';
+	public const string TYPE = 'viera-connector-homekit-connector-bridge';
 
 	/**
 	 * @param array<DevicesEntities\Devices\Device>|Utils\ArrayHash<DevicesEntities\Devices\Device> $parents

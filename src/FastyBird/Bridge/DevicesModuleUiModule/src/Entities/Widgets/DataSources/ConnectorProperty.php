@@ -36,7 +36,7 @@ use function array_merge;
 class ConnectorProperty extends Property
 {
 
-	public const TYPE = 'connector-property';
+	public const string TYPE = 'connector-property';
 
 	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\ManyToOne(targetEntity: DevicesEntities\Connectors\Properties\Property::class)]

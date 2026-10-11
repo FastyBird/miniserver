@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class WindowCovering extends Shelly
 {
 
-	public const TYPE = 'shelly-connector-homekit-connector-bridge-window-covering';
+	public const string TYPE = 'shelly-connector-homekit-connector-bridge-window-covering';
 
 	public static function getType(): string
 	{

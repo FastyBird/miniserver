@@ -28,12 +28,12 @@ final class Constants
 
 	public const string BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX = 'virtual-thermostat-addon-homekit-connector-bridge';
 
-	public const MODEL = 'Virtual Thermostat Bridge';
+	public const string MODEL = 'Virtual Thermostat Bridge';
 
-	public const MANUFACTURER = 'FastyBird';
+	public const string MANUFACTURER = 'FastyBird';
 
-	public const ROUTE_NAME_BRIDGES = 'bridges';
+	public const string ROUTE_NAME_BRIDGES = 'bridges';
 
-	public const ROUTE_NAME_BRIDGE = 'bridge';
+	public const string ROUTE_NAME_BRIDGE = 'bridge';
 
 }

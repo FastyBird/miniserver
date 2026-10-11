@@ -36,7 +36,7 @@ abstract class Property extends UiSchemas\Widgets\DataSources\DataSource
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_PROPERTY = 'property';
+	public const string RELATIONSHIPS_PROPERTY = 'property';
 
 	/**
 	 * @param T $resource

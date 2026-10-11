@@ -49,7 +49,7 @@ use const DIRECTORY_SEPARATOR;
 class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbVirtualThermostatAddonHomeKitConnectorBridge';
+	public const string NAME = 'fbVirtualThermostatAddonHomeKitConnectorBridge';
 
 	public static function register(
 		Boot\Configurator $config,

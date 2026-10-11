@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class InputButton extends Shelly
 {
 
-	public const TYPE = 'shelly-connector-homekit-connector-bridge-input-button';
+	public const string TYPE = 'shelly-connector-homekit-connector-bridge-input-button';
 
 	public static function getType(): string
 	{

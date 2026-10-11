@@ -50,7 +50,7 @@ use const DIRECTORY_SEPARATOR;
 class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbShellyConnectorHomeKitConnectorBridge';
+	public const string NAME = 'fbShellyConnectorHomeKitConnectorBridge';
 
 	public static function register(
 		Boot\Configurator $config,

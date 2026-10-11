@@ -49,12 +49,12 @@ final class ChannelProperty extends Property
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = Sources\Bridge::DEVICES_MODULE_UI_MODULE->value . '/data-source/' . DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::TYPE;
+	public const string SCHEMA_TYPE = Sources\Bridge::DEVICES_MODULE_UI_MODULE->value . '/data-source/' . DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::TYPE;
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_PROPERTY = 'property';
+	public const string RELATIONSHIPS_PROPERTY = 'property';
 
 	public function __construct(
 		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesRepository,

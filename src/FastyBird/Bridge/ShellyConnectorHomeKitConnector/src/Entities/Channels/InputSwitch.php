@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class InputSwitch extends Shelly
 {
 
-	public const TYPE = 'shelly-connector-homekit-connector-bridge-input-switch';
+	public const string TYPE = 'shelly-connector-homekit-connector-bridge-input-switch';
 
 	public static function getType(): string
 	{

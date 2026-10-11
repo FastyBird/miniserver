@@ -57,7 +57,7 @@ use function usort;
 class Build extends Console\Command\Command
 {
 
-	public const NAME = 'fb:viera-connector-homekit-connector-bridge:build';
+	public const string NAME = 'fb:viera-connector-homekit-connector-bridge:build';
 
 	public function __construct(
 		private readonly VieraConnectorHomeKitConnector\Logger $logger,

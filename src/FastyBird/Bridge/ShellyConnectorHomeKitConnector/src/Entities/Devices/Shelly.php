@@ -31,7 +31,7 @@ use function sprintf;
 class Shelly extends HomeKitEntities\Devices\Device
 {
 
-	public const TYPE = 'shelly-connector-homekit-connector-bridge';
+	public const string TYPE = 'shelly-connector-homekit-connector-bridge';
 
 	/**
 	 * @param array<DevicesEntities\Devices\Device>|Utils\ArrayHash<DevicesEntities\Devices\Device> $parents

@@ -28,14 +28,14 @@ final class Constants
 
 	public const string BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX = 'shelly-connector-homekit-connector-bridge';
 
-	public const MANUFACTURER = 'FastyBird & Shelly';
+	public const string MANUFACTURER = 'FastyBird & Shelly';
 
-	public const MODEL = 'Shelly';
+	public const string MODEL = 'Shelly';
 
-	public const ROUTE_NAME_BRIDGES = 'bridges';
+	public const string ROUTE_NAME_BRIDGES = 'bridges';
 
-	public const ROUTE_NAME_BRIDGE = 'bridge';
+	public const string ROUTE_NAME_BRIDGE = 'bridge';
 
-	public const RESOURCES_FOLDER = __DIR__ . '/../resources';
+	public const string RESOURCES_FOLDER = __DIR__ . '/../resources';
 
 }

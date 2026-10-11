@@ -23,7 +23,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 class Lightbulb extends Shelly
 {
 
-	public const TYPE = 'shelly-connector-homekit-connector-bridge-lightbulb';
+	public const string TYPE = 'shelly-connector-homekit-connector-bridge-lightbulb';
 
 	public static function getType(): string
 	{

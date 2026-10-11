@@ -36,7 +36,7 @@ use function array_merge;
 class ChannelProperty extends Property
 {
 
-	public const TYPE = 'channel-property';
+	public const string TYPE = 'channel-property';
 
 	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\ManyToOne(targetEntity: DevicesEntities\Channels\Properties\Property::class)]

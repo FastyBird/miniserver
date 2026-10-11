@@ -36,7 +36,7 @@ use function array_merge;
 class DeviceProperty extends Property
 {
 
-	public const TYPE = 'device-property';
+	public const string TYPE = 'device-property';
 
 	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\ManyToOne(targetEntity: DevicesEntities\Devices\Properties\Property::class)]

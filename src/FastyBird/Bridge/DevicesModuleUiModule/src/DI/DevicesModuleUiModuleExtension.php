@@ -48,7 +48,7 @@ use const DIRECTORY_SEPARATOR;
 class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 {
 
-	public const NAME = 'fbDevicesModuleUiModuleBridge';
+	public const string NAME = 'fbDevicesModuleUiModuleBridge';
 
 	public static function register(
 		Boot\Configurator $config,
