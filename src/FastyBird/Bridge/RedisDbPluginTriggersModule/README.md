@@ -9,7 +9,7 @@
 ## What is Redis DB & Triggers module bridge?
 
 Redis DB & Triggers module bridge is extension for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem
-which is creating bridge between [Triggers module](https://github.com/FastyBird/triggers-module) and [Redis DB plugin](https://github.com/FastyBird/redisdb-plugin).
+which is creating bridge between [Triggers module](../../Module/Triggers/README.md) and [Redis DB plugin](../../Plugin/RedisDb/README.md).
 
 ### Features:
 
@@ -26,16 +26,19 @@ Redis DB & Triggers module bridge is tested against PHP 8.4.
 
 ## Installation
 
-The best way to install **fastybird/redisdb-plugin-triggers-module-bridge** is using [Composer](http://getcomposer.org/):
+This bridge is part of [MiniServer](https://github.com/FastyBird/miniserver) but is not registered by default. To enable it, register its DI extension in `config/local.neon`, as described in [Configuration](../../../../docs/configuration.md#triggers-module-state-bridge):
 
-```sh
-composer require fastybird/redisdb-plugin-triggers-module-bridge
+```neon
+extensions:
+    fbRedisDbPluginTriggersModuleBridge: FastyBird\Bridge\RedisDbPluginTriggersModule\DI\RedisDbPluginTriggersModuleExtension
 ```
+
+The bridge builds on the [Redis DB plugin](../../Plugin/RedisDb/README.md), which has to be registered as well.
 
 ## Documentation
 
 Learn how to build bridge between Redis DB and Triggers module
-in [documentation](https://github.com/FastyBird/redisdb-plugin-triggers-module-bridge/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 

@@ -26,15 +26,16 @@ Redis DB cache is tested against PHP 8.4.
 
 ## Installation
 
-The best way to install **fastybird/redisdb-cache-plugin** is using [Composer](http://getcomposer.org/):
+This plugin is part of [MiniServer](https://github.com/FastyBird/miniserver) but is not registered by default. To enable it, register its DI extension in `config/local.neon`, as described in [Configuration](../../../../docs/configuration.md#redis-backed-nette-cache-storage-redisdbcache-plugin):
 
-```sh
-composer require fastybird/redisdb-cache-plugin
+```neon
+extensions:
+    fbRedisDbCachePlugin: FastyBird\Plugin\RedisDbCache\DI\RedisDbCacheExtension
 ```
 
 ## Documentation
 
-Learn how to use Redis DB as cache storage in [documentation](https://github.com/FastyBird/redisdb-cache-plugin/blob/main/docs/index.md).
+Learn how to use Redis DB as cache storage in [documentation](docs/index.md).
 
 # FastyBird
 

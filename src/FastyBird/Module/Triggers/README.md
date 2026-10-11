@@ -15,7 +15,7 @@ extension for managing automation & notifications.
 
 - Triggers and their actions and conditions management
 - [{JSON:API}](https://jsonapi.org/) schemas for full api access
-- User access [check & validation](https://github.com/FastyBird/simple-auth)
+- User access [check & validation](../../Core/Core/README.md)
 - Multilingual
 - User interface integration via [Vue 3](https://vuejs.org) components
 - Integrated automator worker for PHP based automators
@@ -33,18 +33,14 @@ against [ECMAScript 6](https://www.w3schools.com/JS/js_es6.asp)
 
 ## Installation
 
-The best way to install **fastybird/triggers-module** is using [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/triggers-module
-```
+This module is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbTriggersModule` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 **@fastybird/triggers-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Documentation
 
 Learn how to configure and use triggers module and manage your automation & notifications
-in [documentation](https://github.com/FastyBird/triggers-module/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 

@@ -22,16 +22,17 @@ in [PHP](https://www.php.net) on top of the [Nette framework](https://nette.org)
 
 ## Installation
 
-The best way to install **fastybird/rabbitmq-plugin** is using [Composer](http://getcomposer.org/):
+This plugin is part of [MiniServer](https://github.com/FastyBird/miniserver) but is not registered by default. To enable it, register its DI extension in `config/local.neon`, as described in [Configuration](../../../../docs/configuration.md#rabbitmq-message-exchange-rabbitmq-plugin):
 
-```sh
-composer require fastybird/rabbitmq-plugin
+```neon
+extensions:
+    fbRabbitMqPlugin: FastyBird\Plugin\RabbitMq\DI\RabbitMqExtension
 ```
 
 ## Documentation
 
 Learn how to read & write states and consume & publish messages
-in [documentation](https://github.com/FastyBird/rabbitmq-plugin/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 

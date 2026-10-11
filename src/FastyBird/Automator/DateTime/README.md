@@ -13,7 +13,7 @@ which is integrating automation for date & time.
 
 ### Features:
 
-- FastyBird date & time automator management for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/date-time)
+- FastyBird date & time automator management for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) devices module
 - Automator services for watching and triggering actions and conditions
 - [{JSON:API}](https://jsonapi.org/) schemas for full api access
 
@@ -27,23 +27,19 @@ PHP extension.
 
 ## Installation
 
-### Manual installation
+This automator is part of [MiniServer](https://github.com/FastyBird/miniserver) but is not registered by default. To enable it, register its DI extension in `config/local.neon`, as described in [Configuration](../../../../docs/configuration.md#automators):
 
-The best way to install **fastybird/date-time-automator** is using [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/date-time-automator
+```neon
+extensions:
+    fbDateTimeAutomator: FastyBird\Automator\DateTime\DI\DateTimeExtension
 ```
 
-### Marketplace installation [WIP]
-
-You could install this automator in your [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things)
-application under marketplace section.
+The automator takes no configuration; registering the DI extension is enough.
 
 ## Documentation
 
 Learn how to manage date & time based automation for devices connected with [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) system
-in [documentation](https://github.com/FastyBird/date-time-automator/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 

@@ -16,7 +16,7 @@ extension for managing connectors and connected devices and their basic logic.
 - Devices connectors management
 - Devices and their channels management
 - [{JSON:API}](https://jsonapi.org/) schemas for full api access
-- User access [check & validation](https://github.com/FastyBird/simple-auth)
+- User access [check & validation](../../Core/Core/README.md)
 - Multilingual
 - User interface integration via [Vue 3](https://vuejs.org) components
 - Integrated connector worker for PHP based connectors
@@ -35,12 +35,7 @@ against [ECMAScript 6](https://www.w3schools.com/JS/js_es6.asp)
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/devices-module
-```
+This module is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbDevicesModule` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 **@fastybird/devices-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 

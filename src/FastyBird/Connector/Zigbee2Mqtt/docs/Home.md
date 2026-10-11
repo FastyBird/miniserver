@@ -32,11 +32,11 @@ container automatically.
 All services, helpers, etc. are written to be self-descriptive :wink:.
 
 > [!TIP]
-To better understand what some parts of the connector meant to be used for, please refer to the [Naming Convention](Naming-Convention) page.
+To better understand what some parts of the connector meant to be used for, please refer to the [Naming Convention](Naming-Convention.md) page.
 
 > [!TIP]
 Physical devices needs to be mapped to [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things)
-ecosystem. This is done automatically during discovery process. If you need more info of how it is done, check [Exposes](Exposes) page.
+ecosystem. This is done automatically during discovery process. If you need more info of how it is done, check [Exposes](Exposes.md) page.
 
 ## Using Connector
 
@@ -44,11 +44,11 @@ The connector is ready to be used as is. Has configured all services in applicat
 some other services or bridges.
 
 > [!TIP]
-Find fundamental details regarding the installation and configuration of this connector on the [Configuration](Configuration) page.
+Find fundamental details regarding the installation and configuration of this connector on the [Configuration](Configuration.md) page.
 
 > [!TIP]
 The connector features a built-in physical device discovery capability, and you can find detailed information about device
-discovery on the dedicated [Discovery](Discovery) page.
+discovery on the dedicated [Discovery](Discovery.md) page.
 
 This connector is equipped with interactive console. With this console commands you could manage almost all connector features.
 

@@ -8,12 +8,12 @@ One use case could be calculation of temperature measured by NTC thermistor.
 In this example we will use [Shelly Plus 1PM](https://www.shelly.com/en-cz/products/product-overview/shelly-plus-1-pm) and [Shelly Plus Add-on](https://www.shelly.com/en-cz/products/product-overview/shelly-plus-add-on)
 with connected NTC sensor. After hardware connection you will have to create new script in the device to calculate temperature from measured voltage.
 
-<img alt="Scripts overview" src="https://github.com/FastyBird/shelly-connector/blob/main/docs/_media/scripts_overview.png" />
+<img alt="Scripts overview" src="_media/scripts_overview.png" />
 
 Now you could add new script which will read measured voltage from NTC thermistor and calculate temperature. You could find
 the script in the Shelly scripts library
 
-<img alt="Create script" src="https://github.com/FastyBird/shelly-connector/blob/main/docs/_media/scripts_create.png" />
+<img alt="Create script" src="_media/scripts_create.png" />
 
 Here is a example of the calculation script:
 
@@ -137,7 +137,7 @@ will trigger event with result. This value will be then used by [FastyBird](http
 
 After saving script you will be able to enable it and start.
 
-<img alt="Scripts list" src="https://github.com/FastyBird/shelly-connector/blob/main/docs/_media/scripts_list.png" />
+<img alt="Scripts list" src="_media/scripts_list.png" />
 
 ## Use script in FastyBird IoT system
 

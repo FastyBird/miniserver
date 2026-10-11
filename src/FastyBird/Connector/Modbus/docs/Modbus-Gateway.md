@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="https://github.com/FastyBird/modbus-connector/blob/main/docs/_media/waveshare_gateway.png" alt="Waveshare gateway"/>
+	<img src="_media/waveshare_gateway.png" alt="Waveshare gateway"/>
 </p>
 
 # RS485 To Wifi/Ethernet module
@@ -21,7 +21,7 @@ Gateway have to be configured to specific mode.
 You have to configure UART settings, and it has to match with you devices.
 
 <p align="center">
-	<img src="https://github.com/FastyBird/modbus-connector/blob/main/docs/_media/waveshare_uart_settings.png" alt="UART settings"/>
+	<img src="_media/waveshare_uart_settings.png" alt="UART settings"/>
 </p>
 
 ### Gateway mode
@@ -30,7 +30,7 @@ In next step you have to configure gateway mode. In this case we will use `Modbu
 will expose Modbus TCP commands which will be used by connector.
 
 <p align="center">
-	<img src="https://github.com/FastyBird/modbus-connector/blob/main/docs/_media/waveshare_mode.png" alt="Mode settings"/>
+	<img src="_media/waveshare_mode.png" alt="Mode settings"/>
 </p>
 
 ## Connector configuration
@@ -79,7 +79,7 @@ And also you have to configure gateway port:
 Network setting of you gateway you could find in gateway user interface:
 
 <p align="center">
-	<img src="https://github.com/FastyBird/modbus-connector/blob/main/docs/_media/waveshare_network.png" alt="Network settings"/>
+	<img src="_media/waveshare_network.png" alt="Network settings"/>
 </p>
 
 In the next step you have to provide unit identifier:

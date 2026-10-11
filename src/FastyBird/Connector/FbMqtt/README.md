@@ -15,7 +15,7 @@ via [FastyBird MQTT Convention](https://github.com/FastyBird/mqtt-convention) fo
 ### Features:
 
 - [FastyBird MQTT v1 convention](https://github.com/FastyBird/mqtt-convention) devices support
-- Integration with the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/devices-module) for easy management and monitoring of FB MQTT devices
+- Integration with the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](../../Module/Devices/README.md) for easy management and monitoring of FB MQTT devices
 - Advanced device management features, such as controlling power status, measuring energy consumption, and reading sensor data
 - [{JSON:API}](https://jsonapi.org/) schemas for full API access, providing a standardized and consistent way for developers to access and manipulate FB MQTT powered device data
 - Regular updates with new features and bug fixes, ensuring that the FB MQTT Connector is always up-to-date and reliable.
@@ -30,12 +30,7 @@ PHP extension.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/fb-mqtt-connector
-```
+This connector is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbFbMqttConnector` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 

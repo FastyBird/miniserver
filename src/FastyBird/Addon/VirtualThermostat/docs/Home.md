@@ -28,7 +28,7 @@ container automatically.
 All services, helpers, etc. are written to be self-descriptive :wink:.
 
 > [!TIP]
-To better understand what some parts of the addon meant to be used for, please refer to the [Naming Convention](Naming-Convention) page.
+To better understand what some parts of the addon meant to be used for, please refer to the [Naming Convention](Naming-Convention.md) page.
 
 ## Using Addon
 
@@ -36,7 +36,7 @@ The addon is ready to be used as is. Has configured all services in application 
 some other services or bridges.
 
 > [!TIP]
-Find fundamental details regarding the installation and configuration of this addon on the [Configuration](Configuration) page.
+Find fundamental details regarding the installation and configuration of this addon on the [Configuration](Configuration.md) page.
 
 This addon is equipped with interactive console. With this console commands you could manage almost all addon features.
 
@@ -45,7 +45,7 @@ This addon is equipped with interactive console. With this console commands you 
 Addon console command could be triggered like this :nerd_face:
 
 ```shell
-php bin/fb-console fb:virtual-addon:install
+php bin/fb-console fb:virtual-thermostat-addon:install
 ```
 
 > [!NOTE]

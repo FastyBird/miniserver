@@ -108,7 +108,7 @@ If you enter wrong IP address, command will show you a warning message.
 Now you have to prepare your **Sonoff NS Panel** for pairing. On you **Sonoff NS Panel** go to `Settings`
 and then to `About` and tap **7** times in a row on `Name`. An information message will popup on your **Sonoff NS Panel** screen.
 
-<img alt="pairing" src="https://github.com/FastyBird/ns-panel-connector/blob/main/docs/_media/allow_access.png" />
+<img alt="pairing" src="_media/allow_access.png" />
 
 ```
  ! [NOTE] Now you have to prepare your NS Panel for pairing. Go to Settings, then to About and tap 7 times in a row on  

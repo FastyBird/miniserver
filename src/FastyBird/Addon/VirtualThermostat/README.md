@@ -9,7 +9,7 @@
 ## What is FastyBird Thermostat Device addon?
 
 FastyBird Thermostat Device Addon is extension for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem
-and its [Virtual connector](https://github.com/fastybird/virtual-connector) which allow you to create virtual software
+and its [Virtual connector](../../Connector/Virtual/README.md) which allow you to create virtual software
 defined thermostat.
 
 ### Features:
@@ -31,12 +31,7 @@ PHP extensions.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/virtual-thermostat-addon
-```
+This addon is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbVirtualThermostatAddon` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 

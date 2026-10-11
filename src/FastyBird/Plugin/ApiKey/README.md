@@ -22,16 +22,19 @@ in [PHP](https://www.php.net) on top of the [Nette framework](https://nette.org)
 
 ## Installation
 
-The best way to install **fastybird/apikey-plugin** is using [Composer](http://getcomposer.org/):
+This plugin is part of [MiniServer](https://github.com/FastyBird/miniserver) but is not registered by default. To enable it, register its DI extension in `config/local.neon`, as described in [Configuration](../../../../docs/configuration.md#api-key-authentication-apikey-plugin):
 
-```sh
-composer require fastybird/apikey-plugin
+```neon
+extensions:
+    fbApiKeyPlugin: FastyBird\Plugin\ApiKey\DI\ApiKeyExtension
 ```
+
+The plugin takes no configuration; registering the DI extension is enough.
 
 ## Documentation
 
 Learn how to create, manage and use api keys
-in [documentation](https://github.com/FastyBird/apikey-plugin/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 

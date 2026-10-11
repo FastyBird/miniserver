@@ -16,7 +16,7 @@ which is integrating [Panasonic Viera](https://www.panasonic.com) televisions.
 - Full support for 2018 and later models
 - Support for televisions which need PIN authentication
 - Automated televisions discovery feature, which automatically detects and adds Panasonic Viera televisions to the FastyBird ecosystem
-- Panasonic Viera Connector management for the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/devices-module), allowing users to easily manage and monitor Panasonic Viera televisions
+- Panasonic Viera Connector management for the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](../../Module/Devices/README.md), allowing users to easily manage and monitor Panasonic Viera televisions
 - [{JSON:API}](https://jsonapi.org/) schemas for full API access, providing a standardized and consistent way for developers to access and manipulate Panasonic Viera device data
 - Regular updates with new features and bug fixes, ensuring that the Panasonic Viera Connector is always up-to-date and reliable.
 
@@ -31,12 +31,7 @@ PHP extensions.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/viera-connector
-```
+This connector is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbVieraConnector` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 

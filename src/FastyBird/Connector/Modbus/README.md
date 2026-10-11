@@ -16,7 +16,7 @@ which is integrating [Modbus](https://www.modbus.org) devices.
 - Support for both [Modbus](https://en.wikipedia.org/wiki/Modbus) RTU and TCP/IP communication protocols
 - Capability to handle a diverse range of data types
 - Ability to read and write from various Modbus memory areas, including coils, discrete inputs, holding registers, and input registers
-- Integration with the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/devices-module) for easy management and monitoring of Modbus devices
+- Integration with the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](../../Module/Devices/README.md) for easy management and monitoring of Modbus devices
 - [{JSON:API}](https://jsonapi.org/) schemas for full API access, providing a standardized and consistent way for developers to access and manipulate Modbus device data
 - Regular updates with new features and bug fixes, ensuring that the Modbus Connector is always up-to-date and reliable.
 
@@ -30,12 +30,7 @@ PHP extension.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/modbus-connector
-```
+This connector is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbModbusConnector` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 

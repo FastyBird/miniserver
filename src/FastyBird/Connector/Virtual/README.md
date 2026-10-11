@@ -16,7 +16,7 @@ which allow you to create virtual devices composed from other physical devices.
 - Virtual device driver interface for developers
 - Full support for all devices from other connectors
 - Rich devices management for creating virtual devices
-- FastyBird Virtual Connector management for the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/devices-module), allowing users to easily manage and monitor virtual devices
+- FastyBird Virtual Connector management for the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](../../Module/Devices/README.md), allowing users to easily manage and monitor virtual devices
 - [{JSON:API}](https://jsonapi.org/) schemas for full API access, providing a standardized and consistent way for developers to access and manipulate virtual device data
 - Regular updates with new features and bug fixes, ensuring that the FastyBird Virtual Connector is always up-to-date and reliable.
 
@@ -30,12 +30,7 @@ PHP extensions.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/virtual-connector
-```
+This connector is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbVirtualConnector` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 

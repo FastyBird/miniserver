@@ -6,64 +6,33 @@ This module adds support for managing [FastyBird](https://www.fastybird.com) IoT
 
 ## Installation
 
-The best way to install **fastybird/triggers-module** is using [Composer](https://getcomposer.org/).
-
-> If you don't have Composer yet, [download it](https://getcomposer.org/download/) following the instructions.
-
-### Create new project
-
-If you don't have a project created yet you could start with Nette base project.
-
-You could create new project with simple composer command.
-
-```sh
-composer create-project nette/web-project path/to/install
-```
-
-Everything required will be then installed in the provided folder.
-
-```sh
-cd path/to/install
-```
-
-### Install module
-
-Module could be added to your project with composer command:
-
-```sh
-composer require fastybird/triggers-module
-```
-
-### Module user interface
+This module is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbTriggersModule` in [`config/common.neon`](../../../../../config/common.neon)), so there is nothing to install.
 
 **@fastybird/triggers-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Configuration
 
-This module is dependent on other Nette extensions. All this extensions have to enabled and configured in NEON
-configuration file.
-
-Example configuration could be
-found [here](https://github.com/FastyBird/triggers-module/blob/main/config/example.neon)
+This module is dependent on other Nette extensions. MiniServer enables and configures all of them in `config/common.neon`
+(see [Configuration](../../../../../docs/configuration.md)). An example of a complete NEON configuration could be found [here](../config/example.neon).
 
 ## Initialization
 
 This module is using database, and need some initial data to be inserted into it.
 
 ```sh
-your-console-entrypoint fb:triggers-module:install
+php bin/fb-console.php fb:triggers-module:install
 ```
 
 This console command is interactive and will ask for all required information.
 
 ## Running module interface
 
-This module is dependent on [fastybird/web-server](https://github.com/FastyBird/web-server) which is server-less web
+This module is dependent on the HTTP server of [MiniServer Core](../../../Core/Core/README.md) which is server-less web
 server for serving API content. This module is registering its routes to this webserver automatically. All what you have
-to do is start this server with your console entrypoint:
+to do is start this server with the console entrypoint:
 
 ```sh
-your-console-entrypoint fb:web-server:start
+php bin/fb-console.php fb:web-server:start
 ```
 
 After successful start, server is listening for incoming http api request messages from clients.

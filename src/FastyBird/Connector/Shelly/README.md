@@ -16,7 +16,7 @@ which is integrating [Shelly](https://shelly.cloud) devices.
 - Support for Shelly Gen1 and Gen2 devices, allowing users to connect and control a wide range of Shelly devices
 - Automated device discovery feature, which automatically detects and adds Shelly devices to the FastyBird ecosystem
 - Support for Shelly device authentication using a username and password, providing an extra layer of security for connected devices
-- Shelly Connector management for the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/devices-module), allowing users to easily manage and monitor Shelly devices
+- Shelly Connector management for the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](../../Module/Devices/README.md), allowing users to easily manage and monitor Shelly devices
 - Advanced device management features, such as controlling power status, measuring energy consumption, and reading sensor data
 - [{JSON:API}](https://jsonapi.org/) schemas for full API access, providing a standardized and consistent way for developers to access and manipulate Shelly device data
 - Regular updates with new features and bug fixes, ensuring that the Shelly Connector is always up-to-date and reliable.
@@ -31,12 +31,7 @@ PHP extension.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/shelly-connector
-```
+This connector is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbShellyConnector` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 

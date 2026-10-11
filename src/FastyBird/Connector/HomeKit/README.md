@@ -17,7 +17,7 @@ natively into your [Apple Home](https://www.apple.com/home-app/) application
 - Multiple bridges support
 - Ability to map multiple devices into a single HomeKit device
 - Bidirectional communication with Apple Home app
-- Integration with the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/devices-module) for easy management and monitoring of Modbus devices
+- Integration with the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](../../Module/Devices/README.md) for easy management and monitoring of Modbus devices
 - [{JSON:API}](https://jsonapi.org/) schemas for full API access, providing a standardized and consistent way for developers to access and manipulate HomeKit device data
 - Regular updates with new features and bug fixes, ensuring that the HomeKit Connector is always up-to-date and reliable.
 
@@ -32,12 +32,7 @@ HomeKit connector is tested against PHP 8.4 and require installed [GNU Multiple 
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/homekit-connector
-```
+This connector is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbHomeKitConnector` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 

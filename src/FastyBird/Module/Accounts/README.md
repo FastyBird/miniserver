@@ -14,7 +14,7 @@ extension for managing application accounts, sessions and access management.
 ### Features:
 
 - Accounts and their details management
-- Support for data [exchange bus](https://github.com/FastyBird/exchange)
+- Support for data [exchange bus](../../Core/Core/README.md)
 - [{JSON:API}](https://jsonapi.org/) schemas for full api access
 - User access check & validation
 - Multilingual
@@ -33,18 +33,14 @@ against [ECMAScript 6](https://www.w3schools.com/JS/js_es6.asp)
 
 ## Installation
 
-The best way to install **fastybird/accounts-module** is using [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/accounts-module
-```
+This module is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbAccountsModule` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 **@fastybird/accounts-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Documentation
 
 Learn how to manage application accounts and manage access
-in [documentation](https://github.com/FastyBird/accounts-module/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 

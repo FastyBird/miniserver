@@ -9,7 +9,7 @@
 ## What is Viera connector & HomeKit connector bridge?
 
 Viera connector & HomeKit connector bridge is extension for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem
-which is creating bridge between [Viera connector](https://github.com/FastyBird/viera-connector) and [HomeKit connector](https://github.com/FastyBird/homekit-connector).
+which is creating bridge between [Viera connector](../../Connector/Viera/README.md) and [HomeKit connector](../../Connector/HomeKit/README.md).
 
 ### Features:
 
@@ -27,12 +27,7 @@ Viera connector & HomeKit connector bridge is tested against PHP 8.4.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/viera-connector-homekit-connector-bridge
-```
+This bridge is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbVieraConnectorHomeKitConnectorBridge` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 

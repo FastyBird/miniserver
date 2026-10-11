@@ -9,7 +9,7 @@
 ## What is Shelly connector & HomeKit connector bridge?
 
 Shelly connector & HomeKit connector bridge is extension for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem
-which is creating bridge between [Shelly connector](https://github.com/FastyBird/shelly-connector) and [HomeKit connector](https://github.com/FastyBird/homekit-connector).
+which is creating bridge between [Shelly connector](../../Connector/Shelly/README.md) and [HomeKit connector](../../Connector/HomeKit/README.md).
 
 ### Features:
 
@@ -27,12 +27,7 @@ Shelly connector & HomeKit connector bridge is tested against PHP 8.4.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/shelly-connector-homekit-connector-bridge
-```
+This bridge is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbShellyConnectorHomeKitConnectorBridge` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 
