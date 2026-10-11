@@ -24,6 +24,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 
 	public const string TYPE = 'ns-panel-connector';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

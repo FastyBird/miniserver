@@ -41,6 +41,7 @@ final class VirtualThermostatExtension extends NetteDI\CompilerExtension impleme
 		};
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -159,6 +160,7 @@ final class VirtualThermostatExtension extends NetteDI\CompilerExtension impleme
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

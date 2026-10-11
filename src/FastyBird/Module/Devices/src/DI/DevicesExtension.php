@@ -76,6 +76,7 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 	/**
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -948,6 +949,7 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 	 * @throws NetteDI\MissingServiceException
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

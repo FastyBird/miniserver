@@ -6,6 +6,7 @@ use Closure;
 use Doctrine\ORM;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Ui\Entities;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -48,6 +49,7 @@ class FindWidgetDataSources extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		$qb = $this->createBasicDql($repository);
@@ -76,6 +78,7 @@ class FindWidgetDataSources extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		$qb = $this->createBasicDql($repository)->select('COUNT(d.id)');

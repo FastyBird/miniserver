@@ -7,6 +7,7 @@ use Doctrine\ORM;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Core\Security\Entities\Policies;
 use FastyBird\Core\Security\Types;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -51,6 +52,7 @@ class FindPolicies extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository);
@@ -77,6 +79,7 @@ class FindPolicies extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository)->select('COUNT(p.id)');

@@ -17,6 +17,7 @@ abstract class Property extends UiEntities\Widgets\DataSources\DataSource
 
 	abstract public function getProperty(): DevicesEntities\Property;
 
+	#[Override]
 	public function hasRelation(string $relation): bool
 	{
 		return in_array(
@@ -29,6 +30,7 @@ abstract class Property extends UiEntities\Widgets\DataSources\DataSource
 		);
 	}
 
+	#[Override]
 	public function getRelation(string $relation): PersistenceEntities\CrudEntity|null
 	{
 		if ($relation === Schemas\Widgets\DataSources\ChannelProperty::RELATIONSHIPS_WIDGET) {

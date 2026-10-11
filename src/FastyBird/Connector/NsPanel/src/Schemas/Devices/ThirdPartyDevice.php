@@ -19,6 +19,7 @@ final class ThirdPartyDevice extends Device
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/device/' . Entities\Devices\ThirdPartyDevice::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\ThirdPartyDevice::class;

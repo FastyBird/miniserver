@@ -56,6 +56,7 @@ final class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExte
 		]);
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -183,6 +184,7 @@ final class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExte
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

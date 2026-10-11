@@ -18,6 +18,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Localization;
+use Override;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
@@ -56,6 +57,7 @@ final class Build extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -69,6 +71,7 @@ final class Build extends Console\Command\Command
 	 * @throws VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
+	#[Override]
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{
 		$io = new Style\SymfonyStyle($input, $output);

@@ -44,6 +44,7 @@ final class ChannelPropertyCondition extends TriggersDocuments\Conditions\Condit
 		parent::__construct($id, $trigger, $enabled, $isFulfilled, $owner);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Conditions\ChannelPropertyCondition::TYPE;

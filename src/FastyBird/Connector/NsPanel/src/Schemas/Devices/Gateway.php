@@ -20,6 +20,7 @@ final class Gateway extends Device
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/device/' . Entities\Devices\Gateway::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\Gateway::class;

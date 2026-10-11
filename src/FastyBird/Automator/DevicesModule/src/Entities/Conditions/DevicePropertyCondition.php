@@ -36,6 +36,7 @@ class DevicePropertyCondition extends PropertyCondition
 		$this->property = $property;
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

@@ -15,6 +15,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Localization;
 use Nette\Utils;
+use Override;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
@@ -58,6 +59,7 @@ final class Install extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -76,6 +78,7 @@ final class Install extends Console\Command\Command
 	 * @throws VirtualExceptions\Runtime
 	 * @throws CoreExceptions\InvalidState
 	 */
+	#[Override]
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{
 		$this->input = $input;

@@ -6,6 +6,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Types as ShellyConnectorHomeKitConnectorTypes;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 
@@ -58,6 +59,7 @@ final readonly class SwitchAccessory extends Accessory
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getModels(): array
 	{
 		return $this->models;
@@ -66,6 +68,7 @@ final readonly class SwitchAccessory extends Accessory
 	/**
 	 * @return array<HomeKitTypes\AccessoryCategory>
 	 */
+	#[Override]
 	public function getCategories(): array
 	{
 		return $this->categories;
@@ -74,6 +77,7 @@ final readonly class SwitchAccessory extends Accessory
 	/**
 	 * @return array<Mapping\Services\Service>
 	 */
+	#[Override]
 	public function getServices(): array
 	{
 		return $this->services;

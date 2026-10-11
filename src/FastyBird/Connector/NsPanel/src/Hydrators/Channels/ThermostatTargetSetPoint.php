@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\NsPanel\Hydrators\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
+use Override;
 
 /**
  * NS Panel thermostat target set point capability channel entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Connector\NsPanel\Entities;
 final class ThermostatTargetSetPoint extends Channel
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\ThermostatTargetSetPoint::class;

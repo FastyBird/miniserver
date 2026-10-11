@@ -35,6 +35,7 @@ final class Email extends Schemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Emails\Email::class;

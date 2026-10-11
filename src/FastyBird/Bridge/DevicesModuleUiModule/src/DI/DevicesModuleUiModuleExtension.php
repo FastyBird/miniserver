@@ -57,6 +57,7 @@ final class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 	/**
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -168,6 +169,7 @@ final class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

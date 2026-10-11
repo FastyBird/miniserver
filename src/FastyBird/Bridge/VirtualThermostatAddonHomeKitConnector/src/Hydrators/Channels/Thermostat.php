@@ -4,6 +4,7 @@ namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Hydrators\Chan
 
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
+use Override;
 
 /**
  * Thermostat channel entity hydrator
@@ -13,6 +14,7 @@ use FastyBird\Connector\HomeKit\Hydrators as HomeKitHydrators;
 final class Thermostat extends HomeKitHydrators\Channels\Channel
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\Thermostat::class;

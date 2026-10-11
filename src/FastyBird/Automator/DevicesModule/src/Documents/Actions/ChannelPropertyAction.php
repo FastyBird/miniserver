@@ -38,6 +38,7 @@ final class ChannelPropertyAction extends TriggersDocuments\Actions\Action
 		parent::__construct($id, $trigger, $enabled, $isTriggered, $owner);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Actions\ChannelPropertyAction::TYPE;

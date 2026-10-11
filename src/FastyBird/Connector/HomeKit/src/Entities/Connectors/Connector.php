@@ -37,6 +37,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	)]
 	protected Common\Collections\Collection $clients;
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

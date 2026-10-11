@@ -5,17 +5,20 @@ namespace FastyBird\Connector\NsPanel\Documents\Channels;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Documents;
+use Override;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\IlluminationLevel::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\IlluminationLevel::TYPE)]
 final class IlluminationLevel extends Channel
 {
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Channels\IlluminationLevel::TYPE;
 	}
 
+	#[Override]
 	public function toDefinition(): array
 	{
 		return [

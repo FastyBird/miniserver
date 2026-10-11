@@ -28,6 +28,7 @@ final class Button extends Display
 		return self::SCHEMA_TYPE;
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Widgets\Displays\Button::class;

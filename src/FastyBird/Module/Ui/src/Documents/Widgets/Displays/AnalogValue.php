@@ -32,6 +32,7 @@ final class AnalogValue extends UiDocuments\Widgets\Displays\Display
 		parent::__construct($id, $widget, $owner, $createdAt, $updatedAt);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Widgets\Displays\AnalogValue::TYPE;

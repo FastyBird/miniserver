@@ -17,6 +17,7 @@ class Button extends Display implements Entities\Widgets\Displays\Parameters\Ico
 
 	public const string TYPE = 'button';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

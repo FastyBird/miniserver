@@ -13,6 +13,7 @@ use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -35,6 +36,7 @@ final class Channel extends DevicesHydrators\Channels\Channel
 		parent::__construct($managerRegistry, $translator, $crudReader);
 	}
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\Channel::class;

@@ -30,6 +30,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette\Localization;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use ReflectionException;
 use Symfony\Component\Console;
@@ -93,6 +94,7 @@ final class Install extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -117,6 +119,7 @@ final class Install extends Console\Command\Command
 	 * @throws ValueError
 	 * @throws VirtualExceptions\InvalidArgument
 	 */
+	#[Override]
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{
 		$io = new Style\SymfonyStyle($input, $output);

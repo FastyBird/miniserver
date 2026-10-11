@@ -53,6 +53,7 @@ final class ModbusExtension extends NetteDI\CompilerExtension implements Transla
 	/**
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -259,6 +260,7 @@ final class ModbusExtension extends NetteDI\CompilerExtension implements Transla
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

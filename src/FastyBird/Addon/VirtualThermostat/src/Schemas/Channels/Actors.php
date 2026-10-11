@@ -21,6 +21,7 @@ final class Actors extends VirtualSchemas\Channels\Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Addon::VIRTUAL_THERMOSTAT->value . '/channel/' . Entities\Channels\Actors::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Actors::class;

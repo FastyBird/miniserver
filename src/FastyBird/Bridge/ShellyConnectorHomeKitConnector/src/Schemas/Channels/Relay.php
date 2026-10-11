@@ -21,6 +21,7 @@ final class Relay extends Shelly
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	public const string SCHEMA_TYPE = Sources\Bridge::SHELLY_CONNECTOR_HOMEKIT_CONNECTOR->value . '/channel/' . Entities\Channels\Relay::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Relay::class;

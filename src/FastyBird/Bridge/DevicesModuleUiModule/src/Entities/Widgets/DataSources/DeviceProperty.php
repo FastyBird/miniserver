@@ -47,6 +47,7 @@ class DeviceProperty extends Property
 		$this->property = $property;
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
@@ -57,6 +58,7 @@ class DeviceProperty extends Property
 		return $this->property->getDevice();
 	}
 
+	#[Override]
 	public function getProperty(): DevicesEntities\Devices\Properties\Property
 	{
 		return $this->property;

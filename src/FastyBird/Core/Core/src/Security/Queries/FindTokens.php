@@ -7,6 +7,7 @@ use Doctrine\ORM;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Core\Security\Entities\Tokens;
 use FastyBird\Core\Security\Types;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -48,6 +49,7 @@ final class FindTokens extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository);
@@ -74,6 +76,7 @@ final class FindTokens extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository)->select('COUNT(t.id)');

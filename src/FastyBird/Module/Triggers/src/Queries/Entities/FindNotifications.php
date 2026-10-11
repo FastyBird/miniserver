@@ -6,6 +6,7 @@ use Closure;
 use Doctrine\ORM;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -40,6 +41,7 @@ final class FindNotifications extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Notifications\Notification> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		$qb = $this->createBasicDql($repository);
@@ -70,6 +72,7 @@ final class FindNotifications extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Notifications\Notification> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		$qb = $this->createBasicDql($repository)->select('COUNT(n.id)');

@@ -3,6 +3,7 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
+use Override;
 
 /**
  * Relay channel entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 final class Relay extends Shelly
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\Relay::class;

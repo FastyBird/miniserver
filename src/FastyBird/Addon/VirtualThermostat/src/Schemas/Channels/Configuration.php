@@ -21,6 +21,7 @@ final class Configuration extends VirtualSchemas\Channels\Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Addon::VIRTUAL_THERMOSTAT->value . '/channel/' . Entities\Channels\Configuration::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Configuration::class;

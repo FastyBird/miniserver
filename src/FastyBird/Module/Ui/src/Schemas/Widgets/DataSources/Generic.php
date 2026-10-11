@@ -19,6 +19,7 @@ final class Generic extends DataSource
 	 */
 	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/data-source/' . Entities\Widgets\DataSources\Generic::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Widgets\DataSources\Generic::class;

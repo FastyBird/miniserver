@@ -6,6 +6,7 @@ use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
 use Flow\JSONPath;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function count;
 use function implode;
@@ -107,6 +108,7 @@ class FindDevices extends QueryObject
 	/**
 	 * @throws JSONPath\JSONPathException
 	 */
+	#[Override]
 	protected function doCreateQuery(JSONPath\JSONPath $repository): JSONPath\JSONPath
 	{
 		$filtered = $repository;
@@ -121,6 +123,7 @@ class FindDevices extends QueryObject
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function toString(): string
 	{
 		try {

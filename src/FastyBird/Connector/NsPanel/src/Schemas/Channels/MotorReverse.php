@@ -19,6 +19,7 @@ final class MotorReverse extends Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\MotorReverse::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\MotorReverse::class;

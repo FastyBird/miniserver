@@ -13,6 +13,7 @@ use FastyBird\Core\Phone\Services;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use function is_scalar;
 use function strval;
 
@@ -40,6 +41,7 @@ final class Sms extends Notification
 		parent::__construct($managerRegistry, $translator, $crudReader);
 	}
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return TriggersEntities\Notifications\Sms::class;

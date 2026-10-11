@@ -47,6 +47,7 @@ class ChannelProperty extends Property
 		$this->property = $property;
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
@@ -57,6 +58,7 @@ class ChannelProperty extends Property
 		return $this->property->getChannel();
 	}
 
+	#[Override]
 	public function getProperty(): DevicesEntities\Channels\Properties\Property
 	{
 		return $this->property;

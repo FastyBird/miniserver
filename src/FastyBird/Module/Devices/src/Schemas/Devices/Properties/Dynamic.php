@@ -48,6 +48,7 @@ final class Dynamic extends Property
 		parent::__construct($router, $devicesPropertiesRepository);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\Properties\Dynamic::class;

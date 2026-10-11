@@ -58,6 +58,7 @@ final class NumericType extends Type
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getType(): Zigbee2MqttTypes\ExposeType
 	{
 		return Zigbee2MqttTypes\ExposeType::from($this->type);

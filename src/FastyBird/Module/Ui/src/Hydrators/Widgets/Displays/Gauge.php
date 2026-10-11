@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
 use FastyBird\Module\Ui\Entities;
+use Override;
 
 /**
  * Gauge widget display entity hydrator
@@ -17,6 +18,7 @@ final class Gauge extends Display
 		'precision' => 'precision',
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Widgets\Displays\Gauge::class;

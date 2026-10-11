@@ -19,6 +19,7 @@ final class Generic extends Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/channel/' . Entities\Channels\Generic::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Generic::class;

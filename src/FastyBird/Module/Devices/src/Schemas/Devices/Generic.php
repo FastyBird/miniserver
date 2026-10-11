@@ -19,6 +19,7 @@ final class Generic extends Device
 	 */
 	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/device/' . Entities\Devices\Generic::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\Generic::class;

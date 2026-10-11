@@ -43,6 +43,7 @@ abstract class Property extends UiDocuments\Widgets\DataSources\DataSource
 		parent::__construct($id, $widget, $owner, $createdAt, $updatedAt);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Widgets\DataSources\ChannelProperty::TYPE;

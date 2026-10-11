@@ -69,6 +69,7 @@ final class UiExtension extends NetteDI\CompilerExtension implements Translation
 	/**
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -515,6 +516,7 @@ final class UiExtension extends NetteDI\CompilerExtension implements Translation
 	 * @throws NetteDI\MissingServiceException
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

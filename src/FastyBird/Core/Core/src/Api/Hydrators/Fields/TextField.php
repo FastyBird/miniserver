@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Api\Hydrators\Fields;
 
 use FastyBird\Core\Api\Encoding\Objects;
+use Override;
 use function is_scalar;
 
 /**
@@ -25,6 +26,7 @@ final class TextField extends Field
 	/**
 	 * @param Objects\StandardObject<string, mixed> $attributes
 	 */
+	#[Override]
 	public function getValue(Objects\StandardObject $attributes): string|null
 	{
 		$value = $attributes->get($this->getMappedName());

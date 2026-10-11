@@ -25,6 +25,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette\Localization;
 use Nette\Utils;
+use Override;
 use Psr\Clock\ClockInterface;
 use RuntimeException;
 use Symfony\Component\Console;
@@ -93,6 +94,7 @@ final class Install extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -114,6 +116,7 @@ final class Install extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{
 		$this->input = $input;

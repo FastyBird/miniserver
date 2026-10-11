@@ -17,6 +17,7 @@ class GroupedButton extends Display implements Entities\Widgets\Displays\Paramet
 
 	public const string TYPE = 'grouped-button';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

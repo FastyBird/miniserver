@@ -55,6 +55,7 @@ final class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\Comp
 		]);
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -148,6 +149,7 @@ final class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\Comp
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

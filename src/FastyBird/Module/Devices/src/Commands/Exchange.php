@@ -10,6 +10,7 @@ use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Consumers as DevicesConsumers;
 use FastyBird\Module\Devices\Events;
 use Nette\Localization;
+use Override;
 use Psr\EventDispatcher;
 use React\EventLoop;
 use Symfony\Component\Console;
@@ -47,6 +48,7 @@ final class Exchange extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -57,6 +59,7 @@ final class Exchange extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function execute(
 		Input\InputInterface $input,
 		Output\OutputInterface $output,

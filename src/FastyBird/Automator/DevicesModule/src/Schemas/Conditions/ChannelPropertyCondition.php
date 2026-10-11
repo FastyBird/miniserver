@@ -33,6 +33,7 @@ final class ChannelPropertyCondition extends TriggersSchemas\Conditions\Conditio
 		return self::SCHEMA_TYPE;
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Conditions\ChannelPropertyCondition::class;

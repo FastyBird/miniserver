@@ -4,6 +4,7 @@ namespace FastyBird\Connector\HomeKit\Protocol\Accessories;
 
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Types;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -22,6 +23,7 @@ class Generic extends Accessory
 		parent::__construct($name, $aid, $category);
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->device->getId();

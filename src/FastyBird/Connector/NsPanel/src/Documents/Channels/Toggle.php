@@ -7,6 +7,7 @@ use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Documents;
+use Override;
 use function array_key_exists;
 use function preg_match;
 
@@ -15,6 +16,7 @@ use function preg_match;
 final class Toggle extends Channel
 {
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Channels\Toggle::TYPE;
@@ -23,6 +25,7 @@ final class Toggle extends Channel
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function toDefinition(): array
 	{
 		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $this->getIdentifier(), $matches);

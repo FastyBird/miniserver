@@ -6,6 +6,7 @@ use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Ui\Entities;
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use function is_scalar;
 use function strval;
 
@@ -26,6 +27,7 @@ final class ChartGraph extends Display
 		'enable_min_max' => 'enableMinMax',
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Widgets\Displays\ChartGraph::class;

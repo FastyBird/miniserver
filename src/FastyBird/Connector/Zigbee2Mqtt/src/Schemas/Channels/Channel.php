@@ -20,6 +20,7 @@ final class Channel extends DevicesSchemas\Channels\Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::ZIGBEE2MQTT->value . '/channel/' . Entities\Channels\Channel::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Channel::class;

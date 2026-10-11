@@ -4,6 +4,7 @@ namespace FastyBird\Module\Triggers\Hydrators\Triggers;
 
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Schemas;
+use Override;
 
 /**
  * Automatic trigger entity hydrator
@@ -20,6 +21,7 @@ final class AutomaticTrigger extends Trigger
 		Schemas\Triggers\Automatic::RELATIONSHIPS_NOTIFICATIONS,
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Triggers\Automatic::class;

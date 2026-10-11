@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -41,6 +42,7 @@ class Automatic extends Trigger
 		$this->conditions = new Common\Collections\ArrayCollection();
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

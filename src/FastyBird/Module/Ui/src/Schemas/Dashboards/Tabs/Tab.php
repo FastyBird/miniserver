@@ -37,6 +37,7 @@ final class Tab extends Schemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Dashboards\Tabs\Tab::class;

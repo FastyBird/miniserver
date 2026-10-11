@@ -37,6 +37,7 @@ class Mapped extends Property
 		$this->parent = $parent;
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

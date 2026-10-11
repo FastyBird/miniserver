@@ -6,6 +6,7 @@ use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Schemas;
+use Override;
 use function is_scalar;
 
 /**
@@ -26,6 +27,7 @@ final class Role extends Hydrators\Hydrator
 		Schemas\Roles\Role::RELATIONSHIPS_PARENT,
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Roles\Role::class;

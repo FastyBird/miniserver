@@ -35,6 +35,7 @@ final class Identity extends Schemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Identities\Identity::class;

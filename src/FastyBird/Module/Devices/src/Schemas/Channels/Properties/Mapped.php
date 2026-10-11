@@ -48,6 +48,7 @@ final class Mapped extends Property
 		parent::__construct($router, $channelsPropertiesRepository);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Properties\Mapped::class;

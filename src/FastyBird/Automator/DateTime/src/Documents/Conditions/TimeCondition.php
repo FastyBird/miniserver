@@ -41,6 +41,7 @@ final class TimeCondition extends TriggersDocuments\Conditions\Condition
 		parent::__construct($id, $trigger, $enabled, $isFulfilled, $owner);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Conditions\TimeCondition::TYPE;

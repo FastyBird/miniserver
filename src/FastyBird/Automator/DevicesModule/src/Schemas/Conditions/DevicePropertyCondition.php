@@ -33,6 +33,7 @@ final class DevicePropertyCondition extends TriggersSchemas\Conditions\Condition
 		return self::SCHEMA_TYPE;
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Conditions\DevicePropertyCondition::class;

@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -32,6 +33,7 @@ final class DeviceAttribute extends Attribute
 		parent::__construct($connector, $device, $value, $retained);
 	}
 
+	#[Override]
 	public function getAttribute(): string
 	{
 		return $this->attribute;

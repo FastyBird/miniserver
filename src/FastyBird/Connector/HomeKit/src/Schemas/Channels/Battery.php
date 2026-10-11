@@ -20,6 +20,7 @@ final class Battery extends Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::HOMEKIT->value . '/channel/' . Entities\Channels\Battery::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Battery::class;

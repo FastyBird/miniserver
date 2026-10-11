@@ -176,6 +176,7 @@ final class Lan extends ClientProcess implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	protected function readInformation(
 		Documents\Devices\Device $device,
 	): Promise\PromiseInterface
@@ -298,6 +299,7 @@ final class Lan extends ClientProcess implements Client
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 */
+	#[Override]
 	protected function readState(Documents\Devices\Device $device): Promise\PromiseInterface
 	{
 		// Reading device state is not supported by LAN api

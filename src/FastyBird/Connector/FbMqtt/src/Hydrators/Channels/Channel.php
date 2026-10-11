@@ -4,6 +4,7 @@ namespace FastyBird\Connector\FbMqtt\Hydrators\Channels;
 
 use FastyBird\Connector\FbMqtt\Entities;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
+use Override;
 
 /**
  * FastyBird MQTT channel entity hydrator
@@ -13,6 +14,7 @@ use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 final class Channel extends DevicesHydrators\Channels\Channel
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\Channel::class;

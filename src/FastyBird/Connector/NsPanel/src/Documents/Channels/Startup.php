@@ -6,6 +6,7 @@ use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Documents;
+use Override;
 use function array_key_exists;
 use function preg_match;
 
@@ -14,11 +15,13 @@ use function preg_match;
 final class Startup extends Channel
 {
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Channels\Startup::TYPE;
 	}
 
+	#[Override]
 	public function toDefinition(): array
 	{
 		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $this->getIdentifier(), $matches);

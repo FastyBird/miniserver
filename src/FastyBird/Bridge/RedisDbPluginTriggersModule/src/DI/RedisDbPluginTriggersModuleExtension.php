@@ -40,6 +40,7 @@ final class RedisDbPluginTriggersModuleExtension extends DI\CompilerExtension
 		]);
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();

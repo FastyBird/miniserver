@@ -19,6 +19,7 @@ final class SubDevice extends Device
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/device/' . Entities\Devices\SubDevice::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\SubDevice::class;

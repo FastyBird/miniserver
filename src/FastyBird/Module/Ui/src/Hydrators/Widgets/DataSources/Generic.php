@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Ui\Hydrators\Widgets\DataSources;
 
 use FastyBird\Module\Ui\Entities;
+use Override;
 
 /**
  * Generic data source entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Module\Ui\Entities;
 final class Generic extends DataSource
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Widgets\DataSources\Generic::class;

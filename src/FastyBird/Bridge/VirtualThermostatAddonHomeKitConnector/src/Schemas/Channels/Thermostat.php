@@ -22,6 +22,7 @@ final class Thermostat extends HomeKitSchemas\Channels\Channel
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	public const string SCHEMA_TYPE = Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/channel/' . Entities\Channels\Thermostat::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Thermostat::class;

@@ -11,6 +11,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use Nette\Localization;
+use Override;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
@@ -56,6 +57,7 @@ final class Diagnostics extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -86,6 +88,7 @@ final class Diagnostics extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	protected function execute(
 		Input\InputInterface $input,
 		Output\OutputInterface $output,

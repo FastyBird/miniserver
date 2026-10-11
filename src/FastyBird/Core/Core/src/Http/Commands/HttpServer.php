@@ -7,6 +7,7 @@ use FastyBird\Core\Http\Events;
 use FastyBird\Core\Http\Server;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 use Psr\EventDispatcher;
 use Psr\Log;
 use React\EventLoop;
@@ -43,6 +44,7 @@ final class HttpServer extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		parent::configure();
@@ -52,6 +54,7 @@ final class HttpServer extends Console\Command\Command
 			->setDescription('Start http server');
 	}
 
+	#[Override]
 	protected function execute(
 		Input\InputInterface $input,
 		Output\OutputInterface $output,

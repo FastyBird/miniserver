@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Triggers\Hydrators\Triggers;
 
 use FastyBird\Module\Triggers\Entities;
+use Override;
 
 /**
  * Manual trigger entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Module\Triggers\Entities;
 final class ManualTrigger extends Trigger
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Triggers\Manual::class;

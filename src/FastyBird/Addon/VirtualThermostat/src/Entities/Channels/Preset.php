@@ -35,6 +35,7 @@ class Preset extends VirtualEntities\Channels\Channel
 		parent::__construct($device, $identifier, $name, $id);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

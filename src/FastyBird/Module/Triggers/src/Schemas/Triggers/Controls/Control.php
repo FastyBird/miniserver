@@ -35,6 +35,7 @@ final class Control extends ApiSchemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Triggers\Controls\Control::class;

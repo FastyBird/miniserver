@@ -89,6 +89,7 @@ final class Mapped extends Property
 		);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Devices\Properties\Mapped::getType();

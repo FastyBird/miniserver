@@ -49,6 +49,7 @@ final class Automatic extends Trigger
 		return self::SCHEMA_TYPE;
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Triggers\Automatic::class;

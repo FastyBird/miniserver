@@ -14,6 +14,7 @@ class AnalogSensor extends Sensor
 
 	public const string TYPE = 'analog-sensor';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

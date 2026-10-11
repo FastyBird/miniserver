@@ -40,6 +40,7 @@ class SubDevice extends NsPanelEntities\Devices\Device
 		$this->setParents([$parent]);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

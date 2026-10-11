@@ -4,6 +4,7 @@ namespace FastyBird\Addon\VirtualThermostat\Hydrators\Devices;
 
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;
+use Override;
 
 /**
  * Virtual thermostat device entity hydrator
@@ -13,6 +14,7 @@ use FastyBird\Connector\Virtual\Hydrators as VirtualHydrators;
 final class Device extends VirtualHydrators\Devices\Device
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Devices\Device::class;

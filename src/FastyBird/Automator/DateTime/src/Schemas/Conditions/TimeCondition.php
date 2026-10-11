@@ -29,6 +29,7 @@ final class TimeCondition extends TriggersSchemas\Conditions\Condition
 		return self::SCHEMA_TYPE;
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Conditions\TimeCondition::class;

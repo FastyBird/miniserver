@@ -59,6 +59,7 @@ class Device extends VirtualEntities\Devices\Device
 		parent::__construct($identifier, $connector, $name, $id);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

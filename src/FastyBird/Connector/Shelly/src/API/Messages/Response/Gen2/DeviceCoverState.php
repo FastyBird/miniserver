@@ -114,6 +114,7 @@ final class DeviceCoverState extends DeviceState implements API\Messages\Message
 		parent::__construct($id, $errors);
 	}
 
+	#[Override]
 	public function getType(): Types\ComponentType
 	{
 		return Types\ComponentType::COVER;

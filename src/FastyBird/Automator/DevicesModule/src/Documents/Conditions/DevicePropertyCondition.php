@@ -42,6 +42,7 @@ final class DevicePropertyCondition extends TriggersDocuments\Conditions\Conditi
 		parent::__construct($id, $trigger, $enabled, $isFulfilled, $owner);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Conditions\DevicePropertyCondition::TYPE;

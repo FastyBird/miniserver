@@ -42,6 +42,7 @@ class Slider extends Display implements Entities\Widgets\Displays\Parameters\Min
 		$this->setStepValue($stepValue);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

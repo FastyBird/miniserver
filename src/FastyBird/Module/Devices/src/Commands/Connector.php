@@ -22,6 +22,7 @@ use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Types;
 use Nette\Localization;
 use Nette\Utils;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Ramsey\Uuid;
@@ -97,6 +98,7 @@ final class Connector extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -126,6 +128,7 @@ final class Connector extends Console\Command\Command
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{
 		$io = new Style\SymfonyStyle($input, $output);

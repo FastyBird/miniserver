@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Hydrators\Devices;
 
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
+use Override;
 
 /**
  * Zigbee2MQTT bridge device entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Entities;
 final class Bridge extends Device
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Devices\Bridge::class;

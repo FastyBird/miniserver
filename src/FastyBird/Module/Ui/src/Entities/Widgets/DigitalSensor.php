@@ -14,6 +14,7 @@ class DigitalSensor extends Sensor
 
 	public const string TYPE = 'digital-sensor';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

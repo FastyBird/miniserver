@@ -53,6 +53,7 @@ final class VieraExtension extends NetteDI\CompilerExtension implements Translat
 	/**
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -299,6 +300,7 @@ final class VieraExtension extends NetteDI\CompilerExtension implements Translat
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

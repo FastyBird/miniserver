@@ -9,6 +9,7 @@ use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -34,6 +35,7 @@ class ThirdPartyDevice extends NsPanelEntities\Devices\Device
 		$this->setParents([$parent]);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
