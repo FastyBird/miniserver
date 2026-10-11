@@ -2,15 +2,11 @@
 
 namespace FastyBird\Plugin\RabbitMq\Connections;
 
-use Nette;
-
 /**
  * RabbitMQ connection configuration
  */
 final readonly class Connection
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private string $host = '127.0.0.1',

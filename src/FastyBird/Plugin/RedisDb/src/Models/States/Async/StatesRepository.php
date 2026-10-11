@@ -8,7 +8,6 @@ use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;
 use InvalidArgumentException;
-use Nette;
 use Psr\Log;
 use Ramsey\Uuid;
 use React\Promise;
@@ -23,8 +22,6 @@ use function React\Async\await;
  */
 final readonly class StatesRepository
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param class-string<T> $entity

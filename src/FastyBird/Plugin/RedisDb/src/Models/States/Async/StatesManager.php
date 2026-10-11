@@ -10,7 +10,6 @@ use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
@@ -39,8 +38,6 @@ use function sprintf;
  */
 final readonly class StatesManager
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param class-string<T> $entity

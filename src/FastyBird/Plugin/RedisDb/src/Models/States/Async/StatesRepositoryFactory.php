@@ -5,7 +5,6 @@ namespace FastyBird\Plugin\RedisDb\Models\States\Async;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;
-use Nette;
 use Psr\Log;
 use function class_exists;
 use function sprintf;
@@ -17,8 +16,6 @@ use function sprintf;
  */
 final readonly class StatesRepositoryFactory
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Clients\Async\Client $client,

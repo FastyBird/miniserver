@@ -10,7 +10,6 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Utilities;
-use Nette;
 use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
@@ -21,8 +20,6 @@ use Psr\Log;
  */
 final class Publisher implements ExchangePublisher\MessagePublisher
 {
-
-	use Nette\SmartObject;
 
 	private Bunny\Channel|null $asyncChannel = null;
 

@@ -5,7 +5,6 @@ namespace FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\CouchDb\Exceptions;
-use Nette;
 use PHPOnCouch;
 use Psr\Log;
 use Throwable;
@@ -16,8 +15,6 @@ use function str_replace;
  */
 final class Connection
 {
-
-	use Nette\SmartObject;
 
 	private PHPOnCouch\CouchClient|null $client = null;
 

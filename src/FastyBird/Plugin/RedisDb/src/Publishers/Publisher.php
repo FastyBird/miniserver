@@ -20,8 +20,6 @@ use Psr\Log;
 final readonly class Publisher implements ExchangePublisher\MessagePublisher
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
 		private Utilities\IdentifierGenerator $identifier,
 		private string $channel,

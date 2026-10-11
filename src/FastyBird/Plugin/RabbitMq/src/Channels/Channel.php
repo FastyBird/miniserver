@@ -4,7 +4,6 @@ namespace FastyBird\Plugin\RabbitMq\Channels;
 
 use Bunny;
 use FastyBird\Plugin\RabbitMq\Connections;
-use Nette;
 use Throwable;
 use function assert;
 
@@ -13,8 +12,6 @@ use function assert;
  */
 class Channel
 {
-
-	use Nette\SmartObject;
 
 	private Bunny\Client|null $bunny = null;
 

@@ -2,7 +2,6 @@
 
 namespace FastyBird\Plugin\RedisDb\Utilities;
 
-use Nette;
 use Ramsey\Uuid;
 
 /**
@@ -10,8 +9,6 @@ use Ramsey\Uuid;
  */
 final class IdentifierGenerator
 {
-
-	use Nette\SmartObject;
 
 	private string $identifier;
 

@@ -7,7 +7,6 @@ use FastyBird\Core\Exchange\Events as ExchangeEvents;
 use FastyBird\Plugin\RedisDb\Connections;
 use FastyBird\Plugin\RedisDb\Events as RedisDbEvents;
 use InvalidArgumentException;
-use Nette;
 use Psr\EventDispatcher;
 use React\EventLoop;
 use React\Promise;
@@ -20,8 +19,6 @@ use function strval;
  */
 final class Client
 {
-
-	use Nette\SmartObject;
 
 	private int $selectedDatabase = 0;
 

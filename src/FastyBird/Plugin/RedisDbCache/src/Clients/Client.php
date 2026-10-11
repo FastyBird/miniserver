@@ -3,7 +3,6 @@
 namespace FastyBird\Plugin\RedisDbCache\Clients;
 
 use FastyBird\Plugin\RedisDbCache\Connections;
-use Nette;
 use Predis;
 use Predis\Response as PredisResponse;
 use function assert;
@@ -13,8 +12,6 @@ use function assert;
  */
 class Client
 {
-
-	use Nette\SmartObject;
 
 	private int $selectedDatabase = 0;
 

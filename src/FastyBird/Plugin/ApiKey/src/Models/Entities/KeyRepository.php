@@ -5,15 +5,12 @@ namespace FastyBird\Plugin\ApiKey\Models\Entities;
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Plugin\ApiKey\Entities;
-use Nette;
 
 /**
  * API key repository
  */
 final class KeyRepository
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<ORM\EntityRepository<Entities\Key>> */
 	private array $repository = [];

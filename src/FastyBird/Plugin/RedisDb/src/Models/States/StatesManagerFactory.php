@@ -5,7 +5,6 @@ namespace FastyBird\Plugin\RedisDb\Models\States;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;
-use Nette;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
 use function class_exists;
@@ -18,8 +17,6 @@ use function sprintf;
  */
 final readonly class StatesManagerFactory
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Clients\Client $client,

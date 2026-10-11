@@ -2,15 +2,11 @@
 
 namespace FastyBird\Plugin\RedisDbCache\Connections;
 
-use Nette;
-
 /**
  * Redis connection configuration
  */
 final readonly class Configuration
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private string $host = '127.0.0.1',

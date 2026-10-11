@@ -10,7 +10,6 @@ use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Events;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use FastyBird\Plugin\CouchDb\States;
-use Nette;
 use Nette\Utils;
 use PHPOnCouch;
 use Psr\Clock\ClockInterface;
@@ -35,8 +34,6 @@ use function sprintf;
  */
 final class StatesManager
 {
-
-	use Nette\SmartObject;
 
 	private const int MAX_RETRIES = 5;
 

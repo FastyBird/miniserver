@@ -8,7 +8,6 @@ use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use FastyBird\Plugin\CouchDb\States;
 use InvalidArgumentException;
-use Nette;
 use PHPOnCouch;
 use Psr\Log;
 use Ramsey\Uuid;
@@ -25,8 +24,6 @@ use function is_object;
  */
 final readonly class StatesRepository
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param class-string<T> $entity

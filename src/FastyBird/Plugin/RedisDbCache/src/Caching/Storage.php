@@ -5,7 +5,6 @@ namespace FastyBird\Plugin\RedisDbCache\Caching;
 use FastyBird\Plugin\RedisDbCache\Clients;
 use FastyBird\Plugin\RedisDbCache\Exceptions;
 use JsonException;
-use Nette;
 use Nette\Caching;
 use Nette\Utils;
 use Override;
@@ -27,8 +26,6 @@ use function unserialize;
  */
 final readonly class Storage implements Caching\Storage
 {
-
-	use Nette\SmartObject;
 
 	public const string NS_PREFIX = 'FB.Storage';
 

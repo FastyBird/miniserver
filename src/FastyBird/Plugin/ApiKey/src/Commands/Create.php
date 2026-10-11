@@ -6,7 +6,6 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\ApiKey\Models;
 use FastyBird\Plugin\ApiKey\Types;
-use Nette;
 use Nette\Utils;
 use Psr\Log;
 use Ramsey\Uuid;
@@ -22,8 +21,6 @@ use function sprintf;
  */
 final class Create extends Console\Command\Command
 {
-
-	use Nette\SmartObject;
 
 	public const string NAME = 'fb:api-key:create';
 

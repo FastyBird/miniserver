@@ -24,8 +24,6 @@ use Throwable;
 final readonly class Publisher implements Async\MessagePublisher
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
 		private Utilities\IdentifierGenerator $identifier,
 		private string $channel,

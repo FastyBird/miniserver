@@ -2,15 +2,11 @@
 
 namespace FastyBird\Plugin\RedisDbCache\Caching;
 
-use Nette;
-
 /**
  * Cache record item
  */
 final readonly class Record
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param array<mixed> $meta

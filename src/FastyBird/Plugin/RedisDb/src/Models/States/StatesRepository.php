@@ -7,7 +7,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;
-use Nette;
 use Psr\Log;
 use Ramsey\Uuid;
 use Throwable;
@@ -19,8 +18,6 @@ use Throwable;
  */
 final readonly class StatesRepository
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param class-string<T> $entity
