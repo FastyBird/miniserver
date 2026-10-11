@@ -149,6 +149,17 @@
  * pass. So is a tree in which no package has a package.json, which would mean the walk matches
  * nothing. A package without a package.json is still walked if it happens to have an `assets/`.
  *
+ * CHECK 6: no Hungarian prefix on an interface or a trait (E7.10, #704)
+ *
+ * An interface declared as `interface I[A-Z]...` and a trait declared as `trait T[A-Z]...` are
+ * refused in every package, Core included, and in every package's tests. The first capital is
+ * the point: `interface IRouter` carries the prefix, `trait Tlv` and `interface Index` do not.
+ * E2 and E7 renamed every such declaration away, so the baseline holds no entry for this check
+ * and none may be added; the fix is a role name (`UrlGenerator`, not `IUrlGenerator`), never the
+ * bare name when a concrete class already owns it. The `Interface` and `Trait` suffixes need no
+ * check here: `make cs` refuses them (SuperfluousInterfaceNaming, SuperfluousTraitNaming).
+ * Violations carry the category `prefix`.
+ *
  * Exit codes follow tools/check-layering.php:
  *   0  clean
  *   1  at least one violation, or the baseline has gone stale
@@ -192,6 +203,18 @@ const FB_NAMESPACE_DENYLIST = [
  * is a package, and `assets/` is the root of its JS sources.
  */
 const FB_PACKAGES_ROOT = 'src/FastyBird';
+
+/**
+ * Check 6: the Hungarian prefix each declaration keyword must not carry, as a regex fragment.
+ * `IFoo` for an interface and `TFoo` for a trait are refused in every package; the capital after
+ * the prefix is part of the test, so `Tlv`, `Index` or `Timer` pass. The repository names an
+ * interface for the role it plays and a trait for the capability it adds (docs/conventions.md,
+ * Naming), and the suffixes `Interface` and `Trait` are already refused by `make cs`.
+ */
+const FB_TYPE_PREFIXES = [
+	'interface' => 'I',
+	'trait' => 'T',
+];
 
 const FB_TYPE_DENYLIST = [
 	'SimpleAuth',
@@ -719,16 +742,28 @@ function fbCheckFile(string $path, string $code, string $relative): array
 	// brace-syntax namespace block, for instance) is still seen.
 	if ($isPackage) {
 		preg_match_all(
-			'/^[ \t]*(?:final\s+|abstract\s+|readonly\s+)*(?:class|interface|trait|enum)\s+(\w+)/m',
+			'/^[ \t]*(?:final\s+|abstract\s+|readonly\s+)*(class|interface|trait|enum)\s+(\w+)/m',
 			$code,
 			$typeMatches,
+			PREG_SET_ORDER,
 		);
 
-		foreach ($typeMatches[1] as $typeName) {
+		foreach ($typeMatches as $typeMatch) {
+			[, $keyword, $typeName] = $typeMatch;
+
 			foreach (FB_TYPE_DENYLIST as $token) {
 				if (str_contains($typeName, $token)) {
 					$violations[] = sprintf("type\t%s\t%s contains %s", $relative, $typeName, $token);
 				}
+			}
+
+			// 6. A Hungarian prefix on an interface or a trait, every package (E7.10, #704). The
+			// capital after the prefix is what makes it one: `Tlv` or `Index` is a word, `ITlv` is
+			// not. Classes and enums have no prefix convention to guard.
+			$prefix = FB_TYPE_PREFIXES[$keyword] ?? null;
+
+			if ($prefix !== null && preg_match('/^' . $prefix . '[A-Z]/', $typeName) === 1) {
+				$violations[] = sprintf("prefix\t%s\t%s %s has the prefix %s", $relative, $keyword, $typeName, $prefix);
 			}
 		}
 	}

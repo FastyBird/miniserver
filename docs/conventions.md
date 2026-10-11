@@ -397,6 +397,10 @@ via a shrink-only `<exclude-pattern>` list in `tools/phpcs.xml`, owned by E7 (#4
   alongside the concrete `RouteParser`.
 - Traits: no `T` prefix, and no `…Trait` suffix either — name the capability, not the
   language construct.
+- **The prefixes are rejected by `make naming`** (check 6, E7.10, #704), in every package and in
+  its tests: an `interface I[A-Z]…` or a `trait T[A-Z]…` fails the gate, and the naming baseline
+  holds no entry for it. The capital is part of the test, so a name that merely begins with the
+  letter, such as the trait `Tlv`, is fine.
 - **`…Interface` and `…Trait` suffixes are rejected by `make cs`**:
   `SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming` and
   `SlevomatCodingStandard.Classes.SuperfluousTraitNaming` are active. Neither sniff objects to
