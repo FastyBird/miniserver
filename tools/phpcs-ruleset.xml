@@ -235,6 +235,19 @@
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.Classes.UselessLateStaticBinding"/>
+    <!--
+        No Nette\SmartObject: typed properties make it redundant, and its magic methods turn a
+        misspelt property into a runtime error instead of a static one. The sniff's
+        `forbiddenTraits` option matches `use` inside a class body, and a `null` value forbids the
+        trait without naming a replacement. Repository-wide: no package is exempt.
+    -->
+    <rule ref="SlevomatCodingStandard.PHP.ForbiddenClasses">
+        <properties>
+            <property name="forbiddenTraits" type="array">
+                <element key="Nette\SmartObject" value="null"/>
+            </property>
+        </properties>
+    </rule>
 
     <!-- Attributes: one per line, each in its own #[...], below the docblock, no blank line after. -->
     <rule ref="SlevomatCodingStandard.Attributes.AttributeAndTargetSpacing"/>
