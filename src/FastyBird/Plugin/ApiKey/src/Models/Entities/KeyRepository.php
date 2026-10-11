@@ -1,37 +1,16 @@
 <?php declare(strict_types = 1);
 
-/**
- * KeyRepository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           21.10.22
- */
-
 namespace FastyBird\Plugin\ApiKey\Models\Entities;
 
 use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Plugin\ApiKey\Entities;
-use Nette;
 
 /**
  * API key repository
- *
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class KeyRepository
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<ORM\EntityRepository<Entities\Key>> */
 	private array $repository = [];

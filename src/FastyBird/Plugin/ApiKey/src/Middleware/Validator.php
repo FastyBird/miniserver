@@ -1,24 +1,12 @@
 <?php declare(strict_types = 1);
 
-/**
- * Validator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Middleware
- * @since          1.0.0
- *
- * @date           21.10.22
- */
-
 namespace FastyBird\Plugin\ApiKey\Middleware;
 
 use FastyBird\Core\Api\Exceptions;
 use FastyBird\Plugin\ApiKey\Models;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -34,20 +22,15 @@ use const CASE_LOWER;
 
 /**
  * API key check middleware
- *
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Middleware
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Validator implements MiddlewareInterface
+final readonly class Validator implements MiddlewareInterface
 {
 
-	private const API_KEY_HEADER = 'X-Api-Key';
+	private const string API_KEY_HEADER = 'X-Api-Key';
 
 	public function __construct(
-		private readonly Models\Entities\KeyRepository $keyRepository,
-		private readonly Localization\Translator $translator,
+		private Models\Entities\KeyRepository $keyRepository,
+		private Localization\Translator $translator,
 	)
 	{
 	}
@@ -55,6 +38,7 @@ final class Validator implements MiddlewareInterface
 	/**
 	 * @throws Exceptions\JsonApiError
 	 */
+	#[Override]
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
 	{
 		// Request has to have Authorization header

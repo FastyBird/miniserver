@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Factory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Channel
- * @since          1.0.0
- *
- * @date           26.03.23
- */
-
 namespace FastyBird\Plugin\RabbitMq\Channels;
 
 use Bunny;
@@ -22,6 +9,7 @@ use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Exceptions;
 use FastyBird\Plugin\RabbitMq\Handlers;
 use Nette\Utils;
+use Override;
 use Psr\EventDispatcher;
 use TypeError;
 use ValueError;
@@ -29,26 +17,23 @@ use function assert;
 
 /**
  * RabbitMQ async client factory
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Channel
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Factory implements Exchange\Factory
+final readonly class Factory implements Exchange\Factory
 {
 
-	private const EXCHANGE_TYPE = 'topic';
+	private const string EXCHANGE_TYPE = 'topic';
 
 	public function __construct(
-		private readonly string $exchangeName,
-		private readonly Connections\Connection $connection,
-		private readonly Handlers\Message $messagesHandler,
-		private readonly string|null $queueName = null,
-		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
+		private string $exchangeName,
+		private Connections\Connection $connection,
+		private Handlers\Message $messagesHandler,
+		private string|null $queueName = null,
+		private EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
 	}
 
+	#[Override]
 	public function create(): void
 	{
 		$client = new Bunny\Client([

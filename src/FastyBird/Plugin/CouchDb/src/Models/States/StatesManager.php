@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StatesManager.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           03.03.20
- */
-
 namespace FastyBird\Plugin\CouchDb\Models\States;
 
 use BackedEnum;
@@ -23,7 +10,6 @@ use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Events;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use FastyBird\Plugin\CouchDb\States;
-use Nette;
 use Nette\Utils;
 use PHPOnCouch;
 use Psr\Clock\ClockInterface;
@@ -45,18 +31,11 @@ use function sprintf;
  * States manager
  *
  * @template T of States\State
- *
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class StatesManager
+final class StatesManager
 {
 
-	use Nette\SmartObject;
-
-	private const MAX_RETRIES = 5;
+	private const int MAX_RETRIES = 5;
 
 	/** @var array<int> */
 	private array $retries = [];

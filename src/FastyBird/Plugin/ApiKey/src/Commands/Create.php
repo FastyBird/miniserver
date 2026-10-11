@@ -1,25 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * Create.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           21.10.22
- */
-
 namespace FastyBird\Plugin\ApiKey\Commands;
 
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\ApiKey\Models;
 use FastyBird\Plugin\ApiKey\Types;
-use Nette;
 use Nette\Utils;
 use Psr\Log;
 use Ramsey\Uuid;
@@ -32,18 +18,11 @@ use function sprintf;
 
 /**
  * API key creation command
- *
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Create extends Console\Command\Command
+final class Create extends Console\Command\Command
 {
 
-	use Nette\SmartObject;
-
-	public const NAME = 'fb:api-key:create';
+	public const string NAME = 'fb:api-key:create';
 
 	public function __construct(
 		private readonly Models\Entities\KeysManager $keysManager,

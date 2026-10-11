@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StatesRepository.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           02.03.20
- */
-
 namespace FastyBird\Plugin\CouchDb\Models\States;
 
 use FastyBird\Core\Logging;
@@ -21,7 +8,6 @@ use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use FastyBird\Plugin\CouchDb\States;
 use InvalidArgumentException;
-use Nette;
 use PHPOnCouch;
 use Psr\Log;
 use Ramsey\Uuid;
@@ -35,25 +21,18 @@ use function is_object;
  * State repository
  *
  * @template T of States\State
- *
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class StatesRepository
+final readonly class StatesRepository
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param class-string<T> $entity
 	 */
 	public function __construct(
-		private readonly Connections\Connection $client,
-		private readonly States\StateFactory $stateFactory,
-		private readonly string $entity = States\State::class,
-		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
+		private Connections\Connection $client,
+		private States\StateFactory $stateFactory,
+		private string $entity = States\State::class,
+		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
 	}

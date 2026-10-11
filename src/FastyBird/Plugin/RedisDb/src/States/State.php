@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * State.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     States
- * @since          1.0.0
- *
- * @date           08.03.20
- */
-
 namespace FastyBird\Plugin\RedisDb\States;
 
 use FastyBird\Core\Persistence\Rules;
@@ -21,20 +8,15 @@ use Ramsey\Uuid;
 
 /**
  * Base state
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     States
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class State implements ObjectMapper\MappedObject
 {
 
-	public const ID_FIELD = 'id';
+	public const string ID_FIELD = 'id';
 
-	public const CREATED_AT_FIELD = 'created_at';
+	public const string CREATED_AT_FIELD = 'created_at';
 
-	public const UPDATED_AT_FIELD = 'updated_at';
+	public const string UPDATED_AT_FIELD = 'updated_at';
 
 	public function __construct(
 		#[Rules\UuidValue()]

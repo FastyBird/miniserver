@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RedisDbCacheExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           16.08.24
- */
-
 namespace FastyBird\Plugin\RedisDbCache\DI;
 
 use FastyBird\Plugin\RedisDbCache\Caching as RedisDbCacheCaching;
@@ -22,21 +9,17 @@ use Nette\Bootstrap;
 use Nette\Caching as NetteCaching;
 use Nette\DI;
 use Nette\Schema;
+use Override;
 use stdClass;
 use function assert;
 
 /**
  * Redis DB cache extension container
- *
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class RedisDbCacheExtension extends DI\CompilerExtension
+final class RedisDbCacheExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbRedisDbCachePlugin';
+	public const string NAME = 'fbRedisDbCachePlugin';
 
 	public static function register(
 		Bootstrap\Configurator $config,
@@ -51,6 +34,7 @@ class RedisDbCacheExtension extends DI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([

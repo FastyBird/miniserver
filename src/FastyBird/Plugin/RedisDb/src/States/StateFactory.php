@@ -1,22 +1,8 @@
 <?php declare(strict_types = 1);
 
-/**
- * StateFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     States
- * @since          1.0.0
- *
- * @date           03.03.20
- */
-
 namespace FastyBird\Plugin\RedisDb\States;
 
 use FastyBird\Plugin\RedisDb\Exceptions;
-use FastyBird\Plugin\RedisDb\States;
 use Nette\Utils;
 use Orisai\ObjectMapper;
 use function class_exists;
@@ -24,11 +10,6 @@ use function is_array;
 
 /**
  * State object factory
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     States
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class StateFactory
 {

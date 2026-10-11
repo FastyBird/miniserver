@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Publisher.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Publisher
- * @since          1.0.0
- *
- * @date           08.03.20
- */
-
 namespace FastyBird\Plugin\RabbitMq\Publishers;
 
 use Bunny;
@@ -23,23 +10,16 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Channels;
 use FastyBird\Plugin\RabbitMq\Utilities;
-use Nette;
 use Nette\Utils;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
 
 /**
  * RabbitMQ exchange publisher
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Publisher
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Publisher implements ExchangePublisher\MessagePublisher
 {
-
-	use Nette\SmartObject;
 
 	private Bunny\Channel|null $asyncChannel = null;
 
@@ -61,6 +41,7 @@ final class Publisher implements ExchangePublisher\MessagePublisher
 		$this->asyncChannel = $channel;
 	}
 
+	#[Override]
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,

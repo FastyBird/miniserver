@@ -1,41 +1,19 @@
 <?php declare(strict_types = 1);
 
-/**
- * Configuration.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Connections
- * @since          1.0.0
- *
- * @date           15.08.24
- */
-
 namespace FastyBird\Plugin\RedisDbCache\Connections;
-
-use Nette;
 
 /**
  * Redis connection configuration
- *
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Connections
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Configuration
+final readonly class Configuration
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly string $host = '127.0.0.1',
-		private readonly int $port = 6_379,
-		private readonly string|null $username = null,
-		private readonly string|null $password = null,
-		private readonly int $database = 0,
+		private string $host = '127.0.0.1',
+		private int $port = 6_379,
+		private string|null $username = null,
+		private string|null $password = null,
+		private int $database = 0,
 	)
 	{
 	}

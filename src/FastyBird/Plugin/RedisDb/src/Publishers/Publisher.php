@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Publisher.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Publishers
- * @since          1.0.0
- *
- * @date           17.09.21
- */
-
 namespace FastyBird\Plugin\RedisDb\Publishers;
 
 use DateTimeInterface;
@@ -23,32 +10,27 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Utilities;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
 
 /**
  * Redis DB exchange publisher
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Publishers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Publisher implements ExchangePublisher\MessagePublisher
+final readonly class Publisher implements ExchangePublisher\MessagePublisher
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Utilities\IdentifierGenerator $identifier,
-		private readonly string $channel,
-		private readonly Clients\Client $client,
-		private readonly ClockInterface $clock,
-		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
+		private Utilities\IdentifierGenerator $identifier,
+		private string $channel,
+		private Clients\Client $client,
+		private ClockInterface $clock,
+		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
 	}
 
+	#[Override]
 	public function publish(
 		Sources\Source $source,
 		string $routingKey,

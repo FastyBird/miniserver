@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CouchDbExtension.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           04.12.20
- */
-
 namespace FastyBird\Plugin\CouchDb\DI;
 
 use FastyBird\Core\Boot;
@@ -21,21 +8,17 @@ use FastyBird\Plugin\CouchDb\Models;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
+use Override;
 use stdClass;
 use function assert;
 
 /**
  * CouchDB state storage extension container
- *
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class CouchDbExtension extends DI\CompilerExtension
+final class CouchDbExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbCouchDbPlugin';
+	public const string NAME = 'fbCouchDbPlugin';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -50,6 +33,7 @@ class CouchDbExtension extends DI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([

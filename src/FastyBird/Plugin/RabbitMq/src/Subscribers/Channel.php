@@ -1,35 +1,18 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           21.10.22
- */
-
 namespace FastyBird\Plugin\RabbitMq\Subscribers;
 
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\RabbitMq\Events;
 use FastyBird\Plugin\RabbitMq\Publishers;
+use Override;
 use Psr\Log;
 use Symfony\Component\EventDispatcher;
 
 /**
  * RabbitMQ async client channel subscriber
- *
- * @package         FastyBird:RabbitMqPlugin!
- * @subpackage      Subscribers
- *
- * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  */
-readonly class Channel implements EventDispatcher\EventSubscriberInterface
+final readonly class Channel implements EventDispatcher\EventSubscriberInterface
 {
 
 	public function __construct(
@@ -39,6 +22,7 @@ readonly class Channel implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

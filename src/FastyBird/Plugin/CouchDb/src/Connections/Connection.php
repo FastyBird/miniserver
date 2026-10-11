@@ -1,24 +1,10 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connection.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Connections
- * @since          1.0.0
- *
- * @date           03.03.20
- */
-
 namespace FastyBird\Plugin\CouchDb\Connections;
 
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\CouchDb\Exceptions;
-use Nette;
 use PHPOnCouch;
 use Psr\Log;
 use Throwable;
@@ -26,16 +12,9 @@ use function str_replace;
 
 /**
  * Couch DB connection configuration
- *
- * @package        FastyBird:CouchDbPlugin!
- * @subpackage     Connections
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connection
 {
-
-	use Nette\SmartObject;
 
 	private PHPOnCouch\CouchClient|null $client = null;
 

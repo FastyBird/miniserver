@@ -1,24 +1,10 @@
 <?php declare(strict_types = 1);
 
-/**
- * Key.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           21.10.22
- */
-
 namespace FastyBird\Plugin\ApiKey\Entities;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
-use FastyBird\Plugin\ApiKey\Entities as ApiKeyEntities;
 use FastyBird\Plugin\ApiKey\Types;
 use Ramsey\Uuid;
 
@@ -31,11 +17,10 @@ use Ramsey\Uuid;
 		'comment' => 'API Key plugin access keys',
 	],
 )]
-class Key implements ApiKeyEntities\Entity, PersistenceEntities\CrudEntity,
-	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
+class Key implements PersistenceEntities\CrudEntity, PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use TEntity;
+	use HasEntityId;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

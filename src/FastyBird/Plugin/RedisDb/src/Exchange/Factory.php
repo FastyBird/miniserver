@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Factory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Exchange
- * @since          1.0.0
- *
- * @date           09.10.22
- */
-
 namespace FastyBird\Plugin\RedisDb\Exchange;
 
 use Clue\React\Redis;
@@ -21,6 +8,7 @@ use FastyBird\Core\Exchange\Events as ExchangeEvents;
 use FastyBird\Plugin\RedisDb\Connections;
 use FastyBird\Plugin\RedisDb\Events as RedisDbEvents;
 use InvalidArgumentException;
+use Override;
 use Psr\EventDispatcher;
 use React\EventLoop;
 use React\Socket;
@@ -28,10 +16,6 @@ use Throwable;
 
 /**
  * Redis DB exchange factory
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Exchange
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Factory implements Exchange\Factory
 {
@@ -49,6 +33,7 @@ final readonly class Factory implements Exchange\Factory
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function create(): void
 	{
 		$redis = new Redis\RedisClient(

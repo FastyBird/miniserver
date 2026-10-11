@@ -1,26 +1,13 @@
 <?php declare(strict_types = 1);
 
-/**
- * Storage.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Caching
- * @since          1.0.0
- *
- * @date           15.08.24
- */
-
 namespace FastyBird\Plugin\RedisDbCache\Caching;
 
 use FastyBird\Plugin\RedisDbCache\Clients;
 use FastyBird\Plugin\RedisDbCache\Exceptions;
 use JsonException;
-use Nette;
 use Nette\Caching;
 use Nette\Utils;
+use Override;
 use Predis;
 use function array_map;
 use function assert;
@@ -36,36 +23,29 @@ use function unserialize;
 
 /**
  * Redis cache storage
- *
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Caching
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Storage implements Caching\Storage
+final readonly class Storage implements Caching\Storage
 {
 
-	use Nette\SmartObject;
+	public const string NS_PREFIX = 'FB.Storage';
 
-	public const NS_PREFIX = 'FB.Storage';
+	private const string NS_SEPARATOR = "\x00";
 
-	private const NS_SEPARATOR = "\x00";
+	private const string META_TIME = 'time'; // timestamp
 
-	private const META_TIME = 'time'; // timestamp
+	private const string META_EXPIRE = 'expire'; // expiration timestamp
 
-	private const META_EXPIRE = 'expire'; // expiration timestamp
+	private const string META_DELTA = 'delta'; // relative (sliding) expiration
 
-	private const META_DELTA = 'delta'; // relative (sliding) expiration
+	private const string META_ITEMS = 'di'; // array of dependent items (file => timestamp)
 
-	private const META_ITEMS = 'di'; // array of dependent items (file => timestamp)
+	private const string META_CALLBACKS = 'callbacks'; // array of callbacks (function, args)
 
-	private const META_CALLBACKS = 'callbacks'; // array of callbacks (function, args)
-
-	private const KEY = 'key'; // additional cache structure
+	private const string KEY = 'key'; // additional cache structure
 
 	public function __construct(
-		private readonly Clients\Client $client,
-		private readonly Caching\Storages\Journal|null $journal = null,
+		private Clients\Client $client,
+		private Caching\Storages\Journal|null $journal = null,
 	)
 	{
 	}
@@ -73,6 +53,7 @@ final class Storage implements Caching\Storage
 	/**
 	 * Read from cache
 	 */
+	#[Override]
 	public function read(string $key)
 	{
 		$stored = $this->doRead($key);
@@ -106,6 +87,7 @@ final class Storage implements Caching\Storage
 		return $values;
 	}
 
+	#[Override]
 	public function lock(string $key): void
 	{
 		// unsupported now
@@ -118,6 +100,7 @@ final class Storage implements Caching\Storage
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function write(string $key, mixed $data, array $dependencies): void
 	{
 		$meta = [
@@ -180,6 +163,7 @@ final class Storage implements Caching\Storage
 	/**
 	 * Removes item from the cache
 	 */
+	#[Override]
 	public function remove(string $key): void
 	{
 		$this->client->del($this->formatEntryKey($key));
@@ -194,6 +178,7 @@ final class Storage implements Caching\Storage
 	 *
 	 * @param array<mixed> $conditions
 	 */
+	#[Override]
 	public function clean(array $conditions): void
 	{
 		// Cleaning using file iterator

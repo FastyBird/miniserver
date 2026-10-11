@@ -1,22 +1,10 @@
 <?php declare(strict_types = 1);
 
-/**
- * Journal.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Caching
- * @since          1.0.0
- *
- * @date           15.08.24
- */
-
 namespace FastyBird\Plugin\RedisDbCache\Caching;
 
 use FastyBird\Plugin\RedisDbCache\Clients;
 use Nette\Caching;
+use Override;
 use function array_merge;
 use function array_unique;
 use function assert;
@@ -25,24 +13,19 @@ use function is_string;
 
 /**
  * Redis cache journal
- *
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Caching
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Journal implements Caching\Storages\Journal
+final readonly class Journal implements Caching\Storages\Journal
 {
 
-	public const NS_PREFIX = 'FB.Journal';
+	public const string NS_PREFIX = 'FB.Journal';
 
-	public const KEY_PRIORITY = 'priority';
+	public const string KEY_PRIORITY = 'priority';
 
-	public const SUFFIX_TAGS = 'tags';
+	public const string SUFFIX_TAGS = 'tags';
 
-	public const SUFFIX_KEYS = 'keys';
+	public const string SUFFIX_KEYS = 'keys';
 
-	public function __construct(private readonly Clients\Client $client)
+	public function __construct(private Clients\Client $client)
 	{
 	}
 
@@ -51,6 +34,7 @@ class Journal implements Caching\Storages\Journal
 	 *
 	 * @param array<mixed> $dependencies
 	 */
+	#[Override]
 	public function write(string $key, array $dependencies): void
 	{
 		$this->cleanEntry($key);
@@ -82,7 +66,7 @@ class Journal implements Caching\Storages\Journal
 	 *
 	 * @return array<mixed>|null
 	 */
-	// @phpstan-ignore method.childReturnType (Nette\Caching\Storages\Journal::clean() signature changed upstream; keeping the wider return type is a pre-existing, deliberate deviation)
+	#[Override] // @phpstan-ignore method.childReturnType (Nette\Caching\Storages\Journal::clean() signature changed upstream; keeping the wider return type is a pre-existing, deliberate deviation)
 	public function clean(array $conditions): array|null
 	{
 		if (isset($conditions[Caching\Cache::All])) {

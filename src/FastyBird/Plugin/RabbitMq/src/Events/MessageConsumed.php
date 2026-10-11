@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * MessageConsumed.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           15.02.24
- */
-
 namespace FastyBird\Plugin\RabbitMq\Events;
 
 use FastyBird\Core\Documents;
@@ -21,13 +8,8 @@ use Symfony\Contracts\EventDispatcher;
 
 /**
  * Message was consumed by consumer
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class MessageConsumed extends EventDispatcher\Event
+final class MessageConsumed extends EventDispatcher\Event
 {
 
 	public function __construct(

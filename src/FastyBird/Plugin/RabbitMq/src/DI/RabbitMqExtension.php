@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RabbitMqExtension.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           19.06.20
- */
-
 namespace FastyBird\Plugin\RabbitMq\DI;
 
 use FastyBird\Core\Boot;
@@ -25,23 +12,19 @@ use FastyBird\Plugin\RabbitMq\Utilities;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
+use Override;
 use stdClass;
 use function assert;
 
 /**
  * Message exchange extension container
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class RabbitMqExtension extends DI\CompilerExtension
+final class RabbitMqExtension extends DI\CompilerExtension
 {
 
-	public const EXCHANGE_NAME = 'fb.exchange.bus';
+	public const string EXCHANGE_NAME = 'fb.exchange.bus';
 
-	public const NAME = 'fbRabbitMqPlugin';
+	public const string NAME = 'fbRabbitMqPlugin';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -56,6 +39,7 @@ class RabbitMqExtension extends DI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([

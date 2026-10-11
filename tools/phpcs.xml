@@ -198,7 +198,6 @@
         <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
-        <exclude-pattern>src/FastyBird/Plugin/*</exclude-pattern>
     </rule>
 
     <!-- Every FastyBird-authored file once carried forbidden identity annotations (@license,
@@ -213,6 +212,5 @@
         <exclude-pattern>src/FastyBird/Automator/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Bridge/*</exclude-pattern>
         <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
-        <exclude-pattern>src/FastyBird/Plugin/*</exclude-pattern>
     </rule>
 </ruleset>

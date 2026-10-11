@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * KeysManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           21.10.22
- */
-
 namespace FastyBird\Plugin\ApiKey\Models\Entities;
 
 use Doctrine\DBAL;
@@ -20,23 +7,15 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Plugin\ApiKey\Entities;
-use Nette;
 use Nette\Utils;
 use ReflectionException;
 use function assert;
 
 /**
  * Key entities manager
- *
- * @package        FastyBird:ApiKeyPlugin!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class KeysManager
 {
-
-	use Nette\SmartObject;
 
 	/** @var Crud\EntityCrud<Entities\Key>|null */
 	private Crud\EntityCrud|null $entityCrud = null;

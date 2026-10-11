@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Message.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Handlers
- * @since          1.0.0
- *
- * @date           26.03.23
- */
-
 namespace FastyBird\Plugin\RabbitMq\Handlers;
 
 use Bunny;
@@ -35,29 +22,24 @@ use function strval;
 
 /**
  * RabbitMQ message handler
- *
- * @package        FastyBird:RabbitMqPlugin!
- * @subpackage     Handlers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class Message
+final readonly class Message
 {
 
-	public const MESSAGE_ACK = 1;
+	public const int MESSAGE_ACK = 1;
 
-	public const MESSAGE_NACK = 2;
+	public const int MESSAGE_NACK = 2;
 
-	public const MESSAGE_REJECT = 3;
+	public const int MESSAGE_REJECT = 3;
 
-	public const MESSAGE_REJECT_AND_TERMINATE = 4;
+	public const int MESSAGE_REJECT_AND_TERMINATE = 4;
 
 	public function __construct(
-		private readonly Utilities\IdentifierGenerator $identifier,
-		private readonly Documents\RoutingDocumentFactory $documentFactory,
-		private readonly Consumers\Container $consumer,
-		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
-		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
+		private Utilities\IdentifierGenerator $identifier,
+		private Documents\RoutingDocumentFactory $documentFactory,
+		private Consumers\Container $consumer,
+		private EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
+		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
 	}

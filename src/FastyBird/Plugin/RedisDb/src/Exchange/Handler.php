@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Handler.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Exchange
- * @since          1.0.0
- *
- * @date           09.10.21
- */
-
 namespace FastyBird\Plugin\RedisDb\Exchange;
 
 use FastyBird\Core\Documents;
@@ -34,11 +21,6 @@ use function strval;
 
 /**
  * Redis client message handler
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Exchange
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Handler
 {

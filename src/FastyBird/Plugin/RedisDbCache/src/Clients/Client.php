@@ -1,38 +1,17 @@
 <?php declare(strict_types = 1);
 
-/**
- * Client.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Client
- * @since          1.0.0
- *
- * @date           15.08.24
- */
-
 namespace FastyBird\Plugin\RedisDbCache\Clients;
 
 use FastyBird\Plugin\RedisDbCache\Connections;
-use Nette;
 use Predis;
 use Predis\Response as PredisResponse;
 use function assert;
 
 /**
  * Redis DB sync client to PREDIS instance
- *
- * @package        FastyBird:RedisDbCachePlugin!
- * @subpackage     Client
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Client
 {
-
-	use Nette\SmartObject;
 
 	private int $selectedDatabase = 0;
 

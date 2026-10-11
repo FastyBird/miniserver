@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Client.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Client
- * @since          1.0.0
- *
- * @date           09.10.22
- */
-
 namespace FastyBird\Plugin\RedisDb\Clients\Async;
 
 use Clue\React\Redis;
@@ -20,7 +7,6 @@ use FastyBird\Core\Exchange\Events as ExchangeEvents;
 use FastyBird\Plugin\RedisDb\Connections;
 use FastyBird\Plugin\RedisDb\Events as RedisDbEvents;
 use InvalidArgumentException;
-use Nette;
 use Psr\EventDispatcher;
 use React\EventLoop;
 use React\Promise;
@@ -30,15 +16,9 @@ use function strval;
 
 /**
  * Redis DB async client factory
- *
- * @package        FastyBird:RedisDbPlugin!
- * @subpackage     Client
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Client
+final class Client
 {
-
-	use Nette\SmartObject;
 
 	private int $selectedDatabase = 0;
 
