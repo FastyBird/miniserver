@@ -28,7 +28,8 @@ code IS, or only which package once shipped it:
 differ on purpose: `Application`, `Metadata` and `Tools` are rejected as namespace segments but
 allowed inside a class name, where they are ordinary English words.
 
-Enforced by `make naming`. Its first three checks cover namespace segments of every package
+Enforced by `make naming`, which has no baseline: any violation fails it, and the tree has
+none. Its first three checks cover namespace segments of every package
 (`FastyBird\Core\...` and `FastyBird\<Type>\<Name>\...`), declared type names of every package,
 and `use FastyBird\Core\... as X` aliases anywhere in the repository; the others (import
 collisions, JS directories, interface and trait prefixes) are described where they apply. The package's own root is
@@ -72,9 +73,9 @@ use FastyBird\Core\Security\Mapping\Driver as SecurityMappingDriver;      // at 
 This is a positive rule, not a denylist. A denylist can only ban the names someone already
 thought of; this bans every name not derived from where the symbol actually lives.
 
-`tools/naming-baseline.txt` recorded **3,076 aliases violating this rule** when the convention
-was written, in 131 distinct forms using 112 distinct alias names. `FastyBird\Core\Exceptions`
-alone was aliased 11 different ways, one per library the importing file happened to come from:
+When the convention was written, the repository held **3,076 aliases violating this rule**, in
+131 distinct forms using 112 distinct alias names. `FastyBird\Core\Exceptions` alone was aliased
+11 different ways, one per library the importing file happened to come from:
 
 ```
 538  as ApplicationExceptions      73  as DoctrineCrudExceptions     25  as ExchangeExceptions
@@ -83,11 +84,8 @@ alone was aliased 11 different ways, one per library the importing file happened
   2  as PhoneExceptions             1  as Exceptions (redundant -- import it bare)
 ```
 
-The baseline may only shrink. A stale entry in it fails the gate. **As of E3.15 (#508), the
-last capability PR of the Core identity refactor's Epic E3, the Core-alias entries in the
-baseline were 0** -- every alias of a Core namespace anywhere in the repository was legal. **As
-of E7 the whole baseline is empty**, so it has nowhere left to shrink to and nothing may be added
-to it. The table above is kept as history, not current state.
+There is no baseline: `make naming` exits 1 on any violation, and the repository has none. The
+table above is kept as history, not current state.
 
 **Single-segment exception, generalized.** A name with only one segment (`use Casbin;`,
 `use Monolog;`, `use Exception;`) has no two-segment form, so it always stays bare, even when it
@@ -178,10 +176,7 @@ same, whole-file, same-kind sibling list -- check 3's Core-only siblings widened
 as.
 
 Seeding this check found 534 additional violations, 124 of them the `Doctrine\ORM\Mapping`
-collisions the named exception above then removed, leaving **410 violations across the
-baseline**, entirely pre-existing -- this PR adds no code rewrite, only the check and the
-baseline entries it newly makes visible. They will be worked down package by package in the PRs
-#541 plans next.
+collisions the named exception above then removed. All of them have since been fixed.
 
 ## Namespace layout
 
@@ -223,8 +218,8 @@ class back.
 Epic #459 split Core's DI extension by capability and renamed every identifier it registers.
 These rules keep it that way. `IdentifierGuardTest` (Core, `tests/cases/unit/DI`) enforces the
 naming rules below. It checks every Core service name in the compiled Core test container, every
-key path of the `fbCore` schema, and every tag constant. Its expected-violations list,
-`identifier-guard-violations.txt`, is empty and may only shrink. Any new violation fails it.
+key path of the `fbCore` schema, and every tag constant. It has no list of tolerated
+violations: any violation fails it.
 
 ### Extension layout
 
@@ -398,9 +393,8 @@ and equally in the repository-root `tests/` and `bin/`, which `make cs` scans as
 - Traits: no `T` prefix, and no `…Trait` suffix either — name the capability, not the
   language construct.
 - **The prefixes are rejected by `make naming`** (check 6, E7.10, #704), in every package and in
-  its tests: an `interface I[A-Z]…` or a `trait T[A-Z]…` fails the gate, and the naming baseline
-  holds no entry for it. The capital is part of the test, so a name that merely begins with the
-  letter, such as the trait `Tlv`, is fine.
+  its tests: an `interface I[A-Z]…` or a `trait T[A-Z]…` fails the gate. The capital is part of
+  the test, so a name that merely begins with the letter, such as the trait `Tlv`, is fine.
 - **`…Interface` and `…Trait` suffixes are rejected by `make cs`**:
   `SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming` and
   `SlevomatCodingStandard.Classes.SuperfluousTraitNaming` are active. Neither sniff objects to

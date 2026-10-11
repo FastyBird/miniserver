@@ -8,19 +8,14 @@ use Nette\Schema\Elements\Structure;
 use Nette\Schema\Schema;
 use ReflectionClass;
 use ReflectionClassConstant;
-use function array_diff;
-use function array_filter;
 use function array_keys;
 use function array_map;
 use function array_merge;
-use function array_unique;
-use function array_values;
 use function basename;
 use function class_exists;
 use function count;
 use function dirname;
 use function explode;
-use function file;
 use function glob;
 use function implode;
 use function in_array;
@@ -33,16 +28,14 @@ use function str_starts_with;
 use function strlen;
 use function strtolower;
 use function substr;
-use function trim;
-use const FILE_IGNORE_NEW_LINES;
 
 /**
  * No Core DI identifier carries the name of a library Core was assembled from, and every one
  * is named for the capability that owns it.
  *
  * `make naming` guards PHP namespaces, type names and imports. It cannot see a service name,
- * a configuration key or a tag, which are strings. This test checks those, following the
- * census of Epic #459 (#553, section 10), with two kinds of rule:
+ * a configuration key or a tag, which are strings. This test checks those, with two kinds of
+ * rule:
  *
  * - "denylist": a dot-separated segment equals one of DENYLIST, ignoring case (so the
  *   `jsonapi` in fbCore.jsonApi.middlewares.jsonapi counts too). A segment that merely
@@ -57,16 +50,14 @@ use const FILE_IGNORE_NEW_LINES;
  * (fbCore.* and the unprefixed document.*), every key path of CoreExtension's schema, and
  * every tag constant of CoreExtension and of the capability extensions, which own them.
  *
- * VIOLATIONS_FILE lists today's violations, one per line as "<kind> <identifier> <rules>". It
- * may only shrink: the test fails on a violation that is not listed, and on a listed entry
- * that no longer occurs exactly as listed (fixed, or its rules changed). Epic #459 empties it.
+ * There is no list of tolerated violations: any violation fails the test, and it names each one
+ * as "<kind> <identifier> <rules>".
  */
 final class IdentifierGuardTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	/**
-	 * The library names, in the camelCase form a DI identifier uses (census section 10). The
-	 * census owns this list.
+	 * The library names, in the camelCase form a DI identifier uses
 	 */
 	public const array DENYLIST = [
 		'simpleAuth',
@@ -129,12 +120,9 @@ final class IdentifierGuardTest extends Tests\Cases\Unit\BaseTestCase
 		'document.',
 	];
 
-	private const string VIOLATIONS_FILE = __DIR__ . '/identifier-guard-violations.txt';
-
 	/*
-	 * Every target name the census (#553) approves: section 2 (services), section 3 (key paths)
-	 * and section 4 (tags). Each must pass every rule, or the guard could never reach empty.
-	 * A fixture here, not a map file: the maps under tools/di-maps belong to #558 and #559.
+	 * The approved names of Core's services, configuration key paths and tags. Each must pass
+	 * every rule, or a correct identifier could never satisfy the guard.
 	 */
 
 	private const array CENSUS_SERVICE_TARGETS = [
@@ -343,36 +331,20 @@ final class IdentifierGuardTest extends Tests\Cases\Unit\BaseTestCase
 		'fastybird.core.webSockets.controller',
 	];
 
-	public function testNoNewAndNoFixedViolations(): void
+	public function testIdentifiersFollowTheNamingRules(): void
 	{
-		$actual = array_merge(
+		$violations = array_merge(
 			$this->serviceViolations(),
 			self::configurationViolations(),
 			self::tagViolations(),
 		);
-		sort($actual);
-
-		$lines = file(self::VIOLATIONS_FILE, FILE_IGNORE_NEW_LINES);
-		self::assertIsArray($lines);
-
-		$expected = array_values(array_filter(
-			array_map(static fn (string $line): string => trim($line), $lines),
-			static fn (string $line): bool => $line !== '' && !str_starts_with($line, '#'),
-		));
+		sort($violations);
 
 		self::assertSame(
 			[],
-			array_values(array_diff($actual, $expected)),
-			'New DI identifiers break a naming rule. Name them for their capability instead.',
+			$violations,
+			'These DI identifiers break a naming rule. Name them for their capability instead.',
 		);
-
-		self::assertSame(
-			[],
-			array_values(array_diff($expected, $actual)),
-			sprintf('These no longer occur as listed; remove or correct them in %s.', self::VIOLATIONS_FILE),
-		);
-
-		self::assertSame(array_values(array_unique($expected)), $expected, 'Duplicate entries');
 	}
 
 	public function testEveryCensusTargetPassesEveryRule(): void

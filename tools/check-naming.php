@@ -40,10 +40,7 @@
  * is no longer legal for EITHER import: the alias climbs to the last THREE segments,
  * `PersistenceMappingDriver` and `SecurityMappingDriver`. This is symmetric -- when two
  * imports' k-segment forms would be equal, BOTH escalate to k+1, never just one of them --
- * and it repeats one segment at a time for as long as the collision persists (`tools/
- * move-core-symbols.php`'s alias assignment applies the write side of the same rule when it
- * picks a fresh alias for a moved reference; this is its read side, checked structurally
- * rather than moved).
+ * and it repeats one segment at a time for as long as the collision persists.
  *
  *   use FastyBird\Core\Persistence\Mapping\Driver as PersistenceMappingDriver; legal (collides
  *   use FastyBird\Core\Security\Mapping\Driver as SecurityMappingDriver;       with the above at 2 segments, so both climb to 3)
@@ -154,16 +151,15 @@
  * An interface declared as `interface I[A-Z]...` and a trait declared as `trait T[A-Z]...` are
  * refused in every package, Core included, and in every package's tests. The first capital is
  * the point: `interface IRouter` carries the prefix, `trait Tlv` and `interface Index` do not.
- * E2 and E7 renamed every such declaration away, so the baseline holds no entry for this check
- * and none may be added; the fix is a role name (`UrlGenerator`, not `IUrlGenerator`), never the
- * bare name when a concrete class already owns it. The `Interface` and `Trait` suffixes need no
- * check here: `make cs` refuses them (SuperfluousInterfaceNaming, SuperfluousTraitNaming).
+ * E2 and E7 renamed every such declaration away, so the tree holds none; the fix is a role name
+ * (`UrlGenerator`, not `IUrlGenerator`), never the bare name when a concrete class already owns
+ * it. The `Interface` and `Trait` suffixes need no check here: `make cs` refuses them (SuperfluousInterfaceNaming, SuperfluousTraitNaming).
  * Violations carry the category `prefix`.
  *
  * Exit codes follow tools/check-layering.php:
  *   0  clean
- *   1  at least one violation, or the baseline has gone stale
- *   2  the tool could not do its job
+ *   1  at least one violation; there is no baseline, so every violation fails
+ *   2  the tool could not do its job, including an unknown option
  *
  * Plain PHP, no dependencies; neither vendor/ nor an autoloader is required.
  */
@@ -242,6 +238,33 @@ const FB_TYPE_DENYLIST = [
 const FB_ALIAS_EXCEPTIONS = [
 	'Doctrine\\ORM\\Mapping' => 'ORM',
 ];
+
+const FB_USAGE = <<<'TXT'
+Usage: php tools/check-naming.php [-h | --help]
+
+Checks that no file names a library fastybird/miniserver-core was assembled from, that every
+import alias follows the positive alias rule, and that no interface or trait carries an I or T
+prefix. There is no baseline: any violation exits 1.
+
+Options:
+  -h, --help   Show this help and exit 0.
+
+Exit codes: 0 clean, 1 at least one violation, 2 the tool could not do its job (including an
+unknown option).
+TXT;
+
+foreach (array_slice($argv, 1) as $argument) {
+	if ($argument === '-h' || $argument === '--help') {
+		echo FB_USAGE, PHP_EOL;
+
+		exit(0);
+	}
+
+	// Never exit 0 on an unknown option. A typo in the CI step must not look like a pass.
+	fwrite(STDERR, 'check-naming: unknown option: ' . $argument . PHP_EOL . PHP_EOL . FB_USAGE . PHP_EOL);
+
+	exit(2);
+}
 
 $repoRoot = dirname(__DIR__);
 
@@ -568,8 +591,7 @@ function fbHasSiblingCollision(string $name, array $siblings, int $level): bool
  * that would collide with another same-kind Core import in the same file also reducing to it
  * there ($siblings, every OTHER Core import's FQCN of that kind) -- then the last three, and
  * so on, one segment at a time, for as long as the collision persists or the name runs out of
- * segments. This is the read side of the symmetric rule tools/move-core-symbols.php's alias
- * assignment applies on the write side: two imports whose k-segment forms would be equal both
+ * segments. The rule is symmetric: two imports whose k-segment forms would be equal both
  * escalate to k+1, never just one of them, so this climbs past any level still shared with a
  * sibling and stops the moment it reaches one that is not.
  *
@@ -708,9 +730,9 @@ function fbCheckFile(string $path, string $code, string $relative): array
 
 	// Matches both `namespace X;` and brace-syntax `namespace X { ... }` -- and stops right
 	// after the name in both cases, so it can never swallow into the block body and produce a
-	// violation string containing a newline (which --generate-baseline would then write as two
-	// lines, permanently un-matchable). preg_match_all rather than preg_match, because a file
-	// using brace syntax can legally declare more than one namespace.
+	// violation string containing a newline, which would print as two lines. preg_match_all
+	// rather than preg_match, because a file using brace syntax can legally declare more than one
+	// namespace.
 	preg_match_all('/^[ \t]*namespace\s+([A-Za-z0-9_\\\\]+)\s*[;{]/m', $code, $namespaceMatches);
 
 	$namespaces = $namespaceMatches[1];
@@ -945,114 +967,23 @@ foreach (fbCheckAssetDirectories($repoRoot) as $violation) {
 
 sort($violations);
 
-$baselinePath = $repoRoot . '/tools/naming-baseline.txt';
+if ($violations !== []) {
+	fwrite(STDERR, sprintf("%d naming violations:\n\n", count($violations)));
 
-if (in_array('--generate-baseline', $argv, true)) {
-	$allowGrowth = in_array('--allow-growth', $argv, true);
-	$existingCount = 0;
-
-	if (is_file($baselinePath)) {
-		$existingRaw = file($baselinePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
-		if ($existingRaw === false) {
-			fbFail('could not read tools/naming-baseline.txt');
-		}
-
-		$existingCount = count($existingRaw);
-	}
-
-	$newCount = count($violations);
-
-	// The baseline "may only shrink" (docs/conventions.md), but nothing enforced that beyond
-	// the sentence -- every entry carries a file path, so any rename stales entries, and the
-	// tool's own failure message below tells the engineer to regenerate. That absorbs a new
-	// violation introduced in the same change as silently as it absorbs the stale ones being
-	// cleaned up. Growth is sometimes legitimate (a guard fix making previously invisible
-	// violations visible, as here), so it is not banned outright -- just gated behind a flag
-	// an engineer has to choose on purpose, and behind saying so in the commit message.
-	if ($newCount > $existingCount && !$allowGrowth) {
-		fwrite(
-			STDERR,
-			sprintf(
-				"Refusing to write a larger baseline: %d existing violations, %d new.\n\n"
-				. "The baseline may only shrink (see docs/conventions.md). If this growth is\n"
-				. "legitimate -- for example a guard fix that makes previously invisible\n"
-				. "violations visible -- pass --allow-growth and say so in the commit message.\n",
-				$existingCount,
-				$newCount,
-			),
-		);
-
-		exit(2);
-	}
-
-	file_put_contents($baselinePath, implode(PHP_EOL, $violations) . PHP_EOL);
-
-	printf(
-		"Wrote %d violations to tools/naming-baseline.txt (was %d).\n",
-		$newCount,
-		$existingCount,
-	);
-
-	exit(0);
-}
-
-if (!is_file($baselinePath)) {
-	fbFail('tools/naming-baseline.txt is missing; regenerate it with --generate-baseline');
-}
-
-$baselineRaw = file($baselinePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
-if ($baselineRaw === false) {
-	fbFail('could not read tools/naming-baseline.txt');
-}
-
-$baseline = array_values($baselineRaw);
-
-$introduced = array_values(array_diff($violations, $baseline));
-$fixed = array_values(array_diff($baseline, $violations));
-
-if ($introduced !== []) {
-	fwrite(STDERR, sprintf("%d NEW naming violations, not in the baseline:\n\n", count($introduced)));
-
-	foreach ($introduced as $violation) {
+	foreach ($violations as $violation) {
 		fwrite(STDERR, '  ' . str_replace("\t", '  ', $violation) . PHP_EOL);
 	}
 
 	fwrite(
 		STDERR,
 		PHP_EOL
-		. "The baseline records what the Core identity refactor has not reached yet. It may\n"
-		. "only ever shrink. See docs/conventions.md and the comment at the top of\n"
-		. "tools/check-naming.php.\n",
+		. "There is no baseline: every violation fails the gate. See docs/conventions.md and\n"
+		. "the comment at the top of tools/check-naming.php.\n",
 	);
 
 	exit(1);
 }
 
-// A baseline entry that no longer matches anything is a failure, not a courtesy. It is what
-// forces the baseline to shrink as each epic lands, and it is also the real self-check: if the
-// matcher breaks, every entry goes stale at once and the tool fails loudly instead of
-// reporting a clean tree.
-if ($fixed !== []) {
-	fwrite(
-		STDERR,
-		sprintf("%d baseline entries are no longer violated. Remove them:\n\n", count($fixed)),
-	);
-
-	foreach ($fixed as $violation) {
-		fwrite(STDERR, '  ' . str_replace("\t", '  ', $violation) . PHP_EOL);
-	}
-
-	fwrite(STDERR, PHP_EOL . "Run: php tools/check-naming.php --generate-baseline\n");
-
-	exit(1);
-}
-
-printf(
-	"Checked %d PHP files; %d known violations remain in the baseline, no new ones.\n",
-	count($files),
-	count($baseline),
-);
+printf("Checked %d PHP files; no naming violations.\n", count($files));
 
 exit(0);

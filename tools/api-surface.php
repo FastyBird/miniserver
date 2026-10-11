@@ -3,11 +3,11 @@
 /**
  * API-surface manifest: records the public PHP API of fastybird/miniserver-core -- every
  * `FastyBird\Core\*` type -- as canonical JSON, and proves that a change to it is exactly the
- * change a committed change list declares. Epic E5 (#460 §3.3), E5.2 (#634).
+ * change a change list declares.
  *
- * E4 proved "nothing else changed" in the DI graph with tools/di-snapshot.php. E5 changes Core's
- * PHP API on purpose, so it needs the same proof one layer up: this file is it. The DI snapshot
- * still runs on every PR as well.
+ * tools/di-snapshot.php proves "nothing else changed" in the DI graph. A change that alters a
+ * package's PHP API on purpose needs the same proof one layer up: this file is it. Run the DI
+ * snapshot as well when the change can reach the wiring.
  *
  * USAGE (always in the application image, never on the host)
  *
@@ -27,7 +27,7 @@
  *       into renames by hand.
  *
  *   docker run --rm -v "$PWD":/app -w /app -e XDEBUG_MODE=off -e TZ=UTC -e PHP_DATE_TIMEZONE=UTC \
- *       <application-image> php tools/api-surface.php --diff tools/api-maps/base.json
+ *       <application-image> php tools/api-surface.php --diff var/tools/api-surface/base.json
  *
  * The types are found through the real autoloader: the PSR-4 directories vendor/autoload.php
  * registers for `FastyBird\Core\`, minus `FastyBird\Core\Tests\`. With
@@ -39,20 +39,18 @@
  * with autoloading on and reflected. A type that fails to load is recorded as
  * {"kind": "error", "error": ...} and compared like any other entry.
  *
- * THE BASE MANIFEST is tools/api-maps/base.json: Core's API at E5's merge base, `main` @
- * 5206bfc86 (E5.2 changes no production code, so its own head records the same). It is frozen:
- * no later PR rewrites it. Two checks run on every E5 PR from E5.3 on:
+ * THE BASE MANIFEST is one you write yourself, with --write from a checkout of the base the change
+ * starts from (`main`, or `git merge-base origin/main HEAD` for a long-running branch), and diff
+ * the head against it, explained by the change list the change commits or passes by path:
  *
- *   1. per PR -- the manifest of `main` as the PR's base, written with --write from a checkout
- *      of it, against the PR's head, explained by that PR's change list alone:
- *        --diff var/tools/api-surface/main.json --changes tools/api-maps/NN-<topic>.php
- *   2. cumulative -- the frozen base against the head, explained by every change list so far,
- *      in order (this is the "union manifest" of #460 §16 at close-out):
- *        --diff tools/api-maps/base.json --changes tools/api-maps/03-....php --changes ...
+ *   (base)  php tools/api-surface.php --write var/tools/api-surface/base.json
+ *   (head)  php tools/api-surface.php --diff var/tools/api-surface/base.json --changes <list.php>
  *
- * Write scratch manifests under var/tools/api-surface/, which var/tools/.gitignore ignores.
+ * Several change lists apply in the order given. No manifest or change list is committed to the
+ * repository: both are scratch, a change list is passed by path, and a manifest is written under
+ * var/tools/api-surface/, which var/tools/.gitignore ignores.
  *
- * ANY OTHER PACKAGE: --package <Type>/<Name> (Epic E7, #462 §3 D9). Both modes take it:
+ * ANY OTHER PACKAGE: --package <Type>/<Name>. Both modes take it:
  *
  *   php tools/api-surface.php --package Module/Devices --write <file>
  *   php tools/api-surface.php --package Module/Devices --diff <base.json> [--changes <list.php>]...
@@ -65,19 +63,16 @@
  * another package appears only by name, where a recorded type mentions it. Without --package the
  * tool is exactly the Core tool described above.
  *
- * How an E7 PR uses it (#462 §13 P3): there is no frozen E7 base. E7 is long and `main` moves, so
- * each PR writes, for every package it touches, the base manifest from a checkout of its MERGE
- * BASE (`git merge-base origin/main HEAD`) and diffs its head against it, explained by the change
- * list it commits under tools/api-maps/e7/<pr>-<Type>-<Name>.php (the issue number, then the
- * package):
+ * For a change that touches several packages, write the base manifest of every package it touches
+ * from the base checkout and diff each against its head:
  *
- *   (merge base) php tools/api-surface.php --package Module/Devices --write var/tools/api-surface/base-Module-Devices.json
- *   (head)       php tools/api-surface.php --package Module/Devices --diff var/tools/api-surface/base-Module-Devices.json \
- *                    --changes tools/api-maps/e7/700-Module-Devices.php
+ *   (base)  php tools/api-surface.php --package Module/Devices --write var/tools/api-surface/base-Module-Devices.json
+ *   (head)  php tools/api-surface.php --package Module/Devices --diff var/tools/api-surface/base-Module-Devices.json \
+ *               --changes <list.php>
  *
- * A mechanical (a-)PR's list may hold only constant types; `#[\Override]` is never recorded (below),
- * so it needs no item. A package whose surface the PR does not change still runs the diff, with no
- * --changes, and must exit 0.
+ * A change list for a purely mechanical change may hold only constant types; `#[\Override]` is
+ * never recorded (below), so it needs no item. A package whose surface the change does not alter
+ * still runs the diff, with no --changes, and must exit 0.
  *
  * WHAT IS RECORDED, per type, keyed by FQCN and sorted by it:
  *
@@ -110,19 +105,18 @@
  * `null`, `true`, `42`, `1.5`, `'text'`, `['a', 'k' => 1]`, `\Enum\Name::Case`, `object(\Class)`.
  * Types are PHP's own spelling of them (ReflectionType::__toString()).
  *
- * THE CHANGE LIST (tools/api-maps/NN-<topic>.php, NN being the E5.N subtask number: 03 for #635
- * ... 12 for #644) returns an array with up to four keys, applied to the base in this order:
+ * THE CHANGE LIST (a PHP file passed with --changes <list.php>) returns an array with up to four
+ * keys, applied to the base in this order:
  *
  *   'renamed' => [old => new, ...]
  *       A TYPE (`FastyBird\Core\Foo` => `FastyBird\Core\Bar\Baz`): a rename or a move. Its entry
  *       moves to the new name, and every mention of the old name anywhere in the manifest --
  *       a parent, an interface list, a parameter, return or property type, a `@throws`, an
  *       attribute, a value -- becomes the new name.
- *       A rename ONTO A TYPE THAT ALREADY EXISTS is a COLLAPSE (#460 §3.1, §3.2): the old type
- *       must be an interface; its entry is dropped, every mention of it becomes the target, it
- *       is removed from every `interfaces` list instead (the target does not implement itself),
- *       and its constants become the target's -- exactly what tools/move-core-symbols.php's
- *       'collapse' key does to the code. `Foo` becoming `final` is a separate 'changed' item.
+ *       A rename ONTO A TYPE THAT ALREADY EXISTS is a COLLAPSE: the old type must be an
+ *       interface; its entry is dropped, every mention of it becomes the target, it is removed
+ *       from every `interfaces` list instead (the target does not implement itself), and its
+ *       constants become the target's. `Foo` becoming `final` is a separate 'changed' item.
  *       A MEMBER (`Foo::old()` => `Foo::new()`, `Foo::$a` => `Foo::$b`, `Foo::A` => `Bar::B`):
  *       its entry moves, across types too, and a constant's `Old::A` mentions in values follow.
  *   'removed' => [address, ...]
