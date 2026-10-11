@@ -5,21 +5,18 @@ namespace FastyBird\Module\Devices\Models\States\Devices;
 use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\States;
-use Nette;
 use Nette\Caching as NetteCaching;
 use Ramsey\Uuid;
 
 /**
  * Device property repository
  */
-final class Repository
+final readonly class Repository
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly DevicesCaching\Container $moduleCaching,
-		private readonly IRepository|null $repository = null,
+		private DevicesCaching\Container $moduleCaching,
+		private Reader|null $repository = null,
 	)
 	{
 	}

@@ -4,7 +4,7 @@ namespace FastyBird\Module\Accounts\Exceptions;
 
 use RuntimeException;
 
-class InvalidState extends RuntimeException implements Exception
+final class InvalidState extends RuntimeException implements Exception
 {
 
 }

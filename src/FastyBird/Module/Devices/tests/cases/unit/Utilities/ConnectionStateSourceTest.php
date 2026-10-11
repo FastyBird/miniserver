@@ -245,7 +245,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 
 		$connectorStates = [];
 
-		$connectorStorage = $this->createMock(Models\States\Connectors\IManager::class);
+		$connectorStorage = $this->createMock(Models\States\Connectors\Writer::class);
 		$connectorStorage->method('create')->willReturnCallback(
 			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use (&$connectorStates): States\ConnectorProperty {
 				$connectorStates[$id->toString()] = new Tests\Fixtures\Dummy\ConnectorPropertyState(
@@ -263,7 +263,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 			static fn (Uuid\UuidInterface $id, Utils\ArrayHash $values): States\ConnectorProperty|false => $connectorStates[$id->toString()] ?? false,
 		);
 
-		$connectorLookup = $this->createMock(Models\States\Connectors\IRepository::class);
+		$connectorLookup = $this->createMock(Models\States\Connectors\Reader::class);
 		$connectorLookup->method('find')->willReturnCallback(
 			static fn (Uuid\UuidInterface $id): States\ConnectorProperty|null => $connectorStates[$id->toString()] ?? null,
 		);
@@ -279,7 +279,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 
 		$deviceStates = [];
 
-		$deviceStorage = $this->createMock(Models\States\Devices\IManager::class);
+		$deviceStorage = $this->createMock(Models\States\Devices\Writer::class);
 		$deviceStorage->method('create')->willReturnCallback(
 			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use (&$deviceStates): States\DeviceProperty {
 				$deviceStates[$id->toString()] = new Tests\Fixtures\Dummy\DevicePropertyState(
@@ -297,7 +297,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 			static fn (Uuid\UuidInterface $id, Utils\ArrayHash $values): States\DeviceProperty|false => $deviceStates[$id->toString()] ?? false,
 		);
 
-		$deviceLookup = $this->createMock(Models\States\Devices\IRepository::class);
+		$deviceLookup = $this->createMock(Models\States\Devices\Reader::class);
 		$deviceLookup->method('find')->willReturnCallback(
 			static fn (Uuid\UuidInterface $id): States\DeviceProperty|null => $deviceStates[$id->toString()] ?? null,
 		);
@@ -313,7 +313,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 
 		$channelStates = [];
 
-		$channelStorage = $this->createMock(Models\States\Channels\IManager::class);
+		$channelStorage = $this->createMock(Models\States\Channels\Writer::class);
 		$channelStorage->method('create')->willReturnCallback(
 			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use (&$channelStates): States\ChannelProperty {
 				$channelStates[$id->toString()] = new Tests\Fixtures\Dummy\ChannelPropertyState(
@@ -331,7 +331,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 			static fn (Uuid\UuidInterface $id, Utils\ArrayHash $values): States\ChannelProperty|false => $channelStates[$id->toString()] ?? false,
 		);
 
-		$channelLookup = $this->createMock(Models\States\Channels\IRepository::class);
+		$channelLookup = $this->createMock(Models\States\Channels\Reader::class);
 		$channelLookup->method('find')->willReturnCallback(
 			static fn (Uuid\UuidInterface $id): States\ChannelProperty|null => $channelStates[$id->toString()] ?? null,
 		);

@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Devices\Exceptions;
 
-class InvalidActualValue extends InvalidState implements Exception
+final class InvalidActualValue extends InvalidState implements Exception
 {
 
 }

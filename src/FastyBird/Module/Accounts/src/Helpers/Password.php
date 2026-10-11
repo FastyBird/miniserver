@@ -3,7 +3,6 @@
 namespace FastyBird\Module\Accounts\Helpers;
 
 use FastyBird\Module\Accounts\Exceptions;
-use Nette;
 use Nette\Utils;
 use Override;
 use function hash;
@@ -14,13 +13,11 @@ use function hash;
 final class Password
 {
 
-	use Nette\SmartObject;
-
 	private const string SEPARATOR = '##';
 
 	private string $hash;
 
-	private string $salt;
+	public private(set) string $salt;
 
 	private string $password;
 
@@ -78,16 +75,6 @@ final class Password
 	public function createSalt(): string
 	{
 		return $this->salt = Utils\Random::generate(5);
-	}
-
-	public function getSalt(): string
-	{
-		return $this->salt;
-	}
-
-	public function setSalt(string $salt): void
-	{
-		$this->salt = $salt;
 	}
 
 	public function getHash(): string

@@ -32,7 +32,7 @@ use React\Promise;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DevicePropertiesRepository implements DevicesModels\States\Devices\Async\IRepository
+class DevicePropertiesRepository implements DevicesModels\States\Devices\Async\Reader
 {
 
 	use Nette\SmartObject;

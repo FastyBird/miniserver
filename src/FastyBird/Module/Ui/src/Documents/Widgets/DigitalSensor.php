@@ -8,7 +8,7 @@ use FastyBird\Module\Ui\Entities;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\DigitalSensor::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\DigitalSensor::TYPE)]
-class DigitalSensor extends UiDocuments\Widgets\Widget
+final class DigitalSensor extends UiDocuments\Widgets\Widget
 {
 
 	public static function getType(): string

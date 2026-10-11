@@ -32,7 +32,7 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ActionsRepository implements TriggersModels\States\IActionsRepository
+class ActionsRepository implements TriggersModels\States\ActionsReader
 {
 
 	use Nette\SmartObject;

@@ -32,7 +32,7 @@ use React\Promise;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\Async\IRepository
+class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\Async\Reader
 {
 
 	use Nette\SmartObject;

@@ -8,18 +8,17 @@ use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std;
 use FastyBird\Core\Http\Routing;
 use Fig\Http\Message\RequestMethodInterface;
-use Nette\DI;
 use function assert;
 
 /**
  * Route validator
  */
-class Validator
+final class Validator
 {
 
 	private Routing\FastRouteDispatcher|null $routerDispatcher = null;
 
-	public function __construct(private readonly DI\Container $container)
+	public function __construct(private readonly Routing\Router $router)
 	{
 	}
 
@@ -42,7 +41,7 @@ class Validator
 			return $this->routerDispatcher;
 		}
 
-		$router = $this->container->getByType(Routing\Router::class);
+		$router = $this->router;
 
 		$routeDefinitionCallback = static function (RouteCollector $r) use ($router): void {
 			$basePath = $router->basePath;

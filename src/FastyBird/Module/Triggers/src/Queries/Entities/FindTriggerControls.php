@@ -14,7 +14,7 @@ use SortDirection;
  *
  * @extends  Query\QueryObject<Entities\Triggers\Controls\Control>
  */
-class FindTriggerControls extends Query\QueryObject
+final class FindTriggerControls extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

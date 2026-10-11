@@ -27,7 +27,7 @@ use function strval;
 final class ConnectorPropertyStateV1 extends BaseV1
 {
 
-	use Controllers\Finders\TConnector;
+	use Controllers\Finders\FindsConnector;
 
 	public function __construct(
 		protected readonly Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,

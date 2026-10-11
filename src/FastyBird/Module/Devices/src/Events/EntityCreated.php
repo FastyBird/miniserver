@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Doctrine entity was created
  */
-class EntityCreated extends EventDispatcher\Event
+final class EntityCreated extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Entities\Entity $entity)

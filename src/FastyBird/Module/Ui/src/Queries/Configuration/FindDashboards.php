@@ -15,7 +15,7 @@ use function serialize;
  * @template T of Documents\Dashboards\Dashboard
  * @extends  QueryObject<T>
  */
-class FindDashboards extends QueryObject
+final class FindDashboards extends QueryObject
 {
 
 	/** @var array<string> */

@@ -8,7 +8,6 @@ use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;
-use Nette;
 use Nette\Utils;
 use Psr\EventDispatcher;
 use ReflectionException;
@@ -19,8 +18,6 @@ use function assert;
  */
 final class ChannelsManager
 {
-
-	use Nette\SmartObject;
 
 	/** @var Crud\EntityCrud<Entities\Channels\Channel>|null */
 	private Crud\EntityCrud|null $entityCrud = null;

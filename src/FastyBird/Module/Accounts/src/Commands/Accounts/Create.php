@@ -29,7 +29,7 @@ use function strval;
 /**
  * Account creation command
  */
-class Create extends Console\Command\Command
+final class Create extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:accounts-module:create:account';

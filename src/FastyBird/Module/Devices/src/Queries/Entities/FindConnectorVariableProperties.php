@@ -11,7 +11,7 @@ use FastyBird\Module\Devices\Entities;
  * @template T of Entities\Connectors\Properties\Variable
  * @extends  FindConnectorProperties<T>
  */
-class FindConnectorVariableProperties extends FindConnectorProperties
+final class FindConnectorVariableProperties extends FindConnectorProperties
 {
 
 	public function byValue(string $value): void

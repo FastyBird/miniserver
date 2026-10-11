@@ -27,7 +27,7 @@ use function strval;
 final class PublicV1 extends BaseV1
 {
 
-	use Controllers\Finders\TIdentity;
+	use Controllers\Finders\FindsIdentity;
 
 	public function __construct(
 		protected readonly Models\Entities\Identities\IdentitiesRepository $identitiesRepository,

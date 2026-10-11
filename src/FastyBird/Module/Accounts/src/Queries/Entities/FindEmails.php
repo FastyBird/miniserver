@@ -13,7 +13,7 @@ use Ramsey\Uuid;
  *
  * @extends  Query\QueryObject<Entities\Emails\Email>
  */
-class FindEmails extends Query\QueryObject
+final class FindEmails extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

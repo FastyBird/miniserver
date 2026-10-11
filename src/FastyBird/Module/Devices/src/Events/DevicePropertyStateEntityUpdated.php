@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Device property state entity was updated event
  */
-class DevicePropertyStateEntityUpdated extends EventDispatcher\Event
+final class DevicePropertyStateEntityUpdated extends EventDispatcher\Event
 {
 
 	public function __construct(

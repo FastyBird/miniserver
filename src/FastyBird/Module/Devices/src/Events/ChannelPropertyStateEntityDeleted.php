@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Channel property state entity was deleted event
  */
-class ChannelPropertyStateEntityDeleted extends EventDispatcher\Event
+final class ChannelPropertyStateEntityDeleted extends EventDispatcher\Event
 {
 
 	public function __construct(

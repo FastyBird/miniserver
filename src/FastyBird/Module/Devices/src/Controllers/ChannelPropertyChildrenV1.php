@@ -19,9 +19,9 @@ use function strval;
 final class ChannelPropertyChildrenV1 extends BaseV1
 {
 
-	use Controllers\Finders\TDevice;
-	use Controllers\Finders\TChannel;
-	use Controllers\Finders\TChannelProperty;
+	use Controllers\Finders\FindsDevice;
+	use Controllers\Finders\FindsChannel;
+	use Controllers\Finders\FindsChannelProperty;
 
 	public function __construct(
 		protected readonly Models\Entities\Devices\DevicesRepository $devicesRepository,

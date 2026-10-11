@@ -6,7 +6,7 @@ use function preg_replace;
 use function strtolower;
 use function strval;
 
-class Api
+final class Api
 {
 
 	public static function fieldToJsonApi(string $field): string

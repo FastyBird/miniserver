@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Socket action command received
  */
-class ActionCommandReceived extends EventDispatcher\Event
+final class ActionCommandReceived extends EventDispatcher\Event
 {
 
 	public function __construct(

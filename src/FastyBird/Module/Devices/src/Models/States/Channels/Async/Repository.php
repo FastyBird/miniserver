@@ -6,7 +6,6 @@ use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\States;
-use Nette;
 use Nette\Caching as NetteCaching;
 use Ramsey\Uuid;
 use React\Promise;
@@ -15,15 +14,13 @@ use Throwable;
 /**
  * Asynchronous channel property repository
  */
-final class Repository
+final readonly class Repository
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Models\States\Channels\Repository $fallback,
-		private readonly DevicesCaching\Container $moduleCaching,
-		private readonly IRepository|null $repository = null,
+		private Models\States\Channels\Repository $fallback,
+		private DevicesCaching\Container $moduleCaching,
+		private Reader|null $repository = null,
 	)
 	{
 	}

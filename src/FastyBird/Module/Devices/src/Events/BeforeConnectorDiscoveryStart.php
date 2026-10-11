@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Event fired before connector discovery has been started
  */
-class BeforeConnectorDiscoveryStart extends EventDispatcher\Event
+final class BeforeConnectorDiscoveryStart extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Documents\Connectors\Connector $connector)

@@ -20,20 +20,20 @@ use Ramsey\Uuid;
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_UPDATED_ROUTING_KEY,
 	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_DELETED_ROUTING_KEY,
 ])]
-final class Control implements Documents\Document, Documents\Owner
+final readonly class Control implements Documents\Document, Documents\Owner
 {
 
 	use Documents\HasOwner;
 
 	public function __construct(
 		#[Rules\UuidValue()]
-		private readonly Uuid\UuidInterface $id,
+		private Uuid\UuidInterface $id,
 		#[Rules\UuidValue()]
-		private readonly Uuid\UuidInterface $trigger,
+		private Uuid\UuidInterface $trigger,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
-		private readonly string $name,
+		private string $name,
 		#[Rules\UuidValue()]
-		protected readonly Uuid\UuidInterface|null $owner = null,
+		protected Uuid\UuidInterface|null $owner = null,
 	)
 	{
 	}

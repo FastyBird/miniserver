@@ -17,12 +17,12 @@ use ValueError;
  *
  * @Secured\User(loggedIn)
  */
-class DevicesPresenter extends BasePresenter
+final class DevicesPresenter extends BasePresenter
 {
 
-	use TConnectors;
-	use TDevices;
-	use TChannels;
+	use LoadsConnectors;
+	use LoadsDevices;
+	use LoadsChannels;
 
 	public function __construct(
 		protected readonly Models\Configuration\Connectors\Repository $connectorsRepository,

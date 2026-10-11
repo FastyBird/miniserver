@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette;
 use Nette\Utils;
 use TypeError;
 use ValueError;
@@ -28,18 +27,16 @@ use function sprintf;
 /**
  * Device connection states manager
  */
-final class DeviceConnection
+final readonly class DeviceConnection
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Models\Entities\Devices\DevicesRepository $devicesEntitiesRepository,
-		private readonly Models\Entities\Devices\Properties\PropertiesManager $devicesPropertiesEntitiesManager,
-		private readonly Models\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly Models\States\DevicePropertiesManager $propertiesStatesManager,
-		private readonly Helpers\Database $databaseHelper,
-		private readonly Devices\Logger $logger,
+		private Models\Entities\Devices\DevicesRepository $devicesEntitiesRepository,
+		private Models\Entities\Devices\Properties\PropertiesManager $devicesPropertiesEntitiesManager,
+		private Models\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private Models\States\DevicePropertiesManager $propertiesStatesManager,
+		private Helpers\Database $databaseHelper,
+		private Devices\Logger $logger,
 	)
 	{
 	}

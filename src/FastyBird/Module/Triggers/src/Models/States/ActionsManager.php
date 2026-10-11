@@ -11,22 +11,19 @@ use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\States;
-use Nette;
 use Nette\Utils;
 use function array_merge;
 
 /**
  * Action states manager
  */
-final class ActionsManager
+final readonly class ActionsManager
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		protected readonly CoreDocuments\DocumentFactory $documentFactory,
-		protected readonly IActionsManager|null $manager = null,
-		protected readonly Publisher\MessagePublisher|null $publisher = null,
+		protected CoreDocuments\DocumentFactory $documentFactory,
+		protected ActionsWriter|null $manager = null,
+		protected Publisher\MessagePublisher|null $publisher = null,
 	)
 	{
 	}

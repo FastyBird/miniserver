@@ -13,7 +13,7 @@ use FastyBird\Module\Accounts\Entities;
 final class ProfileEmail extends Hydrators\Hydrator
 {
 
-	use TEmail;
+	use HydratesEmail;
 
 	/** @var array<int|string, string> */
 	protected array $attributes = [

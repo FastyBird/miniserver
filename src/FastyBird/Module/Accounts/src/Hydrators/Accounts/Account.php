@@ -13,7 +13,7 @@ use FastyBird\Module\Accounts\Entities;
 final class Account extends Hydrators\Hydrator
 {
 
-	use TAccount;
+	use HydratesAccount;
 
 	/** @var array<int|string, string> */
 	protected array $attributes = [

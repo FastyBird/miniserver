@@ -4,7 +4,7 @@ namespace FastyBird\Module\Accounts\Exceptions;
 
 use Exception as PHPException;
 
-class PropertyNotExists extends PHPException implements Exception
+final class PropertyNotExists extends PHPException implements Exception
 {
 
 }

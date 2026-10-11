@@ -9,7 +9,6 @@ use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Queries;
-use Nette;
 use function is_array;
 
 /**
@@ -17,8 +16,6 @@ use function is_array;
  */
 final class ActionsRepository
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<ORM\EntityRepository<Entities\Actions\Action>> */
 	private array $repository = [];

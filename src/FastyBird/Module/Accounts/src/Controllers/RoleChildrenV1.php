@@ -21,7 +21,7 @@ use Ramsey\Uuid\Exception\InvalidArgumentException;
 final class RoleChildrenV1 extends BaseV1
 {
 
-	use Controllers\Finders\TRole;
+	use Controllers\Finders\FindsRole;
 
 	public function __construct(private readonly Policies\Repository $policiesRepository)
 	{

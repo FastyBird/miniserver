@@ -44,8 +44,8 @@ abstract class Property implements Entity,
 	Entities\EntityCreated, Entities\EntityUpdated
 {
 
-	use TEntity;
-	use TEntityParams;
+	use HasEntityId;
+	use HasEntityParams;
 	use Entities\HasEntityCreated;
 	use Entities\HasEntityUpdated;
 

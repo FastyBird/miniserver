@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * When module exchange service started
  */
-class ExchangeStartup extends EventDispatcher\Event
+final class ExchangeStartup extends EventDispatcher\Event
 {
 
 }

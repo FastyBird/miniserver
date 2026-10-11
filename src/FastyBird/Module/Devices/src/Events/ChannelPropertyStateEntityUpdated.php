@@ -10,7 +10,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Channel property state entity was updated event
  */
-class ChannelPropertyStateEntityUpdated extends EventDispatcher\Event
+final class ChannelPropertyStateEntityUpdated extends EventDispatcher\Event
 {
 
 	public function __construct(

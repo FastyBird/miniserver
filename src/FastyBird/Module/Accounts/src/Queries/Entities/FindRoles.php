@@ -13,7 +13,7 @@ use Ramsey\Uuid;
  *
  * @extends  Queries\FindPolicies<Entities\Roles\Role>
  */
-class FindRoles extends Queries\FindPolicies
+final class FindRoles extends Queries\FindPolicies
 {
 
 	public function forParent(Entities\Roles\Role $role): void

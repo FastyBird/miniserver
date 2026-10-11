@@ -14,7 +14,7 @@ use function is_string;
 /**
  * Account authentication
  */
-final class Authenticator implements Identity\Authenticator
+final readonly class Authenticator implements Identity\Authenticator
 {
 
 	public const int IDENTITY_UID_NOT_FOUND = 110;
@@ -28,7 +28,7 @@ final class Authenticator implements Identity\Authenticator
 	public const int ACCOUNT_PROFILE_OTHER_ERROR = 230;
 
 	public function __construct(
-		private readonly Models\Entities\Identities\IdentitiesRepository $identitiesRepository,
+		private Models\Entities\Identities\IdentitiesRepository $identitiesRepository,
 	)
 	{
 	}

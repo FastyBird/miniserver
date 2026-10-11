@@ -33,13 +33,14 @@ use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
+use function array_values;
 use function assert;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * UI module
  */
-class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbUiModule';
@@ -127,8 +128,16 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 			->setType(Router\SocketRoutes::class)
 			->addTag(WebSocketsDI\WebSocketsExtension::ROUTES_TAG);
 
-		$builder->addDefinition($this->prefix('router.validator'), new NetteDI\Definitions\ServiceDefinition())
+		$routerValidator = $builder->addDefinition(
+			$this->prefix('router.validator'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Router\Validator::class);
+
+		// The validator takes the router, and the router reaches the validator through the
+		// routes and their controllers: a cycle. A lazy service is a native PHP 8.4 lazy ghost,
+		// built on its first use, which breaks it
+		$routerValidator->lazy = true;
 
 		/**
 		 * MODELS - DOCTRINE
@@ -504,12 +513,28 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 
 	/**
 	 * @throws NetteDI\MissingServiceException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();
 
 		$builder = $this->getContainerBuilder();
+
+		/**
+		 * JSON-API HYDRATORS
+		 */
+
+		// A widget hydrator hydrates the data sources a request includes with the data source
+		// hydrators, which other extensions register too (DevicesModuleUiModule), so the list is
+		// collected here, once every extension has loaded its configuration
+		$dataSourcesHydrators = array_values($builder->findByType(Hydrators\Widgets\DataSources\DataSource::class));
+
+		foreach ($builder->findByType(Hydrators\Widgets\Widget::class) as $widgetHydrator) {
+			assert($widgetHydrator instanceof NetteDI\Definitions\ServiceDefinition);
+
+			$widgetHydrator->setArgument('dataSourcesHydrators', $dataSourcesHydrators);
+		}
 
 		/**
 		 * DOCTRINE ENTITIES

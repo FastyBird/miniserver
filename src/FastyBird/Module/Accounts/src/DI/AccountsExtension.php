@@ -35,7 +35,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Accounts module extension container
  */
-class AccountsExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class AccountsExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbAccountsModule';
@@ -79,8 +79,16 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 			->setType(Router\ApiRoutes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
-		$builder->addDefinition($this->prefix('router.validator'), new NetteDI\Definitions\ServiceDefinition())
+		$routerValidator = $builder->addDefinition(
+			$this->prefix('router.validator'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Router\Validator::class);
+
+		// The validator takes the router, and the router reaches the validator through the
+		// routes and their controllers: a cycle. A lazy service is a native PHP 8.4 lazy ghost,
+		// built on its first use, which breaks it
+		$routerValidator->lazy = true;
 
 		$builder->addDefinition($this->prefix('commands.create'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Accounts\Create::class);

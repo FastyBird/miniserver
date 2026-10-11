@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Event fired before automator has been started
  */
-class BeforeAutomatorStart extends EventDispatcher\Event
+final class BeforeAutomatorStart extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Entities\Triggers\Trigger $trigger)

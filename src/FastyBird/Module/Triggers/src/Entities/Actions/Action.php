@@ -37,7 +37,7 @@ abstract class Action implements TriggersEntities\Entity,
 	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use TriggersEntities\TEntity;
+	use TriggersEntities\HasEntityId;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

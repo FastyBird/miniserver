@@ -10,7 +10,6 @@ use FastyBird\Core\Persistence\Utilities;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
-use Nette;
 use Override;
 use function array_key_exists;
 use function array_merge;
@@ -19,14 +18,12 @@ use function count;
 /**
  * Doctrine entities events
  */
-final class EmailEntity implements Common\EventSubscriber
+final readonly class EmailEntity implements Common\EventSubscriber
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Models\Entities\Emails\EmailsRepository $emailsRepository,
-		private readonly Utilities\DateTimeProvider $dateProvider,
+		private Models\Entities\Emails\EmailsRepository $emailsRepository,
+		private Utilities\DateTimeProvider $dateProvider,
 	)
 	{
 	}

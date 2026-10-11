@@ -15,7 +15,7 @@ final class PasswordTest extends TestCase
 	public function testPassword(): void
 	{
 		$password = new Helpers\Password(null, 'somePassword');
-		$hashedPassword = new Helpers\Password($password->getHash(), null, $password->getSalt());
+		$hashedPassword = new Helpers\Password($password->getHash(), null, $password->salt);
 
 		self::assertTrue($hashedPassword->isEqual('somePassword'));
 	}

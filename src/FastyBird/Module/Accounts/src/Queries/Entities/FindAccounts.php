@@ -16,7 +16,7 @@ use function in_array;
  *
  * @extends  Query\QueryObject<Entities\Accounts\Account>
  */
-class FindAccounts extends Query\QueryObject
+final class FindAccounts extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

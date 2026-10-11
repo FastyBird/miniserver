@@ -31,7 +31,7 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ActionsManager implements TriggersModels\States\IActionsManager
+class ActionsManager implements TriggersModels\States\ActionsWriter
 {
 
 	use Nette\SmartObject;

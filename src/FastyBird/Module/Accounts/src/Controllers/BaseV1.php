@@ -18,7 +18,6 @@ use FastyBird\Module\Accounts\Router;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette;
 use Nette\Localization;
 use Nette\Utils;
 use Psr\Clock\ClockInterface;
@@ -39,8 +38,6 @@ use function strval;
  */
 abstract class BaseV1
 {
-
-	use Nette\SmartObject;
 
 	protected Security\User $user;
 

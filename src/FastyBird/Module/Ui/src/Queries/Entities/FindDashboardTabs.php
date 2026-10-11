@@ -14,7 +14,7 @@ use Ramsey\Uuid;
  * @template T of Entities\Dashboards\Tabs\Tab
  * @extends  Query\QueryObject<T>
  */
-class FindDashboardTabs extends Query\QueryObject
+final class FindDashboardTabs extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

@@ -13,7 +13,7 @@ use function array_merge;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Displays\ChartGraph::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\ChartGraph::TYPE)]
-class ChartGraph extends UiDocuments\Widgets\Displays\Display
+final class ChartGraph extends UiDocuments\Widgets\Displays\Display
 {
 
 	public function __construct(

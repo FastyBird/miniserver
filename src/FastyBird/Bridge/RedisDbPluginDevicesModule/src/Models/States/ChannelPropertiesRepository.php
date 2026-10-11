@@ -30,7 +30,7 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ChannelPropertiesRepository implements DevicesModels\States\Channels\IRepository
+class ChannelPropertiesRepository implements DevicesModels\States\Channels\Reader
 {
 
 	use Nette\SmartObject;

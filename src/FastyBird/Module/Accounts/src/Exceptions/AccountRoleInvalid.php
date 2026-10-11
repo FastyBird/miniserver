@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Accounts\Exceptions;
 
-class AccountRoleInvalid extends InvalidArgument implements Exception
+final class AccountRoleInvalid extends InvalidArgument implements Exception
 {
 
 }

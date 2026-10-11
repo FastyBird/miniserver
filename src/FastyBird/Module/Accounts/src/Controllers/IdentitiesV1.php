@@ -39,8 +39,8 @@ use function strval;
 final class IdentitiesV1 extends BaseV1
 {
 
-	use Controllers\Finders\TAccount;
-	use Controllers\Finders\TIdentity;
+	use Controllers\Finders\FindsAccount;
+	use Controllers\Finders\FindsIdentity;
 
 	public function __construct(
 		private readonly Hydrators\Identities\Identity $identityHydrator,

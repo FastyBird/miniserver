@@ -6,7 +6,6 @@ use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Types;
-use Nette;
 use Nette\Caching as NetteCaching;
 use Override;
 use Symfony\Component\EventDispatcher;
@@ -14,13 +13,11 @@ use Symfony\Component\EventDispatcher;
 /**
  * Module entities events
  */
-final class ConfigurationCache implements EventDispatcher\EventSubscriberInterface
+final readonly class ConfigurationCache implements EventDispatcher\EventSubscriberInterface
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly DevicesCaching\Container $moduleCaching,
+		private DevicesCaching\Container $moduleCaching,
 	)
 	{
 	}

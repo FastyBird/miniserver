@@ -13,7 +13,7 @@ use function array_merge;
 class AnalogValue extends Display implements Entities\Widgets\Displays\Parameters\Precision
 {
 
-	use Entities\Widgets\Displays\Parameters\TPrecision;
+	use Entities\Widgets\Displays\Parameters\HasPrecision;
 
 	public const string TYPE = 'analog-value';
 

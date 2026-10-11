@@ -13,7 +13,7 @@ use Ramsey\Uuid;
  *
  * @extends Query\QueryObject<Entities\Triggers\Trigger>
  */
-class FindTriggers extends Query\QueryObject
+final class FindTriggers extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

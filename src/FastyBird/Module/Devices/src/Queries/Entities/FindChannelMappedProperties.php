@@ -10,7 +10,7 @@ use FastyBird\Module\Devices\Entities;
  * @template T of Entities\Channels\Properties\Mapped
  * @extends  FindChannelProperties<T>
  */
-class FindChannelMappedProperties extends FindChannelProperties
+final class FindChannelMappedProperties extends FindChannelProperties
 {
 
 }

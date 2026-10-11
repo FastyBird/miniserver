@@ -50,7 +50,7 @@ use const SIGTERM;
 /**
  * Module connector command
  */
-class Connector extends Console\Command\Command
+final class Connector extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:devices-module:connector';

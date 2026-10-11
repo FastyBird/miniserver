@@ -15,7 +15,7 @@ use function serialize;
  * @template T of Documents\Connectors\Controls\Control
  * @extends  QueryObject<T>
  */
-class FindConnectorControls extends QueryObject
+final class FindConnectorControls extends QueryObject
 {
 
 	/** @var array<string> */

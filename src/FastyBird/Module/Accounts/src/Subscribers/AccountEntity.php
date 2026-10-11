@@ -10,7 +10,6 @@ use FastyBird\Core\Security\Identity;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
-use Nette;
 use Override;
 use function array_merge;
 use function count;
@@ -20,13 +19,11 @@ use function sprintf;
 /**
  * Doctrine entities events
  */
-final class AccountEntity implements Common\EventSubscriber
+final readonly class AccountEntity implements Common\EventSubscriber
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly Identity\EnforcerFactory $enforcerFactory,
+		private Identity\EnforcerFactory $enforcerFactory,
 	)
 	{
 	}

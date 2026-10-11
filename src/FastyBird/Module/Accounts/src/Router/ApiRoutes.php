@@ -11,7 +11,7 @@ use FastyBird\Module\Accounts\Middleware as AccountsMiddleware;
 /**
  * Module router configuration
  */
-class ApiRoutes
+final readonly class ApiRoutes
 {
 
 	public const string URL_ITEM_ID = 'id';
@@ -21,20 +21,20 @@ class ApiRoutes
 	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
-		private readonly bool $usePrefix,
-		private readonly Controllers\PublicV1 $publicV1Controller,
-		private readonly Controllers\SessionV1 $sessionV1Controller,
-		private readonly Controllers\AccountV1 $accountV1Controller,
-		private readonly Controllers\AccountEmailsV1 $accountEmailsV1Controller,
-		private readonly Controllers\AccountIdentitiesV1 $accountIdentitiesV1Controller,
-		private readonly Controllers\AccountsV1 $accountsV1Controller,
-		private readonly Controllers\EmailsV1 $emailsV1Controller,
-		private readonly Controllers\IdentitiesV1 $identitiesV1Controller,
-		private readonly Controllers\RolesV1 $rolesV1Controller,
-		private readonly Controllers\RoleChildrenV1 $roleChildrenV1Controller,
-		private readonly AccountsMiddleware\Access $authAccessControlMiddleware,
-		private readonly SecurityMiddleware\Authorization $authorizationMiddleware,
-		private readonly SecurityMiddleware\User $userMiddleware,
+		private bool $usePrefix,
+		private Controllers\PublicV1 $publicV1Controller,
+		private Controllers\SessionV1 $sessionV1Controller,
+		private Controllers\AccountV1 $accountV1Controller,
+		private Controllers\AccountEmailsV1 $accountEmailsV1Controller,
+		private Controllers\AccountIdentitiesV1 $accountIdentitiesV1Controller,
+		private Controllers\AccountsV1 $accountsV1Controller,
+		private Controllers\EmailsV1 $emailsV1Controller,
+		private Controllers\IdentitiesV1 $identitiesV1Controller,
+		private Controllers\RolesV1 $rolesV1Controller,
+		private Controllers\RoleChildrenV1 $roleChildrenV1Controller,
+		private AccountsMiddleware\Access $authAccessControlMiddleware,
+		private SecurityMiddleware\Authorization $authorizationMiddleware,
+		private SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

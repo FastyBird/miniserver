@@ -36,7 +36,7 @@ use function strval;
 final class GroupsV1 extends BaseV1
 {
 
-	use Controllers\Finders\TGroup;
+	use Controllers\Finders\FindsGroup;
 
 	public function __construct(
 		private readonly Models\Entities\Groups\Repository $groupsRepository,

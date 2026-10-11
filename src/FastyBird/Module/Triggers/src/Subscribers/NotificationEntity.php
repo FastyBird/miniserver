@@ -6,7 +6,6 @@ use Doctrine\Common;
 use Doctrine\ORM;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions;
-use Nette;
 use Override;
 use function array_merge;
 
@@ -15,8 +14,6 @@ use function array_merge;
  */
 final class NotificationEntity implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * Register events

@@ -15,7 +15,7 @@ use function serialize;
  * @template T of Documents\Groups\Group
  * @extends  QueryObject<T>
  */
-class FindGroups extends QueryObject
+final class FindGroups extends QueryObject
 {
 
 	/** @var array<string> */

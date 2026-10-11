@@ -13,7 +13,7 @@ use function array_merge;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Displays\Slider::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\Displays\Slider::TYPE)]
-class Slider extends UiDocuments\Widgets\Displays\Display
+final class Slider extends UiDocuments\Widgets\Displays\Display
 {
 
 	public function __construct(

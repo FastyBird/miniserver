@@ -20,9 +20,9 @@ use function strval;
 final class DevicePropertyChildrenV1 extends BaseV1
 {
 
-	use Controllers\Finders\TConnector;
-	use Controllers\Finders\TDevice;
-	use Controllers\Finders\TDeviceProperty;
+	use Controllers\Finders\FindsConnector;
+	use Controllers\Finders\FindsDevice;
+	use Controllers\Finders\FindsDeviceProperty;
 
 	public function __construct(
 		protected readonly Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,

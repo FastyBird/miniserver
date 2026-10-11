@@ -7,7 +7,7 @@ namespace FastyBird\Module\Accounts\Presenters;
  *
  * @Secured\User(guest)
  */
-class SignPresenter extends BasePresenter
+final class SignPresenter extends BasePresenter
 {
 
 }

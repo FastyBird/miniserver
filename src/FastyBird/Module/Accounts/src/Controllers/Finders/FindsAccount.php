@@ -1,0 +1,59 @@
+<?php declare(strict_types = 1);
+
+namespace FastyBird\Module\Accounts\Controllers\Finders;
+
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Module\Accounts\Entities;
+use FastyBird\Module\Accounts\Models;
+use FastyBird\Module\Accounts\Queries;
+use FastyBird\Module\Accounts\Router;
+use FastyBird\Module\Accounts\Security;
+use Fig\Http\Message\StatusCodeInterface;
+use Nette\Localization;
+use Psr\Http\Message;
+use Ramsey\Uuid;
+use function strval;
+
+/**
+ * @property-read Localization\ITranslator $translator
+ * @property-read Security\User $user
+ * @property-read Models\Entities\Accounts\AccountsRepository $accountsRepository
+ */
+trait FindsAccount
+{
+
+	/**
+	 * @throws ApiExceptions\JsonApiError
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	protected function findAccount(
+		Message\ServerRequestInterface $request,
+	): Entities\Accounts\Account
+	{
+		if (!Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ACCOUNT_ID)))) {
+			throw new ApiExceptions\JsonApiError(
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
+				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),
+			);
+		}
+
+		$findQuery = new Queries\Entities\FindAccounts();
+		$findQuery->byId(Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ACCOUNT_ID))));
+
+		$account = $this->accountsRepository->findOneBy($findQuery);
+
+		if ($account === null) {
+			throw new ApiExceptions\JsonApiError(
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
+				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),
+			);
+		}
+
+		return $account;
+	}
+
+}

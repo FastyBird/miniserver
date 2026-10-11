@@ -4,7 +4,6 @@ namespace FastyBird\Module\Accounts\Helpers;
 
 use DateMalformedStringException;
 use Exception;
-use Nette;
 use Nette\Utils;
 use Psr\Clock\ClockInterface;
 use function base64_decode;
@@ -15,14 +14,12 @@ use function explode;
 /**
  * Verification hash helper
  */
-final class SecurityHash
+final readonly class SecurityHash
 {
-
-	use Nette\SmartObject;
 
 	private const string SEPARATOR = '##';
 
-	public function __construct(private readonly ClockInterface $clock)
+	public function __construct(private ClockInterface $clock)
 	{
 	}
 

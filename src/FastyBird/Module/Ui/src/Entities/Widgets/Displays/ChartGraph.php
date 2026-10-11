@@ -17,10 +17,10 @@ class ChartGraph extends Display implements Entities\Widgets\Displays\Parameters
 	Entities\Widgets\Displays\Parameters\Precision
 {
 
-	use Entities\Widgets\Displays\Parameters\TMinimumValue;
-	use Entities\Widgets\Displays\Parameters\TMaximumValue;
-	use Entities\Widgets\Displays\Parameters\TStepValue;
-	use Entities\Widgets\Displays\Parameters\TPrecision;
+	use Entities\Widgets\Displays\Parameters\HasMinimumValue;
+	use Entities\Widgets\Displays\Parameters\HasMaximumValue;
+	use Entities\Widgets\Displays\Parameters\HasStepValue;
+	use Entities\Widgets\Displays\Parameters\HasPrecision;
 
 	public const string TYPE = 'chart-graph';
 

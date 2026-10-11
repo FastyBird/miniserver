@@ -13,7 +13,7 @@ use Ramsey\Uuid;
  *
  * @extends Query\QueryObject<Entities\Notifications\Notification>
  */
-class FindNotifications extends Query\QueryObject
+final class FindNotifications extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

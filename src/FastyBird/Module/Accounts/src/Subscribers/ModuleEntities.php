@@ -14,7 +14,6 @@ use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
-use Nette;
 use Nette\Utils;
 use Override;
 use ReflectionClass;
@@ -25,10 +24,8 @@ use function str_starts_with;
 /**
  * Doctrine entities events
  */
-final class ModuleEntities implements Common\EventSubscriber
+final readonly class ModuleEntities implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	private const string ACTION_CREATED = 'created';
 
@@ -37,11 +34,11 @@ final class ModuleEntities implements Common\EventSubscriber
 	private const string ACTION_DELETED = 'deleted';
 
 	public function __construct(
-		private readonly ORM\EntityManagerInterface $entityManager,
-		private readonly EventLoop\Status $eventLoopStatus,
-		private readonly Documents\RoutingDocumentFactory $documentFactory,
-		private readonly Publisher\MessagePublisher $publisher,
-		private readonly Async\MessagePublisher $asyncPublisher,
+		private ORM\EntityManagerInterface $entityManager,
+		private EventLoop\Status $eventLoopStatus,
+		private Documents\RoutingDocumentFactory $documentFactory,
+		private Publisher\MessagePublisher $publisher,
+		private Async\MessagePublisher $asyncPublisher,
 	)
 	{
 	}

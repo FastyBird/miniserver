@@ -20,7 +20,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types;
-use Nette;
 use Nette\Caching as NetteCaching;
 use Nette\Utils;
 use Orisai\ObjectMapper;
@@ -47,8 +46,6 @@ use function strval;
  */
 final class DevicePropertiesManager extends Models\States\PropertiesManager
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly bool $useExchange,

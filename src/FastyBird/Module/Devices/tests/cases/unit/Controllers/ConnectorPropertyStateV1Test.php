@@ -58,7 +58,7 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 	): void
 	{
 		// The storage driver behind the module's state repository; production registers it through a bridge
-		$stateRepository = $this->createMock(Models\States\Connectors\IRepository::class);
+		$stateRepository = $this->createMock(Models\States\Connectors\Reader::class);
 		$stateRepository
 			->expects(self::exactly($lookups))
 			->method('find')

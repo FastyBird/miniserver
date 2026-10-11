@@ -11,7 +11,7 @@ use FastyBird\Module\Ui\Middleware as UiMiddleware;
 /**
  * Module API routes configuration
  */
-class ApiRoutes
+final readonly class ApiRoutes
 {
 
 	public const string URL_ITEM_ID = 'id';
@@ -23,16 +23,16 @@ class ApiRoutes
 	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
-		private readonly bool $usePrefix,
-		private readonly Controllers\DashboardsV1 $dashboardsV1Controller,
-		private readonly Controllers\TabsV1 $tabsV1Controller,
-		private readonly Controllers\GroupsV1 $groupsV1Controller,
-		private readonly Controllers\WidgetsV1 $widgetsV1Controller,
-		private readonly Controllers\DisplayV1 $displayV1Controller,
-		private readonly Controllers\DataSourcesV1 $dataSourceV1Controller,
-		private readonly UiMiddleware\Access $uiAccessControlMiddleware,
-		private readonly SecurityMiddleware\Authorization $authorizationMiddleware,
-		private readonly SecurityMiddleware\User $userMiddleware,
+		private bool $usePrefix,
+		private Controllers\DashboardsV1 $dashboardsV1Controller,
+		private Controllers\TabsV1 $tabsV1Controller,
+		private Controllers\GroupsV1 $groupsV1Controller,
+		private Controllers\WidgetsV1 $widgetsV1Controller,
+		private Controllers\DisplayV1 $displayV1Controller,
+		private Controllers\DataSourcesV1 $dataSourceV1Controller,
+		private UiMiddleware\Access $uiAccessControlMiddleware,
+		private SecurityMiddleware\Authorization $authorizationMiddleware,
+		private SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

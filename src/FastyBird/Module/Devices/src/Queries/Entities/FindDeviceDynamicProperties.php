@@ -10,7 +10,7 @@ use FastyBird\Module\Devices\Entities;
  * @template T of Entities\Devices\Properties\Dynamic
  * @extends  FindDeviceProperties<T>
  */
-class FindDeviceDynamicProperties extends FindDeviceProperties
+final class FindDeviceDynamicProperties extends FindDeviceProperties
 {
 
 }

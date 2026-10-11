@@ -15,7 +15,7 @@ use Override;
 /**
  * Application identity factory
  */
-readonly class IdentityFactory implements Identity\IdentityProvider
+final readonly class IdentityFactory implements Identity\IdentityProvider
 {
 
 	public function __construct(private Tokens\Repository $tokensRepository)

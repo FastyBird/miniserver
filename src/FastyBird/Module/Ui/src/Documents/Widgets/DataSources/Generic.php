@@ -8,7 +8,7 @@ use FastyBird\Module\Ui\Entities;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\DataSources\Generic::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\Generic::TYPE)]
-class Generic extends UiDocuments\Widgets\DataSources\DataSource
+final class Generic extends UiDocuments\Widgets\DataSources\DataSource
 {
 
 	public static function getType(): string
