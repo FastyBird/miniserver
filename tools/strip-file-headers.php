@@ -21,7 +21,8 @@
  *   --list           also print every file a header was (or, with --check, would be) removed from
  *
  * Without --package the scope is every first-party PHP directory: src, tests, bin, public and
- * migrations. node_modules directories are skipped.
+ * migrations, plus the Translations `*.neon` files below them. node_modules directories are
+ * skipped.
  *
  * WHAT IS A HEADER. The file's first docblock, if and only if it sits DIRECTLY between the
  * `declare(strict_types = 1);` statement and the `namespace` keyword -- nothing but whitespace on
@@ -49,6 +50,23 @@
  * otherwise an escalation, §15.2). A forbidden tag in a class or member docblock is not a header
  * and is not this tool's business: `make csf` removes it once the package's ForbiddenAnnotations
  * carve-out in tools/phpcs.xml is gone.
+ *
+ * TRANSLATION FILES. The same legacy header sits at the top of the `*.neon` files in a
+ * `Translations` directory below src (`src/FastyBird/<Type>/<Name>/src/**\/Translations/*.neon`; the
+ * Core one is nested under `Api`). Those are in scope as well, because the
+ * ForbiddenAnnotations sniff only sees PHP. A NEON header is the file's leading block of `#` comment
+ * lines, followed by blank lines, if and only if the block holds at least one of the nine forbidden
+ * tags and every line of it is one of:
+ *
+ *   - an empty comment line (`#`);
+ *   - one of the nine forbidden tags or `@language`, with any value;
+ *   - ONE title line before the first tag, without an `@` (`# Connector translations`).
+ *
+ * Removing it deletes the block and the blank lines after it, so the file starts with its first
+ * key; everything after is untouched byte for byte. The other-shape rule applies here too: a
+ * leading comment block with a forbidden tag in any other shape, or a forbidden tag in a comment
+ * line anywhere else in the file, is left alone, reported and counted by --check. `*.neon` files
+ * outside a `Translations` directory (config/, tests/common.neon) are not scanned.
  *
  * The tool is idempotent: once a header is gone the position is empty, so a second run removes
  * nothing. It only ever deletes bytes from the start of a file up to `namespace`; it never touches
@@ -87,9 +105,10 @@ function fbHeaderFail(string $message): never
 }
 
 /**
- * @return list<string> repository-relative paths of the PHP files below $directory, sorted
+ * @return list<string> repository-relative paths of the PHP files below $directory or, with $neon, of
+ *                      its `*.neon` files whose parent directory is named Translations; sorted
  */
-function fbHeaderFiles(string $root, string $directory): array
+function fbHeaderFiles(string $root, string $directory, bool $neon = false): array
 {
 	$files = [];
 
@@ -105,7 +124,15 @@ function fbHeaderFiles(string $root, string $directory): array
 	);
 
 	foreach ($iterator as $file) {
-		if ($file instanceof SplFileInfo && $file->isFile() && $file->getExtension() === 'php') {
+		if (
+			$file instanceof SplFileInfo
+			&& $file->isFile()
+			&& (
+				$neon
+					? $file->getExtension() === 'neon' && basename($file->getPath()) === 'Translations'
+					: $file->getExtension() === 'php'
+			)
+		) {
 			$files[] = substr($file->getPathname(), strlen($root) + 1);
 		}
 	}
@@ -274,6 +301,84 @@ function fbHeaderAnalyse(string $code): array
 	return ['status' => 'header', 'code' => $kept, 'reason' => null, 'forbidden' => true];
 }
 
+/**
+ * Analyses the leading comment block of a NEON translation file.
+ *
+ * @return array{status: 'none'|'header'|'other', code: string, reason: string|null, forbidden: bool}
+ */
+function fbHeaderAnalyseNeon(string $code): array
+{
+	$forbiddenTag = '/^\s*#\s*@(' . implode('|', FB_HEADER_FORBIDDEN_TAGS) . ')\b/i';
+	$lines = preg_split('/(?<=\n)/', $code, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+	// The leading block: consecutive lines starting with `#`.
+	$block = 0;
+	$hasTag = false;
+
+	while ($block < count($lines) && str_starts_with($lines[$block], '#')) {
+		$hasTag = $hasTag || preg_match($forbiddenTag, $lines[$block]) === 1;
+		$block++;
+	}
+
+	if (!$hasTag) {
+		// No header at the top: a forbidden tag in a comment line anywhere else is still reported.
+		foreach ($lines as $number => $line) {
+			if (preg_match($forbiddenTag, $line) === 1) {
+				return [
+					'status' => 'other',
+					'code' => $code,
+					'reason' => sprintf('line %d carries a forbidden tag outside a leading comment block', $number + 1),
+					'forbidden' => true,
+				];
+			}
+		}
+
+		return ['status' => 'none', 'code' => $code, 'reason' => null, 'forbidden' => false];
+	}
+
+	$other = static fn (string $reason): array => [
+		'status' => 'other',
+		'code' => $code,
+		'reason' => $reason,
+		'forbidden' => true,
+	];
+
+	$tags = 0;
+	$titles = 0;
+
+	for ($i = 0; $i < $block; $i++) {
+		$text = trim(substr(rtrim($lines[$i]), 1));
+
+		if ($text === '') {
+			continue;
+		}
+
+		if (preg_match('/^@([A-Za-z-]+)/', $text, $match) === 1) {
+			if (!in_array(strtolower($match[1]), [...FB_HEADER_FORBIDDEN_TAGS, 'language'], true)) {
+				return $other(sprintf('its leading comment block holds the tag @%s', $match[1]));
+			}
+
+			$tags++;
+
+			continue;
+		}
+
+		if ($tags > 0 || $titles > 0 || str_contains($text, '@')) {
+			return $other(sprintf('its leading comment block holds "%s", which is not a single title line before the tags', $text));
+		}
+
+		$titles++;
+	}
+
+	$rest = $block;
+
+	while ($rest < count($lines) && trim($lines[$rest]) === '') {
+		$rest++;
+	}
+
+	return ['status' => 'header', 'code' => implode('', array_slice($lines, $rest)), 'reason' => null, 'forbidden' => true];
+}
+
 // ---------------------------------------------------------------------------------------------
 
 $root = dirname(__DIR__);
@@ -318,8 +423,10 @@ $scope = $packages !== [] ? array_values(array_unique($packages)) : FB_HEADER_DE
 $files = [];
 
 foreach ($scope as $directory) {
-	foreach (fbHeaderFiles($root, $directory) as $file) {
-		$files[$file] = true;
+	foreach ([false, true] as $neon) {
+		foreach (fbHeaderFiles($root, $directory, $neon) as $file) {
+			$files[$file] = true;
+		}
 	}
 }
 
@@ -337,7 +444,7 @@ foreach ($files as $file) {
 		fbHeaderFail(sprintf('could not read %s', $file));
 	}
 
-	$result = fbHeaderAnalyse($code);
+	$result = str_ends_with($file, '.neon') ? fbHeaderAnalyseNeon($code) : fbHeaderAnalyse($code);
 
 	if ($result['status'] === 'other') {
 		$others[$file] = (string) $result['reason'];

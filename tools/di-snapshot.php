@@ -110,12 +110,62 @@
  *       'tags' => ['old.tag' => 'new.tag', ...],
  *   ];
  *
- * Both keys are optional. A service rename rewrites the definition's key, its place in
+ * Every key is optional. A service rename rewrites the definition's key, its place in
  * "order", aliases (both sides), every {"@": ...} reference, every string argument that is
  * exactly the old name (nettrine's EventPass registers subscribers by service name as a plain
  * string), the names in "wiring" and "tags", and the quoted name in "initialize". A tag rename
  * rewrites tag keys (definitions and "tags"), a locator's "tagged", and every string argument
  * that is exactly the old tag. Renaming two old names to one new name is an error.
+ *
+ * "wiringTypes" => ['Old\Contract' => 'New\Contract', ...] renames the type keys of the generated
+ * container's "wiring" (what findByType() looks up), for a contract that was renamed: the
+ * services keep their names, they are listed under the new type. It touches nothing else, so a
+ * renamed type that also shows in a definition's "type", "factory" or arguments is still reported.
+ * The types are written as `$wiring` keys them, without a leading backslash.
+ *
+ * A fourth key, "definitions", states an expected change of a definition's injected arguments or
+ * its "lazy" flag (a service that now takes the router instead of looking it up, or a new list
+ * argument the compiler pass collects). It is optional like the other two, so every existing map
+ * keeps working unchanged:
+ *
+ *   return [
+ *       'services' => [...],   // renames first (with 'tags' and 'wiringTypes'): the names below are the HEAD's
+ *       'definitions' => [
+ *           // the head's service name, or an fnmatch() pattern (`*` any run of characters)
+ *           'fbUiModule.router.validator' => [
+ *               'lazy' => ['from' => null, 'to' => true],
+ *               'arguments' => [
+ *                   // A BASE position (or name) => the base value and the value the head holds.
+ *                   // A value is written as the recording writes it: a reference is
+ *                   // ['@' => 'service.name'], a string is a string.
+ *                   0 => ['from' => ['@' => 'container'], 'to' => ['@' => 'fbCore.http.routing.router']],
+ *                   // no 'to': the argument is gone in the head (the ones after it move up)
+ *                   4 => ['from' => 'x'],
+ *                   // 'insert': a new argument that sits at this HEAD position, the ones from there
+ *                   // on move down. Applied after the replacements and removals above, in
+ *                   // ascending order. A name (a string key) is appended; it must not exist.
+ *                   3 => ['insert' => ['wiring' => 'Vendor\Some\Contract']],
+ *               ],
+ *           ],
+ *       ],
+ *   ];
+ *
+ * `['wiring' => '<type>']` is a placeholder for the BASE container's own findByType('<type>') list
+ * (the "wiring" entry of the recording, its sub-lists concatenated), as the references
+ * [['@' => 'a'], ['@' => 'b']] in compiled order: the argument that replaces a runtime lookup. It
+ * is only valid as a 'to' or 'insert' value, and the type is written the way `$wiring` keys it
+ * (no leading backslash). The service names in it are the head's, because the renames above run
+ * first.
+ *
+ * The rule is checked, not trusted. A definition the pattern matches whose base value is not
+ * the stated 'from' (or that has no room for an 'insert') is NOT rewritten, and is reported as a
+ * difference of its container; a rule that matches no definition in any container
+ * is reported as well (a typo would otherwise pass silently). Whatever the rule rewrites is then
+ * compared with the head like everything else, so the head must hold exactly the stated 'to'
+ * and nothing else may differ. The rule never touches a definition's name, type, tags, setup,
+ * autowiring or any other field. Only the keys "lazy" and "arguments" exist; any other key is an
+ * error, as is an empty rule. "lazy" exists on a plain service only (it is null if the service
+ * does not set it).
  */
 
 // phpcs:ignoreFile
@@ -790,6 +840,8 @@ function fbDiSnapshotCollapseDotSegments(string $value, array $placeholders): st
  */
 function fbDiSnapshotSelfCheck(): void
 {
+	fbDiSnapshotSelfCheckDefinitionRules();
+
 	$replacements = ['/app' => '%root%', '/app/var/w/temp' => '%FB_TEMP_DIR%'];
 
 	$cases = [
@@ -823,6 +875,140 @@ function fbDiSnapshotSelfCheck(): void
 				$expected,
 			));
 		}
+	}
+}
+
+/**
+ * The "definitions" rules of --map (see the header), on a synthetic recording: the rewrite, the
+ * wiring placeholder, a pattern, and the ways a rule refuses (a base value that is not the stated
+ * one, an insert without room, a rule that matches nothing).
+ */
+function fbDiSnapshotSelfCheckDefinitionRules(): void
+{
+	$service = static fn (array $arguments, bool|null $lazy = null): array => [
+		'kind' => 'service',
+		'type' => 'T',
+		'arguments' => $arguments,
+		'lazy' => $lazy,
+	];
+
+	$snapshot = [
+		'compiled' => true,
+		'wiring' => ['Vendor\\Hook' => [['h.a'], ['h.b']], 'Vendor\\Empty' => []],
+		'services' => [
+			'a.validator' => $service([['@' => 'container']]),
+			'a.hydrator.one' => $service([['@' => 'x'], ['@' => 'container'], ['@' => 'tail']]),
+			'a.hydrator.two' => $service([['@' => 'y'], ['@' => 'container'], ['@' => 'tail']]),
+			'b.other' => $service([1, 2, 3]),
+			'c.named' => $service(['one' => 1]),
+		],
+	];
+
+	$run = static function (array $rules) use ($snapshot): array {
+		$violations = [];
+		$matched = [];
+		$result = fbDiSnapshotApplyDefinitionRules($snapshot, $rules, $violations, $matched);
+
+		return [$result['services'], $violations, $matched];
+	};
+
+	$router = ['@' => 'router'];
+	$schemas = ['@' => 'schemas'];
+	$hooks = [['@' => 'h.a'], ['@' => 'h.b']];
+
+	[$services, $violations, $matched] = $run([
+		'a.validator' => [
+			'lazy' => ['from' => null, 'to' => true],
+			'arguments' => [0 => ['from' => ['@' => 'container'], 'to' => $router]],
+		],
+		// replace a base position, insert in the middle (the tail moves down), insert at the end,
+		// the inserts listed out of order
+		'a.hydrator.*' => [
+			'arguments' => [
+				4 => ['insert' => 'last'],
+				2 => ['insert' => ['wiring' => '\\Vendor\\Hook']],
+				1 => ['from' => ['@' => 'container'], 'to' => $schemas],
+			],
+		],
+		// remove a base position; the ones after it move up
+		'b.*' => ['arguments' => [0 => ['from' => 1], 1 => ['from' => 2]]],
+		'c.*' => ['arguments' => ['two' => ['insert' => 2]]],
+		'a.validator*' => ['arguments' => [0 => ['from' => $router, 'to' => ['@' => 'again']]]],
+	]);
+
+	$expected = [
+		'a.validator' => $service([['@' => 'again']], true),
+		'a.hydrator.one' => $service([['@' => 'x'], $schemas, $hooks, ['@' => 'tail'], 'last']),
+		'a.hydrator.two' => $service([['@' => 'y'], $schemas, $hooks, ['@' => 'tail'], 'last']),
+		'b.other' => $service([3]),
+		'c.named' => $service(['one' => 1, 'two' => 2]),
+	];
+
+	if (
+		$services !== $expected
+		|| $violations !== []
+		|| $matched !== ['a.validator' => 1, 'a.hydrator.*' => 2, 'b.*' => 1, 'c.*' => 1, 'a.validator*' => 1]
+	) {
+		throw new RuntimeException('Definition-rule self-check failed: a rule did not rewrite as the map states');
+	}
+
+	// A wiring placeholder for a type nobody implements is the empty list, as findByType() returns
+	[$services] = $run(['b.other' => ['arguments' => [3 => ['insert' => ['wiring' => 'Vendor\\Empty']]]]]);
+
+	if (($services['b.other']['arguments'] ?? null) !== [1, 2, 3, []]) {
+		throw new RuntimeException('Definition-rule self-check failed: an empty wiring list');
+	}
+
+	// A rule is checked, not trusted: nothing is rewritten and each refusal is reported
+	[$services, $violations, $matched] = $run([
+		'a.validator' => [
+			'lazy' => ['from' => true, 'to' => false],
+			'arguments' => [0 => ['from' => $router, 'to' => $schemas]],
+		],
+		'b.other' => ['arguments' => [5 => ['from' => 1, 'to' => 2], 9 => ['insert' => 'x']]],
+		'zz.*' => ['lazy' => ['from' => null, 'to' => true]],
+	]);
+
+	if (
+		$services !== $snapshot['services']
+		|| count($violations) !== 3
+		|| !str_contains($violations[0], 'lazy is null, the map expects true')
+		|| !str_contains($violations[1], 'argument 0 is {"@":"container"}, the map expects {"@":"router"}')
+		|| !str_contains($violations[2], 'argument 5 is (absent), the map expects 1')
+		|| array_key_exists('zz.*', $matched)
+	) {
+		throw new RuntimeException('Definition-rule self-check failed: a rule that does not apply was applied or went unreported');
+	}
+
+	// "wiringTypes": the wiring keys are renamed, the services are not, and two types may not merge
+	$base = ['compiled' => true, 'order' => ['s'], 'aliases' => [], 'services' => ['s' => $service([]) + ['tags' => []]], 'tags' => [], 'initialize' => [], 'wiring' => ['A\\Old' => [['s']], 'B\\Keep' => [['s']]]];
+	$renamed = fbDiSnapshotApplyMap($base, ['services' => [], 'tags' => [], 'wiringTypes' => ['A\\Old' => 'C\\New'], 'definitions' => []]);
+
+	if (array_keys($renamed['wiring']) !== ['B\\Keep', 'C\\New'] || $renamed['wiring']['C\\New'] !== [['s']] || $renamed['services'] !== $base['services']) {
+		throw new RuntimeException('Definition-rule self-check failed: a wiring type was not renamed alone');
+	}
+
+	try {
+		fbDiSnapshotApplyMap($base, ['services' => [], 'tags' => [], 'wiringTypes' => ['A\\Old' => 'B\\Keep'], 'definitions' => []]);
+
+		throw new RuntimeException('Definition-rule self-check failed: two wiring types merged');
+	} catch (FbDiSnapshotUsageError) {
+		// expected
+	}
+
+	// An insert that has no room is refused too, on its own
+	[$services, $violations] = $run([
+		'b.other' => ['arguments' => [9 => ['insert' => 'x']]],
+		'c.named' => ['arguments' => ['one' => ['insert' => 1]]],
+	]);
+
+	if (
+		$services !== $snapshot['services']
+		|| count($violations) !== 2
+		|| !str_contains($violations[0], 'there is no argument position 9 to insert at (3 arguments)')
+		|| !str_contains($violations[1], 'argument "one" exists (1), the map expects it to be new')
+	) {
+		throw new RuntimeException('Definition-rule self-check failed: an insert without room was applied or went unreported');
 	}
 }
 
@@ -1240,6 +1426,8 @@ function fbDiSnapshotDiffCommand(array $args): int
 {
 	$dirs = [];
 	$maps = [];
+	$mapFiles = [];
+	$matched = [];
 	$allowedMoves = [];
 
 	while ($args !== []) {
@@ -1261,6 +1449,7 @@ function fbDiSnapshotDiffCommand(array $args): int
 			}
 
 			$maps[] = fbDiSnapshotLoadMap($file);
+			$mapFiles[] = $file;
 		} elseif (str_starts_with($arg, '--')) {
 			throw new FbDiSnapshotUsageError(sprintf('Unknown option "%s"', $arg));
 		} else {
@@ -1304,11 +1493,16 @@ function fbDiSnapshotDiffCommand(array $args): int
 		$base = fbDiSnapshotLoadSnapshot($baseDir . '/' . $baseIndex[$id]['file']);
 		$head = fbDiSnapshotLoadSnapshot($headDir . '/' . $headIndex[$id]['file']);
 
-		foreach ($maps as $map) {
+		$violations = [];
+
+		foreach ($maps as $index => $map) {
 			$base = fbDiSnapshotApplyMap($base, $map);
+			$matched[$index] ??= [];
+			$base = fbDiSnapshotApplyDefinitionRules($base, $map['definitions'], $violations, $matched[$index]);
 		}
 
 		[$lines, $info] = fbDiSnapshotCompare($base, $head, $allowedMoves);
+		$lines = array_merge($violations, $lines);
 
 		if ($lines === []) {
 			$identical++;
@@ -1325,6 +1519,18 @@ function fbDiSnapshotDiffCommand(array $args): int
 		fwrite(STDOUT, '== ' . $id . "\n" . implode("\n", array_merge($lines, $info)) . "\n\n");
 	}
 
+	// A "definitions" rule that matched nothing anywhere is a typo, or a change that did not happen
+	$unused = 0;
+
+	foreach ($maps as $index => $map) {
+		foreach (array_keys($map['definitions']) as $pattern) {
+			if (($matched[$index][$pattern] ?? 0) === 0) {
+				fwrite(STDOUT, sprintf("== map %s\n  rule \"%s\" matched no service in any container\n\n", $mapFiles[$index], $pattern));
+				$unused++;
+			}
+		}
+	}
+
 	fwrite(STDOUT, sprintf(
 		"%d containers in base, %d in head, %d in both: %d identical%s%s, %d differ.\n",
 		count($baseIndex),
@@ -1336,7 +1542,11 @@ function fbDiSnapshotDiffCommand(array $args): int
 		$differing,
 	));
 
-	return $differing === 0 ? 0 : 1;
+	if ($unused > 0) {
+		fwrite(STDOUT, sprintf("%d map rule(s) matched no service in any container.\n", $unused));
+	}
+
+	return $differing === 0 && $unused === 0 ? 0 : 1;
 }
 
 /**
@@ -1396,7 +1606,7 @@ function fbDiSnapshotLoadSnapshot(string $file): array
 }
 
 /**
- * @return array{services: array<string, string>, tags: array<string, string>}
+ * @return array{services: array<string, string>, tags: array<string, string>, wiringTypes: array<string, string>, definitions: array<string, array{lazy?: array{from: mixed, to: mixed}, arguments?: array<int|string, array{from?: mixed, to?: mixed, insert?: mixed}>}>}
  */
 function fbDiSnapshotLoadMap(string $file): array
 {
@@ -1406,13 +1616,13 @@ function fbDiSnapshotLoadMap(string $file): array
 
 	$map = require $file;
 
-	if (!is_array($map) || array_diff(array_keys($map), ['services', 'tags']) !== []) {
-		throw new FbDiSnapshotUsageError(sprintf('Map "%s" must return an array with only "services" and "tags" keys', $file));
+	if (!is_array($map) || array_diff(array_keys($map), ['services', 'tags', 'wiringTypes', 'definitions']) !== []) {
+		throw new FbDiSnapshotUsageError(sprintf('Map "%s" must return an array with only "services", "tags", "wiringTypes" and "definitions" keys', $file));
 	}
 
-	$result = ['services' => [], 'tags' => []];
+	$result = ['services' => [], 'tags' => [], 'wiringTypes' => [], 'definitions' => []];
 
-	foreach (['services', 'tags'] as $kind) {
+	foreach (['services', 'tags', 'wiringTypes'] as $kind) {
 		$entries = $map[$kind] ?? [];
 
 		if (!is_array($entries)) {
@@ -1423,6 +1633,10 @@ function fbDiSnapshotLoadMap(string $file): array
 			if (!is_string($old) || !is_string($new) || $old === '' || $new === '') {
 				throw new FbDiSnapshotUsageError(sprintf('Map "%s": "%s" must map non-empty strings to strings', $file, $kind));
 			}
+
+			if ($kind === 'wiringTypes' && ($old[0] === '\\' || $new[0] === '\\')) {
+				throw new FbDiSnapshotUsageError(sprintf('Map "%s": "wiringTypes" names a type without a leading backslash, as $wiring keys it', $file));
+			}
 		}
 
 		if (count(array_unique($entries)) !== count($entries)) {
@@ -1432,12 +1646,252 @@ function fbDiSnapshotLoadMap(string $file): array
 		$result[$kind] = $entries;
 	}
 
+	$result['definitions'] = fbDiSnapshotLoadDefinitionRules($file, $map['definitions'] ?? []);
+
 	return $result;
 }
 
 /**
+ * Validates the "definitions" key of a map; see the header for the format.
+ *
+ * @return array<string, array{lazy?: array{from: mixed, to: mixed}, arguments?: array<int|string, array{from?: mixed, to?: mixed, insert?: mixed}>}>
+ */
+function fbDiSnapshotLoadDefinitionRules(string $file, mixed $definitions): array
+{
+	if (!is_array($definitions)) {
+		throw new FbDiSnapshotUsageError(sprintf('Map "%s": "definitions" must be an array', $file));
+	}
+
+	$rules = [];
+
+	foreach ($definitions as $pattern => $rule) {
+		$where = sprintf('Map "%s": definitions["%s"]', $file, $pattern);
+
+		if (!is_string($pattern) || $pattern === '' || !is_array($rule) || $rule === []) {
+			throw new FbDiSnapshotUsageError($where . ' must map a non-empty service name or pattern to a non-empty array');
+		}
+
+		if (array_diff(array_keys($rule), ['lazy', 'arguments']) !== []) {
+			throw new FbDiSnapshotUsageError($where . ' knows only the keys "lazy" and "arguments"');
+		}
+
+		if (isset($rule['lazy'])) {
+			if (!is_array($rule['lazy']) || array_keys($rule['lazy']) !== ['from', 'to'] && array_keys($rule['lazy']) !== ['to', 'from']) {
+				throw new FbDiSnapshotUsageError($where . '["lazy"] must be [\'from\' => <bool|null>, \'to\' => <bool|null>]');
+			}
+
+			foreach ($rule['lazy'] as $value) {
+				if ($value !== null && !is_bool($value)) {
+					throw new FbDiSnapshotUsageError($where . '["lazy"] holds only true, false or null');
+				}
+			}
+		}
+
+		if (isset($rule['arguments'])) {
+			if (!is_array($rule['arguments']) || $rule['arguments'] === []) {
+				throw new FbDiSnapshotUsageError($where . '["arguments"] must be a non-empty array of position (or name) => [\'from\' => ..., \'to\' => ...]');
+			}
+
+			foreach ($rule['arguments'] as $position => $change) {
+				$at = sprintf('%s["arguments"][%s]', $where, json_encode($position));
+				$keys = is_array($change) ? array_keys($change) : [];
+
+				if (
+					!is_int($position) && !is_string($position)
+					|| !is_array($change)
+					|| $keys !== ['insert'] && $keys !== ['from'] && $keys !== ['from', 'to'] && $keys !== ['to', 'from']
+				) {
+					throw new FbDiSnapshotUsageError($at . ' must be [\'from\' => ..., \'to\' => ...], [\'from\' => ...] (removed) or [\'insert\' => ...]');
+				}
+
+				if (array_key_exists('from', $change) && fbDiSnapshotContainsPlaceholder($change['from'])) {
+					throw new FbDiSnapshotUsageError($at . ': a wiring placeholder is only valid as a \'to\' or \'insert\' value');
+				}
+
+				foreach (['to', 'insert'] as $key) {
+					if (array_key_exists($key, $change) && is_array($change[$key]) && array_key_exists('wiring', $change[$key]) && (count($change[$key]) !== 1 || !is_string($change[$key]['wiring']) || $change[$key]['wiring'] === '')) {
+						throw new FbDiSnapshotUsageError($at . ': a wiring placeholder is [\'wiring\' => \'<type>\'] and nothing else');
+					}
+				}
+
+				if (array_key_exists('insert', $change) && is_int($position) && $position < 0) {
+					throw new FbDiSnapshotUsageError($at . ': an insert position is not negative');
+				}
+			}
+		}
+
+		$rules[$pattern] = $rule;
+	}
+
+	return $rules;
+}
+
+function fbDiSnapshotContainsPlaceholder(mixed $value): bool
+{
+	if (!is_array($value)) {
+		return false;
+	}
+
+	if (array_key_exists('wiring', $value)) {
+		return true;
+	}
+
+	foreach ($value as $item) {
+		if (fbDiSnapshotContainsPlaceholder($item)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Applies the "definitions" rules of one map to one recording (the services already renamed).
+ *
+ * A violated precondition leaves the definition as it is and is returned in $violations, to be
+ * reported with the container's differences. $matched counts, per rule pattern, the definitions
+ * it matched, accumulated by the caller over all containers.
+ *
  * @param array<string, mixed> $snapshot
- * @param array{services: array<string, string>, tags: array<string, string>} $map
+ * @param array<string, array{lazy?: array{from: mixed, to: mixed}, arguments?: array<int|string, array{from?: mixed, to?: mixed, insert?: mixed}>}> $rules
+ * @param list<string> $violations
+ * @param array<string, int> $matched
+ *
+ * @return array<string, mixed>
+ */
+function fbDiSnapshotApplyDefinitionRules(array $snapshot, array $rules, array &$violations, array &$matched): array
+{
+	if (($snapshot['compiled'] ?? false) !== true || $rules === []) {
+		return $snapshot;
+	}
+
+	// Not `?: '?'`, as fbDiSnapshotCompare() writes it: json_encode(0) is the falsy string "0"
+	$json = static function (mixed $value): string {
+		$encoded = json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
+
+		return $encoded === false ? '?' : $encoded;
+	};
+
+	// findByType(): the sub-lists of $wiring[type], concatenated, as references
+	$wiringList = static function (string $type) use ($snapshot): array {
+		$names = [];
+
+		foreach ($snapshot['wiring'][ltrim($type, '\\')] ?? [] as $list) {
+			foreach ($list as $name) {
+				$names[] = ['@' => $name];
+			}
+		}
+
+		return $names;
+	};
+
+	foreach ($rules as $pattern => $rule) {
+		foreach ($snapshot['services'] as $name => $service) {
+			if (!fnmatch($pattern, (string) $name)) {
+				continue;
+			}
+
+			$matched[$pattern] = ($matched[$pattern] ?? 0) + 1;
+			$problems = [];
+
+			if (isset($rule['lazy'])) {
+				$current = $service['lazy'] ?? null;
+
+				if ($current !== $rule['lazy']['from']) {
+					$problems[] = sprintf('lazy is %s, the map expects %s', $json($current), $json($rule['lazy']['from']));
+				} else {
+					$service['lazy'] = $rule['lazy']['to'];
+				}
+			}
+
+			if (isset($rule['arguments'])) {
+				$arguments = $service['arguments'] ?? null;
+
+				if (!is_array($arguments)) {
+					$problems[] = sprintf('it has no arguments (kind %s)', $service['kind'] ?? '?');
+				} else {
+					$wasList = array_is_list($arguments);
+					$changed = $arguments;
+					$inserts = [];
+					$argumentProblems = [];
+
+					$resolve = static fn (mixed $value): mixed => is_array($value) && array_key_exists('wiring', $value)
+						? $wiringList((string) $value['wiring'])
+						: $value;
+
+					foreach ($rule['arguments'] as $position => $change) {
+						if (array_key_exists('insert', $change)) {
+							$inserts[$position] = $resolve($change['insert']);
+
+							continue;
+						}
+
+						if (!array_key_exists($position, $arguments) || $arguments[$position] !== $change['from']) {
+							$argumentProblems[] = sprintf(
+								'argument %s is %s, the map expects %s',
+								$json($position),
+								array_key_exists($position, $arguments) ? $json($arguments[$position]) : '(absent)',
+								$json($change['from']),
+							);
+
+							continue;
+						}
+
+						if (array_key_exists('to', $change)) {
+							$changed[$position] = $resolve($change['to']);
+						} else {
+							unset($changed[$position]);
+						}
+					}
+
+					if ($argumentProblems === []) {
+						if ($wasList) {
+							$changed = array_values($changed);
+						}
+
+						ksort($inserts);
+
+						foreach ($inserts as $position => $value) {
+							if (is_string($position) ? array_key_exists($position, $changed) : !$wasList || $position > count($changed)) {
+								$argumentProblems[] = is_string($position)
+									? sprintf('argument %s exists (%s), the map expects it to be new', $json($position), $json($changed[$position]))
+									: sprintf('there is no argument position %d to insert at (%d arguments%s)', $position, count($changed), $wasList ? '' : ', named');
+
+								continue;
+							}
+
+							if (is_string($position)) {
+								$changed[$position] = $value;
+							} else {
+								array_splice($changed, $position, 0, [$value]);
+							}
+						}
+					}
+
+					if ($argumentProblems === []) {
+						$service['arguments'] = $changed;
+					} else {
+						$problems = array_merge($problems, $argumentProblems);
+					}
+				}
+			}
+
+			if ($problems === []) {
+				$snapshot['services'][$name] = $service;
+			} else {
+				foreach ($problems as $problem) {
+					$violations[] = sprintf('  map rule "%s" does not apply to service %s: %s', $pattern, $name, $problem);
+				}
+			}
+		}
+	}
+
+	return $snapshot;
+}
+
+/**
+ * @param array<string, mixed> $snapshot
+ * @param array{services: array<string, string>, tags: array<string, string>, wiringTypes?: array<string, string>, definitions?: array<string, mixed>} $map
  *
  * @return array<string, mixed>
  */
@@ -1533,15 +1987,23 @@ function fbDiSnapshotApplyMap(array $snapshot, array $map): array
 	// The generated container: every service name in $wiring and $tags, tag names as $tags
 	// keys, and quoted names in the initialize() body.
 	$wiring = [];
+	$wiringTypes = $map['wiringTypes'] ?? [];
 
 	foreach ($snapshot['wiring'] ?? [] as $type => $lists) {
 		foreach ($lists as $key => $names) {
 			$lists[$key] = array_map($rename, $names);
 		}
 
-		$wiring[$type] = $lists;
+		$newType = $wiringTypes[$type] ?? $type;
+
+		if (isset($wiring[$newType])) {
+			throw new FbDiSnapshotUsageError(sprintf('The map renames two wiring types to "%s"', $newType));
+		}
+
+		$wiring[$newType] = $lists;
 	}
 
+	ksort($wiring, SORT_STRING);
 	$snapshot['wiring'] = $wiring;
 
 	$generatedTags = [];

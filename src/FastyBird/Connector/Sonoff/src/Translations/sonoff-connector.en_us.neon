@@ -1,18 +1,3 @@
-#
-# Connector translations
-#
-# @language       en_US
-#
-# @license        More in LICENSE.md
-# @copyright      https://www.fastybird.com
-# @author         Adam Kadlec <adam.kadlec@fastybird.com>
-# @package        FastyBird:SonoffConnector!
-# @subpackage     Translations
-# @since          1.0.0
-#
-# @date           06.10.23
-#
-
 base:
     messages:
         invalidRelation:

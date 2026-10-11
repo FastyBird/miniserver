@@ -12,7 +12,7 @@ final class DummyChannelSchema extends DevicesSchemas\Channels\Channel
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const string SCHEMA_TYPE = Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/device/' . DummyChannelEntity::TYPE;
+	public const string SCHEMA_TYPE = Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR->value . '/channel/' . DummyChannelEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

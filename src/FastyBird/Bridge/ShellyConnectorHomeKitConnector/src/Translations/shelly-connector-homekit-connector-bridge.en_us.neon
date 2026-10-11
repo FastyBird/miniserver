@@ -1,18 +1,3 @@
-#
-# Bridge translations
-#
-# @language       en_US
-#
-# @license        More in LICENSE.md
-# @copyright      https://www.fastybird.com
-# @author         Adam Kadlec <adam.kadlec@fastybird.com>
-# @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
-# @subpackage     Translations
-# @since          1.0.0
-#
-# @date           21.08.24
-#
-
 base:
     misc:
         services:
