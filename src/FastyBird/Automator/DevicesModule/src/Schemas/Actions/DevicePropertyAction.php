@@ -40,7 +40,7 @@ final class DevicePropertyAction extends TriggersSchemas\Actions\Action
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Automator::DEVICE_MODULE->value . '/action/' . Entities\Actions\DevicePropertyAction::TYPE;
+	public const string SCHEMA_TYPE = Sources\Automator::DEVICE_MODULE->value . '/action/' . Entities\Actions\DevicePropertyAction::TYPE;
 
 	public function getType(): string
 	{

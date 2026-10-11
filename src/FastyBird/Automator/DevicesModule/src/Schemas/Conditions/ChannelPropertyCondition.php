@@ -41,7 +41,7 @@ final class ChannelPropertyCondition extends TriggersSchemas\Conditions\Conditio
 	 * Define entity schema type string
 	 */
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	public const SCHEMA_TYPE = Sources\Automator::DEVICE_MODULE->value . '/condition/' . Entities\Conditions\ChannelPropertyCondition::TYPE;
+	public const string SCHEMA_TYPE = Sources\Automator::DEVICE_MODULE->value . '/condition/' . Entities\Conditions\ChannelPropertyCondition::TYPE;
 
 	public function getType(): string
 	{

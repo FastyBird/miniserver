@@ -28,7 +28,7 @@ use function array_merge;
 class ChannelPropertyCondition extends PropertyCondition
 {
 
-	public const TYPE = 'channel-property';
+	public const string TYPE = 'channel-property';
 
 	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'condition_channel', type: Uuid\Doctrine\UuidBinaryType::NAME, nullable: true)]

@@ -38,7 +38,7 @@ use const DIRECTORY_SEPARATOR;
 class DateTimeExtension extends NetteDI\CompilerExtension
 {
 
-	public const NAME = 'fbDateTimeAutomator';
+	public const string NAME = 'fbDateTimeAutomator';
 
 	public static function register(
 		Boot\Configurator $config,

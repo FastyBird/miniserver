@@ -29,7 +29,7 @@ use function assert;
 class DateCondition extends TriggersEntities\Conditions\Condition
 {
 
-	public const TYPE = 'date';
+	public const string TYPE = 'date';
 
 	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'condition_date', type: 'datetime_immutable', nullable: true)]

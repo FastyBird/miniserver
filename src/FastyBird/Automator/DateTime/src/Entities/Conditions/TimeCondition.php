@@ -36,7 +36,7 @@ use function method_exists;
 class TimeCondition extends TriggersEntities\Conditions\Condition
 {
 
-	public const TYPE = 'time';
+	public const string TYPE = 'time';
 
 	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\Column(name: 'condition_time', type: 'time', nullable: true)]

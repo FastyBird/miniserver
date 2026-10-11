@@ -39,7 +39,7 @@ use const DIRECTORY_SEPARATOR;
 class DevicesModuleExtension extends NetteDI\CompilerExtension
 {
 
-	public const NAME = 'fbDevicesModuleAutomator';
+	public const string NAME = 'fbDevicesModuleAutomator';
 
 	public static function register(
 		Boot\Configurator $config,
