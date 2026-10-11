@@ -1,39 +1,19 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConnectorPropertiesRepository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           20.10.22
- */
-
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\Models\States;
 
 use FastyBird\Bridge\RedisDbPluginDevicesModule\States;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
-use Nette;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * Connector property state repository
- *
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\Reader
+final class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\Reader
 {
-
-	use Nette\SmartObject;
 
 	/** @var RedisDbModels\States\StatesRepository<States\ConnectorProperty> */
 	private RedisDbModels\States\StatesRepository $stateRepository;
@@ -54,6 +34,7 @@ class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\R
 	/**
 	 * @throws RedisDbExceptions\InvalidState
 	 */
+	#[Override]
 	public function find(Uuid\UuidInterface $id): States\ConnectorProperty|null
 	{
 		return $this->stateRepository->find($id, $this->database);

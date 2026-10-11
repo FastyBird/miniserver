@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RedisDbPluginDevicesModuleExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           03.12.20
- */
-
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\DI;
 
 use FastyBird\Bridge\RedisDbPluginDevicesModule\Models;
@@ -20,21 +7,17 @@ use FastyBird\Core\Boot;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
+use Override;
 use stdClass;
 use function assert;
 
 /**
  * Redis DB devices module bridge extension
- *
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class RedisDbPluginDevicesModuleExtension extends DI\CompilerExtension
+final class RedisDbPluginDevicesModuleExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbRedisDbPluginDevicesModuleBridge';
+	public const string NAME = 'fbRedisDbPluginDevicesModuleBridge';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -49,6 +32,7 @@ class RedisDbPluginDevicesModuleExtension extends DI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DocumentsMapper.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           09.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
@@ -24,7 +11,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
-use Nette;
+use Override;
 use Ramsey\Uuid;
 use Symfony\Component\EventDispatcher;
 use TypeError;
@@ -34,28 +21,22 @@ use function in_array;
 
 /**
  * Module documents mapper events
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
+final readonly class DocumentsMapper implements EventDispatcher\EventSubscriberInterface
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly DevicesModels\Configuration\Connectors\Properties\Repository $connectorsPropertiesRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesRepository,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesRepository,
-		private readonly DevicesModels\States\ConnectorPropertiesManager $connectorPropertiesManager,
-		private readonly DevicesModels\States\DevicePropertiesManager $devicePropertiesManager,
-		private readonly DevicesModels\States\ChannelPropertiesManager $channelPropertiesManager,
+		private DevicesModels\Configuration\Connectors\Properties\Repository $connectorsPropertiesRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesRepository,
+		private DevicesModels\States\ConnectorPropertiesManager $connectorPropertiesManager,
+		private DevicesModels\States\DevicePropertiesManager $devicePropertiesManager,
+		private DevicesModels\States\ChannelPropertiesManager $channelPropertiesManager,
 	)
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

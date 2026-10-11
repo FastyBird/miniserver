@@ -1,38 +1,22 @@
 <?php declare(strict_types = 1);
 
-/**
- * Lightbulb.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Values\Transformers;
 use FastyBird\Module\Devices\Types as DevicesTypes;
+use Override;
 use function is_float;
 use function is_int;
 
 /**
  * Shelly light bulb service
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Lightbulb extends HomeKitProtocol\Services\Generic
 {
 
+	#[Override]
 	public function recalculateCharacteristics(
 		HomeKitProtocol\Characteristics\Characteristic|null $characteristic = null,
 	): void

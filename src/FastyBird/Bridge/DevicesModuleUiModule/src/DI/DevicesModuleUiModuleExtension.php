@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DevicesModuleUiModuleExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           04.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\DI;
 
 use FastyBird\Bridge\DevicesModuleUiModule;
@@ -31,6 +18,7 @@ use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
@@ -39,16 +27,11 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Redis DB devices module bridge extension
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
+final class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 {
 
-	public const NAME = 'fbDevicesModuleUiModuleBridge';
+	public const string NAME = 'fbDevicesModuleUiModuleBridge';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -63,6 +46,7 @@ class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([

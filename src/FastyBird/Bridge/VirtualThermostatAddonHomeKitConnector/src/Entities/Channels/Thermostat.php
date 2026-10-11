@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Thermostat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +7,7 @@ use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities as VirtualT
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -28,7 +16,7 @@ use function assert;
 class Thermostat extends HomeKitEntities\Channels\Channel
 {
 
-	public const TYPE = 'virtual-thermostat-addon-homekit-connector-bridge';
+	public const string TYPE = 'virtual-thermostat-addon-homekit-connector-bridge';
 
 	public function __construct(
 		VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat $device,
@@ -45,11 +33,13 @@ class Thermostat extends HomeKitEntities\Channels\Channel
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Bridge
 	{
 		return Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR;
 	}
 
+	#[Override]
 	public function getDevice(): VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat
 	{
 		assert($this->device instanceof VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat);

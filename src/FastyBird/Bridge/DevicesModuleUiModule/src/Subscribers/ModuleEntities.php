@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ModuleEntities.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           09.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use Doctrine\Common;
@@ -29,36 +16,30 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Caching as UiCaching;
 use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models as UiModels;
-use Nette;
 use Nette\Caching as NetteCaching;
+use Override;
 use function array_map;
 use function assert;
 use function count;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class ModuleEntities implements Common\EventSubscriber
+final readonly class ModuleEntities implements Common\EventSubscriber
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly UiModels\Configuration\Widgets\DataSources\Repository $dataSourcesRepository,
-		private readonly UiCaching\Container $uiModuleCaching,
-		private readonly ORM\EntityManagerInterface $entityManager,
-		private readonly EventLoop\Status $eventLoopStatus,
-		private readonly Publisher\MessagePublisher $publisher,
-		private readonly Async\MessagePublisher $asyncPublisher,
+		private UiModels\Configuration\Widgets\DataSources\Repository $dataSourcesRepository,
+		private UiCaching\Container $uiModuleCaching,
+		private ORM\EntityManagerInterface $entityManager,
+		private EventLoop\Status $eventLoopStatus,
+		private Publisher\MessagePublisher $publisher,
+		private Async\MessagePublisher $asyncPublisher,
 	)
 	{
 	}
 
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

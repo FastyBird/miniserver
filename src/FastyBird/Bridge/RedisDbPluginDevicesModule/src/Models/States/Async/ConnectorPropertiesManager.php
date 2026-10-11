@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConnectorPropertiesManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           20.01.24
- */
-
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\Models\States\Async;
 
 use FastyBird\Bridge\RedisDbPluginDevicesModule\States;
@@ -20,23 +7,16 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use React\Promise;
 
 /**
  * Connector property asynchronous states manager
- *
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ConnectorPropertiesManager implements DevicesModels\States\Connectors\Async\Writer
+final class ConnectorPropertiesManager implements DevicesModels\States\Connectors\Async\Writer
 {
-
-	use Nette\SmartObject;
 
 	/** @var RedisDbModels\States\Async\StatesManager<States\ConnectorProperty> */
 	private RedisDbModels\States\Async\StatesManager $statesManager;
@@ -57,6 +37,7 @@ class ConnectorPropertiesManager implements DevicesModels\States\Connectors\Asyn
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function create(Uuid\UuidInterface $id, Utils\ArrayHash $values): Promise\PromiseInterface
 	{
 		return $this->statesManager->create($id, $values, $this->database);
@@ -65,6 +46,7 @@ class ConnectorPropertiesManager implements DevicesModels\States\Connectors\Asyn
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function update(Uuid\UuidInterface $id, Utils\ArrayHash $values): Promise\PromiseInterface
 	{
 		return $this->statesManager->update($id, $values, $this->database);
@@ -73,6 +55,7 @@ class ConnectorPropertiesManager implements DevicesModels\States\Connectors\Asyn
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function delete(Uuid\UuidInterface $id): Promise\PromiseInterface
 	{
 		return $this->statesManager->delete($id, $this->database);

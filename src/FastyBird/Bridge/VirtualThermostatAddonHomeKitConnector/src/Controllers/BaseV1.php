@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * BaseV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Controllers;
 
 use Doctrine\DBAL\Connection;
@@ -31,7 +18,6 @@ use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Router as DevicesRouter;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette;
 use Nette\Localization;
 use Nette\Utils;
 use Psr\Http\Message;
@@ -46,16 +32,9 @@ use function strval;
 
 /**
  * API base controller
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class BaseV1
 {
-
-	use Nette\SmartObject;
 
 	protected Localization\Translator $translator;
 

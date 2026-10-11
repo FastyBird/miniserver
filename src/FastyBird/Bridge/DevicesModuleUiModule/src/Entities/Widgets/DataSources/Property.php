@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           09.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Entities\Widgets\DataSources;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +7,7 @@ use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Ui\Entities as UiEntities;
+use Override;
 use function array_merge;
 use function in_array;
 
@@ -55,6 +43,7 @@ abstract class Property extends UiEntities\Widgets\DataSources\DataSource
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Viera.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           24.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Hydrators\Devices;
 
 use Doctrine\Persistence;
@@ -29,6 +16,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -37,12 +25,8 @@ use function strval;
  * Viera device entity hydrator
  *
  * @extends HomeKitHydrators\Devices\Device<VieraConnectorHomeKitConnectorEntities\Devices\Viera>
- *
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Viera extends HomeKitHydrators\Devices\Device
+final class Viera extends HomeKitHydrators\Devices\Device
 {
 
 	/** @var array<int|string, string> */
@@ -66,6 +50,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 		parent::__construct($connectorsRepository, $managerRegistry, $translator, $crudReader);
 	}
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return VieraConnectorHomeKitConnectorEntities\Devices\Viera::class;
@@ -80,6 +65,7 @@ class Viera extends HomeKitHydrators\Devices\Device
 	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function hydrateConnectorRelationship(
 		Objects\RelationshipObject $relationship,
 		Objects\ResourceObjectCollection|null $included,

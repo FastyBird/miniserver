@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelProperty.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           04.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Entities\Widgets\DataSources;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +7,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Ui\Entities as UiEntities;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -36,7 +24,7 @@ use function array_merge;
 class ChannelProperty extends Property
 {
 
-	public const TYPE = 'channel-property';
+	public const string TYPE = 'channel-property';
 
 	#[Attribute\Crud(required: true, writable: true)]
 	#[ORM\ManyToOne(targetEntity: DevicesEntities\Channels\Properties\Property::class)]
@@ -82,6 +70,7 @@ class ChannelProperty extends Property
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

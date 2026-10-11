@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Thermostat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +10,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function sprintf;
 
@@ -31,7 +19,7 @@ use function sprintf;
 class Thermostat extends HomeKitEntities\Devices\Device
 {
 
-	public const TYPE = 'virtual-thermostat-addon-homekit-connector-bridge';
+	public const string TYPE = 'virtual-thermostat-addon-homekit-connector-bridge';
 
 	/**
 	 * @param array<DevicesEntities\Devices\Device>|Utils\ArrayHash<DevicesEntities\Devices\Device> $parents
@@ -68,11 +56,13 @@ class Thermostat extends HomeKitEntities\Devices\Device
 		$this->setParents($parents);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Bridge
 	{
 		return Sources\Bridge::VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR;

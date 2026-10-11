@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Gen2.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           23.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
@@ -25,13 +12,8 @@ use function sprintf;
 
 /**
  * Gen2 mapping configuration
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-readonly class Gen2 implements Mapping\Mapping
+final readonly class Gen2 implements Mapping\Mapping
 {
 
 	/**

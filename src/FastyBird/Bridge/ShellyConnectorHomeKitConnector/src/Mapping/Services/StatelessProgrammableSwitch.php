@@ -1,23 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * StatelessProgrammableSwitch.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           23.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Services;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function assert;
@@ -25,17 +13,12 @@ use function class_exists;
 
 /**
  * Input switch service mapping configuration
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-readonly class StatelessProgrammableSwitch implements Service
+final readonly class StatelessProgrammableSwitch implements Service
 {
 
 	/**
-	 * @param array<Mapping\Characteristics\Characteristic> $characteristics
+	 * @param array<Mapping\Characteristics\BasicCharacteristic> $characteristics
 	 */
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [HomeKitTypes\ServiceType::STATELESS_PROGRAMMABLE_SWITCH->value])]
@@ -72,11 +55,13 @@ readonly class StatelessProgrammableSwitch implements Service
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getType(): HomeKitTypes\ServiceType
 	{
 		return HomeKitTypes\ServiceType::from($this->type);
 	}
 
+	#[Override]
 	public function getClass(): string
 	{
 		assert(class_exists($this->class));
@@ -84,29 +69,34 @@ readonly class StatelessProgrammableSwitch implements Service
 		return $this->class;
 	}
 
+	#[Override]
 	public function getCategory(): HomeKitTypes\AccessoryCategory
 	{
 		return $this->category;
 	}
 
+	#[Override]
 	public function getChannel(): string|null
 	{
 		return $this->channel;
 	}
 
+	#[Override]
 	public function getIndexStart(): int|null
 	{
 		return $this->indexStart;
 	}
 
+	#[Override]
 	public function isMultiple(): bool
 	{
 		return $this->multiple;
 	}
 
 	/**
-	 * @return array<Mapping\Characteristics\Characteristic>
+	 * @return array<Mapping\Characteristics\BasicCharacteristic>
 	 */
+	#[Override]
 	public function getCharacteristics(): array
 	{
 		return $this->characteristics;

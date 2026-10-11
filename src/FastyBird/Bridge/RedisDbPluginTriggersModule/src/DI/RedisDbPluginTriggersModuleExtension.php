@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RedisDbPluginTriggersModuleExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           02.11.22
- */
-
 namespace FastyBird\Bridge\RedisDbPluginTriggersModule\DI;
 
 use FastyBird\Bridge\RedisDbPluginTriggersModule\Models;
@@ -20,21 +7,17 @@ use FastyBird\Core\Boot;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
+use Override;
 use stdClass;
 use function assert;
 
 /**
  * Redis DB triggers module bridge extension
- *
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class RedisDbPluginTriggersModuleExtension extends DI\CompilerExtension
+final class RedisDbPluginTriggersModuleExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbRedisDbPluginTriggersModuleBridge';
+	public const string NAME = 'fbRedisDbPluginTriggersModuleBridge';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -49,6 +32,7 @@ class RedisDbPluginTriggersModuleExtension extends DI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([

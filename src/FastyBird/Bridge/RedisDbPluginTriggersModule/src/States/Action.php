@@ -1,36 +1,19 @@
 <?php declare(strict_types = 1);
 
-/**
- * Action.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     States
- * @since          1.0.0
- *
- * @date           12.01.22
- */
-
 namespace FastyBird\Bridge\RedisDbPluginTriggersModule\States;
 
 use DateTimeInterface;
 use FastyBird\Module\Triggers\States as TriggersStates;
 use FastyBird\Plugin\RedisDb\States as RedisDbStates;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
 /**
  * Trigger action state
- *
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     States
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Action extends RedisDbStates\State implements TriggersStates\Action
+final class Action extends RedisDbStates\State implements TriggersStates\Action
 {
 
 	public function __construct(
@@ -55,6 +38,7 @@ class Action extends RedisDbStates\State implements TriggersStates\Action
 		parent::__construct($id);
 	}
 
+	#[Override]
 	public function isTriggered(): bool
 	{
 		return $this->validationResult;
@@ -70,6 +54,7 @@ class Action extends RedisDbStates\State implements TriggersStates\Action
 		return $this->updatedAt;
 	}
 
+	#[Override]
 	public static function getCreateFields(): array
 	{
 		return [
@@ -80,6 +65,7 @@ class Action extends RedisDbStates\State implements TriggersStates\Action
 		];
 	}
 
+	#[Override]
 	public static function getUpdateFields(): array
 	{
 		return [
@@ -91,6 +77,7 @@ class Action extends RedisDbStates\State implements TriggersStates\Action
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge([

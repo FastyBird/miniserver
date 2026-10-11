@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ActionCommand.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           10.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
@@ -25,8 +12,8 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Ui\Events as UiEvents;
 use FastyBird\Module\Ui\Types as UiTypes;
-use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use Symfony\Component\EventDispatcher;
 use TypeError;
@@ -34,28 +21,22 @@ use ValueError;
 
 /**
  * Module documents mapper events
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class ActionCommand implements EventDispatcher\EventSubscriberInterface
+final readonly class ActionCommand implements EventDispatcher\EventSubscriberInterface
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly DevicesModels\Configuration\Connectors\Properties\Repository $connectorPropertiesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicePropertiesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
-		private readonly DevicesModels\States\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly DevicesModels\States\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private DevicesModels\Configuration\Connectors\Properties\Repository $connectorPropertiesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicePropertiesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelPropertiesConfigurationRepository,
+		private DevicesModels\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
+		private DevicesModels\States\DevicePropertiesManager $devicePropertiesStatesManager,
+		private DevicesModels\States\ChannelPropertiesManager $channelPropertiesStatesManager,
 	)
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

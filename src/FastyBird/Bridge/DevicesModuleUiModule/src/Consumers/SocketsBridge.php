@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SocketsBridge.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Consumers
- * @since          1.0.0
- *
- * @date           06.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Consumers;
 
 use FastyBird\Bridge\DevicesModuleUiModule;
@@ -31,22 +18,18 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Models as UiModels;
 use Nette\Utils;
+use Override;
 use Throwable;
 use function array_merge;
 use function in_array;
 
 /**
  * Exchange to sockets bridge consumer
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Consumers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-final class SocketsBridge implements Consumers\Consumer
+final readonly class SocketsBridge implements Consumers\Consumer
 {
 
-	private const CONSUMER_ROUTING_KEYS = [
+	private const array CONSUMER_ROUTING_KEYS = [
 		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
 		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
 		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
@@ -64,10 +47,10 @@ final class SocketsBridge implements Consumers\Consumer
 	];
 
 	public function __construct(
-		private readonly UiModels\Configuration\Widgets\DataSources\Repository $configurationDataSourcesRepository,
-		private readonly DevicesModuleUiModule\Logger $logger,
-		private readonly Routing\LinkGenerator $linkGenerator,
-		private readonly Topics\Storage $topicsStorage,
+		private UiModels\Configuration\Widgets\DataSources\Repository $configurationDataSourcesRepository,
+		private DevicesModuleUiModule\Logger $logger,
+		private Routing\LinkGenerator $linkGenerator,
+		private Topics\Storage $topicsStorage,
 	)
 	{
 	}
@@ -75,6 +58,7 @@ final class SocketsBridge implements Consumers\Consumer
 	/**
 	 * @throws UiExceptions\InvalidState
 	 */
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

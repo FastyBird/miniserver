@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * VieraConnectorHomeKitConnectorExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           24.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\DI;
 
 use Contributte\Translation;
@@ -33,6 +20,7 @@ use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
@@ -41,16 +29,11 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Viera devices to HomeKit connector bridge extension
- *
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbVieraConnectorHomeKitConnectorBridge';
+	public const string NAME = 'fbVieraConnectorHomeKitConnectorBridge';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -65,6 +48,7 @@ class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension 
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -266,6 +250,7 @@ class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension 
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

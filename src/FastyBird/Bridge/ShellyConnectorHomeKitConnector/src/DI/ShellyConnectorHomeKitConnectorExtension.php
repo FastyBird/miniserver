@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ShellyConnectorHomeKitConnectorExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\DI;
 
 use Contributte\Translation;
@@ -20,7 +7,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Commands;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators as ShellyConnectorHomeKitConnectorHydrators;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
@@ -29,28 +16,26 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
+use function array_values;
 use function assert;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * Shelly devices to HomeKit connector bridge extension
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbShellyConnectorHomeKitConnectorBridge';
+	public const string NAME = 'fbShellyConnectorHomeKitConnectorBridge';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -65,6 +50,7 @@ class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -161,40 +147,40 @@ class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension
 		 */
 
 		$builder->addDefinition($this->prefix('hydrators.device.shelly'), new NetteDI\Definitions\ServiceDefinition())
-			->setType(Hydrators\Devices\Shelly::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Devices\Shelly::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.lightbulb'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Hydrators\Channels\Lightbulb::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\Lightbulb::class);
 
 		$builder->addDefinition($this->prefix('hydrators.channel.outlet'), new NetteDI\Definitions\ServiceDefinition())
-			->setType(Hydrators\Channels\Outlet::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\Outlet::class);
 
 		$builder->addDefinition($this->prefix('hydrators.channel.relay'), new NetteDI\Definitions\ServiceDefinition())
-			->setType(Hydrators\Channels\Relay::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\Relay::class);
 
 		$builder->addDefinition($this->prefix('hydrators.channel.valve'), new NetteDI\Definitions\ServiceDefinition())
-			->setType(Hydrators\Channels\Valve::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\Valve::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.windowCovering'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Hydrators\Channels\WindowCovering::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\WindowCovering::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.inputButton'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Hydrators\Channels\InputButton::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\InputButton::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.inputSwitch'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Hydrators\Channels\InputSwitch::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\InputSwitch::class);
 
 		/**
 		 * HOMEKIT PROTOCOL
@@ -237,12 +223,34 @@ class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension
 
 	/**
 	 * @throws NetteDI\MissingServiceException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();
 
 		$builder = $this->getContainerBuilder();
+
+		/**
+		 * JSON-API HYDRATORS
+		 */
+
+		// The device hydrator hydrates the properties a request includes with the property
+		// hydrators, which the Devices module registers, so the list is collected here, once
+		// every extension has loaded its configuration
+		$propertiesHydrators = array_values(
+			$builder->findByType(DevicesHydrators\Devices\Properties\Property::class),
+		);
+
+		$deviceHydrators = $builder->findByType(
+			ShellyConnectorHomeKitConnectorHydrators\Devices\Shelly::class,
+		);
+
+		foreach ($deviceHydrators as $deviceHydrator) {
+			assert($deviceHydrator instanceof NetteDI\Definitions\ServiceDefinition);
+
+			$deviceHydrator->setArgument('propertiesHydrators', $propertiesHydrators);
+		}
 
 		/**
 		 * DOCTRINE ENTITIES
@@ -305,6 +313,7 @@ class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

@@ -1,36 +1,19 @@
 <?php declare(strict_types = 1);
 
-/**
- * Condition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     States
- * @since          1.0.0
- *
- * @date           12.01.22
- */
-
 namespace FastyBird\Bridge\RedisDbPluginTriggersModule\States;
 
 use DateTimeInterface;
 use FastyBird\Module\Triggers\States as TriggersStates;
 use FastyBird\Plugin\RedisDb\States as RedisDbStates;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
 /**
  * Trigger condition state
- *
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     States
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Condition extends RedisDbStates\State implements TriggersStates\Condition
+final class Condition extends RedisDbStates\State implements TriggersStates\Condition
 {
 
 	public function __construct(
@@ -55,6 +38,7 @@ class Condition extends RedisDbStates\State implements TriggersStates\Condition
 		parent::__construct($id);
 	}
 
+	#[Override]
 	public function isFulfilled(): bool
 	{
 		return $this->validationResult;
@@ -70,6 +54,7 @@ class Condition extends RedisDbStates\State implements TriggersStates\Condition
 		return $this->updatedAt;
 	}
 
+	#[Override]
 	public static function getCreateFields(): array
 	{
 		return [
@@ -80,6 +65,7 @@ class Condition extends RedisDbStates\State implements TriggersStates\Condition
 		];
 	}
 
+	#[Override]
 	public static function getUpdateFields(): array
 	{
 		return [
@@ -91,6 +77,7 @@ class Condition extends RedisDbStates\State implements TriggersStates\Condition
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge([

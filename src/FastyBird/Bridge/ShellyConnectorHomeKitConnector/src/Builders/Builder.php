@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Builder.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Builders
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
@@ -62,31 +49,24 @@ use function strval;
 
 /**
  * HomeKit device builder
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Builders
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Builder
+final readonly class Builder
 {
 
-	use Nette\SmartObject;
-
 	public function __construct(
-		private readonly ShellyConnectorHomeKitConnector\Logger $logger,
-		private readonly Mapping\Builder $mappingBuilder,
-		private readonly HomeKitHelpers\Loader $loader,
-		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		private readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		private readonly PersistenceHelpers\Database $databaseHelper,
-		private readonly Localization\Translator $translator,
+		private ShellyConnectorHomeKitConnector\Logger $logger,
+		private Mapping\Builder $mappingBuilder,
+		private HomeKitHelpers\Loader $loader,
+		private DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		private DevicesModels\Entities\Devices\DevicesManager $devicesManager,
+		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		private DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		private DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
+		private DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		private DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
+		private PersistenceHelpers\Database $databaseHelper,
+		private Localization\Translator $translator,
 	)
 	{
 	}
@@ -707,7 +687,7 @@ class Builder
 		ShellyEntities\Channels\Channel|null $channel,
 		int|null $index,
 		ShellyConnectorHomeKitConnectorEntities\Channels\Shelly $service,
-		Mapping\Characteristics\Characteristic $characteristicMapping,
+		Mapping\Characteristics\BasicCharacteristic $characteristicMapping,
 		bool $optional = false,
 		bool $virtual = false,
 	): bool

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WindowCoveringFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           23.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Services;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents as ShellyConnectorHomeKitConnectorDocuments;
@@ -20,18 +7,14 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
 /**
  * Shelly cover service factory
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class WindowCoveringFactory implements HomeKitProtocol\Services\ServiceFactory
+final class WindowCoveringFactory implements HomeKitProtocol\Services\ServiceFactory
 {
 
 	/**
@@ -39,6 +22,7 @@ class WindowCoveringFactory implements HomeKitProtocol\Services\ServiceFactory
 	 * @param array<string> $optionalCharacteristics
 	 * @param array<string> $virtualCharacteristics
 	 */
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $typeId,
 		HomeKitTypes\ServiceType $type,
@@ -66,6 +50,7 @@ class WindowCoveringFactory implements HomeKitProtocol\Services\ServiceFactory
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\WindowCovering::class;

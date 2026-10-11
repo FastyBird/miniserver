@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Builder.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           30.11.23
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
@@ -25,11 +12,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Mapping builder
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Builder
 {

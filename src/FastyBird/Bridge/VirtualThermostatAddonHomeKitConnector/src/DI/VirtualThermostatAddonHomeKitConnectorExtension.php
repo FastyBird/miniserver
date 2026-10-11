@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * VirtualThermostatAddonHomeKitConnectorExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\DI;
 
 use Contributte\Translation;
@@ -32,6 +19,7 @@ use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
@@ -40,16 +28,11 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Virtual thermostat HomeKit connector bridge extension
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbVirtualThermostatAddonHomeKitConnectorBridge';
+	public const string NAME = 'fbVirtualThermostatAddonHomeKitConnectorBridge';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -64,6 +47,7 @@ class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerEx
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -231,6 +215,7 @@ class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerEx
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

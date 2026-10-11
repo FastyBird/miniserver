@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     States
- * @since          1.0.0
- *
- * @date           20.10.22
- */
-
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\States;
 
 use DateTimeInterface;
@@ -21,17 +8,13 @@ use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Plugin\RedisDb\States as RedisDbStates;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 use function is_bool;
 
 /**
  * Property state
- *
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     States
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Property extends RedisDbStates\State implements DevicesStates\Property
 {
@@ -95,41 +78,49 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 		parent::__construct($id);
 	}
 
+	#[Override]
 	public function getCreatedAt(): DateTimeInterface|null
 	{
 		return $this->createdAt;
 	}
 
+	#[Override]
 	public function getUpdatedAt(): DateTimeInterface|null
 	{
 		return $this->updatedAt;
 	}
 
+	#[Override]
 	public function getActualValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->actualValue;
 	}
 
+	#[Override]
 	public function getExpectedValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		return $this->expectedValue;
 	}
 
+	#[Override]
 	public function isPending(): bool
 	{
 		return is_bool($this->pending) ? $this->pending : true;
 	}
 
+	#[Override]
 	public function getPending(): bool|DateTimeInterface
 	{
 		return $this->pending;
 	}
 
+	#[Override]
 	public function isValid(): bool
 	{
 		return $this->valid;
 	}
 
+	#[Override]
 	public static function getCreateFields(): array
 	{
 		return [
@@ -143,6 +134,7 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 		];
 	}
 
+	#[Override]
 	public static function getUpdateFields(): array
 	{
 		return [
@@ -154,6 +146,7 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 		];
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

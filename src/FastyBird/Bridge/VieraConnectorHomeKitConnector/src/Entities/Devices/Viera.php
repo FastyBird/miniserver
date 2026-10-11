@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Viera.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           24.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +10,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function sprintf;
 
@@ -31,7 +19,7 @@ use function sprintf;
 class Viera extends HomeKitEntities\Devices\Device
 {
 
-	public const TYPE = 'viera-connector-homekit-connector-bridge';
+	public const string TYPE = 'viera-connector-homekit-connector-bridge';
 
 	/**
 	 * @param array<DevicesEntities\Devices\Device>|Utils\ArrayHash<DevicesEntities\Devices\Device> $parents
@@ -68,11 +56,13 @@ class Viera extends HomeKitEntities\Devices\Device
 		$this->setParents($parents);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Bridge
 	{
 		return Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR;

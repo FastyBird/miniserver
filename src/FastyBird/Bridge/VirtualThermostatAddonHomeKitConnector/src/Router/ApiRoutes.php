@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ApiRoutes.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Router
- * @since          1.0.0
- *
- * @date           13.03.20
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Router;
 
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
@@ -23,25 +10,20 @@ use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 
 /**
  * Bridge API routes configuration
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ApiRoutes
+final readonly class ApiRoutes
 {
 
-	public const URL_ITEM_ID = 'id';
+	public const string URL_ITEM_ID = 'id';
 
-	public const RELATION_ENTITY = 'relationEntity';
+	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
-		private readonly bool $usePrefix,
-		private readonly Controllers\BridgesV1 $bridgesV1Controller,
-		private readonly DevicesMiddleware\Access $devicesAccessControlMiddleware,
-		private readonly SecurityMiddleware\Authorization $authorizationMiddleware,
-		private readonly SecurityMiddleware\User $userMiddleware,
+		private bool $usePrefix,
+		private Controllers\BridgesV1 $bridgesV1Controller,
+		private DevicesMiddleware\Access $devicesAccessControlMiddleware,
+		private SecurityMiddleware\Authorization $authorizationMiddleware,
+		private SecurityMiddleware\User $userMiddleware,
 	)
 	{
 	}

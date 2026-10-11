@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * InputAccessory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           23.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Accessories;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
@@ -24,13 +11,8 @@ use ValueError;
 
 /**
  * Input accessories mapping configuration
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-readonly class InputAccessory extends Accessory
+final readonly class InputAccessory extends Accessory
 {
 
 	/**

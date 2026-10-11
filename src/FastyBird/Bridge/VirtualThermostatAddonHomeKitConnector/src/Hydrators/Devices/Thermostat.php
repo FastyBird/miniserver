@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Thermostat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Hydrators\Devices;
 
 use Doctrine\Persistence;
@@ -29,6 +16,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -37,12 +25,8 @@ use function strval;
  * Thermostat device entity hydrator
  *
  * @extends HomeKitHydrators\Devices\Device<VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat>
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Thermostat extends HomeKitHydrators\Devices\Device
+final class Thermostat extends HomeKitHydrators\Devices\Device
 {
 
 	public function __construct(
@@ -56,6 +40,7 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 		parent::__construct($connectorsRepository, $managerRegistry, $translator, $crudReader);
 	}
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class;
@@ -70,6 +55,7 @@ class Thermostat extends HomeKitHydrators\Devices\Device
 	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function hydrateConnectorRelationship(
 		Objects\RelationshipObject $relationship,
 		Objects\ResourceObjectCollection|null $included,

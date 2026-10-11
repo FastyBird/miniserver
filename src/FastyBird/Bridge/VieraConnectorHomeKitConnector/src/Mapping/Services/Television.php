@@ -1,23 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * Television.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           25.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping\Services;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function assert;
@@ -25,17 +13,12 @@ use function class_exists;
 
 /**
  * Television service mapping configuration
- *
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-readonly class Television implements Service
+final readonly class Television implements Service
 {
 
 	/**
-	 * @param array<Mapping\Characteristics\Characteristic> $characteristics
+	 * @param array<Mapping\Characteristics\BasicCharacteristic> $characteristics
 	 */
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [HomeKitTypes\ServiceType::TELEVISION->value])]
@@ -63,11 +46,13 @@ readonly class Television implements Service
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getType(): HomeKitTypes\ServiceType
 	{
 		return HomeKitTypes\ServiceType::from($this->type);
 	}
 
+	#[Override]
 	public function getClass(): string
 	{
 		assert(class_exists($this->class));
@@ -75,19 +60,22 @@ readonly class Television implements Service
 		return $this->class;
 	}
 
+	#[Override]
 	public function getChannel(): string|null
 	{
 		return $this->channel;
 	}
 
+	#[Override]
 	public function isMultiple(): bool
 	{
 		return $this->multiple;
 	}
 
 	/**
-	 * @return array<Mapping\Characteristics\Characteristic>
+	 * @return array<Mapping\Characteristics\BasicCharacteristic>
 	 */
+	#[Override]
 	public function getCharacteristics(): array
 	{
 		return $this->characteristics;

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Build.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Commands;
 
 use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
@@ -46,16 +33,11 @@ use function usort;
 
 /**
  * Virtual thermostat to HomeKit accessory bridge builder command
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Build extends Console\Command\Command
+final class Build extends Console\Command\Command
 {
 
-	public const NAME = 'fb:virtual-thermostat-addon-homekit-connector-bridge:build';
+	public const string NAME = 'fb:virtual-thermostat-addon-homekit-connector-bridge:build';
 
 	public function __construct(
 		private readonly VirtualThermostatAddonHomeKitConnector\Logger $logger,

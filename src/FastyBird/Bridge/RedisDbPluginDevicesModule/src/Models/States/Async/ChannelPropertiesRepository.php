@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelPropertiesRepository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           20.01.24
- */
-
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\Models\States\Async;
 
 use FastyBird\Bridge\RedisDbPluginDevicesModule\States;
@@ -20,22 +7,15 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use InvalidArgumentException;
-use Nette;
+use Override;
 use Ramsey\Uuid;
 use React\Promise;
 
 /**
  * Channel property asynchronous states repository
- *
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ChannelPropertiesRepository implements DevicesModels\States\Channels\Async\Reader
+final class ChannelPropertiesRepository implements DevicesModels\States\Channels\Async\Reader
 {
-
-	use Nette\SmartObject;
 
 	/** @var RedisDbModels\States\Async\StatesRepository<States\ChannelProperty> */
 	private RedisDbModels\States\Async\StatesRepository $stateRepository;
@@ -56,6 +36,7 @@ class ChannelPropertiesRepository implements DevicesModels\States\Channels\Async
 	/**
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function find(Uuid\UuidInterface $id): Promise\PromiseInterface
 	{
 		return $this->stateRepository->find($id, $this->database);

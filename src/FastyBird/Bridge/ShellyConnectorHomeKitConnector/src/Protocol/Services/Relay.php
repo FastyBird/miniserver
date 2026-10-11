@@ -1,36 +1,20 @@
 <?php declare(strict_types = 1);
 
-/**
- * Relay.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           23.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use Override;
 use function is_numeric;
 
 /**
  * Shelly switch service
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Relay extends HomeKitProtocol\Services\Generic
 {
 
+	#[Override]
 	public function recalculateCharacteristics(
 		HomeKitProtocol\Characteristics\Characteristic|null $characteristic = null,
 	): void

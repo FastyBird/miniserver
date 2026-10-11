@@ -1,33 +1,16 @@
 <?php declare(strict_types = 1);
 
-/**
- * BasicCharacteristic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           25.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping\Characteristics;
 
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
 
 /**
  * Basic characteristic mapping configuration
- *
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-readonly class BasicCharacteristic implements Characteristic
+final readonly class BasicCharacteristic implements Mapping\Mapping
 {
 
 	/**

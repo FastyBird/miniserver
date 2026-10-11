@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * InputSourceFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           26.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Protocol\Services;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Documents as VieraConnectorHomeKitConnectorDocuments;
@@ -20,18 +7,14 @@ use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
 use FastyBird\Connector\HomeKit\Documents as HomeKitDocuments;
 use FastyBird\Connector\HomeKit\Protocol as HomeKitProtocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
 /**
  * Viera input source service factory
- *
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class InputSourceFactory implements HomeKitProtocol\Services\ServiceFactory
+final class InputSourceFactory implements HomeKitProtocol\Services\ServiceFactory
 {
 
 	/**
@@ -39,6 +22,7 @@ class InputSourceFactory implements HomeKitProtocol\Services\ServiceFactory
 	 * @param array<string> $optionalCharacteristics
 	 * @param array<string> $virtualCharacteristics
 	 */
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $typeId,
 		HomeKitTypes\ServiceType $type,
@@ -66,6 +50,7 @@ class InputSourceFactory implements HomeKitProtocol\Services\ServiceFactory
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\InputSource::class;
