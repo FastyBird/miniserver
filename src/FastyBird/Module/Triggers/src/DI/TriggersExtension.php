@@ -70,8 +70,16 @@ final class TriggersExtension extends NetteDI\CompilerExtension implements Trans
 			->setType(Router\ApiRoutes::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix]);
 
-		$builder->addDefinition($this->prefix('router.validator'), new NetteDI\Definitions\ServiceDefinition())
+		$routerValidator = $builder->addDefinition(
+			$this->prefix('router.validator'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
 			->setType(Router\Validator::class);
+
+		// The validator takes the router, and the router reaches the validator through the
+		// routes and their controllers: a cycle. A lazy service is a native PHP 8.4 lazy ghost,
+		// built on its first use, which breaks it
+		$routerValidator->lazy = true;
 
 		$builder->addDefinition($this->prefix('models.triggersRepository'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Models\Entities\Triggers\TriggersRepository::class);

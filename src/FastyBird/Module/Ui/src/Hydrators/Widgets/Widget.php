@@ -17,9 +17,7 @@ use FastyBird\Module\Ui\Models;
 use FastyBird\Module\Ui\Queries;
 use FastyBird\Module\Ui\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette\DI;
 use Ramsey\Uuid;
-use function assert;
 use function is_scalar;
 use function strval;
 
@@ -55,16 +53,15 @@ abstract class Widget extends ApiHydrators\Hydrator
 		Schemas\Widgets\Widget::RELATIONSHIPS_DATA_SOURCES => 'dataSources',
 	];
 
-	/** @var Encoding\SchemaContainer<PersistenceEntities\CrudEntity>|null */
-	private Encoding\SchemaContainer|null $jsonApiSchemaContainer = null;
-
-	/** @var array<UiHydrators\Widgets\DataSources\DataSource<UiEntities\Widgets\DataSources\DataSource>>|null  */
-	private array|null $dataSourcesHydrators = null;
-
+	/**
+	 * @param Encoding\SchemaContainer<PersistenceEntities\CrudEntity> $schemaContainer
+	 * @param array<UiHydrators\Widgets\DataSources\DataSource<UiEntities\Widgets\DataSources\DataSource>> $dataSourcesHydrators
+	 */
 	public function __construct(
 		private readonly Models\Entities\Dashboards\Tabs\Repository $tabsRepository,
 		private readonly Models\Entities\Groups\Repository $groupsRepository,
-		private readonly DI\Container $container,
+		private readonly Encoding\SchemaContainer $schemaContainer,
+		private readonly array $dataSourcesHydrators,
 		Persistence\ManagerRegistry $managerRegistry,
 		Translation\Translator $translator,
 		Helpers\CrudReader|null $crudReader = null,
@@ -262,7 +259,6 @@ abstract class Widget extends ApiHydrators\Hydrator
 	/**
 	 * @return array<mixed>
 	 *
-	 * @throws DI\MissingServiceException
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApiError
 	 * @throws Uuid\Exception\InvalidArgumentException
@@ -287,13 +283,11 @@ abstract class Widget extends ApiHydrators\Hydrator
 
 		$dataSources = [];
 
-		$dataSourcesHydrators = $this->getDataSourceHydrators();
-
 		foreach ($relationship->getIdentifiers() as $dataSourceRelationIdentifier) {
 			foreach ($included->getAll() as $item) {
 				if ($item->getId() === $dataSourceRelationIdentifier->getId()) {
-					foreach ($dataSourcesHydrators as $dataSourceHydrator) {
-						$dataSourcesSchema = $this->getSchemaContainer()->getSchemaByClassName(
+					foreach ($this->dataSourcesHydrators as $dataSourceHydrator) {
+						$dataSourcesSchema = $this->schemaContainer->getSchemaByClassName(
 							$dataSourceHydrator->getEntityName(),
 						);
 
@@ -417,47 +411,6 @@ abstract class Widget extends ApiHydrators\Hydrator
 		}
 
 		return $groups;
-	}
-
-	/**
-	 * @return Encoding\SchemaContainer<PersistenceEntities\CrudEntity>
-	 *
-	 * @throws DI\MissingServiceException
-	 */
-	private function getSchemaContainer(): Encoding\SchemaContainer
-	{
-		if ($this->jsonApiSchemaContainer !== null) {
-			return $this->jsonApiSchemaContainer;
-		}
-
-		$this->jsonApiSchemaContainer = $this->container->getByType(Encoding\SchemaContainer::class);
-
-		return $this->jsonApiSchemaContainer;
-	}
-
-	/**
-	 * @return array<UiHydrators\Widgets\DataSources\DataSource<UiEntities\Widgets\DataSources\DataSource>>
-	 *
-	 * @throws DI\MissingServiceException
-	 */
-	private function getDataSourceHydrators(): array
-	{
-		if ($this->dataSourcesHydrators !== null) {
-			return $this->dataSourcesHydrators;
-		}
-
-		$this->dataSourcesHydrators = [];
-
-		$serviceNames = $this->container->findByType(UiHydrators\Widgets\DataSources\DataSource::class);
-
-		foreach ($serviceNames as $serviceName) {
-			$service = $this->container->getByName($serviceName);
-			assert($service instanceof UiHydrators\Widgets\DataSources\DataSource);
-
-			$this->dataSourcesHydrators[] = $service;
-		}
-
-		return $this->dataSourcesHydrators;
 	}
 
 }
