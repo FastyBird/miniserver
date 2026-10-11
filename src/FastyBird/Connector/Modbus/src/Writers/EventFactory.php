@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Modbus\Writers;
 
 use FastyBird\Connector\Modbus\Documents;
+use Override;
 
 /**
  * System event device state periodic writer factory
@@ -10,6 +11,7 @@ use FastyBird\Connector\Modbus\Documents;
 interface EventFactory extends WriterFactory
 {
 
+	#[Override]
 	public function create(Documents\Connectors\Connector $connector): Event;
 
 }

@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Shelly\Clients;
 
 use FastyBird\Connector\Shelly\Documents;
 use FastyBird\Connector\Shelly\Types;
+use Override;
 
 /**
  * MQTT client factory
@@ -13,6 +14,7 @@ interface MqttFactory extends ClientFactory
 
 	public const Types\ClientMode MODE = Types\ClientMode::MQTT;
 
+	#[Override]
 	public function create(Documents\Connectors\Connector $connector): Mqtt;
 
 }

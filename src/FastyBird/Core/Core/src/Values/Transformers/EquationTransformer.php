@@ -5,6 +5,7 @@ namespace FastyBird\Core\Values\Transformers;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Values\Types;
 use MathSolver\Math;
+use Override;
 use function array_key_exists;
 use function floatval;
 use function implode;
@@ -108,6 +109,7 @@ final class EquationTransformer
 		return $this->__toString();
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		$from = $this->getEquationFrom()?->string();
