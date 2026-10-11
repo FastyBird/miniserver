@@ -187,24 +187,4 @@
         <exclude-pattern>src/FastyBird/Module/Devices/src/Entities/Property\.php</exclude-pattern>
         <exclude-pattern>src/FastyBird/Module/Devices/src/Subscribers/StateEntities\.php</exclude-pattern>
     </rule>
-
-    <!-- Typed class constants (PHP 8.3). When the rule was adopted the repository had 1,633
-         untyped class constants across 602 files and zero typed ones (214 in 39 Core files,
-         1,419 in 563 files elsewhere), so it is switched on for Core first and the remaining
-         packages are excluded until E7 of the Core identity refactor reaches them. This list
-         may only shrink; deleting its last entry deletes the block. -->
-    <rule ref="SlevomatCodingStandard.TypeHints.ClassConstantTypeHint">
-        <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
-    </rule>
-
-    <!-- Every FastyBird-authored file once carried forbidden identity annotations (@license,
-         @copyright, @author, @package, @subpackage, @since, @date, in a file header and/or a
-         class docblock) duplicating what Git and LICENSE.md already record. Core's have been
-         removed (E2 of the Core identity refactor); the other six package types have not. This
-         list may only shrink; deleting its last entry deletes the block, at which point the
-         sniff applies repository-wide and this comment goes with it. Owned by #462 (E7). The
-         forbidden list itself is part of the standard, in tools/phpcs-ruleset.xml. -->
-    <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
-        <exclude-pattern>src/FastyBird/Connector/*</exclude-pattern>
-    </rule>
 </ruleset>
