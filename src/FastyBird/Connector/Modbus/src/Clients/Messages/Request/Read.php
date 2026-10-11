@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Modbus\Clients\Messages\Request;
 
 use FastyBird\Connector\Modbus\Clients;
-use Nette;
 use Override;
 use function array_map;
 
@@ -12,8 +11,6 @@ use function array_map;
  */
 abstract class Read implements Clients\Messages\Message
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param array<Clients\Messages\Pointer\ReadAddress> $addresses

@@ -22,7 +22,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette;
 use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
@@ -40,8 +39,6 @@ use function sprintf;
  */
 final readonly class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	private const float WRITE_PENDING_DELAY = 2_000.0;
 

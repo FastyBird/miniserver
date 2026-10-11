@@ -15,7 +15,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette;
 use Nette\Utils;
 use Override;
 use TypeError;
@@ -28,8 +27,6 @@ use function React\Async\await;
  */
 final readonly class StoreDevicePropertyState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private HomeKit\Logger $logger,

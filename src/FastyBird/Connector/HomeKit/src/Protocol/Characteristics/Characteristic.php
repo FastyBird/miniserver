@@ -35,8 +35,6 @@ use function strval;
 class Characteristic
 {
 
-	use Nette\SmartObject;
-
 	private const int DEFAULT_MAX_LENGTH = 64;
 
 	private const int ABSOLUTE_MAX_LENGTH = 256;

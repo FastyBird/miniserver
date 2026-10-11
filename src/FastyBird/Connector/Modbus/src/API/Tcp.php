@@ -9,7 +9,6 @@ use FastyBird\Connector\Modbus\API\Messages\Response\WriteHoldingRegister;
 use FastyBird\Connector\Modbus\Exceptions;
 use FastyBird\Connector\Modbus\Types;
 use InvalidArgumentException;
-use Nette;
 use Random\RandomException;
 use React\EventLoop;
 use React\Promise;
@@ -39,8 +38,6 @@ use function unpack;
  */
 final readonly class Tcp
 {
-
-	use Nette\SmartObject;
 
 	private const string MODBUS_ADU = 'n1transaction/n1protocol/n1length/C1station/C1function/C*data/';
 

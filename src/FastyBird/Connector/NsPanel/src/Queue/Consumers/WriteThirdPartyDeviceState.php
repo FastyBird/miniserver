@@ -20,7 +20,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
@@ -36,8 +35,6 @@ use function strval;
  */
 final class WriteThirdPartyDeviceState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	private API\LanApi|null $lanApiApi = null;
 

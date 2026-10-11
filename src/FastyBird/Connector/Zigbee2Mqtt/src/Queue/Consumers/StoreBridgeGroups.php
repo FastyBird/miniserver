@@ -5,7 +5,6 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Values\Types\Sources;
-use Nette;
 use Override;
 
 /**
@@ -13,8 +12,6 @@ use Override;
  */
 final readonly class StoreBridgeGroups implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(private Zigbee2Mqtt\Logger $logger)
 	{

@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
-use Nette;
 use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
@@ -34,8 +33,6 @@ use function React\Async\await;
  */
 abstract class Periodic implements Writer
 {
-
-	use Nette\SmartObject;
 
 	private const float HANDLER_START_DELAY = 5.0;
 

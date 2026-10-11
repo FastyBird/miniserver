@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Override;
 use TypeError;
 use ValueError;
@@ -29,8 +28,6 @@ use function React\Async\await;
  */
 final readonly class StoreBridgeConnectionState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Zigbee2Mqtt\Logger $logger,

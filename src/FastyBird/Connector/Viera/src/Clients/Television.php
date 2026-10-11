@@ -21,7 +21,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
@@ -39,8 +38,6 @@ use function React\Async\async;
  */
 final class Television implements Client
 {
-
-	use Nette\SmartObject;
 
 	private const float HANDLER_START_DELAY = 2.0;
 

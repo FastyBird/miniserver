@@ -6,7 +6,6 @@ use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Documents;
 use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Core\Values\Types\Sources;
-use Nette;
 use Override;
 use function sprintf;
 
@@ -15,8 +14,6 @@ use function sprintf;
  */
 final readonly class Gateway implements Client
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Documents\Connectors\Connector $connector,

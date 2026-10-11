@@ -7,7 +7,6 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
-use Nette;
 use Ramsey\Uuid;
 use function implode;
 use function in_array;
@@ -26,8 +25,6 @@ use function strlen;
  */
 class Attribute
 {
-
-	use Nette\SmartObject;
 
 	protected bool|float|int|string|null $actualValue = null;
 

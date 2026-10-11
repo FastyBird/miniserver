@@ -7,7 +7,6 @@ use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
-use Nette;
 use TypeError;
 use ValueError;
 
@@ -16,8 +15,6 @@ use ValueError;
  */
 final class ConnectionManager
 {
-
-	use Nette\SmartObject;
 
 	private Client|null $clientConnection = null;
 

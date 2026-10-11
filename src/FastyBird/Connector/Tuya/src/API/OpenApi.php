@@ -51,8 +51,6 @@ use const DIRECTORY_SEPARATOR;
 final class OpenApi
 {
 
-	use Nette\SmartObject;
-
 	private const string VERSION = '0.1.0';
 
 	private const int TUYA_ERROR_CODE_TOKEN_INVALID = 1_010;

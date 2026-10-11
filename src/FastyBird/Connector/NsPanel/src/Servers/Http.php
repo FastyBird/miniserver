@@ -9,7 +9,6 @@ use FastyBird\Connector\NsPanel\Middleware;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
-use Nette;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Http\Message\ResponseInterface;
@@ -24,8 +23,6 @@ use Throwable;
  */
 final class Http implements Server
 {
-
-	use Nette\SmartObject;
 
 	public const string REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
 

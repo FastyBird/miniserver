@@ -59,8 +59,6 @@ use const DIRECTORY_SEPARATOR;
 final class Gen2WsApi
 {
 
-	use Nette\SmartObject;
-
 	private const string REQUEST_SRC = 'fb_ws_client';
 
 	private const string DEVICE_STATUS_METHOD = 'Shelly.GetStatus';

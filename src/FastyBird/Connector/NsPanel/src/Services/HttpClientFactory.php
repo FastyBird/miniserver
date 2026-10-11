@@ -4,7 +4,6 @@ namespace FastyBird\Connector\NsPanel\Services;
 
 use GuzzleHttp;
 use InvalidArgumentException;
-use Nette;
 use React\EventLoop;
 use React\Http;
 use React\Socket\Connector;
@@ -14,8 +13,6 @@ use React\Socket\Connector;
  */
 final class HttpClientFactory
 {
-
-	use Nette\SmartObject;
 
 	private const int CONNECTION_TIMEOUT = 10;
 

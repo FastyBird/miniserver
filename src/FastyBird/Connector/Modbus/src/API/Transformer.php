@@ -11,7 +11,6 @@ use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
-use Nette;
 use Nette\Utils;
 use TypeError;
 use ValueError;
@@ -36,8 +35,6 @@ use function unpack;
  */
 final class Transformer
 {
-
-	use Nette\SmartObject;
 
 	private bool|null $machineUsingLittleEndian = null;
 

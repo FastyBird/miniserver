@@ -3,15 +3,12 @@
 namespace FastyBird\Connector\Modbus\API\Interfaces;
 
 use FastyBird\Connector\Modbus\Types;
-use Nette;
 
 /**
  * Base serial interface configuration
  */
 final class Configuration
 {
-
-	use Nette\SmartObject;
 
 	private Types\BaudRate $baudRate;
 

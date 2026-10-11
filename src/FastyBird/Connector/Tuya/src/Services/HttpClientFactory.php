@@ -4,7 +4,6 @@ namespace FastyBird\Connector\Tuya\Services;
 
 use GuzzleHttp;
 use InvalidArgumentException;
-use Nette;
 use React\EventLoop;
 use React\Http;
 use React\Socket;
@@ -14,8 +13,6 @@ use React\Socket;
  */
 final class HttpClientFactory
 {
-
-	use Nette\SmartObject;
 
 	private const int CONNECTION_TIMEOUT = 10;
 

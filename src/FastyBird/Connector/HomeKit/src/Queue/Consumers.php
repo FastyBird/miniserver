@@ -4,7 +4,6 @@ namespace FastyBird\Connector\HomeKit\Queue;
 
 use FastyBird\Connector\HomeKit;
 use FastyBird\Core\Values\Types\Sources;
-use Nette;
 use SplObjectStorage;
 
 /**
@@ -12,8 +11,6 @@ use SplObjectStorage;
  */
 final class Consumers
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplObjectStorage<Consumer, null> */
 	private SplObjectStorage $consumers;

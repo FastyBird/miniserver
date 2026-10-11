@@ -14,7 +14,6 @@ use FastyBird\Connector\Viera\ValueObjects;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
-use Nette;
 use Orisai\ObjectMapper;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\Datagram;
@@ -38,8 +37,6 @@ use function trim;
  */
 final class Discovery
 {
-
-	use Nette\SmartObject;
 
 	private const string MCAST_HOST = '239.255.255.250';
 

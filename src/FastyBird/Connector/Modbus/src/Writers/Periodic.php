@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
-use Nette;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
@@ -33,8 +32,6 @@ use function React\Async\await;
  */
 abstract class Periodic
 {
-
-	use Nette\SmartObject;
 
 	public const string NAME = 'periodic';
 

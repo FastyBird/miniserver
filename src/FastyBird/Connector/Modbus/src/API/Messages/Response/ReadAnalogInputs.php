@@ -4,7 +4,6 @@ namespace FastyBird\Connector\Modbus\API\Messages\Response;
 
 use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Types;
-use Nette;
 use Override;
 
 /**
@@ -12,8 +11,6 @@ use Override;
  */
 final readonly class ReadAnalogInputs implements API\Messages\Message
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * @param array<int> $registers

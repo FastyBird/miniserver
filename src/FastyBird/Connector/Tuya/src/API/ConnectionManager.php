@@ -12,7 +12,6 @@ use FastyBird\Connector\Tuya\ValueObjects;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use Orisai\ObjectMapper;
 use Throwable;
 use TypeError;
@@ -27,8 +26,6 @@ use function is_string;
  */
 final class ConnectionManager
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<string, LocalApi> */
 	private array $localConnections = [];

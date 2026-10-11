@@ -5,7 +5,6 @@ namespace FastyBird\Connector\Modbus\Clients\Messages\Pointer;
 use FastyBird\Connector\Modbus\Clients;
 use FastyBird\Connector\Modbus\Documents;
 use FastyBird\Core\Values\Types;
-use Nette;
 use Override;
 
 /**
@@ -13,8 +12,6 @@ use Override;
  */
 abstract class ReadAddress implements Clients\Messages\Message
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private readonly int $address,

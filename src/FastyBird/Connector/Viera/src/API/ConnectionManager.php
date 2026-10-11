@@ -7,7 +7,6 @@ use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
-use Nette;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -20,8 +19,6 @@ use function is_string;
  */
 final class ConnectionManager
 {
-
-	use Nette\SmartObject;
 
 	/** @var array<string, TelevisionApi> */
 	private array $connections = [];

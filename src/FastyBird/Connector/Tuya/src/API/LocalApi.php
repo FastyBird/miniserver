@@ -66,8 +66,6 @@ use const OPENSSL_RAW_DATA;
 final class LocalApi
 {
 
-	use Nette\SmartObject;
-
 	public const string DP_QUERY_MESSAGE_SCHEMA_FILENAME = 'localapi_dp_query.json';
 
 	public const string DP_STATE_MESSAGE_SCHEMA_FILENAME = 'localapi_dp_state.json';

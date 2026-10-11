@@ -23,7 +23,6 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
-use Nette;
 use Override;
 use Psr\Clock\ClockInterface;
 use Random\RandomException;
@@ -46,7 +45,6 @@ final class Rtu implements Client
 {
 
 	use TReading;
-	use Nette\SmartObject;
 
 	private const int READ_MAX_ATTEMPTS = 5;
 

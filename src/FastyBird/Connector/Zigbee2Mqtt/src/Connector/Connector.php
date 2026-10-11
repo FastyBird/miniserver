@@ -16,7 +16,6 @@ use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use InvalidArgumentException;
-use Nette;
 use Override;
 use React\EventLoop;
 use React\Promise;
@@ -33,8 +32,6 @@ use function React\Async\async;
  */
 final class Connector implements DevicesConnectors\Connector
 {
-
-	use Nette\SmartObject;
 
 	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 

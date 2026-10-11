@@ -11,7 +11,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use React\Promise;
@@ -26,8 +25,6 @@ use function React\Async\async;
  */
 abstract class ClientProcess
 {
-
-	use Nette\SmartObject;
 
 	protected const float HANDLER_START_DELAY = 2.0;
 

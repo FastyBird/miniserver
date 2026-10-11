@@ -5,7 +5,6 @@ namespace FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Queue\Messages\Message;
 use FastyBird\Core\Values\Types\Sources;
-use Nette;
 use SplQueue;
 
 /**
@@ -13,8 +12,6 @@ use SplQueue;
  */
 final class Queue
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplQueue<Message> */
 	private SplQueue $queue;

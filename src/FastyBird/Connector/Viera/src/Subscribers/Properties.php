@@ -21,7 +21,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Nette\Utils;
 use Override;
 use ReflectionException;
@@ -34,8 +33,6 @@ use function array_merge;
  */
 final readonly class Properties implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Helpers\ChannelProperty $channelProperty,

@@ -16,7 +16,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
-use Nette;
 use Nette\Utils;
 use Override;
 use ReflectionException;
@@ -29,8 +28,6 @@ use function sprintf;
  */
 final readonly class ChannelAttribute implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private FbMqtt\Logger $logger,

@@ -23,8 +23,6 @@ use function sprintf;
 abstract class Accessory
 {
 
-	use Nette\SmartObject;
-
 	/** @var SplObjectStorage<Protocol\Services\Service, null> */
 	protected SplObjectStorage $services;
 

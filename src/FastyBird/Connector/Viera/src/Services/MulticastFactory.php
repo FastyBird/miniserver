@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Viera\Services;
 
 use Clue\React\Multicast;
-use Nette;
 use React\Datagram;
 use React\EventLoop;
 use RuntimeException;
@@ -13,8 +12,6 @@ use RuntimeException;
  */
 final readonly class MulticastFactory
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(private EventLoop\LoopInterface $eventLoop)
 	{

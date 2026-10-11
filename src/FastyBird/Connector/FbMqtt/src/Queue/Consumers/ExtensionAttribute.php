@@ -13,7 +13,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use Nette\Utils;
 use Override;
 use function sprintf;
@@ -23,8 +22,6 @@ use function sprintf;
  */
 final readonly class ExtensionAttribute implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private FbMqtt\Logger $logger,

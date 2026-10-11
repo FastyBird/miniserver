@@ -21,7 +21,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Nette\Utils;
 use Override;
 use ReflectionException;
@@ -36,8 +35,6 @@ use function is_array;
  */
 final readonly class DeviceAttribute implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private FbMqtt\Logger $logger,

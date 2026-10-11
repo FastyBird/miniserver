@@ -30,8 +30,6 @@ use function sprintf;
 class Service
 {
 
-	use Nette\SmartObject;
-
 	public const string HAP_PROTOCOL_INFORMATION_SERVICE_UUID = '000000A2-0000-1000-8000-0026BB765291';
 
 	private const string VIRTUAL_SERVICE_UID = '00000000-0000-0000-0000-000000000000';

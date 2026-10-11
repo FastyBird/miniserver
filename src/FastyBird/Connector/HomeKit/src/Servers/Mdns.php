@@ -13,7 +13,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
-use Nette;
 use Nette\Utils;
 use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -44,8 +43,6 @@ use function substr;
  */
 final class Mdns implements Server
 {
-
-	use Nette\SmartObject;
 
 	private const string DNS_ADDRESS = '224.0.0.251';
 

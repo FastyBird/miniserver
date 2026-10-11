@@ -6,7 +6,6 @@ use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
-use Nette;
 use Ramsey\Uuid;
 use SplObjectStorage;
 use TypeError;
@@ -17,8 +16,6 @@ use ValueError;
  */
 final class Driver
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplObjectStorage<Protocol\Accessories\Accessory, null> */
 	private SplObjectStorage $accessories;

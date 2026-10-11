@@ -14,7 +14,6 @@ use FastyBird\Core\Values\Types\Sources;
 use Fig\Http\Message\RequestMethodInterface;
 use GuzzleHttp;
 use InvalidArgumentException;
-use Nette;
 use Nette\Utils;
 use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
@@ -68,8 +67,6 @@ use function unpack;
  */
 final class TelevisionApi
 {
-
-	use Nette\SmartObject;
 
 	private const int EVENTS_TIMEOUT = 10;
 

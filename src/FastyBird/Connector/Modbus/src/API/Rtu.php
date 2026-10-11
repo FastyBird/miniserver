@@ -9,7 +9,6 @@ use FastyBird\Connector\Modbus\API\Messages\Response\WriteCoil;
 use FastyBird\Connector\Modbus\API\Messages\Response\WriteHoldingRegister;
 use FastyBird\Connector\Modbus\Exceptions;
 use FastyBird\Connector\Modbus\Types;
-use Nette;
 use Nette\Utils;
 use ValueError;
 use function array_combine;
@@ -36,8 +35,6 @@ use function unpack;
  */
 final class Rtu
 {
-
-	use Nette\SmartObject;
 
 	private const string MODBUS_ADU = 'C1station/C1function/C*data/';
 

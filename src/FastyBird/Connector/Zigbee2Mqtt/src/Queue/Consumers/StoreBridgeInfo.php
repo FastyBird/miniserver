@@ -16,7 +16,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Nette\Utils;
 use Override;
 
@@ -27,7 +26,6 @@ final readonly class StoreBridgeInfo implements Queue\Consumer
 {
 
 	use DeviceProperty;
-	use Nette\SmartObject;
 
 	public function __construct(
 		protected Zigbee2Mqtt\Logger $logger,

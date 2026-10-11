@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Viera\API;
 
 use FastyBird\Connector\Viera\Exceptions;
-use Nette;
 use Throwable;
 use function array_values;
 use function base64_decode;
@@ -27,8 +26,6 @@ use const OPENSSL_ZERO_PADDING;
  */
 final class Crypto
 {
-
-	use Nette\SmartObject;
 
 	public const int SIGNATURE_BYTES_LENGTH = 32;
 

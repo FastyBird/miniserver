@@ -4,7 +4,6 @@ namespace FastyBird\Connector\Modbus\Queue;
 
 use FastyBird\Connector\Modbus;
 use FastyBird\Core\Values\Types\Sources;
-use Nette;
 use SplQueue;
 
 /**
@@ -12,8 +11,6 @@ use SplQueue;
  */
 final class Queue
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplQueue<Messages\Message> */
 	private SplQueue $queue;

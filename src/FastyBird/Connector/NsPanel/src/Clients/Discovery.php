@@ -15,7 +15,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\Promise;
 use Throwable;
@@ -31,8 +30,6 @@ use function preg_match;
  */
 final readonly class Discovery
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Documents\Connectors\Connector $connector,

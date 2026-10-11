@@ -22,7 +22,6 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette;
 use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
@@ -40,8 +39,6 @@ use function strval;
  */
 final readonly class WriteChannelPropertyState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Queue\Queue $queue,

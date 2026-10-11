@@ -5,7 +5,6 @@ namespace FastyBird\Connector\HomeKit\Queue;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Queue\Messages\Message;
 use FastyBird\Core\Values\Types\Sources;
-use Nette;
 use SplQueue;
 
 /**
@@ -13,8 +12,6 @@ use SplQueue;
  */
 final class Queue
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplQueue<Message> */
 	private SplQueue $queue;

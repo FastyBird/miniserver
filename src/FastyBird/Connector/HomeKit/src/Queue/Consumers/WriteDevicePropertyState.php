@@ -14,7 +14,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use Override;
 use RuntimeException;
 use TypeError;
@@ -26,8 +25,6 @@ use function intval;
  */
 final readonly class WriteDevicePropertyState implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Protocol\Driver $accessoryDriver,

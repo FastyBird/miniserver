@@ -6,7 +6,6 @@ use FastyBird\Connector\Shelly\Exceptions;
 use FastyBird\Connector\Shelly\Types;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette;
 use Nette\Utils;
 use Psr\Http\Message;
 use React\Promise;
@@ -25,8 +24,6 @@ use function uniqid;
  */
 final class Gen2HttpApi extends HttpApi
 {
-
-	use Nette\SmartObject;
 
 	private const string GET_DEVICE_INFORMATION_ENDPOINT = 'http://%s/rpc/Shelly.GetDeviceInfo';
 

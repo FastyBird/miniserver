@@ -5,7 +5,6 @@ namespace FastyBird\Connector\Zigbee2Mqtt\API;
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
-use Nette;
 use function str_replace;
 
 /**
@@ -13,8 +12,6 @@ use function str_replace;
  */
 final class MqttBuilder
 {
-
-	use Nette\SmartObject;
 
 	/**
 	 * Replace placeholders

@@ -18,7 +18,6 @@ use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette;
 use Nette\Utils;
 use Override;
 use ReflectionException;
@@ -28,8 +27,6 @@ use ReflectionException;
  */
 final readonly class Properties implements Common\EventSubscriber
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,

@@ -3,15 +3,12 @@
 namespace FastyBird\Connector\HomeKit\Controllers;
 
 use FastyBird\Connector\HomeKit;
-use Nette;
 
 /**
  * API base controller
  */
 abstract class BaseController
 {
-
-	use Nette\SmartObject;
 
 	protected HomeKit\Logger $logger;
 

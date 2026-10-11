@@ -6,7 +6,6 @@ use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Servers;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Values\Types\Sources;
-use Nette;
 use Nette\Utils;
 use React\EventLoop;
 use React\Socket;
@@ -27,8 +26,6 @@ use const PHP_URL_HOST;
  */
 final class Subscriber
 {
-
-	use Nette\SmartObject;
 
 	private const float PUBLISH_EVENT_DELAY = 0.5;
 

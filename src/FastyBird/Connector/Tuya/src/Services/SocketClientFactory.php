@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Tuya\Services;
 
 use InvalidArgumentException;
-use Nette;
 use React\EventLoop;
 use React\Socket;
 
@@ -12,8 +11,6 @@ use React\Socket;
  */
 final readonly class SocketClientFactory
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(private EventLoop\LoopInterface $eventLoop)
 	{

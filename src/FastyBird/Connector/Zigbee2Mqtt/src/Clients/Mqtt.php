@@ -20,7 +20,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use InvalidArgumentException;
-use Nette;
 use Override;
 use React\Promise;
 use Throwable;
@@ -34,8 +33,6 @@ use function sprintf;
  */
 final class Mqtt implements Client
 {
-
-	use Nette\SmartObject;
 
 	private Clients\Subscribers\Bridge $bridgeSubscriber;
 

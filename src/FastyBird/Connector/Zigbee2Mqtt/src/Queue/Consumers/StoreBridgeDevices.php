@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Nette\Utils;
 use Override;
 use TypeError;
@@ -34,7 +33,6 @@ use function preg_match;
 final readonly class StoreBridgeDevices implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
 	use DeviceProperty;
 	use ChannelProperty;
 

@@ -16,7 +16,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette;
 use Override;
 use React\Promise;
 use Throwable;
@@ -30,8 +29,6 @@ use function strval;
  */
 final class Device implements Client
 {
-
-	use Nette\SmartObject;
 
 	private API\LanApi $lanApi;
 

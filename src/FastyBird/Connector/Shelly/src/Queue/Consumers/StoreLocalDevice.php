@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Nette\Utils;
 use Override;
 use function assert;
@@ -30,7 +29,6 @@ use function in_array;
 final readonly class StoreLocalDevice implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
 	use DeviceProperty;
 	use ChannelProperty;
 

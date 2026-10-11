@@ -6,7 +6,6 @@ use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Core\Values\Types;
-use Nette;
 use Orisai\ObjectMapper;
 use Override;
 use TypeError;
@@ -26,8 +25,6 @@ use function strtolower;
  */
 final readonly class PropertyAttribute implements Message
 {
-
-	use Nette\SmartObject;
 
 	public const string NAME = 'name';
 

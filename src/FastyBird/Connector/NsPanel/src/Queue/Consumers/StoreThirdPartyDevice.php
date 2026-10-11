@@ -15,7 +15,6 @@ use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Override;
 
 /**
@@ -25,7 +24,6 @@ final readonly class StoreThirdPartyDevice implements Queue\Consumer
 {
 
 	use DeviceProperty;
-	use Nette\SmartObject;
 
 	public function __construct(
 		protected NsPanel\Logger $logger,

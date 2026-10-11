@@ -16,7 +16,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette;
 use Override;
 use Symfony\Component\EventDispatcher;
 use TypeError;
@@ -27,8 +26,6 @@ use ValueError;
  */
 final readonly class Device implements EventDispatcher\EventSubscriberInterface
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Helpers\ChannelProperty $channelProperty,

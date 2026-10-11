@@ -5,7 +5,6 @@ namespace FastyBird\Connector\NsPanel\Protocol\Devices;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types;
-use Nette;
 use Ramsey\Uuid;
 use SplObjectStorage;
 use function array_key_first;
@@ -20,8 +19,6 @@ use function sprintf;
  */
 abstract class Device
 {
-
-	use Nette\SmartObject;
 
 	/** @var SplObjectStorage<Protocol\Capabilities\Capability, null> */
 	protected SplObjectStorage $capabilities;

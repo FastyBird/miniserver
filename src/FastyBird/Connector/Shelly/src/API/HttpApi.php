@@ -41,8 +41,6 @@ use const DIRECTORY_SEPARATOR;
 abstract class HttpApi
 {
 
-	use Nette\SmartObject;
-
 	private const string REQUEST_AUTHORIZATION_HEADER = 'Authorization';
 
 	private const string RESPONSE_AUTHENTICATION_RESPONSE_HEADER = 'WWW-Authenticate';

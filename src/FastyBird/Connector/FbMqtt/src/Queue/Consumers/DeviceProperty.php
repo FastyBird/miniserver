@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette;
 use Nette\Utils;
 use Override;
 use Throwable;
@@ -32,7 +31,6 @@ use function sprintf;
 final readonly class DeviceProperty implements Queue\Consumer
 {
 
-	use Nette\SmartObject;
 	use TProperty;
 
 	public function __construct(

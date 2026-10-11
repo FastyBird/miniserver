@@ -4,7 +4,6 @@ namespace FastyBird\Connector\Modbus\API\Messages\Response;
 
 use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Types;
-use Nette;
 use Override;
 
 /**
@@ -12,8 +11,6 @@ use Override;
  */
 final readonly class WriteCoil implements API\Messages\Message
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private int $station,

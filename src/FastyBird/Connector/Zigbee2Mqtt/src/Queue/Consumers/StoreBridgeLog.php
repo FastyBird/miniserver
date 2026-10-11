@@ -11,7 +11,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette;
 use Override;
 use Psr;
 
@@ -20,8 +19,6 @@ use Psr;
  */
 final readonly class StoreBridgeLog implements Queue\Consumer
 {
-
-	use Nette\SmartObject;
 
 	public function __construct(
 		private Zigbee2Mqtt\Logger $logger,

@@ -21,7 +21,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette;
 use Override;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
@@ -42,8 +41,6 @@ use function React\Async\async;
  */
 final class Local implements Client
 {
-
-	use Nette\SmartObject;
 
 	private const float HANDLER_START_DELAY = 2.0;
 
