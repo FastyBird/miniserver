@@ -12,6 +12,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -63,6 +64,7 @@ class Device extends VirtualEntities\Devices\Device
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Addon
 	{
 		return Sources\Addon::VIRTUAL_THERMOSTAT;

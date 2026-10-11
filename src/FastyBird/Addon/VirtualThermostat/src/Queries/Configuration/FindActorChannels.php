@@ -6,6 +6,7 @@ use FastyBird\Addon\VirtualThermostat\Documents;
 use FastyBird\Addon\VirtualThermostat\Exceptions;
 use FastyBird\Addon\VirtualThermostat\Types;
 use FastyBird\Connector\Virtual\Queries as VirtualQueries;
+use Override;
 use function sprintf;
 
 /**
@@ -22,6 +23,7 @@ class FindActorChannels extends VirtualQueries\Configuration\FindChannels
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function byIdentifier(Types\ChannelIdentifier|string $identifier): void
 	{
 		if (!$identifier instanceof Types\ChannelIdentifier) {

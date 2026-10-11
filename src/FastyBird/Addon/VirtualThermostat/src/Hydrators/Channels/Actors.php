@@ -10,6 +10,7 @@ use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -34,6 +35,7 @@ final class Actors extends VirtualHydrators\Channels\Channel
 	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function hydrateDeviceRelationship(
 		Objects\RelationshipObject $relationship,
 		Objects\ResourceObjectCollection|null $included,

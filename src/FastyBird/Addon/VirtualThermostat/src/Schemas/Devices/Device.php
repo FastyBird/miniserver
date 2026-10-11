@@ -5,6 +5,7 @@ namespace FastyBird\Addon\VirtualThermostat\Schemas\Devices;
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Connector\Virtual\Schemas as VirtualSchemas;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Thermostat device entity schema
@@ -25,6 +26,7 @@ final class Device extends VirtualSchemas\Devices\Device
 		return Entities\Devices\Device::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

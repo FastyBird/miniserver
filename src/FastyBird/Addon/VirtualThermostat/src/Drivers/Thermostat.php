@@ -22,6 +22,7 @@ use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\Promise;
 use Throwable;
@@ -122,6 +123,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws ValueError
 	 * @throws VirtualExceptions\Runtime
 	 */
+	#[Override]
 	public function connect(): Promise\PromiseInterface
 	{
 		if (
@@ -407,6 +409,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function disconnect(): Promise\PromiseInterface
 	{
 		$this->setActorState(false, false);
@@ -420,16 +423,19 @@ class Thermostat implements VirtualDrivers\Driver
 		return Promise\resolve(true);
 	}
 
+	#[Override]
 	public function isConnected(): bool
 	{
 		return $this->connected && $this->connectedAt !== null;
 	}
 
+	#[Override]
 	public function isConnecting(): bool
 	{
 		return false;
 	}
 
+	#[Override]
 	public function getLastConnectAttempt(): DateTimeInterface|null
 	{
 		return $this->connectedAt;
@@ -449,6 +455,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function process(): Promise\PromiseInterface
 	{
 		if ($this->connected === false) {
@@ -703,6 +710,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function writeState(
 		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Channels\Properties\Dynamic $property,
 		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue,
@@ -868,6 +876,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function notifyState(
 		DevicesDocuments\Devices\Properties\Mapped|DevicesDocuments\Channels\Properties\Mapped $property,
 		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue,

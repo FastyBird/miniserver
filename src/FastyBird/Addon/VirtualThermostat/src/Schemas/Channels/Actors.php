@@ -5,6 +5,7 @@ namespace FastyBird\Addon\VirtualThermostat\Schemas\Channels;
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Connector\Virtual\Schemas as VirtualSchemas;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Actors channel entity schema
@@ -25,6 +26,7 @@ final class Actors extends VirtualSchemas\Channels\Channel
 		return Entities\Channels\Actors::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
