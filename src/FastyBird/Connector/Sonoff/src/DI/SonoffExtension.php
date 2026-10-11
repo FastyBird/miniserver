@@ -125,6 +125,11 @@ final class SonoffExtension extends NetteDI\CompilerExtension implements Transla
 				'logger' => $logger,
 			]);
 
+		$builder->addFactoryDefinition($this->prefix('clients.auto'))
+			->setImplement(Clients\AutoFactory::class)
+			->getResultDefinition()
+			->setType(Clients\Auto::class);
+
 		$builder->addFactoryDefinition($this->prefix('clients.discover'))
 			->setImplement(Clients\DiscoveryFactory::class)
 			->getResultDefinition()
