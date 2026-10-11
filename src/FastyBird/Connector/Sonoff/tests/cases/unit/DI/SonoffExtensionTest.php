@@ -35,7 +35,21 @@ final class SonoffExtensionTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertNotNull($container->getByType(Clients\LanFactory::class, false));
 		self::assertNotNull($container->getByType(Clients\CloudFactory::class, false));
+		self::assertNotNull($container->getByType(Clients\AutoFactory::class, false));
 		self::assertNotNull($container->getByType(Clients\DiscoveryFactory::class, false));
+
+		// The connector picks its client from this list, so the auto mode factory has to be in it.
+		$autoFactories = [];
+
+		foreach ($container->findByType(Clients\ClientFactory::class) as $serviceName) {
+			$factory = $container->getService($serviceName);
+
+			if ($factory instanceof Clients\AutoFactory) {
+				$autoFactories[] = $factory;
+			}
+		}
+
+		self::assertCount(1, $autoFactories);
 
 		self::assertNotNull($container->getByType(Services\HttpClientFactory::class, false));
 		self::assertNotNull($container->getByType(Services\MulticastFactory::class, false));
