@@ -465,6 +465,13 @@ jobs:
           docker logs miniserver
           exit 1
 
+      # Schema drift gate. The entrypoint has migrated the empty service database from
+      # migrations/, so the result must equal the entity mapping: orm:validate-schema exits
+      # 0 only when the mapping is valid and the database is in sync with it (1 = invalid
+      # mapping, 2 = out of sync). A mapping change without a migration fails here.
+      - name: "The migrated schema matches the mapping (orm:validate-schema)"
+        run: "docker exec miniserver php bin/fb-console.php orm:validate-schema"
+
       # GET / is not asserted to return 200. AppRouter::createRouter
       # (Core/Application/src/Router/AppRouter.php) defines a route for "/",
       # but nothing registers it: there is no `services: router:` entry and
