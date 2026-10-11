@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher;
 /**
  * RabbitMQ async client channel subscriber
  */
-readonly class Channel implements EventDispatcher\EventSubscriberInterface
+final readonly class Channel implements EventDispatcher\EventSubscriberInterface
 {
 
 	public function __construct(

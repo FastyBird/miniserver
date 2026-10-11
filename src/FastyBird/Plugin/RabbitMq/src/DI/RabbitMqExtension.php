@@ -19,7 +19,7 @@ use function assert;
 /**
  * Message exchange extension container
  */
-class RabbitMqExtension extends DI\CompilerExtension
+final class RabbitMqExtension extends DI\CompilerExtension
 {
 
 	public const string EXCHANGE_NAME = 'fb.exchange.bus';

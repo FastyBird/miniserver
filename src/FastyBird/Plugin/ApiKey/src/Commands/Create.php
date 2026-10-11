@@ -20,7 +20,7 @@ use function sprintf;
 /**
  * API key creation command
  */
-class Create extends Console\Command\Command
+final class Create extends Console\Command\Command
 {
 
 	use Nette\SmartObject;

@@ -16,16 +16,16 @@ use function sprintf;
  *
  * @template T of States\State
  */
-class StatesManagerFactory
+final readonly class StatesManagerFactory
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Clients\Async\Client $client,
-		private readonly States\StateFactory $stateFactory,
-		private readonly ClockInterface $clock,
-		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
+		private Clients\Async\Client $client,
+		private States\StateFactory $stateFactory,
+		private ClockInterface $clock,
+		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
 	}

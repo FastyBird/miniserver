@@ -23,7 +23,7 @@ use function strval;
 /**
  * RabbitMQ message handler
  */
-final class Message
+final readonly class Message
 {
 
 	public const int MESSAGE_ACK = 1;
@@ -35,11 +35,11 @@ final class Message
 	public const int MESSAGE_REJECT_AND_TERMINATE = 4;
 
 	public function __construct(
-		private readonly Utilities\IdentifierGenerator $identifier,
-		private readonly Documents\RoutingDocumentFactory $documentFactory,
-		private readonly Consumers\Container $consumer,
-		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
-		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
+		private Utilities\IdentifierGenerator $identifier,
+		private Documents\RoutingDocumentFactory $documentFactory,
+		private Consumers\Container $consumer,
+		private EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
+		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
 	}

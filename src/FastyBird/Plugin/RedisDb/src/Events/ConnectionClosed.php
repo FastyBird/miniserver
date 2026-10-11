@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * After connection closed event
  */
-class ConnectionClosed extends EventDispatcher\Event
+final class ConnectionClosed extends EventDispatcher\Event
 {
 
 }

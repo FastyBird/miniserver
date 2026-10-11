@@ -17,17 +17,17 @@ use Psr\Log;
 /**
  * Redis DB exchange publisher
  */
-final class Publisher implements ExchangePublisher\MessagePublisher
+final readonly class Publisher implements ExchangePublisher\MessagePublisher
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Utilities\IdentifierGenerator $identifier,
-		private readonly string $channel,
-		private readonly Clients\Client $client,
-		private readonly ClockInterface $clock,
-		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
+		private Utilities\IdentifierGenerator $identifier,
+		private string $channel,
+		private Clients\Client $client,
+		private ClockInterface $clock,
+		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
 	}

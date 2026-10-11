@@ -15,7 +15,7 @@ use function assert;
 /**
  * CouchDB state storage extension container
  */
-class CouchDbExtension extends DI\CompilerExtension
+final class CouchDbExtension extends DI\CompilerExtension
 {
 
 	public const string NAME = 'fbCouchDbPlugin';

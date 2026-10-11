@@ -25,7 +25,7 @@ use function unserialize;
 /**
  * Redis cache storage
  */
-final class Storage implements Caching\Storage
+final readonly class Storage implements Caching\Storage
 {
 
 	use Nette\SmartObject;
@@ -47,8 +47,8 @@ final class Storage implements Caching\Storage
 	private const string KEY = 'key'; // additional cache structure
 
 	public function __construct(
-		private readonly Clients\Client $client,
-		private readonly Caching\Storages\Journal|null $journal = null,
+		private Clients\Client $client,
+		private Caching\Storages\Journal|null $journal = null,
 	)
 	{
 	}

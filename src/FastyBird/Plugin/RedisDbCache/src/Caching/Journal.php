@@ -14,7 +14,7 @@ use function is_string;
 /**
  * Redis cache journal
  */
-class Journal implements Caching\Storages\Journal
+final readonly class Journal implements Caching\Storages\Journal
 {
 
 	public const string NS_PREFIX = 'FB.Journal';
@@ -25,7 +25,7 @@ class Journal implements Caching\Storages\Journal
 
 	public const string SUFFIX_KEYS = 'keys';
 
-	public function __construct(private readonly Clients\Client $client)
+	public function __construct(private Clients\Client $client)
 	{
 	}
 

@@ -2,7 +2,7 @@
 
 namespace FastyBird\Plugin\RabbitMq\Exceptions;
 
-class UnprocessableMessage extends InvalidState implements Exception
+final class UnprocessableMessage extends InvalidState implements Exception
 {
 
 }

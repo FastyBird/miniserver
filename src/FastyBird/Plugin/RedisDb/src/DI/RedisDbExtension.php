@@ -20,7 +20,7 @@ use function assert;
 /**
  * Message exchange extension container
  */
-class RedisDbExtension extends DI\CompilerExtension
+final class RedisDbExtension extends DI\CompilerExtension
 {
 
 	public const string NAME = 'fbRedisDbPlugin';

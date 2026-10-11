@@ -4,7 +4,7 @@ namespace FastyBird\Plugin\RabbitMq\Exceptions;
 
 use InvalidArgumentException as PHPInvalidArgumentException;
 
-class InvalidArgument extends PHPInvalidArgumentException implements Exception
+final class InvalidArgument extends PHPInvalidArgumentException implements Exception
 {
 
 }

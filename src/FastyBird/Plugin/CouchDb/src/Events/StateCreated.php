@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * After state is created event
  */
-class StateCreated extends EventDispatcher\Event
+final class StateCreated extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly States\State $state)

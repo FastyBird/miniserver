@@ -2,7 +2,7 @@
 
 namespace FastyBird\Plugin\CouchDb\Exceptions;
 
-class NotUpdated extends InvalidState implements Exception
+final class NotUpdated extends InvalidState implements Exception
 {
 
 }

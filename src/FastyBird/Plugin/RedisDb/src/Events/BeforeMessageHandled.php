@@ -7,7 +7,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Before message handled event
  */
-class BeforeMessageHandled extends EventDispatcher\Event
+final class BeforeMessageHandled extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly string $message)

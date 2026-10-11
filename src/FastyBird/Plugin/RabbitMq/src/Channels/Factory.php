@@ -18,17 +18,17 @@ use function assert;
 /**
  * RabbitMQ async client factory
  */
-final class Factory implements Exchange\Factory
+final readonly class Factory implements Exchange\Factory
 {
 
 	private const string EXCHANGE_TYPE = 'topic';
 
 	public function __construct(
-		private readonly string $exchangeName,
-		private readonly Connections\Connection $connection,
-		private readonly Handlers\Message $messagesHandler,
-		private readonly string|null $queueName = null,
-		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
+		private string $exchangeName,
+		private Connections\Connection $connection,
+		private Handlers\Message $messagesHandler,
+		private string|null $queueName = null,
+		private EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
 	}

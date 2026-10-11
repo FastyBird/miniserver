@@ -7,7 +7,7 @@ use Nette;
 /**
  * Cache record item
  */
-final class Record
+final readonly class Record
 {
 
 	use Nette\SmartObject;
@@ -16,9 +16,9 @@ final class Record
 	 * @param array<mixed> $meta
 	 */
 	public function __construct(
-		private readonly string $key,
-		private readonly array $meta,
-		private readonly string $data,
+		private string $key,
+		private array $meta,
+		private string $data,
 	)
 	{
 	}

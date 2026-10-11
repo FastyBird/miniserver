@@ -33,7 +33,7 @@ use function sprintf;
  *
  * @template T of States\State
  */
-class StatesManager
+final class StatesManager
 {
 
 	use Nette\SmartObject;

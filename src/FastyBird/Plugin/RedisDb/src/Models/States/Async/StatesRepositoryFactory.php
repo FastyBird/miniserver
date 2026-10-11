@@ -15,15 +15,15 @@ use function sprintf;
  *
  * @template T of States\State
  */
-class StatesRepositoryFactory
+final readonly class StatesRepositoryFactory
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Clients\Async\Client $client,
-		private readonly States\StateFactory $stateFactory,
-		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
+		private Clients\Async\Client $client,
+		private States\StateFactory $stateFactory,
+		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
 	}

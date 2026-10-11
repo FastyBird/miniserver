@@ -15,7 +15,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * API key plugin
  */
-class ApiKeyExtension extends DI\CompilerExtension
+final class ApiKeyExtension extends DI\CompilerExtension
 {
 
 	public const string NAME = 'fbApiKeyPlugin';

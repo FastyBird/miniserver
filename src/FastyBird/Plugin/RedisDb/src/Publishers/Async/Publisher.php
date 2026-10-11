@@ -21,17 +21,17 @@ use Throwable;
 /**
  * Redis DB exchange async publisher
  */
-final class Publisher implements Async\MessagePublisher
+final readonly class Publisher implements Async\MessagePublisher
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Utilities\IdentifierGenerator $identifier,
-		private readonly string $channel,
-		private readonly Clients\Async\Client $client,
-		private readonly ClockInterface $clock,
-		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
+		private Utilities\IdentifierGenerator $identifier,
+		private string $channel,
+		private Clients\Async\Client $client,
+		private ClockInterface $clock,
+		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
 	}

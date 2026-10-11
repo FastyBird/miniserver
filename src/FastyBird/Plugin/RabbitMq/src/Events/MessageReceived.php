@@ -9,7 +9,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Message was received with all required parameters
  */
-class MessageReceived extends EventDispatcher\Event
+final class MessageReceived extends EventDispatcher\Event
 {
 
 	public function __construct(

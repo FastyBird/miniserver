@@ -7,16 +7,16 @@ use Nette;
 /**
  * Redis connection configuration
  */
-final class Configuration
+final readonly class Configuration
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly string $host = '127.0.0.1',
-		private readonly int $port = 6_379,
-		private readonly string|null $username = null,
-		private readonly string|null $password = null,
+		private string $host = '127.0.0.1',
+		private int $port = 6_379,
+		private string|null $username = null,
+		private string|null $password = null,
 	)
 	{
 	}

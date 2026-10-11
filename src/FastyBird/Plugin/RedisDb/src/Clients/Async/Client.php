@@ -18,7 +18,7 @@ use function strval;
 /**
  * Redis DB async client factory
  */
-class Client
+final class Client
 {
 
 	use Nette\SmartObject;

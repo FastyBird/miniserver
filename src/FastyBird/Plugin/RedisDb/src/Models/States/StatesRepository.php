@@ -17,7 +17,7 @@ use Throwable;
  *
  * @template T of States\State
  */
-class StatesRepository
+final readonly class StatesRepository
 {
 
 	use Nette\SmartObject;
@@ -26,10 +26,10 @@ class StatesRepository
 	 * @param class-string<T> $entity
 	 */
 	public function __construct(
-		private readonly Clients\Client $client,
-		private readonly States\StateFactory $stateFactory,
-		private readonly string $entity = States\State::class,
-		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
+		private Clients\Client $client,
+		private States\StateFactory $stateFactory,
+		private string $entity = States\State::class,
+		private Log\LoggerInterface $logger = new Log\NullLogger(),
 	)
 	{
 	}

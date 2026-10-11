@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * After state is deleted event
  */
-class StateDeleted extends EventDispatcher\Event
+final class StateDeleted extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly States\State $state)

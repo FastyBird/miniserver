@@ -23,14 +23,14 @@ use const CASE_LOWER;
 /**
  * API key check middleware
  */
-final class Validator implements MiddlewareInterface
+final readonly class Validator implements MiddlewareInterface
 {
 
 	private const string API_KEY_HEADER = 'X-Api-Key';
 
 	public function __construct(
-		private readonly Models\Entities\KeyRepository $keyRepository,
-		private readonly Localization\Translator $translator,
+		private Models\Entities\KeyRepository $keyRepository,
+		private Localization\Translator $translator,
 	)
 	{
 	}

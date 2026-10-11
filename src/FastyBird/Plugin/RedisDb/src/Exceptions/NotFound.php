@@ -2,7 +2,7 @@
 
 namespace FastyBird\Plugin\RedisDb\Exceptions;
 
-class NotFound extends InvalidState implements Exception
+final class NotFound extends InvalidState implements Exception
 {
 
 }

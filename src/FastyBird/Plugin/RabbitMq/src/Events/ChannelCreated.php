@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher;
 /**
  * Client channel created event
  */
-class ChannelCreated extends EventDispatcher\Event
+final class ChannelCreated extends EventDispatcher\Event
 {
 
 	public function __construct(private readonly Bunny\Channel $channel)

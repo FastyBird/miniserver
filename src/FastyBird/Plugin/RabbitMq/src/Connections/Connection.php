@@ -7,17 +7,17 @@ use Nette;
 /**
  * RabbitMQ connection configuration
  */
-final class Connection
+final readonly class Connection
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly string $host = '127.0.0.1',
-		private readonly int $port = 5_672,
-		private readonly string $vhost = '/',
-		private readonly string $username = 'guest',
-		private readonly string $password = 'guest',
+		private string $host = '127.0.0.1',
+		private int $port = 5_672,
+		private string $vhost = '/',
+		private string $username = 'guest',
+		private string $password = 'guest',
 	)
 	{
 	}

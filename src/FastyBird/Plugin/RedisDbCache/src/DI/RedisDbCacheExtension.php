@@ -16,7 +16,7 @@ use function assert;
 /**
  * Redis DB cache extension container
  */
-class RedisDbCacheExtension extends DI\CompilerExtension
+final class RedisDbCacheExtension extends DI\CompilerExtension
 {
 
 	public const string NAME = 'fbRedisDbCachePlugin';
