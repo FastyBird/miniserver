@@ -11,7 +11,7 @@ final class DummyChannelSchema extends DevicesSchemas\Channels\Channel
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Addon::VIRTUAL_THERMOSTAT->value . '/channel/' . DummyChannelEntity::TYPE;
+	public const string SCHEMA_TYPE = Sources\Addon::VIRTUAL_THERMOSTAT->value . '/channel/' . DummyChannelEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Thermostat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Drivers
- * @since          1.0.0
- *
- * @date           16.10.23
- */
-
 namespace FastyBird\Addon\VirtualThermostat\Drivers;
 
 use DateTimeInterface;
@@ -35,6 +22,7 @@ use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\Promise;
 use Throwable;
@@ -60,16 +48,11 @@ use function str_starts_with;
 
 /**
  * Thermostat service
- *
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Drivers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Thermostat implements VirtualDrivers\Driver
+final class Thermostat implements VirtualDrivers\Driver
 {
 
-	private const PROCESSING_DEBOUNCE_DELAY = 150.0;
+	private const float PROCESSING_DEBOUNCE_DELAY = 150.0;
 
 	/** @var array<string, bool|null> */
 	private array $heaters = [];
@@ -140,6 +123,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws ValueError
 	 * @throws VirtualExceptions\Runtime
 	 */
+	#[Override]
 	public function connect(): Promise\PromiseInterface
 	{
 		if (
@@ -425,6 +409,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function disconnect(): Promise\PromiseInterface
 	{
 		$this->setActorState(false, false);
@@ -438,16 +423,19 @@ class Thermostat implements VirtualDrivers\Driver
 		return Promise\resolve(true);
 	}
 
+	#[Override]
 	public function isConnected(): bool
 	{
 		return $this->connected && $this->connectedAt !== null;
 	}
 
+	#[Override]
 	public function isConnecting(): bool
 	{
 		return false;
 	}
 
+	#[Override]
 	public function getLastConnectAttempt(): DateTimeInterface|null
 	{
 		return $this->connectedAt;
@@ -467,6 +455,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function process(): Promise\PromiseInterface
 	{
 		if ($this->connected === false) {
@@ -721,6 +710,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function writeState(
 		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Channels\Properties\Dynamic $property,
 		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue,
@@ -886,6 +876,7 @@ class Thermostat implements VirtualDrivers\Driver
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function notifyState(
 		DevicesDocuments\Devices\Properties\Mapped|DevicesDocuments\Channels\Properties\Mapped $property,
 		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue,

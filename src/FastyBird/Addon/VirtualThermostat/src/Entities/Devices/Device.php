@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           05.02.24
- */
-
 namespace FastyBird\Addon\VirtualThermostat\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -25,6 +12,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -39,25 +27,25 @@ use function str_starts_with;
 class Device extends VirtualEntities\Devices\Device
 {
 
-	public const TYPE = 'virtual-thermostat-addon';
+	public const string TYPE = 'virtual-thermostat-addon';
 
-	public const MINIMUM_TEMPERATURE = 7.0;
+	public const float MINIMUM_TEMPERATURE = 7.0;
 
-	public const MAXIMUM_ROOM_TEMPERATURE = 1_000.0;
+	public const float MAXIMUM_ROOM_TEMPERATURE = 1_000.0;
 
-	public const MAXIMUM_FLOOR_TEMPERATURE = 1_000.0;
+	public const float MAXIMUM_FLOOR_TEMPERATURE = 1_000.0;
 
-	public const MAXIMUM_SET_ROOM_TEMPERATURE = 35.0;
+	public const float MAXIMUM_SET_ROOM_TEMPERATURE = 35.0;
 
-	public const MAXIMUM_SET_FLOOR_TEMPERATURE = 30.0;
+	public const float MAXIMUM_SET_FLOOR_TEMPERATURE = 30.0;
 
-	public const TARGET_TEMPERATURE = 20.0;
+	public const float TARGET_TEMPERATURE = 20.0;
 
-	public const PRECISION = 0.1;
+	public const float PRECISION = 0.1;
 
-	public const COLD_TOLERANCE = 0.3;
+	public const float COLD_TOLERANCE = 0.3;
 
-	public const HOT_TOLERANCE = 0.3;
+	public const float HOT_TOLERANCE = 0.3;
 
 	protected string $device_type = self::TYPE;
 
@@ -76,6 +64,7 @@ class Device extends VirtualEntities\Devices\Device
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Addon
 	{
 		return Sources\Addon::VIRTUAL_THERMOSTAT;

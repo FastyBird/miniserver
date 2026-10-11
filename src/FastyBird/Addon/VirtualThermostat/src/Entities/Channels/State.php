@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * State.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           03.02.24
- */
-
 namespace FastyBird\Addon\VirtualThermostat\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +9,7 @@ use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -30,7 +18,7 @@ use function assert;
 class State extends VirtualEntities\Channels\Channel
 {
 
-	public const TYPE = 'virtual-thermostat-addon-state';
+	public const string TYPE = 'virtual-thermostat-addon-state';
 
 	public function __construct(
 		VirtualThermostatEntities\Devices\Device $device,
@@ -47,11 +35,13 @@ class State extends VirtualEntities\Channels\Channel
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Addon
 	{
 		return Sources\Addon::VIRTUAL_THERMOSTAT;
 	}
 
+	#[Override]
 	public function getDevice(): VirtualThermostatEntities\Devices\Device
 	{
 		assert($this->device instanceof VirtualThermostatEntities\Devices\Device);

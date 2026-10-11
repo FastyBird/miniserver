@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           21.11.23
- */
-
 namespace FastyBird\Addon\VirtualThermostat\Helpers;
 
 use FastyBird\Addon\VirtualThermostat\Documents as VirtualThermostatDocuments;
@@ -38,11 +25,6 @@ use function str_starts_with;
 
 /**
  * Thermostat helper
- *
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Device
 {

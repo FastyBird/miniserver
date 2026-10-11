@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Actors.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           23.10.23
- */
-
 namespace FastyBird\Addon\VirtualThermostat\Hydrators\Channels;
 
 use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
@@ -23,6 +10,7 @@ use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -31,10 +19,6 @@ use function strval;
  * Actors channel entity hydrator
  *
  * @extends VirtualHydrators\Channels\Channel<VirtualThermostatEntities\Channels\Actors>
- *
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Actors extends VirtualHydrators\Channels\Channel
 {
@@ -51,6 +35,7 @@ final class Actors extends VirtualHydrators\Channels\Channel
 	 * @throws CoreExceptions\Runtime
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function hydrateDeviceRelationship(
 		Objects\RelationshipObject $relationship,
 		Objects\ResourceObjectCollection|null $included,

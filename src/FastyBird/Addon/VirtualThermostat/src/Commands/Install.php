@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Thermostat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           23.10.23
- */
-
 namespace FastyBird\Addon\VirtualThermostat\Commands;
 
 use Doctrine\DBAL;
@@ -76,16 +63,11 @@ use function usort;
 
 /**
  * Connector thermostat devices management command
- *
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class Install extends Console\Command\Command
+final class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:virtual-thermostat-addon:install';
+	public const string NAME = 'fb:virtual-thermostat-addon:install';
 
 	public function __construct(
 		private readonly VirtualThermostat\Logger $logger,
