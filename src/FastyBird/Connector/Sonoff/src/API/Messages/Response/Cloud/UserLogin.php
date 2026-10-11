@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Sonoff\API\Messages\Response\Cloud;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Types;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * User logged in entity
@@ -50,6 +51,7 @@ final readonly class UserLogin implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -39,6 +40,7 @@ abstract class Device implements Message
 		return $this->device;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

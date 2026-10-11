@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\Schemas\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * NS Panel press channel entity schema
@@ -23,6 +24,7 @@ final class Press extends Channel
 		return Entities\Channels\Press::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

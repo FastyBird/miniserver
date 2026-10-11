@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Shelly\ValueObjects;
 
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Websocket frame
@@ -76,6 +77,7 @@ final readonly class WsFrame implements ObjectMapper\MappedObject
 		return $this->auth;
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		try {

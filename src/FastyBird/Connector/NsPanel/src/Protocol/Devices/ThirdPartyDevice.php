@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\Protocol\Devices;
 
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Types;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -95,6 +96,7 @@ class ThirdPartyDevice extends Device
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function toRepresentation(): array
 	{
 		$representation = parent::toRepresentation();

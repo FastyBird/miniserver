@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -44,6 +45,7 @@ final class EnumType extends Type
 		return Zigbee2MqttTypes\ExposeType::from($this->type);
 	}
 
+	#[Override]
 	public function getDataType(): ValuesTypes\DataType
 	{
 		return ValuesTypes\DataType::ENUM;
@@ -57,6 +59,7 @@ final class EnumType extends Type
 		return $this->values;
 	}
 
+	#[Override]
 	public function getFormat(): array|null
 	{
 		/** @var array<int, string> $values */
@@ -65,6 +68,7 @@ final class EnumType extends Type
 		return $values === [] ? null : $values;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

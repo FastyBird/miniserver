@@ -15,6 +15,7 @@ use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
+use Override;
 use React\EventLoop;
 use React\Promise;
 use RuntimeException;
@@ -66,6 +67,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
 		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
@@ -125,6 +127,7 @@ final class Connector implements DevicesConnectors\Connector
 	 *
 	 * @throws RuntimeException
 	 */
+	#[Override]
 	public function discover(): Promise\PromiseInterface
 	{
 		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
@@ -165,6 +168,7 @@ final class Connector implements DevicesConnectors\Connector
 		return Promise\resolve(true);
 	}
 
+	#[Override]
 	public function terminate(): void
 	{
 		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
@@ -189,6 +193,7 @@ final class Connector implements DevicesConnectors\Connector
 		);
 	}
 
+	#[Override]
 	public function hasUnfinishedTasks(): bool
 	{
 		return !$this->queue->isEmpty() && $this->consumersTimer !== null;

@@ -12,6 +12,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
+use Override;
 use function sprintf;
 
 /**
@@ -34,6 +35,7 @@ final class StoreBridgeEvent implements Queue\Consumer
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Zigbee2MqttExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreBridgeEvent) {

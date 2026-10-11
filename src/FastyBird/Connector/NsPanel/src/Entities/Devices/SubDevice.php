@@ -10,6 +10,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -61,6 +62,7 @@ class SubDevice extends NsPanelEntities\Devices\Device
 	/**
 	 * @throws NsPanelExceptions\InvalidState
 	 */
+	#[Override]
 	public function setParents(array|Utils\ArrayHash $parents): void
 	{
 		if (count($parents) !== 1 || !$parents[0] instanceof Gateway) {

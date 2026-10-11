@@ -20,6 +20,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use Throwable;
 use function array_key_exists;
@@ -62,6 +63,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Throwable
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreChannelPropertyState) {

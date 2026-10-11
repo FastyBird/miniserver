@@ -5,6 +5,7 @@ namespace FastyBird\Connector\FbMqtt\Queries\Configuration;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use Override;
 use function sprintf;
 
 /**
@@ -21,6 +22,7 @@ class FindConnectorVariableProperties extends FindConnectorProperties
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function byIdentifier(Types\ConnectorPropertyIdentifier|string $identifier): void
 	{
 		if (!$identifier instanceof Types\ConnectorPropertyIdentifier) {

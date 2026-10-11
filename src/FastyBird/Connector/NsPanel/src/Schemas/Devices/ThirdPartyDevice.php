@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\Schemas\Devices;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * NS Panel third-party device entity schema
@@ -23,6 +24,7 @@ final class ThirdPartyDevice extends Device
 		return Entities\Devices\ThirdPartyDevice::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

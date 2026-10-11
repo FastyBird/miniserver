@@ -6,6 +6,7 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -17,6 +18,7 @@ class ThermostatModeDetectionFactory implements AttributeFactory
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $id,
 		NsPanelTypes\Attribute $type,
@@ -34,6 +36,7 @@ class ThermostatModeDetectionFactory implements AttributeFactory
 		return new ThermostatModeDetection($id, $capability);
 	}
 
+	#[Override]
 	public function getType(): NsPanelTypes\Attribute
 	{
 		return NsPanelTypes\Attribute::MODE;

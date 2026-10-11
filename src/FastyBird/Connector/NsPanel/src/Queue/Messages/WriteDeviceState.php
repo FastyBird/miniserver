@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -58,6 +59,7 @@ abstract readonly class WriteDeviceState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

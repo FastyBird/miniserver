@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 
@@ -53,6 +54,7 @@ final readonly class SingleExposeData implements Message
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -6,6 +6,7 @@ use Exception;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Orisai\ObjectMapper;
+use Override;
 use function array_filter;
 use function array_map;
 use function array_merge;
@@ -341,6 +342,7 @@ final readonly class GetDeviceState implements API\Messages\Message
 	 *
 	 * @throws Exception
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

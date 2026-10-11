@@ -16,6 +16,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Override;
 
 /**
  * Store NS Panel third-party device message consumer
@@ -42,6 +43,7 @@ final class StoreThirdPartyDevice implements Queue\Consumer
 	 * @throws CoreExceptions\InvalidState
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreThirdPartyDevice) {

@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Sonoff\API\Messages\Response\Sockets;
 
 use FastyBird\Connector\Sonoff\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Application sockets handshake in entity
@@ -37,6 +38,7 @@ final readonly class ApplicationHandshake implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

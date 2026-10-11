@@ -14,6 +14,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
+use Override;
 use ReflectionException;
 
 /**
@@ -31,6 +32,7 @@ final class Controls implements Common\EventSubscriber
 	{
 	}
 
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

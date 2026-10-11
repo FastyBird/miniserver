@@ -11,6 +11,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -49,11 +50,13 @@ class Device extends DevicesEntities\Devices\Device
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::TUYA;
 	}
 
+	#[Override]
 	public function getConnector(): TuyaEntities\Connectors\Connector
 	{
 		assert($this->connector instanceof TuyaEntities\Connectors\Connector);
@@ -64,6 +67,7 @@ class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @return array<TuyaEntities\Channels\Channel>
 	 */
+	#[Override]
 	public function getChannels(): array
 	{
 		$channels = [];
@@ -80,6 +84,7 @@ class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @throws TuyaExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof TuyaEntities\Channels\Channel) {

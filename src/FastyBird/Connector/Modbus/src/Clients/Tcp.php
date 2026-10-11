@@ -24,6 +24,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use Random\RandomException;
 use React\EventLoop;
@@ -105,6 +106,7 @@ class Tcp implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$findDevicesQuery = new ModbusQueries\Configuration\FindDevices();
@@ -142,6 +144,7 @@ class Tcp implements Client
 		);
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->closed = true;

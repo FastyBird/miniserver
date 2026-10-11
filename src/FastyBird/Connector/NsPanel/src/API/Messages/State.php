@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\API\Messages;
 
 use FastyBird\Connector\NsPanel\Types;
 use Orisai\ObjectMapper;
+use Override;
 use stdClass;
 use function array_map;
 use function sprintf;
@@ -236,6 +237,7 @@ final readonly class State implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_map(
@@ -244,6 +246,7 @@ final readonly class State implements Message
 		);
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$json = new stdClass();

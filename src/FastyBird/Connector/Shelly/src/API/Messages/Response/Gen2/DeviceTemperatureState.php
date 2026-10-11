@@ -6,6 +6,7 @@ use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Orisai\ObjectMapper;
+use Override;
 use function array_filter;
 use function array_merge;
 
@@ -58,6 +59,7 @@ final class DeviceTemperatureState extends DeviceState implements API\Messages\M
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(
@@ -72,6 +74,7 @@ final class DeviceTemperatureState extends DeviceState implements API\Messages\M
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toState(): array
 	{
 		return array_filter(

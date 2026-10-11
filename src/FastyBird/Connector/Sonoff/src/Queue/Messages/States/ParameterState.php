@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Sonoff\Queue\Messages\States;
 
 use FastyBird\Connector\Sonoff\Queue;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Device or channel parameter state entity
@@ -39,6 +40,7 @@ abstract class ParameterState implements Queue\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

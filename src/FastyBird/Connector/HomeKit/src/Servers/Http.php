@@ -19,6 +19,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
+use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -66,6 +67,7 @@ final class Http implements Server
 	{
 	}
 
+	#[Override]
 	public function initialize(): void
 	{
 		$this->entitiesSubscriber->onUpdateSharedKey[] = function (DevicesEntities\Connectors\Properties\Variable $property): void {
@@ -76,6 +78,7 @@ final class Http implements Server
 	/**
 	 * @throws HomeKitExceptions\Runtime
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		try {
@@ -246,6 +249,7 @@ final class Http implements Server
 	/**
 	 * @throws HomeKitExceptions\Runtime
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->logger->debug(

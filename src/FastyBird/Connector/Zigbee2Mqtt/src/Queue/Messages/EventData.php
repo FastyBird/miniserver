@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use Orisai\ObjectMapper;
+use Override;
 use function array_merge;
 
 /**
@@ -50,6 +51,7 @@ final readonly class EventData implements Message
 		return $this->supported;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

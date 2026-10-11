@@ -11,6 +11,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use React\Promise;
@@ -63,6 +64,7 @@ final class Auto extends ClientProcess implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$this->lanClient = $this->lanClientFactory->create($this->connector, true);
@@ -93,6 +95,7 @@ final class Auto extends ClientProcess implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		if ($this->handlerTimer !== null) {

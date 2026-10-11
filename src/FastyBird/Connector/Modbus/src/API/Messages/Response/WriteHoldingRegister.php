@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Modbus\API\Messages\Response;
 use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Types;
 use Nette;
+use Override;
 
 /**
  * Write single holding register response
@@ -31,6 +32,7 @@ final class WriteHoldingRegister implements API\Messages\Message
 		return $this->function;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -23,6 +23,7 @@ use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use function assert;
@@ -306,6 +307,7 @@ class VirtualExtension extends NetteDI\CompilerExtension implements Translation\
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

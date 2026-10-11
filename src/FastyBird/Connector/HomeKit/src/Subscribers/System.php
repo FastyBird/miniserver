@@ -16,6 +16,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use ReflectionException;
 use TypeError;
@@ -46,6 +47,7 @@ final class System implements Common\EventSubscriber
 	{
 	}
 
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

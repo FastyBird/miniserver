@@ -15,6 +15,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
 use Nette\Utils;
+use Override;
 use function sprintf;
 
 /**
@@ -41,6 +42,7 @@ final class ExtensionAttribute implements Queue\Consumer
 	 * @throws CoreExceptions\InvalidState
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\ExtensionAttribute) {

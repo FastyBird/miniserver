@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen1;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Core\Values\Types;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Parsed sensor range message
@@ -75,6 +76,7 @@ final readonly class SensorRange implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

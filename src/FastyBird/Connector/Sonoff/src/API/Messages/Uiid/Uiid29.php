@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Sonoff\API\Messages\Uiid;
 
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 use function array_merge;
 
@@ -125,6 +126,7 @@ final class Uiid29 implements Uuid
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -148,6 +150,7 @@ final class Uiid29 implements Uuid
 		];
 	}
 
+	#[Override]
 	public function toStates(): array
 	{
 		return array_merge(

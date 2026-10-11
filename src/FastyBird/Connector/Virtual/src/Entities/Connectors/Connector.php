@@ -8,6 +8,7 @@ use FastyBird\Connector\Virtual\Exceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 
 #[ORM\Entity]
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
@@ -21,6 +22,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::VIRTUAL;
@@ -29,6 +31,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	/**
 	 * @return array<VirtualEntities\Devices\Device>
 	 */
+	#[Override]
 	public function getDevices(): array
 	{
 		$devices = [];
@@ -45,6 +48,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
 		if (!$device instanceof VirtualEntities\Devices\Device) {

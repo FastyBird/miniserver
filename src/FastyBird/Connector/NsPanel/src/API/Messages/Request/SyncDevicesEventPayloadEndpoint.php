@@ -6,6 +6,7 @@ use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use stdClass;
 use function array_map;
@@ -133,6 +134,7 @@ final readonly class SyncDevicesEventPayloadEndpoint implements API\Messages\Mes
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -153,6 +155,7 @@ final readonly class SyncDevicesEventPayloadEndpoint implements API\Messages\Mes
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$tags = new stdClass();

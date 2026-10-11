@@ -6,6 +6,7 @@ use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -79,6 +80,7 @@ abstract class Property implements Message
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		$return = [

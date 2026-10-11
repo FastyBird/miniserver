@@ -6,6 +6,7 @@ use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -66,6 +67,7 @@ final readonly class StoreChannelPropertyState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

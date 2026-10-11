@@ -24,6 +24,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
 use Nette\Utils;
+use Override;
 use Psr\Clock\ClockInterface;
 use stdClass;
 use Throwable;
@@ -77,6 +78,7 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 	 * @throws ValueError
 	 * @throws TypeError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\WriteSubDeviceChannelPropertyState) {

@@ -6,6 +6,7 @@ use FastyBird\Connector\Shelly\Documents;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Nette;
+use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use function sprintf;
 
@@ -24,6 +25,7 @@ final class Cloud implements Client
 	{
 	}
 
+	#[Override]
 	public function connect(): void
 	{
 		$this->dispatcher?->dispatch(new DevicesEvents\TerminateConnector(
@@ -32,6 +34,7 @@ final class Cloud implements Client
 		));
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->dispatcher?->dispatch(new DevicesEvents\TerminateConnector(

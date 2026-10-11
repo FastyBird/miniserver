@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\Schemas\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * NS Panel RGB color channel entity schema
@@ -23,6 +24,7 @@ final class ColorRgb extends Channel
 		return Entities\Channels\ColorRgb::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

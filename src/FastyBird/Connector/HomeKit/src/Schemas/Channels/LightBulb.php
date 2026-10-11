@@ -4,6 +4,7 @@ namespace FastyBird\Connector\HomeKit\Schemas\Channels;
 
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Light bulb channel entity schema
@@ -24,6 +25,7 @@ final class LightBulb extends Channel
 		return Entities\Channels\LightBulb::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

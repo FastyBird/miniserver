@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Coordinator information
@@ -30,6 +31,7 @@ final readonly class CoordinatorInfo implements Message
 		return $this->type;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

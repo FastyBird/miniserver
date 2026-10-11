@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\Queue\Messages;
 
 use FastyBird\Connector\NsPanel\Types;
 use Orisai\ObjectMapper;
+use Override;
 use stdClass;
 
 /**
@@ -44,6 +45,7 @@ final readonly class CapabilityDescription implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Shelly\Queue\Messages;
 
 use FastyBird\Core\Values\Types;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Device or channel property description message
@@ -115,6 +116,7 @@ final readonly class PropertyDescription implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

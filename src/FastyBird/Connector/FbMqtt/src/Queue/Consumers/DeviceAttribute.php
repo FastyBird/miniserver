@@ -23,6 +23,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
 use Nette\Utils;
+use Override;
 use ReflectionException;
 use TypeError;
 use ValueError;
@@ -70,6 +71,7 @@ final class DeviceAttribute implements Queue\Consumer
 	 * @throws ValueError
 	 * @throws ReflectionException
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\DeviceAttribute) {

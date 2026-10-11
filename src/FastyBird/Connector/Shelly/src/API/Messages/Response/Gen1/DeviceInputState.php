@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen1;
 
 use FastyBird\Connector\Shelly\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Generation 1 device input state message
@@ -52,6 +53,7 @@ final readonly class DeviceInputState implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -7,6 +7,7 @@ use Exception;
 use FastyBird\Connector\Shelly\API;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Override;
 use function intval;
 
 /**
@@ -69,6 +70,7 @@ final readonly class ComponentEvent implements API\Messages\Message
 	 *
 	 * @throws Exception
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

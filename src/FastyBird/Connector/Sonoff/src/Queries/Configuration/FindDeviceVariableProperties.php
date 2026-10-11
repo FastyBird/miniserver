@@ -6,6 +6,7 @@ use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use function sprintf;
 
 /**
@@ -22,6 +23,7 @@ class FindDeviceVariableProperties extends DevicesQueries\Configuration\FindDevi
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function byIdentifier(Types\DevicePropertyIdentifier|string $identifier): void
 	{
 		if (!$identifier instanceof Types\DevicePropertyIdentifier) {

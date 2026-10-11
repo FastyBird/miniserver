@@ -19,6 +19,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
 use Nette\Utils;
+use Override;
 use Throwable;
 use function assert;
 use function count;
@@ -57,6 +58,7 @@ final class DeviceProperty implements Queue\Consumer
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Throwable
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\DeviceProperty) {

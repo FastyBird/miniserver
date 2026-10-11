@@ -19,6 +19,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
@@ -90,6 +91,7 @@ abstract class Periodic implements Writer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$this->processedDevices = [];
@@ -157,6 +159,7 @@ abstract class Periodic implements Writer
 		);
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		if ($this->handlerTimer !== null) {

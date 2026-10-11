@@ -19,6 +19,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
 use Nette\Utils;
+use Override;
 use TypeError;
 use ValueError;
 use function assert;
@@ -57,6 +58,7 @@ final class StoreDeviceState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreDeviceState) {

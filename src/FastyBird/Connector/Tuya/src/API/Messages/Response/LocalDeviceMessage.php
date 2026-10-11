@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Tuya\API\Messages\Response;
 use FastyBird\Connector\Tuya\API;
 use FastyBird\Connector\Tuya\Types;
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 use function is_array;
 
@@ -84,6 +85,7 @@ final readonly class LocalDeviceMessage implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

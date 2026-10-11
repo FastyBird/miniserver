@@ -6,6 +6,7 @@ use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types as ShellyTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Block sensor description message
@@ -121,6 +122,7 @@ final readonly class BlockSensorDescription implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

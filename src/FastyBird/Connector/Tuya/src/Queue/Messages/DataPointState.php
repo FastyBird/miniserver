@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Tuya\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Data point status message
@@ -38,6 +39,7 @@ final readonly class DataPointState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

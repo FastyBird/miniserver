@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use FastyBird\Connector\Shelly\API;
 use Orisai\ObjectMapper;
+use Override;
 use function array_merge;
 
 /**
@@ -42,6 +43,7 @@ final readonly class TemperatureBlockState implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

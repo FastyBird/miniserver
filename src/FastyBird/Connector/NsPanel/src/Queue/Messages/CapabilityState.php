@@ -6,6 +6,7 @@ use DateTimeInterface;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Device capability state definition
@@ -66,6 +67,7 @@ final readonly class CapabilityState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

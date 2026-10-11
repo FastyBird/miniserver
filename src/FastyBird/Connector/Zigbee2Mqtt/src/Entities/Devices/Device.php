@@ -7,6 +7,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Entities as Zigbee2MqttEntities;
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -24,11 +25,13 @@ abstract class Device extends DevicesEntities\Devices\Device
 		parent::__construct($identifier, $connector, $name, $id);
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::ZIGBEE2MQTT;
 	}
 
+	#[Override]
 	public function getConnector(): Zigbee2MqttEntities\Connectors\Connector
 	{
 		assert($this->connector instanceof Zigbee2MqttEntities\Connectors\Connector);
@@ -39,6 +42,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @return array<Zigbee2MqttEntities\Channels\Channel>
 	 */
+	#[Override]
 	public function getChannels(): array
 	{
 		$channels = [];
@@ -55,6 +59,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof Zigbee2MqttEntities\Channels\Channel) {

@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Tuya\API\Messages\Response;
 use DateTimeInterface;
 use FastyBird\Connector\Tuya\API;
 use Orisai\ObjectMapper;
+use Override;
 use function intval;
 
 /**
@@ -57,6 +58,7 @@ final readonly class AccessToken implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

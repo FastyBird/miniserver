@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -32,6 +33,7 @@ abstract class Bridge implements Message
 		return $this->baseTopic;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -11,6 +11,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use Override;
 use TypeError;
 use ValueError;
 
@@ -28,6 +29,7 @@ final class ConnectorProperties extends DataFixtures\AbstractFixture implements 
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function load(Persistence\ObjectManager $manager): void
 	{
 		$connector = $this->getReference('modbus-rtu-connector', ModbusEntities\Connectors\Connector::class);
@@ -54,6 +56,7 @@ final class ConnectorProperties extends DataFixtures\AbstractFixture implements 
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getDependencies(): array
 	{
 		return [

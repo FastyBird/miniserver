@@ -9,6 +9,7 @@ use FastyBird\Connector\Virtual\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -32,11 +33,13 @@ abstract class Device extends DevicesEntities\Devices\Device
 		parent::__construct($identifier, $connector, $name, $id);
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Connector::VIRTUAL;
 	}
 
+	#[Override]
 	public function getConnector(): VirtualEntities\Connectors\Connector
 	{
 		assert($this->connector instanceof VirtualEntities\Connectors\Connector);
@@ -47,6 +50,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @return array<VirtualEntities\Channels\Channel>
 	 */
+	#[Override]
 	public function getChannels(): array
 	{
 		$channels = [];
@@ -63,6 +67,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @throws VirtualExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof VirtualEntities\Channels\Channel) {

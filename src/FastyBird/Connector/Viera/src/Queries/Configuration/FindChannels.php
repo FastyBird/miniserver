@@ -6,6 +6,7 @@ use FastyBird\Connector\Viera\Documents;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Types;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use function sprintf;
 
 /**
@@ -22,6 +23,7 @@ class FindChannels extends DevicesQueries\Configuration\FindChannels
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function byIdentifier(Types\ChannelType|string $identifier): void
 	{
 		if (!$identifier instanceof Types\ChannelType) {

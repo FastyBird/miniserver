@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Modbus\API\Messages\Response;
 use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Types;
 use Nette;
+use Override;
 
 /**
  * Write single coil register response
@@ -37,6 +38,7 @@ final class WriteCoil implements API\Messages\Message
 		return $this->value;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

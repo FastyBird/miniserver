@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Virtual\Queue\Messages;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 
@@ -78,6 +79,7 @@ final readonly class StoreDevicePropertyState implements Message
 	 *
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -5,6 +5,7 @@ namespace FastyBird\Connector\HomeKit\Queue\Messages;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -42,6 +43,7 @@ final readonly class StoreDeviceConnectionState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

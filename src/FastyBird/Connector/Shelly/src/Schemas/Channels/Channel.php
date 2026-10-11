@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Shelly\Schemas\Channels;
 use FastyBird\Connector\Shelly\Entities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
+use Override;
 
 /**
  * Shelly channel entity schema
@@ -24,6 +25,7 @@ final class Channel extends DevicesSchemas\Channels\Channel
 		return Entities\Channels\Channel::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

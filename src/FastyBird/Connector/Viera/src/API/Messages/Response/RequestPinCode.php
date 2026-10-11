@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Viera\API\Messages\Response;
 
 use FastyBird\Connector\Viera\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Request pin code message
@@ -30,6 +31,7 @@ readonly class RequestPinCode implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

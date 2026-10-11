@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Tuya\API\Messages\Response;
 
 use FastyBird\Connector\Tuya\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Device wifi scan result message
@@ -41,6 +42,7 @@ final readonly class LocalDeviceWifiScan implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

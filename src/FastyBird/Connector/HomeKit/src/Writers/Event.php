@@ -15,6 +15,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
@@ -63,6 +64,7 @@ class Event extends Periodic implements Writer, ComponentEventDispatcher\EventSu
 		);
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

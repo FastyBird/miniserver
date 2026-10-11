@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Sonoff\API\Messages\Response\Cloud;
 
 use FastyBird\Connector\Sonoff\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * User token refreshed in entity
@@ -35,6 +36,7 @@ final readonly class UserRefresh implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

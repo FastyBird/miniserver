@@ -6,6 +6,7 @@ use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -19,6 +20,7 @@ class GenericFactory implements ServiceFactory
 	 * @param array<string> $optionalCharacteristics
 	 * @param array<string> $virtualCharacteristics
 	 */
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $typeId,
 		Types\ServiceType $type,
@@ -44,6 +46,7 @@ class GenericFactory implements ServiceFactory
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Generic::class;

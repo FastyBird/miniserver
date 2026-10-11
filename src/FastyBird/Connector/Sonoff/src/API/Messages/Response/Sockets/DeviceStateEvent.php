@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Sonoff\API\Messages\Response\Sockets;
 
 use FastyBird\Connector\Sonoff\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Device updated status entity
@@ -45,6 +46,7 @@ final readonly class DeviceStateEvent implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -19,6 +19,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Override;
 use TypeError;
 use ValueError;
 use function preg_match;
@@ -63,6 +64,7 @@ final class StoreDeviceConnectionState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreDeviceConnectionState) {

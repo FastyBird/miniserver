@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Modbus\API\Interfaces;
 
 use FastyBird\Connector\Modbus\Exceptions;
+use Override;
 use function array_values;
 use function boolval;
 use function error_clear_last;
@@ -25,6 +26,7 @@ final class SerialWindows extends Serial
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function open(string $mode = 'r+b'): void
 	{
 		parent::open($mode);

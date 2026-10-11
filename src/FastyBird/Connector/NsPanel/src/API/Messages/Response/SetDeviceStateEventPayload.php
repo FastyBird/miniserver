@@ -5,6 +5,7 @@ namespace FastyBird\Connector\NsPanel\API\Messages\Response;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Types;
 use Orisai\ObjectMapper\Rules\BackedEnumValue;
+use Override;
 use stdClass;
 
 /**
@@ -28,6 +29,7 @@ final readonly class SetDeviceStateEventPayload implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -35,6 +37,7 @@ final readonly class SetDeviceStateEventPayload implements API\Messages\Message
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$json = new stdClass();

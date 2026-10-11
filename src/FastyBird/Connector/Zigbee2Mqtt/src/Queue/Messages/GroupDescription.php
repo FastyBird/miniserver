@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 
 /**
@@ -61,6 +62,7 @@ final readonly class GroupDescription implements Message
 		return $this->members;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

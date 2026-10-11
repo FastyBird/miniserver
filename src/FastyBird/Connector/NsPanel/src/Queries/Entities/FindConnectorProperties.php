@@ -6,6 +6,7 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use function sprintf;
 
 /**
@@ -22,6 +23,7 @@ class FindConnectorProperties extends DevicesQueries\Entities\FindConnectorPrope
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function byIdentifier(Types\ConnectorPropertyIdentifier|string $identifier): void
 	{
 		if (!$identifier instanceof Types\ConnectorPropertyIdentifier) {

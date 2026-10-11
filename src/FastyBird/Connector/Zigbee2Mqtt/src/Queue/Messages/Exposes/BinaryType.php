@@ -6,6 +6,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -57,6 +58,7 @@ final class BinaryType extends Type
 		return Zigbee2MqttTypes\ExposeType::from($this->type);
 	}
 
+	#[Override]
 	public function getDataType(): ValuesTypes\DataType
 	{
 		if (is_bool($this->getValueOn()) && is_bool($this->getValueOff())) {
@@ -81,6 +83,7 @@ final class BinaryType extends Type
 		return $this->valueToggle;
 	}
 
+	#[Override]
 	public function getFormat(): array|null
 	{
 		if (is_bool($this->getValueOn()) && is_bool($this->getValueOff())) {
@@ -112,6 +115,7 @@ final class BinaryType extends Type
 		);
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

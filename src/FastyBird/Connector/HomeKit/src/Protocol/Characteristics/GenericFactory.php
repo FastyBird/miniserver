@@ -6,6 +6,7 @@ use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -20,6 +21,7 @@ class GenericFactory implements CharacteristicFactory
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $typeId,
 		string $name,
@@ -53,6 +55,7 @@ class GenericFactory implements CharacteristicFactory
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string|null
 	{
 		return null;

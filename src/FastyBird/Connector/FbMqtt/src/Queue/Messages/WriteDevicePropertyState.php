@@ -4,6 +4,7 @@ namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -51,6 +52,7 @@ final readonly class WriteDevicePropertyState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

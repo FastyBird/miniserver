@@ -9,6 +9,7 @@ use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 use SplObjectStorage;
 use TypeError;
@@ -223,6 +224,7 @@ class Service
 	/**
 	 * @throws Nette\Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		$characteristics = [];

@@ -18,6 +18,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Nette;
 use Nette\Utils;
+use Override;
 use ReflectionException;
 use function in_array;
 use function is_array;
@@ -50,6 +51,7 @@ final class ChannelAttribute implements Queue\Consumer
 	 * @throws CoreExceptions\InvalidState
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\ChannelAttribute) {

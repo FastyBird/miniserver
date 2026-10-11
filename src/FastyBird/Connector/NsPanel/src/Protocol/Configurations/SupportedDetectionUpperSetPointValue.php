@@ -5,6 +5,7 @@ namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -28,6 +29,7 @@ class SupportedDetectionUpperSetPointValue extends Configuration
 		);
 	}
 
+	#[Override]
 	public function toDefinition(): array|null
 	{
 		if ($this->getValue() === null) {

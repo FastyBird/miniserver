@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Shelly\Schemas\Connectors;
 use FastyBird\Connector\Shelly\Entities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
+use Override;
 
 /**
  * Shelly connector entity schema
@@ -24,6 +25,7 @@ final class Connector extends DevicesSchemas\Connectors\Connector
 		return Entities\Connectors\Connector::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

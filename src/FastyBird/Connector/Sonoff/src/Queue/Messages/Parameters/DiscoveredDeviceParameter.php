@@ -6,6 +6,7 @@ use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Types as SonoffTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Discovered device parameter entity
@@ -115,6 +116,7 @@ final readonly class DiscoveredDeviceParameter implements Queue\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

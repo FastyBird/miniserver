@@ -6,6 +6,7 @@ use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 use function is_string;
@@ -19,6 +20,7 @@ class MappingModeFactory implements ConfigurationFactory
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $id,
 		NsPanelTypes\Configuration $type,
@@ -38,6 +40,7 @@ class MappingModeFactory implements ConfigurationFactory
 		return new MappingMode($id, $capability, $value);
 	}
 
+	#[Override]
 	public function getType(): NsPanelTypes\Configuration
 	{
 		return NsPanelTypes\Configuration::MAPPING_MODE;

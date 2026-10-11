@@ -6,6 +6,7 @@ use FastyBird\Connector\Modbus\Exceptions;
 use FastyBird\Connector\Modbus\Types;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use function sprintf;
 
 /**
@@ -22,6 +23,7 @@ class FindConnectorProperties extends DevicesQueries\Configuration\FindConnector
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function byIdentifier(Types\ConnectorPropertyIdentifier|string $identifier): void
 	{
 		if (!$identifier instanceof Types\ConnectorPropertyIdentifier) {

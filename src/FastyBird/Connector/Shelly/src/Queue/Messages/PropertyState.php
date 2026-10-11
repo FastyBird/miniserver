@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Shelly\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Device or channel property state message
@@ -38,6 +39,7 @@ final readonly class PropertyState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

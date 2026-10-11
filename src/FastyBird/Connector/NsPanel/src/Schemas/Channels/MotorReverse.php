@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\Schemas\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * NS Panel motor reverse channel entity schema
@@ -23,6 +24,7 @@ final class MotorReverse extends Channel
 		return Entities\Channels\MotorReverse::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

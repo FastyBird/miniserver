@@ -20,6 +20,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
 use Nette\Utils;
+use Override;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -62,6 +63,7 @@ final class StoreDeviceState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreDeviceState) {

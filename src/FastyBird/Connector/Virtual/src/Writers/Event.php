@@ -8,6 +8,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use Symfony\Component\EventDispatcher;
 use Throwable;
 
@@ -19,6 +20,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 
 	public const string NAME = 'event';
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

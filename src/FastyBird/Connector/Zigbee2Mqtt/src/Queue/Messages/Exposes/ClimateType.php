@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_map;
@@ -54,6 +55,7 @@ final class ClimateType extends Type
 		return $this->features;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

@@ -5,6 +5,7 @@ namespace FastyBird\Connector\NsPanel\API\Messages\Response;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use stdClass;
 
@@ -38,6 +39,7 @@ final readonly class SyncDevicesPayloadEndpoint implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -46,6 +48,7 @@ final readonly class SyncDevicesPayloadEndpoint implements API\Messages\Message
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$json = new stdClass();

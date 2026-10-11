@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Tuya\API\Messages\Response;
 
 use FastyBird\Connector\Tuya\API;
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 
 /**
@@ -43,6 +44,7 @@ final readonly class ReportDeviceState implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

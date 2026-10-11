@@ -22,6 +22,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use Throwable;
 use TypeError;
@@ -68,6 +69,7 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\WriteThirdPartyDeviceState) {

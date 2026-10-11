@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Modbus\Clients\Messages\Request;
 
 use FastyBird\Connector\Modbus\Clients;
 use Nette;
+use Override;
 use function array_map;
 
 /**
@@ -43,6 +44,7 @@ abstract class Read implements Clients\Messages\Message
 		return $this->quantity;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

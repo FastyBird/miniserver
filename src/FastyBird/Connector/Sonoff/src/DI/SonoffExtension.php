@@ -24,6 +24,7 @@ use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use const DIRECTORY_SEPARATOR;
@@ -382,6 +383,7 @@ class SonoffExtension extends NetteDI\CompilerExtension implements Translation\D
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

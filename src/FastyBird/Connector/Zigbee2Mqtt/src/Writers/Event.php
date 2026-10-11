@@ -8,6 +8,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
+use Override;
 use Symfony\Component\EventDispatcher;
 use Throwable;
 
@@ -19,6 +20,7 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 
 	public const string NAME = 'event';
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

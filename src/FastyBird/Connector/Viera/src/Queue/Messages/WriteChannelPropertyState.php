@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Viera\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -58,6 +59,7 @@ final readonly class WriteChannelPropertyState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

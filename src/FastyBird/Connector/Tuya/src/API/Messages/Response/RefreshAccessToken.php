@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Tuya\API\Messages\Response;
 
 use FastyBird\Connector\Tuya\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * OpenAPI refresh access token message
@@ -23,6 +24,7 @@ readonly class RefreshAccessToken implements API\Messages\Message
 		return $this->result;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

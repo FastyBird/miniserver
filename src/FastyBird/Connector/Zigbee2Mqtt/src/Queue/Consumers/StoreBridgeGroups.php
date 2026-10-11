@@ -6,6 +6,7 @@ use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Values\Types\Sources;
 use Nette;
+use Override;
 
 /**
  * Store bridge groups list message consumer
@@ -19,6 +20,7 @@ final class StoreBridgeGroups implements Queue\Consumer
 	{
 	}
 
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreBridgeGroups) {

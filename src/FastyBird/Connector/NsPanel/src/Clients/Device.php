@@ -17,6 +17,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
+use Override;
 use React\Promise;
 use Throwable;
 use TypeError;
@@ -57,6 +58,7 @@ final class Device implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$findDevicesQuery = new Queries\Configuration\FindGatewayDevices();
@@ -508,6 +510,7 @@ final class Device implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		$findDevicesQuery = new Queries\Configuration\FindGatewayDevices();

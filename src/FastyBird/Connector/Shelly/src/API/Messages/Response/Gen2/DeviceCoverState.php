@@ -9,6 +9,7 @@ use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Override;
 use function array_filter;
 use function array_merge;
 use function intval;
@@ -200,6 +201,7 @@ final class DeviceCoverState extends DeviceState implements API\Messages\Message
 	 *
 	 * @throws Exception
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(
@@ -227,6 +229,7 @@ final class DeviceCoverState extends DeviceState implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toState(): array
 	{
 		return array_filter(

@@ -8,6 +8,7 @@ use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Core\Values\Types;
 use Nette;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_filter;
@@ -100,6 +101,7 @@ final class PropertyAttribute implements Message
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

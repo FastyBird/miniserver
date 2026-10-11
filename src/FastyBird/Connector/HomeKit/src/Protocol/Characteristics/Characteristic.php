@@ -12,6 +12,7 @@ use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 use Throwable;
 use TypeError;
@@ -372,6 +373,7 @@ class Characteristic
 	/**
 	 * @throws Nette\Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		$properties = [

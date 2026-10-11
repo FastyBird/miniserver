@@ -8,6 +8,7 @@ use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use Nette;
+use Override;
 use React\Socket;
 use React\Stream;
 use SodiumException;
@@ -100,26 +101,31 @@ final class SecureConnection extends Evenement\EventEmitter implements Socket\Co
 		}
 	}
 
+	#[Override]
 	public function getLocalAddress(): string|null
 	{
 		return $this->connection->getLocalAddress();
 	}
 
+	#[Override]
 	public function getRemoteAddress(): string|null
 	{
 		return $this->connection->getRemoteAddress();
 	}
 
+	#[Override]
 	public function isReadable(): bool
 	{
 		return $this->connection->isReadable();
 	}
 
+	#[Override]
 	public function isWritable(): bool
 	{
 		return $this->connection->isWritable();
 	}
 
+	#[Override]
 	public function write($data): bool
 	{
 		if (is_string($data) && $this->securedRequest) {
@@ -137,21 +143,25 @@ final class SecureConnection extends Evenement\EventEmitter implements Socket\Co
 		}
 	}
 
+	#[Override]
 	public function pause(): void
 	{
 		$this->connection->pause();
 	}
 
+	#[Override]
 	public function resume(): void
 	{
 		$this->connection->resume();
 	}
 
+	#[Override]
 	public function end($data = null): void
 	{
 		$this->connection->end($data);
 	}
 
+	#[Override]
 	public function close(): void
 	{
 		$this->connection->close();
@@ -160,6 +170,7 @@ final class SecureConnection extends Evenement\EventEmitter implements Socket\Co
 	/**
 	 * @param array<mixed> $options
 	 */
+	#[Override]
 	public function pipe(Stream\WritableStreamInterface $dest, array $options = []): Stream\WritableStreamInterface
 	{
 		return $this->connection->pipe($dest, $options);

@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Tuya\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -207,6 +208,7 @@ final readonly class StoreLocalDevice implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

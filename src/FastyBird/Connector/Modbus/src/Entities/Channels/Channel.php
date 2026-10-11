@@ -11,6 +11,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -41,11 +42,13 @@ class Channel extends DevicesEntities\Channels\Channel
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::MODBUS;
 	}
 
+	#[Override]
 	public function getDevice(): ModbusEntities\Devices\Device
 	{
 		assert($this->device instanceof ModbusEntities\Devices\Device);

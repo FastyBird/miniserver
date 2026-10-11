@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Modbus\API\Interfaces;
 
 use FastyBird\Connector\Modbus\Exceptions;
+use Override;
 use function dio_raw;
 use function dio_serial;
 use function error_clear_last;
@@ -22,6 +23,7 @@ final class SerialDio extends Serial
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function open(string $mode = 'r+b'): void
 	{
 		parent::open($mode);

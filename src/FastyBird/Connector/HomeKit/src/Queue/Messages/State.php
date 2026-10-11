@@ -7,6 +7,7 @@ use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function is_bool;
 
@@ -90,6 +91,7 @@ readonly class State implements Message
 		return $this->valid;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

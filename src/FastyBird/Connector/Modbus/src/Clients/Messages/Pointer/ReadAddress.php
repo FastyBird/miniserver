@@ -6,6 +6,7 @@ use FastyBird\Connector\Modbus\Clients;
 use FastyBird\Connector\Modbus\Documents;
 use FastyBird\Core\Values\Types;
 use Nette;
+use Override;
 
 /**
  * Base read register address request
@@ -51,6 +52,7 @@ abstract class ReadAddress implements Clients\Messages\Message
 		return 1;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -57,6 +58,7 @@ final class ListType extends Type
 		return $this->length_max;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

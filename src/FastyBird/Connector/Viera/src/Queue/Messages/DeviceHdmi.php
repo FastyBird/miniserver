@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Viera\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Created device hdmi message
@@ -32,6 +33,7 @@ final readonly class DeviceHdmi implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

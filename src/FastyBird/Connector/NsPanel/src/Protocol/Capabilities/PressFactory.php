@@ -7,6 +7,7 @@ use FastyBird\Connector\NsPanel\Documents;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Protocol;
+use Override;
 use function array_key_exists;
 use function array_map;
 use function assert;
@@ -18,6 +19,7 @@ use function preg_match;
 class PressFactory implements CapabilityFactory
 {
 
+	#[Override]
 	public function create(
 		Documents\Channels\Channel $channel,
 		Protocol\Devices\Device $device,
@@ -46,6 +48,7 @@ class PressFactory implements CapabilityFactory
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Press::class;

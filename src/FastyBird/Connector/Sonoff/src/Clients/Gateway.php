@@ -7,6 +7,7 @@ use FastyBird\Connector\Sonoff\Documents;
 use FastyBird\Connector\Sonoff\Exceptions;
 use FastyBird\Core\Values\Types\Sources;
 use Nette;
+use Override;
 use function sprintf;
 
 /**
@@ -27,6 +28,7 @@ final class Gateway implements Client
 	/**
 	 * @throws Exceptions\NotImplemented
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$this->logger->error(
@@ -48,6 +50,7 @@ final class Gateway implements Client
 	/**
 	 * @throws Exceptions\NotImplemented
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->logger->error(

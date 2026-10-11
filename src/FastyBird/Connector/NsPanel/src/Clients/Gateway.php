@@ -21,6 +21,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
@@ -95,6 +96,7 @@ final class Gateway implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$this->processedGateways = [];
@@ -123,6 +125,7 @@ final class Gateway implements Client
 		);
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		if ($this->handlerTimer !== null) {

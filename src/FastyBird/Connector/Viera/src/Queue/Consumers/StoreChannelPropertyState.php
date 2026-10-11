@@ -18,6 +18,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -53,6 +54,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreChannelPropertyState) {

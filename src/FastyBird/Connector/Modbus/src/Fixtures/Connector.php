@@ -6,6 +6,7 @@ use BadMethodCallException;
 use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
+use Override;
 
 /**
  * Connector database fixture
@@ -16,6 +17,7 @@ final class Connector extends DataFixtures\AbstractFixture implements DataFixtur
 	/**
 	 * @throws BadMethodCallException
 	 */
+	#[Override]
 	public function load(Persistence\ObjectManager $manager): void
 	{
 		$connector = new Entities\Connectors\Connector('modbus-rtu');

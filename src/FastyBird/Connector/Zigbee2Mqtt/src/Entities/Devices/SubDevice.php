@@ -11,6 +11,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -64,6 +65,7 @@ class SubDevice extends Device
 	/**
 	 * @throws Zigbee2MqttExceptions\InvalidState
 	 */
+	#[Override]
 	public function setParents(array|Utils\ArrayHash $parents): void
 	{
 		if (count($parents) !== 1 || !$parents[0] instanceof Bridge) {

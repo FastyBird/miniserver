@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Tuya\Queue\Messages;
 
 use FastyBird\Core\Values\Types;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Discovered cloud device data point message
@@ -115,6 +116,7 @@ final readonly class LocalDeviceDataPoint implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

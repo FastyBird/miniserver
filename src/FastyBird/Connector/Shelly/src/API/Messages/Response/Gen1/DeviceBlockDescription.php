@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen1;
 
 use FastyBird\Connector\Shelly\API;
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 use function array_unique;
 use const SORT_REGULAR;
@@ -51,6 +52,7 @@ final readonly class DeviceBlockDescription implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

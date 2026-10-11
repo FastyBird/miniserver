@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Schemas\Devices;
 
 use FastyBird\Connector\Zigbee2Mqtt\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * Zigbee2MQTT sub-device entity schema
@@ -23,6 +24,7 @@ final class SubDevice extends Device
 		return Entities\Devices\SubDevice::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

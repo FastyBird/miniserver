@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\Schemas\Devices;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Core\Values\Types\Sources;
+use Override;
 
 /**
  * NS Panel gateway entity schema
@@ -24,6 +25,7 @@ final class Gateway extends Device
 		return Entities\Devices\Gateway::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

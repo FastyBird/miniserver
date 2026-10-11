@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Clients;
 
 use BinSoul\Net\Mqtt;
+use Override;
 use React\Promise;
 
 /**
@@ -23,11 +24,13 @@ class Flow implements Mqtt\Flow
 	{
 	}
 
+	#[Override]
 	public function getCode(): string
 	{
 		return $this->decorated->getCode();
 	}
 
+	#[Override]
 	public function start(): Mqtt\Packet|null
 	{
 		$this->packet = $this->decorated->start();
@@ -35,11 +38,13 @@ class Flow implements Mqtt\Flow
 		return $this->packet;
 	}
 
+	#[Override]
 	public function accept(Mqtt\Packet $packet): bool
 	{
 		return $this->decorated->accept($packet);
 	}
 
+	#[Override]
 	public function next(Mqtt\Packet $packet): Mqtt\Packet|null
 	{
 		$this->packet = $this->decorated->next($packet);
@@ -47,21 +52,25 @@ class Flow implements Mqtt\Flow
 		return $this->packet;
 	}
 
+	#[Override]
 	public function isFinished(): bool
 	{
 		return $this->decorated->isFinished();
 	}
 
+	#[Override]
 	public function isSuccess(): bool
 	{
 		return $this->decorated->isSuccess();
 	}
 
+	#[Override]
 	public function getResult()
 	{
 		return $this->decorated->getResult();
 	}
 
+	#[Override]
 	public function getErrorMessage(): string
 	{
 		return $this->decorated->getErrorMessage();

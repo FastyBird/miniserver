@@ -10,6 +10,7 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Nette;
+use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -45,6 +46,7 @@ final class Http implements Server
 	{
 	}
 
+	#[Override]
 	public function connect(): void
 	{
 		try {
@@ -125,6 +127,7 @@ final class Http implements Server
 		});
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->logger->debug(

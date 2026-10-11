@@ -15,6 +15,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
+use Override;
 use RuntimeException;
 use TypeError;
 use ValueError;
@@ -50,6 +51,7 @@ final class WriteDevicePropertyState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\WriteDevicePropertyState) {

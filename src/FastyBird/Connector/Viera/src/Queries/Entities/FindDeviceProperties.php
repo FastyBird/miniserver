@@ -6,6 +6,7 @@ use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Types;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use function sprintf;
 
 /**
@@ -22,6 +23,7 @@ class FindDeviceProperties extends DevicesQueries\Entities\FindDeviceProperties
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function byIdentifier(Types\DevicePropertyIdentifier|string $identifier): void
 	{
 		if (!$identifier instanceof Types\DevicePropertyIdentifier) {

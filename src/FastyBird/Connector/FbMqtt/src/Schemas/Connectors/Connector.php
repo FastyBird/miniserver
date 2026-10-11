@@ -5,6 +5,7 @@ namespace FastyBird\Connector\FbMqtt\Schemas\Connectors;
 use FastyBird\Connector\FbMqtt\Entities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
+use Override;
 
 /**
  * FastyBird MQTT connector entity schema
@@ -24,6 +25,7 @@ final class Connector extends DevicesSchemas\Connectors\Connector
 		return Entities\Connectors\Connector::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

@@ -5,6 +5,7 @@ namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
+use Override;
 use Ramsey\Uuid;
 use function array_filter;
 use function assert;
@@ -61,6 +62,7 @@ class SupportedDetectionModes extends Configuration
 	/**
 	 * @return array<int, string>
 	 */
+	#[Override]
 	public function getValue(): array
 	{
 		assert(is_string($this->value));

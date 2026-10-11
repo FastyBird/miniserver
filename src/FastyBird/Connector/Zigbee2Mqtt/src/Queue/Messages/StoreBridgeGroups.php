@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 use function array_merge;
@@ -37,6 +38,7 @@ final class StoreBridgeGroups extends Bridge implements Message
 		return $this->groups;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

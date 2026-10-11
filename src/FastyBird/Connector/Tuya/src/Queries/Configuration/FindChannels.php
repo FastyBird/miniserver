@@ -6,6 +6,7 @@ use FastyBird\Connector\Tuya\Documents;
 use FastyBird\Connector\Tuya\Exceptions;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use function sprintf;
 
 /**
@@ -22,6 +23,7 @@ class FindChannels extends DevicesQueries\Configuration\FindChannels
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function byIdentifier(Types\DataPoint|string $identifier): void
 	{
 		if (!$identifier instanceof Types\DataPoint) {

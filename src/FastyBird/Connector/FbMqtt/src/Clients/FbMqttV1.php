@@ -14,6 +14,7 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use InvalidArgumentException;
+use Override;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -61,6 +62,7 @@ final class FbMqttV1 implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$client = $this->connectionManager->getConnection($this->connector);
@@ -83,6 +85,7 @@ final class FbMqttV1 implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		$client = $this->connectionManager->getConnection($this->connector);

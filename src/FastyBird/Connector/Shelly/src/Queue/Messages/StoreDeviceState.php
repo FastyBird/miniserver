@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Shelly\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 use function array_merge;
@@ -53,6 +54,7 @@ final class StoreDeviceState extends Device
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

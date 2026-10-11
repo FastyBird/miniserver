@@ -8,6 +8,7 @@ use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -68,6 +69,7 @@ final class NumericType extends Type
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getDataType(): ValuesTypes\DataType
 	{
 		return Utilities\DataType::inferNumberDataType(
@@ -95,6 +97,7 @@ final class NumericType extends Type
 		return $this->valueStep;
 	}
 
+	#[Override]
 	public function getFormat(): array|null
 	{
 		if ($this->getValueMin() !== null || $this->getValueMax() !== null) {
@@ -104,11 +107,13 @@ final class NumericType extends Type
 		return parent::getFormat();
 	}
 
+	#[Override]
 	public function getUnit(): string|null
 	{
 		return $this->unit;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

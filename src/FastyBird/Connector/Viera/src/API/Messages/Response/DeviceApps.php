@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Viera\API\Messages\Response;
 
 use FastyBird\Connector\Viera\API;
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 
 /**
@@ -35,6 +36,7 @@ readonly class DeviceApps implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

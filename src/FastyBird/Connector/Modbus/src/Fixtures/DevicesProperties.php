@@ -11,6 +11,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use Override;
 use TypeError;
 use ValueError;
 
@@ -28,6 +29,7 @@ final class DevicesProperties extends DataFixtures\AbstractFixture implements Da
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function load(Persistence\ObjectManager $manager): void
 	{
 		$device = $this->getReference('modbus-rtu-device', ModbusEntities\Devices\Device::class);
@@ -46,6 +48,7 @@ final class DevicesProperties extends DataFixtures\AbstractFixture implements Da
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getDependencies(): array
 	{
 		return [

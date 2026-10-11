@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen1;
 
 use FastyBird\Connector\Shelly\API;
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 
 /**
@@ -50,6 +51,7 @@ final readonly class ReportDeviceState implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

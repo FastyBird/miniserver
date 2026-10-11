@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use FastyBird\Connector\Shelly\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Generation 2 device light component night mode configuration message
@@ -50,6 +51,7 @@ final readonly class LightNightModeConfigurationBlock implements API\Messages\Me
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

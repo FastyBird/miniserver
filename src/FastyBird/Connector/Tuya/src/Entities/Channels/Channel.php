@@ -7,6 +7,7 @@ use FastyBird\Connector\Tuya\Entities as TuyaEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -32,11 +33,13 @@ class Channel extends DevicesEntities\Channels\Channel
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::TUYA;
 	}
 
+	#[Override]
 	public function getDevice(): TuyaEntities\Devices\Device
 	{
 		assert($this->device instanceof TuyaEntities\Devices\Device);

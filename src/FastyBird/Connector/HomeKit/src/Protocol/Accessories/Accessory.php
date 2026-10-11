@@ -7,6 +7,7 @@ use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 use SplObjectStorage;
 use TypeError;
@@ -152,6 +153,7 @@ abstract class Accessory
 	/**
 	 * @throws Nette\Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		$services = [];

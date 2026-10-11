@@ -4,6 +4,7 @@ namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use FastyBird\Connector\FbMqtt;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -38,6 +39,7 @@ final class ChannelProperty extends Property
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge([

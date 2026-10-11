@@ -5,6 +5,7 @@ namespace FastyBird\Connector\HomeKit\Servers;
 use Evenement\EventEmitter;
 use FastyBird\Connector\HomeKit\Documents;
 use Nette;
+use Override;
 use React\Socket;
 use SplObjectStorage;
 use function str_replace;
@@ -61,6 +62,7 @@ final class SecureServer extends EventEmitter implements Socket\ServerInterface
 		}
 	}
 
+	#[Override]
 	public function getAddress(): string|null
 	{
 		$address = $this->server->getAddress();
@@ -72,16 +74,19 @@ final class SecureServer extends EventEmitter implements Socket\ServerInterface
 		return str_replace('tcp://', 'tls://', $address);
 	}
 
+	#[Override]
 	public function pause(): void
 	{
 		$this->server->pause();
 	}
 
+	#[Override]
 	public function resume(): void
 	{
 		$this->server->resume();
 	}
 
+	#[Override]
 	public function close(): void
 	{
 		$this->server->close();

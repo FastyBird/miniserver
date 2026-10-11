@@ -7,6 +7,7 @@ use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -24,11 +25,13 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 		parent::__construct($device, $identifier, $name, $id);
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::NS_PANEL;
 	}
 
+	#[Override]
 	public function getDevice(): NsPanelEntities\Devices\Device
 	{
 		assert($this->device instanceof NsPanelEntities\Devices\Device);

@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Shelly\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 use function array_unique;
 use const SORT_REGULAR;
@@ -43,6 +44,7 @@ final readonly class ChannelState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

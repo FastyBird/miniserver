@@ -9,6 +9,7 @@ use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -35,11 +36,13 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 		parent::__construct($device, $identifier, $name, $id);
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector|Sources\Bridge
 	{
 		return Sources\Connector::HOMEKIT;
 	}
 
+	#[Override]
 	public function getDevice(): HomeKitEntities\Devices\Device
 	{
 		assert($this->device instanceof HomeKitEntities\Devices\Device);

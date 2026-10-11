@@ -10,6 +10,7 @@ use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use Override;
 use TypeError;
 use ValueError;
 use function array_map;
@@ -39,6 +40,7 @@ class SubDeviceFactory implements DeviceFactory
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function create(
 		Documents\Connectors\Connector $connector,
 		Documents\Devices\Gateway $gateway,
@@ -81,6 +83,7 @@ class SubDeviceFactory implements DeviceFactory
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\SubDevice::class;

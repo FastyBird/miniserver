@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use FastyBird\Connector\Shelly\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Generation 2 device light component default configuration message
@@ -26,6 +27,7 @@ final readonly class LightDefaultConfigurationBlock implements API\Messages\Mess
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

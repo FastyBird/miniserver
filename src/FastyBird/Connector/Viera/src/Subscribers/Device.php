@@ -17,6 +17,7 @@ use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Override;
 use Symfony\Component\EventDispatcher;
 use TypeError;
 use ValueError;
@@ -37,6 +38,7 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

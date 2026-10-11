@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Tuya\API\Messages\Response;
 use FastyBird\Connector\Tuya\API;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * OpenAPI device detail message
@@ -253,6 +254,7 @@ final readonly class Device implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

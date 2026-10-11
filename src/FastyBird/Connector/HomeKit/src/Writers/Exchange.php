@@ -23,6 +23,7 @@ use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
@@ -90,6 +91,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		parent::connect();
@@ -100,6 +102,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 	/**
 	 * @throws CoreExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		parent::disconnect();
@@ -107,6 +110,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 		$this->consumer->disable(self::class);
 	}
 
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

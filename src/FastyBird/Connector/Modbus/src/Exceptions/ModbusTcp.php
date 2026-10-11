@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Modbus\Exceptions;
 
 use Exception as PhpException;
+use Override;
 use Throwable;
 use function array_key_exists;
 use function bin2hex;
@@ -61,6 +62,7 @@ class ModbusTcp extends PhpException implements Exception
 		return $this->response;
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		$output = '';

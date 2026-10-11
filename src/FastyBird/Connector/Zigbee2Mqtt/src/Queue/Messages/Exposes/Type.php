@@ -7,6 +7,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function sprintf;
@@ -259,6 +260,7 @@ abstract class Type implements Zigbee2Mqtt\Queue\Messages\Message
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return $this instanceof ClimateType

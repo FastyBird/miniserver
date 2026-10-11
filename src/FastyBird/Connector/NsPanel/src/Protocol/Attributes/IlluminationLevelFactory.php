@@ -5,6 +5,7 @@ namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -13,6 +14,7 @@ use Ramsey\Uuid;
 class IlluminationLevelFactory implements AttributeFactory
 {
 
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $id,
 		NsPanelTypes\Attribute $type,
@@ -30,6 +32,7 @@ class IlluminationLevelFactory implements AttributeFactory
 		return new IlluminationLevel($id, $capability);
 	}
 
+	#[Override]
 	public function getType(): NsPanelTypes\Attribute
 	{
 		return NsPanelTypes\Attribute::LEVEL;

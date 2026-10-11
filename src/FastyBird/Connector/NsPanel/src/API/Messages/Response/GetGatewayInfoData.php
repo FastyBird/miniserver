@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\API\Messages\Response;
 
 use FastyBird\Connector\NsPanel\API;
 use Orisai\ObjectMapper;
+use Override;
 use stdClass;
 
 /**
@@ -50,6 +51,7 @@ final readonly class GetGatewayInfoData implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -60,6 +62,7 @@ final readonly class GetGatewayInfoData implements API\Messages\Message
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$json = new stdClass();

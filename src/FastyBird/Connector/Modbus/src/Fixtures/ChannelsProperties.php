@@ -11,6 +11,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use Override;
 use TypeError;
 use ValueError;
 use function strval;
@@ -29,6 +30,7 @@ final class ChannelsProperties extends DataFixtures\AbstractFixture implements D
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function load(Persistence\ObjectManager $manager): void
 	{
 		for ($i = 1; $i <= 4; $i++) {
@@ -62,6 +64,7 @@ final class ChannelsProperties extends DataFixtures\AbstractFixture implements D
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getDependencies(): array
 	{
 		return [

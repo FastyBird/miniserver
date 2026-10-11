@@ -22,6 +22,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
@@ -100,6 +101,7 @@ final class Local implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$this->processedDevices = [];
@@ -267,6 +269,7 @@ final class Local implements Client
 		);
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->connectionManager->getGen1CoapApiConnection()->disconnect();

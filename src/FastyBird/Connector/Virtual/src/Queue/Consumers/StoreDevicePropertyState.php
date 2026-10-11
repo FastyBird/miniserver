@@ -17,6 +17,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
@@ -58,6 +59,7 @@ final class StoreDevicePropertyState implements Queue\Consumer
 	 * @throws ValueError
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreDevicePropertyState) {

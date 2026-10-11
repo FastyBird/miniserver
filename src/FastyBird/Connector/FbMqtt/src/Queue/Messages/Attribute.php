@@ -5,6 +5,7 @@ namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_filter;
 use function array_map;
@@ -73,6 +74,7 @@ abstract class Attribute implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

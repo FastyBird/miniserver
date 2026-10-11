@@ -6,6 +6,7 @@ use BadMethodCallException;
 use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
+use Override;
 
 /**
  * Connector devices database fixture
@@ -16,6 +17,7 @@ final class Devices extends DataFixtures\AbstractFixture implements DataFixtures
 	/**
 	 * @throws BadMethodCallException
 	 */
+	#[Override]
 	public function load(Persistence\ObjectManager $manager): void
 	{
 		$connector = $this->getReference('modbus-rtu-connector', Entities\Connectors\Connector::class);
@@ -35,6 +37,7 @@ final class Devices extends DataFixtures\AbstractFixture implements DataFixtures
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getDependencies(): array
 	{
 		return [

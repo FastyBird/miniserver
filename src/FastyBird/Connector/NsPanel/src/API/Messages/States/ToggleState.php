@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\API\Messages\States;
 
 use FastyBird\Connector\NsPanel\Types;
 use Orisai\ObjectMapper;
+use Override;
 use stdClass;
 
 /**
@@ -26,6 +27,7 @@ final readonly class ToggleState implements State
 	{
 	}
 
+	#[Override]
 	public function getType(): Types\Capability
 	{
 		return Types\Capability::TOGGLE;
@@ -36,6 +38,7 @@ final readonly class ToggleState implements State
 		return $this->startup;
 	}
 
+	#[Override]
 	public function getState(): array
 	{
 		return [
@@ -47,6 +50,7 @@ final readonly class ToggleState implements State
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -55,6 +59,7 @@ final readonly class ToggleState implements State
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$json = new stdClass();

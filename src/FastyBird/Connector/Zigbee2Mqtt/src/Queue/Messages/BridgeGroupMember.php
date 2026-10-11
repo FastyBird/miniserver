@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Bridge group member description message
@@ -30,6 +31,7 @@ final readonly class BridgeGroupMember implements Message
 		return $this->endpoint;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

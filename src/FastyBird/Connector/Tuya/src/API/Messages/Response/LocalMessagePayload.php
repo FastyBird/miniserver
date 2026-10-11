@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Tuya\API\Messages\Response;
 use FastyBird\Connector\Tuya\API;
 use FastyBird\Connector\Tuya\Types;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Local API device message
@@ -37,6 +38,7 @@ final readonly class LocalMessagePayload implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Sonoff\Queue\Messages\States;
 
 use Orisai\ObjectMapper;
+use Override;
 use function array_merge;
 
 /**
@@ -29,6 +30,7 @@ final class ChannelParameterState extends ParameterState
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

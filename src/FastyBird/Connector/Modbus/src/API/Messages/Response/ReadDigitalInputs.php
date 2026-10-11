@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Modbus\API\Messages\Response;
 use FastyBird\Connector\Modbus\API;
 use FastyBird\Connector\Modbus\Types;
 use Nette;
+use Override;
 use function array_key_exists;
 
 /**
@@ -59,6 +60,7 @@ final class ReadDigitalInputs implements API\Messages\Message
 		return $this->registers[$address];
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

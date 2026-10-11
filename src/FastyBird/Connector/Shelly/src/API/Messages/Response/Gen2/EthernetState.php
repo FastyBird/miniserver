@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Orisai\ObjectMapper;
+use Override;
 use function array_merge;
 
 /**
@@ -37,6 +38,7 @@ final class EthernetState extends DeviceState implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

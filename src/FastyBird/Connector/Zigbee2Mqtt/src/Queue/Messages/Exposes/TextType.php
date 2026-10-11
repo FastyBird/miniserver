@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 
@@ -31,6 +32,7 @@ final class TextType extends Type
 		return Zigbee2MqttTypes\ExposeType::from($this->type);
 	}
 
+	#[Override]
 	public function getDataType(): ValuesTypes\DataType
 	{
 		return ValuesTypes\DataType::STRING;

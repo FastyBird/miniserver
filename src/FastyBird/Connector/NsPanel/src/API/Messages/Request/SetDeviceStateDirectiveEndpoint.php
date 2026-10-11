@@ -5,6 +5,7 @@ namespace FastyBird\Connector\NsPanel\API\Messages\Request;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use stdClass;
 use function is_array;
@@ -64,6 +65,7 @@ final readonly class SetDeviceStateDirectiveEndpoint implements API\Messages\Mes
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -73,6 +75,7 @@ final readonly class SetDeviceStateDirectiveEndpoint implements API\Messages\Mes
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$tags = new stdClass();

@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Generation 2 device voltmeter configuration message
@@ -63,6 +64,7 @@ final readonly class DeviceVoltmeterConfiguration implements API\Messages\Messag
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

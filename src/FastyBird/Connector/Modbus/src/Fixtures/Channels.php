@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Modbus\Fixtures;
 use Doctrine\Common\DataFixtures;
 use Doctrine\Persistence;
 use FastyBird\Connector\Modbus\Entities;
+use Override;
 
 /**
  * Devices channels database fixture
@@ -12,6 +13,7 @@ use FastyBird\Connector\Modbus\Entities;
 final class Channels extends DataFixtures\AbstractFixture implements DataFixtures\DependentFixtureInterface
 {
 
+	#[Override]
 	public function load(Persistence\ObjectManager $manager): void
 	{
 		$device = $this->getReference('modbus-rtu-device', Entities\Devices\Device::class);
@@ -30,6 +32,7 @@ final class Channels extends DataFixtures\AbstractFixture implements DataFixture
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getDependencies(): array
 	{
 		return [

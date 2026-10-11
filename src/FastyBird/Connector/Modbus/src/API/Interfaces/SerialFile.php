@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Modbus\API\Interfaces;
 
 use FastyBird\Connector\Modbus\Exceptions;
+use Override;
 use function php_uname;
 use function preg_replace;
 
@@ -38,11 +39,13 @@ final class SerialFile extends Serial
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function open(string $mode = 'r+b'): void
 	{
 		$this->serialFile->open($mode);
 	}
 
+	#[Override]
 	public function close(): void
 	{
 		$this->serialFile->close();
@@ -53,6 +56,7 @@ final class SerialFile extends Serial
 	 *
 	 * @return false|int Returns the number of bytes written, or `false` on error
 	 */
+	#[Override]
 	public function send(string $data): false|int
 	{
 		return $this->serialFile->send($data);
@@ -66,6 +70,7 @@ final class SerialFile extends Serial
 	 *
 	 * @return false|string Returns a received data or `false` on failure
 	 */
+	#[Override]
 	public function read(int $length = -1, int $offset = -1): false|string
 	{
 		return $this->serialFile->read($length, $offset);

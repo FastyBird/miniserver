@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Sonoff\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -157,6 +158,7 @@ final readonly class StoreDevice implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

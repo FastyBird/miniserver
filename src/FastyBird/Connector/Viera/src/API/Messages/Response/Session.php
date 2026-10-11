@@ -4,6 +4,7 @@ namespace FastyBird\Connector\Viera\API\Messages\Response;
 
 use FastyBird\Connector\Viera\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Authorize pin code message
@@ -84,6 +85,7 @@ class Session implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

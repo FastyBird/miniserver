@@ -5,6 +5,7 @@ namespace FastyBird\Connector\Modbus\Schemas\Channels;
 use FastyBird\Connector\Modbus\Entities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
+use Override;
 
 /**
  * Modbus channel entity schema
@@ -24,6 +25,7 @@ final class Channel extends DevicesSchemas\Channels\Channel
 		return Entities\Channels\Channel::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;

@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\API\Messages\Request;
 
 use FastyBird\Connector\NsPanel\API;
 use Orisai\ObjectMapper;
+use Override;
 use stdClass;
 
 /**
@@ -28,6 +29,7 @@ final readonly class ReportDeviceOnlineEventEndpoint implements API\Messages\Mes
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -35,6 +37,7 @@ final readonly class ReportDeviceOnlineEventEndpoint implements API\Messages\Mes
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$json = new stdClass();
