@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Discover.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           31.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Commands;
 
 use DateTimeInterface;
@@ -46,16 +33,11 @@ use function usort;
 
 /**
  * Connector devices discovery command
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Discover extends Console\Command\Command
 {
 
-	public const NAME = 'fb:zigbee2mqtt-connector:discover';
+	public const string NAME = 'fb:zigbee2mqtt-connector:discover';
 
 	private DateTimeInterface|null $executedTime = null;
 

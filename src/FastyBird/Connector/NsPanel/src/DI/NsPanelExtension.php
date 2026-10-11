@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * NsPanelExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           11.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\DI;
 
 use Contributte\Translation;
@@ -43,6 +30,7 @@ use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use function assert;
@@ -50,16 +38,11 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * NS Panel connector
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class NsPanelExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbNsPanelConnector';
+	public const string NAME = 'fbNsPanelConnector';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -1138,6 +1121,7 @@ class NsPanelExtension extends NetteDI\CompilerExtension implements Translation\
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

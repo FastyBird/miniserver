@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           07.01.23
- */
-
 namespace FastyBird\Connector\Shelly\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +7,7 @@ use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -28,7 +16,7 @@ use function assert;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const TYPE = 'shelly-connector';
+	public const string TYPE = 'shelly-connector';
 
 	public function __construct(
 		ShellyEntities\Devices\Device $device,
@@ -45,11 +33,13 @@ class Channel extends DevicesEntities\Channels\Channel
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::SHELLY;
 	}
 
+	#[Override]
 	public function getDevice(): ShellyEntities\Devices\Device
 	{
 		assert($this->device instanceof ShellyEntities\Devices\Device);

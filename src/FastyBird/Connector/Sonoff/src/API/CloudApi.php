@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CloudApi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\API;
 
 use DateTimeInterface;
@@ -55,46 +42,41 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * CoolKit cloud API interface
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class CloudApi
 {
 
 	use Nette\SmartObject;
 
-	private const USER_LOGIN_API_ENDPOINT = '/v2/user/login';
+	private const string USER_LOGIN_API_ENDPOINT = '/v2/user/login';
 
-	private const USER_REFRESH_API_ENDPOINT = '/v2/user/refresh';
+	private const string USER_REFRESH_API_ENDPOINT = '/v2/user/refresh';
 
-	private const FAMILY_API_ENDPOINT = '/v2/family';
+	private const string FAMILY_API_ENDPOINT = '/v2/family';
 
-	private const FAMILY_THINGS_API_ENDPOINT = '/v2/device/thing';
+	private const string FAMILY_THINGS_API_ENDPOINT = '/v2/device/thing';
 
-	private const THING_STATE_API_ENDPOINT = '/v2/device/thing/status';
+	private const string THING_STATE_API_ENDPOINT = '/v2/device/thing/status';
 
-	private const ADD_THIRD_PARTY_DEVICE_API_ENDPOINT = '/v2/device/inherit/add-partner-device';
+	private const string ADD_THIRD_PARTY_DEVICE_API_ENDPOINT = '/v2/device/inherit/add-partner-device';
 
-	private const USER_LOGIN_MESSAGE_SCHEMA_FILENAME = 'cloud_api_user_login.json';
+	private const string USER_LOGIN_MESSAGE_SCHEMA_FILENAME = 'cloud_api_user_login.json';
 
-	private const USER_REFRESH_MESSAGE_SCHEMA_FILENAME = 'cloud_api_user_refresh.json';
+	private const string USER_REFRESH_MESSAGE_SCHEMA_FILENAME = 'cloud_api_user_refresh.json';
 
-	private const GET_FAMILY_MESSAGE_SCHEMA_FILENAME = 'cloud_api_get_family.json';
+	private const string GET_FAMILY_MESSAGE_SCHEMA_FILENAME = 'cloud_api_get_family.json';
 
-	private const GET_FAMILY_THINGS_MESSAGE_SCHEMA_FILENAME = 'cloud_api_get_family_things.json';
+	private const string GET_FAMILY_THINGS_MESSAGE_SCHEMA_FILENAME = 'cloud_api_get_family_things.json';
 
-	private const GET_THING_STATE_MESSAGE_SCHEMA_FILENAME = 'cloud_api_get_thing_state.json';
+	private const string GET_THING_STATE_MESSAGE_SCHEMA_FILENAME = 'cloud_api_get_thing_state.json';
 
-	private const SET_THING_STATE_MESSAGE_SCHEMA_FILENAME = 'cloud_api_set_thing_state.json';
+	private const string SET_THING_STATE_MESSAGE_SCHEMA_FILENAME = 'cloud_api_set_thing_state.json';
 
-	private const ADD_THIRD_PARTY_DEVICE_MESSAGE_SCHEMA_FILENAME = 'cloud_api_add_third_party_device.json';
+	private const string ADD_THIRD_PARTY_DEVICE_MESSAGE_SCHEMA_FILENAME = 'cloud_api_add_third_party_device.json';
 
-	private const API_ERROR = 'cloud_api_error.json';
+	private const string API_ERROR = 'cloud_api_error.json';
 
-	private const ACCESS_TOKEN_VALID_TIME = 30 * 24 * 60 * 60;
+	private const int ACCESS_TOKEN_VALID_TIME = 30 * 24 * 60 * 60;
 
 	private string|null $accessToken = null;
 

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Event.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           23.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Writers;
 
 use FastyBird\Connector\Zigbee2Mqtt\Documents;
@@ -21,22 +8,19 @@ use FastyBird\Connector\Zigbee2Mqtt\Queue;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
+use Override;
 use Symfony\Component\EventDispatcher;
 use Throwable;
 
 /**
  * Event based properties writer
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberInterface
 {
 
-	public const NAME = 'event';
+	public const string NAME = 'event';
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TuyaExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Connector\Tuya\DI;
 
 use Contributte\Translation;
@@ -37,22 +24,18 @@ use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * Tuya connector
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class TuyaExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbTuyaConnector';
+	public const string NAME = 'fbTuyaConnector';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -398,6 +381,7 @@ class TuyaExtension extends NetteDI\CompilerExtension implements Translation\DI\
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * HttpApi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           20.12.22
- */
-
 namespace FastyBird\Connector\Shelly\API;
 
 use FastyBird\Connector\Shelly;
@@ -50,24 +37,19 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Device http api interface
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class HttpApi
 {
 
 	use Nette\SmartObject;
 
-	private const REQUEST_AUTHORIZATION_HEADER = 'Authorization';
+	private const string REQUEST_AUTHORIZATION_HEADER = 'Authorization';
 
-	private const RESPONSE_AUTHENTICATION_RESPONSE_HEADER = 'WWW-Authenticate';
+	private const string RESPONSE_AUTHENTICATION_RESPONSE_HEADER = 'WWW-Authenticate';
 
-	protected const AUTHORIZATION_BASIC = 'basic';
+	protected const string AUTHORIZATION_BASIC = 'basic';
 
-	protected const AUTHORIZATION_DIGEST = 'digest';
+	protected const string AUTHORIZATION_DIGEST = 'digest';
 
 	/** @var array<string, string> */
 	private array $validationSchemas = [];

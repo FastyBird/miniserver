@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Install.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           14.12.23
- */
-
 namespace FastyBird\Connector\Viera\Commands;
 
 use DateTimeInterface;
@@ -64,20 +51,15 @@ use function usort;
 
 /**
  * Connector install command
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:viera-connector:install';
+	public const string NAME = 'fb:viera-connector:install';
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	private const MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
+	private const string MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
 
-	private const MATCH_MAC_ADDRESS = '/^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$/';
+	private const string MATCH_MAC_ADDRESS = '/^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$/';
 
 	private string|null $challengeKey = null;
 

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * HttpClientFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Services
- * @since          1.0.0
- *
- * @date           01.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Services;
 
 use GuzzleHttp;
@@ -24,18 +11,13 @@ use React\Socket\Connector;
 
 /**
  * API HTTP client factory
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Services
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class HttpClientFactory
 {
 
 	use Nette\SmartObject;
 
-	private const CONNECTION_TIMEOUT = 10;
+	private const int CONNECTION_TIMEOUT = 10;
 
 	private GuzzleHttp\Client|null $client = null;
 

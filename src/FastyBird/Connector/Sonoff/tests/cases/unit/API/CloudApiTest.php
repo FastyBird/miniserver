@@ -25,9 +25,9 @@ use function strval;
 final class CloudApiTest extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const USERNAME = 'user@username.com';
+	private const string USERNAME = 'user@username.com';
 
-	private const PASSWORD = 'dBCQZohQNR2U4rW9';
+	private const string PASSWORD = 'dBCQZohQNR2U4rW9';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

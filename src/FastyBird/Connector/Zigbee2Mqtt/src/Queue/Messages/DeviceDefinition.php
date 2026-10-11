@@ -1,33 +1,16 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceDefinition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           24.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_map;
 
 /**
  * Device definition message
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class DeviceDefinition implements Message
 {
@@ -109,6 +92,7 @@ final readonly class DeviceDefinition implements Message
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

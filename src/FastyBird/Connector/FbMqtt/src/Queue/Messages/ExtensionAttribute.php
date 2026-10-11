@@ -1,47 +1,30 @@
 <?php declare(strict_types = 1);
 
-/**
- * ExtensionAttribute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           05.07.22
- */
-
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use FastyBird\Connector\FbMqtt\Types;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * Device extension attribute
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ExtensionAttribute implements Message
 {
 
-	public const MAC_ADDRESS = 'mac-address';
+	public const string MAC_ADDRESS = 'mac-address';
 
-	public const MANUFACTURER = 'manufacturer';
+	public const string MANUFACTURER = 'manufacturer';
 
-	public const MODEL = 'model';
+	public const string MODEL = 'model';
 
-	public const VERSION = 'version';
+	public const string VERSION = 'version';
 
-	public const NAME = 'name';
+	public const string NAME = 'name';
 
-	public const ALLOWED_PARAMETERS = [
+	public const array ALLOWED_PARAMETERS = [
 		self::MAC_ADDRESS,
 		self::MANUFACTURER,
 		self::MODEL,
@@ -99,6 +82,7 @@ final class ExtensionAttribute implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

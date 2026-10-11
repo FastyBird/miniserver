@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConnectionManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           01.07.23
- */
-
 namespace FastyBird\Connector\Tuya\API;
 
 use FastyBird\Connector\Tuya\Documents;
@@ -37,11 +24,6 @@ use function is_string;
 
 /**
  * API connections manager
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ConnectionManager
 {

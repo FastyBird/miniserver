@@ -1,33 +1,16 @@
 <?php declare(strict_types = 1);
 
-/**
- * LocalDeviceMessage.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           26.04.22
- */
-
 namespace FastyBird\Connector\Tuya\API\Messages\Response;
 
 use FastyBird\Connector\Tuya\API;
 use FastyBird\Connector\Tuya\Types;
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 use function is_array;
 
 /**
  * Local api device raw message
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class LocalDeviceMessage implements API\Messages\Message
 {
@@ -102,6 +85,7 @@ final readonly class LocalDeviceMessage implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

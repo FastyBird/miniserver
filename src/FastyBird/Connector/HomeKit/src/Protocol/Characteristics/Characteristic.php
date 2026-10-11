@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Characteristic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           13.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol\Characteristics;
 
 use DateTimeInterface;
@@ -25,6 +12,7 @@ use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 use Throwable;
 use TypeError;
@@ -43,29 +31,24 @@ use function strval;
  * the current temperature. Characteristics are contained in services.
  * Each characteristic has a unique type UUID and a set of properties,
  * like format, min and max values, valid values and others.
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Characteristic
 {
 
 	use Nette\SmartObject;
 
-	private const DEFAULT_MAX_LENGTH = 64;
+	private const int DEFAULT_MAX_LENGTH = 64;
 
-	private const ABSOLUTE_MAX_LENGTH = 256;
+	private const int ABSOLUTE_MAX_LENGTH = 256;
 
-	private const VIRTUAL_CHARACTERISTIC_UID = '00000000-0000-0000-0000-000000000000';
+	private const string VIRTUAL_CHARACTERISTIC_UID = '00000000-0000-0000-0000-000000000000';
 
-	private const ALWAYS_NULL
+	private const array ALWAYS_NULL
 		= [
 			'00000073-0000-1000-8000-0026BB765291', // PROGRAMMABLE SWITCH
 		];
 
-	private const IMMEDIATE_NOTIFY
+	private const array IMMEDIATE_NOTIFY
 		= [
 			'00000126-0000-1000-8000-0026BB765291', // BUTTON
 			'00000073-0000-1000-8000-0026BB765291', // PROGRAMMABLE SWITCH
@@ -390,6 +373,7 @@ class Characteristic
 	/**
 	 * @throws Nette\Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		$properties = [

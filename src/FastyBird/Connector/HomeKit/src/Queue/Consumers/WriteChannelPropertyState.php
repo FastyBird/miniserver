@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WriteChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           30.11.23
- */
-
 namespace FastyBird\Connector\HomeKit\Queue\Consumers;
 
 use FastyBird\Connector\HomeKit;
@@ -28,6 +15,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
+use Override;
 use RuntimeException;
 use TypeError;
 use ValueError;
@@ -35,11 +23,6 @@ use function intval;
 
 /**
  * Write state to device message consumer
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class WriteChannelPropertyState implements Queue\Consumer
 {
@@ -69,6 +52,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\WriteChannelPropertyState) {

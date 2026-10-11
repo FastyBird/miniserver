@@ -1,32 +1,15 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreLocalDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           27.08.22
- */
-
 namespace FastyBird\Connector\Tuya\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
 /**
  * Discovered local device message
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class StoreLocalDevice implements Message
 {
@@ -225,6 +208,7 @@ final readonly class StoreLocalDevice implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -1,30 +1,13 @@
 <?php declare(strict_types = 1);
 
-/**
- * CloudDeviceDataPoint.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           27.08.22
- */
-
 namespace FastyBird\Connector\Tuya\Queue\Messages;
 
 use FastyBird\Core\Values\Types;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Discovered cloud device data point message
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class CloudDeviceDataPoint implements Message
 {
@@ -188,6 +171,7 @@ final readonly class CloudDeviceDataPoint implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

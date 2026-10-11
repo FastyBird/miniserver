@@ -1,27 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * ServiceType.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Types
- * @since          1.0.0
- *
- * @date           04.03.23
- */
-
 namespace FastyBird\Connector\HomeKit\Types;
 
 /**
  * HAP accessory service type types
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Types
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 enum ServiceType: string
 {

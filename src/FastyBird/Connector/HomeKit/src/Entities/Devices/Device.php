@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           29.03.22
- */
-
 namespace FastyBird\Connector\HomeKit\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +10,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -34,7 +22,7 @@ use function is_int;
 class Device extends DevicesEntities\Devices\Device
 {
 
-	public const TYPE = 'homekit-connector';
+	public const string TYPE = 'homekit-connector';
 
 	public function __construct(
 		string $identifier,
@@ -51,11 +39,13 @@ class Device extends DevicesEntities\Devices\Device
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector|Sources\Bridge
 	{
 		return Sources\Connector::HOMEKIT;
 	}
 
+	#[Override]
 	public function getConnector(): HomeKitEntities\Connectors\Connector
 	{
 		assert($this->connector instanceof HomeKitEntities\Connectors\Connector);
@@ -66,6 +56,7 @@ class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @return array<HomeKitEntities\Channels\Channel>
 	 */
+	#[Override]
 	public function getChannels(): array
 	{
 		$channels = [];
@@ -82,6 +73,7 @@ class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @throws HomeKitExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof HomeKitEntities\Channels\Channel) {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Service.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           13.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Documents;
@@ -22,6 +9,7 @@ use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 use SplObjectStorage;
 use TypeError;
@@ -38,20 +26,15 @@ use function sprintf;
  *
  * A HAP service contains multiple characteristics.
  * For example, a TemperatureSensor service has the characteristic CurrentTemperature.
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Service
 {
 
 	use Nette\SmartObject;
 
-	public const HAP_PROTOCOL_INFORMATION_SERVICE_UUID = '000000A2-0000-1000-8000-0026BB765291';
+	public const string HAP_PROTOCOL_INFORMATION_SERVICE_UUID = '000000A2-0000-1000-8000-0026BB765291';
 
-	private const VIRTUAL_SERVICE_UID = '00000000-0000-0000-0000-000000000000';
+	private const string VIRTUAL_SERVICE_UID = '00000000-0000-0000-0000-000000000000';
 
 	/** @var SplObjectStorage<Protocol\Characteristics\Characteristic, null> */
 	private SplObjectStorage $characteristics;
@@ -241,6 +224,7 @@ class Service
 	/**
 	 * @throws Nette\Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		$characteristics = [];

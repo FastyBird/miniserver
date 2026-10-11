@@ -1,24 +1,12 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           20.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -36,11 +24,13 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 		parent::__construct($device, $identifier, $name, $id);
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Connector::VIRTUAL;
 	}
 
+	#[Override]
 	public function getDevice(): VirtualEntities\Devices\Device
 	{
 		assert($this->device instanceof VirtualEntities\Devices\Device);

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           03.12.23
- */
-
 namespace FastyBird\Connector\FbMqtt\Helpers;
 
 use FastyBird\Connector\FbMqtt;
@@ -32,11 +19,6 @@ use function is_string;
 
 /**
  * Connector helper
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Connector
 {

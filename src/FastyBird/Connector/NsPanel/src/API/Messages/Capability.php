@@ -1,31 +1,14 @@
 <?php declare(strict_types = 1);
 
-/**
- * Capability.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           09.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\API\Messages;
 
 use FastyBird\Connector\NsPanel\Types;
 use Orisai\ObjectMapper;
+use Override;
 use stdClass;
 
 /**
  * Third-party device & Sub-device capability definition
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Capability implements Message
 {
@@ -62,6 +45,7 @@ final readonly class Capability implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -71,6 +55,7 @@ final readonly class Capability implements Message
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$json = new stdClass();

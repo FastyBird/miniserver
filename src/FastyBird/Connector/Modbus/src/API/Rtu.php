@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Rtu.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           03.02.23
- */
-
 namespace FastyBird\Connector\Modbus\API;
 
 use FastyBird\Connector\Modbus\API;
@@ -45,20 +32,15 @@ use function unpack;
 
 /**
  * Modbus RTU API interface
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Rtu
 {
 
 	use Nette\SmartObject;
 
-	private const MODBUS_ADU = 'C1station/C1function/C*data/';
+	private const string MODBUS_ADU = 'C1station/C1function/C*data/';
 
-	private const MODBUS_ERROR = 'C1station/C1error/C1exception/';
+	private const string MODBUS_ERROR = 'C1station/C1error/C1exception/';
 
 	private API\Interfaces\Serial $interface;
 

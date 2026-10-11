@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Properties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           25.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Subscribers;
 
 use Doctrine\Common;
@@ -32,15 +19,11 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
 use Nette\Utils;
+use Override;
 use ReflectionException;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Properties implements Common\EventSubscriber
 {
@@ -54,6 +37,7 @@ final class Properties implements Common\EventSubscriber
 	{
 	}
 
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

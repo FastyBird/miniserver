@@ -1,31 +1,14 @@
 <?php declare(strict_types = 1);
 
-/**
- * Uiid15.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           24.09.23
- */
-
 namespace FastyBird\Connector\Sonoff\API\Messages\Uiid;
 
 use FastyBird\Connector\Sonoff\Types;
 use Orisai\ObjectMapper;
+use Override;
 use function array_merge;
 
 /**
  * UIID15 params entity
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Uiid15 implements Uuid
 {
@@ -34,11 +17,11 @@ final class Uiid15 implements Uuid
 		TDevice::toStates as toDeviceState;
 	}
 
-	public const DEVICE_TYPE_NORMAL = 'normal';
+	public const string DEVICE_TYPE_NORMAL = 'normal';
 
-	public const DEVICE_TYPE_TEMPERATURE = 'temperature';
+	public const string DEVICE_TYPE_TEMPERATURE = 'temperature';
 
-	public const DEVICE_TYPE_HUMIDITY = 'humidity';
+	public const string DEVICE_TYPE_HUMIDITY = 'humidity';
 
 	public function __construct(
 		#[ObjectMapper\Rules\AnyOf([
@@ -193,6 +176,7 @@ final class Uiid15 implements Uuid
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -213,6 +197,7 @@ final class Uiid15 implements Uuid
 		];
 	}
 
+	#[Override]
 	public function toStates(): array
 	{
 		return array_merge(

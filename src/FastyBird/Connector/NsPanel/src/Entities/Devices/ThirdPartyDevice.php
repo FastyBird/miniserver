@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ThirdPartyDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           16.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -32,7 +19,7 @@ use function is_string;
 class ThirdPartyDevice extends NsPanelEntities\Devices\Device
 {
 
-	public const TYPE = 'ns-panel-connector-third-party-device';
+	public const string TYPE = 'ns-panel-connector-third-party-device';
 
 	public function __construct(
 		string $identifier,

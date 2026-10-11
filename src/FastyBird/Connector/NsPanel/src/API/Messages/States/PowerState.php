@@ -1,31 +1,14 @@
 <?php declare(strict_types = 1);
 
-/**
- * PowerState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           09.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\API\Messages\States;
 
 use FastyBird\Connector\NsPanel\Types;
 use Orisai\ObjectMapper;
+use Override;
 use stdClass;
 
 /**
  * Power state control capability state
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class PowerState implements State
 {
@@ -38,11 +21,13 @@ final readonly class PowerState implements State
 	{
 	}
 
+	#[Override]
 	public function getType(): Types\Capability
 	{
 		return Types\Capability::POWER;
 	}
 
+	#[Override]
 	public function getState(): array
 	{
 		return [
@@ -53,6 +38,7 @@ final readonly class PowerState implements State
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -60,6 +46,7 @@ final readonly class PowerState implements State
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$json = new stdClass();

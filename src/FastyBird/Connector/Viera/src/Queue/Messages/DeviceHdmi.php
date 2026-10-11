@@ -1,29 +1,12 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceHdmi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           28.06.23
- */
-
 namespace FastyBird\Connector\Viera\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Created device hdmi message
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class DeviceHdmi implements Message
 {
@@ -50,6 +33,7 @@ final readonly class DeviceHdmi implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

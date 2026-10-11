@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * LanApi.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           10.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\API;
 
 use FastyBird\Connector\NsPanel;
@@ -46,34 +33,29 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * NS Panel LAN API interface
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class LanApi
 {
 
 	use Nette\SmartObject;
 
-	public const GATEWAY_PORT = 8_081;
+	public const int GATEWAY_PORT = 8_081;
 
-	private const GET_GATEWAY_INFO_MESSAGE_SCHEMA_FILENAME = 'get_gateway_info.json';
+	private const string GET_GATEWAY_INFO_MESSAGE_SCHEMA_FILENAME = 'get_gateway_info.json';
 
-	private const GET_GATEWAY_ACCESS_TOKEN_MESSAGE_SCHEMA_FILENAME = 'get_gateway_access_token.json';
+	private const string GET_GATEWAY_ACCESS_TOKEN_MESSAGE_SCHEMA_FILENAME = 'get_gateway_access_token.json';
 
-	private const SYNCHRONISE_DEVICES_MESSAGE_SCHEMA_FILENAME = 'synchronise_devices.json';
+	private const string SYNCHRONISE_DEVICES_MESSAGE_SCHEMA_FILENAME = 'synchronise_devices.json';
 
-	private const REPORT_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'report_device_online.json';
+	private const string REPORT_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'report_device_online.json';
 
-	private const REPORT_DEVICE_ONLINE_MESSAGE_SCHEMA_FILENAME = 'report_device_online.json';
+	private const string REPORT_DEVICE_ONLINE_MESSAGE_SCHEMA_FILENAME = 'report_device_online.json';
 
-	private const GET_SUB_DEVICES_MESSAGE_SCHEMA_FILENAME = 'get_sub_devices.json';
+	private const string GET_SUB_DEVICES_MESSAGE_SCHEMA_FILENAME = 'get_sub_devices.json';
 
-	private const SET_SUB_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'set_sub_device_state.json';
+	private const string SET_SUB_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'set_sub_device_state.json';
 
-	private const EVENT_ERROR_MESSAGE_SCHEMA_FILENAME = 'event_error.json';
+	private const string EVENT_ERROR_MESSAGE_SCHEMA_FILENAME = 'event_error.json';
 
 	/** @var array<string, string> */
 	private array $validationSchemas = [];

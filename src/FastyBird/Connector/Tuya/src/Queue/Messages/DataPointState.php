@@ -1,29 +1,12 @@
 <?php declare(strict_types = 1);
 
-/**
- * DataPointState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           04.09.22
- */
-
 namespace FastyBird\Connector\Tuya\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Data point status message
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class DataPointState implements Message
 {
@@ -56,6 +39,7 @@ final readonly class DataPointState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

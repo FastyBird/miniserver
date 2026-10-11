@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SubDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           11.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +10,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -34,7 +22,7 @@ use function is_string;
 class SubDevice extends NsPanelEntities\Devices\Device
 {
 
-	public const TYPE = 'ns-panel-connector-sub-device';
+	public const string TYPE = 'ns-panel-connector-sub-device';
 
 	/**
 	 * @throws NsPanelExceptions\InvalidState
@@ -74,6 +62,7 @@ class SubDevice extends NsPanelEntities\Devices\Device
 	/**
 	 * @throws NsPanelExceptions\InvalidState
 	 */
+	#[Override]
 	public function setParents(array|Utils\ArrayHash $parents): void
 	{
 		if (count($parents) !== 1 || !$parents[0] instanceof Gateway) {

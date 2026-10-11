@@ -1,31 +1,14 @@
 <?php declare(strict_types = 1);
 
-/**
- * Logger.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     common
- * @since          1.0.0
- *
- * @date           17.10.23
- */
-
 namespace FastyBird\Connector\Virtual;
 
 use Monolog;
+use Override;
 use Psr\Log;
 use Stringable;
 
 /**
  * Connector logger
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     common
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Logger implements Log\LoggerInterface
 {
@@ -44,6 +27,8 @@ final class Logger implements Log\LoggerInterface
 	 * @param array<mixed> $context
 	 */
 	// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+	#[Override]
 	public function alert(string|Stringable $message, array $context = []): void
 	{
 		$this->logger->alert($message, $context);
@@ -54,6 +39,8 @@ final class Logger implements Log\LoggerInterface
 	 * @param array<mixed> $context
 	 */
 	// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+	#[Override]
 	public function critical(string|Stringable $message, array $context = []): void
 	{
 		$this->logger->critical($message, $context);
@@ -64,6 +51,8 @@ final class Logger implements Log\LoggerInterface
 	 * @param array<mixed> $context
 	 */
 	// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+	#[Override]
 	public function debug(string|Stringable $message, array $context = []): void
 	{
 		$this->logger->debug($message, $context);
@@ -74,6 +63,8 @@ final class Logger implements Log\LoggerInterface
 	 * @param array<mixed> $context
 	 */
 	// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+	#[Override]
 	public function emergency(string|Stringable $message, array $context = []): void
 	{
 		$this->logger->emergency($message, $context);
@@ -84,6 +75,8 @@ final class Logger implements Log\LoggerInterface
 	 * @param array<mixed> $context
 	 */
 	// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+	#[Override]
 	public function error(string|Stringable $message, array $context = []): void
 	{
 		$this->logger->error($message, $context);
@@ -94,6 +87,8 @@ final class Logger implements Log\LoggerInterface
 	 * @param array<mixed> $context
 	 */
 	// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+	#[Override]
 	public function info(string|Stringable $message, array $context = []): void
 	{
 		$this->logger->info($message, $context);
@@ -104,6 +99,8 @@ final class Logger implements Log\LoggerInterface
 	 * @param array<mixed> $context
 	 */
 	// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+	#[Override]
 	public function log(mixed $level, string|Stringable $message, array $context = []): void
 	{
 		$this->logger->log($level, $message, $context);
@@ -114,6 +111,8 @@ final class Logger implements Log\LoggerInterface
 	 * @param array<mixed> $context
 	 */
 	// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+	#[Override]
 	public function notice(string|Stringable $message, array $context = []): void
 	{
 		$this->logger->notice($message, $context);
@@ -124,6 +123,8 @@ final class Logger implements Log\LoggerInterface
 	 * @param array<mixed> $context
 	 */
 	// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+	#[Override]
 	public function warning(string|Stringable $message, array $context = []): void
 	{
 		$this->logger->warning($message, $context);

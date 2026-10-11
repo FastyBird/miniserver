@@ -1,36 +1,20 @@
 <?php declare(strict_types = 1);
 
-/**
- * ColorGreenFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           16.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * NS panel color green attribute factory
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ColorGreenFactory implements AttributeFactory
 {
 
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $id,
 		NsPanelTypes\Attribute $type,
@@ -48,6 +32,7 @@ class ColorGreenFactory implements AttributeFactory
 		return new ColorGreen($id, $capability);
 	}
 
+	#[Override]
 	public function getType(): NsPanelTypes\Attribute
 	{
 		return NsPanelTypes\Attribute::COLOR_GREEN;

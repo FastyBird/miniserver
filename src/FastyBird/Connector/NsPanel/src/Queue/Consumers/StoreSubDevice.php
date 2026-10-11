@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreSubDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -35,16 +22,12 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
 use Nette\Utils;
+use Override;
 use function assert;
 use function in_array;
 
 /**
  * Store NS Panel sub-device message consumer
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreSubDevice implements Queue\Consumer
 {
@@ -77,6 +60,7 @@ final class StoreSubDevice implements Queue\Consumer
 	 * @throws CoreExceptions\InvalidState
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreSubDevice) {

@@ -1,23 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * Attribute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           24.02.20
- */
-
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_filter;
 use function array_map;
@@ -29,26 +17,21 @@ use function strtolower;
 
 /**
  * Device, channel or property attribute
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Attribute implements Message
 {
 
-	public const NAME = 'name';
+	public const string NAME = 'name';
 
-	public const PROPERTIES = 'properties';
+	public const string PROPERTIES = 'properties';
 
-	public const STATE = 'state';
+	public const string STATE = 'state';
 
-	public const CHANNELS = 'channels';
+	public const string CHANNELS = 'channels';
 
-	public const EXTENSIONS = 'extensions';
+	public const string EXTENSIONS = 'extensions';
 
-	public const CONTROLS = 'controls';
+	public const string CONTROLS = 'controls';
 
 	public function __construct(
 		#[Rules\UuidValue()]
@@ -91,6 +74,7 @@ abstract class Attribute implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

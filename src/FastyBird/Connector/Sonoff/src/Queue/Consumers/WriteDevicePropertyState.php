@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WriteDevicePropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           17.08.23
- */
-
 namespace FastyBird\Connector\Sonoff\Queue\Consumers;
 
 use DateTimeInterface;
@@ -36,6 +23,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\Promise;
 use RuntimeException;
@@ -49,11 +37,6 @@ use function strval;
 
 /**
  * Write state to device message consumer
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class WriteDevicePropertyState implements Queue\Consumer
 {
@@ -88,6 +71,7 @@ final class WriteDevicePropertyState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\WriteDevicePropertyState) {

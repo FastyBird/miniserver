@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Tcp.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           31.07.22
- */
-
 namespace FastyBird\Connector\Modbus\Clients;
 
 use DateTimeInterface;
@@ -37,6 +24,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use Random\RandomException;
 use React\EventLoop;
@@ -55,11 +43,6 @@ use function React\Async\await;
 
 /**
  * Modbus TCP devices client interface
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Tcp implements Client
 {
@@ -67,11 +50,11 @@ class Tcp implements Client
 	use TReading;
 	use Nette\SmartObject;
 
-	private const LOST_DELAY = 60.0; // in s - Waiting delay before another communication with device after device was lost
+	private const float LOST_DELAY = 60.0; // in s - Waiting delay before another communication with device after device was lost
 
-	private const HANDLER_START_DELAY = 2.0;
+	private const float HANDLER_START_DELAY = 2.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
 	private bool $closed = true;
 
@@ -123,6 +106,7 @@ class Tcp implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$findDevicesQuery = new ModbusQueries\Configuration\FindDevices();
@@ -160,6 +144,7 @@ class Tcp implements Client
 		);
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->closed = true;

@@ -1,31 +1,14 @@
 <?php declare(strict_types = 1);
 
-/**
- * TemperatureBlockState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           27.12.22
- */
-
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use FastyBird\Connector\Shelly\API;
 use Orisai\ObjectMapper;
+use Override;
 use function array_merge;
 
 /**
  * Generation 2 device switch or cover component temperature state message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class TemperatureBlockState implements API\Messages\Message
 {
@@ -60,6 +43,7 @@ final readonly class TemperatureBlockState implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

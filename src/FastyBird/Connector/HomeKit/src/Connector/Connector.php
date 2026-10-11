@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Connector
- * @since          1.0.0
- *
- * @date           17.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Connector;
 
 use Doctrine\DBAL;
@@ -30,6 +17,7 @@ use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
+use Override;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use React\EventLoop;
 use React\Promise;
@@ -41,20 +29,15 @@ use function React\Async\async;
 
 /**
  * Connector service executor
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Connector
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connector implements DevicesConnectors\Connector
 {
 
 	use Nette\SmartObject;
 
-	private const QUEUE_PROCESSING_INTERVAL = 0.01;
+	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 
-	private const DRIVER_RELOAD_INTERVAL = 60;
+	private const int DRIVER_RELOAD_INTERVAL = 60;
 
 	/** @var array<Servers\Server> */
 	private array $servers = [];
@@ -104,6 +87,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws ValueError
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
 		assert($this->connector instanceof HomeKitDocuments\Connectors\Connector);
@@ -176,6 +160,7 @@ final class Connector implements DevicesConnectors\Connector
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 */
+	#[Override]
 	public function discover(): Promise\PromiseInterface
 	{
 		assert($this->connector instanceof HomeKitDocuments\Connectors\Connector);
@@ -185,6 +170,7 @@ final class Connector implements DevicesConnectors\Connector
 		);
 	}
 
+	#[Override]
 	public function terminate(): void
 	{
 		assert($this->connector instanceof HomeKitDocuments\Connectors\Connector);
@@ -211,6 +197,7 @@ final class Connector implements DevicesConnectors\Connector
 		);
 	}
 
+	#[Override]
 	public function hasUnfinishedTasks(): bool
 	{
 		return !$this->queue->isEmpty() && $this->consumersTimer !== null;

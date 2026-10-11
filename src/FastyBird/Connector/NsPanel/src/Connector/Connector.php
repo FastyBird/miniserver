@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Connector
- * @since          1.0.0
- *
- * @date           09.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Connector;
 
 use FastyBird\Connector\NsPanel;
@@ -31,6 +18,7 @@ use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
+use Override;
 use React\EventLoop;
 use React\Promise;
 use ReflectionClass;
@@ -42,20 +30,15 @@ use function React\Async\async;
 
 /**
  * Connector service executor
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Connector
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connector implements DevicesConnectors\Connector
 {
 
 	use Nette\SmartObject;
 
-	private const QUEUE_PROCESSING_INTERVAL = 0.01;
+	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 
-	private const DRIVER_RELOAD_INTERVAL = 60;
+	private const int DRIVER_RELOAD_INTERVAL = 60;
 
 	/** @var array<Clients\Client|Clients\Discovery> */
 	private array $clients = [];
@@ -105,6 +88,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
 		assert($this->connector instanceof NsPanelDocuments\Connectors\Connector);
@@ -204,6 +188,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function discover(): Promise\PromiseInterface
 	{
 		assert($this->connector instanceof NsPanelDocuments\Connectors\Connector);
@@ -246,6 +231,7 @@ final class Connector implements DevicesConnectors\Connector
 		return Promise\resolve(true);
 	}
 
+	#[Override]
 	public function terminate(): void
 	{
 		assert($this->connector instanceof NsPanelDocuments\Connectors\Connector);
@@ -274,6 +260,7 @@ final class Connector implements DevicesConnectors\Connector
 		);
 	}
 
+	#[Override]
 	public function hasUnfinishedTasks(): bool
 	{
 		return !$this->queue->isEmpty() && $this->consumersTimer !== null;

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SocketClientFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Services
- * @since          1.0.0
- *
- * @date           01.07.23
- */
-
 namespace FastyBird\Connector\Tuya\Services;
 
 use InvalidArgumentException;
@@ -22,11 +9,6 @@ use React\Socket;
 
 /**
  * Socket client factory
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Services
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class SocketClientFactory
 {

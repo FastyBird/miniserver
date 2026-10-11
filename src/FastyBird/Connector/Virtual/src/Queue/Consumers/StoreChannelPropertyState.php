@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           04.09.22
- */
-
 namespace FastyBird\Connector\Virtual\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -30,6 +17,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
@@ -40,11 +28,6 @@ use function React\Async\await;
 
 /**
  * Store channel property state message consumer
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreChannelPropertyState implements Queue\Consumer
 {
@@ -77,6 +60,7 @@ final class StoreChannelPropertyState implements Queue\Consumer
 	 * @throws ValueError
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreChannelPropertyState) {

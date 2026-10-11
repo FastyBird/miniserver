@@ -1,30 +1,13 @@
 <?php declare(strict_types = 1);
 
-/**
- * Flow.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           23.02.20
- */
-
 namespace FastyBird\Connector\FbMqtt\Clients;
 
 use BinSoul\Net\Mqtt;
+use Override;
 use React\Promise;
 
 /**
  * Decorates flows with data required for the {@see Client} class.
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Flow implements Mqtt\Flow
 {
@@ -41,11 +24,13 @@ class Flow implements Mqtt\Flow
 	{
 	}
 
+	#[Override]
 	public function getCode(): string
 	{
 		return $this->decorated->getCode();
 	}
 
+	#[Override]
 	public function start(): Mqtt\Packet|null
 	{
 		$this->packet = $this->decorated->start();
@@ -53,11 +38,13 @@ class Flow implements Mqtt\Flow
 		return $this->packet;
 	}
 
+	#[Override]
 	public function accept(Mqtt\Packet $packet): bool
 	{
 		return $this->decorated->accept($packet);
 	}
 
+	#[Override]
 	public function next(Mqtt\Packet $packet): Mqtt\Packet|null
 	{
 		$this->packet = $this->decorated->next($packet);
@@ -65,21 +52,25 @@ class Flow implements Mqtt\Flow
 		return $this->packet;
 	}
 
+	#[Override]
 	public function isFinished(): bool
 	{
 		return $this->decorated->isFinished();
 	}
 
+	#[Override]
 	public function isSuccess(): bool
 	{
 		return $this->decorated->isSuccess();
 	}
 
+	#[Override]
 	public function getResult()
 	{
 		return $this->decorated->getResult();
 	}
 
+	#[Override]
 	public function getErrorMessage(): string
 	{
 		return $this->decorated->getErrorMessage();

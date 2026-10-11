@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Srp.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           20.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol;
 
 use Brick\Math;
@@ -35,18 +22,13 @@ use function unpack;
 
 /**
  * Server Side Secure Remote Password implementation
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Srp
 {
 
 	use Nette\SmartObject;
 
-	private const N_3072
+	private const string N_3072
 		= 'FFFFFFFFFFFFFFFFC90FDAA22168C234C4C6628B80DC1CD129024E08'
 		. '8A67CC74020BBEA63B139B22514A08798E3404DDEF9519B3CD3A431B'
 		. '302B0A6DF25F14374FE1356D6D51C245E485B576625E7EC6F44C42E9'
@@ -62,7 +44,7 @@ final class Srp
 		. 'BBE117577A615D6C770988C0BAD946E208E24FA074E5AB3143DB5BFC'
 		. 'E0FD108E4B82D120A93AD2CAFFFFFFFFFFFFFFFF';
 
-	private const G = 5;
+	private const int G = 5;
 
 	private string $salt;
 

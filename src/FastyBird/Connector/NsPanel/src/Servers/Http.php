@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Http.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Servers
- * @since          1.0.0
- *
- * @date           19.09.22
- */
-
 namespace FastyBird\Connector\NsPanel\Servers;
 
 use FastyBird\Connector\NsPanel;
@@ -23,6 +10,7 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use Nette;
+use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -33,22 +21,17 @@ use Throwable;
 
 /**
  * Connector HTTP communication server
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Servers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Http implements Server
 {
 
 	use Nette\SmartObject;
 
-	public const REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
+	public const string REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
 
-	public const JSON_CONTENT_TYPE = 'application/json';
+	public const string JSON_CONTENT_TYPE = 'application/json';
 
-	private const LISTENING_ADDRESS = '0.0.0.0';
+	private const string LISTENING_ADDRESS = '0.0.0.0';
 
 	private Socket\ServerInterface|null $socket = null;
 
@@ -63,6 +46,7 @@ final class Http implements Server
 	{
 	}
 
+	#[Override]
 	public function connect(): void
 	{
 		try {
@@ -143,6 +127,7 @@ final class Http implements Server
 		});
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->logger->debug(

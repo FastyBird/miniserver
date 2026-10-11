@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomekitConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           04.03.22
- */
-
 namespace FastyBird\Connector\HomeKit\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +9,7 @@ use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -36,7 +24,7 @@ use function ucwords;
 abstract class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const SERVICE_IDENTIFIER = '/^(?P<type>[a-z_]+)(?:_(?P<cnt>[0-9]+){1})$/';
+	public const string SERVICE_IDENTIFIER = '/^(?P<type>[a-z_]+)(?:_(?P<cnt>[0-9]+){1})$/';
 
 	public function __construct(
 		HomeKitEntities\Devices\Device $device,
@@ -48,11 +36,13 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 		parent::__construct($device, $identifier, $name, $id);
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector|Sources\Bridge
 	{
 		return Sources\Connector::HOMEKIT;
 	}
 
+	#[Override]
 	public function getDevice(): HomeKitEntities\Devices\Device
 	{
 		assert($this->device instanceof HomeKitEntities\Devices\Device);

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Gateway.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           11.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -32,11 +19,11 @@ use function is_string;
 class Gateway extends NsPanelEntities\Devices\Device
 {
 
-	public const TYPE = 'ns-panel-connector-gateway';
+	public const string TYPE = 'ns-panel-connector-gateway';
 
-	public const STATE_READING_DELAY = 300.0;
+	public const float STATE_READING_DELAY = 300.0;
 
-	public const HEARTBEAT_DELAY = 150.0;
+	public const float HEARTBEAT_DELAY = 150.0;
 
 	public static function getType(): string
 	{

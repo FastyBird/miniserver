@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * MessageBuilder.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           03.12.23
- */
-
 namespace FastyBird\Connector\FbMqtt\Helpers;
 
 use FastyBird\Connector\FbMqtt\Exceptions;
@@ -21,11 +8,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Message builder
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class MessageBuilder
 {

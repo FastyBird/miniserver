@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Local.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           25.08.22
- */
-
 namespace FastyBird\Connector\Tuya\Clients;
 
 use DateTimeInterface;
@@ -33,6 +20,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
@@ -45,24 +33,19 @@ use function React\Async\async;
 
 /**
  * Local devices client
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Local implements Client
 {
 
 	use Nette\SmartObject;
 
-	private const HANDLER_START_DELAY = 2.0;
+	private const float HANDLER_START_DELAY = 2.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	private const RECONNECT_COOL_DOWN_TIME = 300.0;
+	private const float RECONNECT_COOL_DOWN_TIME = 300.0;
 
-	private const CMD_STATE = 'state';
+	private const string CMD_STATE = 'state';
 
 	/** @var array<string, Documents\Devices\Device>  */
 	private array $devices = [];
@@ -108,6 +91,7 @@ final class Local implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$this->processedDevices = [];
@@ -136,6 +120,7 @@ final class Local implements Client
 		);
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		foreach ($this->devicesClients as $client) {

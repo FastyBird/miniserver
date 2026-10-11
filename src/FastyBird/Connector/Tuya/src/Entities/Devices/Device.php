@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           25.04.22
- */
-
 namespace FastyBird\Connector\Tuya\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,6 +11,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -39,11 +27,11 @@ use function is_string;
 class Device extends DevicesEntities\Devices\Device
 {
 
-	public const TYPE = 'tuya-connector';
+	public const string TYPE = 'tuya-connector';
 
-	public const STATE_READING_DELAY = 300.0;
+	public const float STATE_READING_DELAY = 300.0;
 
-	public const HEARTBEAT_DELAY = 150.0;
+	public const float HEARTBEAT_DELAY = 150.0;
 
 	private self|null $gateway = null;
 
@@ -62,11 +50,13 @@ class Device extends DevicesEntities\Devices\Device
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::TUYA;
 	}
 
+	#[Override]
 	public function getConnector(): TuyaEntities\Connectors\Connector
 	{
 		assert($this->connector instanceof TuyaEntities\Connectors\Connector);
@@ -77,6 +67,7 @@ class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @return array<TuyaEntities\Channels\Channel>
 	 */
+	#[Override]
 	public function getChannels(): array
 	{
 		$channels = [];
@@ -93,6 +84,7 @@ class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @throws TuyaExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof TuyaEntities\Channels\Channel) {

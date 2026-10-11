@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Accessory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           13.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol\Accessories;
 
 use FastyBird\Connector\HomeKit\Helpers;
@@ -20,6 +7,7 @@ use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Core\Exceptions;
 use Nette;
+use Override;
 use Ramsey\Uuid;
 use SplObjectStorage;
 use TypeError;
@@ -31,11 +19,6 @@ use function sprintf;
 
 /**
  * HAP accessory
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Accessory
 {
@@ -170,6 +153,7 @@ abstract class Accessory
 	/**
 	 * @throws Nette\Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		$services = [];

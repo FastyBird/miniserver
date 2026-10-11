@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreThirdPartyDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           04.08.23
- */
-
 namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 
 use Doctrine\DBAL;
@@ -29,14 +16,10 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Override;
 
 /**
  * Store NS Panel third-party device message consumer
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreThirdPartyDevice implements Queue\Consumer
 {
@@ -60,6 +43,7 @@ final class StoreThirdPartyDevice implements Queue\Consumer
 	 * @throws CoreExceptions\InvalidState
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreThirdPartyDevice) {

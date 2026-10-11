@@ -1,33 +1,15 @@
 <?php declare(strict_types = 1);
 
-/**
- * Constants.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     common
- * @since          1.0.0
- *
- * @date           10.08.23
- */
-
 namespace FastyBird\Connector\Viera;
 
 /**
  * Connector constants
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     common
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Constants
 {
 
 	/** array<string, Types\ChannelPropertyIdentifier> */
-	public const KEYS_PROPERTIES = [
+	public const array KEYS_PROPERTIES = [
 		Types\ActionKey::TV->value => Types\ChannelPropertyIdentifier::KEY_TV,
 		Types\ActionKey::HOME->value => Types\ChannelPropertyIdentifier::KEY_HOME,
 		Types\ActionKey::CH_UP->value => Types\ChannelPropertyIdentifier::KEY_CHANNEL_UP,
@@ -57,12 +39,12 @@ class Constants
 		Types\ActionKey::MENU->value => Types\ChannelPropertyIdentifier::KEY_MENU,
 	];
 
-	public const TV_IDENTIFIER = 'TV';
+	public const string TV_IDENTIFIER = 'TV';
 
-	public const TV_CODE = 500;
+	public const int TV_CODE = 500;
 
-	public const MAX_HDMI_CODE = 100;
+	public const int MAX_HDMI_CODE = 100;
 
-	public const MIN_APPLICATION_CODE = 1_000;
+	public const int MIN_APPLICATION_CODE = 1_000;
 
 }

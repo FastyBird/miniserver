@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FbMqttV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           23.02.20
- */
-
 namespace FastyBird\Connector\FbMqtt\Clients;
 
 use BinSoul\Net\Mqtt;
@@ -27,6 +14,7 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use InvalidArgumentException;
+use Override;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -37,19 +25,14 @@ use function str_contains;
 
 /**
  * FastyBird MQTT v1 client
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class FbMqttV1 implements Client
 {
 
-	public const MQTT_SYSTEM_TOPIC = '$SYS/broker/log/#';
+	public const string MQTT_SYSTEM_TOPIC = '$SYS/broker/log/#';
 
 	// MQTT api topics subscribe format
-	public const DEVICES_TOPICS = [
+	public const array DEVICES_TOPICS = [
 		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+',
 		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+/+',
 		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+',
@@ -59,7 +42,7 @@ final class FbMqttV1 implements Client
 	];
 
 	// When new client is connected, broker send specific payload
-	private const NEW_CLIENT_MESSAGE_PAYLOAD = 'New client connected from';
+	private const string NEW_CLIENT_MESSAGE_PAYLOAD = 'New client connected from';
 
 	public function __construct(
 		private readonly Documents\Connectors\Connector $connector,
@@ -79,6 +62,7 @@ final class FbMqttV1 implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$client = $this->connectionManager->getConnection($this->connector);
@@ -101,6 +85,7 @@ final class FbMqttV1 implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		$client = $this->connectionManager->getConnection($this->connector);

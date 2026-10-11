@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Install.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           12.12.23
- */
-
 namespace FastyBird\Connector\NsPanel\Commands;
 
 use Brick\Math;
@@ -86,16 +73,11 @@ use function usort;
 
 /**
  * Connector install command
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:ns-panel-connector:install';
+	public const string NAME = 'fb:ns-panel-connector:install';
 
 	private Input\InputInterface|null $input = null;
 

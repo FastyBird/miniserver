@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Install.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           13.12.23
- */
-
 namespace FastyBird\Connector\Tuya\Commands;
 
 use Doctrine\DBAL;
@@ -52,16 +39,11 @@ use function usort;
 
 /**
  * Connector install command
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:tuya-connector:install';
+	public const string NAME = 'fb:tuya-connector:install';
 
 	private Input\InputInterface|null $input = null;
 

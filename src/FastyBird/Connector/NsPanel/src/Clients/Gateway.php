@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Gateway.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           13.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Clients;
 
 use DateTimeInterface;
@@ -34,6 +21,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
@@ -49,24 +37,19 @@ use function strval;
 
 /**
  * Connector gateway client
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Gateway implements Client
 {
 
 	use Nette\SmartObject;
 
-	private const HANDLER_START_DELAY = 2.0;
+	private const float HANDLER_START_DELAY = 2.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	private const CMD_STATE = 'state';
+	private const string CMD_STATE = 'state';
 
-	private const CMD_HEARTBEAT = 'heartbeat';
+	private const string CMD_HEARTBEAT = 'heartbeat';
 
 	/** @var array<string, Documents\Devices\Gateway>  */
 	private array $gateways = [];
@@ -113,6 +96,7 @@ final class Gateway implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$this->processedGateways = [];
@@ -141,6 +125,7 @@ final class Gateway implements Client
 		);
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		if ($this->handlerTimer !== null) {

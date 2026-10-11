@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ShellyExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           22.01.22
- */
-
 namespace FastyBird\Connector\Shelly\DI;
 
 use Contributte\Translation;
@@ -37,22 +24,18 @@ use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * Shelly connector
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ShellyExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbShellyConnector';
+	public const string NAME = 'fbShellyConnector';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -390,6 +373,7 @@ class ShellyExtension extends NetteDI\CompilerExtension implements Translation\D
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

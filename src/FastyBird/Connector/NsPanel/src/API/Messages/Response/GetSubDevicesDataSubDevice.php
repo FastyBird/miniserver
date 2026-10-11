@@ -1,24 +1,12 @@
 <?php declare(strict_types = 1);
 
-/**
- * GetSubDevicesDataSubDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           15.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\API\Messages\Response;
 
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use stdClass;
 use function array_map;
@@ -26,11 +14,6 @@ use function is_array;
 
 /**
  * Get NS Panel sub-devices list data sub-device response definition
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class GetSubDevicesDataSubDevice implements API\Messages\Message
 {
@@ -217,6 +200,7 @@ final readonly class GetSubDevicesDataSubDevice implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -243,6 +227,7 @@ final readonly class GetSubDevicesDataSubDevice implements API\Messages\Message
 		];
 	}
 
+	#[Override]
 	public function toJson(): object
 	{
 		$tags = new stdClass();

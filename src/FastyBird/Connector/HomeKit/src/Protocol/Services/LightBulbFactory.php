@@ -1,33 +1,16 @@
 <?php declare(strict_types = 1);
 
-/**
- * BatteryFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           29.01.24
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * HAP light bulb service factory
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class LightBulbFactory implements ServiceFactory
 {
@@ -37,6 +20,7 @@ class LightBulbFactory implements ServiceFactory
 	 * @param array<string> $optionalCharacteristics
 	 * @param array<string> $virtualCharacteristics
 	 */
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $typeId,
 		Types\ServiceType $type,
@@ -62,6 +46,7 @@ class LightBulbFactory implements ServiceFactory
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\LightBulb::class;

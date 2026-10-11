@@ -1,33 +1,16 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           30.11.23
- */
-
 namespace FastyBird\Connector\HomeKit\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * Device status message
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class StoreChannelPropertyState implements Message
 {
@@ -84,6 +67,7 @@ final readonly class StoreChannelPropertyState implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           15.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -22,6 +9,7 @@ use FastyBird\Connector\Virtual\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -33,7 +21,7 @@ use function is_numeric;
 abstract class Device extends DevicesEntities\Devices\Device
 {
 
-	public const STATE_PROCESSING_DELAY = 120.0;
+	public const float STATE_PROCESSING_DELAY = 120.0;
 
 	public function __construct(
 		string $identifier,
@@ -45,11 +33,13 @@ abstract class Device extends DevicesEntities\Devices\Device
 		parent::__construct($identifier, $connector, $name, $id);
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Connector::VIRTUAL;
 	}
 
+	#[Override]
 	public function getConnector(): VirtualEntities\Connectors\Connector
 	{
 		assert($this->connector instanceof VirtualEntities\Connectors\Connector);
@@ -60,6 +50,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @return array<VirtualEntities\Channels\Channel>
 	 */
+	#[Override]
 	public function getChannels(): array
 	{
 		$channels = [];
@@ -76,6 +67,7 @@ abstract class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @throws VirtualExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof VirtualEntities\Channels\Channel) {

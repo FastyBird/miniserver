@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ThirdPartyDeviceFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           04.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Protocol\Devices;
 
 use FastyBird\Connector\NsPanel\Documents;
@@ -23,6 +10,7 @@ use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use Override;
 use TypeError;
 use ValueError;
 use function array_map;
@@ -32,11 +20,6 @@ use function sprintf;
 
 /**
  * NS panel third party device factory
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ThirdPartyDeviceFactory implements DeviceFactory
 {
@@ -59,6 +42,7 @@ class ThirdPartyDeviceFactory implements DeviceFactory
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function create(
 		Documents\Connectors\Connector $connector,
 		Documents\Devices\Gateway $gateway,
@@ -110,6 +94,7 @@ class ThirdPartyDeviceFactory implements DeviceFactory
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\ThirdPartyDevice::class;

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Name.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           21.06.23
- */
-
 namespace FastyBird\Connector\Viera\Helpers;
 
 use function iconv;
@@ -25,11 +12,6 @@ use const MB_CASE_TITLE;
 
 /**
  * Useful name helpers
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Name
 {

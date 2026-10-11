@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WriteChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           31.08.23
- */
-
 namespace FastyBird\Connector\Shelly\Queue\Consumers;
 
 use DateTimeInterface;
@@ -37,6 +24,7 @@ use FastyBird\Module\Devices\Types as DevicesTypes;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette;
 use Nette\Utils;
+use Override;
 use Psr\Clock\ClockInterface;
 use RuntimeException;
 use Throwable;
@@ -49,11 +37,6 @@ use function strval;
 
 /**
  * Write state to device message consumer
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class WriteChannelPropertyState implements Queue\Consumer
 {
@@ -88,6 +71,7 @@ final class WriteChannelPropertyState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\WriteChannelPropertyState) {

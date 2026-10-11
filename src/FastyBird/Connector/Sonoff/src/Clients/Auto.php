@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Auto.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           08.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Clients;
 
 use BadMethodCallException;
@@ -24,6 +11,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use React\Promise;
@@ -36,11 +24,6 @@ use function React\Async\async;
 
 /**
  * Lan client
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Auto extends ClientProcess implements Client
 {
@@ -81,6 +64,7 @@ final class Auto extends ClientProcess implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$this->lanClient = $this->lanClientFactory->create($this->connector, true);
@@ -111,6 +95,7 @@ final class Auto extends ClientProcess implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		if ($this->handlerTimer !== null) {

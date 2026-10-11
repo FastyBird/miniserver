@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Startup.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           02.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -30,7 +17,7 @@ use function preg_match;
 class Startup extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-startup';
+	public const string TYPE = 'ns-panel-connector-startup';
 
 	/**
 	 * @throws Exceptions\InvalidState

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * State.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           23.01.24
- */
-
 namespace FastyBird\Connector\HomeKit\Queue\Messages;
 
 use DateTimeInterface;
@@ -20,16 +7,12 @@ use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function is_bool;
 
 /**
  * Property state
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class State implements Message
 {
@@ -108,6 +91,7 @@ readonly class State implements Message
 		return $this->valid;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

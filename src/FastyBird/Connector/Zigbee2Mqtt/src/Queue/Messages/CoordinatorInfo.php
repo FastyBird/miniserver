@@ -1,29 +1,12 @@
 <?php declare(strict_types = 1);
 
-/**
- * CoordinatorInfo.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           25.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Coordinator information
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class CoordinatorInfo implements Message
 {
@@ -48,6 +31,7 @@ final readonly class CoordinatorInfo implements Message
 		return $this->type;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

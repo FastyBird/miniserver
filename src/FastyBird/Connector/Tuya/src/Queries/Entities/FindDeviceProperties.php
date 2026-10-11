@@ -1,24 +1,12 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindChannelProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           18.02.24
- */
-
 namespace FastyBird\Connector\Tuya\Queries\Entities;
 
 use FastyBird\Connector\Tuya\Exceptions;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use function sprintf;
 
 /**
@@ -26,11 +14,6 @@ use function sprintf;
  *
  * @template T of DevicesEntities\Devices\Properties\Property
  * @extends  DevicesQueries\Entities\FindDeviceProperties<T>
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queries
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindDeviceProperties extends DevicesQueries\Entities\FindDeviceProperties
 {
@@ -40,6 +23,7 @@ class FindDeviceProperties extends DevicesQueries\Entities\FindDeviceProperties
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function byIdentifier(Types\DevicePropertyIdentifier|string $identifier): void
 	{
 		if (!$identifier instanceof Types\DevicePropertyIdentifier) {

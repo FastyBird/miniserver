@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * MessageBuilder.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           08.12.23
- */
-
 namespace FastyBird\Connector\Modbus\Helpers;
 
 use FastyBird\Connector\Modbus\Exceptions;
@@ -21,11 +8,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Message builder
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class MessageBuilder
 {

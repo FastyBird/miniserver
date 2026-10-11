@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WriteSubDeviceState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           18.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Queue\Consumers;
 
 use DateTimeInterface;
@@ -36,6 +23,7 @@ use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
+use Override;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use Throwable;
@@ -48,18 +36,13 @@ use function strval;
 
 /**
  * Write state to sub-device message consumer
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class WriteSubDeviceState implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
-	private const WRITE_PENDING_DELAY = 2_000.0;
+	private const float WRITE_PENDING_DELAY = 2_000.0;
 
 	private API\LanApi|null $lanApiApi = null;
 
@@ -92,6 +75,7 @@ final class WriteSubDeviceState implements Queue\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\WriteSubDeviceState) {

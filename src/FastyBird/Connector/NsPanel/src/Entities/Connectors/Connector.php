@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           09.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,6 +11,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use TypeError;
 use ValueError;
 use function is_int;
@@ -34,13 +22,14 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'ns-panel-connector';
+	public const string TYPE = 'ns-panel-connector';
 
 	public static function getType(): string
 	{
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::NS_PANEL;
@@ -49,6 +38,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	/**
 	 * @return array<NsPanelEntities\Devices\Device>
 	 */
+	#[Override]
 	public function getDevices(): array
 	{
 		$devices = [];
@@ -65,6 +55,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	/**
 	 * @throws NsPanelExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
 		if (!$device instanceof NsPanelEntities\Devices\Device) {

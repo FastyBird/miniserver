@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ComponentEvent.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           14.01.23
- */
-
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use DateTimeInterface;
@@ -20,15 +7,11 @@ use Exception;
 use FastyBird\Connector\Shelly\API;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Override;
 use function intval;
 
 /**
  * Generation 2 device component event message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class ComponentEvent implements API\Messages\Message
 {
@@ -87,6 +70,7 @@ final readonly class ComponentEvent implements API\Messages\Message
 	 *
 	 * @throws Exception
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

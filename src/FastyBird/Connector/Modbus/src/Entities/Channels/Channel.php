@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           30.01.22
- */
-
 namespace FastyBird\Connector\Modbus\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,6 +11,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -37,7 +25,7 @@ use function is_string;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
-	public const TYPE = 'modbus-connector';
+	public const string TYPE = 'modbus-connector';
 
 	public function __construct(
 		ModbusEntities\Devices\Device $device,
@@ -54,11 +42,13 @@ class Channel extends DevicesEntities\Channels\Channel
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::MODBUS;
 	}
 
+	#[Override]
 	public function getDevice(): ModbusEntities\Devices\Device
 	{
 		assert($this->device instanceof ModbusEntities\Devices\Device);

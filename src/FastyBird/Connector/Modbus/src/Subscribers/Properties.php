@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Properties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           04.08.22
- */
-
 namespace FastyBird\Connector\Modbus\Subscribers;
 
 use Doctrine\Common;
@@ -33,6 +20,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Utils;
+use Override;
 use ReflectionException;
 use TypeError;
 use ValueError;
@@ -41,11 +29,6 @@ use function sprintf;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Properties implements Common\EventSubscriber
 {
@@ -59,6 +42,7 @@ final class Properties implements Common\EventSubscriber
 	{
 	}
 
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

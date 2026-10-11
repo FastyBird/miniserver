@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Connector
- * @since          1.0.0
- *
- * @date           21.06.23
- */
-
 namespace FastyBird\Connector\Viera\Connector;
 
 use FastyBird\Connector\Viera;
@@ -28,6 +15,7 @@ use FastyBird\Module\Devices\Connectors as DevicesConnectors;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
+use Override;
 use React\EventLoop;
 use React\Promise;
 use RuntimeException;
@@ -36,18 +24,13 @@ use function React\Async\async;
 
 /**
  * Connector service executor
- *
- * @package        FastyBird:VieraConnector!
- * @subpackage     Connector
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Connector implements DevicesConnectors\Connector
 {
 
 	use Nette\SmartObject;
 
-	private const QUEUE_PROCESSING_INTERVAL = 0.01;
+	private const float QUEUE_PROCESSING_INTERVAL = 0.01;
 
 	private Clients\Client|Clients\Discovery|null $client = null;
 
@@ -84,6 +67,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
 		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
@@ -143,6 +127,7 @@ final class Connector implements DevicesConnectors\Connector
 	 *
 	 * @throws RuntimeException
 	 */
+	#[Override]
 	public function discover(): Promise\PromiseInterface
 	{
 		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
@@ -183,6 +168,7 @@ final class Connector implements DevicesConnectors\Connector
 		return Promise\resolve(true);
 	}
 
+	#[Override]
 	public function terminate(): void
 	{
 		assert($this->connector instanceof VieraDocuments\Connectors\Connector);
@@ -207,6 +193,7 @@ final class Connector implements DevicesConnectors\Connector
 		);
 	}
 
+	#[Override]
 	public function hasUnfinishedTasks(): bool
 	{
 		return !$this->queue->isEmpty() && $this->consumersTimer !== null;

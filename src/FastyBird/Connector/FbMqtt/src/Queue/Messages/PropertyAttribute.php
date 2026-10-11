@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PropertyAttribute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           24.02.20
- */
-
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
 use FastyBird\Connector\FbMqtt;
@@ -21,6 +8,7 @@ use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Core\Values\Types;
 use Nette;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_filter;
@@ -35,30 +23,25 @@ use function strtolower;
 
 /**
  * Device or channel property attribute
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class PropertyAttribute implements Message
 {
 
 	use Nette\SmartObject;
 
-	public const NAME = 'name';
+	public const string NAME = 'name';
 
-	public const SETTABLE = 'settable';
+	public const string SETTABLE = 'settable';
 
-	public const QUERYABLE = 'queryable';
+	public const string QUERYABLE = 'queryable';
 
-	public const DATA_TYPE = 'data-type';
+	public const string DATA_TYPE = 'data-type';
 
-	public const FORMAT = 'format';
+	public const string FORMAT = 'format';
 
-	public const UNIT = 'unit';
+	public const string UNIT = 'unit';
 
-	public const ALLOWED_ATTRIBUTES = [
+	public const array ALLOWED_ATTRIBUTES = [
 		self::NAME,
 		self::SETTABLE,
 		self::QUERYABLE,
@@ -67,7 +50,7 @@ final class PropertyAttribute implements Message
 		self::UNIT,
 	];
 
-	public const FORMAT_ALLOWED_PAYLOADS = [
+	public const array FORMAT_ALLOWED_PAYLOADS = [
 		'rgb',
 		'hsv',
 	];
@@ -118,6 +101,7 @@ final class PropertyAttribute implements Message
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

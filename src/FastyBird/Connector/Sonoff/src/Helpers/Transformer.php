@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Transformer.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           18.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Helpers;
 
 use FastyBird\Connector\Sonoff\Types;
@@ -27,11 +14,6 @@ use const OPENSSL_RAW_DATA;
 
 /**
  * Devices data transformers
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Transformer
 {

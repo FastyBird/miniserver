@@ -1,31 +1,14 @@
 <?php declare(strict_types = 1);
 
-/**
- * Uiid8.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           24.09.23
- */
-
 namespace FastyBird\Connector\Sonoff\API\Messages\Uiid;
 
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 use function array_merge;
 
 /**
  * UIID8 params entity
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Uiid8 implements Uuid
 {
@@ -143,6 +126,7 @@ final class Uiid8 implements Uuid
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -166,6 +150,7 @@ final class Uiid8 implements Uuid
 		];
 	}
 
+	#[Override]
 	public function toStates(): array
 	{
 		return array_merge(

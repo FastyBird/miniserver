@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * IidManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           13.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Helpers;
 
 use FastyBird\Connector\HomeKit\Protocol;
@@ -21,11 +8,6 @@ use SplObjectStorage;
 
 /**
  * Maintains a mapping between Service/Characteristic objects and IIDs
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class IidManager
 {

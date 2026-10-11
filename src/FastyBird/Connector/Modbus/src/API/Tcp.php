@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Tcp.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           03.02.23
- */
-
 namespace FastyBird\Connector\Modbus\API;
 
 use FastyBird\Connector\Modbus\API\Messages\Response\ReadAnalogInputs;
@@ -49,26 +36,21 @@ use function unpack;
 
 /**
  * Modbus TCP API interface
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Tcp
 {
 
 	use Nette\SmartObject;
 
-	private const MODBUS_ADU = 'n1transaction/n1protocol/n1length/C1station/C1function/C*data/';
+	private const string MODBUS_ADU = 'n1transaction/n1protocol/n1length/C1station/C1function/C*data/';
 
-	private const MODBUS_ERROR = 'n1transaction/n1protocol/n1length/C1station/C1error/C1exception/';
+	private const string MODBUS_ERROR = 'n1transaction/n1protocol/n1length/C1station/C1error/C1exception/';
 
-	private const PROTOCOL_ID = 0;
+	private const int PROTOCOL_ID = 0;
 
-	private const MAX_TRANSACTION_ID = 0xFFFF; // 65535 as dec
+	private const int MAX_TRANSACTION_ID = 0xFFFF; // 65535 as dec
 
-	private const CONNECTION_TIMEOUT = 0.2;
+	private const float CONNECTION_TIMEOUT = 0.2;
 
 	public function __construct(
 		private readonly EventLoop\LoopInterface $eventLoop,

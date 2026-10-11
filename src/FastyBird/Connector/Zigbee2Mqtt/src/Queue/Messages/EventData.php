@@ -1,31 +1,14 @@
 <?php declare(strict_types = 1);
 
-/**
- * EventData.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           24.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages;
 
 use FastyBird\Connector\Zigbee2Mqtt\Types;
 use Orisai\ObjectMapper;
+use Override;
 use function array_merge;
 
 /**
  * Event data message
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class EventData implements Message
 {
@@ -68,6 +51,7 @@ final readonly class EventData implements Message
 		return $this->supported;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

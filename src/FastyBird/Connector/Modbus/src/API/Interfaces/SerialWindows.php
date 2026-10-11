@@ -1,21 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * SerialWindows.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           31.07.22
- */
-
 namespace FastyBird\Connector\Modbus\API\Interfaces;
 
 use FastyBird\Connector\Modbus\Exceptions;
+use Override;
 use function array_values;
 use function boolval;
 use function error_clear_last;
@@ -31,11 +19,6 @@ use function vsprintf;
 
 /**
  * Serial interface using Windows file stream
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class SerialWindows extends Serial
 {
@@ -43,6 +26,7 @@ final class SerialWindows extends Serial
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function open(string $mode = 'r+b'): void
 	{
 		parent::open($mode);

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * System.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           15.03.23
- */
-
 namespace FastyBird\Connector\HomeKit\Subscribers;
 
 use Doctrine\Common;
@@ -29,6 +16,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use ReflectionException;
 use TypeError;
@@ -40,11 +28,6 @@ use function intval;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class System implements Common\EventSubscriber
 {
@@ -64,6 +47,7 @@ final class System implements Common\EventSubscriber
 	{
 	}
 
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

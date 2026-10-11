@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StartupFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           16.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Protocol\Capabilities;
 
 use FastyBird\Connector\NsPanel;
@@ -20,6 +7,7 @@ use FastyBird\Connector\NsPanel\Documents;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Mapping;
 use FastyBird\Connector\NsPanel\Protocol;
+use Override;
 use function array_key_exists;
 use function array_map;
 use function assert;
@@ -27,15 +15,11 @@ use function preg_match;
 
 /**
  * NS panel startup capability factory
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class StartupFactory implements CapabilityFactory
 {
 
+	#[Override]
 	public function create(
 		Documents\Channels\Channel $channel,
 		Protocol\Devices\Device $device,
@@ -64,6 +48,7 @@ class StartupFactory implements CapabilityFactory
 		);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Startup::class;

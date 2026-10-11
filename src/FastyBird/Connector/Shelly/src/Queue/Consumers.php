@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Consumers.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           30.08.23
- */
-
 namespace FastyBird\Connector\Shelly\Queue;
 
 use FastyBird\Connector\Shelly;
@@ -22,11 +9,6 @@ use SplObjectStorage;
 
 /**
  * Clients message queue consumers container
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Consumers
 {

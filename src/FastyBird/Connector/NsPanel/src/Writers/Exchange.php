@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Exchange.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           12.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Writers;
 
 use FastyBird\Connector\NsPanel;
@@ -32,6 +19,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
@@ -42,16 +30,11 @@ use function str_starts_with;
 
 /**
  * Exchange based properties writer
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Exchange extends Periodic implements Writer, Consumers\Consumer
 {
 
-	public const NAME = 'exchange';
+	public const string NAME = 'exchange';
 
 	public function __construct(
 		NsPanelDocuments\Connectors\Connector $connector,
@@ -99,6 +82,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		parent::connect();
@@ -109,6 +93,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 	/**
 	 * @throws CoreExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		parent::disconnect();
@@ -116,6 +101,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 		$this->consumer->disable(self::class);
 	}
 
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

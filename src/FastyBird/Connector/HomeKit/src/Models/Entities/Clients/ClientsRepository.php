@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ClientsRepository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           13.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Models\Entities\Clients;
 
 use Doctrine\ORM;
@@ -29,11 +16,6 @@ use function is_array;
 
 /**
  * Clients repository
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ClientsRepository
 {

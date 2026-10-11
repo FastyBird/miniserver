@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Http.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- * @since          1.0.0
- *
- * @date           19.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Servers;
 
 use FastyBird\Connector\HomeKit;
@@ -32,6 +19,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
+use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -46,24 +34,19 @@ use function is_string;
 
 /**
  * HTTP connector communication server
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Http implements Server
 {
 
 	use Nette\SmartObject;
 
-	public const REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
+	public const string REQUEST_ATTRIBUTE_CONNECTOR = 'connector';
 
-	public const PAIRING_CONTENT_TYPE = 'application/pairing+tlv8';
+	public const string PAIRING_CONTENT_TYPE = 'application/pairing+tlv8';
 
-	public const JSON_CONTENT_TYPE = 'application/hap+json';
+	public const string JSON_CONTENT_TYPE = 'application/hap+json';
 
-	private const LISTENING_ADDRESS = '0.0.0.0';
+	private const string LISTENING_ADDRESS = '0.0.0.0';
 
 	private SecureServer|null $socket = null;
 
@@ -84,6 +67,7 @@ final class Http implements Server
 	{
 	}
 
+	#[Override]
 	public function initialize(): void
 	{
 		$this->entitiesSubscriber->onUpdateSharedKey[] = function (DevicesEntities\Connectors\Properties\Variable $property): void {
@@ -94,6 +78,7 @@ final class Http implements Server
 	/**
 	 * @throws HomeKitExceptions\Runtime
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		try {
@@ -264,6 +249,7 @@ final class Http implements Server
 	/**
 	 * @throws HomeKitExceptions\Runtime
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->logger->debug(

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Consumers.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           09.08.23
- */
-
 namespace FastyBird\Connector\NsPanel\Queue;
 
 use FastyBird\Connector\NsPanel;
@@ -22,11 +9,6 @@ use SplObjectStorage;
 
 /**
  * Clients message queue consumers container
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Consumers
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WebSocketClientFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Services
- * @since          1.0.0
- *
- * @date           13.08.23
- */
-
 namespace FastyBird\Connector\Tuya\Services;
 
 use Ratchet;
@@ -24,11 +11,6 @@ use Throwable;
 
 /**
  * OpenPulsar websockets client factory
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Services
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class WebSocketClientFactory
 {

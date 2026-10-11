@@ -1,24 +1,12 @@
 <?php declare(strict_types = 1);
 
-/**
- * Type.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           24.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_merge;
@@ -26,11 +14,6 @@ use function is_bool;
 
 /**
  * Binary type expose type message
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class BinaryType extends Type
 {
@@ -75,6 +58,7 @@ final class BinaryType extends Type
 		return Zigbee2MqttTypes\ExposeType::from($this->type);
 	}
 
+	#[Override]
 	public function getDataType(): ValuesTypes\DataType
 	{
 		if (is_bool($this->getValueOn()) && is_bool($this->getValueOff())) {
@@ -99,6 +83,7 @@ final class BinaryType extends Type
 		return $this->valueToggle;
 	}
 
+	#[Override]
 	public function getFormat(): array|null
 	{
 		if (is_bool($this->getValueOn()) && is_bool($this->getValueOff())) {
@@ -130,6 +115,7 @@ final class BinaryType extends Type
 		);
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

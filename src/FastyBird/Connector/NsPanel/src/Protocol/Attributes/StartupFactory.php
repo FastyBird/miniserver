@@ -1,36 +1,20 @@
 <?php declare(strict_types = 1);
 
-/**
- * StartupFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           16.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Protocol\Attributes;
 
 use FastyBird\Connector\NsPanel\Protocol;
 use FastyBird\Connector\NsPanel\Types as NsPanelTypes;
 use FastyBird\Core\Values\Types as ValuesTypes;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * NS panel startup attribute factory
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class StartupFactory implements AttributeFactory
 {
 
+	#[Override]
 	public function create(
 		Uuid\UuidInterface $id,
 		NsPanelTypes\Attribute $type,
@@ -48,6 +32,7 @@ class StartupFactory implements AttributeFactory
 		return new Startup($id, $capability);
 	}
 
+	#[Override]
 	public function getType(): NsPanelTypes\Attribute
 	{
 		return NsPanelTypes\Attribute::STARTUP;

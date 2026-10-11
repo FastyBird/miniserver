@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Install.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           15.12.23
- */
-
 namespace FastyBird\Connector\HomeKit\Commands;
 
 use Brick\Math;
@@ -83,16 +70,11 @@ use function usort;
 
 /**
  * Connector install command
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:homekit-connector:install';
+	public const string NAME = 'fb:homekit-connector:install';
 
 	public function __construct(
 		private readonly HomeKitHelpers\Loader $loader,

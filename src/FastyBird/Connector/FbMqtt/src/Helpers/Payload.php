@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Payload.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           21.11.21
- */
-
 namespace FastyBird\Connector\FbMqtt\Helpers;
 
 use function is_string;
@@ -20,11 +7,6 @@ use function preg_replace;
 
 /**
  * MQTT payload helpers
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Payload
 {

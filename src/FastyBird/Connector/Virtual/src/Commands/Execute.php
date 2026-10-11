@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Execute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           18.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Commands;
 
 use FastyBird\Connector\Virtual\Documents;
@@ -41,16 +28,11 @@ use function usort;
 
 /**
  * Connector execute command
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Execute extends Console\Command\Command
 {
 
-	public const NAME = 'fb:virtual-connector:execute';
+	public const string NAME = 'fb:virtual-connector:execute';
 
 	public function __construct(
 		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,

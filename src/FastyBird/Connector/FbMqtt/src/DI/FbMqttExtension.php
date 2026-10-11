@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FbMqttExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           03.12.20
- */
-
 namespace FastyBird\Connector\FbMqtt\DI;
 
 use Contributte\Translation;
@@ -36,22 +23,18 @@ use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * FastyBird MQTT connector
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FbMqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbFbMqttConnector';
+	public const string NAME = 'fbFbMqttConnector';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -349,6 +332,7 @@ class FbMqttExtension extends NetteDI\CompilerExtension implements Translation\D
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

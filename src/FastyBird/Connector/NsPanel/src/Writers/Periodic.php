@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Periodic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           12.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Writers;
 
 use DateTimeInterface;
@@ -32,6 +19,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
@@ -46,24 +34,19 @@ use function React\Async\await;
 
 /**
  * Periodic properties writer
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Periodic implements Writer
 {
 
 	use Nette\SmartObject;
 
-	private const HANDLER_START_DELAY = 5.0;
+	private const float HANDLER_START_DELAY = 5.0;
 
-	private const HANDLER_DEBOUNCE_INTERVAL = 2_500.0;
+	private const float HANDLER_DEBOUNCE_INTERVAL = 2_500.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	private const HANDLER_PENDING_DELAY = 2_000.0;
+	private const float HANDLER_PENDING_DELAY = 2_000.0;
 
 	/** @var array<string, NsPanelDocuments\Devices\Device>  */
 	private array $devices = [];
@@ -108,6 +91,7 @@ abstract class Periodic implements Writer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$this->processedDevices = [];
@@ -175,6 +159,7 @@ abstract class Periodic implements Writer
 		);
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		if ($this->handlerTimer !== null) {

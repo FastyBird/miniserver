@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           27.08.24
- */
-
 namespace FastyBird\Connector\Viera\Subscribers;
 
 use Doctrine\DBAL;
@@ -30,17 +17,13 @@ use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Override;
 use Symfony\Component\EventDispatcher;
 use TypeError;
 use ValueError;
 
 /**
  * Device events
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Device implements EventDispatcher\EventSubscriberInterface
 {
@@ -55,6 +38,7 @@ final class Device implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

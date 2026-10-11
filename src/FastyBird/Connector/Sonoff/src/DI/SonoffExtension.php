@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SonoffExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\DI;
 
 use Contributte\Translation;
@@ -37,22 +24,18 @@ use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * Sonoff connector
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class SonoffExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbSonoffConnector';
+	public const string NAME = 'fbSonoffConnector';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -400,6 +383,7 @@ class SonoffExtension extends NetteDI\CompilerExtension implements Translation\D
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceSwitchState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           26.12.22
- */
-
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use DateTimeInterface;
@@ -22,6 +9,7 @@ use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Override;
 use function array_filter;
 use function array_merge;
 use function intval;
@@ -29,11 +17,6 @@ use function is_float;
 
 /**
  * Generation 2 device switch state message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DeviceSwitchState extends DeviceState implements API\Messages\Message
 {
@@ -182,6 +165,7 @@ final class DeviceSwitchState extends DeviceState implements API\Messages\Messag
 	 *
 	 * @throws Exception
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(
@@ -206,6 +190,7 @@ final class DeviceSwitchState extends DeviceState implements API\Messages\Messag
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toState(): array
 	{
 		return array_filter(

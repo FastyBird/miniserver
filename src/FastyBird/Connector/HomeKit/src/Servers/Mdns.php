@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Mdns.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- * @since          1.0.0
- *
- * @date           17.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Servers;
 
 use FastyBird\Connector\HomeKit;
@@ -28,6 +15,7 @@ use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette;
 use Nette\Utils;
+use Override;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\Datagram;
 use React\Dns;
@@ -53,32 +41,27 @@ use function substr;
 
 /**
  * mDNS connector discovery server
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Mdns implements Server
 {
 
 	use Nette\SmartObject;
 
-	private const DNS_ADDRESS = '224.0.0.251';
+	private const string DNS_ADDRESS = '224.0.0.251';
 
-	private const DNS_PORT = 5_353;
+	private const int DNS_PORT = 5_353;
 
-	private const DNS_BROADCAST_INTERVAL = 60;
+	private const int DNS_BROADCAST_INTERVAL = 60;
 
-	private const HAP_SERVICE_TYPE = '_hap._tcp.local';
+	private const string HAP_SERVICE_TYPE = '_hap._tcp.local';
 
-	private const VALID_MDNS_REGEX = '/[^A-Za-z0-9\-]+/';
+	private const string VALID_MDNS_REGEX = '/[^A-Za-z0-9\-]+/';
 
-	private const IP_ADDRESS_REGEX = '/^(\d[\d.]+):(\d+)\b/';
+	private const string IP_ADDRESS_REGEX = '/^(\d[\d.]+):(\d+)\b/';
 
-	private const LEADING_TRAILING_SPACE_DASH = '/^[ -]+|[ -]+$/';
+	private const string LEADING_TRAILING_SPACE_DASH = '/^[ -]+|[ -]+$/';
 
-	private const DASH_REGEX = '/[-]+/';
+	private const string DASH_REGEX = '/[-]+/';
 
 	/** @var array<string, array<int, array<int, array<Dns\Model\Record>>>> */
 	private array $resourceRecords = [];
@@ -113,6 +96,7 @@ final class Mdns implements Server
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function initialize(): void
 	{
 		$this->entitiesSubscriber->onRefresh[] = function (DevicesEntities\Connectors\Properties\Variable $property): void {
@@ -122,6 +106,7 @@ final class Mdns implements Server
 		$this->createZone();
 	}
 
+	#[Override]
 	public function connect(): void
 	{
 		$this->logger->debug(
@@ -226,6 +211,7 @@ final class Mdns implements Server
 			});
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->logger->debug(

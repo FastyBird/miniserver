@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Discovery.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Clients;
 
 use BadMethodCallException;
@@ -55,18 +42,13 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Devices discovery client
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Discovery
 {
 
 	use Nette\SmartObject;
 
-	private const LAN_SEARCH_TIMEOUT = 60;
+	private const int LAN_SEARCH_TIMEOUT = 60;
 
 	private EventLoop\TimerInterface|null $handlerTimer = null;
 

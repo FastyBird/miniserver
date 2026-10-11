@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Network.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           16.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Helpers;
 
 use Socket;
@@ -27,11 +14,6 @@ use const SOL_UDP;
 
 /**
  * Useful network helpers
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Network
 {

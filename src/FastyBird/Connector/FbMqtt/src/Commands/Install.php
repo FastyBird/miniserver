@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Install.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           11.12.23
- */
-
 namespace FastyBird\Connector\FbMqtt\Commands;
 
 use Doctrine\DBAL;
@@ -50,16 +37,11 @@ use function usort;
 
 /**
  * Connector install command
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:fb-mqtt-connector:install';
+	public const string NAME = 'fb:fb-mqtt-connector:install';
 
 	public function __construct(
 		private readonly FbMqtt\Logger $logger,

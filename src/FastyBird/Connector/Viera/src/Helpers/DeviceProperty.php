@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceProperty.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           27.08.24
- */
-
 namespace FastyBird\Connector\Viera\Helpers;
 
 use Doctrine\DBAL;

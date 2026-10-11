@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Subscriber.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           02.10.22
- */
-
 namespace FastyBird\Connector\HomeKit\Clients;
 
 use FastyBird\Connector\HomeKit;
@@ -37,18 +24,13 @@ use const PHP_URL_HOST;
 
 /**
  * HTTP clients exchange subscriber
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Subscriber
 {
 
 	use Nette\SmartObject;
 
-	private const PUBLISH_EVENT_DELAY = 0.5;
+	private const float PUBLISH_EVENT_DELAY = 0.5;
 
 	/** @var SplObjectStorage<Socket\ConnectionInterface, string> */
 	private SplObjectStorage $connections;

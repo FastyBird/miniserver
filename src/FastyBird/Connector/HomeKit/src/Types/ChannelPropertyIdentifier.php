@@ -1,27 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelPropertyIdentifier.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Types
- * @since          1.0.0
- *
- * @date           06.10.22
- */
-
 namespace FastyBird\Connector\HomeKit\Types;
 
 /**
  * Channel property identifier types
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Types
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 enum ChannelPropertyIdentifier: string
 {

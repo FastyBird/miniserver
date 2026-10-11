@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConnectorProperties.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Fixtures
- * @since          1.0.0
- *
- * @date           22.08.22
- */
-
 namespace FastyBird\Connector\Modbus\Fixtures;
 
 use Doctrine\Common\DataFixtures;
@@ -24,16 +11,12 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use Override;
 use TypeError;
 use ValueError;
 
 /**
  * Connector properties database fixture
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Fixtures
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ConnectorProperties extends DataFixtures\AbstractFixture implements DataFixtures\DependentFixtureInterface
 {
@@ -46,6 +29,7 @@ final class ConnectorProperties extends DataFixtures\AbstractFixture implements 
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function load(Persistence\ObjectManager $manager): void
 	{
 		$connector = $this->getReference('modbus-rtu-connector', ModbusEntities\Connectors\Connector::class);
@@ -72,6 +56,7 @@ final class ConnectorProperties extends DataFixtures\AbstractFixture implements 
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getDependencies(): array
 	{
 		return [

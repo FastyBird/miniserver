@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Queue.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           13.08.23
- */
-
 namespace FastyBird\Connector\Tuya\Queue;
 
 use FastyBird\Connector\Tuya;
@@ -23,11 +10,6 @@ use SplQueue;
 
 /**
  * Clients message consumer proxy
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Queue
 {

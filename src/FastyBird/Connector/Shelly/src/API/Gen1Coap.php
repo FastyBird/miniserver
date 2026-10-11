@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Coap.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           14.07.22
- */
-
 namespace FastyBird\Connector\Shelly\API;
 
 use BadMethodCallException;
@@ -46,20 +33,15 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Generation 1 device CoAP interface
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Gen1Coap
 {
 
 	use Nette\SmartObject;
 
-	private const STATE_MESSAGE_CODE = 30;
+	private const int STATE_MESSAGE_CODE = 30;
 
-	private const STATE_MESSAGE_SCHEMA_FILENAME = 'gen1_coap_state.json';
+	private const string STATE_MESSAGE_SCHEMA_FILENAME = 'gen1_coap_state.json';
 
 	/** @var array<Closure(Messages\Message $message): void> */
 	public array $onMessage = [];

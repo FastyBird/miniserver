@@ -1,34 +1,17 @@
 <?php declare(strict_types = 1);
 
-/**
- * SecureServer.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- * @since          1.0.0
- *
- * @date           26.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Servers;
 
 use Evenement\EventEmitter;
 use FastyBird\Connector\HomeKit\Documents;
 use Nette;
+use Override;
 use React\Socket;
 use SplObjectStorage;
 use function str_replace;
 
 /**
  * HTTP secured server wrapper
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class SecureServer extends EventEmitter implements Socket\ServerInterface
 {
@@ -79,6 +62,7 @@ final class SecureServer extends EventEmitter implements Socket\ServerInterface
 		}
 	}
 
+	#[Override]
 	public function getAddress(): string|null
 	{
 		$address = $this->server->getAddress();
@@ -90,16 +74,19 @@ final class SecureServer extends EventEmitter implements Socket\ServerInterface
 		return str_replace('tcp://', 'tls://', $address);
 	}
 
+	#[Override]
 	public function pause(): void
 	{
 		$this->server->pause();
 	}
 
+	#[Override]
 	public function resume(): void
 	{
 		$this->server->resume();
 	}
 
+	#[Override]
 	public function close(): void
 	{
 		$this->server->close();

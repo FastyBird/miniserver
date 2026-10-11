@@ -1,32 +1,15 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelDescription.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           27.12.22
- */
-
 namespace FastyBird\Connector\Shelly\Queue\Messages;
 
 use Orisai\ObjectMapper;
+use Override;
 use function array_map;
 use function array_unique;
 use const SORT_REGULAR;
 
 /**
  * Device channel description message
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class ChannelDescription implements Message
 {
@@ -71,6 +54,7 @@ final readonly class ChannelDescription implements Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

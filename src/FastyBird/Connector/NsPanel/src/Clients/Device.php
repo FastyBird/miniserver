@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           16.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Clients;
 
 use FastyBird\Connector\NsPanel;
@@ -30,6 +17,7 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
+use Override;
 use React\Promise;
 use Throwable;
 use TypeError;
@@ -39,11 +27,6 @@ use function strval;
 
 /**
  * Connector third-party device client
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Device implements Client
 {
@@ -75,6 +58,7 @@ final class Device implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		$findDevicesQuery = new Queries\Configuration\FindGatewayDevices();
@@ -526,6 +510,7 @@ final class Device implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		$findDevicesQuery = new Queries\Configuration\FindGatewayDevices();

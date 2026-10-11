@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WriteSubDeviceChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           32.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 
 use DateTimeInterface;
@@ -37,6 +24,7 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
 use Nette\Utils;
+use Override;
 use Psr\Clock\ClockInterface;
 use stdClass;
 use Throwable;
@@ -49,18 +37,13 @@ use function sprintf;
 
 /**
  * Write state to sub-device message consumer
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
-	private const WRITE_PENDING_DELAY = 2_000.0;
+	private const float WRITE_PENDING_DELAY = 2_000.0;
 
 	public function __construct(
 		protected readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
@@ -95,6 +78,7 @@ final class WriteSubDeviceChannelPropertyState implements Queue\Consumer
 	 * @throws ValueError
 	 * @throws TypeError
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\WriteSubDeviceChannelPropertyState) {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Execute.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Connector\Tuya\Commands;
 
 use FastyBird\Connector\Tuya\Documents;
@@ -40,16 +27,11 @@ use function usort;
 
 /**
  * Connector execute command
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Execute extends Console\Command\Command
 {
 
-	public const NAME = 'fb:tuya-connector:execute';
+	public const string NAME = 'fb:tuya-connector:execute';
 
 	public function __construct(
 		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,

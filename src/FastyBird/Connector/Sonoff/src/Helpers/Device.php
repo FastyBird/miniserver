@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           18.11.23
- */
-
 namespace FastyBird\Connector\Sonoff\Helpers;
 
 use FastyBird\Connector\Sonoff;
@@ -35,11 +22,6 @@ use function is_string;
 
 /**
  * Device helper
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Device
 {

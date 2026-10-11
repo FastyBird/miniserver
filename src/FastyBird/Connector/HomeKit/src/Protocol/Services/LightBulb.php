@@ -1,38 +1,22 @@
 <?php declare(strict_types = 1);
 
-/**
- * LightBulb.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           30.01.24
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol\Services;
 
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Values\Transformers;
 use FastyBird\Module\Devices\Types as DevicesTypes;
+use Override;
 use function is_float;
 use function is_int;
 
 /**
  * HAP light bulb service
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class LightBulb extends Generic
 {
 
+	#[Override]
 	public function recalculateCharacteristics(
 		Protocol\Characteristics\Characteristic|null $characteristic = null,
 	): void

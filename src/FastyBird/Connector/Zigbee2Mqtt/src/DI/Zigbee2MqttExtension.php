@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Zigbee2MqttExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           23.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\DI;
 
 use Contributte\Translation;
@@ -37,22 +24,18 @@ use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * Zigbee2MQTT connector
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Zigbee2MqttExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbZigbee2MqttConnector';
+	public const string NAME = 'fbZigbee2MqttConnector';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -435,6 +418,7 @@ class Zigbee2MqttExtension extends NetteDI\CompilerExtension implements Translat
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

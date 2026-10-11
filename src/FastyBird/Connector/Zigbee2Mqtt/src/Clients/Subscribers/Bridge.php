@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Bridge.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           01.01.24
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Clients\Subscribers;
 
 use BinSoul\Net\Mqtt as NetMqtt;
@@ -35,11 +22,6 @@ use function strval;
 
 /**
  * Zigbee2MQTT MQTT bridge messages subscriber
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class Bridge
 {

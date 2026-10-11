@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Event.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           11.02.23
- */
-
 namespace FastyBird\Connector\HomeKit\Writers;
 
 use FastyBird\Connector\HomeKit;
@@ -28,6 +15,7 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\EventLoop;
@@ -36,16 +24,11 @@ use Throwable;
 
 /**
  * Event based properties writer
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Event extends Periodic implements Writer, ComponentEventDispatcher\EventSubscriberInterface
 {
 
-	public const NAME = 'event';
+	public const string NAME = 'event';
 
 	public function __construct(
 		HomeKitDocuments\Connectors\Connector $connector,
@@ -81,6 +64,7 @@ class Event extends Periodic implements Writer, ComponentEventDispatcher\EventSu
 		);
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

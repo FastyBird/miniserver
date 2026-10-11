@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SubDevice.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           25.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,6 +11,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -37,7 +25,7 @@ use function is_string;
 class SubDevice extends Device
 {
 
-	public const TYPE = 'zigbee2mqtt-connector-sub-device';
+	public const string TYPE = 'zigbee2mqtt-connector-sub-device';
 
 	/**
 	 * @throws Zigbee2MqttExceptions\InvalidState
@@ -77,6 +65,7 @@ class SubDevice extends Device
 	/**
 	 * @throws Zigbee2MqttExceptions\InvalidState
 	 */
+	#[Override]
 	public function setParents(array|Utils\ArrayHash $parents): void
 	{
 		if (count($parents) !== 1 || !$parents[0] instanceof Bridge) {

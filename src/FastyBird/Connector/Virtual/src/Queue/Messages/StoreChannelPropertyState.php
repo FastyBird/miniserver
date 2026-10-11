@@ -1,33 +1,16 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreChannelPropertyState.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           04.09.22
- */
-
 namespace FastyBird\Connector\Virtual\Queue\Messages;
 
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 
 /**
  * Device status message
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class StoreChannelPropertyState implements Message
 {
@@ -103,6 +86,7 @@ final readonly class StoreChannelPropertyState implements Message
 	 *
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

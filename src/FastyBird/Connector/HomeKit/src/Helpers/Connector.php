@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           18.11.23
- */
-
 namespace FastyBird\Connector\HomeKit\Helpers;
 
 use FastyBird\Connector\HomeKit;
@@ -33,11 +20,6 @@ use function is_string;
 
 /**
  * Connector helper
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class Connector
 {

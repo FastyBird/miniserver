@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Periodic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           18.01.23
- */
-
 namespace FastyBird\Connector\Modbus\Writers;
 
 use DateTimeInterface;
@@ -43,26 +30,21 @@ use function React\Async\await;
 
 /**
  * Periodic properties writer
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Periodic
 {
 
 	use Nette\SmartObject;
 
-	public const NAME = 'periodic';
+	public const string NAME = 'periodic';
 
-	private const HANDLER_START_DELAY = 5.0;
+	private const float HANDLER_START_DELAY = 5.0;
 
-	private const HANDLER_DEBOUNCE_INTERVAL = 2_500.0;
+	private const float HANDLER_DEBOUNCE_INTERVAL = 2_500.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	private const HANDLER_PENDING_DELAY = 2_000.0;
+	private const float HANDLER_PENDING_DELAY = 2_000.0;
 
 	/** @var array<string, ModbusDocuments\Devices\Device>  */
 	private array $devices = [];

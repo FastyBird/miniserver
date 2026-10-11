@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Exchange.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           18.01.23
- */
-
 namespace FastyBird\Connector\FbMqtt\Writers;
 
 use FastyBird\Connector\FbMqtt;
@@ -31,6 +18,7 @@ use FastyBird\Module\Devices\Constants as DevicesConstants;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
+use Override;
 use Psr\Clock\ClockInterface;
 use React\EventLoop;
 use Throwable;
@@ -39,16 +27,11 @@ use function str_starts_with;
 
 /**
  * Exchange based properties writer
- *
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Exchange extends Periodic implements Writer, Consumers\Consumer
 {
 
-	public const NAME = 'exchange';
+	public const string NAME = 'exchange';
 
 	public function __construct(
 		FbMqttDocuments\Connectors\Connector $connector,
@@ -94,6 +77,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 	 * @throws FbMqttExceptions\Runtime
 	 * @throws CoreExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		parent::connect();
@@ -104,6 +88,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 	/**
 	 * @throws CoreExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		parent::disconnect();
@@ -111,6 +96,7 @@ class Exchange extends Periodic implements Writer, Consumers\Consumer
 		$this->consumer->disable(self::class);
 	}
 
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

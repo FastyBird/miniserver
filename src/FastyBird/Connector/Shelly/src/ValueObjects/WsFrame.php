@@ -1,30 +1,13 @@
 <?php declare(strict_types = 1);
 
-/**
- * WsFrame.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     ValueObjects
- * @since          1.0.0
- *
- * @date           09.01.23
- */
-
 namespace FastyBird\Connector\Shelly\ValueObjects;
 
 use Nette\Utils;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Websocket frame
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     ValueObjects
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class WsFrame implements ObjectMapper\MappedObject
 {
@@ -94,6 +77,7 @@ final readonly class WsFrame implements ObjectMapper\MappedObject
 		return $this->auth;
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		try {

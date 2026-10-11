@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * CloudWs.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\API;
 
 use Closure;
@@ -58,38 +45,33 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * CoolKit cloud WS interface
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class CloudWs
 {
 
 	use Nette\SmartObject;
 
-	private const SOCKETS_LOGIN_API_ENDPOINT = '/dispatch/app';
+	private const string SOCKETS_LOGIN_API_ENDPOINT = '/dispatch/app';
 
-	private const LOGIN_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_login.json';
+	private const string LOGIN_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_login.json';
 
-	private const HANDSHAKE_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_handshake.json';
+	private const string HANDSHAKE_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_handshake.json';
 
-	private const SYSTEM_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_system.json';
+	private const string SYSTEM_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_system.json';
 
-	private const DEVICE_UPDATE_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_device_update.json';
+	private const string DEVICE_UPDATE_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_device_update.json';
 
-	private const DEVICE_QUERY_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_device_query.json';
+	private const string DEVICE_QUERY_MESSAGE_SCHEMA_FILENAME = 'cloud_sockets_device_query.json';
 
-	private const USER_ONLINE_ACTION = 'userOnline';
+	private const string USER_ONLINE_ACTION = 'userOnline';
 
-	private const SYSTEM_MESSAGE_ACTION = 'sysmsg';
+	private const string SYSTEM_MESSAGE_ACTION = 'sysmsg';
 
-	private const UPDATE_ACTION = 'update';
+	private const string UPDATE_ACTION = 'update';
 
-	private const QUERY_ACTION = 'query';
+	private const string QUERY_ACTION = 'query';
 
-	private const WAIT_FOR_REPLY_TIMEOUT = 15.0;
+	private const float WAIT_FOR_REPLY_TIMEOUT = 15.0;
 
 	/** @var array<Closure(): void> */
 	public array $onConnected = [];

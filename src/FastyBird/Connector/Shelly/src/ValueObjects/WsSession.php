@@ -1,29 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * WsSession.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     ValueObjects
- * @since          1.0.0
- *
- * @date           11.01.23
- */
-
 namespace FastyBird\Connector\Shelly\ValueObjects;
 
 use Orisai\ObjectMapper;
 
 /**
  * Websocket session
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     ValueObjects
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class WsSession implements ObjectMapper\MappedObject
 {

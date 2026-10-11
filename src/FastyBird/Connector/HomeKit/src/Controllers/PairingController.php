@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * PairingController.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           19.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Controllers;
 
 use Brick\Math;
@@ -66,36 +53,31 @@ use function unpack;
 
 /**
  * Connector pairing process controller
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class PairingController extends BaseController
 {
 
-	private const MAX_AUTHENTICATION_ATTEMPTS = 100;
+	private const int MAX_AUTHENTICATION_ATTEMPTS = 100;
 
-	private const SRP_USERNAME = 'Pair-Setup';
+	private const string SRP_USERNAME = 'Pair-Setup';
 
-	private const SALT_ENCRYPT = 'Pair-Setup-Encrypt-Salt';
+	private const string SALT_ENCRYPT = 'Pair-Setup-Encrypt-Salt';
 
-	private const INFO_ENCRYPT = 'Pair-Setup-Encrypt-Info';
+	private const string INFO_ENCRYPT = 'Pair-Setup-Encrypt-Info';
 
-	private const SALT_CONTROLLER = 'Pair-Setup-Controller-Sign-Salt';
+	private const string SALT_CONTROLLER = 'Pair-Setup-Controller-Sign-Salt';
 
-	private const INFO_CONTROLLER = 'Pair-Setup-Controller-Sign-Info';
+	private const string INFO_CONTROLLER = 'Pair-Setup-Controller-Sign-Info';
 
-	private const SALT_ACCESSORY = 'Pair-Setup-Accessory-Sign-Salt';
+	private const string SALT_ACCESSORY = 'Pair-Setup-Accessory-Sign-Salt';
 
-	private const INFO_ACCESSORY = 'Pair-Setup-Accessory-Sign-Info';
+	private const string INFO_ACCESSORY = 'Pair-Setup-Accessory-Sign-Info';
 
-	private const SALT_VERIFY = 'Pair-Verify-Encrypt-Salt';
+	private const string SALT_VERIFY = 'Pair-Verify-Encrypt-Salt';
 
-	private const INFO_VERIFY = 'Pair-Verify-Encrypt-Info';
+	private const string INFO_VERIFY = 'Pair-Verify-Encrypt-Info';
 
-	private const NONCE_SETUP_M5
+	private const array NONCE_SETUP_M5
 		= [
 			0, // 0
 			0, // 0
@@ -111,7 +93,7 @@ final class PairingController extends BaseController
 			53, // 5
 		];
 
-	private const NONCE_SETUP_M6
+	private const array NONCE_SETUP_M6
 		= [
 			0, // 0
 			0, // 0
@@ -127,7 +109,7 @@ final class PairingController extends BaseController
 			54, // 6
 		];
 
-	private const NONCE_VERIFY_M2
+	private const array NONCE_VERIFY_M2
 		= [
 			0, // 0
 			0, // 0
@@ -143,7 +125,7 @@ final class PairingController extends BaseController
 			50, // 2
 		];
 
-	private const NONCE_VERIFY_M3
+	private const array NONCE_VERIFY_M3
 		= [
 			0, // 0
 			0, // 0

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Discovery.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           27.08.22
- */
-
 namespace FastyBird\Connector\Tuya\Clients;
 
 use FastyBird\Connector\Tuya;
@@ -65,27 +52,22 @@ use const OPENSSL_RAW_DATA;
 
 /**
  * Devices discovery client
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Discovery
 {
 
 	use Nette\SmartObject;
 
-	private const UDP_BIND_IP = '0.0.0.0';
+	private const string UDP_BIND_IP = '0.0.0.0';
 
-	private const UDP_PORT = [
+	private const array UDP_PORT = [
 		TuyaTypes\DeviceProtocolVersion::V31->value => 6_666,
 		TuyaTypes\DeviceProtocolVersion::V32_PLUS->value => 6_667,
 	];
 
-	private const UDP_TIMEOUT = 5;
+	private const int UDP_TIMEOUT = 5;
 
-	private const GATEWAY_CATEGORIES = [
+	private const array GATEWAY_CATEGORIES = [
 		'bywg',
 		'zigbee',
 		'wg2',

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Event.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Writers
- * @since          1.0.0
- *
- * @date           12.07.23
- */
-
 namespace FastyBird\Connector\NsPanel\Writers;
 
 use FastyBird\Connector\NsPanel\Documents;
@@ -23,22 +10,19 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
+use Override;
 use Symfony\Component\EventDispatcher;
 use Throwable;
 
 /**
  * Event based properties writer
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Writers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberInterface
 {
 
-	public const NAME = 'event';
+	public const string NAME = 'event';
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [
@@ -47,11 +31,13 @@ class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberI
 		];
 	}
 
+	#[Override]
 	public function connect(): void
 	{
 		// Nothing to do here
 	}
 
+	#[Override]
 	public function disconnect(): void
 	{
 		// Nothing to do here

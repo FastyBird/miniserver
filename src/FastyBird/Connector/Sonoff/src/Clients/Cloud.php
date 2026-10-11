@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Cloud.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Clients;
 
 use FastyBird\Connector\Sonoff;
@@ -31,6 +18,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use InvalidArgumentException;
+use Override;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher;
 use React\EventLoop;
@@ -43,11 +31,6 @@ use function React\Async\async;
 
 /**
  * Cloud client
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Cloud extends ClientProcess implements Client
 {
@@ -86,6 +69,7 @@ final class Cloud extends ClientProcess implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function connect(): void
 	{
 		if (!$this->autoMode) {
@@ -229,6 +213,7 @@ final class Cloud extends ClientProcess implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function disconnect(): void
 	{
 		$this->connectionManager->getCloudWsConnection($this->connector)->disconnect();

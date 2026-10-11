@@ -1,37 +1,20 @@
 <?php declare(strict_types = 1);
 
-/**
- * SwitchPulse.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           21.09.23
- */
-
 namespace FastyBird\Connector\Sonoff\API\Messages\Response\Lan;
 
 use FastyBird\Connector\Sonoff\API;
 use Orisai\ObjectMapper;
+use Override;
 
 /**
  * Switch pulse configuration entity
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class SwitchPulse implements API\Messages\Message
 {
 
-	private const VALUE_ON = 'on';
+	private const string VALUE_ON = 'on';
 
-	private const VALUE_OFF = 'off';
+	private const string VALUE_OFF = 'off';
 
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_ON, self::VALUE_OFF])]
@@ -69,6 +52,7 @@ final class SwitchPulse implements API\Messages\Message
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

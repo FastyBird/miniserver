@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * OpenPulsar.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           25.08.22
- */
-
 namespace FastyBird\Connector\Tuya\API;
 
 use Closure;
@@ -50,24 +37,19 @@ use const OPENSSL_RAW_DATA;
 
 /**
  * OpenPulsar interface
- *
- * @package        FastyBird:TuyaConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class OpenPulsar
 {
 
 	use Nette\SmartObject;
 
-	private const PING_INTERVAL = 30;
+	private const int PING_INTERVAL = 30;
 
-	public const WS_MESSAGE_SCHEMA_FILENAME = 'openpulsar_message.json';
+	public const string WS_MESSAGE_SCHEMA_FILENAME = 'openpulsar_message.json';
 
-	public const WS_MESSAGE_PAYLOAD_SCHEMA_FILENAME = 'openpulsar_payload.json';
+	public const string WS_MESSAGE_PAYLOAD_SCHEMA_FILENAME = 'openpulsar_payload.json';
 
-	public const WS_MESSAGE_PAYLOAD_DATA_SCHEMA_FILENAME = 'openpulsar_data.json';
+	public const string WS_MESSAGE_PAYLOAD_DATA_SCHEMA_FILENAME = 'openpulsar_data.json';
 
 	/** @var array<Closure(): void> */
 	public array $onConnected = [];

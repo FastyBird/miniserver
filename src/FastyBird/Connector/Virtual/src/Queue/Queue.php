@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Queue.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           17.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Queue;
 
 use FastyBird\Connector\Virtual;
@@ -22,11 +9,6 @@ use SplQueue;
 
 /**
  * Clients message consumer proxy
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Queue
 {

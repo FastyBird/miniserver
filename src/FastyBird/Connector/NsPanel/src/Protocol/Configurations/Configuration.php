@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Configuration.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           05.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Protocol\Configurations;
 
 use FastyBird\Connector\NsPanel\Exceptions;
@@ -32,11 +19,6 @@ use function is_array;
  * or capability unit. Configuration rows are contained in capabilities.
  * Each configuration has a unique identifier and a set of properties,
  * like format, min and max values, valid values and others.
- *
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Configuration
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StoreBridgeEvent.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           01.01.24
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Consumers;
 
 use FastyBird\Connector\Zigbee2Mqtt;
@@ -25,15 +12,11 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
+use Override;
 use function sprintf;
 
 /**
  * Store bridge event message consumer
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StoreBridgeEvent implements Queue\Consumer
 {
@@ -52,6 +35,7 @@ final class StoreBridgeEvent implements Queue\Consumer
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws Zigbee2MqttExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function consume(Queue\Messages\Message $message): bool
 	{
 		if (!$message instanceof Queue\Messages\StoreBridgeEvent) {

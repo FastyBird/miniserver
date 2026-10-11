@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ModbusExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           30.01.22
- */
-
 namespace FastyBird\Connector\Modbus\DI;
 
 use Contributte\Translation;
@@ -37,22 +24,18 @@ use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\Fixtures as NettrineFixtures;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * Modbus connector
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ModbusExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbModbusConnector';
+	public const string NAME = 'fbModbusConnector';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -345,6 +328,7 @@ class ModbusExtension extends NetteDI\CompilerExtension implements Translation\D
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

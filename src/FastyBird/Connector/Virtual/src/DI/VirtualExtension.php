@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * VirtualExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Connector\Virtual\DI;
 
 use Contributte\Translation;
@@ -36,6 +23,7 @@ use FastyBird\Module\Devices\DI as DevicesDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use function assert;
@@ -43,16 +31,11 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Virtual connector
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class VirtualExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbVirtualConnector';
+	public const string NAME = 'fbVirtualConnector';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -324,6 +307,7 @@ class VirtualExtension extends NetteDI\CompilerExtension implements Translation\
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

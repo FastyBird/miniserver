@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * NumericType.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- * @since          1.0.0
- *
- * @date           24.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Queue\Messages\Exposes;
 
 use FastyBird\Connector\Zigbee2Mqtt\Types as Zigbee2MqttTypes;
@@ -21,17 +8,13 @@ use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Utilities;
 use Orisai\ObjectMapper;
+use Override;
 use TypeError;
 use ValueError;
 use function array_merge;
 
 /**
  * Numeric type expose type message
- *
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Queue
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class NumericType extends Type
 {
@@ -86,6 +69,7 @@ final class NumericType extends Type
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getDataType(): ValuesTypes\DataType
 	{
 		return Utilities\DataType::inferNumberDataType(
@@ -113,6 +97,7 @@ final class NumericType extends Type
 		return $this->valueStep;
 	}
 
+	#[Override]
 	public function getFormat(): array|null
 	{
 		if ($this->getValueMin() !== null || $this->getValueMax() !== null) {
@@ -122,11 +107,13 @@ final class NumericType extends Type
 		return parent::getFormat();
 	}
 
+	#[Override]
 	public function getUnit(): string|null
 	{
 		return $this->unit;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

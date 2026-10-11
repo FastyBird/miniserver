@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TuyaConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           25.04.22
- */
-
 namespace FastyBird\Connector\Tuya\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,6 +11,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use TypeError;
 use ValueError;
 use function is_string;
@@ -33,13 +21,14 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'tuya-connector';
+	public const string TYPE = 'tuya-connector';
 
 	public static function getType(): string
 	{
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::TUYA;
@@ -48,6 +37,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	/**
 	 * @return array<TuyaEntities\Devices\Device>
 	 */
+	#[Override]
 	public function getDevices(): array
 	{
 		$devices = [];
@@ -64,6 +54,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	/**
 	 * @throws TuyaExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
 		if (!$device instanceof TuyaEntities\Devices\Device) {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:FbMqttConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           05.02.22
- */
-
 namespace FastyBird\Connector\FbMqtt\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -21,6 +8,7 @@ use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 use function assert;
 
@@ -29,7 +17,7 @@ use function assert;
 class Device extends DevicesEntities\Devices\Device
 {
 
-	public const TYPE = 'fb-mqtt-connector';
+	public const string TYPE = 'fb-mqtt-connector';
 
 	public function __construct(
 		string $identifier,
@@ -46,11 +34,13 @@ class Device extends DevicesEntities\Devices\Device
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::FB_MQTT;
 	}
 
+	#[Override]
 	public function getConnector(): FbMqttEntities\Connectors\Connector
 	{
 		assert($this->connector instanceof FbMqttEntities\Connectors\Connector);
@@ -61,6 +51,7 @@ class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @return array<FbMqttEntities\Channels\Channel>
 	 */
+	#[Override]
 	public function getChannels(): array
 	{
 		$channels = [];
@@ -77,6 +68,7 @@ class Device extends DevicesEntities\Devices\Device
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addChannel(DevicesEntities\Channels\Channel $channel): void
 	{
 		if (!$channel instanceof FbMqttEntities\Channels\Channel) {

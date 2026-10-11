@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Thermostat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:NsPanelConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           16.10.24
- */
-
 namespace FastyBird\Connector\NsPanel\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -26,7 +13,7 @@ use Ramsey\Uuid;
 class Thermostat extends Channel
 {
 
-	public const TYPE = 'ns-panel-connector-thermostat';
+	public const string TYPE = 'ns-panel-connector-thermostat';
 
 	/**
 	 * Redeclared without #[Crud]: the constructor fixes the identifier to the capability value, so

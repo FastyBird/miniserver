@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ClientProcess.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Clients
- * @since          1.0.0
- *
- * @date           06.05.23
- */
-
 namespace FastyBird\Connector\Sonoff\Clients;
 
 use DateTimeInterface;
@@ -36,24 +23,19 @@ use function React\Async\async;
 
 /**
  * Client process methods
- *
- * @package        FastyBird:SonoffConnector!
- * @subpackage     Clients
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class ClientProcess
 {
 
 	use Nette\SmartObject;
 
-	protected const HANDLER_START_DELAY = 2.0;
+	protected const float HANDLER_START_DELAY = 2.0;
 
-	protected const HANDLER_PROCESSING_INTERVAL = 0.01;
+	protected const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	protected const CMD_STATE = 'state';
+	protected const string CMD_STATE = 'state';
 
-	protected const CMD_HEARTBEAT = 'heartbeat';
+	protected const string CMD_HEARTBEAT = 'heartbeat';
 
 	/** @var array<string, Documents\Devices\Device>  */
 	protected array $devices = [];

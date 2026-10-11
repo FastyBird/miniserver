@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Transformer.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           02.08.22
- */
-
 namespace FastyBird\Connector\Modbus\API;
 
 use DateTimeInterface;
@@ -46,11 +33,6 @@ use function unpack;
 
 /**
  * Value transformers
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Transformer
 {

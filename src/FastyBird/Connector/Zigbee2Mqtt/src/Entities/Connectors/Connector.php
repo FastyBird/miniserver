@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:Zigbee2MqttConnector!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           23.12.23
- */
-
 namespace FastyBird\Connector\Zigbee2Mqtt\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,6 +11,7 @@ use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use TypeError;
 use ValueError;
 use function is_int;
@@ -34,19 +22,20 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
-	public const TYPE = 'zigbee2mqtt-connector';
+	public const string TYPE = 'zigbee2mqtt-connector';
 
-	public const DEFAULT_SERVER_ADDRESS = '127.0.0.1';
+	public const string DEFAULT_SERVER_ADDRESS = '127.0.0.1';
 
-	public const DEFAULT_SERVER_PORT = 1_883;
+	public const int DEFAULT_SERVER_PORT = 1_883;
 
-	public const DEFAULT_SERVER_SECURED_PORT = 8_883;
+	public const int DEFAULT_SERVER_SECURED_PORT = 8_883;
 
 	public static function getType(): string
 	{
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Connector
 	{
 		return Sources\Connector::ZIGBEE2MQTT;
@@ -55,6 +44,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	/**
 	 * @return array<Zigbee2MqttEntities\Devices\Device>
 	 */
+	#[Override]
 	public function getDevices(): array
 	{
 		$devices = [];
@@ -71,6 +61,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	/**
 	 * @throws Zigbee2MqttExceptions\InvalidArgument
 	 */
+	#[Override]
 	public function addDevice(DevicesEntities\Devices\Device $device): void
 	{
 		if (!$device instanceof Zigbee2MqttEntities\Devices\Device) {

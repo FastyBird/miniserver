@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SecureConnection.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- * @since          1.0.0
- *
- * @date           26.09.22
- */
-
 namespace FastyBird\Connector\HomeKit\Servers;
 
 use Evenement;
@@ -21,6 +8,7 @@ use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use Nette;
+use Override;
 use React\Socket;
 use React\Stream;
 use SodiumException;
@@ -40,28 +28,23 @@ use function unpack;
 
 /**
  * HTTP secured server connection wrapper
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Servers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class SecureConnection extends Evenement\EventEmitter implements Socket\ConnectionInterface
 {
 
 	use Nette\SmartObject;
 
-	private const ENCRYPTED_DATA_LENGTH = 2;
+	private const int ENCRYPTED_DATA_LENGTH = 2;
 
-	private const AUTH_TAG_LENGTH = 16;
+	private const int AUTH_TAG_LENGTH = 16;
 
-	private const SALT_CONTROL = 'Control-Salt';
+	private const string SALT_CONTROL = 'Control-Salt';
 
-	private const INFO_CONTROL_WRITE = 'Control-Write-Encryption-Key';
+	private const string INFO_CONTROL_WRITE = 'Control-Write-Encryption-Key';
 
-	private const INFO_CONTROL_READ = 'Control-Read-Encryption-Key';
+	private const string INFO_CONTROL_READ = 'Control-Read-Encryption-Key';
 
-	private const ENCRYPTED_CHUNK_MAX_SIZE = 1_024;
+	private const int ENCRYPTED_CHUNK_MAX_SIZE = 1_024;
 
 	private int $securedRequestCnt = 0;
 
@@ -118,26 +101,31 @@ final class SecureConnection extends Evenement\EventEmitter implements Socket\Co
 		}
 	}
 
+	#[Override]
 	public function getLocalAddress(): string|null
 	{
 		return $this->connection->getLocalAddress();
 	}
 
+	#[Override]
 	public function getRemoteAddress(): string|null
 	{
 		return $this->connection->getRemoteAddress();
 	}
 
+	#[Override]
 	public function isReadable(): bool
 	{
 		return $this->connection->isReadable();
 	}
 
+	#[Override]
 	public function isWritable(): bool
 	{
 		return $this->connection->isWritable();
 	}
 
+	#[Override]
 	public function write($data): bool
 	{
 		if (is_string($data) && $this->securedRequest) {
@@ -155,21 +143,25 @@ final class SecureConnection extends Evenement\EventEmitter implements Socket\Co
 		}
 	}
 
+	#[Override]
 	public function pause(): void
 	{
 		$this->connection->pause();
 	}
 
+	#[Override]
 	public function resume(): void
 	{
 		$this->connection->resume();
 	}
 
+	#[Override]
 	public function end($data = null): void
 	{
 		$this->connection->end($data);
 	}
 
+	#[Override]
 	public function close(): void
 	{
 		$this->connection->close();
@@ -178,6 +170,7 @@ final class SecureConnection extends Evenement\EventEmitter implements Socket\Co
 	/**
 	 * @param array<mixed> $options
 	 */
+	#[Override]
 	public function pipe(Stream\WritableStreamInterface $dest, array $options = []): Stream\WritableStreamInterface
 	{
 		return $this->connection->pipe($dest, $options);

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Request.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- * @since          1.0.0
- *
- * @date           23.08.23
- */
-
 namespace FastyBird\Connector\Shelly\API;
 
 use FastyBird\Connector\Shelly\Exceptions;
@@ -22,11 +9,6 @@ use RuntimeException;
 
 /**
  * HTTP request
- *
- * @package        FastyBird:ShellyConnector!
- * @subpackage     API
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Request extends Psr7\Request
 {

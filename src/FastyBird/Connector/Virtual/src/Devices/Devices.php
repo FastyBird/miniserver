@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Devices.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Devices
- * @since          1.0.0
- *
- * @date           16.10.23
- */
-
 namespace FastyBird\Connector\Virtual\Devices;
 
 use DateTimeInterface;
@@ -43,22 +30,17 @@ use function React\Async\async;
 
 /**
  * Devices service
- *
- * @package        FastyBird:VirtualConnector!
- * @subpackage     Devices
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Devices
 {
 
 	use Nette\SmartObject;
 
-	private const HANDLER_START_DELAY = 2.0;
+	private const float HANDLER_START_DELAY = 2.0;
 
-	private const HANDLER_PROCESSING_INTERVAL = 0.01;
+	private const float HANDLER_PROCESSING_INTERVAL = 0.01;
 
-	private const RECONNECT_COOL_DOWN_TIME = 300.0;
+	private const float RECONNECT_COOL_DOWN_TIME = 300.0;
 
 	/** @var array<string, Documents\Devices\Device>  */
 	private array $devices = [];

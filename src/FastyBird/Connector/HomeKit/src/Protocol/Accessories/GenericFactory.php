@@ -1,35 +1,19 @@
 <?php declare(strict_types = 1);
 
-/**
- * GenericFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           29.01.24
- */
-
 namespace FastyBird\Connector\HomeKit\Protocol\Accessories;
 
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Entities;
 use FastyBird\Connector\HomeKit\Types;
+use Override;
 
 /**
  * HAP generic accessory factory
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class GenericFactory implements AccessoryFactory
 {
 
+	#[Override]
 	public function create(
 		string $name,
 		int|null $aid,
@@ -40,6 +24,7 @@ class GenericFactory implements AccessoryFactory
 		return new Generic($name, $aid, $category, $device);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\Device::class;

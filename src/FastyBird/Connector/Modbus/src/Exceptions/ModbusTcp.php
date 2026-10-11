@@ -1,21 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * ModbusTcp.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Exceptions
- * @since          1.0.0
- *
- * @date           03.02.23
- */
-
 namespace FastyBird\Connector\Modbus\Exceptions;
 
 use Exception as PhpException;
+use Override;
 use Throwable;
 use function array_key_exists;
 use function bin2hex;
@@ -23,16 +11,11 @@ use function sprintf;
 
 /**
  * Modbus TCP communication exception
- *
- * @package        FastyBird:ModbusConnector!
- * @subpackage     Exceptions
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ModbusTcp extends PhpException implements Exception
 {
 
-	public const EXCEPTION_CODES = [
+	public const array EXCEPTION_CODES = [
 		0x00 => 'Undefined failure code',
 		0x01 => 'Illegal function',
 		0x02 => 'Illegal data address',
@@ -79,6 +62,7 @@ class ModbusTcp extends PhpException implements Exception
 		return $this->response;
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		$output = '';
