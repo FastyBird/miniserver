@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelPropertyAction.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Automator\DevicesModule\Schemas\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
@@ -29,10 +16,6 @@ use function array_merge;
  * Trigger channel state action entity schema
  *
  * @extends TriggersSchemas\Actions\Action<Entities\Actions\ChannelPropertyAction>
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ChannelPropertyAction extends TriggersSchemas\Actions\Action
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DateCondition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Automator\DateTime\Documents\Conditions;
 
 use DateTimeInterface;
@@ -25,11 +12,6 @@ use function array_merge;
 
 /**
  * Date condition document
- *
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Conditions\DateCondition::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Conditions\DateCondition::TYPE)]

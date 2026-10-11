@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ActionEntity.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           05.04.20
- */
-
 namespace FastyBird\Automator\DevicesModule\Subscribers;
 
 use Doctrine\Common;
@@ -24,11 +11,6 @@ use function array_merge;
 
 /**
  * Trigger action entity listener
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ActionEntity implements Common\EventSubscriber
 {

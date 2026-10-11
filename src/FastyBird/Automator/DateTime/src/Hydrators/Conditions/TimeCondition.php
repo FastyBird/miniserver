@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TimeCondition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Automator\DateTime\Hydrators\Conditions;
 
 use DateTimeInterface;
@@ -31,10 +18,6 @@ use function strval;
  * Time condition entity hydrator
  *
  * @extends TriggersHydrators\Conditions\Condition<Entities\Conditions\TimeCondition>
- *
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class TimeCondition extends TriggersHydrators\Conditions\Condition
 {

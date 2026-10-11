@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelPropertyAction.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Automator\DevicesModule\Documents\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
@@ -25,11 +12,6 @@ use function array_merge;
 
 /**
  * Device channel property action document
- *
- * @package        FastyBird:DevicesModuleAutomator!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Actions\ChannelPropertyAction::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Actions\ChannelPropertyAction::TYPE)]

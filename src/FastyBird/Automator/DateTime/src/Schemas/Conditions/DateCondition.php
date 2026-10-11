@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DateCondition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Automator\DateTime\Schemas\Conditions;
 
 use DateTimeInterface;
@@ -26,10 +13,6 @@ use function array_merge;
  * Date condition entity schema
  *
  * @extends TriggersSchemas\Conditions\Condition<Entities\Conditions\DateCondition>
- *
- * @package        FastyBird:DateTimeAutomator!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DateCondition extends TriggersSchemas\Conditions\Condition
 {
