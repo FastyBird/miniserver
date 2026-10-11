@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindAccounts.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Queries\Entities;
 
 use Closure;
@@ -28,10 +15,6 @@ use function in_array;
  * Find accounts entities query
  *
  * @extends  Query\QueryObject<Entities\Accounts\Account>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindAccounts extends Query\QueryObject
 {

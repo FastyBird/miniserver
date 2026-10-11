@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           16.04.21
- */
-
 namespace FastyBird\Module\Devices\Hydrators\Connectors;
 
 use FastyBird\Core\Api\Encoding\Objects;
@@ -26,10 +13,6 @@ use function is_scalar;
  *
  * @template  T of Entities\Connectors\Connector
  * @extends   Hydrators\Hydrator<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Connector extends Hydrators\Hydrator
 {

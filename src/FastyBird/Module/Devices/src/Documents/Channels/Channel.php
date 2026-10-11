@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Channel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           04.06.22
- */
-
 namespace FastyBird\Module\Devices\Documents\Channels;
 
 use DateTimeInterface;
@@ -24,16 +11,12 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
 /**
  * Channel document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Channels\Channel::class)]
 #[CoreDocuments\Mapping\InheritanceType('SINGLE_TABLE')]
@@ -107,6 +90,7 @@ abstract class Channel implements DevicesDocuments\Document, CoreDocuments\Owner
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -155,6 +139,7 @@ abstract class Channel implements DevicesDocuments\Document, CoreDocuments\Owner
 		return $this->controls;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -180,6 +165,7 @@ abstract class Channel implements DevicesDocuments\Document, CoreDocuments\Owner
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;

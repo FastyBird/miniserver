@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Action.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           31.05.22
- */
-
 namespace FastyBird\Module\Ui\Documents\Widgets\DataSources\Actions;
 
 use FastyBird\Core\Documents as CoreDocuments;
@@ -22,15 +9,11 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * Channel control action document
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
@@ -60,6 +43,7 @@ final readonly class Action implements UiDocuments\Document
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->dataSource;
@@ -85,6 +69,7 @@ final readonly class Action implements UiDocuments\Document
 		return $this->expectedValue;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -97,6 +82,7 @@ final readonly class Action implements UiDocuments\Document
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;

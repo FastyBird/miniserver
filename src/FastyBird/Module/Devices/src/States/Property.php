@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     States
- * @since          1.0.0
- *
- * @date           03.03.20
- */
-
 namespace FastyBird\Module\Devices\States;
 
 use DateTimeInterface;
@@ -22,26 +9,21 @@ use Ramsey\Uuid;
 
 /**
  * Property interface
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     States
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 interface Property extends ObjectMapper\MappedObject
 {
 
-	public const ACTUAL_VALUE_FIELD = 'actual_value';
+	public const string ACTUAL_VALUE_FIELD = 'actual_value';
 
-	public const EXPECTED_VALUE_FIELD = 'expected_value';
+	public const string EXPECTED_VALUE_FIELD = 'expected_value';
 
-	public const PENDING_FIELD = 'pending';
+	public const string PENDING_FIELD = 'pending';
 
-	public const VALID_FIELD = 'valid';
+	public const string VALID_FIELD = 'valid';
 
-	public const CREATED_AT = 'created_at';
+	public const string CREATED_AT = 'created_at';
 
-	public const UPDATED_AT = 'updated_at';
+	public const string UPDATED_AT = 'updated_at';
 
 	public function getId(): Uuid\UuidInterface;
 

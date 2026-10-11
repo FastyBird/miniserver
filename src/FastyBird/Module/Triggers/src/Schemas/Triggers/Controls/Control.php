@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Control.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           01.10.21
- */
-
 namespace FastyBird\Module\Triggers\Schemas\Triggers\Controls;
 
 use FastyBird\Core\Api\Schemas as ApiSchemas;
@@ -23,16 +10,13 @@ use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Router;
 use Neomerx\JsonApi;
+use Override;
 
 /**
  * Trigger control entity schema
  *
  * @template T of Entities\Triggers\Controls\Control
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Control extends ApiSchemas\JsonApiSchema
 {
@@ -40,12 +24,12 @@ final class Control extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/control/trigger';
+	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/control/trigger';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_TRIGGER = 'trigger';
+	public const string RELATIONSHIPS_TRIGGER = 'trigger';
 
 	public function __construct(private readonly Routing\Router $router)
 	{
@@ -56,6 +40,7 @@ final class Control extends ApiSchemas\JsonApiSchema
 		return Entities\Triggers\Controls\Control::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -66,6 +51,7 @@ final class Control extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -82,6 +68,7 @@ final class Control extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		return new JsonApi\Schema\Link(
@@ -102,6 +89,7 @@ final class Control extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -122,6 +110,7 @@ final class Control extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,

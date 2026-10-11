@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           17.01.21
- */
-
 namespace FastyBird\Module\Devices\Schemas\Connectors;
 
 use DateTimeInterface;
@@ -23,6 +10,7 @@ use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;
 use Neomerx\JsonApi;
+use Override;
 use function count;
 
 /**
@@ -30,10 +18,6 @@ use function count;
  *
  * @template T of Entities\Connectors\Connector
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Connector extends ApiSchemas\JsonApiSchema
 {
@@ -41,11 +25,11 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_DEVICES = 'devices';
+	public const string RELATIONSHIPS_DEVICES = 'devices';
 
-	public const RELATIONSHIPS_PROPERTIES = 'properties';
+	public const string RELATIONSHIPS_PROPERTIES = 'properties';
 
-	public const RELATIONSHIPS_CONTROLS = 'controls';
+	public const string RELATIONSHIPS_CONTROLS = 'controls';
 
 	public function __construct(private readonly Routing\Router $router)
 	{
@@ -58,6 +42,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -84,6 +69,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		return new JsonApi\Schema\Link(
@@ -105,6 +91,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -137,6 +124,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -197,6 +185,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

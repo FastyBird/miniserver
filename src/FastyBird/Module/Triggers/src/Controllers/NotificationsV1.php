@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * NotificationsV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Controllers;
 
 use Doctrine;
@@ -33,6 +20,7 @@ use FastyBird\Module\Triggers\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use Throwable;
@@ -45,11 +33,6 @@ use function strval;
 
 /**
  * Triggers notifications controller
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */
@@ -436,6 +419,7 @@ final class NotificationsV1 extends BaseV1
 	 * @throws TriggersExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

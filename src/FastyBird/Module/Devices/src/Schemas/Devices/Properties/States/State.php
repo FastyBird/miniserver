@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * State.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           24.01.24
- */
-
 namespace FastyBird\Module\Devices\Schemas\Devices\Properties\States;
 
 use DateTimeInterface;
@@ -28,6 +15,7 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Router;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;
+use Override;
 use function assert;
 use function is_bool;
 
@@ -36,10 +24,6 @@ use function is_bool;
  *
  * @template T of Documents\States\Devices\Properties\Property
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class State extends ApiSchemas\JsonApiSchema
 {
@@ -47,12 +31,12 @@ final class State extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/device/' . Types\PropertyType::DYNAMIC->value . '/state';
+	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/device/' . Types\PropertyType::DYNAMIC->value . '/state';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_PROPERTY = 'property';
+	public const string RELATIONSHIPS_PROPERTY = 'property';
 
 	public function __construct(
 		private readonly Routing\Router $router,
@@ -66,6 +50,7 @@ final class State extends ApiSchemas\JsonApiSchema
 		return Documents\States\Devices\Properties\Property::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -80,6 +65,7 @@ final class State extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -110,6 +96,7 @@ final class State extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		$property = $this->devicesPropertiesRepository->find($resource->getId());
@@ -137,6 +124,7 @@ final class State extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -163,6 +151,7 @@ final class State extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,

@@ -1,24 +1,12 @@
 <?php declare(strict_types = 1);
 
-/**
- * Details.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Entities\Details;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -122,6 +110,7 @@ class Details implements AccountsEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -131,6 +120,7 @@ class Details implements AccountsEntities\Entity,
 		];
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->firstName . ' ' . $this->lastName;

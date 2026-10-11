@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           27.11.23
- */
-
 namespace FastyBird\Module\Devices\Documents\Channels\Properties;
 
 use DateTimeInterface;
@@ -25,6 +12,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -32,11 +20,6 @@ use function array_merge;
 
 /**
  * Channel property document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Channels\Properties\Property::class)]
 #[CoreDocuments\Mapping\InheritanceType('SINGLE_TABLE')]
@@ -110,6 +93,7 @@ abstract class Property extends DevicesDocuments\Property
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

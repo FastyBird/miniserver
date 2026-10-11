@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Condition.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Schemas\Conditions;
 
 use FastyBird\Core\Api\Schemas as ApiSchemas;
@@ -24,16 +11,13 @@ use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Router;
 use Neomerx\JsonApi;
+use Override;
 
 /**
  * Condition entity schema
  *
  * @template T of Entities\Conditions\Condition
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Condition extends ApiSchemas\JsonApiSchema
 {
@@ -41,7 +25,7 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_TRIGGER = 'trigger';
+	public const string RELATIONSHIPS_TRIGGER = 'trigger';
 
 	public function __construct(
 		protected readonly Routing\Router $router,
@@ -57,6 +41,7 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -83,6 +68,7 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		return new JsonApi\Schema\Link(
@@ -105,6 +91,7 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -127,6 +114,7 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -156,6 +144,7 @@ abstract class Condition extends ApiSchemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

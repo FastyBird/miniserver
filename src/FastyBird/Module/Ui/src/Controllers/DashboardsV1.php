@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DashboardsController.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Controllers;
 
 use Doctrine;
@@ -32,6 +19,7 @@ use FastyBird\Module\Ui\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Throwable;
 use function end;
@@ -42,11 +30,6 @@ use function strval;
 
 /**
  * API dashboards controller
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */
@@ -378,6 +361,7 @@ final class DashboardsV1 extends BaseV1
 	 * @throws PersistenceExceptions\Query
 	 * @throws ApiExceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

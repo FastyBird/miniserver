@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           23.01.24
- */
-
 namespace FastyBird\Module\Devices\Documents\States\Channels\Properties;
 
 use DateTimeInterface;
@@ -20,16 +7,12 @@ use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
 /**
  * Channel property state document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
@@ -61,6 +44,7 @@ final class Property extends Devices\Documents\States\Property
 		return $this->channel;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(

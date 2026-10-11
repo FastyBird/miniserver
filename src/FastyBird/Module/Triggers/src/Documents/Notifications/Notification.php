@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Notification.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Module\Triggers\Documents\Notifications;
 
 use FastyBird\Core\Documents;
@@ -20,15 +7,11 @@ use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * Notification document
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Notifications\Notification::class)]
 #[Documents\Mapping\InheritanceType('SINGLE_TABLE')]
@@ -83,6 +66,7 @@ abstract class Notification implements Documents\Document, Documents\Owner
 		return $this->enabled;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

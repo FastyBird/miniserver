@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ModuleEntities.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           22.03.20
- */
-
 namespace FastyBird\Module\Devices\Subscribers;
 
 use Doctrine\Common;
@@ -30,6 +17,7 @@ use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use Nette;
 use Nette\Utils;
+use Override;
 use ReflectionClass;
 use function count;
 use function is_a;
@@ -37,22 +25,17 @@ use function str_starts_with;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ModuleEntities implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
 
-	private const ACTION_CREATED = 'created';
+	private const string ACTION_CREATED = 'created';
 
-	private const ACTION_UPDATED = 'updated';
+	private const string ACTION_UPDATED = 'updated';
 
-	private const ACTION_DELETED = 'deleted';
+	private const string ACTION_DELETED = 'deleted';
 
 	public function __construct(
 		private readonly ORM\EntityManagerInterface $entityManager,
@@ -70,6 +53,7 @@ final class ModuleEntities implements Common\EventSubscriber
 	{
 	}
 
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Email.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           01.06.22
- */
-
 namespace FastyBird\Module\Accounts\Documents\Emails;
 
 use FastyBird\Core\Documents;
@@ -21,15 +8,11 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * Email document
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Emails\Email::class)]
 #[Documents\Mapping\RoutingMap([
@@ -100,6 +83,7 @@ final readonly class Email implements Documents\Document
 		return Sources\Module::ACCOUNTS;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

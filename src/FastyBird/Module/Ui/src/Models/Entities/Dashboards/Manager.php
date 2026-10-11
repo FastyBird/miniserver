@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Manager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           25.05.20
- */
-
 namespace FastyBird\Module\Ui\Models\Entities\Dashboards;
 
 use Doctrine\DBAL;
@@ -21,7 +8,6 @@ use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Events;
-use FastyBird\Module\Ui\Models;
 use Nette;
 use Nette\Utils;
 use Psr\EventDispatcher;
@@ -30,11 +16,6 @@ use function assert;
 
 /**
  * Dashboards entities manager
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Manager
 {

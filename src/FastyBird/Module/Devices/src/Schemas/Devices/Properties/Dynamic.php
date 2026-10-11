@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Dynamic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           13.04.19
- */
-
 namespace FastyBird\Module\Devices\Schemas\Devices\Properties;
 
 use Exception;
@@ -27,9 +14,9 @@ use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Router;
-use FastyBird\Module\Devices\Schemas;
 use FastyBird\Module\Devices\Types;
 use Neomerx\JsonApi;
+use Override;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
@@ -42,10 +29,6 @@ use function count;
  *
  * @template T of Entities\Devices\Properties\Dynamic
  * @extends Property<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Dynamic extends Property
 {
@@ -53,7 +36,7 @@ final class Dynamic extends Property
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/device/' . Types\PropertyType::DYNAMIC->value;
+	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/device/' . Types\PropertyType::DYNAMIC->value;
 
 	public function __construct(
 		Routing\Router $router,
@@ -70,6 +53,7 @@ final class Dynamic extends Property
 		return Entities\Devices\Properties\Dynamic::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -89,6 +73,7 @@ final class Dynamic extends Property
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -120,6 +105,7 @@ final class Dynamic extends Property
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -147,6 +133,7 @@ final class Dynamic extends Property
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -192,6 +179,7 @@ final class Dynamic extends Property
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

@@ -28,7 +28,7 @@ use RuntimeException;
 final class ChannelPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const PROPERTY_ID = '28bc0d38-2f7c-4a71-aa74-27b102f8df4c';
+	private const string PROPERTY_ID = '28bc0d38-2f7c-4a71-aa74-27b102f8df4c';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

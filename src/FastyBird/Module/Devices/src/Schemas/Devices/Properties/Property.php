@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           13.04.19
- */
-
 namespace FastyBird\Module\Devices\Schemas\Devices\Properties;
 
 use DateTimeInterface;
@@ -29,6 +16,7 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Router;
 use Neomerx\JsonApi;
+use Override;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
 use ValueError;
@@ -39,10 +27,6 @@ use function strval;
  *
  * @template T of Entities\Devices\Properties\Property
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Property extends ApiSchemas\JsonApiSchema
 {
@@ -50,13 +34,13 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_DEVICE = 'device';
+	public const string RELATIONSHIPS_DEVICE = 'device';
 
-	public const RELATIONSHIPS_PARENT = 'parent';
+	public const string RELATIONSHIPS_PARENT = 'parent';
 
-	public const RELATIONSHIPS_CHILDREN = 'children';
+	public const string RELATIONSHIPS_CHILDREN = 'children';
 
-	public const RELATIONSHIPS_STATE = 'state';
+	public const string RELATIONSHIPS_STATE = 'state';
 
 	public function __construct(
 		protected readonly Routing\Router $router,
@@ -79,6 +63,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 * @throws InvalidArgumentException
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -112,6 +97,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		return new JsonApi\Schema\Link(
@@ -134,6 +120,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -156,6 +143,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,

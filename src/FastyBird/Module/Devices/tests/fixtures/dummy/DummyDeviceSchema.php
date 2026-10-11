@@ -11,7 +11,7 @@ final class DummyDeviceSchema extends Schemas\Devices\Device
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::DEVICES->value . '/device/' . DummyDeviceEntity::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/device/' . DummyDeviceEntity::TYPE;
 
 	public function getEntityClass(): string
 	{

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * UrlFormat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Middleware
- * @since          1.0.0
- *
- * @date           21.06.20
- */
-
 namespace FastyBird\Module\Accounts\Middleware;
 
 use FastyBird\Core\Api\Exceptions;
@@ -22,6 +9,7 @@ use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Localization;
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -33,11 +21,6 @@ use function strval;
 
 /**
  * Response url formatter
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Middleware
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class UrlFormat implements MiddlewareInterface
 {
@@ -55,6 +38,7 @@ final readonly class UrlFormat implements MiddlewareInterface
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 */
+	#[Override]
 	public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
 	{
 		$response = $handler->handle($request);

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * EmailsV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           25.06.20
- */
-
 namespace FastyBird\Module\Accounts\Controllers;
 
 use Doctrine;
@@ -34,6 +21,7 @@ use FastyBird\Module\Accounts\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Throwable;
 use function end;
@@ -45,11 +33,6 @@ use function strval;
 
 /**
  * Emails controller
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  * @Secured\Role(manager,administrator)
@@ -409,6 +392,7 @@ final class EmailsV1 extends BaseV1
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

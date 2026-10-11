@@ -1,33 +1,16 @@
 <?php declare(strict_types = 1);
 
-/**
- * Automatic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Module\Triggers\Documents\Triggers;
 
 use FastyBird\Core\Documents;
 use FastyBird\Module\Triggers\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
 /**
  * Automatic  trigger document
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Triggers\Automatic::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Triggers\Automatic::TYPE)]
@@ -58,6 +41,7 @@ final class Automatic extends Trigger
 		return $this->isFulfilled;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

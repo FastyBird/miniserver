@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Mapped.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Module\Devices\Documents\Devices\Properties;
 
 use DateTimeInterface;
@@ -27,6 +14,7 @@ use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -34,11 +22,6 @@ use function array_merge;
 
 /**
  * Device mapped property document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Devices\Properties\Mapped::class)]
 final class Mapped extends Property
@@ -152,6 +135,7 @@ final class Mapped extends Property
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

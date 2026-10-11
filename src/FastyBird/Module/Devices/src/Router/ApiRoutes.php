@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ApiRoutes.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Router
- * @since          1.0.0
- *
- * @date           13.03.20
- */
-
 namespace FastyBird\Module\Devices\Router;
 
 use FastyBird\Core\Http\Routing;
@@ -23,26 +10,21 @@ use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 
 /**
  * Module API routes configuration
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ApiRoutes
 {
 
-	public const URL_ITEM_ID = 'id';
+	public const string URL_ITEM_ID = 'id';
 
-	public const URL_DEVICE_ID = 'device';
+	public const string URL_DEVICE_ID = 'device';
 
-	public const URL_CHANNEL_ID = 'channel';
+	public const string URL_CHANNEL_ID = 'channel';
 
-	public const URL_CONNECTOR_ID = 'connector';
+	public const string URL_CONNECTOR_ID = 'connector';
 
-	public const URL_PROPERTY_ID = 'property';
+	public const string URL_PROPERTY_ID = 'property';
 
-	public const RELATION_ENTITY = 'relationEntity';
+	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
 		private readonly bool $usePrefix,

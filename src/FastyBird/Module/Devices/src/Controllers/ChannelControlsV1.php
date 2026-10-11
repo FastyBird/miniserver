@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelControlsV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           04.06.19
- */
-
 namespace FastyBird\Module\Devices\Controllers;
 
 use Exception;
@@ -24,17 +11,13 @@ use FastyBird\Module\Devices\Router;
 use FastyBird\Module\Devices\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use function strval;
 
 /**
  * Device channel controls API controller
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */
@@ -122,6 +105,7 @@ final class ChannelControlsV1 extends BaseV1
 	 * @throws Exception
 	 * @throws Exceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,

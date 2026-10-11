@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Account.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           19.08.20
- */
-
 namespace FastyBird\Module\Accounts\Schemas\Accounts;
 
 use DateTimeInterface;
@@ -28,6 +15,7 @@ use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Router;
 use Neomerx\JsonApi;
+use Override;
 use function count;
 use function intval;
 use function strval;
@@ -37,10 +25,6 @@ use function strval;
  *
  * @template T of Entities\Accounts\Account
  * @extends Schemas\JsonApiSchema<T>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Account extends Schemas\JsonApiSchema
 {
@@ -48,16 +32,16 @@ final class Account extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/account';
+	public const string SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/account';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_IDENTITIES = 'identities';
+	public const string RELATIONSHIPS_IDENTITIES = 'identities';
 
-	public const RELATIONSHIPS_ROLES = 'roles';
+	public const string RELATIONSHIPS_ROLES = 'roles';
 
-	public const RELATIONSHIPS_EMAILS = 'emails';
+	public const string RELATIONSHIPS_EMAILS = 'emails';
 
 	public function __construct(
 		protected readonly Routing\Router $router,
@@ -72,6 +56,7 @@ final class Account extends Schemas\JsonApiSchema
 		return Entities\Accounts\Account::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -84,6 +69,7 @@ final class Account extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -122,6 +108,7 @@ final class Account extends Schemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		return new JsonApi\Schema\Link(
@@ -146,6 +133,7 @@ final class Account extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -178,6 +166,7 @@ final class Account extends Schemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -224,6 +213,7 @@ final class Account extends Schemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Dynamic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           04.01.22
- */
-
 namespace FastyBird\Module\Devices\Entities\Devices\Properties;
 
 use DateTimeInterface;
@@ -20,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
+use Override;
 use function array_map;
 use function array_merge;
 use function sprintf;
@@ -28,7 +16,7 @@ use function sprintf;
 class Dynamic extends Property
 {
 
-	public const TYPE = Types\PropertyType::DYNAMIC->value;
+	public const string TYPE = Types\PropertyType::DYNAMIC->value;
 
 	public static function getType(): string
 	{
@@ -38,6 +26,7 @@ class Dynamic extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function getParent(): Property|null
 	{
 		throw new Exceptions\InvalidState(
@@ -48,6 +37,7 @@ class Dynamic extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function setParent(Property $property): void
 	{
 		throw new Exceptions\InvalidState(
@@ -58,6 +48,7 @@ class Dynamic extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function removeParent(): void
 	{
 		throw new Exceptions\InvalidState(
@@ -68,6 +59,7 @@ class Dynamic extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function getValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		throw new Exceptions\InvalidState(
@@ -78,6 +70,7 @@ class Dynamic extends Property
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function setValue(bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value): void
 	{
 		throw new Exceptions\InvalidState(
@@ -91,6 +84,7 @@ class Dynamic extends Property
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

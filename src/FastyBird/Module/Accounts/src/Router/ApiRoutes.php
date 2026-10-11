@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ApiRoutes.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Router
- * @since          1.0.0
- *
- * @date           31.03.20
- */
-
 namespace FastyBird\Module\Accounts\Router;
 
 use FastyBird\Core\Http\Routing;
@@ -23,20 +10,15 @@ use FastyBird\Module\Accounts\Middleware as AccountsMiddleware;
 
 /**
  * Module router configuration
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ApiRoutes
 {
 
-	public const URL_ITEM_ID = 'id';
+	public const string URL_ITEM_ID = 'id';
 
-	public const URL_ACCOUNT_ID = 'account';
+	public const string URL_ACCOUNT_ID = 'account';
 
-	public const RELATION_ENTITY = 'relationEntity';
+	public const string RELATION_ENTITY = 'relationEntity';
 
 	public function __construct(
 		private readonly bool $usePrefix,

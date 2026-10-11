@@ -27,19 +27,19 @@ use function file_get_contents;
 final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const ADMINISTRATOR_ACCOUNT_ID = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
+	private const string ADMINISTRATOR_ACCOUNT_ID = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
 
-	private const USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
+	private const string USER_ACCOUNT_ID = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
 
-	private const USER_ACCOUNT_ID_2 = 'fae8d781-7e2c-4318-9c85-43ba637d14c5';
+	private const string USER_ACCOUNT_ID_2 = 'fae8d781-7e2c-4318-9c85-43ba637d14c5';
 
-	private const ADMINISTRATOR_EMAIL_ID = '32ebe3c3-0238-482e-ab79-6b1d9ee2147c';
+	private const string ADMINISTRATOR_EMAIL_ID = '32ebe3c3-0238-482e-ab79-6b1d9ee2147c';
 
-	private const USER_EMAIL_ID = '73efbfbd-efbf-bd36-44ef-bfbdefbfbd7a';
+	private const string USER_EMAIL_ID = '73efbfbd-efbf-bd36-44ef-bfbdefbfbd7a';
 
-	private const USER_NOT_VERIFIED_EMAIL_ID = 'ed987404-f14c-40b4-9150-15b6590deb8c';
+	private const string USER_NOT_VERIFIED_EMAIL_ID = 'ed987404-f14c-40b4-9150-15b6590deb8c';
 
-	private const UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
+	private const string UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

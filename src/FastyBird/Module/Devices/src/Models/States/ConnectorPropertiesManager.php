@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConnectorPropertiesStates.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           23.08.22
- */
-
 namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
@@ -53,11 +40,6 @@ use function strval;
  * Useful connector dynamic property state helpers
  *
  * @extends PropertiesManager<DevicesDocuments\Connectors\Properties\Dynamic, null, States\ConnectorProperty>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ConnectorPropertiesManager extends PropertiesManager
 {

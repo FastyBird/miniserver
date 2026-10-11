@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Widget.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           25.05.20
- */
-
 namespace FastyBird\Module\Ui\Entities\Widgets;
 
 use DateTimeInterface;
@@ -26,6 +13,7 @@ use FastyBird\Module\Ui\Entities as UiEntities;
 use FastyBird\Module\Ui\Entities\Dashboards\Tabs\Tab;
 use FastyBird\Module\Ui\Exceptions;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -315,6 +303,7 @@ abstract class Widget implements UiEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -351,6 +340,7 @@ abstract class Widget implements UiEntities\Entity,
 		return [];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::UI;
@@ -359,6 +349,7 @@ abstract class Widget implements UiEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

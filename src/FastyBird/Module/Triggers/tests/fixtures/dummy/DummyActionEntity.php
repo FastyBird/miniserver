@@ -14,7 +14,7 @@ use function array_merge;
 class DummyActionEntity extends Entities\Actions\Action
 {
 
-	public const TYPE = 'dummy';
+	public const string TYPE = 'dummy';
 
 	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'action_do_item', type: Uuid\Doctrine\UuidBinaryType::NAME, nullable: true)]

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DevicesExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           25.11.20
- */
-
 namespace FastyBird\Module\Devices\DI;
 
 use Contributte\Translation;
@@ -46,6 +33,7 @@ use Nette\Caching as NetteCaching;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
@@ -55,18 +43,13 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Devices module
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class DevicesExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbDevicesModule';
+	public const string NAME = 'fbDevicesModule';
 
-	public const CONNECTOR_TYPE_TAG = 'connector_type';
+	public const string CONNECTOR_TYPE_TAG = 'connector_type';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -81,6 +64,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -1109,6 +1093,7 @@ class DevicesExtension extends NetteDI\CompilerExtension implements Translation\
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

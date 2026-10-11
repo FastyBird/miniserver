@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DataSource.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Schemas\Widgets\DataSources;
 
 use FastyBird\Core\Api\Schemas;
@@ -22,16 +9,13 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
 use Neomerx\JsonApi;
+use Override;
 
 /**
  * Data source entity schema
  *
  * @template T of Entities\Widgets\DataSources\DataSource
  * @extends  Schemas\JsonApiSchema<T>
- *
- * @package          FastyBird:UIModule!
- * @subpackage       Schemas
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class DataSource extends Schemas\JsonApiSchema
 {
@@ -39,7 +23,7 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_WIDGET = 'widget';
+	public const string RELATIONSHIPS_WIDGET = 'widget';
 
 	public function __construct(protected readonly Routing\Router $router)
 	{
@@ -52,6 +36,7 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -68,6 +53,7 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getSelfLink(
 		$resource,
 	): JsonApi\Contracts\Schema\LinkInterface
@@ -92,6 +78,7 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -114,6 +101,7 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -143,6 +131,7 @@ abstract class DataSource extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

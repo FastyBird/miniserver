@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SocketRoutes.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Router
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Router;
 
 use FastyBird\Core\Exceptions;
@@ -22,11 +9,6 @@ use Nette;
 
 /**
  * Module sockets routes configuration
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class SocketRoutes
 {

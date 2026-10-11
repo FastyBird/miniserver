@@ -1,39 +1,22 @@
 <?php declare(strict_types = 1);
 
-/**
- * Password.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Helpers;
 
 use FastyBird\Module\Accounts\Exceptions;
 use Nette;
 use Nette\Utils;
+use Override;
 use function hash;
 
 /**
  * Password generator and verification
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Password
 {
 
 	use Nette\SmartObject;
 
-	private const SEPARATOR = '##';
+	private const string SEPARATOR = '##';
 
 	private string $hash;
 
@@ -138,6 +121,7 @@ final class Password
 		return hash('sha512', $salt . self::SEPARATOR . $password);
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->hash;

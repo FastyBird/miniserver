@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Mapped.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           02.04.22
- */
-
 namespace FastyBird\Module\Devices\Entities\Devices\Properties;
 
 use DateTimeInterface;
@@ -24,6 +11,7 @@ use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -35,7 +23,7 @@ use function sprintf;
 class Mapped extends Property
 {
 
-	public const TYPE = Types\PropertyType::MAPPED->value;
+	public const string TYPE = Types\PropertyType::MAPPED->value;
 
 	public function __construct(
 		Entities\Devices\Device $device,
@@ -57,6 +45,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function getParent(): Dynamic|Variable
 	{
 		if ($this->parent === null) {
@@ -71,6 +60,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function getChildren(): array
 	{
 		throw new DevicesExceptions\InvalidState(
@@ -81,6 +71,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function setChildren(array $children): void
 	{
 		throw new DevicesExceptions\InvalidState(
@@ -91,6 +82,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function addChild(Property $child): void
 	{
 		throw new DevicesExceptions\InvalidState(
@@ -101,6 +93,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function removeChild(Property $child): void
 	{
 		throw new DevicesExceptions\InvalidState(
@@ -111,6 +104,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function setSettable(bool $settable): void
 	{
 		if (!$this->getParent() instanceof Dynamic) {
@@ -123,6 +117,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function isSettable(): bool
 	{
 		if (!$this->getParent() instanceof Dynamic) {
@@ -135,6 +130,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function setQueryable(bool $queryable): void
 	{
 		if (!$this->getParent() instanceof Dynamic) {
@@ -147,6 +143,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function isQueryable(): bool
 	{
 		if (!$this->getParent() instanceof Dynamic) {
@@ -163,6 +160,7 @@ class Mapped extends Property
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getDefault(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		try {
@@ -182,6 +180,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function setDefault(
 		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $default,
 	): void
@@ -196,6 +195,7 @@ class Mapped extends Property
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getValue(): bool|float|int|string|DateTimeInterface|Payloads\Payload|null
 	{
 		if (!$this->getParent() instanceof Variable) {
@@ -219,6 +219,7 @@ class Mapped extends Property
 	/**
 	 * @throws DevicesExceptions\InvalidState
 	 */
+	#[Override]
 	public function setValue(bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value): void
 	{
 		if (!$this->getParent() instanceof Variable) {
@@ -238,6 +239,7 @@ class Mapped extends Property
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		if ($this->getParent() instanceof Entities\Devices\Properties\Variable) {

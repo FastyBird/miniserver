@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Tab.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Documents\Dashboards\Tabs;
 
 use DateTimeInterface;
@@ -23,16 +10,12 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
 /**
  * Dashboard tab document
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Dashboards\Tabs\Tab::class)]
 #[CoreDocuments\Mapping\RoutingMap([
@@ -95,6 +78,7 @@ final class Tab implements UiDocuments\Document, CoreDocuments\Owner, CoreDocume
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -133,6 +117,7 @@ final class Tab implements UiDocuments\Document, CoreDocuments\Owner, CoreDocume
 		return $this->widgets;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -153,6 +138,7 @@ final class Tab implements UiDocuments\Document, CoreDocuments\Owner, CoreDocume
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::UI;

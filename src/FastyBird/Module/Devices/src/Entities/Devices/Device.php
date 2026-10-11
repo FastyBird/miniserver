@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           29.01.17
- */
-
 namespace FastyBird\Module\Devices\Entities\Devices;
 
 use DateTimeInterface;
@@ -25,6 +12,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Types;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
@@ -403,6 +391,7 @@ abstract class Device implements DevicesEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -443,6 +432,7 @@ abstract class Device implements DevicesEntities\Entity,
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;
@@ -451,6 +441,7 @@ abstract class Device implements DevicesEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

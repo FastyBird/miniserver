@@ -52,12 +52,12 @@ use function substr;
 final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const FROZEN_NOW = '2020-04-01 12:00:00';
+	private const string FROZEN_NOW = '2020-04-01 12:00:00';
 
-	private const ACCOUNT_ID = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
+	private const string ACCOUNT_ID = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
 
 	// That account's default email in the fixtures
-	private const DEMOTED_EMAIL_ADDRESS = 'john.doe@fastybird.com';
+	private const string DEMOTED_EMAIL_ADDRESS = 'john.doe@fastybird.com';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

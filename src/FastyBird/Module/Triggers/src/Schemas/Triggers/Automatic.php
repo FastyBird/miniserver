@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Automatic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -24,6 +11,7 @@ use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\Router;
 use Neomerx\JsonApi;
+use Override;
 use function array_merge;
 use function count;
 
@@ -32,10 +20,6 @@ use function count;
  *
  * @template T of Entities\Triggers\Automatic
  * @extends  Trigger<T>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Automatic extends Trigger
 {
@@ -43,12 +27,12 @@ final class Automatic extends Trigger
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/trigger/' . Entities\Triggers\Automatic::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/trigger/' . Entities\Triggers\Automatic::TYPE;
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_CONDITIONS = 'conditions';
+	public const string RELATIONSHIPS_CONDITIONS = 'conditions';
 
 	public function __construct(
 		Routing\Router $router,
@@ -59,6 +43,7 @@ final class Automatic extends Trigger
 		parent::__construct($router, $actionStateRepository);
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -74,6 +59,7 @@ final class Automatic extends Trigger
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -107,6 +93,7 @@ final class Automatic extends Trigger
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -127,6 +114,7 @@ final class Automatic extends Trigger
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -157,6 +145,7 @@ final class Automatic extends Trigger
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

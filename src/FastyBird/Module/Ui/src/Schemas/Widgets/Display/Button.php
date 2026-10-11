@@ -1,23 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * Button.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Schemas\Widgets\Display;
 
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Entities;
 use Neomerx\JsonApi;
+use Override;
 use function array_merge;
 
 /**
@@ -25,10 +13,6 @@ use function array_merge;
  *
  * @template T of Entities\Widgets\Displays\Button
  * @extends  Display<T>
- *
- * @package         FastyBird:UIModule!
- * @subpackage      Schemas
- * @author          Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Button extends Display
 {
@@ -36,8 +20,9 @@ final class Button extends Display
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::UI->value . '/display/' . Entities\Widgets\Displays\Button::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/display/' . Entities\Widgets\Displays\Button::TYPE;
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -55,6 +40,7 @@ final class Button extends Display
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,

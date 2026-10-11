@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           07.08.20
- */
-
 namespace FastyBird\Module\Devices\Entities;
 
 use DateTimeInterface;
@@ -31,6 +18,7 @@ use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -62,9 +50,9 @@ abstract class Property implements Entity,
 	use Entities\HasEntityUpdated;
 
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-	private const MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
+	private const string MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
 
-	private const MATCH_MAC_ADDRESS = '/^([0-9a-fA-F][0-9a-fA-F]){1}(:([0-9a-fA-F][0-9a-fA-F])){5,7}$/';
+	private const string MATCH_MAC_ADDRESS = '/^([0-9a-fA-F][0-9a-fA-F]){1}(:([0-9a-fA-F][0-9a-fA-F])){5,7}$/';
 
 	#[ORM\Id]
 	#[ORM\Column(name: 'property_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
@@ -692,6 +680,7 @@ abstract class Property implements Entity,
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		$data = [
@@ -779,6 +768,7 @@ abstract class Property implements Entity,
 		return null;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Module
 	{
 		return Sources\Module::DEVICES;

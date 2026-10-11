@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Control.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           01.10.21
- */
-
 namespace FastyBird\Module\Triggers\Entities\Triggers\Controls;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +7,7 @@ use FastyBird\Core\Persistence\Entities as PersistenceEntities;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -86,6 +74,7 @@ class Control implements TriggersEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -98,6 +87,7 @@ class Control implements TriggersEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

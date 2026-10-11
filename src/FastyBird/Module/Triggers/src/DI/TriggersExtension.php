@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TriggersExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           29.11.20
- */
-
 namespace FastyBird\Module\Triggers\DI;
 
 use Contributte\Translation;
@@ -32,6 +19,7 @@ use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
@@ -40,18 +28,13 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Triggers module extension container
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class TriggersExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbTriggersModule';
+	public const string NAME = 'fbTriggersModule';
 
-	public const TRIGGER_TYPE_TAG = 'trigger_type';
+	public const string TRIGGER_TYPE_TAG = 'trigger_type';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -66,6 +49,7 @@ class TriggersExtension extends NetteDI\CompilerExtension implements Translation
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -303,6 +287,7 @@ class TriggersExtension extends NetteDI\CompilerExtension implements Translation
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

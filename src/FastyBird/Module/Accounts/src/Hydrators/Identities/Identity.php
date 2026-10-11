@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Identity.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           15.08.20
- */
-
 namespace FastyBird\Module\Accounts\Hydrators\Identities;
 
 use FastyBird\Core\Api\Encoding\Objects;
@@ -30,10 +17,6 @@ use function strval;
  * Identity entity hydrator
  *
  * @extends Hydrators\Hydrator<Entities\Identities\Identity>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Identity extends Hydrators\Hydrator
 {

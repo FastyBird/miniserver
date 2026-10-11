@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TAccount.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           31.03.20
- */
-
 namespace FastyBird\Module\Accounts\Hydrators\Accounts;
 
 use FastyBird\Core\Api\Encoding\Objects;
@@ -32,11 +19,6 @@ use function strval;
 
 /**
  * Account entity hydrator trait
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Hydrators
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @property-read Localization\Translator $translator
  */

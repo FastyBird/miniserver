@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DataSource.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Documents\Widgets\DataSources;
 
 use DateTimeInterface;
@@ -23,15 +10,11 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * Widget data source document
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\DataSources\DataSource::class)]
 #[CoreDocuments\Mapping\InheritanceType('JOINED_TABLE')]
@@ -76,6 +59,7 @@ abstract class DataSource implements UiDocuments\Document, CoreDocuments\Owner, 
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -88,6 +72,7 @@ abstract class DataSource implements UiDocuments\Document, CoreDocuments\Owner, 
 		return $this->widget;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -101,6 +86,7 @@ abstract class DataSource implements UiDocuments\Document, CoreDocuments\Owner, 
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::UI;

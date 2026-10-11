@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Email.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Entities\Emails;
 
 use DateTimeImmutable;
@@ -24,6 +11,7 @@ use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Types;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -228,6 +216,7 @@ class Email implements AccountsEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -242,6 +231,7 @@ class Email implements AccountsEntities\Entity,
 		];
 	}
 
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->address;

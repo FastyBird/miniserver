@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Role.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Accounts\Schemas\Roles;
 
 use Exception;
@@ -26,6 +13,7 @@ use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Router;
 use Neomerx\JsonApi;
+use Override;
 use function count;
 
 /**
@@ -33,10 +21,6 @@ use function count;
  *
  * @template T of Entities\Roles\Role
  * @extends  Schemas\JsonApiSchema<T>
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Role extends Schemas\JsonApiSchema
 {
@@ -44,14 +28,14 @@ final class Role extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/role';
+	public const string SCHEMA_TYPE = Sources\Module::ACCOUNTS->value . '/role';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_PARENT = 'parent';
+	public const string RELATIONSHIPS_PARENT = 'parent';
 
-	public const RELATIONSHIPS_CHILDREN = 'children';
+	public const string RELATIONSHIPS_CHILDREN = 'children';
 
 	public function __construct(
 		private readonly Policies\Repository $policiesRepository,
@@ -65,6 +49,7 @@ final class Role extends Schemas\JsonApiSchema
 		return Entities\Roles\Role::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -77,6 +62,7 @@ final class Role extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -96,6 +82,7 @@ final class Role extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		return new JsonApi\Schema\Link(
@@ -119,6 +106,7 @@ final class Role extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -151,6 +139,7 @@ final class Role extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -194,6 +183,7 @@ final class Role extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

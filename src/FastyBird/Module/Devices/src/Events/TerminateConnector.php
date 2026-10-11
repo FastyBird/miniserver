@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * TerminateConnector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Events
- * @since          1.0.0
- *
- * @date           22.06.22
- */
-
 namespace FastyBird\Module\Devices\Events;
 
 use FastyBird\Core\Values\Types\Sources;
@@ -21,11 +8,6 @@ use Throwable;
 
 /**
  * Event fired when connector should be terminated
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Events
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class TerminateConnector extends EventDispatcher\Event
 {

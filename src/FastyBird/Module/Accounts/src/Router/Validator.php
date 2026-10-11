@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Routes.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Router
- * @since          1.0.0
- *
- * @date           11.01.22
- */
-
 namespace FastyBird\Module\Accounts\Router;
 
 use FastRoute;
@@ -25,11 +12,6 @@ use function assert;
 
 /**
  * Route validator
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Validator
 {

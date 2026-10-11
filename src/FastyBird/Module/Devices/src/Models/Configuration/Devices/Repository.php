@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Repository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           14.11.23
- */
-
 namespace FastyBird\Module\Devices\Models\Configuration\Devices;
 
 use FastyBird\Core\Documents as CoreDocuments;
@@ -33,11 +20,6 @@ use function md5;
 
 /**
  * Devices configuration repository
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Repository extends Models\Configuration\Repository
 {

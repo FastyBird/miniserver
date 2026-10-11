@@ -14,9 +14,9 @@ use function is_bool;
 abstract class PropertyState implements States\Property
 {
 
-	public const CREATED_AT_FIELD = 'createdAt';
+	public const string CREATED_AT_FIELD = 'createdAt';
 
-	public const UPDATED_AT_FIELD = 'updatedAt';
+	public const string UPDATED_AT_FIELD = 'updatedAt';
 
 	public function __construct(
 		#[Rules\UuidValue()]

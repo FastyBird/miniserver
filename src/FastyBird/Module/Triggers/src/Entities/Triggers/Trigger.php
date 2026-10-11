@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Trigger.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Entities\Triggers;
 
 use Doctrine\Common;
@@ -22,6 +9,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Security\Entities as SecurityEntities;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -298,6 +286,7 @@ abstract class Trigger implements TriggersEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -314,6 +303,7 @@ abstract class Trigger implements TriggersEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

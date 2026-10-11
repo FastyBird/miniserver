@@ -1,29 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * Container.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Caching
- * @since          1.0.0
- *
- * @date           12.09.24
- */
-
 namespace FastyBird\Module\Devices\Caching;
 
 use Nette\Caching;
 
 /**
  * Module cache container
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Caching
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class Container
 {

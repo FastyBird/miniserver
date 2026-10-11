@@ -1,23 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * Email.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Schemas\Notifications;
 
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers\Entities;
 use Neomerx\JsonApi;
+use Override;
 use function array_merge;
 
 /**
@@ -25,9 +13,6 @@ use function array_merge;
  *
  * @template T of Entities\Notifications\Email
  * @extends  Notification<T>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
  */
 final class Email extends Notification
 {
@@ -35,8 +20,9 @@ final class Email extends Notification
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/notification/' . Entities\Notifications\Email::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/notification/' . Entities\Notifications\Email::TYPE;
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -52,6 +38,7 @@ final class Email extends Notification
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,

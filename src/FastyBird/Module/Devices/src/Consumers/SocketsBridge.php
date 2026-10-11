@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SocketsBridge.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Consumers
- * @since          1.0.0
- *
- * @date           17.4.23
- */
-
 namespace FastyBird\Module\Devices\Consumers;
 
 use FastyBird\Core\Documents;
@@ -23,15 +10,11 @@ use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Topics;
 use FastyBird\Module\Devices;
 use Nette\Utils;
+use Override;
 use Throwable;
 
 /**
  * Exchange to sockets bridge consumer
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Consumers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class SocketsBridge implements Consumers\Consumer
 {
@@ -44,6 +27,7 @@ final readonly class SocketsBridge implements Consumers\Consumer
 	{
 	}
 
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

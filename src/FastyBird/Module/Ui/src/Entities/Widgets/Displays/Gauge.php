@@ -1,23 +1,11 @@
 <?php declare(strict_types = 1);
 
-/**
- * Gauge.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           25.05.20
- */
-
 namespace FastyBird\Module\Ui\Entities\Widgets\Displays;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Ui\Entities;
+use Override;
 use function array_merge;
 
 #[ORM\Entity]
@@ -27,7 +15,7 @@ class Gauge extends Display implements Entities\Widgets\Displays\Parameters\Prec
 
 	use Entities\Widgets\Displays\Parameters\TPrecision;
 
-	public const TYPE = 'gauge';
+	public const string TYPE = 'gauge';
 
 	public static function getType(): string
 	{
@@ -37,6 +25,7 @@ class Gauge extends Display implements Entities\Widgets\Displays\Parameters\Prec
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [

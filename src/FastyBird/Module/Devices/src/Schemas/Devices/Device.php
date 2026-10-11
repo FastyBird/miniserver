@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Device.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           13.04.19
- */
-
 namespace FastyBird\Module\Devices\Schemas\Devices;
 
 use DateTimeInterface;
@@ -27,16 +14,13 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Router;
 use Neomerx\JsonApi;
+use Override;
 
 /**
  * Device entity schema
  *
  * @template T of Entities\Devices\Device
  * @extends  ApiSchemas\JsonApiSchema<T>
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Device extends ApiSchemas\JsonApiSchema
 {
@@ -44,17 +28,17 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_CHANNELS = 'channels';
+	public const string RELATIONSHIPS_CHANNELS = 'channels';
 
-	public const RELATIONSHIPS_PROPERTIES = 'properties';
+	public const string RELATIONSHIPS_PROPERTIES = 'properties';
 
-	public const RELATIONSHIPS_CONTROLS = 'controls';
+	public const string RELATIONSHIPS_CONTROLS = 'controls';
 
-	public const RELATIONSHIPS_CONNECTOR = 'connector';
+	public const string RELATIONSHIPS_CONNECTOR = 'connector';
 
-	public const RELATIONSHIPS_PARENTS = 'parents';
+	public const string RELATIONSHIPS_PARENTS = 'parents';
 
-	public const RELATIONSHIPS_CHILDREN = 'children';
+	public const string RELATIONSHIPS_CHILDREN = 'children';
 
 	public function __construct(
 		protected readonly Models\Entities\Devices\DevicesRepository $devicesRepository,
@@ -73,6 +57,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -98,6 +83,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		return new JsonApi\Schema\Link(
@@ -122,6 +108,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -169,6 +156,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -283,6 +271,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

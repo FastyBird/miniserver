@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DevicePropertyStateV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           24.01.24
- */
-
 namespace FastyBird\Module\Devices\Controllers;
 
 use Exception;
@@ -35,11 +22,6 @@ use function strval;
 
 /**
  * Device property state API controller
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Exchange.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           17.04.23
- */
-
 namespace FastyBird\Module\Devices\Controllers;
 
 use FastyBird\Core\Documents as CoreDocuments;
@@ -43,11 +30,6 @@ use function is_array;
 
 /**
  * Exchange sockets controller
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ExchangeV1 extends Controllers\Controller
 {

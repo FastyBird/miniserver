@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Dashboard.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Documents\Dashboards;
 
 use DateTimeInterface;
@@ -23,16 +10,12 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
 /**
  * Dashboard document
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Dashboards\Dashboard::class)]
 #[CoreDocuments\Mapping\RoutingMap([
@@ -93,6 +76,7 @@ final class Dashboard implements UiDocuments\Document, CoreDocuments\Owner, Core
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -126,6 +110,7 @@ final class Dashboard implements UiDocuments\Document, CoreDocuments\Owner, Core
 		return $this->tabs;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -145,6 +130,7 @@ final class Dashboard implements UiDocuments\Document, CoreDocuments\Owner, Core
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::UI;

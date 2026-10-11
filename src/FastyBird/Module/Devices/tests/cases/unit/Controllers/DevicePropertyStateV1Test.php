@@ -28,7 +28,7 @@ use RuntimeException;
 final class DevicePropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const PROPERTY_ID = 'bbcccf8c-33ab-431b-a795-d7bb38b6b6db';
+	private const string PROPERTY_ID = 'bbcccf8c-33ab-431b-a795-d7bb38b6b6db';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

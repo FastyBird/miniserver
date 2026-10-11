@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Widget.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           05.08.24
- */
-
 namespace FastyBird\Module\Ui\Documents\Widgets;
 
 use DateTimeInterface;
@@ -23,16 +10,12 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
 /**
  * Widget document
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Widgets\Widget::class)]
 #[CoreDocuments\Mapping\InheritanceType('SINGLE_TABLE')]
@@ -102,6 +85,7 @@ abstract class Widget implements UiDocuments\Document, CoreDocuments\Owner, Core
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -148,6 +132,7 @@ abstract class Widget implements UiDocuments\Document, CoreDocuments\Owner, Core
 		return $this->groups;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -175,6 +160,7 @@ abstract class Widget implements UiDocuments\Document, CoreDocuments\Owner, Core
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::UI;

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Connectors
- * @since          1.0.0
- *
- * @date           21.01.24
- */
-
 namespace FastyBird\Module\Devices\Connectors;
 
 use Closure;
@@ -21,6 +8,7 @@ use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions;
 use Nette\Utils;
+use Override;
 use React\Promise;
 use Symfony\Component\EventDispatcher;
 use Throwable;
@@ -28,11 +16,6 @@ use function array_key_exists;
 
 /**
  * Devices connectors container
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Connectors
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Container implements Connector, EventDispatcher\EventSubscriberInterface
 {
@@ -57,6 +40,7 @@ class Container implements Connector, EventDispatcher\EventSubscriberInterface
 		$dispatcher?->addSubscriber($this);
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [
@@ -80,6 +64,7 @@ class Container implements Connector, EventDispatcher\EventSubscriberInterface
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function execute(bool $standalone = true): Promise\PromiseInterface
 	{
 		return $this->getService($this->connector)->execute();
@@ -90,6 +75,7 @@ class Container implements Connector, EventDispatcher\EventSubscriberInterface
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function discover(): Promise\PromiseInterface
 	{
 		return $this->getService($this->connector)->discover();
@@ -98,6 +84,7 @@ class Container implements Connector, EventDispatcher\EventSubscriberInterface
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function terminate(): void
 	{
 		$this->getService($this->connector)->terminate();
@@ -106,6 +93,7 @@ class Container implements Connector, EventDispatcher\EventSubscriberInterface
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function hasUnfinishedTasks(): bool
 	{
 		return $this->getService($this->connector)->hasUnfinishedTasks();

@@ -27,9 +27,9 @@ use function file_get_contents;
 final class RolesV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const ROLE_ID = 'efbfbdef-bfbd-efbf-bd0f-efbfbd5c4f61';
+	private const string ROLE_ID = 'efbfbdef-bfbd-efbf-bd0f-efbfbd5c4f61';
 
-	private const UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
+	private const string UNKNOWN_ID = '83985c13-238c-46bd-aacb-2359d5c921a7';
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument

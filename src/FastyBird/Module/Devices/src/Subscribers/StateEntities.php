@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StateEntities.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           22.10.22
- */
-
 namespace FastyBird\Module\Devices\Subscribers;
 
 use DateTimeInterface;
@@ -33,26 +20,22 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\States;
 use Nette;
 use Nette\Caching as NetteCaching;
+use Override;
 use Symfony\Component\EventDispatcher;
 
 /**
  * Devices state entities events
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StateEntities implements EventDispatcher\EventSubscriberInterface
 {
 
 	use Nette\SmartObject;
 
-	private const ACTION_CREATED = 'created';
+	private const string ACTION_CREATED = 'created';
 
-	private const ACTION_UPDATED = 'updated';
+	private const string ACTION_UPDATED = 'updated';
 
-	private const ACTION_DELETED = 'deleted';
+	private const string ACTION_DELETED = 'deleted';
 
 	public function __construct(
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
@@ -64,6 +47,7 @@ final class StateEntities implements EventDispatcher\EventSubscriberInterface
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

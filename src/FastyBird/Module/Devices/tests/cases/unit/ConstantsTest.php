@@ -18,16 +18,16 @@ use function strtolower;
 final class ConstantsTest extends TestCase
 {
 
-	private const SUBJECT_PATTERN = '[a-z][a-zA-Z]*(\.[a-z][a-zA-Z]*)*';
+	private const string SUBJECT_PATTERN = '[a-z][a-zA-Z]*(\.[a-z][a-zA-Z]*)*';
 
-	private const DOCUMENT_ROUTING_KEY_PATTERN = '/^fb\.exchange\.module\.document\.(reported|created|updated|deleted)\.'
+	private const string DOCUMENT_ROUTING_KEY_PATTERN = '/^fb\.exchange\.module\.document\.(reported|created|updated|deleted)\.'
 		. self::SUBJECT_PATTERN . '$/';
 
-	private const ACTION_ROUTING_KEY_PATTERN = '/^fb\.exchange\.action\.' . self::SUBJECT_PATTERN . '$/';
+	private const string ACTION_ROUTING_KEY_PATTERN = '/^fb\.exchange\.action\.' . self::SUBJECT_PATTERN . '$/';
 
-	private const DOCUMENT_CONSTANT_PATTERN = '/^MESSAGE_BUS_\w+_DOCUMENT_(REPORTED|CREATED|UPDATED|DELETED)_ROUTING_KEY$/';
+	private const string DOCUMENT_CONSTANT_PATTERN = '/^MESSAGE_BUS_\w+_DOCUMENT_(REPORTED|CREATED|UPDATED|DELETED)_ROUTING_KEY$/';
 
-	private const ACTION_CONSTANT_PATTERN = '/^MESSAGE_BUS_\w+_ACTION_ROUTING_KEY$/';
+	private const string ACTION_CONSTANT_PATTERN = '/^MESSAGE_BUS_\w+_ACTION_ROUTING_KEY$/';
 
 	#[DataProvider('documentRoutingKeys')]
 	public function testDocumentRoutingKeyIsWellFormed(string $action, string $routingKey): void

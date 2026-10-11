@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Connector.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           31.05.22
- */
-
 namespace FastyBird\Module\Devices\Commands;
 
 use BadMethodCallException;
@@ -62,22 +49,17 @@ use const SIGTERM;
 
 /**
  * Module connector command
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Connector extends Console\Command\Command
 {
 
-	public const NAME = 'fb:devices-module:connector';
+	public const string NAME = 'fb:devices-module:connector';
 
-	private const SHUTDOWN_WAITING_DELAY = 3;
+	private const int SHUTDOWN_WAITING_DELAY = 3;
 
-	private const DATABASE_REFRESH_INTERVAL = 5;
+	private const int DATABASE_REFRESH_INTERVAL = 5;
 
-	private const DISCOVERY_MAX_PROCESSING_INTERVAL = 120.0;
+	private const float DISCOVERY_MAX_PROCESSING_INTERVAL = 120.0;
 
 	private bool $isTerminating = false;
 

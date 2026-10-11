@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindTriggers.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Queries\Entities;
 
 use Closure;
@@ -25,10 +12,6 @@ use Ramsey\Uuid;
  * Find trigger entities query
  *
  * @extends Query\QueryObject<Entities\Triggers\Trigger>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Queries
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindTriggers extends Query\QueryObject
 {

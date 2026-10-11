@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           27.11.23
- */
-
 namespace FastyBird\Module\Devices\Documents;
 
 use DateTimeInterface;
@@ -31,6 +18,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -43,11 +31,6 @@ use function strval;
 
 /**
  * Channel property document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\MappedSuperclass]
 abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
@@ -201,6 +184,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -322,6 +306,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -346,6 +331,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;

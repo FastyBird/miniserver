@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StatesActions.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Consumers
- * @since          1.0.0
- *
- * @date           22.10.22
- */
-
 namespace FastyBird\Module\Devices\Consumers;
 
 use FastyBird\Core\Documents as CoreDocuments;
@@ -30,6 +17,7 @@ use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types;
 use Nette\Utils;
+use Override;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -38,16 +26,11 @@ use function React\Async\await;
 
 /**
  * States actions messages subscriber
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Consumers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class StatesActions implements Consumers\Consumer
 {
 
-	private const CONSUMER_ROUTING_KEYS = [
+	private const array CONSUMER_ROUTING_KEYS = [
 		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
 		Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
 		Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
@@ -73,6 +56,7 @@ final class StatesActions implements Consumers\Consumer
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

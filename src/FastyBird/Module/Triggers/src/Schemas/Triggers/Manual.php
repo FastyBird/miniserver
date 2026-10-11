@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Manual.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Schemas\Triggers;
 
 use FastyBird\Core\Exceptions;
@@ -21,6 +8,7 @@ use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Router;
 use Neomerx\JsonApi;
+use Override;
 use function array_merge;
 use function count;
 
@@ -29,10 +17,6 @@ use function count;
  *
  * @template T of Entities\Triggers\Manual
  * @extends  Trigger<T>
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Manual extends Trigger
 {
@@ -40,13 +24,14 @@ final class Manual extends Trigger
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/trigger/' . Entities\Triggers\Manual::TYPE;
+	public const string SCHEMA_TYPE = Sources\Module::TRIGGERS->value . '/trigger/' . Entities\Triggers\Manual::TYPE;
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_CONTROLS = 'controls';
+	public const string RELATIONSHIPS_CONTROLS = 'controls';
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -62,6 +47,7 @@ final class Manual extends Trigger
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -82,6 +68,7 @@ final class Manual extends Trigger
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -112,6 +99,7 @@ final class Manual extends Trigger
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

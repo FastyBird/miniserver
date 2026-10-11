@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConfigurationCache.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           11.09.24
- */
-
 namespace FastyBird\Module\Devices\Subscribers;
 
 use FastyBird\Module\Devices\Caching as DevicesCaching;
@@ -21,15 +8,11 @@ use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Types;
 use Nette;
 use Nette\Caching as NetteCaching;
+use Override;
 use Symfony\Component\EventDispatcher;
 
 /**
  * Module entities events
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ConfigurationCache implements EventDispatcher\EventSubscriberInterface
 {
@@ -42,6 +25,7 @@ final class ConfigurationCache implements EventDispatcher\EventSubscriberInterfa
 	{
 	}
 
+	#[Override]
 	public static function getSubscribedEvents(): array
 	{
 		return [

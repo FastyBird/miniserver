@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Identity.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Entities\Identities;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -24,6 +11,7 @@ use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Types;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function strval;
 
@@ -182,6 +170,7 @@ class Identity implements AccountsEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getRoles(): array
 	{
 		return [];
@@ -215,6 +204,7 @@ class Identity implements AccountsEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -241,6 +231,7 @@ class Identity implements AccountsEntities\Entity,
 	/**
 	 * @throws Utils\JsonException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

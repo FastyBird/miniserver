@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * AccountEntity.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           18.08.20
- */
-
 namespace FastyBird\Module\Accounts\Subscribers;
 
 use Doctrine\Common;
@@ -24,6 +11,7 @@ use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use Nette;
+use Override;
 use function array_merge;
 use function count;
 use function in_array;
@@ -31,11 +19,6 @@ use function sprintf;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class AccountEntity implements Common\EventSubscriber
 {
@@ -51,6 +34,7 @@ final class AccountEntity implements Common\EventSubscriber
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function getSubscribedEvents(): array
 	{
 		return [

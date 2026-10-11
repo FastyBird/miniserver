@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * UiExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           02.12.20
- */
-
 namespace FastyBird\Module\Ui\DI;
 
 use Contributte\Translation;
@@ -42,6 +29,7 @@ use Nette\Caching as NetteCaching;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
@@ -50,16 +38,11 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * UI module
- *
- * @package        FastyBird:UIModule!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbUiModule';
+	public const string NAME = 'fbUiModule';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -74,6 +57,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -611,6 +595,7 @@ class UiExtension extends NetteDI\CompilerExtension implements Translation\DI\Tr
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

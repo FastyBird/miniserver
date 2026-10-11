@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ModuleEntities.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Consumers
- * @since          1.0.0
- *
- * @date           03.09.24
- */
-
 namespace FastyBird\Module\Devices\Consumers;
 
 use FastyBird\Core\Documents as CoreDocuments;
@@ -25,14 +12,10 @@ use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Types;
 use Nette\Caching as NetteCaching;
+use Override;
 
 /**
  * Exchange to sockets bridge consumer
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Consumers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final readonly class ModuleEntities implements Consumers\Consumer
 {
@@ -48,6 +31,7 @@ final readonly class ModuleEntities implements Consumers\Consumer
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function consume(
 		Sources\Source $source,
 		string $routingKey,

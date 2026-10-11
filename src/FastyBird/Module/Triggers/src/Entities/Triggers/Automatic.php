@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Automatic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           04.04.20
- */
-
 namespace FastyBird\Module\Triggers\Entities\Triggers;
 
 use Doctrine\Common;
@@ -35,7 +22,7 @@ use Ramsey\Uuid;
 class Automatic extends Trigger
 {
 
-	public const TYPE = 'automatic';
+	public const string TYPE = 'automatic';
 
 	/** @var Common\Collections\Collection<int, Entities\Conditions\Condition> */
 	#[Attribute\Crud(writable: true)]

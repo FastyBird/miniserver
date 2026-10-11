@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Action.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           01.06.22
- */
-
 namespace FastyBird\Module\Devices\Documents\States\Devices\Properties\Actions;
 
 use FastyBird\Core\Documents as CoreDocuments;
@@ -22,17 +9,13 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_merge;
 use function sprintf;
 
 /**
  * Device property action document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
@@ -113,6 +96,7 @@ final readonly class Action implements CoreDocuments\Document
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		$data = [

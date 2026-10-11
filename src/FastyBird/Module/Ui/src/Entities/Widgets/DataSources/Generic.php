@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Generic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           03.08.24
- */
-
 namespace FastyBird\Module\Ui\Entities\Widgets\DataSources;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +7,7 @@ use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Schemas;
+use Override;
 
 #[ORM\Entity]
 #[ORM\Table(
@@ -34,13 +22,14 @@ use FastyBird\Module\Ui\Schemas;
 class Generic extends DataSource
 {
 
-	public const TYPE = 'generic';
+	public const string TYPE = 'generic';
 
 	public static function getType(): string
 	{
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getSource(): Sources\Module
 	{
 		return Sources\Module::UI;

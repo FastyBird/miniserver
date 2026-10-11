@@ -28,7 +28,7 @@ use RuntimeException;
 final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
-	private const PROPERTY_ID = '1b17bcaa-a19e-45f0-98b5-6a3b2c5d0ab9';
+	private const string PROPERTY_ID = '1b17bcaa-a19e-45f0-98b5-6a3b2c5d0ab9';
 
 	public function setUp(): void
 	{

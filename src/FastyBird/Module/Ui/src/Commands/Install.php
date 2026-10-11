@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Install.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           08.08.20
- */
-
 namespace FastyBird\Module\Ui\Commands;
 
 use FastyBird\Core\Logging;
@@ -27,16 +14,11 @@ use Throwable;
 
 /**
  * Module install command
- *
- * @package        FastyBird:UIModule!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Install extends Console\Command\Command
 {
 
-	public const NAME = 'fb:ui-module:install';
+	public const string NAME = 'fb:ui-module:install';
 
 	public function __construct(
 		private readonly Ui\Logger $logger,

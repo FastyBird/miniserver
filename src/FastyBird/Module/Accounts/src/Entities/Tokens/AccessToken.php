@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * AccessToken.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Entities\Tokens;
 
 use DateTimeInterface;
@@ -23,6 +10,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Security\Entities\Tokens;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -39,7 +27,7 @@ class AccessToken extends Tokens\Token implements
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 
-	public const TOKEN_EXPIRATION = '+6 hours';
+	public const string TOKEN_EXPIRATION = '+6 hours';
 
 	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(targetEntity: AccountsEntities\Identities\Identity::class)]
@@ -113,6 +101,7 @@ class AccessToken extends Tokens\Token implements
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

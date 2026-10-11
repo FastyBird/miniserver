@@ -1,32 +1,15 @@
 <?php declare(strict_types = 1);
 
-/**
- * UserPanel.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Utilities
- * @since          1.0.0
- *
- * @date           19.06.24
- */
-
 namespace FastyBird\Module\Accounts\Utilities;
 
 use FastyBird\Module\Accounts\Security;
 use Nette\Utils;
+use Override;
 use Tracy;
 use const DIRECTORY_SEPARATOR;
 
 /**
  * User panel for Debugger Bar
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Utilities
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class UserPanel implements Tracy\IBarPanel
 {
@@ -38,6 +21,7 @@ class UserPanel implements Tracy\IBarPanel
 	/**
 	 * Renders tab
 	 */
+	#[Override]
 	public function getTab(): string
 	{
 		return Utils\Helpers::capture(function (): void {
@@ -51,6 +35,7 @@ class UserPanel implements Tracy\IBarPanel
 	/**
 	 * Renders panel
 	 */
+	#[Override]
 	public function getPanel(): string
 	{
 		return Utils\Helpers::capture(function (): void {

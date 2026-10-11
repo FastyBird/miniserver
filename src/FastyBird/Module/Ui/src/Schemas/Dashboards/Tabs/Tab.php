@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Tab.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           03.08.24
- */
-
 namespace FastyBird\Module\Ui\Schemas\Dashboards\Tabs;
 
 use FastyBird\Core\Api\Schemas;
@@ -23,16 +10,13 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
 use Neomerx\JsonApi;
+use Override;
 
 /**
  * Tab entity schema
  *
  * @template T of Entities\Dashboards\Tabs\Tab
  * @extends  Schemas\JsonApiSchema<T>
- *
- * @package          FastyBird:UIModule!
- * @subpackage       Schemas
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Tab extends Schemas\JsonApiSchema
 {
@@ -40,14 +24,14 @@ final class Tab extends Schemas\JsonApiSchema
 	/**
 	 * Define entity schema type string
 	 */
-	public const SCHEMA_TYPE = Sources\Module::UI->value . '/tab';
+	public const string SCHEMA_TYPE = Sources\Module::UI->value . '/tab';
 
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_DASHBOARD = 'dashboard';
+	public const string RELATIONSHIPS_DASHBOARD = 'dashboard';
 
-	public const RELATIONSHIPS_WIDGETS = 'widgets';
+	public const string RELATIONSHIPS_WIDGETS = 'widgets';
 
 	public function __construct(protected readonly Routing\Router $router)
 	{
@@ -58,6 +42,7 @@ final class Tab extends Schemas\JsonApiSchema
 		return Entities\Dashboards\Tabs\Tab::class;
 	}
 
+	#[Override]
 	public function getType(): string
 	{
 		return self::SCHEMA_TYPE;
@@ -70,6 +55,7 @@ final class Tab extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -91,6 +77,7 @@ final class Tab extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		return new JsonApi\Schema\Link(
@@ -113,6 +100,7 @@ final class Tab extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -140,6 +128,7 @@ final class Tab extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

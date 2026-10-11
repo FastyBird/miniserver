@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RefreshToken.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Entities\Tokens;
 
 use DateTimeInterface;
@@ -23,6 +10,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Security\Entities\Tokens;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
+use Override;
 use Ramsey\Uuid;
 use function sprintf;
 
@@ -40,7 +28,7 @@ class RefreshToken extends Tokens\Token implements
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 
-	public const TOKEN_EXPIRATION = '+3 days';
+	public const string TOKEN_EXPIRATION = '+3 days';
 
 	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(name: 'token_valid_till', type: 'datetime_immutable', nullable: false)]
@@ -97,6 +85,7 @@ class RefreshToken extends Tokens\Token implements
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [

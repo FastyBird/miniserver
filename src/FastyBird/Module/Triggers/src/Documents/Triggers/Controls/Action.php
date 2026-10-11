@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Action.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           01.06.22
- */
-
 namespace FastyBird\Module\Triggers\Documents\Triggers\Controls;
 
 use FastyBird\Core\Documents;
@@ -20,15 +7,11 @@ use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * Trigger control action document
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document]
 #[Documents\Mapping\RoutingMap([
@@ -77,6 +60,7 @@ final readonly class Action implements Documents\Document
 		return $this->expectedValue;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

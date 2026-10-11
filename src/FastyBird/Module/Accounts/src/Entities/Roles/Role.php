@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Role.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           30.03.20
- */
-
 namespace FastyBird\Module\Accounts\Entities\Roles;
 
 use Doctrine\Common;
@@ -23,6 +10,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Security\Entities\Policies;
 use FastyBird\Core\Security\Types;
 use FastyBird\Module\Accounts\Entities as AccountsEntities;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 use function assert;
@@ -150,6 +138,7 @@ class Role extends Policies\Policy implements AccountsEntities\Entity,
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -165,6 +154,7 @@ class Role extends Policies\Policy implements AccountsEntities\Entity,
 	/**
 	 * Convert role object to string
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return $this->getName();

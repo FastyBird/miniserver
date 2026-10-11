@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Property.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Entities
- * @since          1.0.0
- *
- * @date           02.11.18
- */
-
 namespace FastyBird\Module\Devices\Entities\Devices\Properties;
 
 use Doctrine\Common;
@@ -22,6 +9,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
@@ -162,6 +150,7 @@ abstract class Property extends Entities\Property
 	/**
 	 * {@inheritDoc}
 	 */
+	#[Override]
 	public function toArray(): array
 	{
 		return array_merge(parent::toArray(), [
@@ -180,6 +169,7 @@ abstract class Property extends Entities\Property
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	public function __toString(): string
 	{
 		return Utils\Json::encode($this->toArray());

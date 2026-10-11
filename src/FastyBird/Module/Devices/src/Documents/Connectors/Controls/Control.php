@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Control.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           02.06.22
- */
-
 namespace FastyBird\Module\Devices\Documents\Connectors\Controls;
 
 use DateTimeInterface;
@@ -23,15 +10,11 @@ use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 
 /**
  * Connector control document
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Connectors\Controls\Control::class)]
 #[CoreDocuments\Mapping\RoutingMap([
@@ -75,6 +58,7 @@ final class Control implements DevicesDocuments\Document, CoreDocuments\Owner, C
 	{
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->id;
@@ -90,6 +74,7 @@ final class Control implements DevicesDocuments\Document, CoreDocuments\Owner, C
 		return $this->name;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [
@@ -103,6 +88,7 @@ final class Control implements DevicesDocuments\Document, CoreDocuments\Owner, C
 		];
 	}
 
+	#[Override]
 	public function getSource(): Sources\Source
 	{
 		return Sources\Module::DEVICES;

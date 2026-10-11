@@ -15,7 +15,7 @@ use function array_merge;
 class DummyConditionEntity extends Entities\Conditions\Condition
 {
 
-	public const TYPE = 'dummy';
+	public const string TYPE = 'dummy';
 
 	#[Attribute\Crud(required: true)]
 	#[ORM\Column(name: 'condition_watch_item', type: Uuid\Doctrine\UuidBinaryType::NAME, nullable: true)]

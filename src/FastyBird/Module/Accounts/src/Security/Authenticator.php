@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Authenticator.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Security
- * @since          1.0.0
- *
- * @date           31.03.20
- */
-
 namespace FastyBird\Module\Accounts\Security;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -21,28 +8,24 @@ use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Types;
+use Override;
 use function is_string;
 
 /**
  * Account authentication
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Security
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Authenticator implements Identity\Authenticator
 {
 
-	public const IDENTITY_UID_NOT_FOUND = 110;
+	public const int IDENTITY_UID_NOT_FOUND = 110;
 
-	public const INVALID_CREDENTIAL_FOR_UID = 120;
+	public const int INVALID_CREDENTIAL_FOR_UID = 120;
 
-	public const ACCOUNT_PROFILE_BLOCKED = 210;
+	public const int ACCOUNT_PROFILE_BLOCKED = 210;
 
-	public const ACCOUNT_PROFILE_DELETED = 220;
+	public const int ACCOUNT_PROFILE_DELETED = 220;
 
-	public const ACCOUNT_PROFILE_OTHER_ERROR = 230;
+	public const int ACCOUNT_PROFILE_OTHER_ERROR = 230;
 
 	public function __construct(
 		private readonly Models\Entities\Identities\IdentitiesRepository $identitiesRepository,
@@ -62,6 +45,7 @@ final class Authenticator implements Identity\Authenticator
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
 	 */
+	#[Override]
 	public function authenticate(array $credentials): Identity\UserIdentity
 	{
 		[$username, $password] = $credentials + [null, null];

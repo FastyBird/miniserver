@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * AccountsModuleExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           30.11.20
- */
-
 namespace FastyBird\Module\Accounts\DI;
 
 use Contributte\Translation;
@@ -36,6 +23,7 @@ use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use stdClass;
 use Tracy;
 use function array_keys;
@@ -46,16 +34,11 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Accounts module extension container
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class AccountsExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
-	public const NAME = 'fbAccountsModule';
+	public const string NAME = 'fbAccountsModule';
 
 	public static function register(
 		Boot\Configurator $config,
@@ -70,6 +53,7 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 		};
 	}
 
+	#[Override]
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
@@ -338,6 +322,7 @@ class AccountsExtension extends NetteDI\CompilerExtension implements Translation
 	/**
 	 * @return array<string>
 	 */
+	#[Override]
 	public function getTranslationResources(): array
 	{
 		return [

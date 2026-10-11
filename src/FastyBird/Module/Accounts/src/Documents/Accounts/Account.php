@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Account.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:AccountsModule!
- * @subpackage     Documents
- * @since          1.0.0
- *
- * @date           01.06.22
- */
-
 namespace FastyBird\Module\Accounts\Documents\Accounts;
 
 use DateTimeInterface;
@@ -23,16 +10,12 @@ use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 use Orisai\ObjectMapper;
+use Override;
 use Ramsey\Uuid;
 use function array_map;
 
 /**
  * Account document
- *
- * @package        FastyBird:AccountsModule!
- * @subpackage     Documents
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 #[Documents\Mapping\Document(entity: Entities\Accounts\Account::class)]
 #[Documents\Mapping\RoutingMap([
@@ -161,6 +144,7 @@ final readonly class Account implements Documents\Document
 		return Sources\Module::ACCOUNTS;
 	}
 
+	#[Override]
 	public function toArray(): array
 	{
 		return [

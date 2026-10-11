@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ControlsRepository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:TriggersModule!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           01.10.21
- */
-
 namespace FastyBird\Module\Triggers\Models\Entities\Triggers\Controls;
 
 use Doctrine\ORM;
@@ -27,11 +14,6 @@ use function is_array;
 
 /**
  * Trigger control structure repository
- *
- * @package        FastyBird:TriggersModule!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ControlsRepository
 {

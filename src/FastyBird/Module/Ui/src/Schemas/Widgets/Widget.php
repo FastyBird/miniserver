@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Widget.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:UIModule!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           26.05.20
- */
-
 namespace FastyBird\Module\Ui\Schemas\Widgets;
 
 use FastyBird\Core\Api\Schemas;
@@ -22,6 +9,7 @@ use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
 use Neomerx\JsonApi;
+use Override;
 use function count;
 
 /**
@@ -29,10 +17,6 @@ use function count;
  *
  * @template  T of Entities\Widgets\Widget
  * @extends   Schemas\JsonApiSchema<T>
- *
- * @package          FastyBird:UIModule!
- * @subpackage       Schemas
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Widget extends Schemas\JsonApiSchema
 {
@@ -40,13 +24,13 @@ abstract class Widget extends Schemas\JsonApiSchema
 	/**
 	 * Define relationships names
 	 */
-	public const RELATIONSHIPS_DISPLAY = 'display';
+	public const string RELATIONSHIPS_DISPLAY = 'display';
 
-	public const RELATIONSHIPS_TABS = 'tabs';
+	public const string RELATIONSHIPS_TABS = 'tabs';
 
-	public const RELATIONSHIPS_GROUPS = 'groups';
+	public const string RELATIONSHIPS_GROUPS = 'groups';
 
-	public const RELATIONSHIPS_DATA_SOURCES = 'data-sources';
+	public const string RELATIONSHIPS_DATA_SOURCES = 'data-sources';
 
 	public function __construct(protected readonly Routing\Router $router)
 	{
@@ -59,6 +43,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getAttributes(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -78,6 +63,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getSelfLink($resource): JsonApi\Contracts\Schema\LinkInterface
 	{
 		return new JsonApi\Schema\Link(
@@ -99,6 +85,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 	 *
 	 * @phpcsSuppress SlevomatCodingStandard.TypeHints.TypeHintDeclaration.MissingParameterTypeHint
 	 */
+	#[Override]
 	public function getRelationships(
 		$resource,
 		JsonApi\Contracts\Schema\ContextInterface $context,
@@ -136,6 +123,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipRelatedLink(
 		$resource,
 		string $name,
@@ -179,6 +167,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\Runtime
 	 */
+	#[Override]
 	public function getRelationshipSelfLink(
 		$resource,
 		string $name,

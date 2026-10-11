@@ -1,27 +1,9 @@
 <?php declare(strict_types = 1);
 
-/**
- * DevicePropertyIdentifier.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Types
- * @since          1.0.0
- *
- * @date           16.07.21
- */
-
 namespace FastyBird\Module\Devices\Types;
 
 /**
  * Device property identifier types
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Types
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 enum DevicePropertyIdentifier: string
 {

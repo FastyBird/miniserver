@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConnectorPropertiesV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           08.02.22
- */
-
 namespace FastyBird\Module\Devices\Controllers;
 
 use Doctrine;
@@ -33,6 +20,7 @@ use FastyBird\Module\Devices\Utilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
+use Override;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use Throwable;
@@ -44,11 +32,6 @@ use function strval;
 
 /**
  * Connector properties API controller
- *
- * @package        FastyBird:DevicesModule!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured\User(loggedIn)
  */
@@ -384,6 +367,7 @@ final class ConnectorPropertiesV1 extends BaseV1
 	 * @throws Exception
 	 * @throws ApiExceptions\JsonApi
 	 */
+	#[Override]
 	public function readRelationship(
 		Message\ServerRequestInterface $request,
 		Message\ResponseInterface $response,
