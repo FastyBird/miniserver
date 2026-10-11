@@ -968,7 +968,7 @@ final readonly class Builder
 		VieraEntities\Devices\Device $viera,
 		VieraEntities\Channels\Channel|null $channel,
 		VieraConnectorHomeKitConnectorEntities\Channels\Viera $service,
-		Mapping\Characteristics\Characteristic $characteristicMapping,
+		Mapping\Characteristics\BasicCharacteristic $characteristicMapping,
 		string|null $name = null,
 		int|null $value = null,
 	): bool

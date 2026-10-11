@@ -27,7 +27,7 @@ interface Service extends Mapping\Mapping
 	public function isMultiple(): bool;
 
 	/**
-	 * @return array<Mapping\Characteristics\Characteristic>
+	 * @return array<Mapping\Characteristics\BasicCharacteristic>
 	 */
 	public function getCharacteristics(): array;
 

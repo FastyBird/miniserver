@@ -18,7 +18,7 @@ final readonly class WindowCoveringService implements Service
 {
 
 	/**
-	 * @param array<Mapping\Characteristics\Characteristic> $characteristics
+	 * @param array<Mapping\Characteristics\BasicCharacteristic> $characteristics
 	 */
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [HomeKitTypes\ServiceType::WINDOW_COVERING->value])]
@@ -94,7 +94,7 @@ final readonly class WindowCoveringService implements Service
 	}
 
 	/**
-	 * @return array<Mapping\Characteristics\Characteristic>
+	 * @return array<Mapping\Characteristics\BasicCharacteristic>
 	 */
 	#[Override]
 	public function getCharacteristics(): array

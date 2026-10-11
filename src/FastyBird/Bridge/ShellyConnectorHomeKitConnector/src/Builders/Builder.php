@@ -687,7 +687,7 @@ final readonly class Builder
 		ShellyEntities\Channels\Channel|null $channel,
 		int|null $index,
 		ShellyConnectorHomeKitConnectorEntities\Channels\Shelly $service,
-		Mapping\Characteristics\Characteristic $characteristicMapping,
+		Mapping\Characteristics\BasicCharacteristic $characteristicMapping,
 		bool $optional = false,
 		bool $virtual = false,
 	): bool

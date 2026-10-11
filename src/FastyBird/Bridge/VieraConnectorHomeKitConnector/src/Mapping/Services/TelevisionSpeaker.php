@@ -18,7 +18,7 @@ final readonly class TelevisionSpeaker implements Service
 {
 
 	/**
-	 * @param array<Mapping\Characteristics\Characteristic> $characteristics
+	 * @param array<Mapping\Characteristics\BasicCharacteristic> $characteristics
 	 */
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [HomeKitTypes\ServiceType::TELEVISION_SPEAKER->value])]
@@ -73,7 +73,7 @@ final readonly class TelevisionSpeaker implements Service
 	}
 
 	/**
-	 * @return array<Mapping\Characteristics\Characteristic>
+	 * @return array<Mapping\Characteristics\BasicCharacteristic>
 	 */
 	#[Override]
 	public function getCharacteristics(): array
