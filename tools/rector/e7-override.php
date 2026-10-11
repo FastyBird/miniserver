@@ -5,9 +5,9 @@ use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRecto
 use Rector\ValueObject\PhpVersion;
 
 // The `src` directory of every package E7_PACKAGE names: a comma-separated list of `<Type>` or
-// `<Type>/<Name>`, all 28 packages when it is unset.
+// `<Type>/<Name>` (`Core` or `Core/Core` for Core), all 29 packages when it is unset.
 $paths = (static function (): array {
-	$all = glob(__DIR__ . '/../../src/FastyBird/{Addon,Automator,Bridge,Connector,Module,Plugin}/*/src', GLOB_BRACE | GLOB_ONLYDIR);
+	$all = glob(__DIR__ . '/../../src/FastyBird/{Addon,Automator,Bridge,Connector,Core,Module,Plugin}/*/src', GLOB_BRACE | GLOB_ONLYDIR);
 	$filter = trim((string) getenv('E7_PACKAGE'));
 
 	if ($all === false || $all === []) {
@@ -38,28 +38,36 @@ $paths = (static function (): array {
 })();
 
 /**
- * Epic E7 (#462 §3 D4, item 3): `#[\Override]` on every genuine override in the 28 packages
- * outside Core. Copied from tools/rector/skeleton.php, which documents the skips and why names
- * are not imported; one rule, nothing else.
+ * Epic E7 (#462 §3 D4, item 3): `#[\Override]` on every genuine override in the 29 packages, Core
+ * included. Copied from tools/rector/skeleton.php, which documents the skips and why names are
+ * not imported; one rule, nothing else.
  *
  *   - AddOverrideAttributeToOverriddenMethodsRector, with add_to_interface_methods ON: a method
  *     that implements an interface method gets the attribute as well as one that overrides a
  *     parent class method. That is how E2 applied the same rule to Core (#492: 507 attributes in
- *     124 files), so Core and the packages follow one rule, and it is what the D10 guard
- *     (PHPStan's checkMissingOverrideMethodAttribute) will demand. The rule's other option,
- *     allow_override_empty_method, stays at its default (off), as it did for Core: an override of
- *     an empty parent method is left alone.
+ *     124 files), so Core and the packages follow one rule.
+ *   - allow_override_empty_method ON: an override of an EMPTY parent method gets the attribute
+ *     too. Rector's default skips those, but the D10 guard -- PHPStan's
+ *     checkMissingOverrideMethodAttribute -- demands the attribute on every method that
+ *     overrides anything, empty or not (#720). With the option off the guard would flag
+ *     production methods that this rule leaves alone. #492 ran with the option off, so Core is
+ *     in the paths again: the first run with the option on adds the empty-parent overrides there
+ *     as well.
  *
- * The paths are the 28 packages' `src` directories only -- never Core, never tests: E7 rolls
- * Core's conventions out to the packages' production code. A package PR limits the run to its
- * own packages with E7_PACKAGE, a comma-separated list of `<Type>` or `<Type>/<Name>`:
+ * Rector does not handle one case: an interface method that overrides a method of its parent
+ * interface (a factory `create()` narrowing a parent's `create()`). Those are added by hand;
+ * the guard finds them.
+ *
+ * The paths are the 29 packages' `src` directories, Core included, never tests. A package PR
+ * limits the run to its own packages with E7_PACKAGE, a comma-separated list of `<Type>` or
+ * `<Type>/<Name>`:
  *
  *   E7_PACKAGE=Plugin make rector-e5 RECTOR_CONFIG=tools/rector/e7-override.php ARGS=--dry-run   # preview
  *   E7_PACKAGE=Plugin make rector-e5 RECTOR_CONFIG=tools/rector/e7-override.php                  # apply
  *   make csf                                                                                     # then
  *
  * (`make rector-e5` is E5's target; it runs any committed config. Without E7_PACKAGE the run
- * covers all 28 packages, which is the close-out's "0 changes for every package" check,
+ * covers all 29 packages, which is the close-out's "0 changes for every package" check,
  * #462 §13 P7.) Rector writes `#[\Override]` fully qualified; `make csf` imports it, which is
  * why D4 runs it straight after. The Rector output and the csf re-sort are the PR's tool-output
  * commit; hand fixes go in a separate commit after it.
@@ -74,4 +82,5 @@ return RectorConfig::configure()
 	->withPhpVersion(PhpVersion::PHP_84)
 	->withConfiguredRule(AddOverrideAttributeToOverriddenMethodsRector::class, [
 		AddOverrideAttributeToOverriddenMethodsRector::ADD_TO_INTERFACE_METHODS => true,
+		AddOverrideAttributeToOverriddenMethodsRector::ALLOW_OVERRIDE_EMPTY_METHOD => true,
 	]);
