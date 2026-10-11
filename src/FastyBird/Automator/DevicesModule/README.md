@@ -9,11 +9,11 @@
 ## What is FastyBird IoT devices module automator?
 
 FastyBird Devices module automator is extension for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem
-which is integrating automation for [Devices module](https://github.com/FastyBird/devices-module).
+which is integrating automation for [Devices module](../../Module/Devices/README.md).
 
 ### Features:
 
-- FastyBird Devices module automator management for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](https://github.com/FastyBird/devices-module)
+- FastyBird Devices module automator management for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) [devices module](../../Module/Devices/README.md)
 - Automator services for watching and triggering actions and conditions
 - [{JSON:API}](https://jsonapi.org/) schemas for full api access
 
@@ -27,23 +27,19 @@ PHP extension.
 
 ## Installation
 
-### Manual installation
+This automator is part of [MiniServer](https://github.com/FastyBird/miniserver) but is not registered by default. To enable it, register its DI extension in `config/local.neon`, as described in [Configuration](../../../../docs/configuration.md#automators):
 
-The best way to install **fastybird/devices-module-automator** is using [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/devices-module-automator
+```neon
+extensions:
+    fbDevicesModuleAutomator: FastyBird\Automator\DevicesModule\DI\DevicesModuleExtension
 ```
 
-### Marketplace installation [WIP]
-
-You could install this automator in your [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things)
-application under marketplace section.
+The automator takes no configuration; registering the DI extension is enough.
 
 ## Documentation
 
 Learn how to manage automation for devices connected with [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) system
-in [documentation](https://github.com/FastyBird/devices-module-automator/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 
@@ -59,11 +55,11 @@ Documentation is available on [miniserver.fastybird.com/docs](https://miniserver
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs
 or [mail](mailto:code@fastybird.com) or [Tweet](https://twitter.com/fastybird) us for any idea that can improve the
 project.
 
@@ -71,7 +67,7 @@ Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 

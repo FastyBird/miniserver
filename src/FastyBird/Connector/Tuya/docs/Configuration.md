@@ -23,7 +23,7 @@ These can be obtained by following these steps:
 To get started, go to [iot.tuya.com](https://iot.tuya.com) and either create a new account or log in if you already have one. Note that this
 account is different from the account you use for the Tuya mobile app.
 
-![Login to Tuya cloud platform](https://github.com/FastyBird/tuya-connector/blob/main/docs/_media/tuya_login.png)
+![Login to Tuya cloud platform](_media/tuya_login.png)
 
 > [!NOTE]
 Tuya frequently updates their portal and the process for obtaining credentials may change.
@@ -33,39 +33,39 @@ If you have trouble following these instructions, please create an issue or pull
 
 From side menu select cloud platform:
 
-![Tuya platform menu](https://github.com/FastyBird/tuya-connector/blob/main/docs/_media/tuya_select_cloud.png)
+![Tuya platform menu](_media/tuya_select_cloud.png)
 
 And now click on "Create Cloud Project" button:
 
-![New project creation](https://github.com/FastyBird/tuya-connector/blob/main/docs/_media/tuya_create_project_btn.png)
+![New project creation](_media/tuya_create_project_btn.png)
 
 Fill in you new project details a do not forget to select all Data Centers you are using in your Tuya application:
 
-![New project creation](https://github.com/FastyBird/tuya-connector/blob/main/docs/_media/tuya_create_project.png)
+![New project creation](_media/tuya_create_project.png)
 
 Now you have to authorize basic Tuya services. This services enables OpenApi for you cloud project and this API
 interface will be used by Tuya connector to get devices details.
 
-![Project wizard](https://github.com/FastyBird/tuya-connector/blob/main/docs/_media/tuya_project_wizard.png)
+![Project wizard](_media/tuya_project_wizard.png)
 
 On the overview page you could find your **Access ID** and **Access Secret**. Note these credentials, you will use them later.
 
-![Tuya project credentials](https://github.com/FastyBird/tuya-connector/blob/main/docs/_media/tuya_credentials.png)
+![Tuya project credentials](_media/tuya_credentials.png)
 
 ### Connecting your Tuya Application
 
 Open **Devices** tab and then open **Link Tuya App Account** and click on **Add App Account**
 
-![Account assign](https://github.com/FastyBird/tuya-connector/blob/main/docs/_media/tuya_cloud_projects.png)
+![Account assign](_media/tuya_cloud_projects.png)
 
 Scan given QR code with you Tuya application, and follow steps shown in you application. When application authorization
 is finished, you will see your devices in the Devices list.
 
-![Application code](https://github.com/FastyBird/tuya-connector/blob/main/docs/_media/tuya_scan_code.png)
+![Application code](_media/tuya_scan_code.png)
 
 After your devices are linked with your Tuya cloud account you are able to get Tuya user identifier.
 
-![User identifier](https://github.com/FastyBird/tuya-connector/blob/main/docs/_media/tuya_cloud_user_id.png)
+![User identifier](_media/tuya_cloud_user_id.png)
 
 ## Configuring the Connectors and Devices through the Console
 

@@ -9,7 +9,7 @@
 ## What is Virtual thermostat & HomeKit connector bridge?
 
 Virtual thermostat & HomeKit connector bridge is extension for [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem
-which is creating bridge between [Virtual thermostat addon](https://github.com/FastyBird/virtual-thermostat-addon) and [HomeKit connector](https://github.com/FastyBird/homekit-connector).
+which is creating bridge between [Virtual thermostat addon](../../Addon/VirtualThermostat/README.md) and [HomeKit connector](../../Connector/HomeKit/README.md).
 
 ### Features:
 
@@ -27,12 +27,7 @@ Virtual thermostat & HomeKit connector bridge is tested against PHP 8.4.
 
 ## Installation
 
-This extension is part of the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem and is installed by default.
-In case you want to create you own distribution of [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem you could install this extension with  [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/virtual-thermostat-addon-homekit-connector-bridge
-```
+This bridge is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbVirtualThermostatAddonHomeKitConnectorBridge` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 # FastyBird
 
@@ -48,19 +43,19 @@ FastyBird is an Open Source IOT solution built from decoupled components with po
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome
-contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome
+contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs reporting or send an [mail](mailto:code@fastybird.com)
 to us or you could reach us on [X newtwork](https://x.com/fastybird) for any idea that can improve the project.
 
 Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 

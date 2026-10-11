@@ -1,5 +1,5 @@
 <p align="center">
-	<img src="https://github.com/FastyBird/modbus-connector/blob/main/docs/_media/N4D8B08_relay.jpg" alt="Eletechsup N4D8B08 relay"/>
+	<img src="_media/N4D8B08_relay.jpg" alt="Eletechsup N4D8B08 relay"/>
 </p>
 
 # Eletechsup N4D8B08 - multifunction RS485 relay

@@ -15,7 +15,7 @@ extension for managing automation & notifications.
 
 - Triggers and their actions and conditions management
 - [{JSON:API}](https://jsonapi.org/) schemas for full api access
-- User access [check & validation](https://github.com/FastyBird/simple-auth)
+- User access [check & validation](../../Core/Core/README.md)
 - Multilingual
 - User interface integration via [Vue 3](https://vuejs.org) components
 - Integrated automator worker for PHP based automators
@@ -33,18 +33,14 @@ against [ECMAScript 6](https://www.w3schools.com/JS/js_es6.asp)
 
 ## Installation
 
-The best way to install **fastybird/triggers-module** is using [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/triggers-module
-```
+This module is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbTriggersModule` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 **@fastybird/triggers-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Documentation
 
 Learn how to configure and use triggers module and manage your automation & notifications
-in [documentation](https://github.com/FastyBird/triggers-module/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 
@@ -60,11 +56,11 @@ Documentation is available on [miniserver.fastybird.com/docs](https://miniserver
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs
 or [mail](mailto:code@fastybird.com) or [Tweet](https://twitter.com/fastybird) us for any idea that can improve the
 project.
 
@@ -72,7 +68,7 @@ Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 

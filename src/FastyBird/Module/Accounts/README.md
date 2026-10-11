@@ -14,7 +14,7 @@ extension for managing application accounts, sessions and access management.
 ### Features:
 
 - Accounts and their details management
-- Support for data [exchange bus](https://github.com/FastyBird/exchange)
+- Support for data [exchange bus](../../Core/Core/README.md)
 - [{JSON:API}](https://jsonapi.org/) schemas for full api access
 - User access check & validation
 - Multilingual
@@ -33,18 +33,14 @@ against [ECMAScript 6](https://www.w3schools.com/JS/js_es6.asp)
 
 ## Installation
 
-The best way to install **fastybird/accounts-module** is using [Composer](http://getcomposer.org/):
-
-```sh
-composer require fastybird/accounts-module
-```
+This module is part of [MiniServer](https://github.com/FastyBird/miniserver) and is registered by default (`fbAccountsModule` in [`config/common.neon`](../../../../config/common.neon)), so there is nothing to install.
 
 **@fastybird/accounts-module** is part of the [FastyBird MiniServer](https://github.com/FastyBird/miniserver) monorepo and is not published as a standalone npm package.
 
 ## Documentation
 
 Learn how to manage application accounts and manage access
-in [documentation](https://github.com/FastyBird/accounts-module/blob/main/docs/index.md).
+in [documentation](docs/index.md).
 
 # FastyBird
 
@@ -60,11 +56,11 @@ Documentation is available on [miniserver.fastybird.com/docs](https://miniserver
 
 ## Contributing
 
-The sources of this package are contained in the [FastyBird monorepo](https://github.com/FastyBird/fastybird). We welcome contributions for this package on [FastyBird/fastybird](https://github.com/FastyBird/).
+The sources of this package are contained in the [FastyBird MiniServer monorepo](https://github.com/FastyBird/miniserver). We welcome contributions for this package on [FastyBird/miniserver](https://github.com/FastyBird/miniserver).
 
 ## Feedback
 
-Use the [issue tracker](https://github.com/FastyBird/fastybird/issues) for bugs
+Use the [issue tracker](https://github.com/FastyBird/miniserver/issues) for bugs
 or [mail](mailto:code@fastybird.com) or [Tweet](https://twitter.com/fastybird) us for any idea that can improve the
 project.
 
@@ -72,7 +68,7 @@ Thank you for testing, reporting and contributing.
 
 ## Changelog
 
-For release info check [release page](https://github.com/FastyBird/fastybird/releases).
+For release info check [release page](https://github.com/FastyBird/miniserver/releases).
 
 ## Maintainers
 
