@@ -28,9 +28,10 @@ code IS, or only which package once shipped it:
 differ on purpose: `Application`, `Metadata` and `Tools` are rejected as namespace segments but
 allowed inside a class name, where they are ordinary English words.
 
-Enforced by `make naming`, which checks three places: namespace segments of every package
+Enforced by `make naming`. Its first three checks cover namespace segments of every package
 (`FastyBird\Core\...` and `FastyBird\<Type>\<Name>\...`), declared type names of every package,
-and `use FastyBird\Core\... as X` aliases anywhere in the repository. The package's own root is
+and `use FastyBird\Core\... as X` aliases anywhere in the repository; the others (import
+collisions, JS directories, interface and trait prefixes) are described where they apply. The package's own root is
 exempt from the segment check, because it is the package's name: `FastyBird\Plugin\WebServer` is
 the WebServer plugin, but `FastyBird\Plugin\WebServer\Tools` would be refused. The same holds for
 a package's tests: its helper classes are `FastyBird\<Type>\<Name>\Tests\Support` in `tests/support`,
@@ -84,8 +85,9 @@ alone was aliased 11 different ways, one per library the importing file happened
 
 The baseline may only shrink. A stale entry in it fails the gate. **As of E3.15 (#508), the
 last capability PR of the Core identity refactor's Epic E3, the Core-alias entries in the
-baseline were 0** -- every alias of a Core namespace anywhere in the repository was legal. The
-table above is kept as history, not current state.
+baseline were 0** -- every alias of a Core namespace anywhere in the repository was legal. **As
+of E7 the whole baseline is empty**, so it has nowhere left to shrink to and nothing may be added
+to it. The table above is kept as history, not current state.
 
 **Single-segment exception, generalized.** A name with only one segment (`use Casbin;`,
 `use Monolog;`, `use Exception;`) has no two-segment form, so it always stays bare, even when it
@@ -322,9 +324,9 @@ key path of the `fbCore` schema, and every tag constant. Its expected-violations
 Since E5.7 (#639) Core's services get their dependencies through their constructors. These rules
 are kept by review, not by a gate.
 
-- **No service locators.** Outside `Boot\`, no Core class takes `Nette\DI\Container` to look a
-  service up at runtime (`getByType()`, `getService()`). A lookup hides the dependency from the
-  DI graph and from `tools/di-snapshot.php`.
+- **No service locators.** Outside Core's `Boot\`, no class in any package takes
+  `Nette\DI\Container` to look a service up at runtime (`getByType()`, `getService()`). A lookup
+  hides the dependency from the DI graph and from `tools/di-snapshot.php`.
 - **A cycle is broken with `lazy`, not with a lookup.** When injecting a service would close a
   dependency cycle, its definition is made lazy (`$definition->lazy = true`). nette/di then
   returns a PHP 8.4 native lazy ghost, and builds the real service, its setups included, on first
@@ -375,13 +377,11 @@ through them. These rules are kept by review, not by a gate.
 
 **No file header.** The licence is in `LICENSE.md`, the author in `composer.json`, and the
 namespace supersedes `@package`. `@package`, `@subpackage`, `@author`, `@copyright`,
-`@license`, `@since`, `@created`, `@version` and `@date` are forbidden. **Enforced for Core:**
+`@license`, `@since`, `@created`, `@version` and `@date` are forbidden. **Enforced everywhere:**
 the coding standard (`tools/phpcs-ruleset.xml`) runs
-`SlevomatCodingStandard.Commenting.ForbiddenAnnotations`, and `tools/phpcs.xml` excludes nothing
-under `src/FastyBird/Core/Core`; `make cs` rejects any of these annotations there, and equally in
-the repository-root `tests/` and `bin/`, which `make cs` scans as well (#610). The other six
-package types (`Addon`, `Automator`, `Bridge`, `Connector`, `Module`, `Plugin`) are still exempt
-via a shrink-only `<exclude-pattern>` list in `tools/phpcs.xml`, owned by E7 (#462).
+`SlevomatCodingStandard.Commenting.ForbiddenAnnotations`, and `tools/phpcs.xml` excludes no
+package from it; `make cs` rejects any of these annotations in all 29 packages and their tests,
+and equally in the repository-root `tests/` and `bin/`, which `make cs` scans as well (#610).
 
 - `@var`, `@param`, `@return`: omit where they only restate a native type. Keep for array
   shapes, generics and `@template`.
@@ -414,15 +414,32 @@ Core's `Http\Routing\` already shows why a name is needed rather than a mechanic
 collide with the concrete class of the same name, so each interface needs a role name instead
 — what it does, not what implements it.
 
-### Core's remaining interfaces
+### Interfaces: K1–K4
 
-Core keeps an interface only for one of the reasons K1–K4 of Epic #460 §3.1: K1, two or more
-production implementations; K2, an implementation outside Core; K3, a substitution point
-(configuration, a `findByType()` or tag collection, or a Nette `setImplement()` factory); K4, a
-third-party contract. Test doubles do not count, and an implementation that extends the sole
-other implementation does not count towards K1 or K2 (rule R1, E5 census X3). Every interface
-declared in `src/FastyBird/Core/Core/src` is listed below, by capability. Implementer counts are
-transitive and exclude `tests/`. None of them is kept for K4.
+Every package keeps an interface only for one of the reasons K1–K4 of Epic #460 §3.1: K1, two or
+more production implementations; K2, an implementation outside the package; K3, a substitution
+point (configuration, a `findByType()` or tag collection, or a Nette `setImplement()` factory);
+K4, a third-party contract. Test doubles do not count, and an implementation that extends the
+sole other implementation does not count towards K1 or K2 (rule R1, E5 census X3). The rule is
+the same in all 29 packages (E7, #462 D6).
+
+- **K1 counts implementations of the same contract across a package family**, not only inside
+  one package (#707). Rule R1 alone would count the five `Writers\Writer` interfaces of the
+  NsPanel, Sonoff, Tuya, Viera and Virtual connectors, and Triggers' `Entities\EntityParams`, as
+  one implementation each, because every implementer descends from one abstract root
+  (`Writers\Periodic`, `Entities\Triggers\Trigger`). They are kept: the same contract is
+  implemented by several classes, in several packages for the writers.
+- **A marker interface is kept while it has an implementer.** A package's `Exceptions\Exception`
+  marker is kept as long as at least one exception implements it: catching by package is the
+  contract it expresses. A marker with no implementer and no `catch` site is dead code and is
+  deleted (`Bridge\DevicesModuleUiModule\Exceptions\Exception` was the one case, #462 D6).
+- **An interface with one local implementer and no K3 use is collapsed**: a `findByType()`, a
+  tag, a `setImplement()` factory or a NEON reference is a K3 use; its absence is not.
+
+Every interface declared in `src/FastyBird/Core/Core/src` is listed below, by capability.
+Implementer counts are transitive and exclude `tests/`. None of them is kept for K4. A package's
+own interfaces are kept by the same rule and justified in the E7 census
+([2026-10-10-e7-census.md](./superpowers/plans/2026-10-10-e7-census.md)), not in a table here.
 
 | Interface (FQCN under `FastyBird\Core\`) | Kept for | Evidence |
 |---|---|---|
@@ -467,12 +484,13 @@ A new interface in Core needs a row in this table, with its reason, in the PR th
 ## Code
 
 - `final` by default. Drop it only for a class that is actually extended.
-- No `Nette\SmartObject`. Typed properties make it redundant.
-- `#[\Override]` on every genuine override.
+- No `Nette\SmartObject`. Typed properties make it redundant. Enforced by `make cs`
+  (`SlevomatCodingStandard.PHP.ForbiddenClasses`, `forbiddenTraits`), repository-wide.
+- `#[\Override]` on every genuine override, interface methods included. Enforced by
+  `make phpstan` (`checkMissingOverrideMethodAttribute`, in both configurations), repository-wide.
 - `readonly class` where every property is readonly.
 - Typed class constants, enforced by `SlevomatCodingStandard.TypeHints.ClassConstantTypeHint`.
-  **Active for `src/FastyBird/Core/Core` only** — the other 28 packages are excluded in
-  `tools/phpcs.xml` until E7 types their remaining 1,419 constants across 563 files.
+  Active in all 29 packages; `tools/phpcs.xml` excludes none.
 - Constructor property promotion, enforced by `SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion`.
 - **A get/set pair is a property, not two methods** (E5.12, #644). Where a getter only returns
   a property and a setter only assigns it, declare the property and drop both methods. Kept by
