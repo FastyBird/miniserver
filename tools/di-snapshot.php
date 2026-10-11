@@ -1765,7 +1765,7 @@ function fbDiSnapshotApplyDefinitionRules(array $snapshot, array $rules, array &
 		return $snapshot;
 	}
 
-	// Not `?: '?'`, as fbDiSnapshotCompare() writes it: json_encode(0) is the falsy string "0"
+	// Not `?: '?'`: json_encode(0) is the falsy string "0", which would print as "?"
 	$json = static function (mixed $value): string {
 		$encoded = json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
 
@@ -2043,7 +2043,12 @@ function fbDiSnapshotCompare(array $base, array $head, array $allowedMoves = [])
 {
 	$lines = [];
 	$info = [];
-	$json = static fn (mixed $value): string => json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION) ?: '?';
+	// Not `?: '?'`: json_encode(0) is the falsy string "0", which would print as "?"
+	$json = static function (mixed $value): string {
+		$encoded = json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
+
+		return $encoded === false ? '?' : $encoded;
+	};
 
 	if (($base['compiled'] ?? false) !== true || ($head['compiled'] ?? false) !== true) {
 		if (($base['compiled'] ?? false) === ($head['compiled'] ?? false) && ($base['error'] ?? null) === ($head['error'] ?? null)) {

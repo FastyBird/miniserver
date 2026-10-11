@@ -118,8 +118,16 @@ discriminators: ## Check every Doctrine inheritance root declares an explicit di
 # when the Core identity refactor started, in 131 distinct forms, and they existed purely
 # because nothing checked. tools/naming-baseline.txt is empty now that every package has been
 # reached; nothing may be added to it, and a stale entry fails the gate.
-naming: ## Check no file names a library Core was assembled from, and no interface or trait carries an I or T prefix
+#
+# The second line is the legacy file-header check (#734): tools/strip-file-headers.php --check
+# exits 1 while a header carrying the nine forbidden tags remains in a first-party file. PHP
+# headers are also guarded by the ForbiddenAnnotations sniff in `make cs`, but that sniff only
+# sees PHP, so the `.neon` headers have no other guard. It is plain PHP as well, so it runs in the
+# same CI step, and the line sits here (not in `cs`) because `make cs` passes ARGS to phpcs. ARGS
+# goes to check-naming.php only.
+naming: ## Check no file names a library Core was assembled from, no interface or trait carries an I or T prefix, and no legacy file header remains
 	$(PRE_PHP) php tools/check-naming.php $(ARGS)
+	$(PRE_PHP) php tools/strip-file-headers.php --check
 
 phpstan: ## Analyse code with PHPStan
 	mkdir -p var/tools
