@@ -26,7 +26,7 @@ use function str_contains;
 /**
  * FastyBird MQTT v1 client
  */
-final class FbMqttV1 implements Client
+final readonly class FbMqttV1 implements Client
 {
 
 	public const string MQTT_SYSTEM_TOPIC = '$SYS/broker/log/#';
@@ -45,11 +45,11 @@ final class FbMqttV1 implements Client
 	private const string NEW_CLIENT_MESSAGE_PAYLOAD = 'New client connected from';
 
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
-		private readonly API\ConnectionManager $connectionManager,
-		private readonly FbMqtt\Logger $logger,
-		private readonly Queue\Queue $queue,
-		private readonly Helpers\MessageBuilder $messageBuilder,
+		private Documents\Connectors\Connector $connector,
+		private API\ConnectionManager $connectionManager,
+		private FbMqtt\Logger $logger,
+		private Queue\Queue $queue,
+		private Helpers\MessageBuilder $messageBuilder,
 	)
 	{
 	}

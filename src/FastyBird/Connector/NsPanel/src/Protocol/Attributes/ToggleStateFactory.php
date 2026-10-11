@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel toggle state attribute factory
  */
-class ToggleStateFactory implements AttributeFactory
+final class ToggleStateFactory implements AttributeFactory
 {
 
 	#[Override]

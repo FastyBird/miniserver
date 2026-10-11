@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel color red attribute factory
  */
-class ColorRedFactory implements AttributeFactory
+final class ColorRedFactory implements AttributeFactory
 {
 
 	#[Override]

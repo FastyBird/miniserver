@@ -14,7 +14,7 @@ use function assert;
 /**
  * HAP channel dynamic property characteristic factory
  */
-class MappedPropertyFactory implements CharacteristicFactory
+final class MappedPropertyFactory implements CharacteristicFactory
 {
 
 	/**

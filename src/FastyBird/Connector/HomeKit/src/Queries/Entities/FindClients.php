@@ -15,7 +15,7 @@ use Ramsey\Uuid;
  * @template T of HomeKitEntities\Clients\Client
  * @extends  Query\QueryObject<T>
  */
-class FindClients extends Query\QueryObject
+final class FindClients extends Query\QueryObject
 {
 
 	/** @var array<Closure(ORM\QueryBuilder $qb): void> */

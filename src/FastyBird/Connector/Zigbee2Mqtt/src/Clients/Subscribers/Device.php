@@ -24,7 +24,7 @@ use function strval;
 /**
  * Zigbee2MQTT MQTT devices messages subscriber
  */
-readonly class Device
+final readonly class Device
 {
 
 	public function __construct(

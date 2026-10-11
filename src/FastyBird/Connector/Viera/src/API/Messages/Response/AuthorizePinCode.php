@@ -9,7 +9,7 @@ use Override;
 /**
  * Authorize pin code message
  */
-readonly class AuthorizePinCode implements API\Messages\Message
+final readonly class AuthorizePinCode implements API\Messages\Message
 {
 
 	public function __construct(

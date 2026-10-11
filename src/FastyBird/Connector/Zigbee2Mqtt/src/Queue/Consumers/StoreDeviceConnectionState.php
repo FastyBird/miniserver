@@ -28,21 +28,21 @@ use function React\Async\await;
 /**
  * Store device connection state message consumer
  */
-final class StoreDeviceConnectionState implements Queue\Consumer
+final readonly class StoreDeviceConnectionState implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Zigbee2Mqtt\Helpers\Devices\Bridge $bridgeHelper,
-		private readonly Zigbee2Mqtt\Helpers\Devices\SubDevice $subDeviceHelper,
-		private readonly Zigbee2Mqtt\Logger $logger,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		private readonly DevicesUtilities\DeviceConnection $deviceConnectionManager,
-		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private Zigbee2Mqtt\Helpers\Devices\Bridge $bridgeHelper,
+		private Zigbee2Mqtt\Helpers\Devices\SubDevice $subDeviceHelper,
+		private Zigbee2Mqtt\Logger $logger,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private DevicesUtilities\DeviceConnection $deviceConnectionManager,
+		private DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
 	)
 	{
 	}

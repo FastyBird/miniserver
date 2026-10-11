@@ -24,19 +24,19 @@ use function intval;
 /**
  * Write state to device message consumer
  */
-final class WriteChannelPropertyState implements Queue\Consumer
+final readonly class WriteChannelPropertyState implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Protocol\Driver $accessoryDriver,
-		private readonly Clients\Subscriber $subscriber,
-		private readonly HomeKit\Logger $logger,
-		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private Protocol\Driver $accessoryDriver,
+		private Clients\Subscriber $subscriber,
+		private HomeKit\Logger $logger,
+		private DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 	)
 	{
 	}

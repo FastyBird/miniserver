@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel press attribute factory
  */
-class PressFactory implements AttributeFactory
+final class PressFactory implements AttributeFactory
 {
 
 	#[Override]

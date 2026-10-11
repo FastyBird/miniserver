@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Range maximal value configuration
  */
-class RangeMax extends Configuration
+final class RangeMax extends Configuration
 {
 
 	public function __construct(

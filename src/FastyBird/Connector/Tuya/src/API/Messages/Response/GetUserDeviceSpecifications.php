@@ -9,7 +9,7 @@ use Override;
 /**
  * OpenAPI get user device specifications message
  */
-readonly class GetUserDeviceSpecifications implements API\Messages\Message
+final readonly class GetUserDeviceSpecifications implements API\Messages\Message
 {
 
 	public function __construct(

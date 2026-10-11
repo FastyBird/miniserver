@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * NS panel third party device
  */
-class ThirdPartyDevice extends Device
+final class ThirdPartyDevice extends Device
 {
 
 	private bool $provisioned = false;

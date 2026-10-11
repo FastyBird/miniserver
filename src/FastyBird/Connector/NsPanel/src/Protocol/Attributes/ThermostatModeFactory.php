@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel thermostat mode attribute factory
  */
-class ThermostatModeFactory implements AttributeFactory
+final class ThermostatModeFactory implements AttributeFactory
 {
 
 	#[Override]

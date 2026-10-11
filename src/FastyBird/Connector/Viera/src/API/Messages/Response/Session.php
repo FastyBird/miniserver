@@ -9,7 +9,7 @@ use Override;
 /**
  * Authorize pin code message
  */
-class Session implements API\Messages\Message
+final class Session implements API\Messages\Message
 {
 
 	public function __construct(

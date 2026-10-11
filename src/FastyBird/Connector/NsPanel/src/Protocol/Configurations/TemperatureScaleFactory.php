@@ -13,7 +13,7 @@ use function is_string;
 /**
  * NS panel temperature scale capability configuration factory
  */
-class TemperatureScaleFactory implements ConfigurationFactory
+final class TemperatureScaleFactory implements ConfigurationFactory
 {
 
 	#[Override]

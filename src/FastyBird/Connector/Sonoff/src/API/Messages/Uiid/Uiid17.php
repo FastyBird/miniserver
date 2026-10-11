@@ -10,7 +10,7 @@ use function array_merge;
 /**
  * UIID17 params entity
  */
-final class Uiid17 implements Uuid
+final readonly class Uiid17 implements Uuid
 {
 
 	use TDevice {
@@ -23,49 +23,49 @@ final class Uiid17 implements Uuid
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('sledOnline')]
-		private readonly string|null $statusLed,
+		private string|null $statusLed,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('fwVersion')]
-		private readonly string|null $firmwareVersion,
+		private string|null $firmwareVersion,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('chipid')]
-		private readonly string|null $chipId,
+		private string|null $chipId,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $ssid,
+		private string|null $ssid,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $rssi,
+		private int|null $rssi,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $fan,
+		private string|null $fan,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::SPEED_SLOW, self::SPEED_MODERATE, self::SPEED_FAST]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $speed,
+		private string|null $speed,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::MODE_NORMAL, self::MODE_NATURAL, self::MODE_SLEEP]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $mode,
+		private string|null $mode,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $shake,
+		private string|null $shake,
 	)
 	{
 	}

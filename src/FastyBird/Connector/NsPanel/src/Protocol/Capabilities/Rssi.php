@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device RSSI capability
  */
-class Rssi extends Capability
+final class Rssi extends Capability
 {
 
 	/**

@@ -9,7 +9,7 @@ use Override;
 /**
  * Switch state entity
  */
-final class SwitchState implements API\Messages\Message
+final readonly class SwitchState implements API\Messages\Message
 {
 
 	private const string VALUE_ON = 'on';
@@ -18,9 +18,9 @@ final class SwitchState implements API\Messages\Message
 
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_ON, self::VALUE_OFF])]
-		private readonly string $switch,
+		private string $switch,
 		#[ObjectMapper\Rules\IntValue(min: 0, max: 10, unsigned: true)]
-		private readonly int $outlet,
+		private int $outlet,
 	)
 	{
 	}

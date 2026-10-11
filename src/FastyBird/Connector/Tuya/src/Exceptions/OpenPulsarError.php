@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Tuya\Exceptions;
 
 use RuntimeException;
 
-class OpenPulsarError extends RuntimeException implements Exception
+final class OpenPulsarError extends RuntimeException implements Exception
 {
 
 }

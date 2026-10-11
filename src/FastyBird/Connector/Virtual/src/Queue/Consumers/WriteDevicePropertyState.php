@@ -32,7 +32,7 @@ use function React\Async\await;
 /**
  * Write state to device message consumer
  */
-final class WriteDevicePropertyState implements Queue\Consumer
+final readonly class WriteDevicePropertyState implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
@@ -40,15 +40,15 @@ final class WriteDevicePropertyState implements Queue\Consumer
 	private const float WRITE_PENDING_DELAY = 2_000.0;
 
 	public function __construct(
-		private readonly Queue\Queue $queue,
-		private readonly Drivers\DriversManager $driversManager,
-		private readonly Virtual\Helpers\MessageBuilder $messageBuilder,
-		private readonly Virtual\Logger $logger,
-		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly ClockInterface $clock,
+		private Queue\Queue $queue,
+		private Drivers\DriversManager $driversManager,
+		private Virtual\Helpers\MessageBuilder $messageBuilder,
+		private Virtual\Logger $logger,
+		private DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
+		private ClockInterface $clock,
 	)
 	{
 	}

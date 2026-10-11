@@ -11,7 +11,7 @@ use function array_key_exists;
 /**
  * Digital registers reading response
  */
-final class ReadDigitalInputs implements API\Messages\Message
+final readonly class ReadDigitalInputs implements API\Messages\Message
 {
 
 	use Nette\SmartObject;
@@ -20,10 +20,10 @@ final class ReadDigitalInputs implements API\Messages\Message
 	 * @param array<int, bool> $registers
 	 */
 	public function __construct(
-		private readonly int $station,
-		private readonly Types\ModbusFunction $function,
-		private readonly int $count,
-		private readonly array $registers,
+		private int $station,
+		private Types\ModbusFunction $function,
+		private int $count,
+		private array $registers,
 	)
 	{
 	}

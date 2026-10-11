@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Thermostat mode attribute
  */
-class ThermostatMode extends Attribute
+final class ThermostatMode extends Attribute
 {
 
 	public function __construct(

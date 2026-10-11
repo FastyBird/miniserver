@@ -9,7 +9,7 @@ use Override;
 /**
  * Device specs info message
  */
-class DeviceSpecs implements API\Messages\Message
+final class DeviceSpecs implements API\Messages\Message
 {
 
 	public function __construct(

@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Tuya\Exceptions;
 
 use RuntimeException;
 
-class LocalApiTimeout extends RuntimeException implements Exception
+final class LocalApiTimeout extends RuntimeException implements Exception
 {
 
 }

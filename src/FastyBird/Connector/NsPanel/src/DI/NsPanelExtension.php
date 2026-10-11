@@ -39,7 +39,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * NS Panel connector
  */
-class NsPanelExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class NsPanelExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbNsPanelConnector';

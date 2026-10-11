@@ -10,7 +10,7 @@ use function array_map;
 /**
  * Device apps info message
  */
-readonly class DeviceApps implements API\Messages\Message
+final readonly class DeviceApps implements API\Messages\Message
 {
 
 	/**

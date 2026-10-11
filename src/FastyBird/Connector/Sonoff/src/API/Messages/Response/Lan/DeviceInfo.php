@@ -10,7 +10,7 @@ use function array_map;
 /**
  * Device info entity
  */
-final class DeviceInfo implements API\Messages\Message
+final readonly class DeviceInfo implements API\Messages\Message
 {
 
 	private const string VALUE_ON = 'on';
@@ -27,87 +27,87 @@ final class DeviceInfo implements API\Messages\Message
 	public function __construct(
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		#[ObjectMapper\Modifiers\FieldName('deviceid')]
-		private readonly string $id,
+		private string $id,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
-		private readonly string $ssid,
+		private string $ssid,
 		#[ObjectMapper\Rules\BoolValue()]
 		#[ObjectMapper\Modifiers\FieldName('otaUnlock')]
-		private readonly bool $otaEnabled,
+		private bool $otaEnabled,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		#[ObjectMapper\Modifiers\FieldName('fwVersion')]
-		private readonly string $firmwareVersion,
+		private string $firmwareVersion,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		#[ObjectMapper\Modifiers\FieldName('bssid')]
-		private readonly string $bssid,
+		private string $bssid,
 		#[ObjectMapper\Rules\IntValue()]
 		#[ObjectMapper\Modifiers\FieldName('signalStrength')]
-		private readonly int $rssi,
+		private int $rssi,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $switch = null,
+		private string|null $switch = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF, self::VALUE_STAY]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $startup = null,
+		private string|null $startup = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly string|null $pulse = null,
+		private string|null $pulse = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(500, 3_599_500, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $pulseWidth = null,
+		private int|null $pulseWidth = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(0, 100, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $brightness = null,
+		private int|null $brightness = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(0, 255, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
-		private readonly int|null $mode = null,
+		private int|null $mode = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(0, 254, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('brightmin')]
-		private readonly int|null $minimumBrightness = null,
+		private int|null $minimumBrightness = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(1, 255, true),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('brightmax')]
-		private readonly int|null $maximumBrightness = null,
+		private int|null $maximumBrightness = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('sledOnline')]
-		private readonly string|null $statusLed = null,
+		private string|null $statusLed = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: SwitchState::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('switches')]
-		private readonly array $switchesStates = [],
+		private array $switchesStates = [],
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: SwitchConfiguration::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('configure')]
-		private readonly array $switchesConfiguration = [],
+		private array $switchesConfiguration = [],
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: SwitchPulse::class),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('pulses')]
-		private readonly array $switchesPulses = [],
+		private array $switchesPulses = [],
 	)
 	{
 	}

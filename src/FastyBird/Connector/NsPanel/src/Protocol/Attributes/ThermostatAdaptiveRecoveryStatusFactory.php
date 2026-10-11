@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel thermostat adaptive recovery status attribute factory
  */
-class ThermostatAdaptiveRecoveryStatusFactory implements AttributeFactory
+final class ThermostatAdaptiveRecoveryStatusFactory implements AttributeFactory
 {
 
 	#[Override]

@@ -14,7 +14,7 @@ use function is_bool;
 /**
  * Property state
  */
-readonly class State implements Message
+final readonly class State implements Message
 {
 
 	public function __construct(

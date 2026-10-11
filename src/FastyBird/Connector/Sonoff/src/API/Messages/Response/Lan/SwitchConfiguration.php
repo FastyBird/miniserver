@@ -9,7 +9,7 @@ use Override;
 /**
  * Switch configuration entity
  */
-final class SwitchConfiguration implements API\Messages\Message
+final readonly class SwitchConfiguration implements API\Messages\Message
 {
 
 	private const string VALUE_ON = 'on';
@@ -20,9 +20,9 @@ final class SwitchConfiguration implements API\Messages\Message
 
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_ON, self::VALUE_OFF, self::VALUE_STAY])]
-		private readonly string $startup,
+		private string $startup,
 		#[ObjectMapper\Rules\IntValue(min: 0, max: 10, unsigned: true)]
-		private readonly int $outlet,
+		private int $outlet,
 	)
 	{
 	}

@@ -29,19 +29,19 @@ use function React\Async\await;
 /**
  * Store device property state message consumer
  */
-final class StoreDevicePropertyState implements Queue\Consumer
+final readonly class StoreDevicePropertyState implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Virtual\Logger $logger,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		private readonly Helpers\Database $databaseHelper,
-		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
+		private Virtual\Logger $logger,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		private Helpers\Database $databaseHelper,
+		private DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
 	)
 	{
 	}

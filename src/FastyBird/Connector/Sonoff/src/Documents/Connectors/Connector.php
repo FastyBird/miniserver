@@ -8,7 +8,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Connectors\Connector::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Connectors\Connector::TYPE)]
-class Connector extends DevicesDocuments\Connectors\Connector
+final class Connector extends DevicesDocuments\Connectors\Connector
 {
 
 	public static function getType(): string

@@ -9,7 +9,7 @@ use FastyBird\Core\Http\Routing;
 /**
  * Connector router configuration
  */
-class Router extends Routing\Router
+final class Router extends Routing\Router
 {
 
 	/**

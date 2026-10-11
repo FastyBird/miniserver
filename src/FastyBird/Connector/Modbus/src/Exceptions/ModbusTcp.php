@@ -12,7 +12,7 @@ use function sprintf;
 /**
  * Modbus TCP communication exception
  */
-class ModbusTcp extends PhpException implements Exception
+final class ModbusTcp extends PhpException implements Exception
 {
 
 	public const array EXCEPTION_CODES = [

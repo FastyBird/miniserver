@@ -10,15 +10,15 @@ use Override;
 /**
  * Write single coil register response
  */
-final class WriteCoil implements API\Messages\Message
+final readonly class WriteCoil implements API\Messages\Message
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly int $station,
-		private readonly Types\ModbusFunction $function,
-		private readonly bool $value,
+		private int $station,
+		private Types\ModbusFunction $function,
+		private bool $value,
 	)
 	{
 	}

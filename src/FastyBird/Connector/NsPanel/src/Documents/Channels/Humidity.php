@@ -8,7 +8,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Humidity::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Humidity::TYPE)]
-class Humidity extends Channel
+final class Humidity extends Channel
 {
 
 	public static function getType(): string

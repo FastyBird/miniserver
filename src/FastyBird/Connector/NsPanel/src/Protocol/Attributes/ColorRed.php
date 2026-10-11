@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Red color attribute
  */
-class ColorRed extends Attribute
+final class ColorRed extends Attribute
 {
 
 	public function __construct(

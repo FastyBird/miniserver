@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Toggle attribute
  */
-class ToggleState extends Attribute
+final class ToggleState extends Attribute
 {
 
 	public function __construct(

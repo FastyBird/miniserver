@@ -11,12 +11,12 @@ use Override;
 /**
  * Store bridge groups list message consumer
  */
-final class StoreBridgeGroups implements Queue\Consumer
+final readonly class StoreBridgeGroups implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
-	public function __construct(private readonly Zigbee2Mqtt\Logger $logger)
+	public function __construct(private Zigbee2Mqtt\Logger $logger)
 	{
 	}
 

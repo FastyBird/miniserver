@@ -11,7 +11,7 @@ use function preg_match;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Startup::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Startup::TYPE)]
-class Startup extends Channel
+final class Startup extends Channel
 {
 
 	public static function getType(): string

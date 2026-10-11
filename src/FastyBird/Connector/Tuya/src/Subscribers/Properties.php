@@ -25,14 +25,14 @@ use ReflectionException;
 /**
  * Doctrine entities events
  */
-final class Properties implements Common\EventSubscriber
+final readonly class Properties implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $propertiesManager,
+		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesManager $propertiesManager,
 	)
 	{
 	}

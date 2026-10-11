@@ -32,7 +32,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Tuya connector
  */
-class TuyaExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class TuyaExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbTuyaConnector';

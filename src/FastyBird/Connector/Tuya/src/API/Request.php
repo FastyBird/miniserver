@@ -10,7 +10,7 @@ use RuntimeException;
 /**
  * HTTP request
  */
-class Request extends Psr7\Request
+final class Request extends Psr7\Request
 {
 
 	/**

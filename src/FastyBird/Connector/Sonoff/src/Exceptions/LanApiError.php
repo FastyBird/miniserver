@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Sonoff\Exceptions;
 
 use RuntimeException;
 
-class LanApiError extends RuntimeException implements Exception
+final class LanApiError extends RuntimeException implements Exception
 {
 
 }

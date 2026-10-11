@@ -16,7 +16,7 @@ use function preg_match;
 /**
  * NS panel detect capability factory
  */
-class DetectFactory implements CapabilityFactory
+final class DetectFactory implements CapabilityFactory
 {
 
 	#[Override]

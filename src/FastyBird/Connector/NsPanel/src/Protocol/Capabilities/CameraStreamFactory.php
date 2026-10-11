@@ -16,7 +16,7 @@ use function preg_match;
 /**
  * NS panel camera stream capability factory
  */
-class CameraStreamFactory implements CapabilityFactory
+final class CameraStreamFactory implements CapabilityFactory
 {
 
 	#[Override]

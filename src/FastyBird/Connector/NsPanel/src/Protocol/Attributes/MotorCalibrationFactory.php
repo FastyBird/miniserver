@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel motor calibration attribute factory
  */
-class MotorCalibrationFactory implements AttributeFactory
+final class MotorCalibrationFactory implements AttributeFactory
 {
 
 	#[Override]

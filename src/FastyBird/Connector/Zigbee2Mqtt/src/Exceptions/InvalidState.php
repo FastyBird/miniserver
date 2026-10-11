@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Zigbee2Mqtt\Exceptions;
 
 use RuntimeException;
 
-class InvalidState extends RuntimeException implements Exception
+final class InvalidState extends RuntimeException implements Exception
 {
 
 }

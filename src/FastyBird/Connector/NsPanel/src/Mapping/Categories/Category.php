@@ -10,7 +10,7 @@ use function array_map;
 /**
  * Basic category interface
  */
-readonly class Category implements Mapping\Mapping
+final readonly class Category implements Mapping\Mapping
 {
 
 	/**

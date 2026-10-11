@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Brightness attribute
  */
-class Brightness extends Attribute
+final class Brightness extends Attribute
 {
 
 	public function __construct(

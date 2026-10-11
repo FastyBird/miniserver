@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Shelly\Exceptions;
 
 use RuntimeException;
 
-class WsCallTimeout extends RuntimeException implements Exception
+final class WsCallTimeout extends RuntimeException implements Exception
 {
 
 }

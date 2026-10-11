@@ -29,25 +29,25 @@ use function in_array;
 /**
  * Store NS Panel sub-device message consumer
  */
-final class StoreSubDevice implements Queue\Consumer
+final readonly class StoreSubDevice implements Queue\Consumer
 {
 
 	use DeviceProperty;
 	use Nette\SmartObject;
 
 	public function __construct(
-		protected readonly NsPanel\Logger $logger,
-		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		protected readonly PersistenceHelpers\Database $databaseHelper,
-		private readonly Mapping\Builder $mappingBuilder,
-		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
-		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
-		private readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
+		protected NsPanel\Logger $logger,
+		protected DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		protected PersistenceHelpers\Database $databaseHelper,
+		private Mapping\Builder $mappingBuilder,
+		private DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
+		private DevicesModels\Entities\Devices\DevicesManager $devicesManager,
+		private DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		private DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
+		private DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		private DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
 	)
 	{
 	}

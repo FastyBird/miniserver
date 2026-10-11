@@ -13,7 +13,7 @@ use function is_string;
 /**
  * NS panel supported detection upper set point scale capability configuration factory
  */
-class SupportedDetectionUpperSetPointScaleFactory implements ConfigurationFactory
+final class SupportedDetectionUpperSetPointScaleFactory implements ConfigurationFactory
 {
 
 	#[Override]

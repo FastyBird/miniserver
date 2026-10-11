@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel battery attribute factory
  */
-class BrightnessFactory implements AttributeFactory
+final class BrightnessFactory implements AttributeFactory
 {
 
 	#[Override]

@@ -10,7 +10,7 @@ use Override;
 /**
  * Analog registers reading response
  */
-final class ReadAnalogInputs implements API\Messages\Message
+final readonly class ReadAnalogInputs implements API\Messages\Message
 {
 
 	use Nette\SmartObject;
@@ -19,10 +19,10 @@ final class ReadAnalogInputs implements API\Messages\Message
 	 * @param array<int> $registers
 	 */
 	public function __construct(
-		private readonly int $station,
-		private readonly Types\ModbusFunction $function,
-		private readonly int $count,
-		private readonly array $registers,
+		private int $station,
+		private Types\ModbusFunction $function,
+		private int $count,
+		private array $registers,
 	)
 	{
 	}

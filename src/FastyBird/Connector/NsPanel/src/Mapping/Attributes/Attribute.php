@@ -11,7 +11,7 @@ use function array_filter;
 /**
  * Basic attribute interface
  */
-readonly class Attribute implements Mapping\Mapping
+final readonly class Attribute implements Mapping\Mapping
 {
 
 	/**

@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device press capability
  */
-class Press extends Capability
+final class Press extends Capability
 {
 
 	/**

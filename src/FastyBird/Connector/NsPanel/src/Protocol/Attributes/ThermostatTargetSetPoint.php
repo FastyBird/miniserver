@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Thermostat feature attribute
  */
-class ThermostatTargetSetPoint extends Attribute
+final class ThermostatTargetSetPoint extends Attribute
 {
 
 	public function __construct(

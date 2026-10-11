@@ -18,7 +18,7 @@ use function preg_match;
 /**
  * Basic capability interface
  */
-readonly class Capability implements Mapping\Mapping
+final readonly class Capability implements Mapping\Mapping
 {
 
 	/**

@@ -15,7 +15,7 @@ use function assert;
 /**
  * Clients entities manager
  */
-class ClientsManager
+final class ClientsManager
 {
 
 	use Nette\SmartObject;

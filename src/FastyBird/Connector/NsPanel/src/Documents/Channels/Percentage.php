@@ -8,7 +8,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Percentage::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Percentage::TYPE)]
-class Percentage extends Channel
+final class Percentage extends Channel
 {
 
 	public static function getType(): string

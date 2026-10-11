@@ -37,7 +37,7 @@ use function unpack;
 /**
  * Modbus TCP API interface
  */
-class Tcp
+final readonly class Tcp
 {
 
 	use Nette\SmartObject;
@@ -52,9 +52,7 @@ class Tcp
 
 	private const float CONNECTION_TIMEOUT = 0.2;
 
-	public function __construct(
-		private readonly EventLoop\LoopInterface $eventLoop,
-	)
+	public function __construct(private EventLoop\LoopInterface $eventLoop)
 	{
 	}
 

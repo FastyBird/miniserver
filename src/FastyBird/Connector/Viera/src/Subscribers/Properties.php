@@ -32,16 +32,16 @@ use function array_merge;
 /**
  * Doctrine entities events
  */
-final class Properties implements Common\EventSubscriber
+final readonly class Properties implements Common\EventSubscriber
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Helpers\ChannelProperty $channelProperty,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		private readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		private Helpers\ChannelProperty $channelProperty,
+		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		private DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		private DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 	)
 	{
 	}

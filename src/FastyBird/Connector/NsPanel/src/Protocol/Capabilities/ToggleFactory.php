@@ -16,7 +16,7 @@ use function preg_match;
 /**
  * NS panel toggle capability factory
  */
-class ToggleFactory implements CapabilityFactory
+final class ToggleFactory implements CapabilityFactory
 {
 
 	#[Override]

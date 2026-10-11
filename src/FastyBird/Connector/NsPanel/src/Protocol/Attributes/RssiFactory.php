@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel RSSI attribute factory
  */
-class RssiFactory implements AttributeFactory
+final class RssiFactory implements AttributeFactory
 {
 
 	#[Override]

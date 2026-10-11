@@ -40,7 +40,7 @@ use function strval;
 /**
  * Write state to device message consumer
  */
-final class WriteChannelPropertyState implements Queue\Consumer
+final readonly class WriteChannelPropertyState implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
@@ -48,17 +48,17 @@ final class WriteChannelPropertyState implements Queue\Consumer
 	private const float WRITE_PENDING_DELAY = 2_000.0;
 
 	public function __construct(
-		private readonly Queue\Queue $queue,
-		private readonly API\ConnectionManager $connectionManager,
-		private readonly Helpers\MessageBuilder $messageBuilder,
-		private readonly Helpers\Device $deviceHelper,
-		private readonly Viera\Logger $logger,
-		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		private readonly ClockInterface $clock,
+		private Queue\Queue $queue,
+		private API\ConnectionManager $connectionManager,
+		private Helpers\MessageBuilder $messageBuilder,
+		private Helpers\Device $deviceHelper,
+		private Viera\Logger $logger,
+		private DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Repository $channelsConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
+		private ClockInterface $clock,
 	)
 	{
 	}

@@ -9,7 +9,7 @@ use Override;
 /**
  * Event data message
  */
-readonly class Event implements API\Messages\Message
+final readonly class Event implements API\Messages\Message
 {
 
 	public function __construct(

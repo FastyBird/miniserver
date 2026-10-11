@@ -25,13 +25,13 @@ use function is_string;
 /**
  * Useful channel helpers
  */
-final class Channel
+final readonly class Channel
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		private DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
 	)
 	{
 	}

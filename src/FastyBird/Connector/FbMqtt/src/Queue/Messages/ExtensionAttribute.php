@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * Device extension attribute
  */
-final class ExtensionAttribute implements Message
+final readonly class ExtensionAttribute implements Message
 {
 
 	public const string MAC_ADDRESS = 'mac-address';
@@ -34,17 +34,17 @@ final class ExtensionAttribute implements Message
 
 	public function __construct(
 		#[Rules\UuidValue()]
-		private readonly Uuid\UuidInterface $connector,
+		private Uuid\UuidInterface $connector,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
-		private readonly string $device,
+		private string $device,
 		#[ObjectMapper\Rules\InstanceOfValue(type: Types\ExtensionType::class)]
-		private readonly Types\ExtensionType $extension,
+		private Types\ExtensionType $extension,
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: self::ALLOWED_PARAMETERS)]
-		private readonly string $parameter,
+		private string $parameter,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
-		private readonly string $value,
+		private string $value,
 		#[ObjectMapper\Rules\BoolValue()]
-		private readonly bool $retained = false,
+		private bool $retained = false,
 	)
 	{
 	}

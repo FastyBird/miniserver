@@ -35,20 +35,20 @@ use function strval;
 /**
  * Write V1 protocol state to device message consumer
  */
-final class WriteV1DevicePropertyState implements Queue\Consumer
+final readonly class WriteV1DevicePropertyState implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly API\ConnectionManager $connectionManager,
-		private readonly Helpers\Connector $connectorHelper,
-		private readonly FbMqtt\Logger $logger,
-		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly ClockInterface $clock,
+		private API\ConnectionManager $connectionManager,
+		private Helpers\Connector $connectorHelper,
+		private FbMqtt\Logger $logger,
+		private DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
+		private ClockInterface $clock,
 	)
 	{
 	}

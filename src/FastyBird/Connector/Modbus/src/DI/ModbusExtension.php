@@ -32,7 +32,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Modbus connector
  */
-class ModbusExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class ModbusExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbModbusConnector';

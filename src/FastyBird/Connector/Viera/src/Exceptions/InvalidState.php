@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Viera\Exceptions;
 
 use RuntimeException;
 
-class InvalidState extends RuntimeException implements Exception
+final class InvalidState extends RuntimeException implements Exception
 {
 
 }

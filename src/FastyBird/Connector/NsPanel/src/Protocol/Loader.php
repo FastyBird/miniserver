@@ -31,7 +31,7 @@ use function sprintf;
 /**
  * NS panel device driver loader
  */
-readonly class Loader
+final readonly class Loader
 {
 
 	/**

@@ -12,7 +12,7 @@ use function is_string;
 /**
  * NS panel device driver service
  */
-class Driver
+final class Driver
 {
 
 	use Nette\SmartObject;

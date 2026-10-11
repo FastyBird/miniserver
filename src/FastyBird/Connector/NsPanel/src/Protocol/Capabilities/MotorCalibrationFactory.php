@@ -16,7 +16,7 @@ use function preg_match;
 /**
  * NS panel motor calibration capability factory
  */
-class MotorCalibrationFactory implements CapabilityFactory
+final class MotorCalibrationFactory implements CapabilityFactory
 {
 
 	#[Override]

@@ -71,7 +71,7 @@ use function usort;
 /**
  * Connector install command
  */
-class Install extends Console\Command\Command
+final class Install extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:homekit-connector:install';

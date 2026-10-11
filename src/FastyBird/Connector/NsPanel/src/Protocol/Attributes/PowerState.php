@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Relay attribute
  */
-class PowerState extends Attribute
+final class PowerState extends Attribute
 {
 
 	public function __construct(

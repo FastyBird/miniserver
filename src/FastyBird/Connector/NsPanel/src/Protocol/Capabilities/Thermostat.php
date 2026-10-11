@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device thermostat capability
  */
-class Thermostat extends Capability
+final class Thermostat extends Capability
 {
 
 	/**

@@ -9,7 +9,7 @@ use Override;
 /**
  * Television app
  */
-readonly class Application implements API\Messages\Message
+final readonly class Application implements API\Messages\Message
 {
 
 	public function __construct(

@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device motor calibration capability
  */
-class MotorCalibration extends Capability
+final class MotorCalibration extends Capability
 {
 
 	/**

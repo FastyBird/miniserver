@@ -8,7 +8,7 @@ use function preg_replace;
 /**
  * MQTT payload helpers
  */
-class Payload
+final class Payload
 {
 
 	public static function cleanName(string $payload): string

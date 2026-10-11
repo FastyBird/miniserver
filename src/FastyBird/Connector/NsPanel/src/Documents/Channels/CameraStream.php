@@ -8,7 +8,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\CameraStream::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\CameraStream::TYPE)]
-class CameraStream extends Channel
+final class CameraStream extends Channel
 {
 
 	public static function getType(): string

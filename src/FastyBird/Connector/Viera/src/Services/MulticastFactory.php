@@ -11,14 +11,12 @@ use RuntimeException;
 /**
  * React multicast server factory
  */
-final class MulticastFactory
+final readonly class MulticastFactory
 {
 
 	use Nette\SmartObject;
 
-	public function __construct(
-		private readonly EventLoop\LoopInterface $eventLoop,
-	)
+	public function __construct(private EventLoop\LoopInterface $eventLoop)
 	{
 	}
 

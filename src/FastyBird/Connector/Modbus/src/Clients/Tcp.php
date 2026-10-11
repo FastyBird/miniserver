@@ -44,7 +44,7 @@ use function React\Async\await;
 /**
  * Modbus TCP devices client interface
  */
-class Tcp implements Client
+final class Tcp implements Client
 {
 
 	use TReading;

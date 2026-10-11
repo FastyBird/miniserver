@@ -13,14 +13,14 @@ use function sprintf;
 /**
  * Cloud client
  */
-final class Cloud implements Client
+final readonly class Cloud implements Client
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
-		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
+		private Documents\Connectors\Connector $connector,
+		private PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
 	}

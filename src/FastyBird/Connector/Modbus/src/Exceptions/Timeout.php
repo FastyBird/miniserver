@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Modbus\Exceptions;
 
 use Exception as PhpException;
 
-class Timeout extends PhpException implements Exception
+final class Timeout extends PhpException implements Exception
 {
 
 }

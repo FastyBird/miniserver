@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * Thermostat upper set point value configuration
  */
-class SupportedDetectionUpperSetPointValue extends Configuration
+final class SupportedDetectionUpperSetPointValue extends Configuration
 {
 
 	public function __construct(

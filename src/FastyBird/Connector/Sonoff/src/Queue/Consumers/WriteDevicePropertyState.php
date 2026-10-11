@@ -38,23 +38,23 @@ use function strval;
 /**
  * Write state to device message consumer
  */
-final class WriteDevicePropertyState implements Queue\Consumer
+final readonly class WriteDevicePropertyState implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Queue\Queue $queue,
-		private readonly API\ConnectionManager $connectionManager,
-		private readonly Helpers\MessageBuilder $entityHelper,
-		private readonly Helpers\Connector $connectorHelper,
-		private readonly Helpers\Device $deviceHelper,
-		private readonly Sonoff\Logger $logger,
-		private readonly DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
-		private readonly DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
-		private readonly ClockInterface $clock,
+		private Queue\Queue $queue,
+		private API\ConnectionManager $connectionManager,
+		private Helpers\MessageBuilder $entityHelper,
+		private Helpers\Connector $connectorHelper,
+		private Helpers\Device $deviceHelper,
+		private Sonoff\Logger $logger,
+		private DevicesModels\Configuration\Connectors\Repository $connectorsConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
+		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
+		private DevicesModels\States\Async\DevicePropertiesManager $devicePropertiesStatesManager,
+		private ClockInterface $clock,
 	)
 	{
 	}

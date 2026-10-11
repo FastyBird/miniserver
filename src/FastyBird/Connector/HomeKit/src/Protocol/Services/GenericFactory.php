@@ -12,7 +12,7 @@ use Ramsey\Uuid;
 /**
  * HAP generic service factory
  */
-class GenericFactory implements ServiceFactory
+final class GenericFactory implements ServiceFactory
 {
 
 	/**

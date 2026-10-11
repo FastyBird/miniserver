@@ -14,7 +14,7 @@ use function is_string;
 /**
  * NS panel mapping mode capability configuration factory
  */
-class MappingModeFactory implements ConfigurationFactory
+final class MappingModeFactory implements ConfigurationFactory
 {
 
 	/**

@@ -26,7 +26,7 @@ use function assert;
 /**
  * Device discovery message consumer
  */
-final class StoreDevice implements Queue\Consumer
+final readonly class StoreDevice implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
@@ -34,17 +34,17 @@ final class StoreDevice implements Queue\Consumer
 	use ChannelProperty;
 
 	public function __construct(
-		protected readonly Sonoff\Logger $logger,
-		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		protected readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		protected readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		protected readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		protected readonly PersistenceHelpers\Database $databaseHelper,
-		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
-		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
-		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
+		protected Sonoff\Logger $logger,
+		protected DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		protected DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		protected DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		protected DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
+		protected PersistenceHelpers\Database $databaseHelper,
+		private DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
+		private DevicesModels\Entities\Devices\DevicesManager $devicesManager,
+		private DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 	)
 	{
 	}

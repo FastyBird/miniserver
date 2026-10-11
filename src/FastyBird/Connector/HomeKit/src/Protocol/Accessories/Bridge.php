@@ -12,7 +12,7 @@ use SplObjectStorage;
 /**
  * HAP bridge accessory
  */
-class Bridge extends Accessory
+final class Bridge extends Accessory
 {
 
 	/** @var SplObjectStorage<Accessory, null> */

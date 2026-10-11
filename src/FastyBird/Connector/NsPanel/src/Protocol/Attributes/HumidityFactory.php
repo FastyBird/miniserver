@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel humidity attribute factory
  */
-class HumidityFactory implements AttributeFactory
+final class HumidityFactory implements AttributeFactory
 {
 
 	#[Override]

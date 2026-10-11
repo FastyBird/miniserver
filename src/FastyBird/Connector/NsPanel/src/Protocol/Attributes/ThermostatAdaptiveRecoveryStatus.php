@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Thermostat adaptive recovery status attribute
  */
-class ThermostatAdaptiveRecoveryStatus extends Attribute
+final class ThermostatAdaptiveRecoveryStatus extends Attribute
 {
 
 	public function __construct(

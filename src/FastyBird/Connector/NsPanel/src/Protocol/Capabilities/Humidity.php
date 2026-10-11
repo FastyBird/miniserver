@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device humidity capability
  */
-class Humidity extends Capability
+final class Humidity extends Capability
 {
 
 	/**

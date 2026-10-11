@@ -25,15 +25,15 @@ use ValueError;
 /**
  * Device events
  */
-final class Device implements EventDispatcher\EventSubscriberInterface
+final readonly class Device implements EventDispatcher\EventSubscriberInterface
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Helpers\ChannelProperty $channelProperty,
-		private readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		private Helpers\ChannelProperty $channelProperty,
+		private DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		private DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
 	)
 	{
 	}

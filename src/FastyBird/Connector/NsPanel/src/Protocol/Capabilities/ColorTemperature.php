@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device color temperature capability
  */
-class ColorTemperature extends Capability
+final class ColorTemperature extends Capability
 {
 
 	/**

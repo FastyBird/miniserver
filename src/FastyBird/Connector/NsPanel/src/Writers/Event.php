@@ -17,7 +17,7 @@ use Throwable;
 /**
  * Event based properties writer
  */
-class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberInterface
+final class Event extends Periodic implements Writer, EventDispatcher\EventSubscriberInterface
 {
 
 	public const string NAME = 'event';

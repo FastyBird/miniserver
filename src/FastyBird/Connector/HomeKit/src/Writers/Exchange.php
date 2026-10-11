@@ -36,7 +36,7 @@ use function str_starts_with;
 /**
  * Exchange based properties writer
  */
-class Exchange extends Periodic implements Writer, Consumers\Consumer
+final class Exchange extends Periodic implements Writer, Consumers\Consumer
 {
 
 	public const string NAME = 'exchange';

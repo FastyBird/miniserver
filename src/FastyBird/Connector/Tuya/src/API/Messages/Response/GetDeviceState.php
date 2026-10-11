@@ -10,7 +10,7 @@ use function array_map;
 /**
  * OpenAPI get device state message
  */
-readonly class GetDeviceState implements API\Messages\Message
+final readonly class GetDeviceState implements API\Messages\Message
 {
 
 	/**

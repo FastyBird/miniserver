@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel fault attribute factory
  */
-class FaultFactory implements AttributeFactory
+final class FaultFactory implements AttributeFactory
 {
 
 	#[Override]

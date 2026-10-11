@@ -10,14 +10,12 @@ use React\Socket;
 /**
  * Socket client factory
  */
-final class SocketClientFactory
+final readonly class SocketClientFactory
 {
 
 	use Nette\SmartObject;
 
-	public function __construct(
-		private readonly EventLoop\LoopInterface $eventLoop,
-	)
+	public function __construct(private EventLoop\LoopInterface $eventLoop)
 	{
 	}
 

@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel battery attribute factory
  */
-class BatteryFactory implements AttributeFactory
+final class BatteryFactory implements AttributeFactory
 {
 
 	#[Override]

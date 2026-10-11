@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device camera stream capability
  */
-class CameraStream extends Capability
+final class CameraStream extends Capability
 {
 
 	/**

@@ -15,7 +15,7 @@ use ValueError;
 /**
  * HAP accessory driver service
  */
-class Driver
+final class Driver
 {
 
 	use Nette\SmartObject;

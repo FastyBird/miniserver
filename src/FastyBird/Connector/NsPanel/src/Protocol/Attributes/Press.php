@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Press attribute
  */
-class Press extends Attribute
+final class Press extends Attribute
 {
 
 	public function __construct(

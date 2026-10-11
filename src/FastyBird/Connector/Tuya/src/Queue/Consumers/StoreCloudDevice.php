@@ -24,7 +24,7 @@ use function assert;
 /**
  * Store cloud found device details message consumer
  */
-final class StoreCloudDevice implements Queue\Consumer
+final readonly class StoreCloudDevice implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
@@ -32,19 +32,19 @@ final class StoreCloudDevice implements Queue\Consumer
 	use ChannelProperty;
 
 	public function __construct(
-		protected readonly Tuya\Logger $logger,
-		protected readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
-		protected readonly DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
-		protected readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		protected readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
-		protected readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
-		protected readonly DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
-		protected readonly DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
-		protected readonly Helpers\Database $databaseHelper,
-		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
-		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
-		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
+		protected Tuya\Logger $logger,
+		protected DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesRepository $devicesPropertiesRepository,
+		protected DevicesModels\Entities\Devices\Properties\PropertiesManager $devicesPropertiesManager,
+		protected DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		protected DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelsPropertiesRepository,
+		protected DevicesModels\Entities\Channels\Properties\PropertiesManager $channelsPropertiesManager,
+		protected DevicesModels\Configuration\Channels\Properties\Repository $channelsPropertiesConfigurationRepository,
+		protected DevicesModels\States\Async\ChannelPropertiesManager $channelPropertiesStatesManager,
+		protected Helpers\Database $databaseHelper,
+		private DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
+		private DevicesModels\Entities\Devices\DevicesManager $devicesManager,
+		private DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
 	)
 	{
 	}

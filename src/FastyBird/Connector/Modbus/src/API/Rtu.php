@@ -34,7 +34,7 @@ use function unpack;
 /**
  * Modbus RTU API interface
  */
-class Rtu
+final class Rtu
 {
 
 	use Nette\SmartObject;

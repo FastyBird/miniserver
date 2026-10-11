@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel startup attribute factory
  */
-class StartupFactory implements AttributeFactory
+final class StartupFactory implements AttributeFactory
 {
 
 	#[Override]

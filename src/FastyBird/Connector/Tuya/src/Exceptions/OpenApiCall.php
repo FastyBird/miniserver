@@ -6,7 +6,7 @@ use Psr\Http\Message;
 use RuntimeException;
 use Throwable;
 
-class OpenApiCall extends RuntimeException implements Exception
+final class OpenApiCall extends RuntimeException implements Exception
 {
 
 	public function __construct(

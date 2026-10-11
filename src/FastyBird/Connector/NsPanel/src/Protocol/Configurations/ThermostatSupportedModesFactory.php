@@ -13,7 +13,7 @@ use function is_string;
 /**
  * NS panel thermostat supported modes capability configuration factory
  */
-class ThermostatSupportedModesFactory implements ConfigurationFactory
+final class ThermostatSupportedModesFactory implements ConfigurationFactory
 {
 
 	#[Override]

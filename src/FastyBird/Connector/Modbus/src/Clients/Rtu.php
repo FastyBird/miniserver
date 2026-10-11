@@ -42,7 +42,7 @@ use function React\Async\await;
 /**
  * Modbus RTU devices client interface
  */
-class Rtu implements Client
+final class Rtu implements Client
 {
 
 	use TReading;

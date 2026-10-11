@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Tuya\Exceptions;
 
 use RuntimeException;
 
-class OpenApiError extends RuntimeException implements Exception
+final class OpenApiError extends RuntimeException implements Exception
 {
 
 }

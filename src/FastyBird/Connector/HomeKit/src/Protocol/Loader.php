@@ -55,7 +55,7 @@ use function usort;
 /**
  * HAP accessory driver service
  */
-class Loader
+final class Loader
 {
 
 	private Hashids\Hashids $hashIds;

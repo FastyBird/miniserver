@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device thermostat target set point capability
  */
-class ThermostatTargetSetPoint extends Capability
+final class ThermostatTargetSetPoint extends Capability
 {
 
 	/**

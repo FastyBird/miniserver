@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device motor control capability
  */
-class MotorControl extends Capability
+final class MotorControl extends Capability
 {
 
 	/**

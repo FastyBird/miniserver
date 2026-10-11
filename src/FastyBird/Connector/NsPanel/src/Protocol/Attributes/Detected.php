@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Detect attribute
  */
-class Detected extends Attribute
+final class Detected extends Attribute
 {
 
 	public function __construct(

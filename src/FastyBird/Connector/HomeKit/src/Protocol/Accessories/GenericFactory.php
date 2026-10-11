@@ -10,7 +10,7 @@ use Override;
 /**
  * HAP generic accessory factory
  */
-class GenericFactory implements AccessoryFactory
+final class GenericFactory implements AccessoryFactory
 {
 
 	#[Override]

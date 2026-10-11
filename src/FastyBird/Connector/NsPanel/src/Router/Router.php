@@ -9,7 +9,7 @@ use FastyBird\Core\Http\Routing;
 /**
  * Connector router configuration
  */
-class Router extends Routing\Router
+final class Router extends Routing\Router
 {
 
 	public const string URL_GATEWAY_ID = 'gateway';

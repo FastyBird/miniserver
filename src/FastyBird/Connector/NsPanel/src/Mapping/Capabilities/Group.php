@@ -11,7 +11,7 @@ use function array_map;
 /**
  * Basic group interface
  */
-readonly class Group implements Mapping\Mapping
+final readonly class Group implements Mapping\Mapping
 {
 
 	/**

@@ -37,7 +37,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * HomeKit connector
  */
-class HomeKitExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class HomeKitExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbHomeKitConnector';

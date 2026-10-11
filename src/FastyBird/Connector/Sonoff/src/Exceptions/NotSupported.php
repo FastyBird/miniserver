@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Sonoff\Exceptions;
 
 use InvalidArgumentException as PHPInvalidArgumentException;
 
-class NotSupported extends PHPInvalidArgumentException implements Exception
+final class NotSupported extends PHPInvalidArgumentException implements Exception
 {
 
 }

@@ -14,7 +14,7 @@ use function is_int;
 /**
  * NS panel supported detection lower set point value capability configuration factory
  */
-class SupportedDetectionLowerSetPointValueFactory implements ConfigurationFactory
+final class SupportedDetectionLowerSetPointValueFactory implements ConfigurationFactory
 {
 
 	#[Override]

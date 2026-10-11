@@ -8,7 +8,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\ColorTemperature::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\ColorTemperature::TYPE)]
-class ColorTemperature extends Channel
+final class ColorTemperature extends Channel
 {
 
 	public static function getType(): string

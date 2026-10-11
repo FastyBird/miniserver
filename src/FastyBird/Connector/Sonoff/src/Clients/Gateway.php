@@ -13,14 +13,14 @@ use function sprintf;
 /**
  * Gateway client
  */
-final class Gateway implements Client
+final readonly class Gateway implements Client
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
-		private readonly Sonoff\Logger $logger,
+		private Documents\Connectors\Connector $connector,
+		private Sonoff\Logger $logger,
 	)
 	{
 	}

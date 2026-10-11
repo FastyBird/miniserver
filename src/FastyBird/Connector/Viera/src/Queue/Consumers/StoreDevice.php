@@ -27,21 +27,21 @@ use function assert;
 /**
  * Store device details message consumer
  */
-final class StoreDevice implements Queue\Consumer
+final readonly class StoreDevice implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly Viera\Logger $logger,
-		private readonly VieraHelpers\DeviceProperty $deviceProperty,
-		private readonly VieraHelpers\ChannelProperty $channelProperty,
-		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
-		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		private readonly DevicesModels\Entities\Devices\DevicesManager $devicesManager,
-		private readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
-		private readonly PersistenceHelpers\Database $databaseHelper,
+		private Viera\Logger $logger,
+		private VieraHelpers\DeviceProperty $deviceProperty,
+		private VieraHelpers\ChannelProperty $channelProperty,
+		private DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
+		private DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		private DevicesModels\Entities\Devices\DevicesManager $devicesManager,
+		private DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		private DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
+		private PersistenceHelpers\Database $databaseHelper,
 	)
 	{
 	}

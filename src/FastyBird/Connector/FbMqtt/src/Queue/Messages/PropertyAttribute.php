@@ -24,7 +24,7 @@ use function strtolower;
 /**
  * Device or channel property attribute
  */
-final class PropertyAttribute implements Message
+final readonly class PropertyAttribute implements Message
 {
 
 	use Nette\SmartObject;
@@ -57,9 +57,9 @@ final class PropertyAttribute implements Message
 
 	public function __construct(
 		#[ObjectMapper\Rules\ArrayEnumValue(cases: self::ALLOWED_ATTRIBUTES)]
-		private readonly string $attribute,
+		private string $attribute,
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
-		private readonly string $value,
+		private string $value,
 	)
 	{
 	}

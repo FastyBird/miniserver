@@ -9,7 +9,7 @@ use Override;
 /**
  * Device vector info message
  */
-readonly class DeviceVectorInfo implements API\Messages\Message
+final readonly class DeviceVectorInfo implements API\Messages\Message
 {
 
 	public function __construct(

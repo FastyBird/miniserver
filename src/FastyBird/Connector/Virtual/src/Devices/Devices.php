@@ -31,7 +31,7 @@ use function React\Async\async;
 /**
  * Devices service
  */
-class Devices
+final class Devices
 {
 
 	use Nette\SmartObject;

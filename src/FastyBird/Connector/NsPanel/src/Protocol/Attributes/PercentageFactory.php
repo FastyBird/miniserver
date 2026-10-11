@@ -11,7 +11,7 @@ use Ramsey\Uuid;
 /**
  * NS panel percentage attribute factory
  */
-class PercentageFactory implements AttributeFactory
+final class PercentageFactory implements AttributeFactory
 {
 
 	#[Override]

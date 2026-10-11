@@ -9,7 +9,7 @@ use Ramsey\Uuid;
 /**
  * NS Panel device illumination level capability
  */
-class IlluminationLevel extends Capability
+final class IlluminationLevel extends Capability
 {
 
 	/**

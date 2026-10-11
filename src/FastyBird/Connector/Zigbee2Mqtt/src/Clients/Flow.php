@@ -9,7 +9,7 @@ use React\Promise;
 /**
  * Decorates flows with data required for the {@see Client} class.
  */
-class Flow implements Mqtt\Flow
+final class Flow implements Mqtt\Flow
 {
 
 	/**

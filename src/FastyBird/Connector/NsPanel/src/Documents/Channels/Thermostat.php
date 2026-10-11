@@ -8,7 +8,7 @@ use FastyBird\Core\Documents;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Thermostat::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Thermostat::TYPE)]
-class Thermostat extends Channel
+final class Thermostat extends Channel
 {
 
 	public static function getType(): string

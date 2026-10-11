@@ -4,7 +4,7 @@ namespace FastyBird\Connector\Sonoff\Exceptions;
 
 use RuntimeException;
 
-class ParseMessage extends RuntimeException implements Exception
+final class ParseMessage extends RuntimeException implements Exception
 {
 
 }

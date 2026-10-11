@@ -10,7 +10,7 @@ use Ramsey\Uuid;
 /**
  * Rssi attribute
  */
-class Rssi extends Attribute
+final class Rssi extends Attribute
 {
 
 	public function __construct(

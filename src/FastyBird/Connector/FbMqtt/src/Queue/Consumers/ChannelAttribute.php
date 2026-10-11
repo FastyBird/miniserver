@@ -27,21 +27,21 @@ use function sprintf;
 /**
  * Device channel attributes MQTT message consumer
  */
-final class ChannelAttribute implements Queue\Consumer
+final readonly class ChannelAttribute implements Queue\Consumer
 {
 
 	use Nette\SmartObject;
 
 	public function __construct(
-		private readonly FbMqtt\Logger $logger,
-		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		private readonly DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
-		private readonly DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelPropertiesRepository,
-		private readonly DevicesModels\Entities\Channels\Properties\PropertiesManager $channelPropertiesManager,
-		private readonly DevicesModels\Entities\Channels\Controls\ControlsRepository $channelControlsRepository,
-		private readonly DevicesModels\Entities\Channels\Controls\ControlsManager $channelControlsManager,
-		private readonly Helpers\Database $databaseHelper,
+		private FbMqtt\Logger $logger,
+		private DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
+		private DevicesModels\Entities\Channels\ChannelsRepository $channelsRepository,
+		private DevicesModels\Entities\Channels\ChannelsManager $channelsManager,
+		private DevicesModels\Entities\Channels\Properties\PropertiesRepository $channelPropertiesRepository,
+		private DevicesModels\Entities\Channels\Properties\PropertiesManager $channelPropertiesManager,
+		private DevicesModels\Entities\Channels\Controls\ControlsRepository $channelControlsRepository,
+		private DevicesModels\Entities\Channels\Controls\ControlsManager $channelControlsManager,
+		private Helpers\Database $databaseHelper,
 	)
 	{
 	}
