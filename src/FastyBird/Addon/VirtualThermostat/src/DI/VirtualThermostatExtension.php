@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * VirtualThermostatExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           24.08.22
- */
-
 namespace FastyBird\Addon\VirtualThermostat\DI;
 
 use Contributte\Translation;
@@ -34,11 +21,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Virtual connector
- *
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class VirtualThermostatExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

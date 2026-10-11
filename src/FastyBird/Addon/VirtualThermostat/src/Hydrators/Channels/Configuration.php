@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Configuration.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           23.10.23
- */
-
 namespace FastyBird\Addon\VirtualThermostat\Hydrators\Channels;
 
 use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
@@ -31,10 +18,6 @@ use function strval;
  * Configuration channel entity hydrator
  *
  * @extends VirtualHydrators\Channels\Channel<VirtualThermostatEntities\Channels\Configuration>
- *
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Configuration extends VirtualHydrators\Channels\Channel
 {

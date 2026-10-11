@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * VirtualThermostat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           15.10.23
- */
-
 namespace FastyBird\Addon\VirtualThermostat\Schemas\Devices;
 
 use FastyBird\Addon\VirtualThermostat\Entities;
@@ -24,10 +11,6 @@ use FastyBird\Core\Values\Types\Sources;
  *
  * @template T of Entities\Devices\Device
  * @extends  VirtualSchemas\Devices\Device<T>
- *
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Device extends VirtualSchemas\Devices\Device
 {

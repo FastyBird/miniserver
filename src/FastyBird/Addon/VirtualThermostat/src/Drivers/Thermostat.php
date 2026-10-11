@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Thermostat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Drivers
- * @since          1.0.0
- *
- * @date           16.10.23
- */
-
 namespace FastyBird\Addon\VirtualThermostat\Drivers;
 
 use DateTimeInterface;
@@ -60,11 +47,6 @@ use function str_starts_with;
 
 /**
  * Thermostat service
- *
- * @package        FastyBird:VirtualThermostatAddon!
- * @subpackage     Drivers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Thermostat implements VirtualDrivers\Driver
 {
