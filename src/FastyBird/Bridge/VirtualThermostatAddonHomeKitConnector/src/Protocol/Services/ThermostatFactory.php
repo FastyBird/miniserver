@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ThermostatFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           29.01.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Protocol\Services;
 
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Documents as VirtualThermostatAddonHomeKitConnectorDocuments;
@@ -25,11 +12,6 @@ use function assert;
 
 /**
  * HAP thermostat service factory
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ThermostatFactory implements HomeKitProtocol\Services\ServiceFactory
 {

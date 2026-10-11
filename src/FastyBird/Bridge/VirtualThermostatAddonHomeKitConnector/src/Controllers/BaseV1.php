@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * BaseV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Controllers;
 
 use Doctrine\DBAL\Connection;
@@ -46,11 +33,6 @@ use function strval;
 
 /**
  * API base controller
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class BaseV1
 {

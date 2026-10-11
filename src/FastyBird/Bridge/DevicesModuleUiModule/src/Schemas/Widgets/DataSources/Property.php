@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ChannelProperty.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Schemas\Widgets\DataSources;
 
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
@@ -25,10 +12,6 @@ use function array_merge;
  *
  * @template T of Entities\Widgets\DataSources\Property
  * @extends  UiSchemas\Widgets\DataSources\DataSource<T>
- *
- * @package          FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage       Schemas
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 abstract class Property extends UiSchemas\Widgets\DataSources\DataSource
 {

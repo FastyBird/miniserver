@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ModuleEntities.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           09.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use Doctrine\Common;
@@ -37,11 +24,6 @@ use function count;
 
 /**
  * Doctrine entities events
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ModuleEntities implements Common\EventSubscriber
 {

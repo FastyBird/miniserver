@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Build.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Commands;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
@@ -60,11 +47,6 @@ use function usort;
 
 /**
  * Shelly connector to HomeKit accessory bridge builder command
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Build extends Console\Command\Command
 {

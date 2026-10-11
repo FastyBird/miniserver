@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConnectorPropertiesRepository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           20.01.24
- */
-
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\Models\States\Async;
 
 use FastyBird\Bridge\RedisDbPluginDevicesModule\States;
@@ -26,11 +13,6 @@ use React\Promise;
 
 /**
  * Connector property asynchronous states repository
- *
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ConnectorPropertiesRepository implements DevicesModels\States\Connectors\Async\Reader
 {

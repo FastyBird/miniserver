@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Builder.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Builders
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
@@ -62,11 +49,6 @@ use function strval;
 
 /**
  * HomeKit device builder
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Builders
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Builder
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ActionsRepository.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           12.01.22
- */
-
 namespace FastyBird\Bridge\RedisDbPluginTriggersModule\Models\States;
 
 use FastyBird\Bridge\RedisDbPluginTriggersModule\States;
@@ -26,11 +13,6 @@ use Ramsey\Uuid;
 
 /**
  * Trigger action state repository
- *
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ActionsRepository implements TriggersModels\States\ActionsReader
 {

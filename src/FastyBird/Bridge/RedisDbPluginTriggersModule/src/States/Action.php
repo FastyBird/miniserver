@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Action.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     States
- * @since          1.0.0
- *
- * @date           12.01.22
- */
-
 namespace FastyBird\Bridge\RedisDbPluginTriggersModule\States;
 
 use DateTimeInterface;
@@ -24,11 +11,6 @@ use function array_merge;
 
 /**
  * Trigger action state
- *
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     States
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Action extends RedisDbStates\State implements TriggersStates\Action
 {

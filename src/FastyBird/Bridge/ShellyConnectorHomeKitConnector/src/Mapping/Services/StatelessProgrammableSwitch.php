@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * StatelessProgrammableSwitch.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           23.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Services;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
@@ -25,11 +12,6 @@ use function class_exists;
 
 /**
  * Input switch service mapping configuration
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class StatelessProgrammableSwitch implements Service
 {

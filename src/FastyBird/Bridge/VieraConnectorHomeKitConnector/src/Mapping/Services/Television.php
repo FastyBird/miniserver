@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Television.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           25.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping\Services;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
@@ -25,11 +12,6 @@ use function class_exists;
 
 /**
  * Television service mapping configuration
- *
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class Television implements Service
 {

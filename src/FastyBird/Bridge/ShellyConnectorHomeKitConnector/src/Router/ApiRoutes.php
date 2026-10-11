@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ApiRoutes.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Router
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
@@ -23,11 +10,6 @@ use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 
 /**
  * Bridge API routes configuration
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Router
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ApiRoutes
 {

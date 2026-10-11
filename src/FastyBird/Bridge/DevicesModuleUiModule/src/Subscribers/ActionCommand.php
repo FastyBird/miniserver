@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ActionCommand.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- * @since          1.0.0
- *
- * @date           10.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 
 use FastyBird\Bridge\DevicesModuleUiModule\Documents as DevicesModuleUiModuleDocuments;
@@ -34,11 +21,6 @@ use ValueError;
 
 /**
  * Module documents mapper events
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Subscribers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class ActionCommand implements EventDispatcher\EventSubscriberInterface
 {

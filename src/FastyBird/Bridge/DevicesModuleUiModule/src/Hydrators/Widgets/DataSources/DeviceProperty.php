@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DeviceProperty.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           04.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Hydrators\Widgets\DataSources;
 
 use Doctrine\Persistence;
@@ -35,10 +22,6 @@ use function strval;
  * Device property data source entity hydrator
  *
  * @extends UiHydrators\Widgets\DataSources\DataSource<DevicesModuleUiModuleEntities\Widgets\DataSources\DeviceProperty>
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class DeviceProperty extends UiHydrators\Widgets\DataSources\DataSource
 {

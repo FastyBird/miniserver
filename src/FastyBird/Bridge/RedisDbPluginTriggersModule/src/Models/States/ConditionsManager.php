@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ConditionsManager.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     Models
- * @since          1.0.0
- *
- * @date           20.10.22
- */
-
 namespace FastyBird\Bridge\RedisDbPluginTriggersModule\Models\States;
 
 use FastyBird\Bridge\RedisDbPluginTriggersModule\States;
@@ -25,11 +12,6 @@ use Ramsey\Uuid;
 
 /**
  * Condition states manager
- *
- * @package        FastyBird:RedisDbPluginTriggersModuleBridge!
- * @subpackage     Models
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ConditionsManager implements TriggersModels\States\ConditionsWriter
 {

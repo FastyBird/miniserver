@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * BasicCharacteristic.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           19.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Characteristics;
 
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
@@ -21,11 +8,6 @@ use Orisai\ObjectMapper;
 
 /**
  * Basic characteristic mapping configuration
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class BasicCharacteristic implements Characteristic
 {

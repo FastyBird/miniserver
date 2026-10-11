@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Builder.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Helpers
- * @since          1.0.0
- *
- * @date           25.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector;
@@ -25,11 +12,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Mapping builder
- *
- * @package        FastyBird:HomeKitConnector!
- * @subpackage     Helpers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Builder
 {

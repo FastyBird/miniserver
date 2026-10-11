@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Viera.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           24.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Hydrators\Devices;
 
 use Doctrine\Persistence;
@@ -37,10 +24,6 @@ use function strval;
  * Viera device entity hydrator
  *
  * @extends HomeKitHydrators\Devices\Device<VieraConnectorHomeKitConnectorEntities\Devices\Viera>
- *
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Viera extends HomeKitHydrators\Devices\Device
 {

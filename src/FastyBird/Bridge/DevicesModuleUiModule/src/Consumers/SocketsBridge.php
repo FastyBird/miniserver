@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SocketsBridge.php
- *
- * @license        More in license.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Consumers
- * @since          1.0.0
- *
- * @date           06.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Consumers;
 
 use FastyBird\Bridge\DevicesModuleUiModule;
@@ -37,11 +24,6 @@ use function in_array;
 
 /**
  * Exchange to sockets bridge consumer
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Consumers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class SocketsBridge implements Consumers\Consumer
 {

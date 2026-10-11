@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * VirtualThermostatAddonHomeKitConnectorExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\DI;
 
 use Contributte\Translation;
@@ -40,11 +27,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Virtual thermostat HomeKit connector bridge extension
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {

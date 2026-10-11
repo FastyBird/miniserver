@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * SwitchAccessory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- * @since          1.0.0
- *
- * @date           19.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Accessories;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
@@ -24,11 +11,6 @@ use ValueError;
 
 /**
  * Switches accessories mapping configuration
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Mapping
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 readonly class SwitchAccessory extends Accessory
 {

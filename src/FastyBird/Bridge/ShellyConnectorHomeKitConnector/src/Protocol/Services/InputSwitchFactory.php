@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * InputSwitchFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           23.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Services;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents as ShellyConnectorHomeKitConnectorDocuments;
@@ -25,11 +12,6 @@ use function assert;
 
 /**
  * Shelly input in switch mode service factory
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class InputSwitchFactory implements HomeKitProtocol\Services\ServiceFactory
 {

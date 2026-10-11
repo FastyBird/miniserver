@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ShellyFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Accessories;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents as ShellyConnectorHomeKitConnectorDocuments;
@@ -24,11 +11,6 @@ use function assert;
 
 /**
  * HAP shelly accessory factory
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ShellyFactory implements HomeKitProtocol\Accessories\AccessoryFactory
 {

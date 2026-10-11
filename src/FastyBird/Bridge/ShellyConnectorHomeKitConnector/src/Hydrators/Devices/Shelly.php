@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Shelly.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Hydrators
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators\Devices;
 
 use Doctrine\Persistence;
@@ -46,10 +33,6 @@ use function strval;
  * Shelly device entity hydrator
  *
  * @extends HomeKitHydrators\Devices\Device<ShellyConnectorHomeKitConnectorEntities\Devices\Shelly>
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Hydrators
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Shelly extends HomeKitHydrators\Devices\Device
 {

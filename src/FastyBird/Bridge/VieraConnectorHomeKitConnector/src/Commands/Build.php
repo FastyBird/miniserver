@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Build.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Commands
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Commands;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector;
@@ -48,11 +35,6 @@ use function usort;
 
 /**
  * Viera connector to HomeKit accessory bridge builder command
- *
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Commands
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Build extends Console\Command\Command
 {

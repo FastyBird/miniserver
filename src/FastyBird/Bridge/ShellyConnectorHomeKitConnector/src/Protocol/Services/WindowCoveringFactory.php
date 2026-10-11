@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * WindowCoveringFactory.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- * @since          1.0.0
- *
- * @date           23.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol\Services;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents as ShellyConnectorHomeKitConnectorDocuments;
@@ -25,11 +12,6 @@ use function assert;
 
 /**
  * Shelly cover service factory
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Protocol
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class WindowCoveringFactory implements HomeKitProtocol\Services\ServiceFactory
 {

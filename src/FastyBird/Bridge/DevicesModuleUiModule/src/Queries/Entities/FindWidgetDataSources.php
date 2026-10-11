@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * FindWidgetDataSources.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     Queries
- * @since          1.0.0
- *
- * @date           06.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\Queries\Entities;
 
 use Doctrine\ORM;
@@ -26,10 +13,6 @@ use Ramsey\Uuid;
  *
  * @template T of DevicesModuleUiModuleEntities\Widgets\DataSources\Property
  * @extends  UiQueries\Entities\FindWidgetDataSources<T>
- *
- * @package          FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage       Queries
- * @author           Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class FindWidgetDataSources extends UiQueries\Entities\FindWidgetDataSources
 {

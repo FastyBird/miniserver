@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * DevicesModuleUiModuleExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           04.08.24
- */
-
 namespace FastyBird\Bridge\DevicesModuleUiModule\DI;
 
 use FastyBird\Bridge\DevicesModuleUiModule;
@@ -39,11 +26,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Redis DB devices module bridge extension
- *
- * @package        FastyBird:DevicesModuleUiModuleBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 {

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Builder.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Builders
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Builders;
 
 use FastyBird\Addon\VirtualThermostat\Entities as VirtualThermostatEntities;
@@ -56,11 +43,6 @@ use function strval;
 
 /**
  * HomeKit device builder
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Builders
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class Builder
 {

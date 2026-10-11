@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * RedisDbPluginDevicesModuleExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           03.12.20
- */
-
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\DI;
 
 use FastyBird\Bridge\RedisDbPluginDevicesModule\Models;
@@ -25,11 +12,6 @@ use function assert;
 
 /**
  * Redis DB devices module bridge extension
- *
- * @package        FastyBird:RedisDbPluginDevicesModuleBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class RedisDbPluginDevicesModuleExtension extends DI\CompilerExtension
 {

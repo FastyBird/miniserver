@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * Thermostat.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           04.02.24
- */
-
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Schemas\Channels;
 
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Entities;
@@ -24,10 +11,6 @@ use FastyBird\Core\Values\Types\Sources;
  *
  * @template T of Entities\Channels\Thermostat
  * @extends  HomeKitSchemas\Channels\Channel<T>
- *
- * @package        FastyBird:VirtualThermostatAddonHomeKitConnectorBridge!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class Thermostat extends HomeKitSchemas\Channels\Channel
 {

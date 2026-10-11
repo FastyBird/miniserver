@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * InputSource.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Schemas
- * @since          1.0.0
- *
- * @date           24.08.24
- */
-
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Schemas\Channels;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Entities;
@@ -23,10 +10,6 @@ use FastyBird\Core\Values\Types\Sources;
  *
  * @template T of Entities\Channels\InputSource
  * @extends  Viera<T>
- *
- * @package        FastyBird:VieraConnectorHomeKitConnectorBridge!
- * @subpackage     Schemas
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 final class InputSource extends Viera
 {

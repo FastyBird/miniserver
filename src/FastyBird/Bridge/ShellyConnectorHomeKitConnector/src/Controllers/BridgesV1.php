@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * BridgesV1.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Controllers
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
 
 use Doctrine;
@@ -51,11 +38,6 @@ use function strval;
 
 /**
  * API bridges controller
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     Controllers
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  *
  * @Secured
  * @Secured\User(loggedIn)

@@ -1,18 +1,5 @@
 <?php declare(strict_types = 1);
 
-/**
- * ShellyConnectorHomeKitConnectorExtension.php
- *
- * @license        More in LICENSE.md
- * @copyright      https://www.fastybird.com
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     DI
- * @since          1.0.0
- *
- * @date           18.08.24
- */
-
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\DI;
 
 use Contributte\Translation;
@@ -41,11 +28,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Shelly devices to HomeKit connector bridge extension
- *
- * @package        FastyBird:ShellyConnectorHomeKitConnectorBridge!
- * @subpackage     DI
- *
- * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
 class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
