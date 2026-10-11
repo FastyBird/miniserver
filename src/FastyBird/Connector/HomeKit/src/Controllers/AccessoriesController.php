@@ -89,6 +89,7 @@ final class AccessoriesController extends BaseController
 	 * @throws HomeKitExceptions\HapRequestError
 	 * @throws HomeKitExceptions\InvalidState
 	 * @throws InvalidArgumentException
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws TypeError
 	 * @throws ValueError

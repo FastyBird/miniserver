@@ -11,6 +11,7 @@ use FastyBird\Connector\Modbus\Exceptions;
 use FastyBird\Connector\Modbus\Types;
 use Nette;
 use Nette\Utils;
+use ValueError;
 use function array_combine;
 use function array_fill;
 use function array_keys;
@@ -120,6 +121,7 @@ class Rtu
 	 *
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\ModbusRtu
+	 * @throws ValueError
 	 */
 	public function readCoils(
 		int $station,
@@ -144,6 +146,7 @@ class Rtu
 	 *
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\ModbusRtu
+	 * @throws ValueError
 	 */
 	public function readDiscreteInputs(
 		int $station,
@@ -393,6 +396,7 @@ class Rtu
 	/**
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\ModbusRtu
+	 * @throws ValueError
 	 */
 	private function readDigitalRegisters(
 		Types\ModbusFunction $functionCode,

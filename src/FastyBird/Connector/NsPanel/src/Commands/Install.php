@@ -4258,6 +4258,7 @@ class Install extends Console\Command\Command
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument
+	 * @throws ValueError
 	 */
 	private function provideAttributeValue(
 		Style\SymfonyStyle $io,

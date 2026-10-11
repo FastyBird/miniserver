@@ -25,6 +25,7 @@ use React\Socket;
 use RuntimeException;
 use SimpleXMLElement;
 use Throwable;
+use ValueError;
 use function array_combine;
 use function array_fill;
 use function array_key_exists;
@@ -297,6 +298,7 @@ final class TelevisionApi
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\TelevisionApiCall
 	 * @throws Exceptions\TelevisionApiError
+	 * @throws ValueError
 	 */
 	public function getApps(
 		bool $async = true,
@@ -1625,6 +1627,7 @@ final class TelevisionApi
 	/**
 	 * @throws Exceptions\TelevisionApiCall
 	 * @throws Exceptions\TelevisionApiError
+	 * @throws ValueError
 	 */
 	private function parseGetApps(
 		Message\RequestInterface $request,
