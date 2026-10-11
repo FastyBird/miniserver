@@ -35,7 +35,7 @@ use function assert;
 class CouchDbExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbCouchDbPlugin';
+	public const string NAME = 'fbCouchDbPlugin';
 
 	public static function register(
 		Boot\Configurator $config,

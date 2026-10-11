@@ -44,13 +44,13 @@ use function strval;
 final class Message
 {
 
-	public const MESSAGE_ACK = 1;
+	public const int MESSAGE_ACK = 1;
 
-	public const MESSAGE_NACK = 2;
+	public const int MESSAGE_NACK = 2;
 
-	public const MESSAGE_REJECT = 3;
+	public const int MESSAGE_REJECT = 3;
 
-	public const MESSAGE_REJECT_AND_TERMINATE = 4;
+	public const int MESSAGE_REJECT_AND_TERMINATE = 4;
 
 	public function __construct(
 		private readonly Utilities\IdentifierGenerator $identifier,

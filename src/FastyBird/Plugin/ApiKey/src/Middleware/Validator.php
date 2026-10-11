@@ -43,7 +43,7 @@ use const CASE_LOWER;
 final class Validator implements MiddlewareInterface
 {
 
-	private const API_KEY_HEADER = 'X-Api-Key';
+	private const string API_KEY_HEADER = 'X-Api-Key';
 
 	public function __construct(
 		private readonly Models\Entities\KeyRepository $keyRepository,

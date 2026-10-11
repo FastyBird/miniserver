@@ -43,7 +43,7 @@ class Create extends Console\Command\Command
 
 	use Nette\SmartObject;
 
-	public const NAME = 'fb:api-key:create';
+	public const string NAME = 'fb:api-key:create';
 
 	public function __construct(
 		private readonly Models\Entities\KeysManager $keysManager,

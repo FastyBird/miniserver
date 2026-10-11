@@ -39,9 +39,9 @@ use function assert;
 class RabbitMqExtension extends DI\CompilerExtension
 {
 
-	public const EXCHANGE_NAME = 'fb.exchange.bus';
+	public const string EXCHANGE_NAME = 'fb.exchange.bus';
 
-	public const NAME = 'fbRabbitMqPlugin';
+	public const string NAME = 'fbRabbitMqPlugin';
 
 	public static function register(
 		Boot\Configurator $config,

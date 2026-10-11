@@ -36,7 +36,7 @@ use function assert;
 class RedisDbCacheExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbRedisDbCachePlugin';
+	public const string NAME = 'fbRedisDbCachePlugin';
 
 	public static function register(
 		Bootstrap\Configurator $config,

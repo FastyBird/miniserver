@@ -40,7 +40,7 @@ use function assert;
 class RedisDbExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbRedisDbPlugin';
+	public const string NAME = 'fbRedisDbPlugin';
 
 	private const string EXCHANGE_CHANNEL_NAME = 'fb_exchange';
 

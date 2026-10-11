@@ -36,7 +36,7 @@ use const DIRECTORY_SEPARATOR;
 class ApiKeyExtension extends DI\CompilerExtension
 {
 
-	public const NAME = 'fbApiKeyPlugin';
+	public const string NAME = 'fbApiKeyPlugin';
 
 	public static function register(
 		Boot\Configurator $config,

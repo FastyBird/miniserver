@@ -37,7 +37,7 @@ use function assert;
 final class Factory implements Exchange\Factory
 {
 
-	private const EXCHANGE_TYPE = 'topic';
+	private const string EXCHANGE_TYPE = 'topic';
 
 	public function __construct(
 		private readonly string $exchangeName,

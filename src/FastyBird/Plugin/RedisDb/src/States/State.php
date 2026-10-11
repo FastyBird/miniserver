@@ -30,11 +30,11 @@ use Ramsey\Uuid;
 class State implements ObjectMapper\MappedObject
 {
 
-	public const ID_FIELD = 'id';
+	public const string ID_FIELD = 'id';
 
-	public const CREATED_AT_FIELD = 'created_at';
+	public const string CREATED_AT_FIELD = 'created_at';
 
-	public const UPDATED_AT_FIELD = 'updated_at';
+	public const string UPDATED_AT_FIELD = 'updated_at';
 
 	public function __construct(
 		#[Rules\UuidValue()]

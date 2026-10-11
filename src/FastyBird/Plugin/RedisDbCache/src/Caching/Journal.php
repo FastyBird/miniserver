@@ -34,13 +34,13 @@ use function is_string;
 class Journal implements Caching\Storages\Journal
 {
 
-	public const NS_PREFIX = 'FB.Journal';
+	public const string NS_PREFIX = 'FB.Journal';
 
-	public const KEY_PRIORITY = 'priority';
+	public const string KEY_PRIORITY = 'priority';
 
-	public const SUFFIX_TAGS = 'tags';
+	public const string SUFFIX_TAGS = 'tags';
 
-	public const SUFFIX_KEYS = 'keys';
+	public const string SUFFIX_KEYS = 'keys';
 
 	public function __construct(private readonly Clients\Client $client)
 	{

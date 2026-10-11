@@ -47,21 +47,21 @@ final class Storage implements Caching\Storage
 
 	use Nette\SmartObject;
 
-	public const NS_PREFIX = 'FB.Storage';
+	public const string NS_PREFIX = 'FB.Storage';
 
-	private const NS_SEPARATOR = "\x00";
+	private const string NS_SEPARATOR = "\x00";
 
-	private const META_TIME = 'time'; // timestamp
+	private const string META_TIME = 'time'; // timestamp
 
-	private const META_EXPIRE = 'expire'; // expiration timestamp
+	private const string META_EXPIRE = 'expire'; // expiration timestamp
 
-	private const META_DELTA = 'delta'; // relative (sliding) expiration
+	private const string META_DELTA = 'delta'; // relative (sliding) expiration
 
-	private const META_ITEMS = 'di'; // array of dependent items (file => timestamp)
+	private const string META_ITEMS = 'di'; // array of dependent items (file => timestamp)
 
-	private const META_CALLBACKS = 'callbacks'; // array of callbacks (function, args)
+	private const string META_CALLBACKS = 'callbacks'; // array of callbacks (function, args)
 
-	private const KEY = 'key'; // additional cache structure
+	private const string KEY = 'key'; // additional cache structure
 
 	public function __construct(
 		private readonly Clients\Client $client,

@@ -56,7 +56,7 @@ class StatesManager
 
 	use Nette\SmartObject;
 
-	private const MAX_RETRIES = 5;
+	private const int MAX_RETRIES = 5;
 
 	/** @var array<int> */
 	private array $retries = [];
