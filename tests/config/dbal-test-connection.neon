@@ -6,15 +6,6 @@
 # siblings (see Boot\Bootstrap::loadEnvParameters()) take precedence over them, since Nette
 # static parameters are compiled in after every addConfig()-loaded file regardless of call
 # order.
-#
-# @license        More in LICENSE.md
-# @copyright      https://www.fastybird.com
-# @author         Adam Kadlec <adam.kadlec@fastybird.com>
-# @package        FastyBird:MiniServer!
-# @subpackage     tests
-# @since          1.0.0
-#
-# @date           17.09.26
 
 parameters:
     database:
