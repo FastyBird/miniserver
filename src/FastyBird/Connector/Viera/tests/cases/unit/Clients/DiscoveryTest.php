@@ -25,12 +25,17 @@ use React\Datagram;
 use React\EventLoop;
 use React\Socket;
 use RuntimeException;
+use function sprintf;
 use function strval;
 
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
 final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 {
+
+	private const float QUEUE_CHECK_INTERVAL = 0.05;
+
+	private const int DISCOVERY_SAFETY_TIMEOUT = 10;
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument
@@ -255,17 +260,41 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 		$client->discover();
 
 		$eventLoop = $this->getContainer()->getByType(EventLoop\LoopInterface::class);
+		$queue = $this->getContainer()->getByType(Queue\Queue::class);
 
-		$eventLoop->addTimer(2, static function () use ($eventLoop, $client): void {
-			$eventLoop->stop();
+		// The loop runs until the discovery has put its result into the queue, however long that takes.
+		$eventLoop->addPeriodicTimer(
+			self::QUEUE_CHECK_INTERVAL,
+			static function () use ($eventLoop, $queue, $client): void {
+				if ($queue->isEmpty()) {
+					return;
+				}
 
-			$client->disconnect();
-		});
+				$eventLoop->stop();
+
+				$client->disconnect();
+			},
+		);
+
+		// Safety net only: a discovery which produces nothing fails the test instead of hanging it.
+		// The duration is not part of the behaviour under test.
+		$timedOut = false;
+
+		$eventLoop->addTimer(
+			self::DISCOVERY_SAFETY_TIMEOUT,
+			static function () use ($eventLoop, &$timedOut): void {
+				$timedOut = true;
+
+				$eventLoop->stop();
+			},
+		);
 
 		$eventLoop->run();
 
-		$queue = $this->getContainer()->getByType(Queue\Queue::class);
-
+		self::assertFalse(
+			$timedOut,
+			sprintf('Discovery produced no queue message within %d seconds', self::DISCOVERY_SAFETY_TIMEOUT),
+		);
 		self::assertFalse($queue->isEmpty());
 
 		$consumers = $this->getContainer()->getByType(Queue\Consumers::class);
