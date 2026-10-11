@@ -6,6 +6,7 @@ use Closure;
 use Doctrine\ORM;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities;
+use Override;
 use Ramsey\Uuid;
 use SortDirection;
 
@@ -51,6 +52,7 @@ class FindConnectors extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		$qb = $this->createBasicDql($repository);
@@ -79,6 +81,7 @@ class FindConnectors extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		$qb = $this->createBasicDql($repository)->select('COUNT(c.id)');

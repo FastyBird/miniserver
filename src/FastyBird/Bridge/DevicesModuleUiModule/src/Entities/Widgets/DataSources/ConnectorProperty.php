@@ -47,6 +47,7 @@ class ConnectorProperty extends Property
 		$this->property = $property;
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
@@ -57,6 +58,7 @@ class ConnectorProperty extends Property
 		return $this->property->getConnector();
 	}
 
+	#[Override]
 	public function getProperty(): DevicesEntities\Connectors\Properties\Property
 	{
 		return $this->property;

@@ -19,6 +19,7 @@ final class MotorCalibration extends Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\MotorCalibration::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\MotorCalibration::class;

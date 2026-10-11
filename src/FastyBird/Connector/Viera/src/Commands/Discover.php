@@ -23,6 +23,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette\Localization;
+use Override;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use Symfony\Component\Console;
@@ -74,6 +75,7 @@ final class Discover extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -109,6 +111,7 @@ final class Discover extends Console\Command\Command
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{
 		$symfonyApp = $this->getApplication();

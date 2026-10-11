@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\HomeKit\Hydrators\Channels;
 
 use FastyBird\Connector\HomeKit\Entities;
+use Override;
 
 /**
  * Battery channel entity hydrator
@@ -16,6 +17,7 @@ final class Battery extends Channel
 	/**
 	 * @return class-string<Entities\Channels\Battery>
 	 */
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\Battery::class;

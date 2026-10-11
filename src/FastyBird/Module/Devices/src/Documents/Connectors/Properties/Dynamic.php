@@ -69,6 +69,7 @@ final class Dynamic extends Property
 		);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Connectors\Properties\Dynamic::getType();

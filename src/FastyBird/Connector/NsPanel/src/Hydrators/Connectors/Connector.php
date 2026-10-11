@@ -4,6 +4,7 @@ namespace FastyBird\Connector\NsPanel\Hydrators\Connectors;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
+use Override;
 
 /**
  * NS Panel connector entity hydrator
@@ -13,6 +14,7 @@ use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 final class Connector extends DevicesHydrators\Connectors\Connector
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Connectors\Connector::class;

@@ -49,6 +49,7 @@ final class RedisDbCacheExtension extends DI\CompilerExtension
 		]);
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -72,6 +73,7 @@ final class RedisDbCacheExtension extends DI\CompilerExtension
 	/**
 	 * @throws DI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

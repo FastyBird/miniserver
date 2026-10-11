@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use Override;
 use Ramsey\Uuid;
 
 #[ORM\Entity]
@@ -30,11 +31,13 @@ class Percentage extends Channel
 		parent::__construct($device, Types\Capability::PERCENTAGE->value, $name, $id);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getCapability(): Types\Capability
 	{
 		return Types\Capability::PERCENTAGE;

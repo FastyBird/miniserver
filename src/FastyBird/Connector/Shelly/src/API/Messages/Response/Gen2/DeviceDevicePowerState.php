@@ -37,6 +37,7 @@ final class DeviceDevicePowerState extends DeviceState implements API\Messages\M
 		parent::__construct($id, $errors);
 	}
 
+	#[Override]
 	public function getType(): Types\ComponentType
 	{
 		return Types\ComponentType::DEVICE_POWER;

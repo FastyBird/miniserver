@@ -49,6 +49,7 @@ final class DeviceProperty extends Property
 		parent::__construct($router);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return DevicesModuleUiModuleEntities\Widgets\DataSources\DeviceProperty::class;

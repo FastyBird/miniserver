@@ -7,6 +7,7 @@ use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Triggers\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
+use Override;
 use function is_scalar;
 use function strval;
 
@@ -24,6 +25,7 @@ final class Email extends Notification
 		'enabled',
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Notifications\Email::class;

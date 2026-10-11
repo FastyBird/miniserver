@@ -6,6 +6,7 @@ use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
+use Override;
 use function is_scalar;
 
 /**
@@ -29,6 +30,7 @@ final class Tab extends Hydrators\Hydrator
 		Schemas\Dashboards\Tabs\Tab::RELATIONSHIPS_WIDGETS,
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Dashboards\Tabs\Tab::class;

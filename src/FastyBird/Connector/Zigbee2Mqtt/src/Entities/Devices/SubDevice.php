@@ -43,6 +43,7 @@ class SubDevice extends Device
 		$this->setParents([$parent]);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
 use FastyBird\Module\Ui\Entities;
+use Override;
 
 /**
  * Slider widget display entity hydrator
@@ -20,6 +21,7 @@ final class Slider extends Display
 		'precision' => 'precision',
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Widgets\Displays\Slider::class;

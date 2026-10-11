@@ -8,6 +8,7 @@ use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use TypeError;
 use ValueError;
 use function floatval;
@@ -25,6 +26,7 @@ class Gateway extends NsPanelEntities\Devices\Device
 
 	public const float HEARTBEAT_DELAY = 150.0;
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

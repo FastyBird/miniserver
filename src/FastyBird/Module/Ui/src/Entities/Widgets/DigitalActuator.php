@@ -14,6 +14,7 @@ class DigitalActuator extends Actuator
 
 	public const string TYPE = 'digital-actuator';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

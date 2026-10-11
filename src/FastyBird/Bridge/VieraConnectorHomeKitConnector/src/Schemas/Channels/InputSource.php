@@ -21,6 +21,7 @@ final class InputSource extends Viera
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	public const string SCHEMA_TYPE = Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value . '/channel/' . Entities\Channels\InputSource::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\InputSource::class;

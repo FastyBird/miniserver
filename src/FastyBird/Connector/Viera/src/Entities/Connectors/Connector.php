@@ -17,6 +17,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 
 	public const string TYPE = 'viera-connector';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

@@ -20,6 +20,7 @@ final class LightBulb extends Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::HOMEKIT->value . '/channel/' . Entities\Channels\LightBulb::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\LightBulb::class;

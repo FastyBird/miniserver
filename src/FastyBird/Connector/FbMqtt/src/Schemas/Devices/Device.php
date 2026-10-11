@@ -20,6 +20,7 @@ final class Device extends DevicesSchemas\Devices\Device
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::FB_MQTT->value . '/device/' . Entities\Devices\Device::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\Device::class;

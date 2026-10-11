@@ -19,6 +19,7 @@ final class Rssi extends Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\Rssi::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Rssi::class;

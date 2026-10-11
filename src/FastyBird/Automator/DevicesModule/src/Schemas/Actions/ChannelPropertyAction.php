@@ -32,6 +32,7 @@ final class ChannelPropertyAction extends TriggersSchemas\Actions\Action
 		return self::SCHEMA_TYPE;
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Actions\ChannelPropertyAction::class;

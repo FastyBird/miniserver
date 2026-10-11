@@ -10,6 +10,7 @@ use Nette;
 use Nette\Bootstrap;
 use Nette\DI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -33,6 +34,7 @@ final class ApiKeyExtension extends DI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -53,6 +55,7 @@ final class ApiKeyExtension extends DI\CompilerExtension
 	/**
 	 * @throws Nette\DI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

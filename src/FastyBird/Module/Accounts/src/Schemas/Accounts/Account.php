@@ -51,6 +51,7 @@ final class Account extends Schemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Accounts\Account::class;

@@ -28,6 +28,7 @@ final class Sms extends Notification
 		return self::SCHEMA_TYPE;
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Notifications\Sms::class;

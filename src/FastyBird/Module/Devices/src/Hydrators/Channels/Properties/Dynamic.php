@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Devices\Hydrators\Channels\Properties;
 
 use FastyBird\Module\Devices\Entities;
+use Override;
 
 /**
  * Channel property entity hydrator
@@ -15,6 +16,7 @@ final class Dynamic extends Property
 	/**
 	 * @return class-string<Entities\Channels\Properties\Dynamic>
 	 */
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\Properties\Dynamic::class;

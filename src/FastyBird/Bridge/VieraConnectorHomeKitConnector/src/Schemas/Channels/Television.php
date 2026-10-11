@@ -21,6 +21,7 @@ final class Television extends Viera
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	public const string SCHEMA_TYPE = Sources\Bridge::VIERA_CONNECTOR_HOMEKIT_CONNECTOR->value . '/channel/' . Entities\Channels\Television::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Television::class;

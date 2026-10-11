@@ -38,6 +38,7 @@ final class ChannelAttribute extends Attribute
 		return $this->channel;
 	}
 
+	#[Override]
 	public function getAttribute(): string
 	{
 		return $this->attribute;

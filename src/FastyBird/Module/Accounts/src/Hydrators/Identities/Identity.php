@@ -10,6 +10,7 @@ use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use function is_scalar;
 use function strval;
 
@@ -32,6 +33,7 @@ final class Identity extends Hydrators\Hydrator
 		Schemas\Identities\Identity::RELATIONSHIPS_ACCOUNT,
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Identities\Identity::class;

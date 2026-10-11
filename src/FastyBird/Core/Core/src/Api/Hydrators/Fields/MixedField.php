@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Api\Hydrators\Fields;
 
 use FastyBird\Core\Api\Encoding\Objects;
+use Override;
 
 /**
  * Entity mixed value field
@@ -24,6 +25,7 @@ final class MixedField extends Field
 	/**
 	 * @param Objects\StandardObject<string, mixed> $attributes
 	 */
+	#[Override]
 	public function getValue(Objects\StandardObject $attributes): mixed
 	{
 		return $attributes->get($this->getMappedName());

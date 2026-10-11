@@ -13,6 +13,7 @@ use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -39,6 +40,7 @@ class Device extends DevicesHydrators\Devices\Device
 	/**
 	 * @return class-string<Entities\Devices\Device>
 	 */
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Devices\Device::class;

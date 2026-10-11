@@ -4,12 +4,14 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Core\Documents;
+use Override;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\InputButton::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\InputButton::TYPE)]
 final class InputButton extends Shelly
 {
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Channels\InputButton::TYPE;

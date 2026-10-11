@@ -35,6 +35,7 @@ final class Group extends Schemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Groups\Group::class;

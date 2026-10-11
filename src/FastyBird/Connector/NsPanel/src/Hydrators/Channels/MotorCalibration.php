@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\NsPanel\Hydrators\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
+use Override;
 
 /**
  * NS Panel motor calibration capability channel entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Connector\NsPanel\Entities;
 final class MotorCalibration extends Channel
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\MotorCalibration::class;

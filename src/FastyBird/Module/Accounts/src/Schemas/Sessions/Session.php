@@ -37,6 +37,7 @@ final class Session extends Schemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Tokens\AccessToken::class;

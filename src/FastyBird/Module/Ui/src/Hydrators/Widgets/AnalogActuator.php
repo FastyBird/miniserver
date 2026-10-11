@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Ui\Hydrators\Widgets;
 
 use FastyBird\Module\Ui\Entities;
+use Override;
 
 /**
  * Analog actuator widget entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Module\Ui\Entities;
 final class AnalogActuator extends Widget
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Widgets\AnalogActuator::class;

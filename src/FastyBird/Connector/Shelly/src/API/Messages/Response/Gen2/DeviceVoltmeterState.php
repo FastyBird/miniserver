@@ -39,6 +39,7 @@ final class DeviceVoltmeterState extends DeviceState implements API\Messages\Mes
 		parent::__construct($id, $errors);
 	}
 
+	#[Override]
 	public function getType(): Types\ComponentType
 	{
 		return Types\ComponentType::VOLTMETER;

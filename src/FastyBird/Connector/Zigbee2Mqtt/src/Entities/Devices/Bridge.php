@@ -8,6 +8,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use TypeError;
 use ValueError;
 use function is_string;
@@ -21,6 +22,7 @@ class Bridge extends Device
 
 	public const string BASE_TOPIC = 'zigbee2mqtt';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

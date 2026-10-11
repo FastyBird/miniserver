@@ -7,6 +7,7 @@ use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Types;
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use TypeError;
 use ValueError;
 use function is_scalar;
@@ -25,6 +26,7 @@ final class GroupedButton extends Display
 		'icon',
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Widgets\Displays\GroupedButton::class;

@@ -25,6 +25,7 @@ final class EthernetState extends DeviceState implements API\Messages\Message
 		parent::__construct();
 	}
 
+	#[Override]
 	public function getType(): Types\ComponentType
 	{
 		return Types\ComponentType::ETHERNET;

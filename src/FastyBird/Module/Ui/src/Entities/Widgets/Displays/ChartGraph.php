@@ -27,6 +27,7 @@ class ChartGraph extends Display implements Entities\Widgets\Displays\Parameters
 	#[Attribute\Crud(writable: true)]
 	protected bool $enableMinMax;
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

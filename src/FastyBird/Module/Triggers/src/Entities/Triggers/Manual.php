@@ -4,6 +4,7 @@ namespace FastyBird\Module\Triggers\Entities\Triggers;
 
 use Doctrine\ORM\Mapping as ORM;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use Override;
 
 #[ORM\Entity]
 #[ORM\Table(
@@ -20,6 +21,7 @@ class Manual extends Trigger
 
 	public const string TYPE = 'manual';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

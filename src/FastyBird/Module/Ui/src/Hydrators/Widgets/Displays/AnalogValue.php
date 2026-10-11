@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
 use FastyBird\Module\Ui\Entities;
+use Override;
 
 /**
  * Analog value widget display entity hydrator
@@ -17,6 +18,7 @@ final class AnalogValue extends Display
 		'precision',
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Widgets\Displays\AnalogValue::class;

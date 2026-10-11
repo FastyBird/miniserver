@@ -7,6 +7,7 @@ use Doctrine\ORM;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -67,6 +68,7 @@ final class FindClients extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository);
@@ -93,6 +95,7 @@ final class FindClients extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<T> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository)->select('COUNT(c.id)');

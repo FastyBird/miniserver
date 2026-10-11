@@ -29,6 +29,7 @@ final class Variable extends Property
 	 */
 	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/property/connector/' . Types\PropertyType::VARIABLE->value;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Connectors\Properties\Variable::class;

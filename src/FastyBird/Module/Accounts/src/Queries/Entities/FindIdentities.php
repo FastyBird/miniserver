@@ -7,6 +7,7 @@ use Doctrine\ORM;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -62,6 +63,7 @@ final class FindIdentities extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Identities\Identity> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository);
@@ -88,6 +90,7 @@ final class FindIdentities extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Identities\Identity> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository)

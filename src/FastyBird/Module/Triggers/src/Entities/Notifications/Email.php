@@ -40,6 +40,7 @@ class Email extends Notification
 		$this->email = $email;
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

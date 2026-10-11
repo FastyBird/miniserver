@@ -14,6 +14,7 @@ class AnalogActuator extends Actuator
 
 	public const string TYPE = 'analog-actuator';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

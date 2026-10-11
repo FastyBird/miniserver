@@ -4,12 +4,14 @@ namespace FastyBird\Connector\NsPanel\Documents\Devices;
 
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Core\Documents;
+use Override;
 
 #[Documents\Mapping\Document(entity: Entities\Devices\Gateway::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Devices\Gateway::TYPE)]
 final class Gateway extends Device
 {
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Devices\Gateway::TYPE;

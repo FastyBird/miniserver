@@ -93,6 +93,7 @@ final class DeviceSwitchState extends DeviceState implements API\Messages\Messag
 		parent::__construct($id, $errors);
 	}
 
+	#[Override]
 	public function getType(): Types\ComponentType
 	{
 		return Types\ComponentType::SWITCH;

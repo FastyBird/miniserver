@@ -5,12 +5,14 @@ namespace FastyBird\Addon\VirtualThermostat\Documents\Channels;
 use FastyBird\Addon\VirtualThermostat\Entities;
 use FastyBird\Connector\Virtual\Documents as VirtualDocuments;
 use FastyBird\Core\Documents as CoreDocuments;
+use Override;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Channels\State::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\State::TYPE)]
 final class State extends VirtualDocuments\Channels\Channel
 {
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Channels\State::TYPE;

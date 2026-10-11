@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Devices\Hydrators\Connectors;
 
 use FastyBird\Module\Devices\Entities;
+use Override;
 
 /**
  * Generic connector entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Module\Devices\Entities;
 final class Generic extends Connector
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Connectors\Generic::class;

@@ -15,6 +15,7 @@ class Generic extends Entities\Connectors\Connector
 
 	public const string TYPE = 'generic';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

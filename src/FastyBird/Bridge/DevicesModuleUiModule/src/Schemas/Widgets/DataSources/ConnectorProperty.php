@@ -49,6 +49,7 @@ final class ConnectorProperty extends Property
 		parent::__construct($router);
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return DevicesModuleUiModuleEntities\Widgets\DataSources\ConnectorProperty::class;

@@ -44,6 +44,7 @@ final class Role extends Schemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Roles\Role::class;

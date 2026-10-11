@@ -19,6 +19,7 @@ final class Bridge extends Device
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::ZIGBEE2MQTT->value . '/device/' . Entities\Devices\Bridge::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\Bridge::class;

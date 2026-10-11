@@ -4,6 +4,7 @@ namespace FastyBird\Core\Api\Hydrators\Fields;
 
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Exceptions;
+use Override;
 use function is_array;
 use function sprintf;
 
@@ -20,6 +21,7 @@ final class SingleEntityField extends EntityField
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function getValue(Objects\StandardObject $attributes): array|null
 	{
 		if ($this->isRelationship()) {

@@ -57,6 +57,7 @@ final class TriggersExtension extends NetteDI\CompilerExtension implements Trans
 		]);
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -228,6 +229,7 @@ final class TriggersExtension extends NetteDI\CompilerExtension implements Trans
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

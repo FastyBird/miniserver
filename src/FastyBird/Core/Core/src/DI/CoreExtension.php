@@ -150,6 +150,7 @@ final class CoreExtension extends NetteDI\CompilerExtension
 	 * @throws Exceptions\InvalidState
 	 * @throws Exceptions\Logic
 	 */
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -328,6 +329,7 @@ final class CoreExtension extends NetteDI\CompilerExtension
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 * @throws Exceptions\Logic
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();
@@ -422,6 +424,7 @@ final class CoreExtension extends NetteDI\CompilerExtension
 		$this->webSockets->beforeCompile();
 	}
 
+	#[Override]
 	public function afterCompile(PhpGenerator\ClassType $class): void
 	{
 		parent::afterCompile($class);

@@ -10,6 +10,7 @@ use FastyBird\Core\Documents\DI as DocumentsDI;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nettrine\ORM as NettrineORM;
+use Override;
 use function array_keys;
 use function array_pop;
 use const DIRECTORY_SEPARATOR;
@@ -35,6 +36,7 @@ final class DateTimeExtension extends NetteDI\CompilerExtension
 		};
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -55,6 +57,7 @@ final class DateTimeExtension extends NetteDI\CompilerExtension
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

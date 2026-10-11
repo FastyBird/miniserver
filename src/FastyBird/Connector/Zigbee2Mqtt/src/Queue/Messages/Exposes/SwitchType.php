@@ -42,6 +42,7 @@ final class SwitchType extends Type
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getType(): Types\ExposeType
 	{
 		return Types\ExposeType::from($this->type);

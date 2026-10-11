@@ -6,6 +6,7 @@ use Closure;
 use Doctrine\ORM;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Triggers\Entities;
+use Override;
 use Ramsey\Uuid;
 use SortDirection;
 
@@ -65,6 +66,7 @@ final class FindTriggerControls extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Triggers\Controls\Control> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		$qb = $this->createBasicDql($repository);
@@ -95,6 +97,7 @@ final class FindTriggerControls extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Triggers\Controls\Control> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		$qb = $this->createBasicDql($repository)->select('COUNT(c.id)');

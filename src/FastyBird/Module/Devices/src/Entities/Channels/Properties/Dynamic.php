@@ -18,6 +18,7 @@ class Dynamic extends Property
 
 	public const string TYPE = Types\PropertyType::DYNAMIC->value;
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

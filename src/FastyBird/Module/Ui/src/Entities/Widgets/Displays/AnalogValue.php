@@ -17,6 +17,7 @@ class AnalogValue extends Display implements Entities\Widgets\Displays\Parameter
 
 	public const string TYPE = 'analog-value';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

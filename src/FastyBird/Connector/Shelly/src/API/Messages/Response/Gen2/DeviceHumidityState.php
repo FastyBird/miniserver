@@ -34,6 +34,7 @@ final class DeviceHumidityState extends DeviceState implements API\Messages\Mess
 		parent::__construct($id, $errors);
 	}
 
+	#[Override]
 	public function getType(): Types\ComponentType
 	{
 		return Types\ComponentType::HUMIDITY;

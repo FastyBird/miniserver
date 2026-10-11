@@ -7,6 +7,7 @@ use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use ValueError;
 use function call_user_func;
 use function is_callable;
@@ -36,6 +37,7 @@ final class BackedEnumField extends Field
 	 *
 	 * @throws Exceptions\JsonApiError
 	 */
+	#[Override]
 	public function getValue(Objects\StandardObject $attributes): BackedEnum|null
 	{
 		$value = $attributes->get($this->getMappedName());

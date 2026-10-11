@@ -41,6 +41,7 @@ class Sms extends Notification
 		$this->phone = $phone;
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

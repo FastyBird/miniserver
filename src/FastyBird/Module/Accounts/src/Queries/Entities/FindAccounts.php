@@ -8,6 +8,7 @@ use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions;
 use FastyBird\Module\Accounts\Types;
+use Override;
 use Ramsey\Uuid;
 use function in_array;
 
@@ -63,6 +64,7 @@ final class FindAccounts extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Accounts\Account> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository);
@@ -89,6 +91,7 @@ final class FindAccounts extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Accounts\Account> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository)

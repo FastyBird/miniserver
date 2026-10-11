@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Persistence\Helpers\StringFunctions;
 
 use Doctrine\ORM\Query;
+use Override;
 
 final class DateFormat extends Query\AST\Functions\FunctionNode
 {
@@ -17,6 +18,7 @@ final class DateFormat extends Query\AST\Functions\FunctionNode
 	 */
 	protected string $formatChar;
 
+	#[Override]
 	public function getSql(Query\SqlWalker $sqlWalker): string
 	{
 		return 'DATE_FORMAT(' .
@@ -29,6 +31,7 @@ final class DateFormat extends Query\AST\Functions\FunctionNode
 	/**
 	 * @throws Query\QueryException
 	 */
+	#[Override]
 	public function parse(Query\Parser $parser): void
 	{
 		$parser->match(Query\TokenType::T_IDENTIFIER);

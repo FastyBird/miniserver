@@ -3,6 +3,7 @@
 namespace FastyBird\Automator\DevicesModule\Hydrators\Actions;
 
 use FastyBird\Automator\DevicesModule\Entities;
+use Override;
 
 /**
  * Device property action entity hydrator
@@ -20,6 +21,7 @@ final class DevicePropertyAction extends PropertyAction
 		'enabled',
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Actions\DevicePropertyAction::class;

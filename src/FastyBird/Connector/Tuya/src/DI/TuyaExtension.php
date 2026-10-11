@@ -53,6 +53,7 @@ final class TuyaExtension extends NetteDI\CompilerExtension implements Translati
 	/**
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -327,6 +328,7 @@ final class TuyaExtension extends NetteDI\CompilerExtension implements Translati
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

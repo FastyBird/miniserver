@@ -26,6 +26,7 @@ final class AnalogSensor extends Widget
 		return self::SCHEMA_TYPE;
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Widgets\AnalogSensor::class;

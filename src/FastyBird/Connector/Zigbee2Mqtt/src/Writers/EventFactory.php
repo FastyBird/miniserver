@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\Zigbee2Mqtt\Writers;
 
 use FastyBird\Connector\Zigbee2Mqtt\Documents;
+use Override;
 
 /**
  * System event device state periodic writer factory
@@ -10,6 +11,7 @@ use FastyBird\Connector\Zigbee2Mqtt\Documents;
 interface EventFactory extends WriterFactory
 {
 
+	#[Override]
 	public function create(Documents\Connectors\Connector $connector): Event;
 
 }

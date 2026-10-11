@@ -6,6 +6,7 @@ use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use function is_array;
 use function strval;
 
@@ -34,6 +35,7 @@ final class ArrayField extends Field
 	 *
 	 * @throws Exceptions\JsonApiError
 	 */
+	#[Override]
 	public function getValue(Objects\StandardObject $attributes): array|null
 	{
 		$value = $attributes->get($this->getMappedName());

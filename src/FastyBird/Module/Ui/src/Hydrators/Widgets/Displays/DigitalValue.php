@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Ui\Hydrators\Widgets\Displays;
 
 use FastyBird\Module\Ui\Entities;
+use Override;
 
 /**
  * Digital value widget display entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Module\Ui\Entities;
 final class DigitalValue extends Display
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Widgets\Displays\DigitalValue::class;

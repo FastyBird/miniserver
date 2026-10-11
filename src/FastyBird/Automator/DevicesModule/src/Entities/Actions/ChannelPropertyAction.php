@@ -40,6 +40,7 @@ class ChannelPropertyAction extends PropertyAction
 		$this->property = $property;
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

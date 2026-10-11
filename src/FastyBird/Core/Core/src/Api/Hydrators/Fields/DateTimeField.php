@@ -5,6 +5,7 @@ namespace FastyBird\Core\Api\Hydrators\Fields;
 use DateTimeInterface;
 use FastyBird\Core\Api\Encoding\Objects;
 use Nette\Utils;
+use Override;
 use ValueError;
 use function is_scalar;
 
@@ -30,6 +31,7 @@ final class DateTimeField extends Field
 	 *
 	 * @throws ValueError
 	 */
+	#[Override]
 	public function getValue(Objects\StandardObject $attributes): DateTimeInterface|null
 	{
 		$value = $attributes->get($this->getMappedName());

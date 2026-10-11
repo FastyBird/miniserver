@@ -8,6 +8,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Exceptions;
 use FastyBird\Core\WebSockets\Server;
+use Override;
 use Psr\EventDispatcher;
 use Psr\Log;
 use React\EventLoop;
@@ -44,6 +45,7 @@ final class WsServer extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		parent::configure();
@@ -53,6 +55,7 @@ final class WsServer extends Console\Command\Command
 			->setDescription('WebSockets server service');
 	}
 
+	#[Override]
 	protected function execute(
 		Input\InputInterface $input,
 		Output\OutputInterface $output,

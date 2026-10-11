@@ -19,6 +19,7 @@ final class ThermostatTargetSetPoint extends Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\ThermostatTargetSetPoint::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\ThermostatTargetSetPoint::class;

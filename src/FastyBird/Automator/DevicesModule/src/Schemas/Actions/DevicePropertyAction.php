@@ -32,6 +32,7 @@ final class DevicePropertyAction extends TriggersSchemas\Actions\Action
 		return self::SCHEMA_TYPE;
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Actions\DevicePropertyAction::class;

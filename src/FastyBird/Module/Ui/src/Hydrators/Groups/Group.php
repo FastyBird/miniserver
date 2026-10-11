@@ -6,6 +6,7 @@ use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Hydrators;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Schemas;
+use Override;
 use function is_scalar;
 
 /**
@@ -28,6 +29,7 @@ final class Group extends Hydrators\Hydrator
 		Schemas\Groups\Group::RELATIONSHIPS_WIDGETS,
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Groups\Group::class;

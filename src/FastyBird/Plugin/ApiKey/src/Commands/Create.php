@@ -7,6 +7,7 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\ApiKey\Models;
 use FastyBird\Plugin\ApiKey\Types;
 use Nette\Utils;
+use Override;
 use Psr\Log;
 use Ramsey\Uuid;
 use Symfony\Component\Console;
@@ -36,6 +37,7 @@ final class Create extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -43,6 +45,7 @@ final class Create extends Console\Command\Command
 			->setDescription('Create API access key');
 	}
 
+	#[Override]
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output)
 	{
 		$io = new Style\SymfonyStyle($input, $output);

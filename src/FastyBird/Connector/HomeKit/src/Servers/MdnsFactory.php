@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\HomeKit\Servers;
 
 use FastyBird\Connector\HomeKit\Documents;
+use Override;
 
 /**
  * mDNS connector discovery server factory
@@ -10,6 +11,7 @@ use FastyBird\Connector\HomeKit\Documents;
 interface MdnsFactory extends ServerFactory
 {
 
+	#[Override]
 	public function create(Documents\Connectors\Connector $connector): Mdns;
 
 }

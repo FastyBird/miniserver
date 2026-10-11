@@ -9,6 +9,7 @@ use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Triggers\Hydrators as TriggersHydrators;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
+use Override;
 use ValueError;
 use function in_array;
 use function is_array;
@@ -30,6 +31,7 @@ final class TimeCondition extends TriggersHydrators\Conditions\Condition
 		'enabled',
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Conditions\TimeCondition::class;

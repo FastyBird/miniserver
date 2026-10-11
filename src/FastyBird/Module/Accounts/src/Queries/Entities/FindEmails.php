@@ -6,6 +6,7 @@ use Closure;
 use Doctrine\ORM;
 use FastyBird\Core\Persistence\Query;
 use FastyBird\Module\Accounts\Entities;
+use Override;
 use Ramsey\Uuid;
 
 /**
@@ -53,6 +54,7 @@ final class FindEmails extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Emails\Email> $repository
 	 */
+	#[Override]
 	protected function doCreateQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository);
@@ -79,6 +81,7 @@ final class FindEmails extends Query\QueryObject
 	/**
 	 * @param ORM\EntityRepository<Entities\Emails\Email> $repository
 	 */
+	#[Override]
 	protected function doCreateCountQuery(ORM\EntityRepository $repository): ORM\QueryBuilder
 	{
 		return $this->createBasicDql($repository)

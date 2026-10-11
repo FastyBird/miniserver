@@ -14,6 +14,7 @@ use FastyBird\Module\Devices\Commands as DevicesCommands;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Localization;
+use Override;
 use Ramsey\Uuid;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
@@ -54,6 +55,7 @@ final class Execute extends Console\Command\Command
 	/**
 	 * @throws Console\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function configure(): void
 	{
 		$this
@@ -87,6 +89,7 @@ final class Execute extends Console\Command\Command
 	 * @throws ValueError
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
+	#[Override]
 	protected function execute(Input\InputInterface $input, Output\OutputInterface $output): int
 	{
 		$symfonyApp = $this->getApplication();

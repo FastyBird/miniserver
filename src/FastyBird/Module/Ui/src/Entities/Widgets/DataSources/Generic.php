@@ -24,6 +24,7 @@ class Generic extends DataSource
 
 	public const string TYPE = 'generic';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
@@ -35,11 +36,13 @@ class Generic extends DataSource
 		return Sources\Module::UI;
 	}
 
+	#[Override]
 	public function hasRelation(string $relation): bool
 	{
 		return $relation === Schemas\Widgets\DataSources\Generic::RELATIONSHIPS_WIDGET;
 	}
 
+	#[Override]
 	public function getRelation(string $relation): Entities\CrudEntity|null
 	{
 		if ($relation === Schemas\Widgets\DataSources\Generic::RELATIONSHIPS_WIDGET) {

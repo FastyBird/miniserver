@@ -58,6 +58,7 @@ final class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExt
 		]);
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -225,6 +226,7 @@ final class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExt
 	 * @throws NetteDI\MissingServiceException
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

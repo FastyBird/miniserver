@@ -53,6 +53,7 @@ final class Zigbee2MqttExtension extends NetteDI\CompilerExtension implements Tr
 	/**
 	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
@@ -364,6 +365,7 @@ final class Zigbee2MqttExtension extends NetteDI\CompilerExtension implements Tr
 	/**
 	 * @throws NetteDI\MissingServiceException
 	 */
+	#[Override]
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();

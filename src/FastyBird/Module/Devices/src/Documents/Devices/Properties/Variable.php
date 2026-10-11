@@ -83,6 +83,7 @@ final class Variable extends Property
 		);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Devices\Properties\Variable::getType();

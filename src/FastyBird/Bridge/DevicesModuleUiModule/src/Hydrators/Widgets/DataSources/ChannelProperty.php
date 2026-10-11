@@ -14,6 +14,7 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Ui\Hydrators as UiHydrators;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -42,6 +43,7 @@ final class ChannelProperty extends UiHydrators\Widgets\DataSources\DataSource
 		parent::__construct($managerRegistry, $translator, $crudReader);
 	}
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class;

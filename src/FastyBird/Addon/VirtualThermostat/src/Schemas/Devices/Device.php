@@ -21,6 +21,7 @@ final class Device extends VirtualSchemas\Devices\Device
 	 */
 	public const string SCHEMA_TYPE = Sources\Addon::VIRTUAL_THERMOSTAT->value . '/device/' . Entities\Devices\Device::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Devices\Device::class;

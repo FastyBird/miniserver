@@ -19,6 +19,7 @@ final class Generic extends Connector
 	 */
 	public const string SCHEMA_TYPE = Sources\Module::DEVICES->value . '/connector/' . Entities\Connectors\Generic::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Connectors\Generic::class;

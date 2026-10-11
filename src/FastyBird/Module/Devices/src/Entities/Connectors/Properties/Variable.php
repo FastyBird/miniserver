@@ -13,6 +13,7 @@ class Variable extends Property
 
 	public const string TYPE = Types\PropertyType::VARIABLE->value;
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

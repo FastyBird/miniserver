@@ -45,6 +45,7 @@ final class State extends ApiSchemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Documents\States\Channels\Properties\Property::class;

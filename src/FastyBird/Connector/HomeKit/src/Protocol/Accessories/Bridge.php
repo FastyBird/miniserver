@@ -6,6 +6,7 @@ use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Types;
+use Override;
 use Ramsey\Uuid;
 use SplObjectStorage;
 
@@ -32,6 +33,7 @@ final class Bridge extends Accessory
 		$this->accessories = new SplObjectStorage();
 	}
 
+	#[Override]
 	public function getId(): Uuid\UuidInterface
 	{
 		return $this->connector->getId();

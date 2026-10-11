@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\HomeKit\Servers;
 
 use FastyBird\Connector\HomeKit\Documents;
+use Override;
 
 /**
  * HTTP connector communication server factory
@@ -10,6 +11,7 @@ use FastyBird\Connector\HomeKit\Documents;
 interface HttpFactory extends ServerFactory
 {
 
+	#[Override]
 	public function create(Documents\Connectors\Connector $connector): Http;
 
 }

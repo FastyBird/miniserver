@@ -47,6 +47,7 @@ final class CouchDbExtension extends DI\CompilerExtension
 		]);
 	}
 
+	#[Override]
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();

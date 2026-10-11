@@ -35,6 +35,7 @@ final class Dashboard extends Schemas\JsonApiSchema
 	{
 	}
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Dashboards\Dashboard::class;

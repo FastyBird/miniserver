@@ -76,6 +76,7 @@ final class Dynamic extends Property
 		);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Channels\Properties\Dynamic::getType();

@@ -3,6 +3,7 @@
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
+use Override;
 
 /**
  * Input button type channel entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 final class InputButton extends Shelly
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\InputButton::class;

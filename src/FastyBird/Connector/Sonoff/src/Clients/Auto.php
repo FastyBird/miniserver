@@ -120,6 +120,7 @@ final class Auto extends ClientProcess implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	protected function readInformation(
 		Documents\Devices\Device $device,
 	): Promise\PromiseInterface
@@ -169,6 +170,7 @@ final class Auto extends ClientProcess implements Client
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
+	#[Override]
 	protected function readState(Documents\Devices\Device $device): Promise\PromiseInterface
 	{
 		$deferred = new Promise\Deferred();

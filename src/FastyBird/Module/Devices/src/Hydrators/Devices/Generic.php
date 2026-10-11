@@ -12,6 +12,7 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
+use Override;
 use Ramsey\Uuid;
 use function is_string;
 use function strval;
@@ -34,6 +35,7 @@ final class Generic extends Device
 		parent::__construct($managerRegistry, $translator, $crudReader);
 	}
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Devices\Generic::class;

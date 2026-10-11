@@ -30,6 +30,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 
 	public const int DEFAULT_SERVER_SECURED_PORT = 8_883;
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

@@ -55,6 +55,7 @@ final class MiddlewareDispatcher implements RequestHandlerInterface
 			{
 			}
 
+			#[Override]
 			public function handle(ServerRequestInterface $request): ResponseInterface
 			{
 				return $this->middleware->process($request, $this->next);

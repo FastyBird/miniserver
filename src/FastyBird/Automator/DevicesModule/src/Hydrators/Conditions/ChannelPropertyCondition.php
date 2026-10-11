@@ -6,6 +6,7 @@ use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions;
 use Fig\Http\Message\StatusCodeInterface;
+use Override;
 use Ramsey\Uuid;
 use function is_scalar;
 use function strval;
@@ -28,6 +29,7 @@ final class ChannelPropertyCondition extends PropertyCondition
 		'enabled',
 	];
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Conditions\ChannelPropertyCondition::class;

@@ -3,6 +3,7 @@
 namespace FastyBird\Module\Devices\Hydrators\Devices\Properties;
 
 use FastyBird\Module\Devices\Entities;
+use Override;
 
 /**
  * Device property entity hydrator
@@ -15,6 +16,7 @@ final class Mapped extends Property
 	/**
 	 * @return class-string<Entities\Devices\Properties\Mapped>
 	 */
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Devices\Properties\Mapped::class;

@@ -6,6 +6,7 @@ use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Exceptions;
 use Flow\JSONPath;
 use Nette\Utils;
+use Override;
 use Ramsey\Uuid;
 use function serialize;
 
@@ -54,6 +55,7 @@ final class FindDashboardTabs extends QueryObject
 	/**
 	 * @throws JSONPath\JSONPathException
 	 */
+	#[Override]
 	protected function doCreateQuery(JSONPath\JSONPath $repository): JSONPath\JSONPath
 	{
 		$filtered = $repository;
@@ -68,6 +70,7 @@ final class FindDashboardTabs extends QueryObject
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
+	#[Override]
 	public function toString(): string
 	{
 		try {

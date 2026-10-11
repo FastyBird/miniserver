@@ -4,12 +4,14 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Documents\Channels;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Entities;
 use FastyBird\Core\Documents;
+use Override;
 
 #[Documents\Mapping\Document(entity: Entities\Channels\Relay::class)]
 #[Documents\Mapping\DiscriminatorEntry(name: Entities\Channels\Relay::TYPE)]
 final class Relay extends Shelly
 {
 
+	#[Override]
 	public static function getType(): string
 	{
 		return Entities\Channels\Relay::TYPE;

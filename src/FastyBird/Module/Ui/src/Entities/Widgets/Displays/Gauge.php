@@ -17,6 +17,7 @@ class Gauge extends Display implements Entities\Widgets\Displays\Parameters\Prec
 
 	public const string TYPE = 'gauge';
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;

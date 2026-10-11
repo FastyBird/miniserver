@@ -19,6 +19,7 @@ final class Toggle extends Channel
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::NS_PANEL->value . '/channel/' . Entities\Channels\Toggle::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Channels\Toggle::class;

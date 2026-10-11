@@ -3,6 +3,7 @@
 namespace FastyBird\Connector\NsPanel\Hydrators\Channels;
 
 use FastyBird\Connector\NsPanel\Entities;
+use Override;
 
 /**
  * NS Panel detect capability channel entity hydrator
@@ -12,6 +13,7 @@ use FastyBird\Connector\NsPanel\Entities;
 final class Detect extends Channel
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return Entities\Channels\Detect::class;

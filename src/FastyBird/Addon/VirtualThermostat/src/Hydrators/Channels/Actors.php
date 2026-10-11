@@ -23,6 +23,7 @@ use function strval;
 final class Actors extends VirtualHydrators\Channels\Channel
 {
 
+	#[Override]
 	public function getEntityName(): string
 	{
 		return VirtualThermostatEntities\Channels\Actors::class;

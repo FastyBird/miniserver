@@ -8,6 +8,7 @@ use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
+use Override;
 use Ramsey\Uuid;
 use function array_key_exists;
 use function preg_match;
@@ -45,11 +46,13 @@ class Toggle extends Channel
 		parent::__construct($device, $identifier, $name, $id);
 	}
 
+	#[Override]
 	public static function getType(): string
 	{
 		return self::TYPE;
 	}
 
+	#[Override]
 	public function getCapability(): Types\Capability
 	{
 		return Types\Capability::TOGGLE;

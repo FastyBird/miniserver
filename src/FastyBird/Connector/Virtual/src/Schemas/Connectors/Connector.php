@@ -20,6 +20,7 @@ final class Connector extends DevicesSchemas\Connectors\Connector
 	 */
 	public const string SCHEMA_TYPE = Sources\Connector::VIRTUAL->value . '/connector/' . Entities\Connectors\Connector::TYPE;
 
+	#[Override]
 	public function getEntityClass(): string
 	{
 		return Entities\Connectors\Connector::class;
