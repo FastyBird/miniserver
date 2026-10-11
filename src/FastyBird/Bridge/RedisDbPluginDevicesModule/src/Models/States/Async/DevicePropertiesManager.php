@@ -33,7 +33,7 @@ use React\Promise;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DevicePropertiesManager implements DevicesModels\States\Devices\Async\IManager
+class DevicePropertiesManager implements DevicesModels\States\Devices\Async\Writer
 {
 
 	use Nette\SmartObject;

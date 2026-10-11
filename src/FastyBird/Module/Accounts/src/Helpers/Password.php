@@ -17,7 +17,7 @@ final class Password
 
 	private string $hash;
 
-	private string $salt;
+	public private(set) string $salt;
 
 	private string $password;
 
@@ -75,16 +75,6 @@ final class Password
 	public function createSalt(): string
 	{
 		return $this->salt = Utils\Random::generate(5);
-	}
-
-	public function getSalt(): string
-	{
-		return $this->salt;
-	}
-
-	public function setSalt(string $salt): void
-	{
-		$this->salt = $salt;
 	}
 
 	public function getHash(): string

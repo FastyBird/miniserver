@@ -27,7 +27,7 @@ class Control implements DevicesEntities\Entity,
 	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use DevicesEntities\TEntity;
+	use DevicesEntities\HasEntityId;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

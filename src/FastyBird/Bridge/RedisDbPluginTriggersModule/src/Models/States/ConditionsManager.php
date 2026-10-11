@@ -31,7 +31,7 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class ConditionsManager implements TriggersModels\States\IConditionsManager
+class ConditionsManager implements TriggersModels\States\ConditionsWriter
 {
 
 	use Nette\SmartObject;

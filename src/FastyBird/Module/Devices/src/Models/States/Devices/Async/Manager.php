@@ -20,7 +20,7 @@ final readonly class Manager
 
 	public function __construct(
 		private Models\States\Devices\Manager $fallback,
-		private IManager|null $manager = null,
+		private Writer|null $manager = null,
 	)
 	{
 	}

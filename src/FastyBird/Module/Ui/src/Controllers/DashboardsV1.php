@@ -36,7 +36,7 @@ use function strval;
 final class DashboardsV1 extends BaseV1
 {
 
-	use Controllers\Finders\TDashboard;
+	use Controllers\Finders\FindsDashboard;
 
 	public function __construct(
 		private readonly Models\Entities\Dashboards\Repository $dashboardsRepository,

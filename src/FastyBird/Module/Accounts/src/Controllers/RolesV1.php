@@ -33,7 +33,7 @@ use function strval;
 final class RolesV1 extends BaseV1
 {
 
-	use Controllers\Finders\TRole;
+	use Controllers\Finders\FindsRole;
 
 	public function __construct(
 		private readonly Hydrators\Roles\Role $roleHydrator,

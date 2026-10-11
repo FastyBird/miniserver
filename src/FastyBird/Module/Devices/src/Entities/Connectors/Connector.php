@@ -48,8 +48,8 @@ abstract class Connector implements DevicesEntities\Entity,
 	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use DevicesEntities\TEntity;
-	use DevicesEntities\TEntityParams;
+	use DevicesEntities\HasEntityId;
+	use DevicesEntities\HasEntityParams;
 	use SecurityEntities\HasOwner;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;

@@ -36,8 +36,8 @@ use function strval;
 final class DevicesV1 extends BaseV1
 {
 
-	use Controllers\Finders\TConnector;
-	use Controllers\Finders\TDevice;
+	use Controllers\Finders\FindsConnector;
+	use Controllers\Finders\FindsDevice;
 
 	public function __construct(
 		protected readonly Models\Entities\Connectors\ConnectorsRepository $connectorsRepository,

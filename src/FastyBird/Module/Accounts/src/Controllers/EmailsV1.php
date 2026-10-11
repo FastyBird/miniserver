@@ -40,8 +40,8 @@ use function strval;
 final class EmailsV1 extends BaseV1
 {
 
-	use Controllers\Finders\TAccount;
-	use Controllers\Finders\TEmail;
+	use Controllers\Finders\FindsAccount;
+	use Controllers\Finders\FindsEmail;
 
 	public function __construct(
 		private readonly Hydrators\Emails\Email $emailHydrator,

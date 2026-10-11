@@ -44,8 +44,8 @@ abstract class Channel implements DevicesEntities\Entity,
 	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use DevicesEntities\TEntity;
-	use DevicesEntities\TEntityParams;
+	use DevicesEntities\HasEntityId;
+	use DevicesEntities\HasEntityParams;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

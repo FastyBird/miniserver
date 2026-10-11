@@ -25,7 +25,7 @@ class Role extends Policies\Policy implements AccountsEntities\Entity,
 	PersistenceEntities\EntityUpdated
 {
 
-	use AccountsEntities\TEntity;
+	use AccountsEntities\HasEntityId;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

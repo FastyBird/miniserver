@@ -31,7 +31,7 @@ use Ramsey\Uuid;
  *
  * @author         Adam Kadlec <adam.kadlec@fastybird.com>
  */
-class DevicePropertiesManager implements DevicesModels\States\Devices\IManager
+class DevicePropertiesManager implements DevicesModels\States\Devices\Writer
 {
 
 	use Nette\SmartObject;

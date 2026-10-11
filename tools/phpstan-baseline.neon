@@ -6839,7 +6839,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Channels/Async/Repository.php
 
 		-
-			message: '#^Strict comparison using \=\=\= between FastyBird\\Module\\Devices\\Models\\States\\Channels\\IRepository and null will always evaluate to false\.$#'
+			message: '#^Strict comparison using \=\=\= between FastyBird\\Module\\Devices\\Models\\States\\Channels\\Reader and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Channels/Repository.php
@@ -6863,7 +6863,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Connectors/Async/Repository.php
 
 		-
-			message: '#^Strict comparison using \=\=\= between FastyBird\\Module\\Devices\\Models\\States\\Connectors\\IRepository and null will always evaluate to false\.$#'
+			message: '#^Strict comparison using \=\=\= between FastyBird\\Module\\Devices\\Models\\States\\Connectors\\Reader and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Connectors/Repository.php
@@ -6887,7 +6887,7 @@ parameters:
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Devices/Async/Repository.php
 
 		-
-			message: '#^Strict comparison using \=\=\= between FastyBird\\Module\\Devices\\Models\\States\\Devices\\IRepository and null will always evaluate to false\.$#'
+			message: '#^Strict comparison using \=\=\= between FastyBird\\Module\\Devices\\Models\\States\\Devices\\Reader and null will always evaluate to false\.$#'
 			identifier: identical.alwaysFalse
 			count: 1
 			path: ../src/FastyBird/Module/Devices/src/Models/States/Devices/Repository.php
@@ -7040,7 +7040,7 @@ parameters:
 			message: '#^Using nullsafe property access "\?\-\>value" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
-			path: ../src/FastyBird/Module/Ui/src/Entities/Widgets/Displays/Parameters/TIcon.php
+			path: ../src/FastyBird/Module/Ui/src/Entities/Widgets/Displays/Parameters/HasIcon.php
 
 		-
 			message: '#^Method FastyBird\\Module\\Ui\\Entities\\Widgets\\Widget\:\:getOwnerId\(\) should return string\|null but returns mixed\.$#'

@@ -14,7 +14,7 @@ use FastyBird\Module\Accounts\Schemas;
 final class Email extends Hydrators\Hydrator
 {
 
-	use TEmail;
+	use HydratesEmail;
 
 	/** @var array<int|string, string> */
 	protected array $attributes = [

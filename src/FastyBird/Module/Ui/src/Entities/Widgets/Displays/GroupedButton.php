@@ -13,7 +13,7 @@ use function array_merge;
 class GroupedButton extends Display implements Entities\Widgets\Displays\Parameters\Icon
 {
 
-	use Entities\Widgets\Displays\Parameters\TIcon;
+	use Entities\Widgets\Displays\Parameters\HasIcon;
 
 	public const string TYPE = 'grouped-button';
 

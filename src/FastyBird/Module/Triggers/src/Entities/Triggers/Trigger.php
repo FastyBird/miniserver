@@ -36,8 +36,8 @@ abstract class Trigger implements TriggersEntities\Entity,
 	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use TriggersEntities\TEntity;
-	use TriggersEntities\TEntityParams;
+	use TriggersEntities\HasEntityId;
+	use TriggersEntities\HasEntityParams;
 	use SecurityEntities\HasOwner;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;

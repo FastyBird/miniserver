@@ -36,7 +36,7 @@ use function strval;
 final class WidgetsV1 extends BaseV1
 {
 
-	use Controllers\Finders\TWidget;
+	use Controllers\Finders\FindsWidget;
 
 	public function __construct(
 		private readonly Models\Entities\Widgets\Repository $widgetsRepository,

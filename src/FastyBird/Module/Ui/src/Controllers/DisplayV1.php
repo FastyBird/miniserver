@@ -26,7 +26,7 @@ use function strval;
 final class DisplayV1 extends BaseV1
 {
 
-	use Controllers\Finders\TWidget;
+	use Controllers\Finders\FindsWidget;
 
 	public function __construct(
 		private readonly Models\Entities\Widgets\Displays\Manager $displaysManager,

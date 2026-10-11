@@ -284,7 +284,7 @@ final class AccountsV1Test extends Tests\Cases\Unit\DbTestCase
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/accounts/accounts.create.details.null.json',
 			],
-			// TAccount::validateDetailsAttribute() rejects a JSON array like any other non-object
+			// HydratesAccount::validateDetailsAttribute() rejects a JSON array like any other non-object
 			'detailsList' => [
 				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,

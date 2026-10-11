@@ -16,7 +16,7 @@ final readonly class Repository
 
 	public function __construct(
 		private DevicesCaching\Container $moduleCaching,
-		private IRepository|null $repository = null,
+		private Reader|null $repository = null,
 	)
 	{
 	}

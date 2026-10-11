@@ -20,9 +20,9 @@ use ValueError;
 final class ChannelsPresenter extends BasePresenter
 {
 
-	use TConnectors;
-	use TDevices;
-	use TChannels;
+	use LoadsConnectors;
+	use LoadsDevices;
+	use LoadsChannels;
 
 	public function __construct(
 		protected readonly Models\Configuration\Connectors\Repository $connectorsRepository,

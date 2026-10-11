@@ -34,7 +34,7 @@ use const PHP_BINARY;
  * Since #607 checkAccess() throws InvalidState instead, so such a route answers 500 and logs
  * the error; this test still catches it before anything is served.
  *
- * The controller finder traits (Controllers\Finders\T*) read repositories from the controller
+ * The controller finder traits (Controllers\Finders\Finds*) read repositories from the controller
  * that composes them. Their @property-read docblocks satisfy PHPStan whether or not the
  * controller declares the property, so a controller that calls a finder without injecting the
  * repository it reads fails only at runtime, with a 500. That is how both channel property
@@ -72,14 +72,14 @@ final class RouteCallableGuardTest extends TestCase
 	 * call a finder without its repository. Same purpose as REPRESENTATIVE_ROUTES.
 	 */
 	private const array REPRESENTATIVE_FINDERS = [
-		'FastyBird\Module\Accounts\Controllers\EmailsV1 uses FastyBird\Module\Accounts\Controllers\Finders\TAccount',
+		'FastyBird\Module\Accounts\Controllers\EmailsV1 uses FastyBird\Module\Accounts\Controllers\Finders\FindsAccount',
 		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-		'FastyBird\Module\Devices\Controllers\ChannelPropertyChildrenV1 uses FastyBird\Module\Devices\Controllers\Finders\TChannel',
+		'FastyBird\Module\Devices\Controllers\ChannelPropertyChildrenV1 uses FastyBird\Module\Devices\Controllers\Finders\FindsChannel',
 		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-		'FastyBird\Module\Devices\Controllers\ChannelPropertyStateV1 uses FastyBird\Module\Devices\Controllers\Finders\TDevice',
+		'FastyBird\Module\Devices\Controllers\ChannelPropertyStateV1 uses FastyBird\Module\Devices\Controllers\Finders\FindsDevice',
 		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-		'FastyBird\Module\Triggers\Controllers\TriggerControlsV1 uses FastyBird\Module\Triggers\Controllers\Finders\TTrigger',
-		'FastyBird\Module\Ui\Controllers\TabsV1 uses FastyBird\Module\Ui\Controllers\Finders\TTab',
+		'FastyBird\Module\Triggers\Controllers\TriggerControlsV1 uses FastyBird\Module\Triggers\Controllers\Finders\FindsTrigger',
+		'FastyBird\Module\Ui\Controllers\TabsV1 uses FastyBird\Module\Ui\Controllers\Finders\FindsTab',
 	];
 
 	/**

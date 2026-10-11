@@ -16,7 +16,7 @@ use Throwable;
 final readonly class Manager
 {
 
-	public function __construct(private IManager|null $manager = null)
+	public function __construct(private Writer|null $manager = null)
 	{
 	}
 

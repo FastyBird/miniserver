@@ -31,8 +31,8 @@ class Group implements UiEntities\Entity,
 	PersistenceEntities\EntityCreated, PersistenceEntities\EntityUpdated
 {
 
-	use UiEntities\TEntity;
-	use UiEntities\TEntityParams;
+	use UiEntities\HasEntityId;
+	use UiEntities\HasEntityParams;
 	use SecurityEntities\HasOwner;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;

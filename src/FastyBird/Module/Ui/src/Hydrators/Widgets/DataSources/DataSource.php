@@ -31,7 +31,7 @@ abstract class DataSource extends Hydrators\Hydrator
 	];
 
 	/**
-	 * The generic mapping resolves `params` to a mixed field: TEntityParams types the property
+	 * The generic mapping resolves `params` to a mixed field: HasEntityParams types the property
 	 * `array|null` but getParams() returns Utils\ArrayHash. A mixed field hands the raw resource
 	 * object to setParams(array), which rejects it, so the object is converted here.
 	 *

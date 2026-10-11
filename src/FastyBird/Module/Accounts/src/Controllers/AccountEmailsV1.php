@@ -41,7 +41,7 @@ use function strval;
 final class AccountEmailsV1 extends BaseV1
 {
 
-	use Controllers\Finders\TEmail;
+	use Controllers\Finders\FindsEmail;
 
 	public function __construct(
 		private readonly Hydrators\Emails\ProfileEmail $emailHydrator,

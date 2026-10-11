@@ -12,7 +12,7 @@ use FastyBird\Module\Triggers\States;
 final readonly class ActionsRepository
 {
 
-	public function __construct(protected IActionsRepository|null $repository = null)
+	public function __construct(protected ActionsReader|null $repository = null)
 	{
 	}
 

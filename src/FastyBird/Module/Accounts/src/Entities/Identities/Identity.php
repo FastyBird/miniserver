@@ -34,8 +34,8 @@ class Identity implements AccountsEntities\Entity,
 	PersistenceEntities\EntityUpdated
 {
 
-	use AccountsEntities\TEntity;
-	use AccountsEntities\TEntityParams;
+	use AccountsEntities\HasEntityId;
+	use AccountsEntities\HasEntityParams;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 
@@ -132,7 +132,7 @@ class Identity implements AccountsEntities\Entity,
 			$this->plainPassword = $password->getPassword();
 		}
 
-		$this->setSalt($password->getSalt());
+		$this->setSalt($password->salt);
 	}
 
 	public function getSalt(): string|null

@@ -22,7 +22,7 @@ final readonly class ConditionsManager
 
 	public function __construct(
 		protected CoreDocuments\DocumentFactory $documentFactory,
-		protected IConditionsManager|null $manager = null,
+		protected ConditionsWriter|null $manager = null,
 		protected Publisher\MessagePublisher|null $publisher = null,
 	)
 	{

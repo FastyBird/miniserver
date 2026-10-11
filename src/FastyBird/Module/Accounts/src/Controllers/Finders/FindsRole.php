@@ -1,0 +1,59 @@
+<?php declare(strict_types = 1);
+
+namespace FastyBird\Module\Accounts\Controllers\Finders;
+
+use FastyBird\Core\Api\Exceptions as ApiExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
+use FastyBird\Core\Security\Models\Policies;
+use FastyBird\Module\Accounts\Entities;
+use FastyBird\Module\Accounts\Queries;
+use FastyBird\Module\Accounts\Router;
+use Fig\Http\Message\StatusCodeInterface;
+use Nette\Localization;
+use Psr\Http\Message;
+use Ramsey\Uuid;
+use function strval;
+
+/**
+ * @property-read Localization\ITranslator $translator
+ * @property-read Policies\Repository $policiesRepository
+ */
+trait FindsRole
+{
+
+	/**
+	 * @throws CoreExceptions\InvalidState
+	 * @throws PersistenceExceptions\Query
+	 * @throws ApiExceptions\JsonApi
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	protected function findRole(
+		Message\ServerRequestInterface $request,
+	): Entities\Roles\Role
+	{
+		if (!Uuid\Uuid::isValid(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID)))) {
+			throw new ApiExceptions\JsonApiError(
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
+				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),
+			);
+		}
+
+		$findQuery = new Queries\Entities\FindRoles();
+		$findQuery->byId(Uuid\Uuid::fromString(strval($request->getAttribute(Router\ApiRoutes::URL_ITEM_ID))));
+
+		$role = $this->policiesRepository->findOneBy($findQuery, Entities\Roles\Role::class);
+
+		if ($role === null) {
+			throw new ApiExceptions\JsonApiError(
+				StatusCodeInterface::STATUS_NOT_FOUND,
+				strval($this->translator->translate('//accounts-module.base.messages.notFound.heading')),
+				strval($this->translator->translate('//accounts-module.base.messages.notFound.message')),
+			);
+		}
+
+		return $role;
+	}
+
+}

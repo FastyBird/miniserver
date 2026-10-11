@@ -327,7 +327,7 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * TAccount::validateDetailsAttribute() only validates; the stored names come from the nested
+	 * HydratesAccount::validateDetailsAttribute() only validates; the stored names come from the nested
 	 * `details` object. Read back from the table, not from the entity manager.
 	 *
 	 * @throws CoreExceptions\InvalidArgument

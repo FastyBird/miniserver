@@ -36,8 +36,8 @@ use function strval;
 final class TabsV1 extends BaseV1
 {
 
-	use Controllers\Finders\TDashboard;
-	use Controllers\Finders\TTab;
+	use Controllers\Finders\FindsDashboard;
+	use Controllers\Finders\FindsTab;
 
 	public function __construct(
 		protected readonly Models\Entities\Dashboards\Repository $dashboardsRepository,

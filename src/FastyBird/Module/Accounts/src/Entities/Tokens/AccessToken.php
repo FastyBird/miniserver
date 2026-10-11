@@ -22,8 +22,8 @@ class AccessToken extends Tokens\Token implements
 	PersistenceEntities\EntityUpdated
 {
 
-	use AccountsEntities\TEntity;
-	use AccountsEntities\TEntityParams;
+	use AccountsEntities\HasEntityId;
+	use AccountsEntities\HasEntityParams;
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 

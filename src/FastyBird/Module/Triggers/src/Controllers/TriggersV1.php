@@ -38,7 +38,7 @@ use function strval;
 final class TriggersV1 extends BaseV1
 {
 
-	use Controllers\Finders\TTrigger;
+	use Controllers\Finders\FindsTrigger;
 
 	public function __construct(
 		private readonly Models\Entities\Triggers\TriggersRepository $triggersRepository,

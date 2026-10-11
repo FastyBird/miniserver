@@ -22,7 +22,7 @@ final readonly class ActionsManager
 
 	public function __construct(
 		protected CoreDocuments\DocumentFactory $documentFactory,
-		protected IActionsManager|null $manager = null,
+		protected ActionsWriter|null $manager = null,
 		protected Publisher\MessagePublisher|null $publisher = null,
 	)
 	{
