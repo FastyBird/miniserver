@@ -64,7 +64,7 @@ use function usort;
 /**
  * Connector thermostat devices management command
  */
-class Install extends Console\Command\Command
+final class Install extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:virtual-thermostat-addon:install';

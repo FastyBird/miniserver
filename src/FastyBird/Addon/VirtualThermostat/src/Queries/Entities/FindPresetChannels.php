@@ -15,7 +15,7 @@ use function sprintf;
  * @template T of Entities\Channels\Preset
  * @extends  VirtualQueries\Entities\FindChannels<T>
  */
-class FindPresetChannels extends VirtualQueries\Entities\FindChannels
+final class FindPresetChannels extends VirtualQueries\Entities\FindChannels
 {
 
 	/**

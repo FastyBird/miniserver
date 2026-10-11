@@ -11,7 +11,7 @@ use FastyBird\Connector\Virtual\Queries as VirtualQueries;
  * @template T of Documents\Devices\Device
  * @extends  VirtualQueries\Configuration\FindDevices<T>
  */
-class FindDevices extends VirtualQueries\Configuration\FindDevices
+final class FindDevices extends VirtualQueries\Configuration\FindDevices
 {
 
 }

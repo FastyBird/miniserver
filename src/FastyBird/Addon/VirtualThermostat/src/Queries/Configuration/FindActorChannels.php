@@ -15,7 +15,7 @@ use function sprintf;
  * @template T of Documents\Channels\Actors
  * @extends  VirtualQueries\Configuration\FindChannels<T>
  */
-class FindActorChannels extends VirtualQueries\Configuration\FindChannels
+final class FindActorChannels extends VirtualQueries\Configuration\FindChannels
 {
 
 	/**

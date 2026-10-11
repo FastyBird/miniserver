@@ -23,7 +23,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Virtual connector
  */
-class VirtualThermostatExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
+final class VirtualThermostatExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
 	public const string NAME = 'fbVirtualThermostatAddon';

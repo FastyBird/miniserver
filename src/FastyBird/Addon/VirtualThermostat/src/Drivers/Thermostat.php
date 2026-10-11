@@ -49,7 +49,7 @@ use function str_starts_with;
 /**
  * Thermostat service
  */
-class Thermostat implements VirtualDrivers\Driver
+final class Thermostat implements VirtualDrivers\Driver
 {
 
 	private const float PROCESSING_DEBOUNCE_DELAY = 150.0;

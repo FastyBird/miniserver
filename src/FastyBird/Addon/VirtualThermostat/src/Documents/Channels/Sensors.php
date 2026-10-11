@@ -8,7 +8,7 @@ use FastyBird\Core\Documents as CoreDocuments;
 
 #[CoreDocuments\Mapping\Document(entity: Entities\Channels\Sensors::class)]
 #[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Channels\Sensors::TYPE)]
-class Sensors extends VirtualDocuments\Channels\Channel
+final class Sensors extends VirtualDocuments\Channels\Channel
 {
 
 	public static function getType(): string

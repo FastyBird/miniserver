@@ -15,7 +15,7 @@ use function sprintf;
  * @template T of Documents\Channels\Sensors
  * @extends  VirtualQueries\Configuration\FindChannels<T>
  */
-class FindSensorChannels extends VirtualQueries\Configuration\FindChannels
+final class FindSensorChannels extends VirtualQueries\Configuration\FindChannels
 {
 
 	/**
