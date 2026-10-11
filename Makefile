@@ -80,9 +80,10 @@ rector-e5: ## Apply an E5 Rector config: make rector-e5 RECTOR_CONFIG=tools/rect
 	mkdir -p var/tools/Rector
 	$(PRE_PHP) "vendor/bin/rector" process --config="$(RECTOR_CONFIG)" --no-progress-bar --clear-cache $(ARGS)
 
-# Dependency-direction gate for the 34 packages under src/FastyBird. This is what replaced
-# the 34 per-package composer manifests, which were measured to be fiction (117 undeclared
-# edges against 149 declared) and unenforceable by construction anyway.
+# Dependency-direction gate for the 29 packages under src/FastyBird. This is what replaced
+# the per-package composer manifests (34 of them before the Core merge) as the statement of the
+# dependency direction: they were measured to be fiction (117 undeclared edges against 149
+# declared) and unenforceable by construction anyway.
 #
 # Note there is no "vendor/bin/" here and no `composer install` prerequisite: the checker is
 # plain PHP with no dependency on vendor/, on an autoloader or on a framework, deliberately,
