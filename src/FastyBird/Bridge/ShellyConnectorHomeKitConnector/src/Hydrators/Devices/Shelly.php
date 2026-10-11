@@ -20,13 +20,11 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Schemas as DevicesSchemas;
 use Fig\Http\Message\StatusCodeInterface;
 use JsonException;
-use Nette\DI;
 use Nette\Localization;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use Throwable;
-use function assert;
 use function is_string;
 use function strval;
 
@@ -56,16 +54,15 @@ final class Shelly extends HomeKitHydrators\Devices\Device
 			DevicesSchemas\Devices\Device::RELATIONSHIPS_PROPERTIES,
 		];
 
-	/** @var Encoding\SchemaContainer<PersistenceEntities\CrudEntity>|null */
-	private Encoding\SchemaContainer|null $jsonApiSchemaContainer = null;
-
-	/** @var array<DevicesHydrators\Devices\Properties\Property<DevicesEntities\Devices\Properties\Property>>|null  */
-	private array|null $propertiesHydrators = null;
-
+	/**
+	 * @param Encoding\SchemaContainer<PersistenceEntities\CrudEntity> $schemaContainer
+	 * @param array<DevicesHydrators\Devices\Properties\Property<DevicesEntities\Devices\Properties\Property>> $propertiesHydrators
+	 */
 	public function __construct(
 		private readonly DevicesModels\Entities\Connectors\ConnectorsRepository $connectorsRepository,
 		private readonly DevicesModels\Entities\Devices\DevicesRepository $devicesRepository,
-		private readonly DI\Container $container,
+		private readonly Encoding\SchemaContainer $schemaContainer,
+		private readonly array $propertiesHydrators,
 		Persistence\ManagerRegistry $managerRegistry,
 		Localization\Translator $translator,
 		Helpers\CrudReader|null $crudReader = null,
@@ -185,7 +182,6 @@ final class Shelly extends HomeKitHydrators\Devices\Device
 	/**
 	 * @return array<mixed>
 	 *
-	 * @throws DI\MissingServiceException
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApiError
 	 * @throws Throwable
@@ -216,13 +212,11 @@ final class Shelly extends HomeKitHydrators\Devices\Device
 
 		$properties = [];
 
-		$propertiesHydrators = $this->getPropertyHydrators();
-
 		foreach ($relationship->getIdentifiers() as $propertyRelationIdentifier) {
 			foreach ($included->getAll() as $item) {
 				if ($item->getId() === $propertyRelationIdentifier->getId()) {
-					foreach ($propertiesHydrators as $propertyHydrator) {
-						$propertiesSchema = $this->getSchemaContainer()->getSchemaByClassName(
+					foreach ($this->propertiesHydrators as $propertyHydrator) {
+						$propertiesSchema = $this->schemaContainer->getSchemaByClassName(
 							$propertyHydrator->getEntityName(),
 						);
 
@@ -263,47 +257,6 @@ final class Shelly extends HomeKitHydrators\Devices\Device
 		}
 
 		return $properties;
-	}
-
-	/**
-	 * @return Encoding\SchemaContainer<PersistenceEntities\CrudEntity>
-	 *
-	 * @throws DI\MissingServiceException
-	 */
-	private function getSchemaContainer(): Encoding\SchemaContainer
-	{
-		if ($this->jsonApiSchemaContainer !== null) {
-			return $this->jsonApiSchemaContainer;
-		}
-
-		$this->jsonApiSchemaContainer = $this->container->getByType(Encoding\SchemaContainer::class);
-
-		return $this->jsonApiSchemaContainer;
-	}
-
-	/**
-	 * @return array<DevicesHydrators\Devices\Properties\Property<DevicesEntities\Devices\Properties\Property>>
-	 *
-	 * @throws DI\MissingServiceException
-	 */
-	private function getPropertyHydrators(): array
-	{
-		if ($this->propertiesHydrators !== null) {
-			return $this->propertiesHydrators;
-		}
-
-		$this->propertiesHydrators = [];
-
-		$serviceNames = $this->container->findByType(DevicesHydrators\Devices\Properties\Property::class);
-
-		foreach ($serviceNames as $serviceName) {
-			$service = $this->container->getByName($serviceName);
-			assert($service instanceof DevicesHydrators\Devices\Properties\Property);
-
-			$this->propertiesHydrators[] = $service;
-		}
-
-		return $this->propertiesHydrators;
 	}
 
 }

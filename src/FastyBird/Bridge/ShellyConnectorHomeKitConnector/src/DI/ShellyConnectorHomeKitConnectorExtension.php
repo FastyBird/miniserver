@@ -7,7 +7,7 @@ use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Builders;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Commands;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Hydrators as ShellyConnectorHomeKitConnectorHydrators;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Protocol;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
@@ -16,6 +16,7 @@ use FastyBird\Core\Boot;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Documents\DI as DocumentsDI;
 use FastyBird\Core\Http\Routing;
+use FastyBird\Module\Devices\Hydrators as DevicesHydrators;
 use Nette\Bootstrap;
 use Nette\DI as NetteDI;
 use Nette\Schema;
@@ -24,6 +25,7 @@ use Override;
 use stdClass;
 use function array_keys;
 use function array_pop;
+use function array_values;
 use function assert;
 use const DIRECTORY_SEPARATOR;
 
@@ -145,40 +147,40 @@ final class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExt
 		 */
 
 		$builder->addDefinition($this->prefix('hydrators.device.shelly'), new NetteDI\Definitions\ServiceDefinition())
-			->setType(Hydrators\Devices\Shelly::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Devices\Shelly::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.lightbulb'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Hydrators\Channels\Lightbulb::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\Lightbulb::class);
 
 		$builder->addDefinition($this->prefix('hydrators.channel.outlet'), new NetteDI\Definitions\ServiceDefinition())
-			->setType(Hydrators\Channels\Outlet::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\Outlet::class);
 
 		$builder->addDefinition($this->prefix('hydrators.channel.relay'), new NetteDI\Definitions\ServiceDefinition())
-			->setType(Hydrators\Channels\Relay::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\Relay::class);
 
 		$builder->addDefinition($this->prefix('hydrators.channel.valve'), new NetteDI\Definitions\ServiceDefinition())
-			->setType(Hydrators\Channels\Valve::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\Valve::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.windowCovering'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Hydrators\Channels\WindowCovering::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\WindowCovering::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.inputButton'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Hydrators\Channels\InputButton::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\InputButton::class);
 
 		$builder->addDefinition(
 			$this->prefix('hydrators.channel.inputSwitch'),
 			new NetteDI\Definitions\ServiceDefinition(),
 		)
-			->setType(Hydrators\Channels\InputSwitch::class);
+			->setType(ShellyConnectorHomeKitConnectorHydrators\Channels\InputSwitch::class);
 
 		/**
 		 * HOMEKIT PROTOCOL
@@ -221,12 +223,34 @@ final class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExt
 
 	/**
 	 * @throws NetteDI\MissingServiceException
+	 * @throws NetteDI\NotAllowedDuringResolvingException
 	 */
 	public function beforeCompile(): void
 	{
 		parent::beforeCompile();
 
 		$builder = $this->getContainerBuilder();
+
+		/**
+		 * JSON-API HYDRATORS
+		 */
+
+		// The device hydrator hydrates the properties a request includes with the property
+		// hydrators, which the Devices module registers, so the list is collected here, once
+		// every extension has loaded its configuration
+		$propertiesHydrators = array_values(
+			$builder->findByType(DevicesHydrators\Devices\Properties\Property::class),
+		);
+
+		$deviceHydrators = $builder->findByType(
+			ShellyConnectorHomeKitConnectorHydrators\Devices\Shelly::class,
+		);
+
+		foreach ($deviceHydrators as $deviceHydrator) {
+			assert($deviceHydrator instanceof NetteDI\Definitions\ServiceDefinition);
+
+			$deviceHydrator->setArgument('propertiesHydrators', $propertiesHydrators);
+		}
 
 		/**
 		 * DOCTRINE ENTITIES
