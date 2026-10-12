@@ -72,7 +72,6 @@ final class ChannelsV1 extends BaseV1
 			$channels = $this->channelsRepository->getResultSet($findQuery);
 		}
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $channels);
 	}
 

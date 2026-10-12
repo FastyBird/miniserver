@@ -216,7 +216,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param Entities\CrudEntity|Documents\Document|Query\ResultSet<Entities\CrudEntity>|array<Entities\CrudEntity> $data
+	 * @param Entities\CrudEntity|Documents\Document|Query\ResultSet<covariant Entities\CrudEntity>|array<Entities\CrudEntity> $data
 	 *
 	 * @throws Exception
 	 */

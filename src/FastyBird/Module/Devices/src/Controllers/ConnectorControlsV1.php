@@ -50,7 +50,6 @@ final class ConnectorControlsV1 extends BaseV1
 
 		$controls = $this->connectorControlsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $controls);
 	}
 

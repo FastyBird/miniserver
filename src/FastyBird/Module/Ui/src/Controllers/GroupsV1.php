@@ -59,7 +59,6 @@ final class GroupsV1 extends BaseV1
 
 		$groups = $this->groupsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $groups);
 	}
 

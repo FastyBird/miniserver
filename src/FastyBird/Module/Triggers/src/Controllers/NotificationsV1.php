@@ -55,6 +55,7 @@ final class NotificationsV1 extends BaseV1
 	 * @throws ApiExceptions\JsonApi
 	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws Exception
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -69,7 +70,6 @@ final class NotificationsV1 extends BaseV1
 
 		$rows = $this->notificationsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $rows);
 	}
 

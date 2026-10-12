@@ -61,7 +61,6 @@ final class WidgetsV1 extends BaseV1
 
 		$widgets = $this->widgetsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $widgets);
 	}
 

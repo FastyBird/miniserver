@@ -42,6 +42,7 @@ final class TriggerControlsV1 extends BaseV1
 	 * @throws ApiExceptions\JsonApi
 	 * @throws CoreExceptions\InvalidState
 	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @throws Exception
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -64,7 +65,6 @@ final class TriggerControlsV1 extends BaseV1
 
 		$controls = $this->controlRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $controls);
 	}
 

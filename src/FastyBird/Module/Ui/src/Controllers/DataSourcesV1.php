@@ -66,7 +66,6 @@ final class DataSourcesV1 extends BaseV1
 
 		$dataSources = $this->dataSourcesRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $dataSources);
 	}
 

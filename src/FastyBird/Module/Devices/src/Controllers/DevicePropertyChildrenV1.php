@@ -55,7 +55,6 @@ final class DevicePropertyChildrenV1 extends BaseV1
 
 		$children = $this->devicePropertiesRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $children);
 	}
 
