@@ -7,7 +7,7 @@ says so.
 ## Identity
 
 Core was assembled from fifteen earlier packages, some of which had themselves absorbed
-third-party libraries. Their names are the denylists of `tools/check-naming.php`.
+third-party libraries. Those names make up the denylists of `tools/check-naming.php`.
 
 **The rule is not "never write these words."** It is that a name may not be used as a grouping
 layer *because that is where the code came from*. The test is whether the name says what the
@@ -70,9 +70,8 @@ thought of; this bans every name not derived from where the symbol actually live
 
 The rule exists because an alias is the cheapest way to move a class without rewriting the file
 body, so aliases named after the importing file's origin re-form unless a gate refuses them.
-There is no baseline: `make naming` exits 1 on any violation, and the repository has none.
 
-**Single-segment exception, generalized.** A name with only one segment (`use Casbin;`,
+**Single-segment exception.** A name with only one segment (`use Casbin;`,
 `use Monolog;`, `use Exception;`) has no two-segment form, so it always stays bare, even when it
 collides with something. There is no `Something\Casbin` to alias `Casbin` from, and the same
 holds for every single-segment import.
@@ -85,8 +84,8 @@ use FastyBird\Core\Security\Models\Casbin as ModelsCasbin; // the colliding sibl
 **One named exception: `Doctrine\ORM\Mapping as ORM`.** Unlike the single-segment rule above,
 this is not a general mechanism -- it is exactly one FQCN, allowed exactly one alias, listed as
 a single constant map in `tools/check-naming.php` (`FB_ALIAS_EXCEPTIONS`). `ORM` is Doctrine's
-own documented attribute convention (`#[ORM\Entity]`, `#[ORM\Column]`, ...), used by the 54
-entity files that import it with no collision at all; the last-two-segments rule would want
+own documented attribute convention (`#[ORM\Entity]`, `#[ORM\Column]`, ...), used by the entity
+files that import it with no collision at all; the last-two-segments rule would want
 `ORMMapping` instead, which exists nowhere in the codebase and would split entity files across
 two styles for no reader benefit. Only this exact pair is exempt: `Doctrine\ORM\Mapping` left
 bare, or aliased anything other than `ORM` (`Orm`, `ORMMapping`), while inside a collision group
@@ -104,14 +103,13 @@ package's own `Documents` left bare next to `Devices\Documents as DevicesDocumen
 module's own `Caching` left bare next to `Nette\Caching as NetteCaching`. `make naming`'s check 4
 applies the same rule -- bare unless it collides, aliased to the smallest colliding `k >= 2` when
 it does, single-segment names always exempt -- to every top-level `use` import in every file the
-gate scans, per KIND
-(`use`, `use function` and `use const` never collide with each other). A `use` inside a class
+gate scans, per KIND (`use`, `use function` and `use const` never collide with each other). A `use` inside a class
 body (trait composition) is not an import and is never in scope. Check 4 compares a file's
 imports only with each other, so a standalone import -- no colliding sibling `use` in the file --
 is outside what it can see; the next paragraph covers those.
 
-**Standalone imports** follow the same rule: bare unless they collide. For a
-standalone import a collision is wider than check 4's sibling list -- a class, interface, trait
+**Standalone imports** follow the same rule: bare unless they collide. For a standalone import
+a collision is wider than check 4's sibling list -- a class, interface, trait
 or enum declared in the file's own namespace counts, and so does the class the file itself
 declares. A bare import silently shadows a same-namespace type of the same short name, and one
 naming the file's own class does not compile. So `Http\Routing\RouteHandler`, which sits beside
@@ -122,16 +120,15 @@ never imports a namespace it is already inside: `FastyBird\Module\Triggers\Const
 This is kept by review, not by `make naming`.
 
 ```php
-use Nette\Security;                                        // was `as NS`
-use const DIRECTORY_SEPARATOR;                             // was `as DS`
+use Nette\Security;                                        // bare: nothing collides
+use const DIRECTORY_SEPARATOR;                             // bare: nothing collides
 use Symfony\Component\Console as ComponentConsole;         // legal: the file declares `Console`
 ```
 
 **The clock is imported as `use Psr\Clock\ClockInterface;`.** Time comes from PSR-20: a consumer
 types against `Psr\Clock\ClockInterface` and calls `now()`, which returns a `DateTimeImmutable`.
 Core's `Clock\SystemClock` and `Clock\FrozenClock` are its two implementations. Import the
-interface itself, bare, in
-every file, never the `Psr\Clock` namespace: `Psr\Clock` and `FastyBird\Core\Clock` share their
+interface itself, bare, in every file, never the `Psr\Clock` namespace: `Psr\Clock` and `FastyBird\Core\Clock` share their
 last segment, so a namespace import would collide in every file that also constructs one of Core's
 clocks and force both into `PsrClock`/`CoreClock` aliases, while `ClockInterface` collides with
 nothing. The `…Interface` suffix rule below applies to the types this repository declares, not to
@@ -144,12 +141,12 @@ use FastyBird\Core\Clock;               // only where Clock\SystemClock or Clock
 
 **SPL exceptions may be imported as `PHP<Name>Exception`.** The per-package `Exceptions\`
 directories extend the SPL exceptions under that alias (`class InvalidArgument extends
-PHPInvalidArgumentException implements Exception`, 68 imports across 26 packages), and it is an
-accepted convention, not a violation. For `Exception` itself, in an `Exceptions` namespace that
+PHPInvalidArgumentException implements Exception`), and it is an accepted convention, not a
+violation. For `Exception` itself, in an `Exceptions` namespace that
 declares its own `Exception` interface, the alias is required: a bare `use Exception;` would make
 the short name resolve to the global class instead of the package's interface, and
 `src/FastyBird/Core/Core/src/Exceptions/InvalidController.php`, which `extends PHPException
-implements Exception`, would stop compiling. Seven files are in that position. `PhpException`
+implements Exception`, would stop compiling. `PhpException`
 (`Connector/Modbus`) is an existing variant spelling of the same convention.
 
 Checks 3 and 4 compute a colliding import's expected alias from the same function over the
@@ -166,12 +163,17 @@ its top level, only:
   `Persistence\`, `Phone\`, `Security\`, `Values\`, `WebSockets\`;
 - `Exceptions\`, the odd one out — a **shared root**, not a capability, holding only the
   handful of genuinely cross-cutting exceptions (`Exception`, `InvalidArgument`,
-  `InvalidController`, `InvalidLink`, `InvalidState`, `Logic`, `Runtime`, `UnexpectedValue`).
-  Layer names — `Middleware`, `Subscribers`, `Entities`, `Controllers` — appear only *inside*
-  a capability, never at the top level. Exceptions and events live inside their owning
-  capability too; only these 8 genuinely cross-cutting exceptions sit at the shared root;
+  `InvalidController`, `InvalidLink`, `InvalidState`, `Logic`, `Runtime`, `UnexpectedValue`);
 - five runtime namespaces, kept at the root because they are unrelated to each other and no
   umbrella name would say what they are: `Boot\`, `DI\`, `EventLoop\`, `Presenters\`, `UI\`.
+
+Two structural rules follow:
+
+- **Exceptions and events live inside their owning capability**
+  (`Security\Exceptions\UnauthorizedAccess`, `Exchange\Events\BeforeMessagePublished`); only the
+  cross-cutting exceptions above sit at the shared root.
+- **Layer names appear only inside a capability.** `Middleware`, `Subscribers`, `Entities`,
+  `Controllers`, `Helpers` and the like are never top-level namespaces.
 
 There is no root-level `Configuration` class. Runtime settings belong to the capability that
 reads them: `Security\Configuration` holds the token and application settings
@@ -188,8 +190,8 @@ class back.
 ## DI
 
 Core's DI extension is split by capability, and every identifier it registers is named after its
-capability. `IdentifierGuardTest` (Core, `tests/cases/unit/DI`) enforces the
-naming rules below. It checks every Core service name in the compiled Core test container, every
+capability. `IdentifierGuardTest` (Core, `tests/cases/unit/DI`) enforces the naming rules below.
+It checks every Core service name in the compiled Core test container, every
 key path of the `fbCore` schema, and every tag constant. It has no list of tolerated
 violations: any violation fails it.
 
@@ -295,7 +297,7 @@ review, not by a gate.
   up at runtime (`getByType()`, `getService()`). A lookup hides the dependency from the DI graph
   and from `tools/di-snapshot.php`. There are three exceptions, and no others: Core's `Boot\`,
   which creates the container; `WebSockets\Controllers\ControllerFactory`; and the contributte
-  `LazyListener` statements `WebSocketsExtension::beforeCompile()` compiles. Both are described
+  `LazyListener` statements `WebSocketsExtension::beforeCompile()` compiles. The last two are described
   below.
 - **A cycle is broken with `lazy`, not with a lookup.** When injecting a service would close a
   dependency cycle, its definition is made lazy (`$definition->lazy = true`). nette/di then
@@ -368,9 +370,9 @@ header in PHP and `.neon` files repository-wide.
 
 - Interfaces: no `I` prefix. Prefer deleting the interface entirely when it has one
   implementation and is not a DI substitution point — that remains the first choice. Where an
-  interface must exist, **name it for what it does**, not with a type suffix: `IRouteParser` /
-  `RouteParser` becomes an interface named for the role it expresses (e.g. `UrlGenerator`)
-  alongside the concrete `RouteParser`.
+  interface must exist, **name it for what it does**, not with a type suffix: an interface
+  beside a concrete `RouteParser` is named for the role it expresses (for example
+  `UrlGenerator`), never `IRouteParser`.
 - Traits: no `T` prefix, and no `…Trait` suffix either — name the capability, not the
   language construct.
 - **The prefixes are rejected by `make naming`** (check 6), in every package and in
@@ -381,13 +383,11 @@ header in PHP and `.neon` files repository-wide.
   `SlevomatCodingStandard.Classes.SuperfluousTraitNaming` are active. Neither sniff objects to
   the `I`/`T` prefix — only to the suffix — but this repository rejects the prefix too, by the
   maintainer's ruling: name by role, no suffix either direction.
-- No stuttering: not `Middleware\JsonApi\JsonApi`, not `Services\Phone\Phone`.
+- No stuttering: not `Middleware\Cors\Cors`, not `Services\Phone\Phone`.
 
-Core's `Http\Routing\` already shows why a name is needed rather than a mechanical drop of the `I`:
-`IRoute`, `IRouteCollector`, `IRouteGroup`, `IRouteParser`, `IRouter` sit beside concrete
-`Route`, `RouteCollector`, `RouteGroup`, `RouteParser`, `Router`. Simply deleting the `I` would
-collide with the concrete class of the same name, so each interface needs a role name instead
-— what it does, not what implements it.
+A name is needed rather than a mechanical drop of the `I`: an `IRouter` beside a concrete
+`Router` cannot simply become `Router`, because it would collide with the class, so the interface
+needs a role name instead -- what it does, not what implements it.
 
 ### Interfaces: K1–K4
 
@@ -428,7 +428,7 @@ own interfaces are kept by the same rule, without a table here.
 | `Exchange\Consumers\Consumer` | K1, K2, K3 | 16 implementers, 15 outside Core: the 10 connectors' `Writers\Exchange`, 3 in Devices, 1 in Ui, 1 in DevicesModuleUiModule. `findByType()` at `ExchangeExtension.php:71` registers them on `Consumers\Container`. |
 | `Exchange\Publisher\MessagePublisher` | K1, K2, K3 | `Publisher\Container`, RabbitMq's and RedisDb's `Publishers\Publisher`. `findByType()` at `ExchangeExtension.php:98`. |
 | `Exchange\Publisher\Async\MessagePublisher` | K1, K2, K3 | `Async\Container`, RedisDb's `Publishers\Async\Publisher`. `findByType()` at `ExchangeExtension.php:117`. |
-| `Exchange\Factory` | K1, K2, K3 | RabbitMq's `Channels\Factory`, RedisDb's `Exchange\Factory`; none in Core. `findByType()` at `WebSocketsExtension.php:312` and `DevicesExtension.php:971,980`. |
+| `Exchange\Factory` | K1, K2, K3 | RabbitMq's `Channels\Factory`, RedisDb's `Exchange\Factory`; none in Core. `findByType()` at `WebSocketsExtension.php:312` and `DevicesExtension.php:965,974`. |
 | `Http\Routing\Handlers\Handler` | K1 | `RequestHandler`, `RequestResponseHandler`. |
 | `Persistence\Crud\CrudFactory` | K3 | `setImplement()` at `PersistenceExtension.php:112`; Nette generates the only implementation. |
 | `Persistence\Crud\Create\EntityCreatorFactory` | K3 | `setImplement()` at `PersistenceExtension.php:94`. |
