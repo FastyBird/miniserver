@@ -487,7 +487,7 @@ final class ClassMetadataFactory
 	 */
 	private function normalizeClassName(string $className): string
 	{
-		// @phpstan-ignore-next-line
+		// @phpstan-ignore return.type (ltrim() returns string, which loses the class-string<T> narrowing; the value is the same class name)
 		return ltrim($className, '\\');
 	}
 

@@ -361,6 +361,7 @@ final class Client
 	{
 		$deferred = new Promise\Deferred();
 
+		/** @var Promise\PromiseInterface<Socket\ConnectionInterface>|null $future */
 		$future = null;
 
 		$timer = $this->eventLoop->addTimer(
@@ -369,7 +370,6 @@ final class Client
 				$exception = new FbMqttExceptions\Runtime(sprintf('Connection timed out after %d seconds', $timeout));
 				$deferred->reject($exception);
 
-				// @phpstan-ignore-next-line
 				if ($future instanceof Promise\PromiseInterface) {
 					$future->cancel();
 				}

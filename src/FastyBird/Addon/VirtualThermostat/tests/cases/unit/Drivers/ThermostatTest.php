@@ -154,7 +154,7 @@ final class ThermostatTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertFalse($queue->isEmpty());
 
-		// @phpstan-ignore-next-line
+		// @phpstan-ignore booleanNot.alwaysTrue (PHPStan carries the assertFalse($queue->isEmpty()) above into the loop condition, but consume() drains the queue)
 		while (!$queue->isEmpty()) {
 			$consumers = $this->getContainer()->getByType(VirtualQueue\Consumers::class);
 

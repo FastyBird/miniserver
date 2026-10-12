@@ -366,6 +366,7 @@ final class Client
 	{
 		$deferred = new Promise\Deferred();
 
+		/** @var Promise\PromiseInterface<Socket\ConnectionInterface>|null $future */
 		$future = null;
 
 		$timer = $this->eventLoop->addTimer(
@@ -376,7 +377,6 @@ final class Client
 				);
 				$deferred->reject($exception);
 
-				// @phpstan-ignore-next-line
 				if ($future instanceof Promise\PromiseInterface) {
 					$future->cancel();
 				}
