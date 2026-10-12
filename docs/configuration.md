@@ -280,7 +280,7 @@ fbCouchDbPlugin:
         password: admin
 ```
 
-`connection.port` must be set explicitly to `5984` (CouchDB's real port) -- the extension's own schema default is `5672`, left over from being adapted from the RabbitMq plugin.
+`connection.port` defaults to `5984`, CouchDB's port. Until #726 the default was `5672`, RabbitMQ's port, left over from adapting the RabbitMq plugin.
 
 ## RabbitMQ message exchange (RabbitMq plugin)
 
