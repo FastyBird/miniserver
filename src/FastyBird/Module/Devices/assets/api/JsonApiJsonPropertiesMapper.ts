@@ -1,8 +1,7 @@
 import { JsonPropertiesMapper } from 'jsona';
-import { IJsonPropertiesMapper, TAnyKeyValueObject, TJsonaModel, TJsonaRelationships } from 'jsona/lib/JsonaTypes';
 import get from 'lodash.get';
 
-import { DataType } from '@fastybird/miniserver-core';
+import { DataType, IJsonPropertiesMapper, TAnyKeyValueObject, TJsonaModel, TJsonaRelationships } from '@fastybird/miniserver-core';
 
 import { useNormalizeValue } from '../composables';
 import { PropertyType } from '../types';

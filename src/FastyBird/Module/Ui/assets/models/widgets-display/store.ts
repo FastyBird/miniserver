@@ -4,12 +4,11 @@ import addFormats from 'ajv-formats';
 import Ajv from 'ajv/dist/2020';
 import axios from 'axios';
 import { Jsona } from 'jsona';
-import { TJsonApiBody } from 'jsona/lib/JsonaTypes';
 import get from 'lodash.get';
 import isEqual from 'lodash.isequal';
 import { v4 as uuid } from 'uuid';
 
-import { ModulePrefix } from '@fastybird/miniserver-core';
+import { ModulePrefix, TJsonApiBody } from '@fastybird/miniserver-core';
 
 import exchangeDocumentSchema from '../../../resources/schemas/document.widget.display.json';
 import { JsonApiJsonPropertiesMapper, JsonApiModelPropertiesMapper } from '../../api';

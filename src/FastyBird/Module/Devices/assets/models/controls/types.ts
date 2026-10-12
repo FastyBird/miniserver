@@ -1,4 +1,4 @@
-import { TJsonaModel } from 'jsona/lib/JsonaTypes';
+import { TJsonaModel } from '@fastybird/miniserver-core';
 
 import { IEntityMeta } from '../types';
 
