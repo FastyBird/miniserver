@@ -101,9 +101,7 @@ The 256 retire themselves with the Infection upgrade that PHP 8.2 was blocking:
 Infection's current release (0.35.4) requires `php: ^8.3` and
 `thecodingmachine/safe: ^3`, and safe 3 fixed the implicit nullables.
 
-The remaining 2 (`optional()` and `with()` in `illuminate/support/helpers.php`) are
-production and have no such path. Laravel 9 is end of life, and
-`mathsolver/mathsolver` -- required by `Core/Core` (formerly `Core/Tools`, absorbed
-in the Core consolidation), from a git repository rather than Packagist -- is also
-the package behind one of the two permanent `composer validate` warnings. Worth its
-own look when the dependency upgrades reach it.
+The remaining 2 (`optional()` and `with()` in `illuminate/support/helpers.php`) were
+retired by #443, which replaced `mathsolver/mathsolver` with `nxp/math-executor` and
+so dropped Laravel 9's `illuminate/*` and Carbon 2 from the lock. Requiring
+`vendor/autoload.php` on PHP 8.4 now emits **0** of these notices (measured for #443).

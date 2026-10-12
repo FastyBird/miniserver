@@ -166,8 +166,7 @@ composer-validate: ## Validate the root and every extension composer manifest
 	# Deliberately NOT --strict, at either level. --strict promotes constraint-style
 	# warnings to a non-zero exit, and the manifests carry such constraints on purpose:
 	# every manifest requires its sibling packages at @dev (they are path repositories of
-	# this application, not versioned releases), Core/Core requires mathsolver/mathsolver
-	# at @dev (a branch dependency, locked to dev-main), and Plugin/RedisDb and
+	# this application, not versioned releases), and Plugin/RedisDb and
 	# Plugin/RedisDbCache pin clue/redis-react to the exact version 3.0.0. With --strict
 	# this target would be red.
 	composer validate
