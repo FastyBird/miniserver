@@ -58,7 +58,8 @@ services:
       # Vite manifest when there is no frontend build. Must match the path in that script.
       FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
-      FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
+      # The port inside the compose network. Not MYSQL_PORT, which only sets the host port below.
+      FB_APP_PARAMETER__DATABASE_PORT: 3306
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
       FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-miniserver}
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-miniserver}
@@ -123,7 +124,8 @@ services:
       # Vite manifest when there is no frontend build. Must match the path in that script.
       FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
-      FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
+      # The port inside the compose network. Not MYSQL_PORT, which only sets the host port below.
+      FB_APP_PARAMETER__DATABASE_PORT: 3306
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
       FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-miniserver}
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-miniserver}
@@ -159,7 +161,8 @@ services:
       # Vite manifest when there is no frontend build. Must match the path in that script.
       FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
-      FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
+      # The port inside the compose network. Not MYSQL_PORT, which only sets the host port below.
+      FB_APP_PARAMETER__DATABASE_PORT: 3306
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
       FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-miniserver}
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-miniserver}
@@ -192,7 +195,8 @@ services:
       # Vite manifest when there is no frontend build. Must match the path in that script.
       FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
-      FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
+      # The port inside the compose network. Not MYSQL_PORT, which only sets the host port below.
+      FB_APP_PARAMETER__DATABASE_PORT: 3306
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
       FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-miniserver}
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-miniserver}
@@ -220,6 +224,7 @@ services:
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/mysql/data:/var/lib/mysql:rw,delegated
     ports:
+      # MYSQL_PORT is the host port only; the services above reach the database on 3306.
       - "${MYSQL_PORT:-3306}:3306"
     networks:
       - fastybird
