@@ -64,7 +64,7 @@ Services are named `fbCore.<capability>.<role>`, tags `fastybird.core.<capabilit
 `src/FastyBird/Core/Core/assets` follows the same capability layout. `entry.ts` is the package's single export (`"."` in `package.json`) and re-exports the capability barrels. `main.ts` is the Vite entry of the application shell.
 
 - **Capabilities:** `api/` (the JSON:API backend client and its plugin), `eventBus/`, `extensions/` (the plugin that installs every registered extension), `security/` (the account manager contract), `stores/` (the Pinia store manager), `values/` (`types/`, the data types, payloads and sources mirrored from PHP's `Values`, and `utilities/`) and `websockets/` (the WAMP v1 client).
-- **The shell, at the root:** `main.ts`, `App.vue`, `App.scss`, `components/`, `composables/`, `images/`, `layouts/`, `locales/`, `router/`, `styles/` and `views/`.
+- **The shell, at the root:** `main.ts`, `App.vue`, `App.scss`, `vite-env.d.ts`, `icons.generated.ts`, `components/`, `composables/`, `images/`, `layouts/`, `locales/`, `router/`, `styles/` and `views/`.
 
 `make naming` refuses an `assets/` directory named after a former package (`application`, `metadata`, `tools` and the rest of its namespace denylist) in every extension.
 
