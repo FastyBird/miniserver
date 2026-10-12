@@ -339,15 +339,13 @@ final class CoreExtension extends NetteDI\CompilerExtension
 		/**
 		 * EVENT DISPATCHER -- default fallback
 		 *
-		 * Pre-merge, the WS server event bridge (now WebSocketsExtension::beforeCompile(), which
-		 * runs after this; preserved from WsServerExtension, itself a separate opt-in extension)
-		 * could unconditionally require a
-		 * Psr\EventDispatcher\EventDispatcherInterface because every app config that registered
-		 * fbWsServerPlugin also registered contributteEvents (Contributte\EventDispatcher) --
-		 * two independent, always-paired entries in the same extensions: list. fbCore is now the
-		 * single universal extension every container in the repo loads, including single-package
-		 * test containers that have no reason to also load contributteEvents, so that pairing no
-		 * longer holds. Register a default here, but only if nothing has already provided one --
+		 * The WebSocket server's event bridge (WebSocketsExtension::beforeCompile(), which runs
+		 * after this) needs a Psr\EventDispatcher\EventDispatcherInterface. A production
+		 * container gets one from contributteEvents (Contributte\EventDispatcher), but fbCore is
+		 * the single universal extension every container in the repo loads, including
+		 * single-package test containers that have no reason to also load contributteEvents, so
+		 * the two cannot be assumed to be configured together any more.
+		 * Register a default here, but only if nothing has already provided one --
 		 * production still wires contributteEvents itself, and registering a second
 		 * EventDispatcherInterface-typed service unconditionally would reintroduce the exact
 		 * ambiguous-autowiring failure this same class of bug already caused for the router and

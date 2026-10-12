@@ -6,8 +6,8 @@ use Symfony\Contracts\EventDispatcher;
 use Throwable;
 
 /**
- * Dispatched by Commands\WsServer when the server's socket reports an error, before the command
- * stops the loop.
+ * Dispatched by the WebSocket server command when the server's socket reports an error, before
+ * the command stops the loop.
  */
 final class ServerFailed extends EventDispatcher\Event
 {

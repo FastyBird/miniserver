@@ -21,7 +21,7 @@ services:
 # Symfony console support extension
 ###################################
 contributteConsole:
-    name: "FastyBird:Application!"
+    name: "FastyBird MiniServer"
     version: "1.0"
     catchExceptions: true
     autoExit: true

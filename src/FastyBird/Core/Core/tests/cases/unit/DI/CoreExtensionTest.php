@@ -33,15 +33,10 @@ use React\EventLoop;
 use Symfony\Bridge\Monolog as BridgeMonolog;
 
 /**
- * Replaces ApplicationExtensionTest, ExchangeExtensionTest, ToolsExtensionTest,
- * WebServerExtensionTest and WsServerExtensionTest -- the five DI-extension tests that existed
- * across the fourteen extensions CoreExtension consolidates (Tasks 3, 9, 13, 16 and 17 deleted
- * them one package at a time as each package's content moved into Core/Core; the other nine
- * extensions -- SimpleAuth, DateTimeFactory, DoctrineCrud, DoctrineTimestampable, JsonApi,
- * Phone, DoctrinePhone, WebSockets and WebSocketsWAMP -- never had a dedicated DI test at all).
- * This class asserts the union of what those five tested, plus representative coverage of the
- * domains that were never tested before, plus both halves of each of the two service-key
- * collisions this task's own investigation found and resolved.
+ * Compiles a container with CoreExtension and asserts that the services each of its capabilities
+ * owns -- logging, documents, exchange, persistence, HTTP server, WebSocket server, security,
+ * API and phone -- are registered, and that the service keys of the capabilities that would
+ * otherwise collide stay distinct.
  */
 final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 {
@@ -57,7 +52,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		$container = $this->createContainer();
 
 		/**
-		 * APPLICATION -- from ApplicationExtensionTest
+		 * LOGGING and DOCUMENTS
 		 */
 
 		self::assertNotNull($container->getByType(Monolog\Handler\RotatingFileHandler::class, false));
@@ -69,7 +64,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		);
 
 		/**
-		 * EXCHANGE -- from ExchangeExtensionTest
+		 * EXCHANGE
 		 */
 
 		self::assertNotNull($container->getByType(Documents\RoutingDocumentFactory::class, false));
@@ -78,14 +73,14 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertNotNull($container->getByType(Consumers\Container::class, false));
 
 		/**
-		 * TOOLS -- from ToolsExtensionTest
+		 * DATABASE HELPER and SCHEMA VALIDATION
 		 */
 
 		self::assertNotNull($container->getByType(Helpers\Database::class, false));
 		self::assertNotNull($container->getByType(Schemas\Validator::class, false));
 
 		/**
-		 * HTTP SERVER (formerly Plugin/WebServer) -- from WebServerExtensionTest
+		 * HTTP SERVER
 		 */
 
 		self::assertNotNull($container->getByType(Server\Application::class, false));
@@ -99,15 +94,14 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertNotNull($container->getByType(HttpSubscribers\Server::class, false));
 
 		/**
-		 * WS SERVER (Plugin/WsServer's own registrations) -- from WsServerExtensionTest
+		 * WEBSOCKET SERVER
 		 */
 
 		self::assertNotNull($container->getByType(WebSocketsCommands\WsServer::class, false));
 		self::assertNotNull($container->getByType(WebSocketsSubscribers\Client::class, false));
 
 		/**
-		 * Domains none of the five surviving tests covered -- SimpleAuth, JSON:API, Phone and
-		 * WebSockets never had a dedicated DI test before this merge.
+		 * SECURITY, JSON:API, WEBSOCKET CONTROLLERS and PHONE
 		 */
 
 		self::assertInstanceOf(
@@ -126,14 +120,10 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertNotNull($container->getByType(PhoneSubscribers\PhoneObjectSubscriber::class, false));
 
 		/**
-		 * The service-key collision this task's own investigation found (Flagged
-		 * Assumption 12), resolved by keying every service <domainTag>.<originalRelativeKey> --
-		 * assert both halves of the collision survive as distinct services, not one silently
-		 * overwriting the other. SimpleAuth and DoctrineTimestampable used to collide the same
-		 * way over `configuration` -- the 2026-09-21 core cleanup merged those two into one root
-		 * Configuration, and E5.8 (#640) split it again into Security\Configuration and
-		 * Persistence\TimestampableConfiguration, each registered by its owning capability, so
-		 * this asserts each is reachable both by type and by its service name.
+		 * Every service is keyed <domainTag>.<relativeKey>, so two capabilities that each register
+		 * a `configuration` service cannot overwrite one another. Security\Configuration and
+		 * Persistence\TimestampableConfiguration are each registered by their owning capability,
+		 * so this asserts each is reachable both by type and by its service name.
 		 */
 
 		$securityConfiguration = $container->getService('fbCore.security.configuration');

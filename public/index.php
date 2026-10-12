@@ -42,7 +42,7 @@ if (file_exists($autoload)) {
 	$container = $configurator->createContainer();
 
 	if ($isApi) {
-		// WebServer application
+		// ReactPHP HTTP server application
 		$container
 			->getByType(Server\Application::class)
 			->run();
