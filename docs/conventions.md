@@ -366,8 +366,11 @@ The extensions follow three more rules, decided in
 - **Per-connection client callbacks are private, behind typed registration methods.** A transport
   client that a connector creates for one connection keeps its callbacks in a private property
   and exposes one typed method per hook, such as `onMessage(Closure $listener): void`. A global
-  event would make every listener filter by client instance. The connectors' transport clients
-  still carry public `$onX` arrays until the rest of #725 lands.
+  event would make every listener filter by client instance. FbMqtt's and Zigbee2Mqtt's
+  `API\Client` follow this rule: `onConnect()`, `onMessage()` and the other registration methods
+  append to private arrays, and the listeners are called in the order they were registered. The
+  Shelly, Sonoff, Tuya and Viera clients still carry public `$onX` arrays until the rest of #725
+  lands.
 - **A runtime listener has a matching removal.** An object created per connector, outside DI,
   may add a listener at runtime. It does that with `addListener()` on
   `Symfony\Component\EventDispatcher\EventDispatcherInterface`, because PSR-14 has no

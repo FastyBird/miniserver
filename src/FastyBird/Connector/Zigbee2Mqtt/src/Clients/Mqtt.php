@@ -75,9 +75,9 @@ final class Mqtt
 	public function connect(): Promise\PromiseInterface
 	{
 		$client = $this->getClient();
-		$client->onConnect[] = function (): void {
+		$client->onConnect(function (): void {
 			$this->onConnect();
-		};
+		});
 
 		$this->bridgeSubscriber->subscribe($client);
 		$this->deviceSubscriber->subscribe($client);

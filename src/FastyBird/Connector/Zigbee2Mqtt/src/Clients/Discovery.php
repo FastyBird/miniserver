@@ -82,9 +82,9 @@ final class Discovery
 		$this->onlyBridge = $onlyBridge;
 
 		$client = $this->getClient();
-		$client->onConnect[] = function (): void {
+		$client->onConnect(function (): void {
 			$this->onConnect();
-		};
+		});
 
 		if (!$this->isRunning()) {
 			$this->bridgeSubscriber->subscribe($client);

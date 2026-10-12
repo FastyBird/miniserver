@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\Tests\Cases\Unit\Clients;
 
-use BinSoul\Net\Mqtt as NetMqtt;
 use Error;
 use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\API;
@@ -21,11 +20,10 @@ use Nette\DI;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
-use React;
 use React\EventLoop;
 use RuntimeException;
 use function array_diff;
-use function sprintf;
+use function array_map;
 
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -47,40 +45,17 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 	 */
 	public function testDiscover(): void
 	{
-		$subscribePromise = $this->createMock(React\Promise\PromiseInterface::class);
-		$subscribePromise
-			->method('then')
-			->with(
-				self::callback(static function (callable $callback): bool {
-					$topic = sprintf(Zigbee2Mqtt\Constants::BRIDGE_TOPIC, Entities\Devices\Bridge::BASE_TOPIC);
-					$subscription = new NetMqtt\DefaultSubscription($topic);
+		$eventLoop = $this->getContainer()->getByType(EventLoop\LoopInterface::class);
 
-					$callback($subscription);
+		$broker = new Tests\Support\FakeBroker($eventLoop);
 
-					return true;
-				}),
-				self::callback(static fn (): bool => true),
-			);
-
-		$publishPromise = $this->createMock(React\Promise\PromiseInterface::class);
-		$publishPromise
-			->method('then')
-			->with(
-				self::callback(static function (callable $callback): bool {
-					$callback();
-
-					return true;
-				}),
-				self::callback(static fn (): bool => true),
-			);
-
-		$apiClient = $this->createMock(API\Client::class);
-		$apiClient
-			->method('subscribe')
-			->willReturn($subscribePromise);
-		$apiClient
-			->method('publish')
-			->willReturn($publishPromise);
+		$apiClient = new API\Client(
+			'zigbee2mqtt-discovery-test',
+			'127.0.0.1',
+			$broker->getPort(),
+			new Zigbee2Mqtt\Logger(),
+			$eventLoop,
+		);
 
 		$connectionManager = $this->createMock(API\ConnectionManager::class);
 		$connectionManager
@@ -121,21 +96,10 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 
 		$client = $clientFactory->create($connectorDocument);
 
-		$client->discover();
-
-		$eventLoop = $this->getContainer()->getByType(EventLoop\LoopInterface::class);
-
-		$eventLoop->addTimer(0.1, static function () use ($apiClient): void {
-			self::assertCount(1, $apiClient->onConnect);
-			self::assertCount(1, $apiClient->onMessage);
-
-			Utils\Arrays::invoke($apiClient->onConnect);
-			Utils\Arrays::invoke(
-				$apiClient->onMessage,
-				new NetMqtt\DefaultMessage(
-					'zigbee2mqtt/bridge/devices',
-					Utils\FileSystem::read(__DIR__ . '/../../../fixtures/Clients/Messages/bridge_devices.json'),
-				),
+		$client->discover()->then(static function () use ($broker): void {
+			$broker->pushMessage(
+				'zigbee2mqtt/bridge/devices',
+				Utils\FileSystem::read(__DIR__ . '/../../../fixtures/Clients/Messages/bridge_devices.json'),
 			);
 		});
 
@@ -146,6 +110,14 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 		});
 
 		$eventLoop->run();
+
+		$broker->close();
+
+		// Discovery reacted to the client connecting by asking the bridge to permit joining
+		self::assertSame(
+			['zigbee2mqtt/bridge/request/permit_join'],
+			array_map(static fn (array $message): string => $message[0], $broker->getPublished()),
+		);
 
 		$queue = $this->getContainer()->getByType(Queue\Queue::class);
 
