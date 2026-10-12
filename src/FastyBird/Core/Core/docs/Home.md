@@ -2,8 +2,9 @@
 
 This guide describes what each of Core's capabilities does and how an extension uses it. The
 [README](../README.md) lists the capabilities in one line each; every `fbCore` configuration key,
-with its type and default, is in [docs/configuration.md](../../../../../docs/configuration.md#core-fbcore);
-the naming, DI, event and code rules are in [docs/conventions.md](../../../../../docs/conventions.md).
+with its type and default, is in
+[docs/configuration.md](../../../../../docs/configuration.md#core-fbcore); the naming, DI, event
+and code rules are in [docs/conventions.md](../../../../../docs/conventions.md).
 
 ## Booting the application
 
@@ -66,8 +67,8 @@ container.
 `Api\Middleware\JsonApiMiddleware` (`fbCore.api.middleware`) turns an exception a controller
 throws into a JSON:API error response: a `JsonApiError` or `JsonApiMultipleError` with its own
 status and errors, an `Http\Exceptions\Http` with its status, anything else as a logged 500. The
-application adds it to the HTTP router in `config/common.neon`. `fbCore.api.meta` sets the `meta.author` and
-`meta.copyright` of every document.
+application adds it to the HTTP router in `config/common.neon`. `fbCore.api.meta` sets the
+`meta.author` and `meta.copyright` of every document.
 
 ## Clock
 
@@ -115,30 +116,63 @@ The API stack, PSR-7 and PSR-15, with a FastRoute-based router.
 
 - **Routes.** `Http\Routing\Router` (the service `fbCore.http.routing.router`, typed
   `ServerRouter`) collects routes in groups. A module registers its routes from its DI extension's
-  `beforeCompile()`:
+  `beforeCompile()`, as the Devices module's `DevicesExtension` does:
 
   ```php
-  $router = $builder->getDefinitionByType(Http\Routing\Router::class);
-  $router->addSetup('?->registerRoutes(?)', [$builder->getDefinitionByType(Router\ApiRoutes::class), $router]);
+  $routerService = $builder->getDefinitionByType(HttpRouting\Router::class);
+
+  if ($routerService instanceof NetteDI\Definitions\ServiceDefinition) {
+      $routerService->addSetup('?->registerRoutes(?)', [
+          $builder->getDefinitionByType(Router\ApiRoutes::class),
+          $routerService,
+      ]);
+  }
   ```
 
-  and its `registerRoutes()` builds them under `Router::API_PREFIX`:
+  Its `Router\ApiRoutes::registerRoutes()` builds them under `Router::API_PREFIX`, then the
+  module prefix while the module's `apiPrefix` option is on, then `/v1`, and puts Security's
+  middlewares on the group. Shortened to one route from `Module/Devices/src/Router/ApiRoutes.php`:
 
   ```php
-  $routes = $router->group('/' . Routing\Router::API_PREFIX, function (Routing\RouteCollector $group): void {
-      $group->group('/v1', function (Routing\RouteCollector $group): void {
-          $group->get('/devices', [$this->devicesController, 'index']);
-      });
-  });
+  public function registerRoutes(Routing\Router $router): void
+  {
+      $routes = $router->group('/' . Routing\Router::API_PREFIX, function (
+          Routing\RouteCollector $group,
+      ): void {
+          if ($this->usePrefix) {
+              $group->group('/' . Devices\Constants::MODULE_DEVICES_PREFIX, function (
+                  Routing\RouteCollector $group,
+              ): void {
+                  $this->buildRoutes($group);
+              });
 
-  $routes->addMiddleware($this->authorizationMiddleware);
+          } else {
+              $this->buildRoutes($group);
+          }
+      });
+
+      $routes->addMiddleware($this->accessControlMiddleware); // Security\Middleware\Authorization
+      $routes->addMiddleware($this->userMiddleware); // Security\Middleware\User
+      $routes->addMiddleware($this->devicesAccessControlMiddleware);
+  }
+
+  private function buildRoutes(Routing\Router|Routing\RouteCollector $group): Routing\RouteGroup
+  {
+      return $group->group('/v1', function (Routing\RouteCollector $group): void {
+          $group->group('/devices', function (Routing\RouteCollector $group): void {
+              $group->get('', [$this->devicesV1Controller, 'index']);
+          });
+      });
+  }
   ```
 
   A controller method takes the PSR-7 request and response and returns the response.
 - **Serving.** Under php-fpm, `public/index.php` hands every `/api…` request to
   `Http\Server\Application`. `php bin/fb-console.php fb:web-server:start` runs the same router in a
   ReactPHP server on `fbCore.http.server.address`/`port` (TLS with `server.certificate`), behind
-  the CORS (`fbCore.http.cors`) and static-file (`fbCore.http.static`) middlewares.
+  the CORS and static-file middlewares, the services `fbCore.http.middlewares.cors` and
+  `fbCore.http.middlewares.staticFiles`, configured by the `fbCore.http.cors` and
+  `fbCore.http.static` sections.
 - **Events.** `Http\Events\HttpServerStartup`, `HttpServerRequest`, `HttpServerResponse` and
   `HttpServerError`.
 
@@ -146,8 +180,9 @@ The API stack, PSR-7 and PSR-15, with a FastRoute-based router.
 
 The Monolog handlers `fbCore.logging` configures: a daily rotating file in `FB_LOGS_DIR`, stdout,
 and Symfony's console handler, whose level a subscriber sets when a console command starts.
-`Logging\Logger::buildException()` builds the log context of an exception. With a DSN in `fbCore.logging.sentry.dsn`, or in the environment variable
-`FB_APP_PARAMETER__SENTRY_DSN`, warnings and worse also go to Sentry.
+`Logging\Logger::buildException()` builds the log context of an exception. With a DSN in
+`fbCore.logging.sentry.dsn`, or in the environment variable `FB_APP_PARAMETER__SENTRY_DSN`,
+warnings and worse also go to Sentry.
 
 ## Persistence
 
@@ -186,9 +221,9 @@ unless `fbCore.security.token.signature` is set.
   `user`, `manager` and `administrator`. The Accounts module provides the authenticator and the
   identity factory.
 - **Authorization.** Controllers and presenters declare access in `Secured` docblock annotations:
-  `User`, `Role`, `Resource`, `Privilege`, `Permission` and `Domain`. `Security\Access\AnnotationChecker`
-  reads them, and Casbin decides permissions, from policies in the database
-  (`fbCore.security.enable.casbin.database`) or in a policy file.
+  `User`, `Role`, `Resource`, `Privilege`, `Permission` and `Domain`.
+  `Security\Access\AnnotationChecker` reads them, and Casbin decides permissions, from policies
+  in the database (`fbCore.security.enable.casbin.database`) or in a policy file.
 - **Middlewares.** A module puts `Security\Middleware\Authorization` and `Security\Middleware\User`
   on its route group. A request without a token is refused with 403, one with an invalid token
   with 401.
