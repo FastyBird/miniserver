@@ -4,7 +4,7 @@ namespace FastyBird\Core\Http\Commands;
 
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Events;
-use FastyBird\Core\Http\Server;
+use FastyBird\Core\Http\Server as HttpServer;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use Override;
@@ -22,7 +22,7 @@ use function is_file;
 /**
  * HTTP server command
  */
-final class HttpServer extends Console\Command\Command
+final class Server extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:web-server:start';
@@ -30,7 +30,7 @@ final class HttpServer extends Console\Command\Command
 	public function __construct(
 		private readonly string $serverAddress,
 		private readonly int $serverPort,
-		private readonly Server\Factory $serverFactory,
+		private readonly HttpServer\Factory $serverFactory,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),

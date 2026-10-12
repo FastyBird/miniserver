@@ -77,11 +77,11 @@ final class AccountPresenter extends BasePresenter
 	 */
 	protected function loadAccount(): void
 	{
-		assert($this->simpleUser instanceof Identity\User);
-		assert($this->simpleUser->getId() instanceof Uuid\UuidInterface);
+		assert($this->securityUser instanceof Identity\User);
+		assert($this->securityUser->getId() instanceof Uuid\UuidInterface);
 
 		$findQuery = new Queries\Entities\FindAccounts();
-		$findQuery->byId($this->simpleUser->getId());
+		$findQuery->byId($this->securityUser->getId());
 
 		$account = $this->accountsRepository->findOneBy($findQuery);
 
@@ -100,11 +100,11 @@ final class AccountPresenter extends BasePresenter
 	 */
 	protected function loadEmails(): void
 	{
-		assert($this->simpleUser instanceof Identity\User);
-		assert($this->simpleUser->getId() instanceof Uuid\UuidInterface);
+		assert($this->securityUser instanceof Identity\User);
+		assert($this->securityUser->getId() instanceof Uuid\UuidInterface);
 
 		$findQuery = new Queries\Entities\FindAccounts();
-		$findQuery->byId($this->simpleUser->getId());
+		$findQuery->byId($this->securityUser->getId());
 
 		$account = $this->accountsRepository->findOneBy($findQuery);
 

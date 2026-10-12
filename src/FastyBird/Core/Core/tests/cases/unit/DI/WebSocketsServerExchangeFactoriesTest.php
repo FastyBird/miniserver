@@ -19,7 +19,7 @@ use ReflectionProperty;
  * nette/di processes after every extension's loadConfiguration(), the same position as RedisDb
  * or RabbitMQ registered in config/local.neon.
  */
-final class WsServerExchangeFactoriesTest extends Tests\Cases\Unit\BaseTestCase
+final class WebSocketsServerExchangeFactoriesTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	/**
@@ -31,12 +31,12 @@ final class WsServerExchangeFactoriesTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testCommandReceivesAnExchangeFactoryRegisteredAfterCore(): void
 	{
-		$container = $this->createContainer(__DIR__ . '/wsServerExchangeFactory.neon');
+		$container = $this->createContainer(__DIR__ . '/webSocketsServerExchangeFactory.neon');
 
 		$exchangeFactory = $container->getByType(Dummy\DummyExchangeFactory::class);
-		$command = $container->getByType(Commands\WsServer::class);
+		$command = $container->getByType(Commands\Server::class);
 
-		$exchangeFactories = (new ReflectionProperty(Commands\WsServer::class, 'exchangeFactories'))
+		$exchangeFactories = (new ReflectionProperty(Commands\Server::class, 'exchangeFactories'))
 			->getValue($command);
 
 		// Keyed by service name, as ContainerBuilder::findByType() returns them

@@ -7,7 +7,7 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\WebSockets\Events;
 use FastyBird\Core\WebSockets\Exceptions;
-use FastyBird\Core\WebSockets\Server;
+use FastyBird\Core\WebSockets\Server as WebSocketsServer;
 use Override;
 use Psr\EventDispatcher;
 use Psr\Log;
@@ -21,7 +21,7 @@ use Throwable;
 /**
  * WS server command
  */
-final class WsServer extends Console\Command\Command
+final class Server extends Console\Command\Command
 {
 
 	public const string NAME = 'fb:ws-server:start';
@@ -30,8 +30,8 @@ final class WsServer extends Console\Command\Command
 	 * @param array<Exchange\Factory> $exchangeFactories
 	 */
 	public function __construct(
-		private readonly Server\Configuration $configuration,
-		private readonly Server\ServerRuntime $server,
+		private readonly WebSocketsServer\Configuration $configuration,
+		private readonly WebSocketsServer\ServerRuntime $server,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly array $exchangeFactories = [],
 		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,

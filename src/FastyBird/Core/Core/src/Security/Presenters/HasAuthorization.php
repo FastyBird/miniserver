@@ -19,21 +19,21 @@ use ReflectionMethod;
 trait HasAuthorization
 {
 
-	protected Configuration $simpleAuthConfiguration;
+	protected Configuration $securityConfiguration;
 
 	protected Access\AnnotationChecker $annotationChecker;
 
-	protected Identity\User|null $simpleUser = null;
+	protected Identity\User|null $securityUser = null;
 
-	public function injectSimpleAuth(
+	public function injectAuthorization(
 		Access\AnnotationChecker $annotationChecker,
 		Configuration $configuration,
-		Identity\User|null $simpleUser = null,
+		Identity\User|null $securityUser = null,
 	): void
 	{
 		$this->annotationChecker = $annotationChecker;
-		$this->simpleAuthConfiguration = $configuration;
-		$this->simpleUser = $simpleUser;
+		$this->securityConfiguration = $configuration;
+		$this->securityUser = $securityUser;
 	}
 
 	/**
@@ -46,11 +46,11 @@ trait HasAuthorization
 	 */
 	public function checkRequirements(ReflectionClass|ReflectionMethod $element): void
 	{
-		$redirectUrl = $this->simpleAuthConfiguration->getRedirectUrl([
+		$redirectUrl = $this->securityConfiguration->getRedirectUrl([
 			'backlink' => $this->storeRequest(),
 		]);
 
-		$homeUrl = $this->simpleAuthConfiguration->getHomeUrl();
+		$homeUrl = $this->securityConfiguration->getHomeUrl();
 
 		try {
 			parent::checkRequirements($element);
@@ -63,7 +63,7 @@ trait HasAuthorization
 			}
 		} catch (Application\ForbiddenRequestException $ex) {
 			if ($redirectUrl) {
-				if ($this->simpleUser->isLoggedIn()) {
+				if ($this->securityUser->isLoggedIn()) {
 					$this->getPresenter()->redirectUrl($homeUrl);
 				} else {
 					$this->getPresenter()->redirectUrl($redirectUrl);

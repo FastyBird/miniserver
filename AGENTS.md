@@ -13,7 +13,7 @@ make lint && make cs && make phpstan && make tests   # PHP quality gate
 pnpm lint:js && pnpm types && pnpm build              # JS quality gate
 ```
 
-`make composer-validate` runs `composer validate` deliberately without `--strict` -- the manifests' constraint warnings (sibling path packages at `@dev`, an unbound and an exactly pinned dependency) make `--strict` exit 1 and that is permanent, not a bug to fix.
+`make composer-validate` runs `composer validate` deliberately without `--strict` -- the manifests' constraint warnings (sibling path packages at `@dev` and an exactly pinned dependency) make `--strict` exit 1 and that is permanent, not a bug to fix.
 
 Schema changes ship as a Doctrine migration on top of the single baseline in `migrations/`, generated after `rm -rf var/temp/cache`. CI's `Docker Build` job runs `orm:validate-schema` on the migrated database and fails on any drift.
 
