@@ -1,644 +1,251 @@
-# FastyBird MiniServer Core
+# MiniServer Core: capability guide
 
-## Application bootstrap
+This guide describes what each of Core's capabilities does and how an extension uses it. The
+[README](../README.md) lists the capabilities in one line each; every `fbCore` configuration key,
+with its type and default, is in [docs/configuration.md](../../../../../docs/configuration.md#core-fbcore);
+the naming, DI, event and code rules are in [docs/conventions.md](../../../../../docs/conventions.md).
 
-<p align="center">
-	<img src="https://github.com/fastybird/.github/blob/main/assets/repo_title.png?raw=true" alt="FastyBird"/>
-</p>
+## Booting the application
 
-> [!IMPORTANT]
-This documentation is meant to be used by developers or users which has basic programming skills. If you are regular user
-please use FastyBird IoT documentation which is available on [miniserver.fastybird.com/docs](https://miniserver.fastybird.com/docs).
+`FastyBird\Core\Boot\Bootstrap::boot()` returns a configured `Boot\Configurator`, and
+`createContainer()` compiles and returns the container. `public/index.php` and
+`bin/fb-console.php` both start this way.
 
-This extension plays a vital role in the [FastyBird](https://www.fastybird.com) application by orchestrating the establishment of essential core services.
-In addition to its primary function, it incorporates default extensions that contribute to the overall enhancement of the application's functionality,
-ensuring a robust and versatile framework for various tasks and operations.
+`boot()` first defines the directory constants from the environment (`$_ENV`, then `getenv()`):
 
-# About Library
+| Constant | Default |
+|---|---|
+| `FB_APP_DIR` | the nearest directory above Core's `src/Boot` that holds a `vendor/` directory |
+| `FB_PUBLIC_DIR` | `<FB_APP_DIR>/public` |
+| `FB_RESOURCES_DIR` | `<FB_APP_DIR>/resources` |
+| `FB_TEMP_DIR` | `<FB_APP_DIR>/var/temp`, created if missing |
+| `FB_LOGS_DIR` | `<FB_APP_DIR>/var/logs`, created if missing |
+| `FB_CONFIG_DIR` | `<FB_APP_DIR>/config` |
 
-This library has some services divided into namespaces. All services are preconfigured and imported into application
-container automatically.
+They become the static parameters `%appDir%`, `%wwwDir%`, `%tempDir%` and `%logsDir%`.
+`%debugMode%` is `true` when `APP_ENV` is `dev`. Every environment variable named
+`FB_APP_PARAMETER__<SECTION>_<KEY>` becomes a parameter as well: `FB_APP_PARAMETER__DATABASE_HOST`
+is `%database.host%`. `boot()` then loads Core's own `config/common.neon` and `defaults.neon`, the
+application's, and the operator's `local.neon`, in the order
+[docs/architecture.md](../../../../../docs/architecture.md#configuration-load-order) describes.
 
-```
-\FastyBird\Core\Application
-  \Boot - Application bootstrap related services
-  \Caching - Cache related services
-  \Helpers - Useful helpers for working with database, logger etc.
-  \ObjectMapper - Object mapper custom rules
-```
+Tracy is enabled, with deprecations kept out of its strict mode, unless the process runs under
+PHPUnit.
 
-All services, helpers, etc. are written to be self-descriptive :wink:.
+## The `fbCore` extension
 
-## Using Library
-
-This extension is configured via **env** variables or via Neon **parameters** or their combination.
-
-Environment variables are used to define all necessary folders for application to run:
-
-```
-FB_APP_DIR - is application root dir. Default value is folder where is composer.json located
-
-FB_RESOURCES_DIR - is dir for additional resources. Default value is FB_APP_DIR . '/resources'
-
-FB_TEMP_DIR - is dir for storing temporary data like filecache, generated DI etc. Default value is FB_APP_DIR . '/var/temp'
-
-FB_LOGS_DIR - is dir for application logs or exceptions. Default value is FB_APP_DIR . '/var/logs'
-
-FB_CONFIG_DIR - is dir where you sould place your custom configuration. Default value is FB_APP_DIR . '/config' 
-```
-
-> [!TIP]
-You don't need to configure this environment variables. It is totally ok to use defined values. Folders will then be defined inside project root
-
-PHP constants are generated from these environment variables, allowing their convenient use throughout the application. Moreover, the values associated
-with FB_APP_DIR, FB_TEMP_DIR, and FB_LOGS_DIR are seamlessly integrated into the nenon configuration parser, facilitating their utilization in the
-configuration of various services.
+`FastyBird\Core\DI\CoreExtension`, registered as `fbCore`, is the only Core extension a container
+registers. It composes one child extension per capability and gives each its own configuration
+section:
 
 ```neon
-services: 
-    -
-        type: Your\Cool\Service
-        arguments: [
-            temp: %tempDir%/cache
-            logs: %logsDir%/service.result.log
-            root: %appDir%
-        ]
+fbCore:
+    logging:       # Logging\DI\LoggingExtension
+    documents:     # Documents\DI\DocumentsExtension
+    security:      # Security\DI\SecurityExtension
+    clock:         # Clock\DI\ClockExtension
+    persistence:   # Persistence\DI\PersistenceExtension
+    api:           # Api\DI\ApiExtension
+    webSockets:    # WebSockets\DI\WebSocketsExtension
+    http:          # Http\DI\HttpExtension
 ```
 
-### Overriding parameters
-
-FastyBird application could be configured via `parameters` section in configuration neon file, but in case you don't want to
-store you sensitive data in file you could use configuration via env variables.
-
-Application will search for all env variables prefixed with `FB_APP_PARAMETER_` and create parameters array from them.
-Also structuring parameters is supported, just use delimiter `_`:
-
-```nenon
-parameters:
-    database:
-        password: secretPass
-```
-
-is equivalent to:
-
-```php
-$_ENV[FB_APP_PARAMETER_DATABASE_PASSWORD] = 'secretPass';
-```
-
-### Custom application configuration
-
-Application configuration is done via neon files and this files have to be places into **FB_CONFIG_DIR**.
-
-Application will automatically load configuration files, all what you have to do is follow naming convention for neon
-files:
-
-```
-common.neon - file for configuring extension, services, etc.
-
-defaults.neon - file for placing all you parameters
-
-local.neon - file for additional configuration or user specific
-```
-
-**common.neon** and **defaults.neon** should be versioned in you application repository, **local.neon** is meant to be
-custom local file not be stored in repository.
-
-## Create Application Container
-
-Now when you have application configured you could move to next step, creating application entrypoint which will
-loads DI and fire `Nette\Application\Bootstrap::run`
-
-You can copy & paste it to your project, for example to `<app_root>/www/index.php`.
-
-```php
-<?php declare(strict_types = 1);
-
-require __DIR__ . '/../vendor/autoload.php';
-
-exit(\FastyBird\Core\Application\Boot\Bootstrap::boot()
-    ->createContainer()
-    ->getByType(Nette\Application\Application::class)
-    ->run());
-```
-
-When a call `FastyBird\Core\Application\Boot\Bootstrap::boot()` is made, application will try to configure application and
-prepare everything for building container.
-
-## Default Extensions
-
-This extension has preconfigured some useful extensions.
-
-### Console Support
-
-Is implemented via [contribute/console](https://github.com/contributte/console) package. Console entrypoint could be
-found in composer `bin` folder and to run command just run:
-
-```sh
-vendor/bin/fb_console your:command
-```
-
-### Application Logger
-
-Is implemented via [contribute/monolog](https://github.com/contributte/monolog) package. And is configured to log all
-actions with severity errors and higher.
-
-You could configure optional output of this logger to standard output or into rotating file:
-
-```neon
-parameters:
-    logger:
-        rotatingFile: your.filename.log
-        stdOut: true
-```
-
-Logger severity level could be also configured via neon extension configuration:
-
-```neon
-parameters:
-    logger:
-        level: 400 # Levels: DEBUG = 100, INFO = 200, NOTICE = 250, WARNING = 300, ERROR = 400, CRITICAL = 500, ALERT = 550, EMERGENCY = 600
-```
-
-
-## Exchange (pub/sub bus)
-
-<p align="center">
-	<img src="https://github.com/fastybird/.github/blob/main/assets/repo_title.png?raw=true" alt="FastyBird"/>
-</p>
-
-> [!IMPORTANT]
-This documentation is meant to be used by developers or users which has basic programming skills. If you are regular user
-please use FastyBird IoT documentation which is available on [miniserver.fastybird.com/docs](https://miniserver.fastybird.com/docs).
-
-# Quick start
-
-When a service within your extension requires the publication of messages to the data exchange bus for other extensions,
-a recommended approach is to implement the `FastyBird\Core\Exchange\Publisher\Publisher` interface. This allows seamless
-integration with the data exchange bus.
-
-Following this implementation, you can register your custom publisher as a service. This structured approach ensures that
-your extension's services can efficiently communicate and share relevant information with other components in
-the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem.
-
-***
-
-## Creating custom publisher
-
-If some service of your extension have to publish messages to data exchange bus for other extensions, you could just
-implement `FastyBird\Core\Exchange\Publisher\Publisher` interface and register your publisher as service
-
-```php
-namespace Your\CoolApp\Publishers;
-
-use FastyBird\Core\Exchange\Publisher\Publisher;
-use FastyBird\Core\Application\Documents;
-use FastyBird\Core\Values\Types;
-
-class ModuleDataPublisher implements Publisher
-{
-
-    public function publish(
-        Types\Sources\Module|Types\Sources\Plugin|Types\Sources\Connector $source,
-        string $routingKey,
-        Documents\Document|null $entity,
-    ) : void {
-        // Service logic here, e.g. publish message to RabbitMQ or Redis etc. 
-    }
-
-}
-```
-
-You could create as many publishers as you need. Publisher proxy then will collect all of them.
-
-### Asynchronous publisher
-
-As the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) ecosystem utilizes
-an asynchronous event-loop system within its services, it is recommended to implement asynchronous publishers. This ensures
-that code processing remains unblocked. These publishers have to follow a Promise-based approach when publishing messages.
-
-```php
-namespace Your\CoolApp\Publishers;
-
-use FastyBird\Core\Exchange\Publisher\Async\Publisher;
-use FastyBird\Core\Application\Documents;
-use FastyBird\Core\Values\Types;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
-
-class ModuleDataPublisher implements Publisher
-{
-
-    /**
-    * @return PromiseInterface<bool>
-     */
-    public function publish(
-        Types\Sources\Module|Types\Sources\Plugin|Types\Sources\Connector $source,
-        string $routingKey,
-        Documents\Document|null $entity,
-    ) : PromiseInterface {
-        $deferred  = new Deferred();
-
-        // Service logic here, e.g. publish message to RabbitMQ or Redis etc.
-        
-        return $deferred->promise(); 
-    }
-
-}
-```
-
-## Publishing message
-
-In your code you could just import one publisher - proxy publisher.
-
-```php
-namespace Your\CoolApp\Actions;
-
-use FastyBird\Core\Exchange\Publisher\Container;
-
-class SomeHandler
-{
-
-    /** @var Container */
-    private Container $publisher;
-
-    public function __construct(
-        Container $publisher
-    ) {
-        $this->publisher = $publisher;
-    }
-
-    public function updateSomething()
-    {
-        // Your interesting logic here...
-
-        $this->publisher->publish(
-            $origin,
-            $routingKey,
-            $entity,
-        );
-    }
-}
-```
-
-And that is it, global publisher will call all your publishers and publish message to all your systems.
-
-## Creating custom consumer
-
-One part is done, message is published. Now have to be consumed.
-
-If some service of your extension have is waiting for messages from data exchange bus from other extensions, you could just
-implement `FastyBird\Core\Exchange\Consumer\Consumer` interface and register your consumer as service
-
-```php
-namespace Your\CoolApp\Publishers;
-
-use FastyBird\Core\Exchange\Consumers\Consumer;
-use FastyBird\Core\Application\Documents;
-use FastyBird\Core\Values\Types;
-
-class DataConsumer implements Consumer
-{
-
-    public function consume(
-        Types\Sources\Module|Types\Sources\Plugin|Types\Sources\Connector $source,
-        string $routingKey,
-        Documents\Document|null $entity,
-    ) : void {
-        // Do your data processing logic here 
-    }
-
-}
-```
-
-You could create as many consumers as you need. Consumer proxy then will collect all of them.
-
-## Tools
-
-<p align="center">
-	<img src="https://github.com/fastybird/.github/blob/main/assets/repo_title.png?raw=true" alt="FastyBird"/>
-</p>
-
-> [!IMPORTANT]
-This documentation is meant to be used by developers or users which has basic programming skills. If you are regular user
-please use FastyBird IoT documentation which is available on [miniserver.fastybird.com/docs](https://miniserver.fastybird.com/docs).
-
-## HTTP server runtime
-
-<p align="center">
-	<img src="https://github.com/fastybird/.github/blob/main/assets/repo_title.png?raw=true" alt="FastyBird"/>
-</p>
-
-> [!IMPORTANT]
-This documentation is meant to be used by developers or users which has basic programming skills. If you are regular user
-please use FastyBird IoT documentation which is available on [miniserver.fastybird.com/docs](https://miniserver.fastybird.com/docs).
-
-# About Plugin
-
-The purpose of this plugin is to create php based web server for serving and handling API request and responses.
-
-This library has some services divided into namespaces. All services are preconfigured and imported into application
-container automatically.
-
-```
-\FastyBird\Plugin\RedisDb
-  \Commands - Console commands to run WS server
-  \Events - Events which are triggered by plugin and other services
-  \Middleware - Server basic middlewares
-  \Subscribers - Plugin subscribers which are subscribed to main sockets library
-```
-
-All services, helpers, etc. are written to be self-descriptive :wink:.
-
-## Using Plugin
-
-The plugin is ready to be used as is. Has configured all services in application container and there is no need to develop
-some other services or bridges.
-
-This plugin is dependent on other extensions, and they have to be registered too
-
-```neon
-extensions:
-    ...
-    contributteConsole: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
-    contributteEvents: Contributte\EventDispatcher\DI\EventDispatcherExtension
-```
-
-## Plugin Configuration
-
-This plugin has some configuration options:
-
-```neon
-fbWebServerPlugin:
-    static:
-        publicRoot: /path/to/public/folder
-        enabled: false
-    server:
-        address: 127.0.0.1
-        port: 8000
-        certificate: /path/to/your/certificate.pa
-```
-
-Where:
-
-- `static -> publicRoot` is path to public static files and this files could be served by this webserver
-- `static -> enabled` enable or disable serving static files support
-
-
-- `server -> address` is address where is server listening for incoming requests
-- `server -> port` is address port where is server listening for incoming requests
-- `server -> certificate` is path to your private certificate to enable SSL communication
-
-## Application routes
-
-This plugin has router service. This service could be used to be injected in other services for registering routes.
-Or in case you want to implement automatic routes registration, you could use service **decorator**
-
-```php
-namespace Your\CoolApp\Routing;
-
-use FastyBird\Library\SlimRouter\Routing;
-
-use Your\CoolApp\Controllers;
-
-class Routes
-{
-
-    /** @var Controllers\ArticlesController */
-    private Controllers\ArticlesController $articlesV1Controller;
-
-    public function __construct(
-        Controllers\ArticlesController $articlesV1Controller
-    ) {
-        $this->articlesV1Controller = $articlesV1Controller;
-    }
-
-    public function registerRoutes(Routing\IRouter $router): void
-    {
-        return $router->group('/v1', function (Routing\RouteCollector $group): void {
-            $group->group('/articles', function (Routing\RouteCollector $group): void {
-                $group->get('', [$this->articlesV1Controller, 'index']);
-    
-                $group->get('/{id}', [$this->articlesV1Controller, 'read']);
-    
-                $group->post('', [$this->articlesV1Controller, 'create']);
-    
-                $group->patch('/{id}', [$this->articlesV1Controller, 'update']);
-    
-                $group->delete('/{id}', [$this->articlesV1Controller, 'delete']);
-    
-                $group->get('/{id}/relationships/{relation}', [
-                    $this->articlesV1Controller,
-                    'readRelationship',
-                ]);
-            });
-        });
-    }
-
-}
-```
-
-And in your configuration neon:
-
-```neon
-services:
-    appRoutes:
-        factory: Your\CoolApp\Routing\Routes
-
-decorator:
-    FastyBird\Library\SlimRouter\Routing\Router:
-        setup:
-            @appRoutes::registerRoutes
-```
-
-For more info how to write routes and controllers, see the router in `FastyBird\Core\Http\Routing`.
-
-## Custom middleware
-
-With middleware, you could modify incoming requests and also outgoing responses.
-
-```php
-namespace Your\CoolApp\Routing;
-
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-
-class AccessControlMiddleware implements MiddlewareInterface
-{
-
-    public function process(
-        ServerRequestInterface $request,
-        RequestHandlerInterface $handler
-    ): ResponseInterface {
-        // Do you logic here e.g. modify request
-
-        // With $handler call another middleware
-        $response = $handler->handle($request);
-
-        // Do another logic e.g. modify response
-
-        return $response;
-    }
-
-}
-```
-
-Each middleware have to be registered as a service
-
-```neon
-services:
-    accessControlMiddleware:
-        factory: Your\CoolApp\AccessControlMiddleware
-```
-
-Registration of middlewares to router is done via decorator:
-
-```neon
-decorator: 
-    FastyBird\Library\SlimRouter\Routing\Router:
-        setup:
-            - addMiddleware(@accessControlMiddleware)
-```
-
-And if you have more middlewares, you could define their execution order. First registered is executed as last.
-
-This type of middleware will be used for each route. But there could be cases, where you want use your middleware for specific routes only.
-
-```neon
-services:
-    - {factory: Your\CoolApp\AccessControlMiddleware}
-```
-
-Middleware will be registered as usual service and could be injected into router, where you could add it to specific route.
-
-```php
-namespace Your\CoolApp\Routing;
-
-use FastyBird\Library\SlimRouter\Routing;
-
-class Routes
-{
-    // ...
-
-    /** @var AccessControlMiddleware */
-    private AccessControlMiddleware $accessControlMiddleware;
-
-    public function registerRoutes(Routing\IRouter $router): void
-    {
-        // ...
-
-            $deleteRoute = $group->delete('/{id}', [$this->articlesV1Controller, 'delete']);
-            $deleteRoute->addMiddleware($this->accessControlMiddleware);
-
-        // ...
-    }
-}
-```
-
-For more info how to write middleware, see the router in `FastyBird\Core\Http\Routing`.
-
-## Running server
-
-This plugin has implemented command interface for running server. All you have to do is just run one command:
-
-```sh
-<app_root>/vendor/bin/fb-console fb:web-server:start
-```
-
-## What about Apache or Nginx?
-
-If you have any reason to use classic web server like [Apache](https://www.apache.org) or [Nginx](https://www.nginx.com)
-, this extension has solution for you.
-
-Steps to achieve this way is almost same as in console version. You have to create an entrypoint which will loads DI and
-fire `FastyBird\Plugin\WebServer\Application\Application::run`
-
-You can copy & paste it to your project, for example to `<app_root>/www/index.php`.
-
-```php
-<?php declare(strict_types = 1);
-
-require __DIR__ . '/../vendor/autoload.php';
-
-exit(Your\CoolApp\Application::boot()
-    ->createContainer()
-    ->getByType(FastyBird\Plugin\WebServer\Application\Application::class)
-    ->run());
-```
-
-And as a last step, you have to configure you Apache or Nginx server to load your page from: `<app_root>/www/index.php`
-
-# Tips
-
-If you want to use [{JSON:API}](https://jsonapi.org/) for you api calls, you could
-use [fastybird/json-api](https://github.com/FastyBird/json-api) package. This package brings you schemas factory for
-your responses and document to entity hydrator
-
-And last but not least, [fastybird/simple-auth](https://github.com/FastyBird/simple-auth). With this package you could
-create basic token based authentication and authorization.
-
-## WS server runtime
-
-<p align="center">
-	<img src="https://github.com/fastybird/.github/blob/main/assets/repo_title.png?raw=true" alt="FastyBird"/>
-</p>
-
-> [!IMPORTANT]
-This documentation is meant to be used by developers or users which has basic programming skills. If you are regular user
-please use FastyBird IoT documentation which is available on [miniserver.fastybird.com/docs](https://miniserver.fastybird.com/docs).
-
-# About Plugin
-
-The purpose of this plugin is to create php based WS server for serving and handling sockets real time connections.
-
-This library has some services divided into namespaces. All services are preconfigured and imported into application
-container automatically.
-
-```
-\FastyBird\Plugin\RedisDb
-  \Commands - Console commands to run WS server
-  \Events - Events which are triggered by plugin and other services
-  \Subscribers - Plugin subscribers which are subscribed to main sockets library
-```
-
-All services, helpers, etc. are written to be self-descriptive :wink:.
-
-## Using Plugin
-
-The plugin is ready to be used as is. Has configured all services in application container and there is no need to develop
-some other services or bridges.
-
-This plugin is dependent on other extensions, and they have to be registered too
-
-```neon
-extensions:
-    ...
-    contributteConsole: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
-    fbCore: FastyBird\Core\DI\CoreExtension
-```
-
-## Plugin Configuration
-
-This plugin has some configuration options:
-
-```neon
-fbWsServerPlugin:
-    access:
-        keys: f9657db3-b9e0-4a6d-a482-76a8099edbce
-        origins: yourdomain.tld,service.yourdomain.tld
-```
-
-Where:
-
-- `access -> keys` are comma separated access keys which will server validate on clients connections
-- `access -> origins` are comma separated allowed domain names which will server validate on clients connections
-
-## Running server
-
-This plugin has implemented command interface for running server. All you have to do is just run one command:
-
-```sh
-<app_root>/vendor/bin/fb-console fb:ws-server:start
-```
-
+Exchange, Values and Phone have no configuration. A key the schema does not know fails the
+compilation. Each child names its services `fbCore.<capability>.<role>`; the root services are
+`fbCore.eventLoop.*`, `fbCore.ui.*`, `fbCore.cache.psr6` and, when nothing else provides a PSR-14
+dispatcher, `fbCore.eventDispatcher`.
+
+## Api
+
+JSON:API on top of `neomerx/json-api`. `Api\Encoding\Encoder` and `Builder` produce documents,
+`Api\Schemas\JsonApiSchema` is the base of every resource schema, and `Api\Hydrators\Hydrator` turns
+a request document into entity data. An extension registers its schemas and hydrators as services;
+the API extension collects them by type into `fbCore.api.schemas.container` and the hydrators
+container.
+
+`Api\Middleware\JsonApiMiddleware` (`fbCore.api.middleware`) turns an exception a controller
+throws into a JSON:API error response: a `JsonApiError` or `JsonApiMultipleError` with its own
+status and errors, an `Http\Exceptions\Http` with its status, anything else as a logged 500. The
+application adds it to the HTTP router in `config/common.neon`. `fbCore.api.meta` sets the `meta.author` and
+`meta.copyright` of every document.
+
+## Clock
+
+PSR-20. A service takes `Psr\Clock\ClockInterface` and calls `now()`, which returns a
+`DateTimeImmutable`. `Clock\SystemClock` reads the system time in `fbCore.clock.timeZone`;
+`Clock\FrozenClock` returns a fixed moment and is autowired instead when `fbCore.clock.frozen` is
+set, which is how the test configurations pin time.
+
+## Documents
+
+A document is a typed object that carries an entity's data between processes. Its class is mapped
+by attributes from `FastyBird\Core\Documents\Mapping` (`Document`, `MappedSuperclass`,
+`InheritanceType`, `DiscriminatorColumn`, `DiscriminatorMap`, `RoutingMap`), and
+`Documents\DocumentFactory::create($documentClass, $data)` builds one from an array, a JSON string
+or an object, validated through the object mapper. `Documents\Document` is the common interface;
+`CreatedAt`, `UpdatedAt` and `Owner` mark documents that carry those fields.
+
+`fbCore.documents.mapping` maps a namespace to a directory of document classes. Modules add their
+own through `DocumentsExtension::DRIVER_TAG` instead.
+
+## Exchange
+
+The publish/subscribe bus that connects the application's processes.
+
+- **Publishing.** Autowire `Exchange\Publisher\MessagePublisher` (the publisher container,
+  `fbCore.exchange.publisher`) and call `publish($source, $routingKey, $document)`. The source is a
+  `Values\Types\Sources\Source` case naming the publishing extension; routing keys start with
+  `MessagePublisher::ROUTING_KEY_PREFIX` (`fb.exchange`). The container forwards the message to
+  every publisher a transport plugin registers. `Exchange\Publisher\Async\MessagePublisher` is the
+  promise-returning variant for code running on the event loop.
+- **Consuming.** Implement `Exchange\Consumers\Consumer::consume($source, $routingKey, $document)`
+  and register the class as a service. The Exchange extension collects every consumer by type into
+  `Exchange\Consumers\Container`. The tag `ExchangeExtension::CONSUMER_ROUTING_KEY` limits a
+  consumer to one routing key, and `ExchangeExtension::CONSUMER_STATE` set to `false` registers it
+  disabled; `Consumers\Container::enable()` and `disable()` switch it at runtime.
+- **Transports.** A plugin that carries messages between processes (RedisDb, RabbitMq) implements
+  `Exchange\Factory`; a long-running process, such as the WebSocket server, calls `create()` on
+  every factory to start consuming.
+- **Events.** `Exchange\Events\BeforeMessagePublished`, `AfterMessagePublished`,
+  `BeforeMessageConsumed`, `AfterMessageConsumed` and `ExchangeError`.
+
+## Http
+
+The API stack, PSR-7 and PSR-15, with a FastRoute-based router.
+
+- **Routes.** `Http\Routing\Router` (the service `fbCore.http.routing.router`, typed
+  `ServerRouter`) collects routes in groups. A module registers its routes from its DI extension's
+  `beforeCompile()`:
+
+  ```php
+  $router = $builder->getDefinitionByType(Http\Routing\Router::class);
+  $router->addSetup('?->registerRoutes(?)', [$builder->getDefinitionByType(Router\ApiRoutes::class), $router]);
+  ```
+
+  and its `registerRoutes()` builds them under `Router::API_PREFIX`:
+
+  ```php
+  $routes = $router->group('/' . Routing\Router::API_PREFIX, function (Routing\RouteCollector $group): void {
+      $group->group('/v1', function (Routing\RouteCollector $group): void {
+          $group->get('/devices', [$this->devicesController, 'index']);
+      });
+  });
+
+  $routes->addMiddleware($this->authorizationMiddleware);
+  ```
+
+  A controller method takes the PSR-7 request and response and returns the response.
+- **Serving.** Under php-fpm, `public/index.php` hands every `/api…` request to
+  `Http\Server\Application`. `php bin/fb-console.php fb:web-server:start` runs the same router in a
+  ReactPHP server on `fbCore.http.server.address`/`port` (TLS with `server.certificate`), behind
+  the CORS (`fbCore.http.cors`) and static-file (`fbCore.http.static`) middlewares.
+- **Events.** `Http\Events\HttpServerStartup`, `HttpServerRequest`, `HttpServerResponse` and
+  `HttpServerError`.
+
+## Logging
+
+The Monolog handlers `fbCore.logging` configures: a daily rotating file in `FB_LOGS_DIR`, stdout,
+and Symfony's console handler, whose level a subscriber sets when a console command starts.
+`Logging\Logger::buildException()` builds the log context of an exception. With a DSN in `fbCore.logging.sentry.dsn`, or in the environment variable
+`FB_APP_PARAMETER__SENTRY_DSN`, warnings and worse also go to Sentry.
+
+## Persistence
+
+Helpers on top of Doctrine ORM 3:
+
+- **Entity CRUD.** `Persistence\Crud\CrudFactory::create($entityClass)` returns an `EntityCrud`,
+  whose creator, updater and deleter create, update and delete an entity from a Nette
+  `ArrayHash`. An entity implements `Persistence\Entities\CrudEntity`.
+- **Queries.** `Persistence\Query\QueryObject` is the base of a reusable query, and `ResultSet` its
+  paginated result.
+- **Timestamps.** A property with the `Persistence\Mapping\Annotation\Timestampable` attribute is
+  stamped on create or update; the traits `HasEntityCreated` and `HasEntityUpdated` declare the
+  usual pair. `fbCore.persistence.timestampable` decides how an unmapped one is handled.
+- **UUIDs.** `Persistence\Rules\UuidRule` lets the object mapper read UUID values.
+- **Schema.** `Persistence\Subscribers\SchemaSubscriber` adds Doctrine Migrations' own table to
+  the schema the ORM generates, so schema tools do not propose dropping it. The schema itself is
+  migrated from the application's `migrations/` (see
+  [docs/architecture.md](../../../../../docs/architecture.md#database-schema)).
+- **Events.** `Persistence\Events\DbTransactionStarted` and `DbTransactionFinished`.
+
+## Phone
+
+`Phone\Entities\Phone` is a phone number value object built with `libphonenumber`,
+`Phone\Types\PhoneType` the Doctrine type that stores it, and `Phone\Services\PhoneNumberHelper`
+validates and formats numbers.
+
+## Security
+
+Authentication and authorization for the API and the presenters. Nothing in it is registered
+unless `fbCore.security.token.signature` is set.
+
+- **Tokens.** `Security\Identity\TokenBuilder` issues and `TokenValidator` validates signed JWT
+  access tokens (`lcobucci/jwt`). `TokenReader` reads one from the `Authorization: Bearer …`
+  header, or from the `token` cookie on a presenter request.
+- **Identity.** `Security\Identity\User` is the signed-in user, with the roles `guest`, `visitor`,
+  `user`, `manager` and `administrator`. The Accounts module provides the authenticator and the
+  identity factory.
+- **Authorization.** Controllers and presenters declare access in `Secured` docblock annotations:
+  `User`, `Role`, `Resource`, `Privilege`, `Permission` and `Domain`. `Security\Access\AnnotationChecker`
+  reads them, and Casbin decides permissions, from policies in the database
+  (`fbCore.security.enable.casbin.database`) or in a policy file.
+- **Middlewares.** A module puts `Security\Middleware\Authorization` and `Security\Middleware\User`
+  on its route group. A request without a token is refused with 403, one with an invalid token
+  with 401.
+- **Ownership.** `Security\Entities\Owner` marks an entity that records the user who created it,
+  through the owner mapping driver (`fbCore.security.enable.doctrine.mapping`).
+
+## Values
+
+The shared vocabulary of the exchange and the API:
+
+- `Values\Types\DataType` and `DataTypeShort`, the data types of a property;
+- `Values\Types\Payloads`, the `Button`, `Cover` and `Switcher` payloads;
+- `Values\Types\Sources`, the enums `Addon`, `Automator`, `Bridge`, `Connector`, `Module` and
+  `Plugin`, whose cases are the exchange source identifiers;
+- `Values\Formats`, the value formats (`NumberRange`, `StringEnum`, `CombinedEnum`);
+- `Values\Transformers`, the colour and equation transformers;
+- `Values\Schemas\Validator`, the JSON schema validator (`opis/json-schema`);
+- `Values\Utilities\Value` and `DataType`, conversions between them.
+
+The JS package mirrors the types in `assets/values/types`.
+
+## WebSockets
+
+A WAMP v1 server on the React event loop, run by `php bin/fb-console.php fb:ws-server:start` on
+`fbCore.webSockets.server.address`/`port`.
+
+- **Routes.** A module tags a service with `WebSocketsExtension::ROUTES_TAG`; its `createRouter()`
+  returns a `WebSockets\Wamp\RouteList` of `WampRoute`s, for example the Devices module's
+  `/devices-module/v1/exchange`. `fbCore.webSockets.routes` adds routes from configuration.
+- **Controllers.** Every `WebSockets\Controllers\RequestController` is tagged
+  `WebSocketsExtension::CONTROLLER_TAG` automatically. `WebSockets\Controllers\ControllerFactory`
+  creates them; a module maps its controller namespace with `setMapping()` on it, or through
+  `fbCore.webSockets.mapping`.
+- **Access.** `fbCore.webSockets.access.keys` makes a client send one of the keys in the `x-ws-key`
+  handshake header, and `access.origins` limits the origins a client may connect from.
+- **Storage.** Connected clients and WAMP topics are kept by a storage driver, in memory by
+  default (`fbCore.webSockets.storage`).
+- **Events.** `WebSockets\Events\ServerCreated`, `ServerLaunched`, `ServerStarted`,
+  `ServerStopped`, `ServerFailed`, the client and connection events (`ClientConnected`,
+  `ClientDisconnected`, `ClientFailed`, `ConnectionOpened`, `ConnectionClosed`) and the message
+  events (`MessageReceived`, `MessageProcessed`, `ApplicationMessageReceived`, `ApplicationFailed`).
+  A listener of `ServerCreated` in another package is an invokable service tagged
+  `WebSocketsExtension::SERVER_CREATED_LISTENER_TAG`, with its priority as the tag value.
+
+## The runtime namespaces
+
+- **`EventLoop`** -- `EventLoop\Wrapper` around the React event loop, `Status`, and the
+  `EventLoopStarted`, `EventLoopStopping` and `EventLoopStopped` events.
+- **`Presenters`** -- `BasePresenter`, `DefaultPresenter` and `AppRouter`, which maps `/` to
+  `App:Default:default` on the Nette route list `fbCore.ui.routes`.
+- **`UI`** -- `UI\TemplateFactory`, which applies Core's layout template, `templates/@layout.latte`.
+  The layout loads the Vue application shell from `assets/` through contributte/vite.
+
+## The JS package
+
+`@fastybird/miniserver-core` exports `assets/entry.ts`: the shell components and composables, and
+the capabilities `api` (the backend client), `eventBus`, `extensions`, `security`, `stores`,
+`values` and `websockets` (the WAMP v1 client). `assets/main.ts` is the Vite entry of the
+application shell; [docs/architecture.md](../../../../../docs/architecture.md#frontend) describes
+how it loads the registered extensions.
