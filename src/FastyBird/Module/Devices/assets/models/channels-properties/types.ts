@@ -1,8 +1,15 @@
 import { Ref } from 'vue';
 
-import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships } from 'jsona/lib/JsonaTypes';
-
-import { ButtonPayload, CoverPayload, DataType, SwitchPayload } from '@fastybird/miniserver-core';
+import {
+	ButtonPayload,
+	CoverPayload,
+	DataType,
+	SwitchPayload,
+	TJsonApiBody,
+	TJsonApiData,
+	TJsonApiRelation,
+	TJsonApiRelationships,
+} from '@fastybird/miniserver-core';
 
 import {
 	ChannelPropertyDocument,

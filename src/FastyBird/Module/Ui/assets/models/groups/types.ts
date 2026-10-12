@@ -1,6 +1,6 @@
 import { _GettersTree } from 'pinia';
 
-import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships, TJsonaModel } from 'jsona/lib/JsonaTypes';
+import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships, TJsonaModel } from '@fastybird/miniserver-core';
 
 import { IEntityMeta, IPlainRelation, IWidgetResponseData, IWidgetResponseModel } from '../../models/types';
 import { GroupDocument } from '../../types';
