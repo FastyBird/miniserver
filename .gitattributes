@@ -24,5 +24,9 @@
 .editorconfig export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
-docker-compose.yml export-ignore
+# Anchored to the root. Unanchored, the pattern matched docker/dev/ and docker/prod/ as
+# well, and `git archive` (so a Packagist or GitHub source tarball) then shipped the
+# images' Dockerfiles with neither compose file to run them. The root file only
+# includes docker/dev, which still ships.
+/docker-compose.yml export-ignore
 Makefile export-ignore
