@@ -8,7 +8,6 @@ use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
 use Override;
-use stdClass;
 use function assert;
 
 /**
@@ -37,7 +36,7 @@ final class RedisDbPluginDevicesModuleExtension extends DI\CompilerExtension
 	{
 		return Schema\Expect::structure([
 			'database' => Schema\Expect::int(0),
-		]);
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -45,7 +44,7 @@ final class RedisDbPluginDevicesModuleExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$builder->addDefinition(
 			$this->prefix('models.connectorPropertyRepository'),

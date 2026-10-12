@@ -21,7 +21,6 @@ use Nette\DI as NetteDI;
 use Nette\Schema;
 use Nettrine\ORM as NettrineORM;
 use Override;
-use stdClass;
 use function array_keys;
 use function array_pop;
 use function assert;
@@ -53,7 +52,7 @@ final class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExte
 	{
 		return Schema\Expect::structure([
 			'apiPrefix' => Schema\Expect::bool(true),
-		]);
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -61,7 +60,7 @@ final class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExte
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(VieraConnectorHomeKitConnector\Logger::class)

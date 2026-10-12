@@ -13,7 +13,6 @@ use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
 use Override;
-use stdClass;
 use function assert;
 
 /**
@@ -49,14 +48,14 @@ final class RabbitMqExtension extends DI\CompilerExtension
 				'vhost' => Schema\Expect::string('/'),
 				'username' => Schema\Expect::string('guest'),
 				'password' => Schema\Expect::string('guest'),
-			]),
+			])->castTo(Config\Client::class),
 			'exchange' => Schema\Expect::structure([
 				'name' => Schema\Expect::string()->default(self::EXCHANGE_NAME),
-			]),
+			])->castTo(Config\Exchange::class),
 			'queue' => Schema\Expect::structure([
 				'name' => Schema\Expect::string()->default(null),
-			]),
-		]);
+			])->castTo(Config\Queue::class),
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -64,7 +63,7 @@ final class RabbitMqExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$publisher = $builder->addDefinition($this->prefix('publisher'), new DI\Definitions\ServiceDefinition())
 			->setType(Publishers\Publisher::class)
