@@ -240,7 +240,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		assert($configuration instanceof Config);
 
 		$builder->addDefinition($this->prefix('commands.server'), new DI\Definitions\ServiceDefinition())
-			->setType(Commands\WsServer::class);
+			->setType(Commands\Server::class);
 
 		$builder->addDefinition($this->prefix('subscribers.client'), new DI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Client::class)

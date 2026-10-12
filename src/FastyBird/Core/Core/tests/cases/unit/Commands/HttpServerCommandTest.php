@@ -88,7 +88,7 @@ final class HttpServerCommandTest extends TestCase
 		);
 
 		$application = new Application();
-		$application->add(new Commands\HttpServer(
+		$application->add(new Commands\Server(
 			'127.0.0.1',
 			0,
 			$serverFactory,
@@ -97,7 +97,7 @@ final class HttpServerCommandTest extends TestCase
 			$logger,
 		));
 
-		$command = $application->get(Commands\HttpServer::NAME);
+		$command = $application->get(Commands\Server::NAME);
 
 		$commandTester = new CommandTester($command);
 		$commandTester->execute([]);

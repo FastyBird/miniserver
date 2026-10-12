@@ -75,7 +75,7 @@ final class HttpExtension extends DI\CompilerExtension
 			->setType(Routing\ServerRouter::class);
 
 		$builder->addDefinition($this->prefix('commands.server'), new DI\Definitions\ServiceDefinition())
-			->setType(Commands\HttpServer::class)
+			->setType(Commands\Server::class)
 			->setArguments([
 				'serverAddress' => $configuration->server->address,
 				'serverPort' => $configuration->server->port,

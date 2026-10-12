@@ -25,7 +25,7 @@ use const PHP_INT_MAX;
  * The command gets the container's ServerRuntime and dispatcher, a socket on an ephemeral
  * loopback port and an event loop that returns at once.
  */
-final class WsServerCommandTest extends BaseTestCase
+final class WebSocketsServerCommandTest extends BaseTestCase
 {
 
 	/**
@@ -52,7 +52,7 @@ final class WsServerCommandTest extends BaseTestCase
 
 		$server = $this->container->getByType(Server\ServerRuntime::class);
 
-		$command = new Commands\WsServer(
+		$command = new Commands\Server(
 			new Server\Configuration(0, '127.0.0.1'),
 			$server,
 			$loop,
@@ -72,7 +72,7 @@ final class WsServerCommandTest extends BaseTestCase
 		});
 		$serverLoop->run();
 
-		self::assertSame(Commands\WsServer::SUCCESS, $result);
+		self::assertSame(Commands\Server::SUCCESS, $result);
 		self::assertSame(
 			[
 				'dispatched ' . Events\ServerLaunched::class,

@@ -84,7 +84,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 */
 
 		self::assertNotNull($container->getByType(Server\Application::class, false));
-		self::assertNotNull($container->getByType(HttpCommands\HttpServer::class, false));
+		self::assertNotNull($container->getByType(HttpCommands\Server::class, false));
 		self::assertNotNull($container->getByType(Http\ServerResponseFactory::class, false));
 		self::assertNotNull($container->getByType(EventLoop\LoopInterface::class, false));
 		self::assertNotNull($container->getByType(Middleware\Cors::class, false));
@@ -97,7 +97,7 @@ final class CoreExtensionTest extends Tests\Cases\Unit\BaseTestCase
 		 * WEBSOCKET SERVER
 		 */
 
-		self::assertNotNull($container->getByType(WebSocketsCommands\WsServer::class, false));
+		self::assertNotNull($container->getByType(WebSocketsCommands\Server::class, false));
 		self::assertNotNull($container->getByType(WebSocketsSubscribers\Client::class, false));
 
 		/**
