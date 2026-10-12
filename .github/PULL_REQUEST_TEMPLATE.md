@@ -19,8 +19,8 @@
 - [ ] **The pull request title follows `<type>(<scope>): <subject>`.**
       `lint-pr.yml` enforces this and the check fails otherwise. Type is one of
       `feat fix docs style refactor test chore perf ci build revert`; scope is one of
-      `core module connector plugin bridge addon automator library ui infra ci deps
-      deps-dev docs cross`. The subject starts lowercase and has no trailing period.
+      `core module connector plugin bridge addon automator ui infra ci deps deps-dev
+      docs cross`. The subject starts lowercase and has no trailing period.
 - [ ] Commit messages follow the same convention (`commitlint` enforces this locally
       once `pnpm install` has run and wired the husky hook).
 - [ ] I ran the relevant gates and they pass.
