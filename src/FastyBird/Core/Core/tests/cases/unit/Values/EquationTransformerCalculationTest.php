@@ -60,7 +60,6 @@ final class EquationTransformerCalculationTest extends TestCase
 			'decimal sum is not 0.30000000000000004' => ['equation:x=0.1+0.2', 1, 0.3],
 			'decimal input times three' => ['equation:x=y*3', 0.1, 0.3],
 			'small decimal input' => ['equation:x=y*2', 1.0E-5, 2.0E-5],
-			'value large enough for exponent notation' => ['equation:x=y*2', 1.0E+25, 2.0E+25],
 			'large integer product' => ['equation:x=y*1000000', 1_000_000, 1_000_000_000_000.0],
 			'fixture: scale by ten' => ['equation:x=y*10', 5, 50.0],
 			'fixture: divide by ten' => ['equation:x=y/10', 50, 5.0],
@@ -144,6 +143,19 @@ final class EquationTransformerCalculationTest extends TestCase
 			'two terms' => ['equation:x=2y+3y', 3, 15.0],
 			'implicit multiplication keeps the power tight' => ['equation:x=2y^2', 3, 18.0],
 			'implicit multiplication with parenthesised power' => ['equation:x=2(y)^2', 3, 18.0],
+		];
+	}
+
+	/**
+	 * Rows whose result no integer data type can hold, so they run only as FLOAT. Casting such a
+	 * float to int is undefined, and PHP 8.5 warns about it.
+	 *
+	 * @return array<string, array{string, int|float, float}>
+	 */
+	public static function provideFloatOnlyFromEquations(): array
+	{
+		return [
+			'value large enough for exponent notation' => ['equation:x=y*2', 1.0E+25, 2.0E+25],
 		];
 	}
 
@@ -296,6 +308,7 @@ final class EquationTransformerCalculationTest extends TestCase
 	 * @throws Exceptions\InvalidArgument
 	 */
 	#[DataProvider('provideFromEquations')]
+	#[DataProvider('provideFloatOnlyFromEquations')]
 	public function testXEquationAsFloat(string $equation, int|float $value, float $expected): void
 	{
 		$result = (new Transformers\EquationTransformer($equation))->calculateEquationFrom(
