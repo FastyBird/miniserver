@@ -7,7 +7,7 @@
  * A green test suite proves that the services it happens to fetch exist. It says nothing about
  * the ones it never fetches, about setup order, about a tag nobody reads any more, or about an
  * argument that quietly changed. This tool records all of it, for every definition, so that a
- * refactoring of the DI wiring (Epic #459) can be proven not to have changed the graph.
+ * change to the DI wiring can be proven not to have changed the graph.
  *
  * Usage (always in the application image, never on the host):
  *
@@ -38,8 +38,7 @@
  *     developer's git-ignored config/local.neon never leaks into the recording. Like the
  *     application-scope test tier, it points contributte/vite at
  *     tests/cases/application/fixtures/vite-manifest.json, because the real manifest is a
- *     frontend build artefact that a checkout does not have. This is the census's
- *     prod:entity-mapping-test.
+ *     frontend build artefact that a checkout does not have.
  *   - "production:dev": the same with APP_ENV=dev (debug mode compiles the stdout and console
  *     log handlers and the ConsoleHandler subscriber).
  *   - "production:sentry": the same with a fixed dummy FB_APP_PARAMETER__SENTRY_DSN (the only
@@ -85,7 +84,7 @@
  *
  * Every field is a hard diff criterion, with one exception: the raw global "order". It is strict
  * by default, but a refactoring may legitimately move a definition that sits in no observable
- * collection (census #553, section 5.5). --allow-moves <file> lists such names, one per line,
+ * collection. --allow-moves <file> lists such names, one per line,
  * blank lines and # comments ignored, named as the head names them. The order is then compared
  * with those names taken out; their moves are printed as information, and a move of any other
  * name still fails. Because the setups, $wiring and $tags are compared regardless, an allowed
@@ -102,7 +101,7 @@
  * The recording is taken in afterCompile() of an extension added last through
  * Configurator::$onCompile, after ContainerBuilder::complete(), so every definition is resolved.
  *
- * Map file format (--map), used by tools/di-maps/06-services.php and 07-tags.php:
+ * Map file format (--map <file>; a map is written for one change and passed by path, none is committed):
  *
  *   <?php
  *   return [

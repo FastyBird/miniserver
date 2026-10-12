@@ -38,7 +38,7 @@ The old sections `application`, `tools` and `wsServer` are gone. There is no liv
 
 ### Renamed service names (breaking change)
 
-Since Epic #459 (#558), every Core service is named `fbCore.<capability>.<role>`, after the capability that registers it. The root services are `fbCore.eventLoop.*`, `fbCore.ui.*`, `fbCore.cache.psr6` and `fbCore.eventDispatcher`. The four unprefixed `document.*` services are now `fbCore.documents.*`. The full old-to-new table is `tools/di-maps/06-services.php`. Some examples:
+Since Epic #459 (#558), every Core service is named `fbCore.<capability>.<role>`, after the capability that registers it. The root services are `fbCore.eventLoop.*`, `fbCore.ui.*`, `fbCore.cache.psr6` and `fbCore.eventDispatcher`. The four unprefixed `document.*` services are now `fbCore.documents.*`. Some examples:
 
 | Old name | New name |
 |---|---|

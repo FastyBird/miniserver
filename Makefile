@@ -61,22 +61,19 @@ rectorf: ## Apply the PHPUnit annotation-to-attribute conversion, then fix codin
 	$(PRE_PHP) "vendor/bin/rector" process $(ARGS)
 	$(MAKE) csf
 
-# Epic E5 (#460) runs its repository-wide mechanical rewrites through a committed Rector config
-# per PR, tools/rector/e5-<topic>.php, copied from tools/rector/skeleton.php (which applies no
-# rule). Unlike `make rector`, this applies the config; pass ARGS=--dry-run to preview. Run it in
-# the application image, then `make csf`. RECTOR_CONFIG is required: without it Rector would
-# fall back to the repository-root rector.php, which is the unrelated PHPUnit conversion.
-# Epic E7 (#462) runs its two configs through the same target, limited to a type or a package by
-# E7_PACKAGE: `E7_PACKAGE=Plugin make rector-e5 RECTOR_CONFIG=tools/rector/e7-override.php`
-# (and tools/rector/e7-readonly.php); without E7_PACKAGE e7-override.php covers all 29 packages' src
-# (Core included) and e7-readonly.php the 28 outside Core.
+# A repository-wide mechanical rewrite runs through a committed Rector config per change,
+# copied from tools/rector/skeleton.php (which applies no rule). Unlike `make rector`, this
+# applies the config; pass ARGS=--dry-run to preview. Run it in the application image, then
+# `make csf`. RECTOR_CONFIG is required: without it Rector would fall back to the
+# repository-root rector.php, which is the unrelated PHPUnit conversion. A config may read its
+# scope from an environment variable it documents, passed through the environment of the call.
 # The target always passes --clear-cache, for dry runs and for applying alike. Rector's cache
 # (var/tools/Rector) can return stale results: in #713 a readonly run found 15 candidates instead
 # of 20 until the cache was cleared. A cleared cache costs only speed, and a repository-wide
-# rewrite runs a handful of times per PR, so a trustworthy result wins.
-rector-e5: ## Apply an E5 Rector config: make rector-e5 RECTOR_CONFIG=tools/rector/e5-<topic>.php [ARGS=--dry-run]
-	test -n "$(RECTOR_CONFIG)" || { echo "rector-e5: set RECTOR_CONFIG=tools/rector/<config>.php" >&2; exit 2; }
-	test -f "$(RECTOR_CONFIG)" || { echo "rector-e5: $(RECTOR_CONFIG) does not exist" >&2; exit 2; }
+# rewrite runs a handful of times per change, so a trustworthy result wins.
+rector-config: ## Apply a committed Rector config: make rector-config RECTOR_CONFIG=tools/rector/<config>.php [ARGS=--dry-run]
+	test -n "$(RECTOR_CONFIG)" || { echo "rector-config: set RECTOR_CONFIG=tools/rector/<config>.php" >&2; exit 2; }
+	test -f "$(RECTOR_CONFIG)" || { echo "rector-config: $(RECTOR_CONFIG) does not exist" >&2; exit 2; }
 	mkdir -p var/tools/Rector
 	$(PRE_PHP) "vendor/bin/rector" process --config="$(RECTOR_CONFIG)" --no-progress-bar --clear-cache $(ARGS)
 
@@ -116,8 +113,8 @@ discriminators: ## Check every Doctrine inheritance root declares an explicit di
 #
 # Aliases are the reason this is a gate rather than a review habit. There were 3,076 of them
 # when the Core identity refactor started, in 131 distinct forms, and they existed purely
-# because nothing checked. tools/naming-baseline.txt is empty now that every package has been
-# reached; nothing may be added to it, and a stale entry fails the gate.
+# because nothing checked. There is no baseline file: any violation exits 1, and an unknown
+# option exits 2, so `make naming ARGS=...` cannot turn the gate green.
 #
 # The second line is the legacy file-header check (#734): tools/strip-file-headers.php --check
 # exits 1 while a header carrying the nine forbidden tags remains in a first-party file. PHP

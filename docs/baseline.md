@@ -130,6 +130,30 @@ docker compose run --rm --no-deps ui-server sh -lc "yarn build"
 
 `--ignore-engines` is required. See below.
 
+## Proof tools
+
+A green test suite proves only what the tests exercise. Five tools in the repository prove the
+rest of a change that must not alter behaviour, or must alter it in a declared way. They are
+general: none is tied to a particular change, and none keeps committed baselines, maps or change
+lists. A recording, a manifest or a change list is a scratch file, written under
+`var/tools/` (git-ignored) or passed by path. Run each PHP tool in the application image, with
+`-e XDEBUG_MODE=off -e TZ=UTC -e PHP_DATE_TIMEZONE=UTC` (see "PHP: the DI snapshot" above for the
+full `docker run`), after refreshing the `vendor/fastybird/*` mirror: the tools that load
+production classes load them from there, not from `src/`. The header of each file documents every
+option.
+
+| Tool | What it proves | How to run it |
+|---|---|---|
+| `tools/api-surface.php` | A package's public PHP API (every type, and every public and protected member, with its types, defaults and attributes) changed exactly as a change list declares, and in no other way. Core by default; `--package <Type>/<Name>` for any other package. | `php tools/api-surface.php --write var/tools/api-surface/base.json` on a checkout of the base, then `php tools/api-surface.php --diff var/tools/api-surface/base.json [--changes <list.php>]...` on the head. Exit 0 identical, 1 a difference. It refuses a stale or symlinked mirror. |
+| `scripts/js-api-surface.mjs` | The names a JS package's entry module exports, and their kinds, are the same. There are no JS tests to say so. | `node scripts/js-api-surface.mjs [<entry.ts>] > var/tools/base.txt` on the base and on the head, then `diff` the two. Without an argument it reads Core's `assets/entry.ts`. |
+| `tools/di-snapshot.php` | The compiled DI graph of every container the repository builds is unchanged: types, arguments, setups in order, tags, autowiring and the observable orders. | `php tools/di-snapshot.php var/tools/di-snapshot/head`, once on the base and once on the head, then `php tools/di-snapshot.php --diff var/tools/di-snapshot/base var/tools/di-snapshot/head [--map <file>]... [--allow-moves <file>]...`. Exit 0 identical, 1 a difference. A `--map` file declares an expected rename or argument change. |
+| `tools/strip-file-headers.php` | No first-party file carries the legacy file header (a filename and the nine forbidden tags). This one is also a guard: `make naming` runs it with `--check`. | `php tools/strip-file-headers.php --check`. Without `--check` it removes every header it recognises; follow it with `make csf`. |
+| `tools/check-lsp.php` | Every type under `src/FastyBird` autoloads from the file it is declared in, with its whole ancestry, so a stale `vendor/fastybird/*` mirror or a namespace that no longer matches its path cannot produce a false green. | `php tools/check-lsp.php [<path-relative-to-repo-root>]`. Exit 0 clean, 1 a type failed, 2 no `vendor/autoload.php`. |
+
+A sixth file is a template rather than a proof: `tools/rector/skeleton.php` is the starting
+point for a repository-wide Rector config, run with `make rector-config RECTOR_CONFIG=...`. It
+applies no rule by itself.
+
 ## Forced exceptions
 
 The baseline phase forbade dependency changes. Two were made anyway, deliberately, and
