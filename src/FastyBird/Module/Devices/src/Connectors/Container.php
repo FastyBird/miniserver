@@ -2,29 +2,17 @@
 
 namespace FastyBird\Module\Devices\Connectors;
 
-use Closure;
-use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents;
-use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Exceptions;
-use Nette\Utils;
 use Override;
 use React\Promise;
-use Symfony\Component\EventDispatcher;
-use Throwable;
 use function array_key_exists;
 
 /**
  * Devices connectors container
  */
-final class Container implements Connector, EventDispatcher\EventSubscriberInterface
+final class Container implements Connector
 {
-
-	/** @var array<Closure(Sources\Source $source, string|null $reason, Throwable|null $ex): void> */
-	public array $onTerminate = [];
-
-	/** @var array<Closure(Sources\Source $source, string|null $reason, Throwable|null $ex): void> */
-	public array $onRestart = [];
 
 	private Connector|null $service = null;
 
@@ -34,29 +22,8 @@ final class Container implements Connector, EventDispatcher\EventSubscriberInter
 	public function __construct(
 		private readonly array $factories,
 		private readonly Documents\Connectors\Connector $connector,
-		EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
-		$dispatcher?->addSubscriber($this);
-	}
-
-	#[Override]
-	public static function getSubscribedEvents(): array
-	{
-		return [
-			Events\TerminateConnector::class => 'processTermination',
-			Events\RestartConnector::class => 'processRestart',
-		];
-	}
-
-	public function processTermination(Events\TerminateConnector $event): void
-	{
-		Utils\Arrays::invoke($this->onTerminate, $event->getSource(), $event->getReason(), $event->getException());
-	}
-
-	public function processRestart(Events\RestartConnector $event): void
-	{
-		Utils\Arrays::invoke($this->onRestart, $event->getSource(), $event->getReason(), $event->getException());
 	}
 
 	/**
