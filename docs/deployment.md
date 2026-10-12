@@ -24,14 +24,14 @@ The entrypoint then waits for the database to answer, runs `php bin/fb-console.p
 
 ### Databases created before the migration baseline
 
-`migrations/` holds one version, `Version20261011210849`: a baseline of the whole schema, in utf8mb4 with `utf8mb4_general_ci` on every table. It replaced the three earlier versions (`Version20260910150558`, `Version20260913085735` and `Version20260917084547`). On a database migrated with those, `migrations:migrate` fails with `Base table or view already exists`, so the entrypoint above stops. Fix such a database in one of two ways:
+`migrations/` starts with `Version20261011210849`: a baseline of the whole schema, in utf8mb4 with `utf8mb4_general_ci` on every table. Later versions, such as `Version20261012172407` (the Automators' columns), change the schema from there. The baseline replaced the three earlier versions (`Version20260910150558`, `Version20260913085735` and `Version20260917084547`). On a database migrated with those, `migrations:migrate` fails with `Base table or view already exists`, so the entrypoint above stops. Fix such a database in one of two ways:
 
 - **Recreate it** (recommended): drop and recreate the database, empty. The next start migrates it from the baseline.
-- **Keep it**: replace the old versions with the baseline in the version table, then move the three join tables that were created in utf8mb3 to utf8mb4:
+- **Keep it**: replace the old versions with the baseline in the version table, then move the three join tables that were created in utf8mb3 to utf8mb4. Mark only the baseline as executed. `--add --all` would also mark the later versions as executed, so the next start would skip them and never apply their changes. Marked this way, the next start runs them.
 
   ```sh
   php bin/fb-console.php migrations:version --delete --all --no-interaction
-  php bin/fb-console.php migrations:version --add --all --no-interaction
+  php bin/fb-console.php migrations:version 'Migrations\Version20261011210849' --add --no-interaction
   ```
 
   ```sql
@@ -41,6 +41,14 @@ The entrypoint then waits for the database to answer, runs `php bin/fb-console.p
   ```
 
   The database then differs from a fresh one only in the display width of its boolean columns (`tinyint(1)` instead of `tinyint`), which Doctrine treats as equal.
+
+### Automator columns created by hand
+
+Before `Version20261012172407`, registering an Automator created none of its columns. If you created them yourself, for example with `orm:schema-tool:update`, that version fails with `Duplicate column name`. Mark it as executed instead, and the next start skips it:
+
+```sh
+php bin/fb-console.php migrations:version 'Migrations\Version20261012172407' --add --no-interaction
+```
 
 ## Runtime processes
 

@@ -114,11 +114,16 @@ Long-running workers under supervisord: `fb:ws-server:start` (the WAMP v1 WebSoc
 
 ## Database schema
 
-Schema changes ship as Doctrine migrations in `migrations/`, the one directory `config/common.neon` registers. It holds one version, `Version20261011210849`: a baseline of the whole schema of the default registration (the extensions `config/common.neon` registers), 34 tables plus Doctrine Migrations' own `doctrine_migrations`. A schema change adds a new version on top of it, generated with `migrations:diff` after `rm -rf var/temp/cache`: outside debug mode the compiled container is never rebuilt, and a stale one can make `migrations:diff` report no changes.
+Schema changes ship as Doctrine migrations in `migrations/`, the one directory `config/common.neon` registers. It holds two versions:
+
+- `Version20261011210849`: a baseline of the whole schema of the default registration (the extensions `config/common.neon` registered when it was generated), 34 tables plus Doctrine Migrations' own `doctrine_migrations`.
+- `Version20261012172407`: the two Automators' 14 nullable single-table-inheritance columns, 5 on `fb_triggers_module_actions` and 9 on `fb_triggers_module_conditions`. `config/common.neon` registers the Automators since this version (#745).
+
+A schema change adds a new version on top of them, generated with `migrations:diff` after `rm -rf var/temp/cache`: outside debug mode the compiled container is never rebuilt, and a stale one can make `migrations:diff` report no changes.
 
 - **Character set.** The DBAL connection uses `charset: utf8mb4`, and its `defaultTableOptions` (`charset: utf8mb4`, `collation: utf8mb4_general_ci`) are the only place table options are set. Every generated `CREATE TABLE` carries them explicitly, so the schema does not depend on the server's default collation. Entities declare no table options of their own.
 - **The drift gate.** The production entrypoint runs `migrations:migrate --no-interaction --allow-no-migration` at every start. CI's `Docker Build` job starts the image on an empty database and then runs `orm:validate-schema`, which exits 0 only when the migrated schema equals the entity mapping, so a mapping change without a migration fails CI. `Persistence\Subscribers\SchemaSubscriber` adds the `doctrine_migrations` table to the schema the ORM generates, so neither the gate nor `orm:schema-tool` proposes dropping it.
 - **Tests do not migrate.** The test suites build their schema from the mapping with Doctrine's `SchemaTool`.
-- **Optional extensions ship no schema.** No migration creates what an extension outside the default registration maps: the two Automators map 14 nullable single-table-inheritance columns, 5 on `fb_triggers_module_actions` and 9 on `fb_triggers_module_conditions`, and the ApiKey plugin adds a table. Registering one of them leaves the schema out of sync with its mapping (#745; ApiKey's table is part of #730).
+- **Optional extensions ship no schema.** No migration creates what an extension outside the default registration maps. The ApiKey plugin adds a table, so registering it leaves the schema out of sync with its mapping (#730). The two Automators are part of the default registration, and `Version20261012172407` creates their columns.
 
 [deployment.md](./deployment.md) describes what to do with a database created before the baseline.
