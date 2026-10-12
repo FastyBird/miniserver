@@ -13,9 +13,9 @@ final class BasePresenterTest extends TestCase
 
 	/**
 	 * BasePresenter::formatTemplateFiles() locates the `templates/` directory relative to its
-	 * own file via `__DIR__`. That directory arithmetic is not exercised anywhere else --
-	 * `GET /` 404s by design (no route is registered), so nothing ever dispatches a presenter
-	 * -- and is therefore silent if wrong: a class-level move of BasePresenter.php that does
+	 * own file via `__DIR__`. That directory arithmetic is not exercised anywhere else -- no
+	 * other test dispatches a presenter, and `GET /` 404s on a case-sensitive filesystem
+	 * because the template file names are lowercase -- and is therefore silent if wrong: a class-level move of BasePresenter.php that does
 	 * not also correct its relative depth would ship a `$dir` pointing at a directory that
 	 * does not exist, undetected by every other gate. This test resolves the path
 	 * `formatTemplateFiles()` computes independently, via reflection on the class's own file

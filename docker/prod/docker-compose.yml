@@ -47,9 +47,9 @@ services:
     volumes:
       - miniserver-data:/data
     healthcheck:
-      # "/" is not routed (see docker/prod/Dockerfile HEALTHCHECK comment
-      # and spec section 7.1); /favicon.ico is served by nginx and returns
-      # 200.
+      # "/" 404s: it is routed, but its presenter template is not found on a
+      # case-sensitive filesystem (see the docker/prod/Dockerfile HEALTHCHECK
+      # comment); /favicon.ico is served by nginx and returns 200.
       test: ["CMD", "curl", "-f", "http://localhost/favicon.ico"]
       interval: 30s
       timeout: 5s
