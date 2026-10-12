@@ -6,7 +6,8 @@
 #
 # The placeholder is an empty manifest. It lets the DI container compile, which is all the dev
 # PHP services need: the JSON:API and the WebSocket server never read the manifest, and the one
-# template that does is not routed (see docs/architecture.md).
+# template that does is never rendered: `GET /` 404s on Linux because the template file names are
+# lowercase (see docs/architecture.md, Request routing).
 
 contributteVite:
     manifestFile: %appDir%/docker/dev/php/no-frontend-build/vite-manifest.json
