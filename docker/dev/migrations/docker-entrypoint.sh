@@ -29,4 +29,4 @@ done
 
 echo "Database is reachable."
 
-php bin/fb-console.php migrations:migrate --no-interaction --allow-no-migration
+php bin/fb-console.php no:such:command
