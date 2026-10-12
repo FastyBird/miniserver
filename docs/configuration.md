@@ -2,6 +2,22 @@
 
 Shipped wiring lives in `config/common.neon` and `config/defaults.neon`. Operator overrides go in `config/local.neon`, which is git-ignored, or in environment variables named `FB_APP_PARAMETER__<SECTION>_<KEY>` (see [architecture.md](./architecture.md#configuration-load-order)).
 
+## Environment variable typing
+
+An environment variable arrives as a string. `Boot\Bootstrap::loadEnvParameters()` types it before it becomes a container parameter, by these rules:
+
+| Value | Becomes | Examples |
+|---|---|---|
+| `true` or `false`, in any case | a boolean | `FB_APP_PARAMETER__API_PREFIXED_MODULES=false` is `%api.prefixed.modules%` = `false` |
+| a canonical integer: `0`, or an optional `-`, then digits with no leading zero | an int | `3306`, `0`, `-5` |
+| anything else, the empty string included | the string, unchanged | `0123`, `+5`, `1.5`, `1e3`, `10.11`, `127.0.0.1` |
+
+An integer too large for PHP (above `9223372036854775807`) stays a string too.
+
+A variable whose name ends in `PASSWORD`, `USERNAME`, `SIGNATURE`, `DSN` or `KEY`, in any case, is never typed: its value stays the string it was, so a password of `12345678`, `true` or `0123` reaches the connection unchanged. Only the end of the name counts: `..._PASSWORD_AGE` is typed like any other variable.
+
+Any other name that must be a string and looks like a number, such as an all-digit `FB_APP_PARAMETER__DATABASE_DBNAME`, is typed as an int, and the schema that reads it will reject it. Set that one in `config/local.neon` instead.
+
 ## Core (`fbCore`)
 
 `fbCore` is `FastyBird\Core\DI\CoreExtension`, and every container registers it. Its configuration has one section per configurable capability: `logging`, `documents`, `security`, `clock`, `persistence`, `api`, `webSockets` and `http`. Exchange, Values and Phone have no configuration. Each section is a strict schema. A key the schema does not know fails container compilation, for example `Unexpected item 'fbCore › jsonApi'.`
