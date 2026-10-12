@@ -63,6 +63,22 @@ export default defineConfig({
 	server: {
 		watch: {
 			usePolling: true,
+			// Polling stat()s every watched file on every tick, and the root is the
+			// repository root, so anything heavy that is not frontend source must stay
+			// out of the watch set. Vite only skips `.git` and `node_modules` by
+			// default. Left in, the pnpm store (about 35k files while it sat at
+			// `.pnpm-store`) and, in the dev stack, `vendor/` and `var/` (PHP
+			// dependencies and caches) starved the single-threaded event
+			// loop: `.vue` transforms hung for minutes and HMR never fired (#438).
+			// Anchored to the repository root so a future `vendor`/`var` directory
+			// inside an extension's frontend sources is not silently ignored.
+			ignored: [
+				'**/.pnpm-store/**',
+				resolve(__dirname, 'vendor/**'),
+				resolve(__dirname, 'var/**'),
+				resolve(__dirname, 'public/.vite/**'),
+				resolve(__dirname, 'public/assets/**'),
+			],
 		},
 		hmr: {
 			host: 'localhost',
