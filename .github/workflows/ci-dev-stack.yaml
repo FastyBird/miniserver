@@ -138,13 +138,18 @@ jobs:
           expect "anonymous" 403
           expect "invalid token" 401 -H "Authorization: Bearer invalid"
 
-      # #438: a real `.vue` transform on the Vite dev server hung indefinitely. curl's --max-time
-      # is the bound; a hang is reported as exit 28 with no body. App.vue is the file that did
-      # not answer in 90 s on the old configuration (PR #762). Waiting for the server itself
-      # (/@vite/client needs no transform) is separate, so a slow start is not read as a hang.
+      # #438: a real `.vue` transform on the Vite dev server was starved by the file watcher (it
+      # polls every file under the repository root; the pnpm store and vendor/ sat inside it).
+      # On a developer machine that meant no answer for minutes; on a CI runner, measured here
+      # with the pre-#762 configuration, App.vue took 10.4 s against 0.1 s with the fix. So the
+      # bound is 5 s, which is 40x what the fixed server needs and half of what the broken one did.
+      # curl --max-time turns a hang into exit 28 with no body. Waiting for the server itself
+      # (/@vite/client needs no transform) is a separate, longer loop, so a slow start is not read
+      # as a slow transform.
       - name: "The Vite dev server transforms .vue files (#438)"
         run: |
           base=http://127.0.0.1:3000
+          limit=5
 
           for i in $(seq 1 60); do
             if curl -fsS --max-time 5 -o /dev/null "$base/@vite/client"; then
@@ -159,8 +164,8 @@ jobs:
             src/FastyBird/Core/Core/assets/App.vue \
             src/FastyBird/Core/Core/assets/components/app-gravatar.vue; do
             echo "GET /$module"
-            code=$(curl -sS --max-time 60 -o /tmp/vue-module.js -w '%{http_code} in %{time_total}s' "$base/$module") || {
-              echo "No answer within 60 s (curl exit $?): the dev server hangs on a .vue transform (#438)"
+            code=$(curl -sS --max-time "$limit" -o /tmp/vue-module.js -w '%{http_code} in %{time_total}s' "$base/$module") || {
+              echo "No answer within ${limit} s (curl exit $?): the dev server is starved on a .vue transform (#438)"
               exit 1
             }
             echo "  $code"
@@ -176,7 +181,7 @@ jobs:
         if: "failure()"
         run: |
           $COMPOSE ps -a || true
-          ls -lna var var/temp var/log 2>&1 | head -40 || true
+          find var -maxdepth 3 -printf '%M %U:%G %p\n' 2>&1 | head -40 || true
           tail -n 40 var/log/*.log 2>&1 || true
           $COMPOSE logs --no-color --tail=300 || true
 
