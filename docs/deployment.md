@@ -94,6 +94,8 @@ docker compose -f docker/dev/docker-compose.yml up -d
 
 The PHP image copies `docker/dev/php/conf/php.ini` in when it is built, so an image built before a change to that file keeps the old settings. Rebuild it with `docker compose -f docker/dev/docker-compose.yml build`, then `up -d` again. In particular, the dev image now turns `display_errors` off, as the production image does: with it on, PHP 8.4 deprecations from vendor code are printed before any header and every HTTP request answers with a Tracy "headers already sent" page instead of its real response. An image built before this change does exactly that until it is rebuilt.
 
+The pnpm store lives in `node_modules/.pnpm-store` (`.npmrc`), on the same named volume as the packages it is hard-linked into, and the Vite dev server does not watch it (nor `vendor/`, `var/` or the build output in `public/`). A `ui-node-modules` volume populated before that move recorded the old store location, and the install above then refuses to continue without a terminal (`ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY`). Pass `-e CI=true` to let pnpm recreate `node_modules`, and delete the now-unused `.pnpm-store` at the repository root.
+
 After an edit under `src/FastyBird/<Type>/<Name>/src/`, refresh that package's copy with `composer reinstall <package>`, run the same way (see the Traps in `CLAUDE.md`).
 
 On a fresh checkout the stack then does the rest on its own:

@@ -6,6 +6,8 @@
 # and were being copied into every build. pnpm makes this worse: a symlink farm
 # per workspace package, into <root>/node_modules/.pnpm.
 **/node_modules
+# Legacy pnpm store location (now under node_modules, excluded above); a checkout
+# that still has one must not ship it in the build context.
 .pnpm-store
 vendor
 var/logs
