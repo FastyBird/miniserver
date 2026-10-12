@@ -71,7 +71,6 @@ final class BridgesV1 extends BaseV1
 			ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
 		);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $devices);
 	}
 

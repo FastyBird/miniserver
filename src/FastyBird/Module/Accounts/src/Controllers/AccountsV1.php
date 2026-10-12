@@ -67,6 +67,7 @@ final class AccountsV1 extends BaseV1
 	/**
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
+	 * @throws Exception
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -77,7 +78,6 @@ final class AccountsV1 extends BaseV1
 
 		$accounts = $this->accountsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $accounts);
 	}
 

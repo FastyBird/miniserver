@@ -66,7 +66,6 @@ final class BridgesV1 extends BaseV1
 			Entities\Devices\Thermostat::class,
 		);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $devices);
 	}
 

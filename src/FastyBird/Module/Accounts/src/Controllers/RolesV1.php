@@ -56,7 +56,6 @@ final class RolesV1 extends BaseV1
 
 		$roles = $this->policiesRepository->getResultSet($findQuery, Entities\Roles\Role::class);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $roles);
 	}
 

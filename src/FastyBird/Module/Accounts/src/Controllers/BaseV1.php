@@ -233,7 +233,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param PersistenceEntities\CrudEntity|array<PersistenceEntities\CrudEntity>|Query\ResultSet<AccountsEntities\Entity>|null $data
+	 * @param PersistenceEntities\CrudEntity|array<PersistenceEntities\CrudEntity>|Query\ResultSet<covariant AccountsEntities\Entity>|null $data
 	 *
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception

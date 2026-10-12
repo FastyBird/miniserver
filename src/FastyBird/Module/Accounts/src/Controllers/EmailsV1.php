@@ -59,6 +59,7 @@ final class EmailsV1 extends BaseV1
 	 * @throws ApiExceptions\JsonApi
 	 * @throws CoreExceptions\InvalidState
 	 * @throws \Ramsey\Uuid\Exception\InvalidArgumentException
+	 * @throws Exception
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -70,7 +71,6 @@ final class EmailsV1 extends BaseV1
 
 		$emails = $this->emailsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $emails);
 	}
 

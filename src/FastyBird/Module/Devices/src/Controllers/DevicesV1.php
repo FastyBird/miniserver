@@ -74,7 +74,6 @@ final class DevicesV1 extends BaseV1
 			$devices = $this->devicesRepository->getResultSet($findQuery);
 		}
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $devices);
 	}
 

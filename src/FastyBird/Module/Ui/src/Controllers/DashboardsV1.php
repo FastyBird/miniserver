@@ -58,7 +58,6 @@ final class DashboardsV1 extends BaseV1
 
 		$dashboards = $this->dashboardsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $dashboards);
 	}
 
