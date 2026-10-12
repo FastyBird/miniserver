@@ -262,6 +262,10 @@ violations: any violation fails it.
   values the schema can hand over. The schema stays the single source of keys, types and
   defaults; the class declares no defaults. A child reads `$this->getConfig()` after
   `assert($configuration instanceof Config)`.
+- Every other package's extension that takes configuration follows the same pattern: its section
+  is cast to `FastyBird\<Type>\<Name>\DI\Config`, and each nested structure to
+  `FastyBird\<Type>\<Name>\DI\Config\<Path>` (`fbRabbitMqPlugin > client` is
+  `RabbitMq\DI\Config\Client`).
 - The denylist applies to every key path, sections and leaves alike. `application` may not be a
   top-level key.
 
@@ -444,7 +448,7 @@ own interfaces are kept by the same rule, without a table here.
 | `Security\Identity\UserIdentity` | K1, K2 | Core's `PlainIdentity`, Accounts' `Entities\Identities\Identity`. |
 | `Values\Transformers\Transformer` | K1 | `HsbTransformer`, `HsiTransformer`, `MiredTransformer`, `RgbTransformer`. |
 | `Values\Types\Payloads\Payload` | K1 | The enums `Button`, `Cover`, `Switcher`. An enum cannot extend a class, so this is their only common type. |
-| `Values\Types\Sources\Source` | K1 | The enums `Addon`, `Automator`, `Bridge`, `Connector`, `Module`, `Plugin`. |
+| `Values\Types\Sources\Source` | K1 | The enums `Addon`, `Automator`, `Bridge`, `Connector`, `Core`, `Module`, `Plugin`. |
 | `WebSockets\Clients\Drivers\Driver` | K3 | Selected by `fbCore > webSockets > storage > clients > driver` (`WebSocketsExtension.php:132`). Production implementer: `InMemory`. |
 | `WebSockets\Topics\Drivers\Driver` | K3 | Selected by `fbCore > webSockets > storage > topics > driver` (`WebSocketsExtension.php:209`). Production implementer: `InMemory`. |
 | `WebSockets\Controllers\RequestController` | K3 | `findByType()` at `WebSocketsExtension.php:298` tags every implementer with `CONTROLLER_TAG`, which `ControllerFactory` reads. The implementers are the abstract `Controller` and its subclasses, Devices' and Ui's `ExchangeV1` (R1: not K1 or K2). |

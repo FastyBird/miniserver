@@ -2,6 +2,7 @@
 
 namespace FastyBird\Module\Accounts\Controllers;
 
+use Exception;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
@@ -33,6 +34,7 @@ final class RoleChildrenV1 extends BaseV1
 	 * @throws AccountsExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApi
 	 * @throws InvalidArgumentException
+	 * @throws Exception
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -50,7 +52,6 @@ final class RoleChildrenV1 extends BaseV1
 			Entities\Roles\Role::class,
 		);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $children);
 	}
 

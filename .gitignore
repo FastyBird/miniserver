@@ -2,6 +2,8 @@
 # pnpm materialises node_modules per workspace package, not just at the root
 # (see the matching **/node_modules note in .dockerignore).
 **/node_modules
+# Legacy pnpm store location (.npmrc now keeps it under node_modules); still
+# ignored so a checkout that has one left over does not show it as untracked.
 /.pnpm-store
 /vendor
 .DS_Store

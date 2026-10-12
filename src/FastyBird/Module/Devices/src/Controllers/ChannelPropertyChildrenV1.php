@@ -57,7 +57,6 @@ final class ChannelPropertyChildrenV1 extends BaseV1
 
 		$children = $this->channelPropertiesRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $children);
 	}
 

@@ -100,7 +100,7 @@ Config resolution is **three layers**, read in this order, via `Bootstrap::resol
 
 Every file is skipped if it does not exist, and `resolveConfigFiles()` also **dedupes by resolved real path** (`realpath()`), skipping any file already loaded by an earlier layer. Since `FB_CONFIG_DIR` defaults to the *same directory* as layer 2, the common case is that layer 3's `common.neon`/`defaults.neon` resolve to files already loaded in layer 2 and are silently skipped -- only `local.neon` actually adds anything. Point `FB_CONFIG_DIR` at a genuinely different directory and all three of its files load in addition to layers 1 and 2, because none of them share a real path with anything loaded so far.
 
-Environment variables named `FB_APP_PARAMETER__<SECTION>_<KEY>` become container parameters: the prefix ends in a double underscore, and every further underscore starts a nested key, all lowercased. `FB_APP_PARAMETER__DATABASE_HOST` becomes `%database.host%`, and `FB_APP_PARAMETER__API_PREFIXED_MODULES` becomes `%api.prefixed.modules%`. A numeric value becomes an integer, and `true`/`false` a boolean. `APP_ENV=dev` enables debug mode. Tracy is enabled unless the process runs under PHPUnit. See [configuration.md](./configuration.md) for how to add extension-specific wiring through `local.neon`.
+Environment variables named `FB_APP_PARAMETER__<SECTION>_<KEY>` become container parameters: the prefix ends in a double underscore, and every further underscore starts a nested key, all lowercased. `FB_APP_PARAMETER__DATABASE_HOST` becomes `%database.host%`, and `FB_APP_PARAMETER__API_PREFIXED_MODULES` becomes `%api.prefixed.modules%`. A canonical integer becomes an integer, and `true`/`false` a boolean; credentials are never typed (see [Environment variable typing](./configuration.md#environment-variable-typing)). `APP_ENV=dev` enables debug mode. Tracy is enabled unless the process runs under PHPUnit. See [configuration.md](./configuration.md) for how to add extension-specific wiring through `local.neon`.
 
 ## Runtime processes
 
@@ -114,11 +114,16 @@ Long-running workers under supervisord: `fb:ws-server:start` (the WAMP v1 WebSoc
 
 ## Database schema
 
-Schema changes ship as Doctrine migrations in `migrations/`, the one directory `config/common.neon` registers. It holds one version, `Version20261011210849`: a baseline of the whole schema of the default registration (the extensions `config/common.neon` registers), 34 tables plus Doctrine Migrations' own `doctrine_migrations`. A schema change adds a new version on top of it, generated with `migrations:diff` after `rm -rf var/temp/cache`: outside debug mode the compiled container is never rebuilt, and a stale one can make `migrations:diff` report no changes.
+Schema changes ship as Doctrine migrations in `migrations/`, the one directory `config/common.neon` registers. It holds two versions:
+
+- `Version20261011210849`: a baseline of the whole schema of the default registration (the extensions `config/common.neon` registered when it was generated), 34 tables plus Doctrine Migrations' own `doctrine_migrations`.
+- `Version20261012172407`: the two Automators' 14 nullable single-table-inheritance columns, 5 on `fb_triggers_module_actions` and 9 on `fb_triggers_module_conditions`. `config/common.neon` registers the Automators since this version (#745).
+
+A schema change adds a new version on top of them, generated with `migrations:diff` after `rm -rf var/temp/cache`: outside debug mode the compiled container is never rebuilt, and a stale one can make `migrations:diff` report no changes.
 
 - **Character set.** The DBAL connection uses `charset: utf8mb4`, and its `defaultTableOptions` (`charset: utf8mb4`, `collation: utf8mb4_general_ci`) are the only place table options are set. Every generated `CREATE TABLE` carries them explicitly, so the schema does not depend on the server's default collation. Entities declare no table options of their own.
 - **The drift gate.** The production entrypoint runs `migrations:migrate --no-interaction --allow-no-migration` at every start. CI's `Docker Build` job starts the image on an empty database and then runs `orm:validate-schema`, which exits 0 only when the migrated schema equals the entity mapping, so a mapping change without a migration fails CI. `Persistence\Subscribers\SchemaSubscriber` adds the `doctrine_migrations` table to the schema the ORM generates, so neither the gate nor `orm:schema-tool` proposes dropping it.
 - **Tests do not migrate.** The test suites build their schema from the mapping with Doctrine's `SchemaTool`.
-- **Optional extensions ship no schema.** No migration creates what an extension outside the default registration maps: the two Automators map 14 nullable single-table-inheritance columns, 5 on `fb_triggers_module_actions` and 9 on `fb_triggers_module_conditions`, and the ApiKey plugin adds a table. Registering one of them leaves the schema out of sync with its mapping (#745; ApiKey's table is part of #730).
+- **Optional extensions ship no schema.** No migration creates what an extension outside the default registration maps. The ApiKey plugin adds a table, so registering it leaves the schema out of sync with its mapping (#730). The two Automators are part of the default registration, and `Version20261012172407` creates their columns.
 
 [deployment.md](./deployment.md) describes what to do with a database created before the baseline.

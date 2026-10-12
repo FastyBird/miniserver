@@ -1,5 +1,6 @@
 import { JsonPropertiesMapper } from 'jsona';
-import { IJsonPropertiesMapper, TAnyKeyValueObject, TJsonaModel, TJsonaRelationships } from 'jsona/lib/JsonaTypes';
+
+import { IJsonPropertiesMapper, TAnyKeyValueObject, TJsonaModel, TJsonaRelationships } from '@fastybird/miniserver-core';
 
 import { RELATIONSHIP_NAMES_PROP } from './constants';
 import {

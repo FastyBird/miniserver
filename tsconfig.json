@@ -7,20 +7,17 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "importHelpers": true,
-    "moduleResolution": "node",
-    "ignoreDeprecations": "6.0",
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
     "paths": {
       "@config/*": ["./config/*"]
     },
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "types": [
-      "@fastybird/miniserver-core",
       "@intlify/unplugin-vue-i18n/messages",
       "@types/lodash",
       "@types/md5",

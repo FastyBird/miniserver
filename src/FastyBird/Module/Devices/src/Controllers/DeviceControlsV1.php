@@ -57,7 +57,6 @@ final class DeviceControlsV1 extends BaseV1
 
 		$controls = $this->deviceControlsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $controls);
 	}
 

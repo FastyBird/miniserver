@@ -65,7 +65,6 @@ final class ConnectorPropertiesV1 extends BaseV1
 
 		$properties = $this->connectorPropertiesRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $properties);
 	}
 

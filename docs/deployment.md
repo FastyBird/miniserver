@@ -24,14 +24,14 @@ The entrypoint then waits for the database to answer, runs `php bin/fb-console.p
 
 ### Databases created before the migration baseline
 
-`migrations/` holds one version, `Version20261011210849`: a baseline of the whole schema, in utf8mb4 with `utf8mb4_general_ci` on every table. It replaced the three earlier versions (`Version20260910150558`, `Version20260913085735` and `Version20260917084547`). On a database migrated with those, `migrations:migrate` fails with `Base table or view already exists`, so the entrypoint above stops. Fix such a database in one of two ways:
+`migrations/` starts with `Version20261011210849`: a baseline of the whole schema, in utf8mb4 with `utf8mb4_general_ci` on every table. Later versions, such as `Version20261012172407` (the Automators' columns), change the schema from there. The baseline replaced the three earlier versions (`Version20260910150558`, `Version20260913085735` and `Version20260917084547`). On a database migrated with those, `migrations:migrate` fails with `Base table or view already exists`, so the entrypoint above stops. Fix such a database in one of two ways:
 
 - **Recreate it** (recommended): drop and recreate the database, empty. The next start migrates it from the baseline.
-- **Keep it**: replace the old versions with the baseline in the version table, then move the three join tables that were created in utf8mb3 to utf8mb4:
+- **Keep it**: replace the old versions with the baseline in the version table, then move the three join tables that were created in utf8mb3 to utf8mb4. Mark only the baseline as executed. `--add --all` would also mark the later versions as executed, so the next start would skip them and never apply their changes. Marked this way, the next start runs them.
 
   ```sh
   php bin/fb-console.php migrations:version --delete --all --no-interaction
-  php bin/fb-console.php migrations:version --add --all --no-interaction
+  php bin/fb-console.php migrations:version 'Migrations\Version20261011210849' --add --no-interaction
   ```
 
   ```sql
@@ -41,6 +41,14 @@ The entrypoint then waits for the database to answer, runs `php bin/fb-console.p
   ```
 
   The database then differs from a fresh one only in the display width of its boolean columns (`tinyint(1)` instead of `tinyint`), which Doctrine treats as equal.
+
+### Automator columns created by hand
+
+Before `Version20261012172407`, registering an Automator created none of its columns. If you created them yourself, for example with `orm:schema-tool:update`, that version fails with `Duplicate column name`. Mark it as executed instead, and the next start skips it:
+
+```sh
+php bin/fb-console.php migrations:version 'Migrations\Version20261012172407' --add --no-interaction
+```
 
 ## Runtime processes
 
@@ -94,13 +102,20 @@ docker compose -f docker/dev/docker-compose.yml up -d
 
 The PHP image copies `docker/dev/php/conf/php.ini` in when it is built, so an image built before a change to that file keeps the old settings. Rebuild it with `docker compose -f docker/dev/docker-compose.yml build`, then `up -d` again. In particular, the dev image now turns `display_errors` off, as the production image does: with it on, PHP 8.4 deprecations from vendor code are printed before any header and every HTTP request answers with a Tracy "headers already sent" page instead of its real response. An image built before this change does exactly that until it is rebuilt.
 
+The pnpm store lives in `node_modules/.pnpm-store` (`.npmrc`), on the same named volume as the packages it is hard-linked into, and the Vite dev server does not watch it (nor `vendor/`, `var/` or the build output in `public/`). A `ui-node-modules` volume populated before that move recorded the old store location, and the install above then refuses to continue without a terminal (`ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY`). Pass `-e CI=true` to let pnpm recreate `node_modules`, and delete the now-unused `.pnpm-store` at the repository root.
+
 After an edit under `src/FastyBird/<Type>/<Name>/src/`, refresh that package's copy with `composer reinstall <package>`, run the same way (see the Traps in `CLAUDE.md`).
 
 On a fresh checkout the stack then does the rest on its own:
 
+- **Ports.** `MYSQL_PORT` sets only the port the database publishes on the host. The services reach it inside the Compose network on 3306 whatever `MYSQL_PORT` is, so changing it never breaks the application's connection.
+- **PHP edits.** The dev image keeps `opcache.validate_timestamps` on, so an edit to a PHP file applies without restarting php-fpm (PHP rechecks a file at most every two seconds). The production image turns it off.
+- **nginx and `application`.** nginx resolves the `application` address through Docker's DNS for each request, so recreating `application` (`docker compose up -d --force-recreate application`) needs no restart of `web-server`.
 - **Schema.** The one-shot `migrations` service waits for the database and runs `migrations:migrate --no-interaction --allow-no-migration`, as the production entrypoint does. If the wait fails, it prints the last attempt's output, not only "Database did not answer".
-- **Security signature.** The PHP services fall back to a public, development-only value, `dev-only-insecure-signature-never-use-in-production`, when `SECURITY_SIGNATURE` is empty or unset. Anyone can sign a token with it, so do not expose the dev stack beyond your machine. To use your own, set `SECURITY_SIGNATURE` (at least 32 characters) and pass the file explicitly: Compose reads `.env` from the compose file's directory, `docker/dev/`, so a `.env` at the repository root needs `--env-file .env`. A signature in `config/local.neon` has no effect here, because the environment variable always wins over a configuration file.
+- **Security signature.** The PHP services fall back to a public, development-only value, `dev-only-insecure-signature-never-use-in-production`, when `SECURITY_SIGNATURE` is empty or unset. Anyone can sign a token with it, so do not expose the dev stack beyond your machine. To use your own, set `SECURITY_SIGNATURE` (at least 32 characters) in `.env`. Which `.env` Compose reads depends on how you start the stack: `docker compose ...` from the repository root (the root `docker-compose.yml` includes the dev stack, and `make up` does this) reads the root `.env`; `docker compose -f docker/dev/docker-compose.yml ...` reads `docker/dev/.env` instead, so with that form a root `.env` needs `--env-file .env`. The two forms also name the Compose project differently (the repository directory against `dev`), and with it the named volumes, so do not alternate between them on one database. A signature in `config/local.neon` has no effect here, because the environment variable always wins over a configuration file.
 - **Frontend manifest.** contributte/vite needs a `manifest.json` to compile the DI container, and only a frontend build writes one, into `public/.vite/`. The PHP services therefore load their operator configuration from `FB_CONFIG_DIR=/tmp/fastybird-dev-config`, a directory inside each container that `docker/dev/php/docker-entrypoint.sh` fills when the container starts. It always links `config/local.neon` there, so your overrides load as before. Without a build, it also links `docker/dev/php/no-frontend-build/common.neon`, which sets an empty placeholder manifest kept beside it, and logs `No frontend build in public/` to stderr. Nothing is written into `public/` or the rest of the checkout. `docker compose exec` sees the same choice as the service it runs in. After a build (`docker compose -f docker/dev/docker-compose.yml run --rm --no-deps ui-server pnpm build`), restart the PHP services (`docker compose -f docker/dev/docker-compose.yml restart application ws-server devices-module`) and they use the real manifest. The two cases load different configuration files, so each gets its own compiled container in `var/temp/cache`.
+
+CI boots this stack from a fresh checkout with the steps above (`.github/workflows/ci-dev-stack.yaml`, job "Dev Stack (not required)"). It checks that `migrations` exits 0, that `GET /api/devices-module/v1/devices` answers 403 anonymously and 401 with an invalid token through nginx, and that the Vite dev server transforms a `.vue` file within 5 seconds. It is not a required check: a failure there does not block a merge, but it is worth reading.
 
 Default services: `web-server` (nginx), `application` (php-fpm with xdebug), `ui-server` (node running `pnpm dev`), `ws-server`, `devices-module` (exchange), `migrations` (one-shot) and `database` (MariaDB). `redis`, `couchdb`, `rabbitmq` and `mqtt` are behind Compose profiles -- see [configuration.md](./configuration.md) for which extension needs which profile. A LAN-facing macvlan network is available as an override: `docker compose -f docker/dev/docker-compose.yml -f docker/dev/docker-compose.lan.yml up -d`.
 

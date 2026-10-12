@@ -60,7 +60,6 @@ final class ConnectorsV1 extends BaseV1
 
 		$connectors = $this->connectorsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $connectors);
 	}
 

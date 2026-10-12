@@ -59,7 +59,6 @@ final class ChannelControlsV1 extends BaseV1
 
 		$controls = $this->channelControlsRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $controls);
 	}
 

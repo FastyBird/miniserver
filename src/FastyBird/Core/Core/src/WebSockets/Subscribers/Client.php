@@ -125,7 +125,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			$this->closeSession($client);
 
 			$this->logger->warning('Client used invalid WS key', [
-				'source' => Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Core::CORE->value,
+				'capability' => 'ws-server',
 				'type' => 'subscriber',
 				'ws_key' => $wsKey,
 			]);
@@ -142,7 +143,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			$this->closeSession($client);
 
 			$this->logger->warning('Client is connecting from not allowed origin', [
-				'source' => Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Core::CORE->value,
+				'capability' => 'ws-server',
 				'type' => 'subscriber',
 				'origin' => $origin,
 			]);
@@ -155,7 +157,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 
 		if ($headerToken === null && $cookieToken === null) {
 			$this->logger->warning('Client access token is missing', [
-				'source' => Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Core::CORE->value,
+				'capability' => 'ws-server',
 				'type' => 'subscriber',
 			]);
 
@@ -166,7 +169,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 
 		if ($this->tokenReader === null || $this->tokenValidator === null || $this->identityFactory === null) {
 			$this->logger->warning('Client access token can not be validated, authentication is not configured', [
-				'source' => Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Core::CORE->value,
+				'capability' => 'ws-server',
 				'type' => 'subscriber',
 			]);
 
@@ -192,7 +196,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 
 		if ($identity === null) {
 			$this->logger->warning('Client access token is not valid', [
-				'source' => Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Core::CORE->value,
+				'capability' => 'ws-server',
 				'type' => 'subscriber',
 				'token_source' => $headerToken !== null ? 'header' : 'cookie',
 			]);
@@ -229,7 +234,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			return $this->user->getRoles();
 		} catch (CoreExceptions\InvalidState | SecurityExceptions\Authentication $ex) {
 			$this->logger->warning('Client roles could not be resolved', [
-				'source' => Sources\Plugin::WS_SERVER->value,
+				'source' => Sources\Core::CORE->value,
+				'capability' => 'ws-server',
 				'type' => 'subscriber',
 				'error' => $ex->getMessage(),
 			]);

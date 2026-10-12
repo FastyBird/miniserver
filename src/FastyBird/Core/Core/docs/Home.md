@@ -236,8 +236,10 @@ The shared vocabulary of the exchange and the API:
 
 - `Values\Types\DataType` and `DataTypeShort`, the data types of a property;
 - `Values\Types\Payloads`, the `Button`, `Cover` and `Switcher` payloads;
-- `Values\Types\Sources`, the enums `Addon`, `Automator`, `Bridge`, `Connector`, `Module` and
-  `Plugin`, whose cases are the exchange source identifiers;
+- `Values\Types\Sources`, the enums `Addon`, `Automator`, `Bridge`, `Connector`, `Core`, `Module` and
+  `Plugin`, whose cases are the exchange source identifiers. `Core::CORE` (`com.fastybird.core`) is
+  Core's own: its WebSocket and HTTP server logs carry it as `source` and name the server in a
+  separate `capability` context key (`ws-server`, `web-server`);
 - `Values\Formats`, the value formats (`NumberRange`, `StringEnum`, `CombinedEnum`);
 - `Values\Transformers`, the colour and equation transformers;
 - `Values\Schemas\Validator`, the JSON schema validator (`opis/json-schema`);

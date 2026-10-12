@@ -51,6 +51,7 @@ final class TriggersV1 extends BaseV1
 	 * @throws CoreExceptions\InvalidState
 	 * @throws TriggersExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidState
+	 * @throws Exception
 	 */
 	public function index(
 		Message\ServerRequestInterface $request,
@@ -61,7 +62,6 @@ final class TriggersV1 extends BaseV1
 
 		$triggers = $this->triggersRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $triggers);
 	}
 

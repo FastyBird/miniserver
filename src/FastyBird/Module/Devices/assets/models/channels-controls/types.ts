@@ -1,6 +1,6 @@
 import { Ref } from 'vue';
 
-import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships } from 'jsona/lib/JsonaTypes';
+import { TJsonApiBody, TJsonApiData, TJsonApiRelation, TJsonApiRelationships } from '@fastybird/miniserver-core';
 
 import {
 	ChannelControlDocument,

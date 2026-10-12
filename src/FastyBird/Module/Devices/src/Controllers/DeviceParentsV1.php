@@ -44,7 +44,6 @@ final class DeviceParentsV1 extends BaseV1
 
 		$parents = $this->devicesRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $parents);
 	}
 

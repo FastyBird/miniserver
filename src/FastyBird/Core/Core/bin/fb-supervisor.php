@@ -5,7 +5,7 @@ $stdOut = STDOUT;
 
 fwrite($stdOut, "READY\n");
 
-// @phpstan-ignore-next-line
+// @phpstan-ignore while.alwaysTrue (supervisor event listener: loops until supervisord kills the process)
 while (true) {
 	$line = fgets($stdIn);
 

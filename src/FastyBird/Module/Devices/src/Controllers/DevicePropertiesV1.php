@@ -72,7 +72,6 @@ final class DevicePropertiesV1 extends BaseV1
 
 		$properties = $this->devicePropertiesRepository->getResultSet($findQuery);
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $properties);
 	}
 

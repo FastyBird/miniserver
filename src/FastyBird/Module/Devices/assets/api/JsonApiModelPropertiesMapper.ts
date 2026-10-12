@@ -1,6 +1,7 @@
 import { ModelPropertiesMapper } from 'jsona';
-import { IModelPropertiesMapper, TAnyKeyValueObject, TJsonaModel, TJsonaRelationships } from 'jsona/lib/JsonaTypes';
 import get from 'lodash.get';
+
+import { IModelPropertiesMapper, TAnyKeyValueObject, TJsonaModel, TJsonaRelationships } from '@fastybird/miniserver-core';
 
 import { RELATIONSHIP_NAMES_PROP } from './constants';
 

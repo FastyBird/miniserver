@@ -233,7 +233,7 @@ abstract class BaseV1
 	}
 
 	/**
-	 * @param PersistenceEntities\CrudEntity|array<PersistenceEntities\CrudEntity>|Query\ResultSet<AccountsEntities\Entity>|null $data
+	 * @param PersistenceEntities\CrudEntity|array<PersistenceEntities\CrudEntity>|Query\ResultSet<covariant AccountsEntities\Entity>|null $data
 	 *
 	 * @throws PersistenceExceptions\Query
 	 * @throws Exception
@@ -261,11 +261,13 @@ abstract class BaseV1
 			}
 		}
 
+		/** @var PersistenceEntities\CrudEntity|array<PersistenceEntities\CrudEntity>|null $entity */
+		$entity = $data instanceof Query\ResultSet ? $data->toArray() : $data;
+
 		return $this->builder->build(
 			$request,
 			$response,
-			// @phpstan-ignore-next-line
-			$data instanceof Query\ResultSet ? $data->toArray() : $data,
+			$entity,
 			$totalCount,
 			fn (string $link): bool => $this->routesValidator->validate($link),
 		);

@@ -33,9 +33,11 @@ use function is_string;
  *
  * E5.10 (#642) dissolved the class: each of its 63 constants moved to the type that owns it, or
  * became a literal in a Values\Types\Sources enum case, under rules C1 to C4 (C5's only constant,
- * TOKEN_URI_NAME, was never read and #635 deleted it). VALUES is the table #648 recorded against the
- * class itself, unedited; DESTINATIONS says where each constant lives now. A value that changed on
- * the way is a red test, not a review comment.
+ * TOKEN_URI_NAME, was never read and #635 deleted it). Two of the 63, PLUGIN_WS_SERVER_SOURCE and
+ * PLUGIN_WEB_SERVER_SOURCE, are gone from both tables since #744: they were log labels only, and
+ * Core's logs now use Sources\Core::CORE with a `capability` context key. VALUES is the table #648
+ * recorded against the class itself, unedited; DESTINATIONS says where each constant lives now. A
+ * value that changed on the way is a red test, not a review comment.
  *
  * It lives in the application tier because the destinations span Core, four modules, three bridges
  * and a plugin, which no single package's tests may reference (make layers).
@@ -56,8 +58,6 @@ final class ConstantsValuesTest extends TestCase
 		'PLUGIN_RABBITMQ_SOURCE' => 'com.fastybird.rabbitmq-plugin',
 		'PLUGIN_REDISDB_SOURCE' => 'com.fastybird.redisdb-plugin',
 		'PLUGIN_REDISDB_CACHE_SOURCE' => 'com.fastybird.redisdb-cache-plugin',
-		'PLUGIN_WS_SERVER_SOURCE' => 'com.fastybird.ws-server-plugin',
-		'PLUGIN_WEB_SERVER_SOURCE' => 'com.fastybird.web-server-plugin',
 		'PLUGIN_API_KEY' => 'com.fastybird.api-key-plugin',
 		'CONNECTOR_FB_BUS_SOURCE' => 'com.fastybird.fb-bus-connector',
 		'CONNECTOR_FB_MQTT_SOURCE' => 'com.fastybird.fb-mqtt-connector',
@@ -119,7 +119,7 @@ final class ConstantsValuesTest extends TestCase
 	/**
 	 * The old constant name => every place its value lives now: a class constant, of any
 	 * visibility, or a backed enum case. NOT_SPECIFIED_SOURCE became the NOT_SPECIFIED case of all
-	 * six Sources enums.
+	 * seven Sources enums.
 	 */
 	private const array DESTINATIONS = [
 		'EXCHANGE_CHANNEL_NAME' => [[RedisDbDI\RedisDbExtension::class, 'EXCHANGE_CHANNEL_NAME']],
@@ -128,6 +128,7 @@ final class ConstantsValuesTest extends TestCase
 		'NOT_SPECIFIED_SOURCE' => [
 			[Sources\Module::class, 'NOT_SPECIFIED'],
 			[Sources\Plugin::class, 'NOT_SPECIFIED'],
+			[Sources\Core::class, 'NOT_SPECIFIED'],
 			[Sources\Connector::class, 'NOT_SPECIFIED'],
 			[Sources\Automator::class, 'NOT_SPECIFIED'],
 			[Sources\Addon::class, 'NOT_SPECIFIED'],
@@ -141,8 +142,6 @@ final class ConstantsValuesTest extends TestCase
 		'PLUGIN_RABBITMQ_SOURCE' => [[Sources\Plugin::class, 'RABBITMQ']],
 		'PLUGIN_REDISDB_SOURCE' => [[Sources\Plugin::class, 'REDISDB']],
 		'PLUGIN_REDISDB_CACHE_SOURCE' => [[Sources\Plugin::class, 'REDISDB_CACHE']],
-		'PLUGIN_WS_SERVER_SOURCE' => [[Sources\Plugin::class, 'WS_SERVER']],
-		'PLUGIN_WEB_SERVER_SOURCE' => [[Sources\Plugin::class, 'WEB_SERVER']],
 		'PLUGIN_API_KEY' => [[Sources\Plugin::class, 'API_KEY']],
 		'CONNECTOR_FB_BUS_SOURCE' => [[Sources\Connector::class, 'FB_BUS']],
 		'CONNECTOR_FB_MQTT_SOURCE' => [[Sources\Connector::class, 'FB_MQTT']],
@@ -229,7 +228,7 @@ final class ConstantsValuesTest extends TestCase
 	}
 
 	/**
-	 * Each of the 63 is read above, under its old name: testEveryConstantHasItsPinnedValue fails on
+	 * Each of the 61 is read above, under its old name: testEveryConstantHasItsPinnedValue fails on
 	 * any name missing from DESTINATIONS or not in VALUES. What is left to pin is the class itself.
 	 */
 	public function testTheConstantsClassIsGone(): void

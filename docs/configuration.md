@@ -2,6 +2,22 @@
 
 Shipped wiring lives in `config/common.neon` and `config/defaults.neon`. Operator overrides go in `config/local.neon`, which is git-ignored, or in environment variables named `FB_APP_PARAMETER__<SECTION>_<KEY>` (see [architecture.md](./architecture.md#configuration-load-order)).
 
+## Environment variable typing
+
+An environment variable arrives as a string. `Boot\Bootstrap::loadEnvParameters()` types it before it becomes a container parameter, by these rules:
+
+| Value | Becomes | Examples |
+|---|---|---|
+| `true` or `false`, in any case | a boolean | `FB_APP_PARAMETER__API_PREFIXED_MODULES=false` is `%api.prefixed.modules%` = `false` |
+| a canonical integer: `0`, or an optional `-`, then digits with no leading zero | an int | `3306`, `0`, `-5` |
+| anything else, the empty string included | the string, unchanged | `0123`, `+5`, `1.5`, `1e3`, `10.11`, `127.0.0.1` |
+
+An integer too large for PHP (above `9223372036854775807`) stays a string too.
+
+A variable whose name ends in `PASSWORD`, `USERNAME`, `SIGNATURE`, `DSN` or `KEY`, in any case, is never typed: its value stays the string it was, so a password of `12345678`, `true` or `0123` reaches the connection unchanged. Only the end of the name counts: `..._PASSWORD_AGE` is typed like any other variable.
+
+Any other name that must be a string and looks like a number, such as an all-digit `FB_APP_PARAMETER__DATABASE_DBNAME`, is typed as an int, and the schema that reads it will reject it. Set that one in `config/local.neon` instead.
+
 ## Core (`fbCore`)
 
 `fbCore` is `FastyBird\Core\DI\CoreExtension`, and every container registers it. Its configuration has one section per configurable capability: `logging`, `documents`, `security`, `clock`, `persistence`, `api`, `webSockets` and `http`. Exchange, Values and Phone have no configuration. Each section is a strict schema. A key the schema does not know fails container compilation, for example `Unexpected item 'fbCore › jsonApi'.`
@@ -173,6 +189,15 @@ The clients driver must implement `FastyBird\Core\WebSockets\Clients\Drivers\Dri
 | `cors.allow.credentials` | bool | `true` | `Access-Control-Allow-Credentials`. |
 | `cors.allow.headers` | list of strings | `Content-Type`, `Authorization`, `X-Requested-With` | `Access-Control-Allow-Headers`. The application adds `X-Api-Key`. |
 
+## Automators
+
+`config/common.neon` registers both automators, `fbDateTimeAutomator` (`FastyBird\Automator\DateTime\DI\DateTimeExtension`) and `fbDevicesModuleAutomator` (`FastyBird\Automator\DevicesModule\DI\DevicesModuleExtension`). Neither takes configuration. They add the triggers module's conditions and actions:
+
+- **DateTime**: the date and time conditions.
+- **DevicesModule**: the device property and channel property conditions and actions. It also adds two Doctrine `onFlush` subscribers. They reject a trigger with two channel property actions on the same property, or with two device property or two channel property conditions on the same property.
+
+For each type, an automator adds its entity, document, JSON:API schema and hydrator. Neither adds a console command, a route, a timer or an exchange consumer. The migration `Version20261012172407` creates their 14 nullable columns: 5 on `fb_triggers_module_actions` and 9 on `fb_triggers_module_conditions`.
+
 ## Extensions not registered by default
 
 None of the extensions below are registered by default. Each snippet is a complete `config/local.neon` that registers the extension's DI extension class alongside whatever `config/common.neon` already registers -- Nette merges the `extensions:` sections, so you do not need to repeat the ones already wired.
@@ -255,7 +280,7 @@ fbCouchDbPlugin:
         password: admin
 ```
 
-`connection.port` must be set explicitly to `5984` (CouchDB's real port) -- the extension's own schema default is `5672`, left over from being adapted from the RabbitMq plugin.
+`connection.port` defaults to `5984`, CouchDB's port. Until #726 the default was `5672`, RabbitMQ's port, left over from adapting the RabbitMq plugin.
 
 ## RabbitMQ message exchange (RabbitMq plugin)
 
@@ -289,16 +314,6 @@ fbRabbitMqPlugin:
 
 What a connector reports about itself is not a command, so it carries the connector's source, not `devices`: its device and connector connection state (`Utilities\DeviceConnection::setState()` and `ConnectorConnection::setState()` take the source of whoever reports) and the validity reset of its properties when it starts or stops. WebSocket clients receive those, which includes Devices clients that did not before.
 
-## Automators
-
-Both automators take no configuration -- registering the DI extension is enough to make their conditions/actions available to the triggers module:
-
-```neon
-extensions:
-    fbDateTimeAutomator: FastyBird\Automator\DateTime\DI\DateTimeExtension
-    fbDevicesModuleAutomator: FastyBird\Automator\DevicesModule\DI\DevicesModuleExtension
-```
-
 ## API key authentication (ApiKey plugin)
 
 Registers `FastyBird\Plugin\ApiKey\DI\ApiKeyExtension` (service name `fbApiKeyPlugin`); it also takes no configuration:
@@ -316,7 +331,7 @@ php bin/fb-console.php fb:api-key:create
 
 ## Compose services
 
-`docker/dev/docker-compose.yml` puts `redis`, `couchdb`, `rabbitmq` and `mqtt` behind Compose profiles, and `docker/prod/docker-compose.yml` puts `redis` behind one, because none of the extensions above are registered by default. Enable the matching profile when you register the extension, for example:
+`docker/dev/docker-compose.yml` puts `redis`, `couchdb`, `rabbitmq` and `mqtt` behind Compose profiles, and `docker/prod/docker-compose.yml` puts `redis` behind one, because none of the extensions under [Extensions not registered by default](#extensions-not-registered-by-default) are registered by default. Enable the matching profile when you register the extension, for example:
 
 ```sh
 docker compose -f docker/dev/docker-compose.yml --profile redis up -d

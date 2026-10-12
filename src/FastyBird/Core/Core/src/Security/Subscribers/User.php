@@ -126,10 +126,10 @@ final readonly class User implements Common\EventSubscriber
 				$needChanges = false;
 
 				if ($uow->isScheduledForInsert($object) && isset($config['create'])) {
-					// @phpstan-ignore-next-line
+					// @phpstan-ignore foreach.nonIterable (Driver\Owner::getObjectConfigurations() returns an untyped array<mixed> cache blob)
 					foreach ($config['create'] as $field) {
 						// Field can not exist in change set, when persisting embedded document without parent for example
-						// @phpstan-ignore-next-line
+						// @phpstan-ignore argument.type (same untyped blob: $field comes out of $config['create'] as mixed)
 						$new = array_key_exists($field, $changeSet) ? $changeSet[$field][1] : false;
 
 						if ($new === null) { // let manual values
@@ -153,23 +153,21 @@ final readonly class User implements Common\EventSubscriber
 	 */
 	private function updateField(
 		ORM\UnitOfWork $uow,
-		mixed $object,
+		object $object,
 		ORM\Mapping\ClassMetadata $classMetadata,
 		string $field,
 	): void
 	{
 		$property = $classMetadata->getReflectionProperty($field);
 
-		// @phpstan-ignore-next-line
+		// @phpstan-ignore method.nonObject (ClassMetadata::getReflectionProperty() is nullable, but the Owner driver maps every field it reports, so the property exists)
 		$oldValue = $property->getValue($object);
 		$newValue = $this->userStorage->identity?->getId()->toString();
 
-		// @phpstan-ignore-next-line
+		// @phpstan-ignore method.nonObject (same nullable getReflectionProperty() as above)
 		$property->setValue($object, $newValue);
 
-		// @phpstan-ignore-next-line
 		$uow->propertyChanged($object, $field, $oldValue, $newValue);
-		// @phpstan-ignore-next-line
 		$uow->scheduleExtraUpdate($object, [
 			$field => [$oldValue, $newValue],
 		]);
@@ -183,14 +181,14 @@ final readonly class User implements Common\EventSubscriber
 	 * @throws InvalidArgumentException
 	 */
 	public function prePersist(
-		mixed $entity,
+		object $entity,
 		ORM\Event\PrePersistEventArgs $eventArgs,
 	): void
 	{
 		$manager = $eventArgs->getObjectManager();
 		$uow = $manager->getUnitOfWork();
 		/** @var ORM\Mapping\ClassMetadata<T> $classMetadata */
-		$classMetadata = $manager->getClassMetadata($entity::class); // @phpstan-ignore-line
+		$classMetadata = $manager->getClassMetadata($entity::class);
 
 		$config = $this->driver->getObjectConfigurations($manager, $classMetadata->getName());
 
@@ -208,12 +206,12 @@ final readonly class User implements Common\EventSubscriber
 	private function updateFields(
 		array $fields,
 		ORM\UnitOfWork $uow,
-		mixed $object,
+		object $object,
 		ORM\Mapping\ClassMetadata $classMetadata,
 	): void
 	{
 		foreach ($fields as $field) {
-			// @phpstan-ignore-next-line
+			// @phpstan-ignore method.deprecated (getPropertyAccessor() is not a drop-in replacement; updateField() carries the baselined use of the same call), method.nonObject (nullable getReflectionProperty(), as in updateField())
 			if ($classMetadata->getReflectionProperty($field)->getValue($object) === null) { // let manual values
 				$this->updateField($uow, $object, $classMetadata, $field);
 			}

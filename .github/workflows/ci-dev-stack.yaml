@@ -1,0 +1,190 @@
+# Boots the development compose stack (docker/dev/docker-compose.yml) from a fresh checkout, the
+# way docs/deployment.md "Development" says to, and checks the three things that broke there
+# without any other gate noticing: the schema migration, the API through the dev nginx, and the
+# Vite dev server transforming a `.vue` file (#438: it used to hang for minutes).
+#
+# Its own workflow, not a job in ci-tests.yaml, on purpose:
+#   - it is slow (it builds the dev images: PHP extensions are compiled from source) and flaky in
+#     a different way from the unit-test jobs (registries, DNS, a cold Vite), so it must be
+#     possible to re-run, disable or time-box it without touching the gating workflow;
+#   - the one job here is named "Dev Stack (not required)". The required checks are listed in the
+#     "Main branch protection" ruleset by job name, and this name is not in that list, so the job
+#     reports on a pull request without blocking it. Making it required later is a ruleset change,
+#     deliberately separate from this file.
+name: "CI Dev Stack"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+  schedule:
+    - cron: "0 8 * * 1" # At 08:00 on Monday: catches drift in the base images (php, node, nginx, mariadb)
+  workflow_dispatch:
+
+permissions:
+  contents: "read"
+
+concurrency:
+  group: "ci-dev-stack-${{ github.ref }}"
+  cancel-in-progress: "${{ github.event_name == 'pull_request' }}"
+
+jobs:
+  dev-stack:
+    name: "Dev Stack (not required)"
+    runs-on: "ubuntu-latest"
+    timeout-minutes: 40
+
+    env:
+      COMPOSE: "docker compose -f docker/dev/docker-compose.yml"
+      COMPOSER_CACHE_HOST_DIR: "/tmp/composer-cache"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v7"
+
+      # Composer's download cache, mounted into the container below. The pnpm store is not cached:
+      # it lives in node_modules/.pnpm-store on the stack's named volume, by design (#762), and a
+      # restored copy on the runner would sit on another device and defeat the hard links.
+      #
+      # Only the dist archives (files/ and repo/), not vcs/: that holds bare git clones created by
+      # root in the container, and a restore hands them to the runner user, after which git in the
+      # container refuses them ("detected dubious ownership") and composer install fails.
+      - name: "Restore the Composer cache"
+        uses: "actions/cache@v6"
+        with:
+          path: |
+            ${{ env.COMPOSER_CACHE_HOST_DIR }}/files
+            ${{ env.COMPOSER_CACHE_HOST_DIR }}/repo
+          key: "dev-stack-composer-${{ hashFiles('composer.lock') }}"
+          restore-keys: "dev-stack-composer-"
+
+      # The documented steps, verbatim apart from the cache mount. Nothing is installed on the host.
+      - name: "composer install (in the application container)"
+        run: |
+          mkdir -p "$COMPOSER_CACHE_HOST_DIR"
+          $COMPOSE run --rm --no-deps \
+            -e XDEBUG_MODE=off -e COMPOSER_MIRROR_PATH_REPOS=1 \
+            -e COMPOSER_CACHE_DIR=/composer-cache \
+            -v "$COMPOSER_CACHE_HOST_DIR:/composer-cache" \
+            application composer install --no-interaction --no-progress
+
+      # The mirror must be a copy, as in CI and production (CLAUDE.md, Traps).
+      - name: "vendor/fastybird holds copies, not symlinks"
+        run: |
+          links=$(find vendor/fastybird -maxdepth 1 -type l)
+          if [ -n "$links" ]; then
+            echo "$links"
+            exit 1
+          fi
+
+      - name: "pnpm install (in the ui-server container)"
+        run: "$COMPOSE run --rm --no-deps ui-server pnpm install --frozen-lockfile"
+
+      - name: "Start the stack"
+        run: "$COMPOSE up -d"
+
+      # migrations is a one-shot service: wait for it to stop, then require exit 0. Bounded: the
+      # service's own wait for the database is 20 attempts, one second apart.
+      - name: "The migrations service exits 0"
+        run: |
+          id=$($COMPOSE ps -a -q migrations)
+          if [ -z "$id" ]; then
+            echo "No migrations container"
+            exit 1
+          fi
+
+          for i in $(seq 1 90); do
+            state=$(docker inspect -f '{{.State.Status}}' "$id")
+            if [ "$state" = "exited" ]; then
+              break
+            fi
+            echo "migrations is $state (attempt $i of 90)"
+            sleep 2
+          done
+
+          code=$(docker inspect -f '{{.State.ExitCode}}' "$id")
+          echo "migrations: status=$(docker inspect -f '{{.State.Status}}' "$id") exit=$code"
+          $COMPOSE logs --no-color migrations
+          [ "$(docker inspect -f '{{.State.Status}}' "$id")" = "exited" ] && [ "$code" = "0" ]
+
+      # Through the dev nginx on :80, so this covers nginx -> php-fpm -> the compiled DI container
+      # -> the security stack. Anonymous is 403 and a bad token is 401 (PR #754). Both are retried
+      # for a bounded time, because php-fpm may still be starting; the status must then be exact.
+      - name: "GET /api/devices-module/v1/devices: 403 anonymous, 401 with an invalid token"
+        run: |
+          url=http://127.0.0.1:80/api/devices-module/v1/devices
+
+          expect() {
+            label=$1
+            want=$2
+            shift 2
+            code=000
+            for i in $(seq 1 30); do
+              code=$(curl -s -o /tmp/api-body.txt -w '%{http_code}' --max-time 20 "$@" "$url" || true)
+              if [ "$code" = "$want" ]; then
+                break
+              fi
+              echo "$label: got $code, want $want (attempt $i of 30)"
+              sleep 2
+            done
+            echo "$label -> $code"
+            # A Tracy error page is HTML: strip the tags to keep the exception message readable.
+            sed -e 's/<[^>]*>//g' /tmp/api-body.txt | grep -v '^[[:space:]]*$' | head -c 600 || true
+            echo
+            [ "$code" = "$want" ]
+          }
+
+          expect "anonymous" 403
+          expect "invalid token" 401 -H "Authorization: Bearer invalid"
+
+      # #438: a real `.vue` transform on the Vite dev server was starved by the file watcher (it
+      # polls every file under the repository root; the pnpm store and vendor/ sat inside it).
+      # On a developer machine that meant no answer for minutes; on a CI runner, measured here
+      # with the pre-#762 configuration, App.vue took 10.4 s against 0.1 s with the fix. So the
+      # bound is 5 s, which is 40x what the fixed server needs and half of what the broken one did.
+      # curl --max-time turns a hang into exit 28 with no body. Waiting for the server itself
+      # (/@vite/client needs no transform) is a separate, longer loop, so a slow start is not read
+      # as a slow transform.
+      - name: "The Vite dev server transforms .vue files (#438)"
+        run: |
+          base=http://127.0.0.1:3000
+          limit=5
+
+          for i in $(seq 1 60); do
+            if curl -fsS --max-time 5 -o /dev/null "$base/@vite/client"; then
+              break
+            fi
+            echo "Waiting for the Vite dev server (attempt $i of 60)..."
+            sleep 2
+          done
+          curl -fsS --max-time 5 -o /dev/null "$base/@vite/client"
+
+          for module in \
+            src/FastyBird/Core/Core/assets/App.vue \
+            src/FastyBird/Core/Core/assets/components/app-gravatar.vue; do
+            echo "GET /$module"
+            code=$(curl -sS --max-time "$limit" -o /tmp/vue-module.js -w '%{http_code} in %{time_total}s' "$base/$module") || {
+              echo "No answer within ${limit} s (curl exit $?): the dev server is starved on a .vue transform (#438)"
+              exit 1
+            }
+            echo "  $code"
+            case "$code" in
+              200*) ;;
+              *) head -c 400 /tmp/vue-module.js; exit 1 ;;
+            esac
+            grep -q "_sfc_main" /tmp/vue-module.js \
+              || { echo "  the response is not a compiled Vue component"; head -c 400 /tmp/vue-module.js; exit 1; }
+          done
+
+      - name: "Dump the compose state and logs on failure"
+        if: "failure()"
+        run: |
+          $COMPOSE ps -a || true
+          find var -maxdepth 3 -printf '%M %U:%G %p\n' 2>&1 | head -40 || true
+          tail -n 40 var/log/*.log 2>&1 || true
+          $COMPOSE logs --no-color --tail=300 || true
+
+      - name: "Tear the stack down"
+        if: "always()"
+        run: "$COMPOSE down -v --remove-orphans"

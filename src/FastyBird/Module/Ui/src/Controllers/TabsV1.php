@@ -71,7 +71,6 @@ final class TabsV1 extends BaseV1
 			$tabs = $this->tabsRepository->getResultSet($findQuery);
 		}
 
-		// @phpstan-ignore-next-line
 		return $this->buildResponse($request, $response, $tabs);
 	}
 

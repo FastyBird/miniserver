@@ -277,11 +277,11 @@ final class ClassMetadata
 	public function fullyQualifiedClassName(string $className): string
 	{
 		if (!str_contains($className, '\\')) {
-			// @phpstan-ignore-next-line
+			// @phpstan-ignore return.type (concatenation returns string, which loses the class-string<CN> narrowing)
 			return $this->namespace . '\\' . $className;
 		}
 
-		// @phpstan-ignore-next-line
+		// @phpstan-ignore return.type (ltrim() returns string, which loses the class-string<CN> narrowing)
 		return ltrim($className, '\\');
 	}
 
@@ -312,10 +312,10 @@ final class ClassMetadata
 					throw new Exceptions\InvalidState('Failed to deserialize document ClassMetadata');
 				}
 
-				// @phpstan-ignore-next-line
+				// @phpstan-ignore assign.propertyType (the serialised name is this metadata's own class, but class_exists() only proves ReflectionClass<object>)
 				$this->reflectionClass = new ReflectionClass($value);
 			} elseif (property_exists($this, $key)) {
-				// @phpstan-ignore-next-line
+				// @phpstan-ignore property.dynamicName (restoring serialised state: property_exists() above bounds $key to declared properties)
 				$this->{$key} = $value;
 			}
 		}

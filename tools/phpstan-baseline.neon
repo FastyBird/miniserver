@@ -2979,7 +2979,7 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
 			identifier: argument.type
-			count: 6
+			count: 4
 			path: ../src/FastyBird/Core/Core/src/Boot/Bootstrap.php
 
 		-
@@ -7157,36 +7157,6 @@ parameters:
 			path: ../src/FastyBird/Module/Ui/src/Models/Entities/Widgets/Repository.php
 
 		-
-			message: '#^Cannot access property \$database on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/CouchDb/src/DI/CouchDbExtension.php
-
-		-
-			message: '#^Cannot access property \$host on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/CouchDb/src/DI/CouchDbExtension.php
-
-		-
-			message: '#^Cannot access property \$password on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/CouchDb/src/DI/CouchDbExtension.php
-
-		-
-			message: '#^Cannot access property \$port on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/CouchDb/src/DI/CouchDbExtension.php
-
-		-
-			message: '#^Cannot access property \$username on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/CouchDb/src/DI/CouchDbExtension.php
-
-		-
 			message: '#^Parameter \#1 \$id of method PHPOnCouch\\CouchClient\:\:getDoc\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
@@ -7203,42 +7173,6 @@ parameters:
 			identifier: offsetAccess.invalidOffset
 			count: 1
 			path: ../src/FastyBird/Plugin/CouchDb/src/States/StateFactory.php
-
-		-
-			message: '#^Cannot access property \$host on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RabbitMq/src/DI/RabbitMqExtension.php
-
-		-
-			message: '#^Cannot access property \$name on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Plugin/RabbitMq/src/DI/RabbitMqExtension.php
-
-		-
-			message: '#^Cannot access property \$password on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RabbitMq/src/DI/RabbitMqExtension.php
-
-		-
-			message: '#^Cannot access property \$port on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RabbitMq/src/DI/RabbitMqExtension.php
-
-		-
-			message: '#^Cannot access property \$username on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RabbitMq/src/DI/RabbitMqExtension.php
-
-		-
-			message: '#^Cannot access property \$vhost on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RabbitMq/src/DI/RabbitMqExtension.php
 
 		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
@@ -7293,36 +7227,6 @@ parameters:
 			identifier: instanceof.alwaysFalse
 			count: 1
 			path: ../src/FastyBird/Plugin/RedisDb/src/Clients/Client.php
-
-		-
-			message: '#^Cannot access property \$channel on mixed\.$#'
-			identifier: property.nonObject
-			count: 3
-			path: ../src/FastyBird/Plugin/RedisDb/src/DI/RedisDbExtension.php
-
-		-
-			message: '#^Cannot access property \$host on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDb/src/DI/RedisDbExtension.php
-
-		-
-			message: '#^Cannot access property \$password on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDb/src/DI/RedisDbExtension.php
-
-		-
-			message: '#^Cannot access property \$port on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDb/src/DI/RedisDbExtension.php
-
-		-
-			message: '#^Cannot access property \$username on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDb/src/DI/RedisDbExtension.php
 
 		-
 			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
@@ -7480,38 +7384,3 @@ parameters:
 			count: 1
 			path: ../src/FastyBird/Plugin/RedisDbCache/src/Clients/Client.php
 
-		-
-			message: '#^Cannot access property \$database on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDbCache/src/DI/RedisDbCacheExtension.php
-
-		-
-			message: '#^Cannot access property \$host on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDbCache/src/DI/RedisDbCacheExtension.php
-
-		-
-			message: '#^Cannot access property \$password on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDbCache/src/DI/RedisDbCacheExtension.php
-
-		-
-			message: '#^Cannot access property \$port on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDbCache/src/DI/RedisDbCacheExtension.php
-
-		-
-			message: '#^Cannot access property \$username on mixed\.$#'
-			identifier: property.nonObject
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDbCache/src/DI/RedisDbCacheExtension.php
-
-		-
-			message: '#^Parameter \#1 \$state of method Nette\\DI\\Definitions\\Definition\:\:setAutowired\(\) expects array\<class\-string\>\|bool\|class\-string, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: ../src/FastyBird/Plugin/RedisDbCache/src/DI/RedisDbCacheExtension.php
