@@ -2,33 +2,26 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Values;
 
-use Closure;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Values\Transformers;
 use FastyBird\Core\Values\Types;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Throwable;
 use function intval;
 use function round;
-use function sprintf;
 
 /**
- * Characterization of what `Transformers\EquationTransformer` calculates (#443, PR1).
+ * What `Transformers\EquationTransformer` calculates (#443).
  *
- * The transformer evaluates through `mathsolver/mathsolver`, which has no release, no commit since
- * 2023 and a lenient, partly accidental grammar. #443 replaces it with `nxp/math-executor` in PR2.
- * This file is the safety net for that swap, in three tiers:
+ * PR1 pinned the results of `mathsolver/mathsolver` here as the safety net for replacing it with
+ * `nxp/math-executor` (PR2). Two tiers remain:
  *
- *  1. PINNED: behaviour the swap must keep. Every provider except `provideLenientMalformed` and
- *     `provideKnownDefects` is this tier, and asserts what is both true today and intended.
- *  2. ACCIDENTAL (`provideLenientMalformed`, `testEmptyYEquationIsZero`): what the current library
- *     does with malformed text. It is pinned only so that PR2 sees every change; nothing here is a
- *     promise, and PR2 may replace these with a thrown error.
- *  3. KNOWN DEFECTS (`provideKnownDefects`): the intended behaviour where today's library is wrong.
- *     Each runs the real calculation; while the library is wrong the test is reported incomplete
- *     (green), and the moment it is right the test FAILS and asks for the row to be moved up into
- *     the pinned tier. PR2 must make every row pass, or take it out of the list with a reason.
+ *  1. PINNED: intended behaviour. Every provider except `provideLenientMalformed` is this tier. It
+ *     includes the 15 rows PR1 recorded as known defects of mathsolver (`:` multiplied or was not
+ *     parsed, `y^0.5` gave 0, a value printed in exponent notation gave 0), which PR2 fixed.
+ *  2. ACCIDENTAL (`provideLenientMalformed`): malformed text that still evaluates to a number. It is
+ *     pinned so that a later change shows up, not promised. Most of what mathsolver accepted here
+ *     is now rejected; those rows are in `provideRejectedMalformed`.
  *
  * The x-equation (`equation:x=…`) is applied by `calculateEquationFrom()` with `y` bound to the
  * value; the y-equation (`…|y=…`) by `calculateEquationTo()` with `x` bound to the value.
@@ -108,6 +101,7 @@ final class EquationTransformerCalculationTest extends TestCase
 			'square' => ['equation:x=y^2', 3, 9.0],
 			'variable exponent' => ['equation:x=2^y', 3, 8.0],
 			'zero to the zero' => ['equation:x=y^0', 0, 1.0],
+			'fractional exponent' => ['equation:x=y^0.5', 16, 4.0],
 			'root through a parenthesised fraction' => ['equation:x=y^(1/2)', 16, 4.0],
 			'power is right associative' => ['equation:x=2^3^2', 1, 512.0],
 			'power is right associative, base is the variable' => ['equation:x=y^3^2', 2, 512.0],
@@ -116,6 +110,19 @@ final class EquationTransformerCalculationTest extends TestCase
 			'power is right associative, three levels' => ['equation:x=2^3^2^1', 1, 512.0],
 			'left-grouped power needs parentheses' => ['equation:x=(2^3)^2', 1, 64.0],
 			'right-grouped power in parentheses' => ['equation:x=2^(3^2)', 1, 512.0],
+
+			// Colon is division
+			'colon: variable over number' => ['equation:x=y:4', 10, 2.5],
+			'colon: number over variable' => ['equation:x=100:y', 4, 25.0],
+			'colon: two numbers' => ['equation:x=10:2', 1, 5.0],
+			'colon: chained is left associative' => ['equation:x=8:2:2', 1, 2.0],
+			'colon: chained with the variable' => ['equation:x=y:2:5', 20, 2.0],
+			'colon: after a product' => ['equation:x=y*2:4', 10, 5.0],
+			'colon: precedence equals division' => ['equation:x=y+8:2', 2, 6.0],
+			'colon: parenthesised divisor' => ['equation:x=y:(2*2)', 10, 2.5],
+			'colon: parenthesised dividend' => ['equation:x=(y):4', 10, 2.5],
+			'colon: decimal divisor' => ['equation:x=y:0.5', 3, 6.0],
+			'colon: same result as slash' => ['equation:x=y:2', 10, 5.0],
 
 			// Implicit multiplication
 			'number then variable' => ['equation:x=10y+2', 3, 32.0],
@@ -140,6 +147,19 @@ final class EquationTransformerCalculationTest extends TestCase
 	}
 
 	/**
+	 * Rows whose result no integer data type can hold, so they run only as FLOAT. Casting such a
+	 * float to int is undefined, and PHP 8.5 warns about it.
+	 *
+	 * @return array<string, array{string, int|float, float}>
+	 */
+	public static function provideFloatOnlyFromEquations(): array
+	{
+		return [
+			'value large enough for exponent notation' => ['equation:x=y*2', 1.0E+25, 2.0E+25],
+		];
+	}
+
+	/**
 	 * @return array<string, array{string, int|float, float}>
 	 */
 	public static function provideToEquations(): array
@@ -150,6 +170,7 @@ final class EquationTransformerCalculationTest extends TestCase
 			'subtraction' => ['equation:x=y+1|y=x-1', 5, 4.0],
 			'multiplication' => ['equation:x=y/3|y=x*3', 10, 30.0],
 			'division' => ['equation:x=y*10|y=x/10', 50, 5.0],
+			'colon is division' => ['equation:x=y|y=x:4', 10, 2.5],
 			'decimal factor' => ['equation:x=y|y=x*0.1', 55, 5.5],
 			'fixture: inches to centimetres' => ['equation:x=y/2.54|y=x*2.54', 10, 25.4],
 			'fixture: centimetres to inches' => ['equation:x=y*2.54|y=x/2.54', 25.4, 10.0],
@@ -185,8 +206,7 @@ final class EquationTransformerCalculationTest extends TestCase
 	}
 
 	/**
-	 * Division by zero. Today `Math::substitute()`/`simplify()` raises `DivisionByZeroError`; PR2 will
-	 * raise the library's own exception. The contract kept here is only "throws, never returns".
+	 * Division by zero, by `/`, by `:` or by a negative power of zero, throws and never returns.
 	 *
 	 * @return array<string, array{string, bool, int|float}>
 	 */
@@ -201,14 +221,14 @@ final class EquationTransformerCalculationTest extends TestCase
 			'variable over itself at zero' => ['equation:x=y/y', true, 0],
 			'zero divisor after a product' => ['equation:x=y*1/0', true, 3],
 			'zero to a negative power' => ['equation:x=y^-1', true, 0],
+			'colon, literal zero divisor' => ['equation:x=y:0', true, 10],
 			'y-equation, literal zero divisor' => ['equation:x=y|y=x/0', false, 5],
 			'y-equation, variable divisor' => ['equation:x=y|y=10/x', false, 0],
 		];
 	}
 
 	/**
-	 * Text the pattern accepts and the library cannot evaluate; today an `Error` or `TypeError` that
-	 * leaks out of the library. The contract kept here is only "throws, never returns a number".
+	 * Text the pattern accepts and that cannot be evaluated throws, never returns a number.
 	 *
 	 * @return array<string, array{string, bool, int|float}>
 	 */
@@ -227,64 +247,60 @@ final class EquationTransformerCalculationTest extends TestCase
 	}
 
 	/**
-	 * ACCIDENTAL. Malformed text the library does not reject but evaluates to something. None of this
-	 * is intended behaviour: it is pinned so that the swap shows exactly which of them change, and
-	 * PR2 is free to turn any row into a thrown error (nxp/math-executor rejects most of them).
+	 * ACCIDENTAL. Malformed text that still evaluates to something. None of this is intended
+	 * behaviour; it is pinned so that a change to it is seen. A doubled sign is a binary operator
+	 * followed by a unary one, and a missing operator is multiplication, so `2y3` is `2*y*3`
+	 * (mathsolver gave 69).
 	 *
 	 * @return array<string, array{string, int|float, float}>
 	 */
 	public static function provideLenientMalformed(): array
 	{
 		return [
-			'empty x-equation is zero' => ['equation:x=', 10, 0.0],
-			'trailing plus is dropped' => ['equation:x=y+', 10, 10.0],
-			'trailing minus subtracts one' => ['equation:x=y-', 3, 2.0],
-			'trailing multiplication is dropped' => ['equation:x=y*', 3, 3.0],
-			'leading multiplication is dropped' => ['equation:x=*y', 3, 3.0],
-			'unclosed parenthesis is closed' => ['equation:x=(y+1', 10, 11.0],
-			'empty parentheses are zero' => ['equation:x=()', 3, 0.0],
-			'doubled multiplication multiplies by the right operand' => ['equation:x=y**2', 3, 6.0],
 			'doubled plus' => ['equation:x=y++2', 3, 5.0],
-			'plus then multiplication' => ['equation:x=y+*2', 3, 5.0],
 			'doubled minus is plus' => ['equation:x=y--2', 3, 5.0],
-			'doubled power' => ['equation:x=y^^2', 3, 81.0],
-			'doubled colon' => ['equation:x=y::2', 4, 8.0],
-			'two decimal points are zero' => ['equation:x=1.2.3*y', 3, 0.0],
-			'only decimal points are zero' => ['equation:x=..', 3, 0.0],
-			'digit, variable, digit' => ['equation:x=2y3', 3, 69.0],
+			'digit, variable, digit' => ['equation:x=2y3', 3, 18.0],
 		];
 	}
 
 	/**
-	 * INTENDED behaviour where the current library is wrong. See the class comment: reported
-	 * incomplete while wrong, FAILS when it starts being right.
+	 * Malformed text the pattern accepts, which mathsolver evaluated to a number (given in the
+	 * comment) and which now throws.
 	 *
-	 * `expected` is the intended result, or null where the intended behaviour is that it throws.
-	 *
-	 * @return array<string, array{string, bool, int|float, float|null, string}>
+	 * @return array<string, array{string, bool, int|float}>
 	 */
-	public static function provideKnownDefects(): array
+	public static function provideRejectedMalformed(): array
 	{
 		return [
-			// ":" is division. mathsolver multiplies, or fails to parse and yields 0.
-			'colon: variable over number' => ['equation:x=y:4', true, 10, 2.5, 'today 40.0, it multiplies'],
-			'colon: variable over number, y-equation' => ['equation:x=y|y=x:4', false, 10, 2.5, 'today 40.0, it multiplies'],
-			'colon: number over variable' => ['equation:x=100:y', true, 4, 25.0, 'today 400.0, it multiplies'],
-			'colon: two numbers' => ['equation:x=10:2', true, 1, 5.0, 'today 0.0, unparsed'],
-			'colon: chained is left associative' => ['equation:x=8:2:2', true, 1, 2.0, 'today 0.0, unparsed'],
-			'colon: chained with the variable' => ['equation:x=y:2:5', true, 20, 2.0, 'today 500.0'],
-			'colon: after a product' => ['equation:x=y*2:4', true, 10, 5.0, 'today 0.0, unparsed'],
-			'colon: precedence equals division' => ['equation:x=y+8:2', true, 2, 6.0, 'today 0.0, unparsed'],
-			'colon: parenthesised divisor' => ['equation:x=y:(2*2)', true, 10, 2.5, 'today 10.0'],
-			'colon: parenthesised dividend' => ['equation:x=(y):4', true, 10, 2.5, 'today 10.0'],
-			'colon: decimal divisor' => ['equation:x=y:0.5', true, 3, 6.0, 'today 1.5, it multiplies'],
-			'colon: zero divisor throws like slash' => ['equation:x=y:0', true, 10, null, 'today 0.0, no error'],
-			'colon: same result as slash' => ['equation:x=y:2', true, 10, 5.0, 'today 20.0, it multiplies'],
+			'empty x-equation' => ['equation:x=', true, 10], // 0
+			'empty y-equation' => ['equation:x=y*2|y=', false, 5], // 0
+			'trailing plus' => ['equation:x=y+', true, 10], // 10
+			'trailing minus' => ['equation:x=y-', true, 3], // 2
+			'trailing multiplication' => ['equation:x=y*', true, 3], // 3
+			'leading multiplication' => ['equation:x=*y', true, 3], // 3
+			'unclosed parenthesis' => ['equation:x=(y+1', true, 10], // 11
+			'empty parentheses' => ['equation:x=()', true, 3], // 0
+			'doubled multiplication' => ['equation:x=y**2', true, 3], // 6
+			'plus then multiplication' => ['equation:x=y+*2', true, 3], // 5
+			'doubled power' => ['equation:x=y^^2', true, 3], // 81
+			'doubled colon' => ['equation:x=y::2', true, 4], // 8
+			'two decimal points' => ['equation:x=1.2.3*y', true, 3], // 0
+			'only decimal points' => ['equation:x=..', true, 3], // 0
+			// Not pinned by PR1. getValue() drops whitespace, which would turn it into 12.
+			'two numbers separated by whitespace' => ['equation:x=1 2', true, 3],
+		];
+	}
 
-			// Not in the issue text; found while characterizing. "^" with a fractional exponent and a
-			// float that PHP prints in exponent notation are both mis-evaluated, not just unusual.
-			'power: fractional exponent' => ['equation:x=y^0.5', true, 16, 4.0, 'today 0.0'],
-			'value large enough for exponent notation' => ['equation:x=y*2', true, 1.0E+25, 2.0E+25, 'today 0.0'],
+	/**
+	 * A result that is not a finite number throws rather than reaching a property value.
+	 *
+	 * @return array<string, array{string, int|float}>
+	 */
+	public static function provideNonFiniteResults(): array
+	{
+		return [
+			'root of a negative number' => ['equation:x=(-y)^(1/2)', 4],
+			'overflow' => ['equation:x=y*10', 1.0E+308],
 		];
 	}
 
@@ -292,6 +308,7 @@ final class EquationTransformerCalculationTest extends TestCase
 	 * @throws Exceptions\InvalidArgument
 	 */
 	#[DataProvider('provideFromEquations')]
+	#[DataProvider('provideFloatOnlyFromEquations')]
 	public function testXEquationAsFloat(string $equation, int|float $value, float $expected): void
 	{
 		$result = (new Transformers\EquationTransformer($equation))->calculateEquationFrom(
@@ -455,7 +472,8 @@ final class EquationTransformerCalculationTest extends TestCase
 	{
 		$transformer = new Transformers\EquationTransformer($equation);
 
-		$this->expectException(Throwable::class);
+		$this->expectException(Exceptions\InvalidArgument::class);
+		$this->expectExceptionMessage('divides by zero');
 
 		$from
 			? $transformer->calculateEquationFrom($value, Types\DataType::FLOAT)
@@ -470,7 +488,7 @@ final class EquationTransformerCalculationTest extends TestCase
 	{
 		$transformer = new Transformers\EquationTransformer($equation);
 
-		$this->expectException(Throwable::class);
+		$this->expectException(Exceptions\InvalidArgument::class);
 
 		$from
 			? $transformer->calculateEquationFrom($value, Types\DataType::FLOAT)
@@ -498,13 +516,30 @@ final class EquationTransformerCalculationTest extends TestCase
 	/**
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function testEmptyYEquationIsZero(): void
+	#[DataProvider('provideRejectedMalformed')]
+	public function testMalformedTextThrows(string $equation, bool $from, int|float $value): void
 	{
-		// ACCIDENTAL, like the rows above: `|y=` with nothing after it passes the pattern.
-		$transformer = new Transformers\EquationTransformer('equation:x=y*2|y=');
+		$transformer = new Transformers\EquationTransformer($equation);
 
-		self::assertSame(0.0, $transformer->calculateEquationTo(5, Types\DataType::FLOAT));
-		self::assertSame(0, $transformer->calculateEquationTo(5, Types\DataType::INT));
+		$this->expectException(Exceptions\InvalidArgument::class);
+
+		$from
+			? $transformer->calculateEquationFrom($value, Types\DataType::FLOAT)
+			: $transformer->calculateEquationTo($value, Types\DataType::FLOAT);
+	}
+
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 */
+	#[DataProvider('provideNonFiniteResults')]
+	public function testNonFiniteResultThrows(string $equation, int|float $value): void
+	{
+		$transformer = new Transformers\EquationTransformer($equation);
+
+		$this->expectException(Exceptions\InvalidArgument::class);
+		$this->expectExceptionMessage('does not evaluate to a finite number');
+
+		$transformer->calculateEquationFrom($value, Types\DataType::FLOAT);
 	}
 
 	/**
@@ -559,65 +594,22 @@ final class EquationTransformerCalculationTest extends TestCase
 	}
 
 	/**
+	 * `getValue()` drops whitespace and otherwise keeps the equation as written. mathsolver
+	 * re-rendered its parse tree instead, so `y:4` came back as `4y` and `2*y` as `2y`.
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	#[DataProvider('provideKnownDefects')]
-	public function testKnownDefectsFixedByPr2(
-		string $equation,
-		bool $from,
-		int|float $value,
-		float|null $expected,
-		string $today,
-	): void
+	public function testGetValueKeepsTheEquationAsWritten(): void
 	{
-		$transformer = new Transformers\EquationTransformer($equation);
-
-		$assertion = static function () use ($transformer, $from, $value, $expected): void {
-			if ($expected === null) {
-				try {
-					$from
-						? $transformer->calculateEquationFrom($value, Types\DataType::FLOAT)
-						: $transformer->calculateEquationTo($value, Types\DataType::FLOAT);
-				} catch (Throwable) {
-					return;
-				}
-
-				self::fail('Expected an exception, none was thrown.');
-			}
-
-			$result = $from
-				? $transformer->calculateEquationFrom($value, Types\DataType::FLOAT)
-				: $transformer->calculateEquationTo($value, Types\DataType::FLOAT);
-
-			self::assertEqualsWithDelta($expected, $result, self::DELTA);
-		};
-
-		self::expectedFailureUntilPr2($assertion, $equation, $today);
-	}
-
-	/**
-	 * Known-defect gate: red-to-green is a signal, not a surprise. While the assertion fails the
-	 * test is incomplete; once it holds the test fails and tells the author to promote the row.
-	 *
-	 * @param Closure(): void $assertion
-	 */
-	private static function expectedFailureUntilPr2(Closure $assertion, string $equation, string $today): void
-	{
-		try {
-			$assertion();
-		} catch (Throwable $ex) {
-			self::markTestIncomplete(sprintf(
-				'Known defect, fixed by #443 PR2: "%s" (%s). %s',
-				$equation,
-				$today,
-				$ex->getMessage(),
-			));
-		}
-
-		self::fail(sprintf(
-			'"%s" now gives the intended result. Move it out of provideKnownDefects() into the pinned providers.',
-			$equation,
-		));
+		self::assertSame(
+			'equation:x=y:4|y=x*4',
+			(new Transformers\EquationTransformer('equation:x=y : 4|y=x * 4'))->getValue(),
+		);
+		self::assertSame(
+			'equation:x=2*y/2/5',
+			(new Transformers\EquationTransformer("equation:x=2 * y\t/ 2 / 5"))->getValue(),
+		);
+		self::assertSame('equation:x=y*2', (string) new Transformers\EquationTransformer('equation:x=y*2'));
 	}
 
 }
