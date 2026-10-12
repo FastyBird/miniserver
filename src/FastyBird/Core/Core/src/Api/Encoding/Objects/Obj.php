@@ -81,7 +81,7 @@ final class Obj
 	 */
 	public static function traverse(stdClass|array $data): Traversable
 	{
-		/** @phpstan-ignore-next-line */
+		// @phpstan-ignore function.alreadyNarrowedType (runtime guard for callers that bypass the stdClass|array declaration), booleanAnd.alwaysFalse (same guard)
 		if (!$data instanceof stdClass && !is_array($data)) {
 			throw new Exceptions\InvalidArgument('Expecting an object or array to transform keys.');
 		}
@@ -106,7 +106,7 @@ final class Obj
 	 */
 	public static function toArray(stdClass|array $data): array
 	{
-		/** @phpstan-ignore-next-line */
+		// @phpstan-ignore function.alreadyNarrowedType (runtime guard for callers that bypass the stdClass|array declaration), booleanAnd.alwaysFalse (same guard)
 		if (!$data instanceof stdClass && !is_array($data)) {
 			throw new Exceptions\InvalidArgument('Expecting an object or array to transform keys.');
 		}
