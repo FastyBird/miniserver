@@ -46,6 +46,19 @@ else
 	rm -f "${dev_config_dir}/common.neon"
 fi
 
+# Make var/temp and var/logs writable by every PHP process of the stack. The services run as
+# root (console commands, migrations) and php-fpm's workers run as www-data, and they share the
+# bind-mounted checkout. On a Linux host the checkout belongs to the host user, so without this
+# the first process to compile the DI container (the migrations service, as root) leaves
+# var/temp/cache owned by root, and the first HTTP request answers 500 with "Unable to create
+# file .../var/temp/cache/fb.di.configurator/Container_*.php.lock: Permission denied". Docker
+# Desktop maps all ownership to the host user and so never showed it. Both directories only hold
+# caches and logs, are git-ignored, and this is the development stack. The umask makes what the
+# processes create from here on writable by the others too.
+mkdir -p /app/var/temp /app/var/logs
+chmod -R a+rwX /app/var/temp /app/var/logs 2>/dev/null || true
+umask 000
+
 export FB_CONFIG_DIR="${dev_config_dir}"
 
 exec docker-php-entrypoint "$@"
