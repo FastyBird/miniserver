@@ -189,6 +189,15 @@ The clients driver must implement `FastyBird\Core\WebSockets\Clients\Drivers\Dri
 | `cors.allow.credentials` | bool | `true` | `Access-Control-Allow-Credentials`. |
 | `cors.allow.headers` | list of strings | `Content-Type`, `Authorization`, `X-Requested-With` | `Access-Control-Allow-Headers`. The application adds `X-Api-Key`. |
 
+## Automators
+
+`config/common.neon` registers both automators, `fbDateTimeAutomator` (`FastyBird\Automator\DateTime\DI\DateTimeExtension`) and `fbDevicesModuleAutomator` (`FastyBird\Automator\DevicesModule\DI\DevicesModuleExtension`). Neither takes configuration. They add the triggers module's conditions and actions:
+
+- **DateTime**: the date and time conditions.
+- **DevicesModule**: the device property and channel property conditions and actions. It also adds two Doctrine `onFlush` subscribers. They reject a trigger with two channel property actions on the same property, or with two device property or two channel property conditions on the same property.
+
+For each type, an automator adds its entity, document, JSON:API schema and hydrator. Neither adds a console command, a route, a timer or an exchange consumer. The migration `Version20261012172407` creates their 14 nullable columns: 5 on `fb_triggers_module_actions` and 9 on `fb_triggers_module_conditions`.
+
 ## Extensions not registered by default
 
 None of the extensions below are registered by default. Each snippet is a complete `config/local.neon` that registers the extension's DI extension class alongside whatever `config/common.neon` already registers -- Nette merges the `extensions:` sections, so you do not need to repeat the ones already wired.
@@ -305,16 +314,6 @@ fbRabbitMqPlugin:
 
 What a connector reports about itself is not a command, so it carries the connector's source, not `devices`: its device and connector connection state (`Utilities\DeviceConnection::setState()` and `ConnectorConnection::setState()` take the source of whoever reports) and the validity reset of its properties when it starts or stops. WebSocket clients receive those, which includes Devices clients that did not before.
 
-## Automators
-
-Both automators take no configuration -- registering the DI extension is enough to make their conditions/actions available to the triggers module:
-
-```neon
-extensions:
-    fbDateTimeAutomator: FastyBird\Automator\DateTime\DI\DateTimeExtension
-    fbDevicesModuleAutomator: FastyBird\Automator\DevicesModule\DI\DevicesModuleExtension
-```
-
 ## API key authentication (ApiKey plugin)
 
 Registers `FastyBird\Plugin\ApiKey\DI\ApiKeyExtension` (service name `fbApiKeyPlugin`); it also takes no configuration:
@@ -332,7 +331,7 @@ php bin/fb-console.php fb:api-key:create
 
 ## Compose services
 
-`docker/dev/docker-compose.yml` puts `redis`, `couchdb`, `rabbitmq` and `mqtt` behind Compose profiles, and `docker/prod/docker-compose.yml` puts `redis` behind one, because none of the extensions above are registered by default. Enable the matching profile when you register the extension, for example:
+`docker/dev/docker-compose.yml` puts `redis`, `couchdb`, `rabbitmq` and `mqtt` behind Compose profiles, and `docker/prod/docker-compose.yml` puts `redis` behind one, because none of the extensions under [Extensions not registered by default](#extensions-not-registered-by-default) are registered by default. Enable the matching profile when you register the extension, for example:
 
 ```sh
 docker compose -f docker/dev/docker-compose.yml --profile redis up -d

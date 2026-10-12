@@ -27,14 +27,7 @@ PHP extension.
 
 ## Installation
 
-This automator is part of [MiniServer](https://github.com/FastyBird/miniserver) but is not registered by default. To enable it, register its DI extension in `config/local.neon`, as described in [Configuration](../../../../docs/configuration.md#automators):
-
-```neon
-extensions:
-    fbDevicesModuleAutomator: FastyBird\Automator\DevicesModule\DI\DevicesModuleExtension
-```
-
-The automator takes no configuration; registering the DI extension is enough.
+This automator is part of [MiniServer](https://github.com/FastyBird/miniserver), and `config/common.neon` registers it by default as `fbDevicesModuleAutomator`. It takes no configuration. The migrations in `migrations/` create its columns. See [Configuration](../../../../docs/configuration.md#automators).
 
 ## Documentation
 
