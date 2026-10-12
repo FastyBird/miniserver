@@ -38,7 +38,7 @@ The same namespace denylist covers the JS of every package. No directory under a
 entry of it, compared case-insensitively. A JS capability directory is named for what its code is
 (`api`, `eventBus`, `security`, `values`, `websockets`), exactly as in PHP: the Accounts, Devices
 and Ui modules keep their JSON:API mappers in `assets/api/`, not `assets/jsonapi/`, and the
-`JsonApi…Mapper` class names stay, because the denylist applies to directory segments only. A
+mapper class names stay as they are, because the denylist applies to directory segments only. A
 package with a `package.json` must have an `assets/` root that holds at least one file, otherwise
 the tool fails rather than passes.
 
