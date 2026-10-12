@@ -129,7 +129,7 @@ final class BootstrapEnvParametersTest extends TestCase
 
 		$parameters = Boot\Bootstrap::loadEnvParameters(self::PREFIX);
 
-		self::assertSame($expected, $parameters['probe']['value']);
+		self::assertSame($expected, self::leaf($parameters, 'probe', 'value'));
 	}
 
 	/**
@@ -144,7 +144,7 @@ final class BootstrapEnvParametersTest extends TestCase
 
 		$parameters = Boot\Bootstrap::loadEnvParameters(self::PREFIX);
 
-		self::assertFalse($parameters['api']['prefixed']['modules']);
+		self::assertFalse(self::leaf($parameters, 'api', 'prefixed', 'modules'));
 	}
 
 	/**
@@ -159,7 +159,7 @@ final class BootstrapEnvParametersTest extends TestCase
 
 			$parameters = Boot\Bootstrap::loadEnvParameters(self::PREFIX);
 
-			self::assertSame($value, $parameters[$section][$key], $name);
+			self::assertSame($value, self::leaf($parameters, $section, $key), $name);
 		}
 	}
 
@@ -173,7 +173,7 @@ final class BootstrapEnvParametersTest extends TestCase
 
 		$parameters = Boot\Bootstrap::loadEnvParameters(self::PREFIX);
 
-		self::assertSame('12345678', $parameters['database']['password']);
+		self::assertSame('12345678', self::leaf($parameters, 'database', 'password'));
 	}
 
 	/**
@@ -188,7 +188,7 @@ final class BootstrapEnvParametersTest extends TestCase
 
 		$parameters = Boot\Bootstrap::loadEnvParameters(self::PREFIX);
 
-		self::assertSame(30, $parameters['probe']['password']['age']);
+		self::assertSame(30, self::leaf($parameters, 'probe', 'password', 'age'));
 	}
 
 	/**
@@ -203,9 +203,9 @@ final class BootstrapEnvParametersTest extends TestCase
 
 		$parameters = Boot\Bootstrap::loadEnvParameters(self::PREFIX);
 
-		self::assertSame('database', $parameters['database']['host']);
-		self::assertSame(3_306, $parameters['database']['port']);
-		self::assertFalse($parameters['modules']['exchange']);
+		self::assertSame('database', self::leaf($parameters, 'database', 'host'));
+		self::assertSame(3_306, self::leaf($parameters, 'database', 'port'));
+		self::assertFalse(self::leaf($parameters, 'modules', 'exchange'));
 		self::assertFalse(array_key_exists('DATABASE', $parameters));
 	}
 
@@ -218,6 +218,23 @@ final class BootstrapEnvParametersTest extends TestCase
 		$this->expectException(Exceptions\InvalidArgument::class);
 
 		Boot\Bootstrap::loadEnvParameters(self::PREFIX, '');
+	}
+
+	/**
+	 * @param array<mixed> $parameters
+	 */
+	private static function leaf(array $parameters, string ...$path): mixed
+	{
+		$value = $parameters;
+
+		foreach ($path as $key) {
+			self::assertIsArray($value);
+			self::assertArrayHasKey($key, $value);
+
+			$value = $value[$key];
+		}
+
+		return $value;
 	}
 
 	private function setEnvironment(string $name, string $value): void
