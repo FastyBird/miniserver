@@ -46,10 +46,16 @@ jobs:
       # Composer's download cache, mounted into the container below. The pnpm store is not cached:
       # it lives in node_modules/.pnpm-store on the stack's named volume, by design (#762), and a
       # restored copy on the runner would sit on another device and defeat the hard links.
+      #
+      # Only the dist archives (files/ and repo/), not vcs/: that holds bare git clones created by
+      # root in the container, and a restore hands them to the runner user, after which git in the
+      # container refuses them ("detected dubious ownership") and composer install fails.
       - name: "Restore the Composer cache"
         uses: "actions/cache@v6"
         with:
-          path: "${{ env.COMPOSER_CACHE_HOST_DIR }}"
+          path: |
+            ${{ env.COMPOSER_CACHE_HOST_DIR }}/files
+            ${{ env.COMPOSER_CACHE_HOST_DIR }}/repo
           key: "dev-stack-composer-${{ hashFiles('composer.lock') }}"
           restore-keys: "dev-stack-composer-"
 
