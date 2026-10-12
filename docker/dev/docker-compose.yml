@@ -7,6 +7,14 @@
 # With the storage services that are not wired by default:
 #   docker compose -f docker/dev/docker-compose.yml --profile redis --profile couchdb --profile rabbitmq --profile mqtt up -d
 #
+# Prerequisites and what the stack does on its own: docs/deployment.md, "Development".
+#
+
+# Signs authentication tokens. SECURITY_SIGNATURE (.env) wins; without it the PHP services
+# use this public, development-only value, so that a fresh checkout boots. Never reuse it:
+# anyone can sign a token with it. docker/prod/docker-compose.yml has no such default, and
+# its entrypoint generates a random signature instead.
+x-dev-security-signature: &dev-security-signature ${SECURITY_SIGNATURE:-dev-only-insecure-signature-never-use-in-production}
 
 services:
   # WEB SERVER
@@ -46,7 +54,9 @@ services:
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/config
+      # Filled by docker/dev/php/docker-entrypoint.sh: config/local.neon, plus a placeholder
+      # Vite manifest when there is no frontend build. Must match the path in that script.
+      FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
@@ -54,10 +64,11 @@ services:
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-miniserver}
       FB_APP_PARAMETER__REDIS_HOST: redis
       FB_APP_PARAMETER__REDIS_PORT: ${REDIS_PORT:-6379}
-      FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
+      FB_APP_PARAMETER__SECURITY_SIGNATURE: *dev-security-signature
       FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
     volumes:
       - ../../:/app:delegated
+    entrypoint: ["/bin/sh", "/app/docker/dev/php/docker-entrypoint.sh"]
     command: php-fpm
     networks:
       - fastybird
@@ -108,7 +119,9 @@ services:
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/config
+      # Filled by docker/dev/php/docker-entrypoint.sh: config/local.neon, plus a placeholder
+      # Vite manifest when there is no frontend build. Must match the path in that script.
+      FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
@@ -116,12 +129,13 @@ services:
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-miniserver}
       FB_APP_PARAMETER__REDIS_HOST: redis
       FB_APP_PARAMETER__REDIS_PORT: ${REDIS_PORT:-6379}
-      FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
+      FB_APP_PARAMETER__SECURITY_SIGNATURE: *dev-security-signature
       FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
     volumes:
       - ../../:/app:delegated
     ports:
       - "${WS_PORT:-8888}:8888"
+    entrypoint: ["/bin/sh", "/app/docker/dev/php/docker-entrypoint.sh"]
     command: php /app/bin/fb-console.php fb:ws-server:start
     networks:
       - fastybird
@@ -141,7 +155,9 @@ services:
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/config
+      # Filled by docker/dev/php/docker-entrypoint.sh: config/local.neon, plus a placeholder
+      # Vite manifest when there is no frontend build. Must match the path in that script.
+      FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
@@ -149,10 +165,11 @@ services:
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-miniserver}
       FB_APP_PARAMETER__REDIS_HOST: redis
       FB_APP_PARAMETER__REDIS_PORT: ${REDIS_PORT:-6379}
-      FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
+      FB_APP_PARAMETER__SECURITY_SIGNATURE: *dev-security-signature
       FB_APP_PARAMETER__API_PREFIXED_MODULES: ${API_PREFIXED_MODULES:-true}
     volumes:
       - ../../:/app:delegated
+    entrypoint: ["/bin/sh", "/app/docker/dev/php/docker-entrypoint.sh"]
     command: php /app/bin/fb-console.php fb:devices-module:exchange -n
     networks:
       - fastybird
@@ -171,16 +188,19 @@ services:
       PHP_DATE_TIMEZONE: ${APP_TZ:-UTC}
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/config
+      # Filled by docker/dev/php/docker-entrypoint.sh: config/local.neon, plus a placeholder
+      # Vite manifest when there is no frontend build. Must match the path in that script.
+      FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
       FB_APP_PARAMETER__DATABASE_PASSWORD: ${DATABASE_PASSWORD:-miniserver}
       FB_APP_PARAMETER__DATABASE_DBNAME: ${DATABASE_DBNAME:-miniserver}
-      FB_APP_PARAMETER__SECURITY_SIGNATURE: ${SECURITY_SIGNATURE}
+      FB_APP_PARAMETER__SECURITY_SIGNATURE: *dev-security-signature
     volumes:
       - ../../:/app:delegated
-    entrypoint: ["/bin/sh", "/app/docker/dev/migrations/docker-entrypoint.sh"]
+    entrypoint: ["/bin/sh", "/app/docker/dev/php/docker-entrypoint.sh"]
+    command: ["/bin/sh", "/app/docker/dev/migrations/docker-entrypoint.sh"]
     networks:
       - fastybird
 

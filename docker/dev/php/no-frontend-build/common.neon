@@ -1,0 +1,14 @@
+# FastyBird MiniServer - development only, loaded only when there is no frontend build
+#
+# docker/dev/php/docker-entrypoint.sh links this file into the dev PHP services' FB_CONFIG_DIR
+# when public/ holds no manifest.json, that is, before the first `pnpm build`. Production never
+# loads it: its FB_CONFIG_DIR is /data/config and its image builds the frontend.
+#
+# The placeholder is an empty manifest. It lets the DI container compile, which is all the dev
+# PHP services need: the JSON:API and the WebSocket server never read the manifest. The one
+# template that does is behind `GET /`, which 404s on a case-sensitive filesystem because the
+# template file names are lowercase, but renders on a case-insensitive bind mount such as macOS's
+# (see docs/architecture.md, Request routing). Run `pnpm build` before using that page.
+
+contributteVite:
+    manifestFile: %appDir%/docker/dev/php/no-frontend-build/vite-manifest.json
