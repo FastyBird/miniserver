@@ -36,6 +36,9 @@ extensions:
     fbVirtualThermostatAddonHomeKitConnectorBridge  : FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension
     # FastyBird addons
     fbVirtualThermostatAddon                        : FastyBird\Addon\VirtualThermostat\DI\VirtualThermostatExtension
+    # FastyBird automators
+    fbDateTimeAutomator                             : FastyBird\Automator\DateTime\DI\DateTimeExtension
+    fbDevicesModuleAutomator                        : FastyBird\Automator\DevicesModule\DI\DevicesModuleExtension
 
 decorator:
     FastyBird\Core\Http\Routing\ServerRouter:
