@@ -64,11 +64,10 @@ final class PhoneExtension extends DI\CompilerExtension
 	{
 		parent::afterCompile($class);
 
-		// Preserved from DoctrinePhoneExtension::afterCompile() -- registers the 'phone' DBAL
-		// type. Entities map columns to it by name (Module/Triggers Entities\Notifications\Sms),
-		// so without this every test that loads the Triggers metadata fails. It is written into
-		// initialize() directly rather than through getInitialization(), which would wrap it in a
-		// closure and change the generated code.
+		// Registers the 'phone' DBAL type. Entities map columns to it by name
+		// (Module/Triggers Entities\Notifications\Sms), so without this every test that loads the
+		// Triggers metadata fails. It is written into initialize() directly rather than through
+		// getInitialization(), which would wrap it in a closure and change the generated code.
 		$initialize = $class->getMethod('initialize');
 		$initialize->addBody(
 			'if (!Doctrine\DBAL\Types\Type::hasType(\'' . Types\PhoneType::PHONE . '\')) {'

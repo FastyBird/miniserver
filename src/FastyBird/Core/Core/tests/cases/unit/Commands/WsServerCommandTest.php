@@ -17,11 +17,10 @@ use function assert;
 use const PHP_INT_MAX;
 
 /**
- * Characterization of `fb:ws-server:start` (census T4, T12-17): the command dispatches the
- * startup event BEFORE it creates the server -- whose creation dispatches the create event --
- * and only then runs the loop. That startup event is the only server start event production ever
- * dispatches: ServerRuntime::run(), which dispatches the other one, is never called by it. E5.6
- * (#638) renames both events and must keep the order.
+ * `fb:ws-server:start` dispatches the startup event BEFORE it creates the server -- whose
+ * creation dispatches the create event -- and only then runs the loop. That startup event is the
+ * only server start event production ever dispatches: ServerRuntime::run(), which dispatches the
+ * other one, is never called by it.
  *
  * The command gets the container's ServerRuntime and dispatcher, a socket on an ephemeral
  * loopback port and an event loop that returns at once.

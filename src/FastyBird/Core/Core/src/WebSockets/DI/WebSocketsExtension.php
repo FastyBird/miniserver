@@ -314,8 +314,7 @@ final class WebSocketsExtension extends DI\CompilerExtension
 		/**
 		 * EVENTS -- the server, its wrapper and the WAMP application take the PSR-14 dispatcher
 		 * and dispatch their events themselves (#638). Without one they cannot be created, so this
-		 * fails loudly, as the WS server's event bridge did (preserved from
-		 * WsServerExtension::beforeCompile()).
+		 * fails loudly at compile time.
 		 */
 
 		if ($builder->getByType(PsrEventDispatcher\EventDispatcherInterface::class) === null) {

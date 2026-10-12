@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 
 /**
- * THE DEPENDENCY-DIRECTION RULE MATRIX FOR THE 34 PACKAGES UNDER src/FastyBird.
+ * THE DEPENDENCY-DIRECTION RULE MATRIX FOR THE PACKAGES UNDER src/FastyBird.
  *
  * This file is DATA ONLY. It returns a plain array, it has no logic, no closures and no
  * dependencies. tools/check-layering.php is the thing that reads it. Both files run on a
@@ -51,7 +51,6 @@
  * THE MAINTAINER'S DEFINITION OF EACH TYPE, WHICH THE MEASURED MATRIX CONFIRMS EXACTLY
  * ---------------------------------------------------------------------------------------
  *
- *   Library    code that would work in an application that is not this one
  *   Core       the cornerstone of the application
  *   Plugin     an application plugin: redis, web server, sockets
  *   Module     an application module
@@ -60,22 +59,21 @@
  *   Addon      adds a special FUNCTION
  *   Bridge     a contract BETWEEN extensions
  *
- * Measured type -> type edge matrix (every `use` statement in src/ and tests/ of all 34
+ * Measured type -> type edge matrix (every `use` statement in src/ and tests/ of all 29
  * packages, self-imports excluded). There are ZERO upward and ZERO sideways crossings in
  * PHP -- no Core->Module, no Module->Plugin, no Plugin->Module, no Connector->Connector,
- * no Module->Module:
+ * no Module->Module -- with one exception: the two Connector -> Addon references listed
+ * under 'exceptions' below, which are grandfathered and marked for deletion:
  *
- *   Library    -> nothing at all, 0 out-edges
- *   Core       -> Core 15, Library 20
- *   Plugin     -> Core 71, Library 27
- *   Module     -> Core 643, Library 239
- *   Automator  -> Core 49, Library 8, Module 41
- *   Connector  -> Core 888, Library 399, Module 1201
- *   Addon      -> Core 46, Library 18, Module 36, Connector 54
- *   Bridge     -> Core 188, Library 63, Module 203, Connector 177, Plugin 38, Addon 8
+ *   Core       -> nothing outside itself, 0 out-edges
+ *   Plugin     -> Core 97
+ *   Module     -> Core 1587
+ *   Automator  -> Core 83, Module 44
+ *   Connector  -> Core 1452, Module 1214, Addon 2 (the exception)
+ *   Addon      -> Core 82, Module 37, Connector 55
+ *   Bridge     -> Core 361, Module 244, Connector 181, Plugin 40, Addon 9
  *
- * In-degree of the bottom of the stack, for orientation: Core/Application 982,
- * Core/Tools 784, Library/Metadata 774, Core/Exchange 134.
+ * In-degree of the bottom of the stack, for orientation: Core/Core 3662, Module/Devices 1442.
  */
 
 return [
@@ -84,7 +82,7 @@ return [
 	 * Where the packages live, relative to the repository root. A package is any directory at
 	 * depth 2 under this path. Discovery is NOT driven by composer.json (those are being
 	 * deleted, which is why this tool exists), NOT by the root autoload (an empty psr-4 map)
-	 * and NOT by a hardcoded list of 34 names.
+	 * and NOT by a hardcoded list of package names.
 	 *
 	 * Discovery used to additionally REQUIRE a src/ subdirectory, which turned out to be an
 	 * opt-out: a directory holding only config/ and tests/ -- an entirely ordinary way to
@@ -118,11 +116,10 @@ return [
 		 * that, and reading a manifest would in any case contradict this tool's scope.
 		 *
 		 * Deliberately NOT scanned, each for a measured reason:
-		 *   *.md      -- three per-package docs/Home.md files contain copy-pasted sibling
-		 *                namespaces in prose (Plugin/WebServer, Plugin/WsServer,
-		 *                Connector/Virtual). They are documentation typos, not dependency
-		 *                edges, and they would force three cosmetic entries into the
-		 *                exception list below for zero enforcement value.
+		 *   *.md      -- the per-package docs/Home.md files name namespaces in prose. They
+		 *                are documentation, not dependency edges, and any slip in them
+		 *                would force a cosmetic entry into the exception list below for
+		 *                zero enforcement value.
 		 *   *.ts/*.vue -- the frontend couples by `@fastybird/<name>` npm specifier, never
 		 *                by PHP namespace, so this scanner would see nothing. The frontend
 		 *                boundary is clean today and is a separate tool if it is ever
@@ -135,8 +132,8 @@ return [
 		 *
 		 * The manifests are here because this tool checks dependency DIRECTION and never
 		 * composer manifests -- reading one to harvest namespaces out of an autoload map
-		 * would blur exactly the line the scope statement draws, and those 34 files are
-		 * being deleted anyway.
+		 * would blur exactly the line the scope statement draws, and the
+		 * manifests are none of this tool's business.
 		 *
 		 * The PHPStan configs are here because a baseline is a list of ERROR MESSAGES, not
 		 * wiring: tools/phpstan-baseline.neon alone is 241 KB of `FastyBird\...` patterns.
@@ -203,22 +200,16 @@ return [
 	 * This list is not used to allow anything -- a reference whose second segment is not a
 	 * discovered TYPE directory can never resolve to a package anyway. It exists so the
 	 * checker can tell the difference between "external, fine" and "resolves to nothing,
-	 * which probably means somebody wrote a stale namespace". Four module config/example.neon
-	 * files still register `FastyBird\WebServer\DI\WebServerExtension`; the real class has
-	 * been `FastyBird\Plugin\WebServer\DI\WebServerExtension` since the namespace
-	 * reorganisation. Without this list that stale spelling would be dropped without a word.
-	 *
-	 * Those four notes are advisory and correcting them is now SAFE: all four files are
-	 * listed under 'compositionRoots' below, so the corrected spelling is permitted. Before
-	 * that list existed the tool reported the stale name and then failed the build on the
-	 * one-word fix it had just asked for.
+	 * which probably means somebody wrote a stale namespace". No such external namespace is
+	 * referenced anywhere in the scanned files at present, so the list is empty; add an entry
+	 * only for a real composer package that shares the FastyBird vendor namespace.
 	 *
 	 * A second segment that IS a real type but whose package segment is missing or names no
 	 * package is a different matter entirely and is NOT advisory -- it exits 1. That is the
 	 * branch that catches `use FastyBird\Module as Modules;`, a group `use` cut above the
 	 * package segment, and `sprintf('FastyBird\Module\%s\...')`.
 	 */
-	'externalNamespaces' => ['JsonApi', 'SimpleAuth', 'DateTimeFactory'],
+	'externalNamespaces' => [],
 
 	/*
 	 * -----------------------------------------------------------------------------------
@@ -234,10 +225,8 @@ return [
 	'types' => [
 
 		/*
-		 * Core is the cornerstone -- Core/Core is now the ONLY package of this type, and
-		 * the only package in the whole repository other packages boot on. Library/* no
-		 * longer exists as a type at all (all 9 packages absorbed into Core/Core alongside
-		 * the 6 Core/Plugin packages) -- see docs/superpowers/specs/2026-09-20-core-consolidation-design.md.
+		 * Core is the cornerstone -- Core/Core is the ONLY package of this type, and the
+		 * only package in the whole repository other packages boot on.
 		 */
 		'Core' => ['Core/*'],
 
@@ -254,8 +243,7 @@ return [
 		 * Modules are the application. They sit on Core and on nothing else --
 		 * no Module -> Module (measured zero, which is why there is no `Module/*` target
 		 * here; Devices and Ui are joined by Bridge/DevicesModuleUiModule instead) and no
-		 * Module -> Plugin (also measured zero in PHP, though see the stale
-		 * FastyBird\WebServer spelling noted under 'externalNamespaces').
+		 * Module -> Plugin (also measured zero in PHP).
 		 */
 		'Module' => ['Core/*'],
 
@@ -263,8 +251,8 @@ return [
 		 * "A special plugin FOR THE TRIGGERS MODULE." The singular is the rule. Both
 		 * automators reach Module/Triggers and no other module, 41 refs, zero strays --
 		 * so the tight target goes here on the type rather than being repeated per package.
-		 * An automator reaches devices through the exchange bus using Metadata
-		 * documents (now part of Core/Core), never by linking Module/Devices.
+		 * An automator reaches devices through the exchange bus using Core's
+		 * documents, never by linking Module/Devices.
 		 */
 		'Automator' => ['Core/*', 'Module/Triggers'],
 
@@ -418,13 +406,10 @@ return [
 	 * depends on the plugin.
 	 *
 	 * The four files below are exactly that. Each is a standalone example configuration for
-	 * booting one module on its own, and each registers Contributte, Nettrine, IPub and
-	 * FastyBird DI extensions side by side. Judging them by their owning module's rule is a
-	 * category error, and it was a live trap before this list existed: all four still spell
-	 * the web server plugin's pre-reorganisation namespace `FastyBird\WebServer\DI\...`,
-	 * the checker reports that as an unresolved coordinate, and correcting the spelling --
-	 * a one-word edit -- would have turned the build red for a Module -> Plugin edge that
-	 * an example application is supposed to have. The tool invited a fix it then rejected.
+	 * booting one module on its own, and each registers Contributte, Nettrine and FastyBird
+	 * DI extensions side by side. Judging them by their owning module's rule is a category
+	 * error: an example application is supposed to register whatever it needs, including
+	 * packages its module's own code may never reach.
 	 *
 	 * Cross-package references in these files are counted, appear in --list-edges and are
 	 * reported in the summary under `composition`, so they stay visible. They are simply
@@ -440,9 +425,9 @@ return [
 		[
 			'path' => 'src/FastyBird/Module/Accounts/config/example.neon',
 			'reason' => 'Standalone example application config for booting the accounts module on its own. '
-				. 'It registers Contributte, Nettrine, IPub, SimpleAuth, JsonApi and the web server plugin '
-				. 'in one container, which is what an application does and what the module itself must '
-				. 'never do. Delete this entry if the file stops being a bootable container and becomes '
+				. 'It registers Contributte, Nettrine and the Core extension in one container, '
+				. 'which is what an application does and what the module itself must never do. Delete '
+				. 'this entry if the file stops being a bootable container and becomes '
 				. 'module-scoped configuration.',
 		],
 		[
@@ -490,7 +475,7 @@ return [
 	 *                      package anywhere in that file, forever, and the anti-rot
 	 *                      detector could not see it because the entry still matched more
 	 *                      than zero sites. Adding an unrelated repository service to
-	 *                      Core/Application's test container re-committed the sharpest
+	 *                      Core's test container re-committed the sharpest
 	 *                      inversion in the repository for free. `symbols` names the exact
 	 *                      namespaces excused; `sites` pins how many places may use them,
 	 *                      so a second copy of an already-excused line fails too.

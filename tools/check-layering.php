@@ -476,11 +476,11 @@ $selfCheck = $config['selfCheck'];
 // Package discovery
 //
 // A package is any directory at depth 2 under the packages root. Deliberately NOT
-// composer.json -- those 34 manifests are being deleted, which is the whole reason this tool
-// exists. Deliberately NOT the root autoload, which is an empty psr-4 map. Deliberately NOT
-// a hardcoded list of names: a new Connector, Module, Plugin, Automator, Core or Library
-// package is picked up on the next run with no edit to either file, and inherits its type
-// rule.
+// composer.json -- the manifests do not describe the real dependency edges, which is the whole
+// reason this tool exists. Deliberately NOT the root autoload, which is an empty psr-4 map.
+// Deliberately NOT a hardcoded list of names: a new Connector, Module, Plugin, Automator, Core,
+// Addon or Bridge package is picked up on the next run with no edit to either file, and
+// inherits its type rule.
 //
 // Discovery used to require a src/ subdirectory, which quietly doubled as an opt-out: a
 // directory holding only config/ and tests/ -- a bridge whose DI wiring was committed before
@@ -820,7 +820,7 @@ foreach ($config['exceptions'] as $index => $exception) {
 //
 // One file_get_contents, one mask and two preg_match_all per file. No tokenizer (it is an
 // order of magnitude slower and cannot read .neon at all, so it would force two code paths
-// for no gain), no subprocesses (34 greps would cost more than the whole scan), no
+// for no gain), no subprocesses (one grep per package would cost more than the whole scan), no
 // autoloader.
 //
 // DO NOT add a `str_contains($contents, 'FastyBird')` prefilter before the regex. It was

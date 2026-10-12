@@ -54,7 +54,7 @@ HTTP is served by nginx in front of php-fpm; every request hits `public/index.ph
 
 ### Per-connector processes are not wired up in production today
 
-Each configured connector is meant to run as its own long-running process, `php /app/bin/fb-console.php fb:devices-module:connector <identifier> -n`, one per connector identifier. **There is currently no mechanism in the shipped production image that starts one automatically.** `docker/prod/supervisor/supervisord.conf` has no `[include]` directive, by design: an earlier version tried globbing `/data/config/supervisor/*.conf`, but this repository's own supervisor configs live one level deeper (under `config/supervisor/{plugins,system,modules}/`, ported from the pre-merge framework repository and not otherwise used by anything today), so the glob matched nothing. `config/supervisor/system/application.conf` -- a dead program definition running a command that could not work in any package manager, `<pkg-manager> workspace @fastybird/application dev`, since `@fastybird/application`'s `package.json` has no `scripts` block -- was deleted in the Phase 6 pnpm migration rather than fixed, since a correct glob would otherwise have picked it up, taken the whole container down (`autorestart` turning a `FATAL` into a crash loop) and started a second WebSocket server colliding with the baked-in `ws-server` program. `.gitignore`'s `/config/supervisor/*.local.conf` entry and the rest of the `config/supervisor/` tree remain vestigial, not a working drop-in mechanism.
+Each configured connector is meant to run as its own long-running process, `php /app/bin/fb-console.php fb:devices-module:connector <identifier> -n`, one per connector identifier. **There is currently no mechanism in the shipped production image that starts one automatically.** `docker/prod/supervisor/supervisord.conf` has no `[include]` directive, by design: a glob over `/data/config/supervisor/*.conf` would match nothing, because this repository's own supervisor configs live one level deeper (under `config/supervisor/{plugins,modules}/`, a legacy layout that nothing reads today), and a glob deep enough to reach them would start a second WebSocket server colliding with the baked-in `ws-server` program. `.gitignore`'s `/config/supervisor/*.local.conf` entry and the rest of the `config/supervisor/` tree are vestigial, not a working drop-in mechanism.
 
 To actually run a connector under supervisord in production today, add a `[program:fb.connector.<identifier>]` block directly to `docker/prod/supervisor/supervisord.conf` and rebuild the image. Use this template as the starting point for that block:
 
@@ -72,7 +72,7 @@ stdout_logfile = /data/logs/%(program_name)s.log
 stderr_logfile = /data/logs/%(program_name)s-error.log
 ```
 
-Wiring an `[include]` glob that safely covers this case, so an operator can drop a config file into the `/data` volume without rebuilding the image, is unresolved -- a later phase should either fix the glob path and remove the dev-only `config/supervisor/system/application.conf` program from what it would pick up, or provide a purpose-built connector-programs directory.
+Wiring an `[include]` glob that safely covers this case, so an operator can drop a config file into the `/data` volume without rebuilding the image, is unresolved -- a later phase should either fix the glob path so it reaches only the program definitions meant for this image, or provide a purpose-built connector-programs directory.
 
 ## Development
 

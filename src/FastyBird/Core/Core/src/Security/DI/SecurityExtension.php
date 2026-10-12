@@ -48,17 +48,14 @@ final class SecurityExtension extends DI\CompilerExtension
 	public function getConfigSchema(): Schema\Schema
 	{
 		return Schema\Expect::structure([
-			// SimpleAuth used to be its own separate, opt-in Nette extension
-			// (fbSimpleAuth/SimpleAuthExtension) that a container's own config chose to
-			// register -- or not. fbCore is now the single universal extension every
-			// container in the repo loads (production and every package's tests alike), so
-			// there is no longer a way to simply not register SimpleAuth. An empty-string
-			// default keeps container compilation possible for containers that never
-			// configure it; everything loadConfiguration() below registers is gated on
-			// this same signature being non-empty, so an unconfigured signature never
-			// reaches TokenBuilder/TokenValidator or gets used for real token signing -- it
-			// simply means none of SimpleAuth's services are registered at all, matching
-			// pre-merge behaviour for containers that never opted into fbSimpleAuth.
+			// fbCore is the single universal extension every container in the repo loads
+			// (production and every package's tests alike), so security cannot be left
+			// unregistered by omission. An empty-string default keeps container compilation
+			// possible for containers that never configure it; everything loadConfiguration()
+			// below registers is gated on this same signature being non-empty, so an
+			// unconfigured signature never reaches TokenBuilder/TokenValidator or gets used for
+			// real token signing -- it simply means none of the security services are registered
+			// at all.
 			'token' => Schema\Expect::structure([
 				'issuer' => Schema\Expect::string(),
 				'signature' => Schema\Expect::string(''),
@@ -308,10 +305,10 @@ final class SecurityExtension extends DI\CompilerExtension
 
 		// Mirrors the signature !== '' gate around everything in loadConfiguration() above: this
 		// fallback's constructor needs IUserStorage, which only exists if that gate passed and
-		// registered security.userStorage. Without this
-		// gate, containers that never configure SimpleAuth (signature === '') would still get an
-		// unconditional fallback User service whose dependency was never registered, replacing
-		// "signature is missing" with a confusing "IUserStorage not found" deep in DI resolution.
+		// registered security.userStorage. Without this gate, containers that never configure a
+		// token signature (signature === '') would still get an unconditional fallback User
+		// service whose dependency was never registered, replacing "signature is missing" with a
+		// confusing "IUserStorage not found" deep in DI resolution.
 		if ($userContextServiceName === null && $configuration->token->signature !== '') {
 			$builder->addDefinition($this->prefix('user'), new DI\Definitions\ServiceDefinition())
 				->setType(Identity\User::class);

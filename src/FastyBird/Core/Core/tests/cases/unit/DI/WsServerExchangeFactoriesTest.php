@@ -14,8 +14,8 @@ use ReflectionProperty;
 /**
  * The fb:ws-server:start command starts every exchange registered in the container (#566).
  *
- * WsServer::execute() calls create() on each of its exchangeFactories, and nothing else starts
- * an exchange in the WS server process. The overlay registers the factory under services:, which
+ * The command's execute() calls create() on each of its exchangeFactories, and nothing else
+ * starts an exchange in the WebSocket server process. The overlay registers the factory under services:, which
  * nette/di processes after every extension's loadConfiguration(), the same position as RedisDb
  * or RabbitMQ registered in config/local.neon.
  */
