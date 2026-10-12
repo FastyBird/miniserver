@@ -20,7 +20,7 @@ All three live under the single declared volume `/data`. The container exposes p
 
 **A security signature is required.** The entrypoint (`docker/prod/docker-entrypoint.sh`) generates a random one into `config/local.neon` on first start if neither that file nor `FB_APP_PARAMETER__SECURITY_SIGNATURE` already supplies one, and refuses to boot (fatal, loud) if it cannot obtain or persist one -- the previous behaviour of silently signing every token with an empty string, which authenticated nothing, is exactly the failure this exists to prevent. The generated value is written into the `/data` volume, so it survives container replacement but is tied to that volume. For any deployment with more than one application replica, or any deployment where you need to reproduce the same signature after recreating the volume, set `SECURITY_SIGNATURE` explicitly (`docker/prod/docker-compose.yml` reads it with no fallback default, deliberately -- the value tracked in this public repository's own `.env`/`config/defaults.neon` must never reach production). **Losing the signature invalidates every token issued under it** -- every signed-in session and every API key that relies on it stops validating.
 
-The entrypoint then waits for the database to answer, runs `php bin/fb-console.php migrations:migrate --no-interaction --allow-no-migration`, then execs supervisord with the programs below.
+The entrypoint then waits for the database to answer, runs `php bin/fb-console.php migrations:migrate --no-interaction --allow-no-migration`, then execs supervisord with the programs below. The wait probe, `dbal:run-sql "select 1"`, boots the whole application, so a container that does not compile fails it as well as an unreachable database does. After 20 failed attempts the entrypoint aborts and prints the last attempt's output, which names the real cause.
 
 ### Databases created before the migration baseline
 
@@ -76,9 +76,29 @@ Wiring an `[include]` glob that safely covers this case, so an operator can drop
 
 ## Development
 
+Prerequisites: Docker with Compose v2, and a checkout of this repository. Nothing else is needed on the host: PHP, Composer, Node and pnpm run in the stack's own images. Run every command from the repository root:
+
 ```sh
+# PHP dependencies. COMPOSER_MIRROR_PATH_REPOS=1 copies the extensions into vendor/
+# instead of symlinking them, as CI and the production image do.
+docker compose -f docker/dev/docker-compose.yml run --rm --no-deps \
+    -e XDEBUG_MODE=off -e COMPOSER_MIRROR_PATH_REPOS=1 \
+    application composer install --no-interaction
+
+# JS dependencies, for the ui-server (the Vite dev server).
+docker compose -f docker/dev/docker-compose.yml run --rm --no-deps ui-server pnpm install --frozen-lockfile
+
+# Start the stack.
 docker compose -f docker/dev/docker-compose.yml up -d
 ```
+
+After an edit under `src/FastyBird/<Type>/<Name>/src/`, refresh that package's copy with `composer reinstall <package>`, run the same way (see the Traps in `CLAUDE.md`).
+
+On a fresh checkout the stack then does the rest on its own:
+
+- **Schema.** The one-shot `migrations` service waits for the database and runs `migrations:migrate --no-interaction --allow-no-migration`, as the production entrypoint does. If the wait fails, it prints the last attempt's output, not only "Database did not answer".
+- **Security signature.** The PHP services fall back to a public, development-only value, `dev-only-insecure-signature-never-use-in-production`, when `SECURITY_SIGNATURE` is empty or unset. Anyone can sign a token with it, so do not expose the dev stack beyond your machine. To use your own, set `SECURITY_SIGNATURE` (at least 32 characters) and pass the file explicitly: Compose reads `.env` from the compose file's directory, `docker/dev/`, so a `.env` at the repository root needs `--env-file .env`. A signature in `config/local.neon` has no effect here, because the environment variable always wins over a configuration file.
+- **Frontend manifest.** contributte/vite needs a `manifest.json` to compile the DI container, and only a frontend build writes one, into `public/.vite/`. Without a build, `docker/dev/php/docker-entrypoint.sh` points `FB_CONFIG_DIR` at `docker/dev/php/no-frontend-build/`. That directory's `common.neon` sets an empty placeholder manifest kept beside it, and its `local.neon` is a link to `config/local.neon`, so your overrides still load. Each PHP service logs `No frontend build in public/` to stderr when it starts this way. Nothing is written into `public/`. After a build (`docker compose -f docker/dev/docker-compose.yml run --rm --no-deps ui-server pnpm build`), restart the PHP services (`application`, `ws-server`, `devices-module`) and they use the real manifest. The two cases load different configuration files, so each gets its own compiled container in `var/temp/cache`.
 
 Default services: `web-server` (nginx), `application` (php-fpm with xdebug), `ui-server` (node running `pnpm dev`), `ws-server`, `devices-module` (exchange), `migrations` (one-shot) and `database` (MariaDB). `redis`, `couchdb`, `rabbitmq` and `mqtt` are behind Compose profiles -- see [configuration.md](./configuration.md) for which extension needs which profile. A LAN-facing macvlan network is available as an override: `docker compose -f docker/dev/docker-compose.yml -f docker/dev/docker-compose.lan.yml up -d`.
 
