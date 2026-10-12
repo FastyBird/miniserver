@@ -36,7 +36,6 @@ jobs:
             bridge
             addon
             automator
-            library
             ui
             infra
             ci

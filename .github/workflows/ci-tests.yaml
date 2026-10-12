@@ -472,19 +472,16 @@ jobs:
       - name: "The migrated schema matches the mapping (orm:validate-schema)"
         run: "docker exec miniserver php bin/fb-console.php orm:validate-schema"
 
-      # GET / is not asserted to return 200. AppRouter::createRouter
-      # (Core/Application/src/Router/AppRouter.php) defines a route for "/",
-      # but nothing registers it: there is no `services: router:` entry and
-      # no `application: mapping:` in any config (checked both
-      # Core/Application/config/*.neon and config/*.neon; `git log
-      # -S'AppRouter'` over those paths returns nothing). The Nette
-      # application therefore has no routes and correctly 404s every
-      # non-API request. This is pre-existing frozen-repository behaviour,
-      # not something this phase introduced, and wiring the router would be
-      # a behavioural change the merge forbids. Do not "fix" this assertion
-      # to expect 200 — it cannot happen without a router config change
-      # that is out of scope here. What we can and do assert is that the
-      # request reached and was handled by the Nette application.
+      # GET / is not asserted to return 200. The Nette application does route
+      # "/": CoreExtension::beforeCompile() adds Presenters\AppRouter::createRouter
+      # (src/FastyBird/Core/Core/src/Presenters/AppRouter.php) to its route list,
+      # fbCore.ui.routes, which maps "/" to App:Default:default. But the presenter
+      # looks its template up as templates/presenters/Default.latte and the file is
+      # default.latte, so on a case-sensitive filesystem, this image's included,
+      # the request ends in a 404 "Missing template". Do not "fix" this assertion
+      # to expect 200 -- that needs a code change, out of scope here. What we can
+      # and do assert is that the request reached and was handled by the Nette
+      # application.
       - name: "GET / is handled by the Nette application (any status)"
         run: |
           headers=$(curl -s -D - -o /dev/null http://127.0.0.1:80/)

@@ -44,7 +44,6 @@ module.exports = {
 				'bridge',
 				'addon',
 				'automator',
-				'library',
 				'ui',
 				'infra',
 				'ci',
