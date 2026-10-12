@@ -54,7 +54,9 @@ services:
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/config
+      # Filled by docker/dev/php/docker-entrypoint.sh: config/local.neon, plus a placeholder
+      # Vite manifest when there is no frontend build. Must match the path in that script.
+      FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
@@ -117,7 +119,9 @@ services:
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/config
+      # Filled by docker/dev/php/docker-entrypoint.sh: config/local.neon, plus a placeholder
+      # Vite manifest when there is no frontend build. Must match the path in that script.
+      FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
@@ -151,7 +155,9 @@ services:
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/config
+      # Filled by docker/dev/php/docker-entrypoint.sh: config/local.neon, plus a placeholder
+      # Vite manifest when there is no frontend build. Must match the path in that script.
+      FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
@@ -182,7 +188,9 @@ services:
       PHP_DATE_TIMEZONE: ${APP_TZ:-UTC}
       # Application specific environment variables
       APP_ENV: "dev"
-      FB_CONFIG_DIR: /app/config
+      # Filled by docker/dev/php/docker-entrypoint.sh: config/local.neon, plus a placeholder
+      # Vite manifest when there is no frontend build. Must match the path in that script.
+      FB_CONFIG_DIR: /tmp/fastybird-dev-config
       FB_APP_PARAMETER__DATABASE_HOST: database
       FB_APP_PARAMETER__DATABASE_PORT: ${MYSQL_PORT:-3306}
       FB_APP_PARAMETER__DATABASE_USERNAME: ${DATABASE_USERNAME:-miniserver}
