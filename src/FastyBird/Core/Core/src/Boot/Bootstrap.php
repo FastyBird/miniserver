@@ -7,7 +7,6 @@ use Tracy\Debugger;
 use function array_key_exists;
 use function array_merge;
 use function array_shift;
-use function boolval;
 use function class_exists;
 use function count;
 use function define;
@@ -18,15 +17,19 @@ use function file_exists;
 use function getenv;
 use function implode;
 use function in_array;
+use function intval;
 use function is_array;
 use function is_dir;
-use function is_numeric;
+use function is_string;
 use function mkdir;
+use function preg_match;
 use function realpath;
 use function sprintf;
+use function str_ends_with;
 use function strlen;
 use function strpos;
 use function strtolower;
+use function strtoupper;
 use function strval;
 use function substr;
 use const DIRECTORY_SEPARATOR;
@@ -39,6 +42,11 @@ use const E_USER_DEPRECATED;
  */
 final class Bootstrap
 {
+
+	/**
+	 * Suffixes of the environment variable names whose value is never typed, see castEnvValue()
+	 */
+	private const array STRING_ONLY_SUFFIXES = ['PASSWORD', 'USERNAME', 'SIGNATURE', 'DSN', 'KEY'];
 
 	/**
 	 * @throws Exceptions\InvalidArgument
@@ -275,12 +283,18 @@ final class Bootstrap
 	}
 
 	/**
+	 * Reads the environment variables named `<prefix><delimiter><SECTION><delimiter><KEY>...` into a
+	 * nested parameter array: the name after the prefix is lowercased and split on the delimiter, so
+	 * `FB_APP_PARAMETER__DATABASE_PORT` becomes `['database' => ['port' => 3306]]`.
+	 *
+	 * Values are typed by castEnvValue().
+	 *
 	 * @return array<mixed>
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 */
-	private static function loadEnvParameters(
+	public static function loadEnvParameters(
 		string $prefix,
 		string $delimiter = '_',
 	): array
@@ -293,13 +307,7 @@ final class Bootstrap
 
 		$map = static function (&$array, array $keys, $value) use (&$map) {
 			if (count($keys) <= 0) {
-				return is_numeric($value) ? (int) $value : (in_array(
-					strtolower(strval($value)),
-					['true', 'false'],
-					true,
-				) ? boolval(
-					strtolower(strval($value)),
-				) : $value);
+				return $value;
 			}
 
 			$key = array_shift($keys);
@@ -328,11 +336,55 @@ final class Bootstrap
 				$keys = explode($delimiter, strtolower(substr($key, strlen($prefix))));
 
 				// Make array structure
-				$map($parameters, $keys, $value);
+				$map($parameters, $keys, is_string($value) ? self::castEnvValue($key, $value) : $value);
 			}
 		}
 
 		return $parameters;
+	}
+
+	/**
+	 * Types the value of one environment variable. `$name` is the variable's full name as it arrives,
+	 * for example `FB_APP_PARAMETER__DATABASE_PASSWORD`.
+	 *
+	 * - A name ending in PASSWORD, USERNAME, SIGNATURE, DSN or KEY (compared case-insensitively) is
+	 *   a credential or an opaque token, never a number or a flag: its value stays the string it was.
+	 * - `true` and `false`, in any case, become booleans.
+	 * - A canonical integer, that is `0` or `-?[1-9][0-9]*` and small enough for PHP_INT_MAX, becomes
+	 *   an int. A leading zero (`0123`), a sign (`+5`, `-0`), a fraction (`1.5`), an exponent (`1e3`),
+	 *   padding and an integer too large to round-trip all stay strings.
+	 * - Anything else, the empty string included, stays a string.
+	 */
+	private static function castEnvValue(string $name, string $value): bool|int|string
+	{
+		$name = strtoupper($name);
+
+		foreach (self::STRING_ONLY_SUFFIXES as $suffix) {
+			if (str_ends_with($name, $suffix)) {
+				return $value;
+			}
+		}
+
+		$lowered = strtolower($value);
+
+		if ($lowered === 'true') {
+			return true;
+		}
+
+		if ($lowered === 'false') {
+			return false;
+		}
+
+		if (preg_match('/^(?:0|-?[1-9][0-9]*)\z/', $value) === 1) {
+			$integer = intval($value);
+
+			// An integer beyond PHP_INT_MAX saturates when cast; it is not the number that was written
+			if (strval($integer) === $value) {
+				return $integer;
+			}
+		}
+
+		return $value;
 	}
 
 }
