@@ -164,11 +164,12 @@ mutations-infection:
 
 composer-validate: ## Validate the root and every extension composer manifest
 	# Deliberately NOT --strict, at either level. --strict promotes constraint-style
-	# warnings to a non-zero exit, and three manifests carry such constraints that the
-	# merge is forbidden to change: the root and Core/Tools declare mathsolver/mathsolver
-	# as unbound (@dev), and the root and Connector/HomeKit pin endroid/qr-code to the
-	# exact version 4.5. With --strict this target would be red from birth. Revisit in
-	# Phase 6, when dependency changes are permitted.
+	# warnings to a non-zero exit, and the manifests carry such constraints on purpose:
+	# every manifest requires its sibling packages at @dev (they are path repositories of
+	# this application, not versioned releases), Core/Core requires mathsolver/mathsolver
+	# at @dev (a branch dependency, locked to dev-main), and Plugin/RedisDb and
+	# Plugin/RedisDbCache pin clue/redis-react to the exact version 3.0.0. With --strict
+	# this target would be red.
 	composer validate
 	for manifest in src/FastyBird/*/*/composer.json; do \
 		composer validate --no-check-lock "$$manifest" || exit 1; \

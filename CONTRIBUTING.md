@@ -36,14 +36,13 @@ The scope is the surface you changed, mirroring the extension type directories u
 
 | Scope | Covers |
 |---|---|
-| `core` | `src/FastyBird/Core/**` -- Application, Exchange, Tools |
+| `core` | `src/FastyBird/Core/**` -- Core, the package every other extension builds on |
 | `module` | `src/FastyBird/Module/**` -- Accounts, Devices, Triggers, Ui |
 | `connector` | `src/FastyBird/Connector/**` -- the ten device connectors |
-| `plugin` | `src/FastyBird/Plugin/**` -- ApiKey, CouchDb, RabbitMq, RedisDb, RedisDbCache, WebServer, WsServer |
+| `plugin` | `src/FastyBird/Plugin/**` -- ApiKey, CouchDb, RabbitMq, RedisDb, RedisDbCache |
 | `bridge` | `src/FastyBird/Bridge/**` -- the six inter-extension bridges |
 | `addon` | `src/FastyBird/Addon/**` -- VirtualThermostat |
 | `automator` | `src/FastyBird/Automator/**` -- DateTime, DevicesModule |
-| `library` | `src/FastyBird/Library/**` -- Metadata |
 | `ui` | Root frontend build tooling shared across extensions: `index.html`, `vite.config.ts`, `uno.config.ts`, `eslint.config.mjs`, `prettier.config.mjs`, `stylelint.config.mjs`, `config/extensions.ts` |
 | `infra` | `docker/**`, `docker-compose.yml`, `Makefile`, `bin/**`, `config/**` (shipped wiring), root `composer.json`/`tools/**` |
 | `ci` | `.github/**` |

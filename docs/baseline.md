@@ -188,81 +188,25 @@ a range allowed drift, we got drift.
 None of these are regressions. All predate the merge, and all were left alone because the
 baseline phase must not change behaviour.
 
-**The `dg/bypass-finals` patch does not apply.** It targets a line that moved upstream.
-It is accepted and non-blocking; the test suite passes without it.
-
-**`composer validate --strict` exits 1.** Two pre-existing warnings remain:
-`endroid/qr-code` uses an exact version constraint, and `mathsolver/mathsolver` is
-unbound. Fixing either is a dependency change. Any later gate running that command must
-drop `--strict` or tolerate warnings, or it will be red from birth.
+**`composer validate --strict` exits 1, permanently.** Every manifest requires its sibling
+packages at `@dev` (they are path repositories of this application), `Core/Core` requires
+`mathsolver/mathsolver` at `@dev`, and `Plugin/RedisDb` and `Plugin/RedisDbCache` pin
+`clue/redis-react` to the exact version `3.0.0`. `make composer-validate` therefore runs without
+`--strict`.
 
 **Two runtime defects are recorded in the spec, section 7.1.** The Shelly Gen2 WebSocket
 client raises an argument-count error if executed, and a presenter returns an empty array
 where its parent declares a non-empty list. Both are suppressed with truthful comments at
 the call site and must be resolved before the affected features are relied upon.
 
-**`FastyBird/libraries-patches` cannot be deleted, and vendoring did not fully take
-effect.** A cold install on 2026-09-10 showed exactly which patches come from where.
-Nine of the eleven applied patches resolve from `tools/patches/`. Two are still fetched
-over the network from that repository:
-
-- `nette/utils` — the root never declared it. `fastybird/json-api`,
-  `fastybird/datetime-factory` and `fastybird/simple-auth` each declare it by raw URL.
-- `nettrine/orm` — **the root does declare this one locally, and is overridden.**
-  `fastybird/simple-auth` declares the same patch by raw URL, and a dependency's
-  declaration wins over a root entry sharing its description key. The vendored file sits
-  unused.
-
-So the project still needs that repository reachable at install time, and one vendored
-file is dead weight until the external libraries stop declaring it. Deleting the
-repository would break `composer install` on every future checkout. It becomes
-removable only once Phase 6 updates or absorbs those three libraries. Verify with
-`grep -rl libraries-patches vendor/*/*/composer.json` returning nothing.
-
-> **Update (2026-09-12), after a full audit of all eleven patches.** Three were deleted:
-> `dg/bypass-finals` (never applied here at all -- `patches_applied: []` -- and it never
-> fixed a library bug), `react/event-loop` (its last consumer disappeared in 2024) and the
-> `nettrine/orm` root entry (the dead duplicate described just above; the dependency's copy
-> is still the live one and is unaffected).
->
-> Four more went in the two changes that followed. `doctrine/dbal` cast null to `''` for
-> every parameter bound with an explicit string type -- not only in `quote()`, which was its
-> stated purpose and has no caller in `src/`, but in `bindParameters()`, which is how
-> Doctrine ORM binds every UPDATE. The two `doctrine/orm` "Ramsey uuid" patches pre-converted
-> UUID identifiers to raw bytes before a delete, which upstream made unnecessary in 2.7.0 and
-> 2.8.2 by passing `$types` through to `Connection::delete()` and `deleteJoinTableRecords()`;
-> and the `ramsey/uuid-doctrine` patch existed only to make `UuidBinaryType` tolerate the raw
-> bytes those two produced. All three had to go in one commit: with the ORM patches applied
-> and the uuid-doctrine one removed, every delete throws `ConversionException`.
->
-> Four patch files and four root entries across four packages remain, and five packages are
-> patched at install time -- the fifth being `nettrine/orm` through `fastybird/simple-auth`.
->
-> Two `extra` flags changed with them. `enable-patching` is now an explicit `true` rather
-> than relying on `Patches::isPatchingEnabled()` returning true as a side effect of a
-> non-empty `patches` block: emptying that block would otherwise disable **all** patching
-> silently, including the dependency-supplied one. And `composer-exit-on-patch-failure` is
-> now `true`, so a patch that fails to apply stops the install instead of printing a
-> warning and exiting 0. A clean `composer install` was verified green under both.
-
-**Coverage configuration is wrong.** In `tools/phpunit.xml`, the `<source><include>`
-block lists test directories rather than source directories, so coverage and mutation
-testing measure the tests themselves. Pre-existing; it makes any future coverage gate
-meaningless until corrected.
-
-**`tools/patches/nette-utils-array-offsetcheck.diff` is now declared in the root.** This
-paragraph used to record that an experiment added the entry, found it inert because a
-dependency's declaration wins, and reverted it. That was right about the mechanism and
-wrong about the conclusion. Inert today is exactly what protective later looks like: the
-moment `fastybird/json-api`, `fastybird/simple-auth` and `fastybird/datetime-factory`
-become first-party source, their `extra.patches` leave the dependency graph, nothing
-declares this patch, `composer install` exits 0 in silence, and `ArrayHash::offsetExists()`
-reverts -- which breaks the explicit-null path in every Devices state manager. The entry
-was re-added on 2026-09-12 under the description key `Bug: Offset check with null support`,
-matching the dependency's key character for character. That match is load bearing: a
-differing key makes both copies gather, the second fail, `patches_applied` mismatch
-permanently, and `checkPatches()` uninstall and re-download `nette/utils` on every
-subsequent install.
+**Two dependencies are patched at install time.** The root `composer.json` declares both
+patches, and both apply from `tools/patches/`: `nette/utils` (`Bug: Offset check with null
+support`, which keeps `ArrayHash::offsetExists()` true for a key holding `null`; the explicit-null
+path of every Devices state manager relies on it) and `softcreatr/jsonpath`. `enable-patching` is
+an explicit `true`, and `composer-exit-on-patch-failure` is `true`, so a patch that fails to apply
+stops the install. No dependency declares a patch by URL any more, so the external
+`FastyBird/libraries-patches` repository is not needed: `grep -rl libraries-patches
+vendor/*/*/composer.json` returns nothing.
 
 ## Cold reinstall, verified 2026-09-10
 

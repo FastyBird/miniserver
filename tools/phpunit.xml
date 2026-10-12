@@ -151,7 +151,6 @@
             <directory suffix=".php">../src/FastyBird/Bridge/*/src</directory>
             <directory suffix=".php">../src/FastyBird/Connector/*/src</directory>
             <directory suffix=".php">../src/FastyBird/Core/*/src</directory>
-            <directory suffix=".php">../src/FastyBird/Library/*/src</directory>
             <directory suffix=".php">../src/FastyBird/Module/*/src</directory>
             <directory suffix=".php">../src/FastyBird/Plugin/*/src</directory>
         </include>

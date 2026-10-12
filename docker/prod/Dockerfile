@@ -154,9 +154,11 @@ VOLUME /data
 
 EXPOSE 80 8888
 
-# "/" cannot be used here: the Nette application has no router registered
-# (see spec section 7.1 / progress.md Ruling 8), so it 404s on every
-# request and `curl -f` would exit non-zero forever, leaving the container
+# "/" cannot be used here: the Nette application routes it to
+# App:Default:default, but the presenter looks its template up as
+# Default.latte and the file is default.latte, so on this image's
+# case-sensitive filesystem it 404s (see docs/architecture.md, Request
+# routing) and `curl -f` would exit non-zero forever, leaving the container
 # permanently "unhealthy". /favicon.ico is served directly by nginx from
 # public/ and genuinely returns 200.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \

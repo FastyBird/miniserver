@@ -193,7 +193,7 @@ fbRedisDbPlugin:
         channel: fb_exchange
 ```
 
-`client.username` and `client.password` default to `null`; add them if your Redis instance requires auth. `exchange.channel` defaults to the metadata library's `EXCHANGE_CHANNEL_NAME` constant if omitted.
+`client.username` and `client.password` default to `null`; add them if your Redis instance requires auth. `exchange.channel` defaults to `fb_exchange` (`RedisDbExtension::EXCHANGE_CHANNEL_NAME`) if omitted.
 
 ### Devices module state bridge
 
