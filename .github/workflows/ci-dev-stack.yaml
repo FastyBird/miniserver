@@ -123,7 +123,8 @@ jobs:
               sleep 2
             done
             echo "$label -> $code"
-            head -c 400 /tmp/api-body.txt || true
+            # A Tracy error page is HTML: strip the tags to keep the exception message readable.
+            sed -e 's/<[^>]*>//g' /tmp/api-body.txt | grep -v '^[[:space:]]*$' | head -c 600 || true
             echo
             [ "$code" = "$want" ]
           }
@@ -169,6 +170,8 @@ jobs:
         if: "failure()"
         run: |
           $COMPOSE ps -a || true
+          ls -lna var var/temp var/log 2>&1 | head -40 || true
+          tail -n 40 var/log/*.log 2>&1 || true
           $COMPOSE logs --no-color --tail=300 || true
 
       - name: "Tear the stack down"
