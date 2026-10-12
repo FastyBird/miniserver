@@ -6,14 +6,17 @@ export enum ModuleSource {
 	UI = 'com.fastybird.ui-module',
 }
 
+export enum CoreSource {
+	NOT_SPECIFIED = '*',
+	CORE = 'com.fastybird.core',
+}
+
 export enum PluginSource {
 	NOT_SPECIFIED = '*',
 	COUCHDB = 'com.fastybird.couchdb-plugin',
 	RABBITMQ = 'com.fastybird.rabbitmq-plugin',
 	REDISDB = 'com.fastybird.redisdb-plugin',
 	REDISDB_CACHE = 'com.fastybird.redisdb-cache-plugin',
-	WS_EXCHANGE = 'com.fastybird.ws-server-plugin',
-	WEB_SERVER = 'com.fastybird.web-server-plugin',
 	API_KEY = 'com.fastybird.api-key-plugin',
 }
 

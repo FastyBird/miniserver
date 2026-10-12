@@ -27,14 +27,6 @@ final class SourcesParityTest extends TestCase
 
 	private const string PHP_DIRECTORY = __DIR__ . '/../../../../src/Values/Types/Sources';
 
-	/**
-	 * PHP case names whose TS twin is named differently. `Plugin::WS_SERVER` is `WS_EXCHANGE` in TS
-	 * (the value is the same); #744 replaces both, and this entry goes with it.
-	 */
-	private const array TS_NAME_ALIASES = [
-		'PluginSource' => ['WS_EXCHANGE' => 'WS_SERVER'],
-	];
-
 	public function testEveryPhpEnumHasATsTwinAndNothingMore(): void
 	{
 		$php = [];
@@ -82,13 +74,11 @@ final class SourcesParityTest extends TestCase
 
 		self::assertArrayHasKey($name . 'Source', $tsEnums);
 
-		$actual = [];
-
-		foreach ($tsEnums[$name . 'Source'] as $caseName => $value) {
-			$actual[self::TS_NAME_ALIASES[$name . 'Source'][$caseName] ?? $caseName] = $value;
-		}
-
-		self::assertEquals($expected, $actual, 'source.ts ' . $name . 'Source differs from Sources\\' . $name);
+		self::assertEquals(
+			$expected,
+			$tsEnums[$name . 'Source'],
+			'source.ts ' . $name . 'Source differs from Sources\\' . $name,
+		);
 	}
 
 	/**

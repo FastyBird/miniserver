@@ -41,7 +41,8 @@ final class HttpServerCommandTest extends TestCase
 					if ($args === [
 						'Starting HTTP Server',
 						[
-							'source' => Sources\Plugin::WEB_SERVER->value,
+							'source' => Sources\Core::CORE->value,
+							'capability' => 'web-server',
 							'type' => 'server-command',
 						],
 					]) {
@@ -54,7 +55,8 @@ final class HttpServerCommandTest extends TestCase
 						&& is_string($args[0])
 						&& preg_match('#^Listening on "http://127\.0\.0\.1:[1-9][0-9]*"$#', $args[0]) === 1
 						&& $args[1] === [
-							'source' => Sources\Plugin::WEB_SERVER->value,
+							'source' => Sources\Core::CORE->value,
+							'capability' => 'web-server',
 							'type' => 'factory',
 						];
 				}),
