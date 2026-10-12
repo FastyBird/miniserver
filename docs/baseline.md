@@ -391,6 +391,13 @@ distinct names imported there are types or interfaces, erased at compile time). 
 rests on exactly **6** value imports of `RELATIONSHIP_NAMES_PROP` from
 `jsona/lib/simplePropertyMappers`, the one symbol with no path off the subpath.
 
+> **Update (#441):** the 28 `jsona/lib/JsonaTypes` type imports are gone (29 import sites by
+> the time of the change). The types are owned in `Core/Core/assets/api/jsona.types.ts` and
+> imported from `@fastybird/miniserver-core`, which let `tsconfig.json` move to
+> `moduleResolution: "bundler"` and drop `baseUrl` and `ignoreDeprecations`. jsona's `exports`
+> map exposes only the package root, and that root re-exports none of the nine type names.
+> Moving to TypeScript 7 stays blocked on typescript-eslint (typescript-eslint#12518).
+
 **`--ignore-engines` (Task 4 Step 2): already corrected, before this run.** This
 document's own "Update, since this baseline was taken" note (above) already records the
 flag as retired repo-wide following the Node 20 -> 24 move, and a live grep of
