@@ -10,7 +10,6 @@ use Nette\Caching as NetteCaching;
 use Nette\DI;
 use Nette\Schema;
 use Override;
-use stdClass;
 use function assert;
 
 /**
@@ -44,9 +43,9 @@ final class RedisDbCacheExtension extends DI\CompilerExtension
 				'username' => Schema\Expect::string()->nullable(),
 				'password' => Schema\Expect::string()->nullable(),
 				'database' => Schema\Expect::int(0),
-			]),
+			])->castTo(Config\Client::class),
 			'autowired' => Schema\Expect::bool(true),
-		]);
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -54,7 +53,7 @@ final class RedisDbCacheExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$builder->addDefinition($this->prefix('redis.configuration'), new DI\Definitions\ServiceDefinition())
 			->setType(Connections\Configuration::class)
@@ -80,7 +79,7 @@ final class RedisDbCacheExtension extends DI\CompilerExtension
 
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$builder->getDefinitionByType(NetteCaching\Storage::class)
 			->setAutowired(false);

@@ -14,7 +14,6 @@ use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
 use Override;
-use stdClass;
 use function assert;
 
 /**
@@ -49,11 +48,11 @@ final class RedisDbExtension extends DI\CompilerExtension
 				'port' => Schema\Expect::int(6_379),
 				'username' => Schema\Expect::string()->nullable(),
 				'password' => Schema\Expect::string()->nullable(),
-			]),
+			])->castTo(Config\Client::class),
 			'exchange' => Schema\Expect::structure([
 				'channel' => Schema\Expect::string()->default(self::EXCHANGE_CHANNEL_NAME),
-			]),
-		]);
+			])->castTo(Config\Exchange::class),
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -61,7 +60,7 @@ final class RedisDbExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$builder->addDefinition($this->prefix('publisher'), new DI\Definitions\ServiceDefinition())
 			->setType(Publishers\Publisher::class)

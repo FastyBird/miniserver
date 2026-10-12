@@ -9,7 +9,6 @@ use Nette\Bootstrap;
 use Nette\DI;
 use Nette\Schema;
 use Override;
-use stdClass;
 use function assert;
 
 /**
@@ -43,8 +42,8 @@ final class CouchDbExtension extends DI\CompilerExtension
 				'port' => Schema\Expect::int(5_672),
 				'username' => Schema\Expect::string('guest')->nullable(),
 				'password' => Schema\Expect::string('guest')->nullable(),
-			]),
-		]);
+			])->castTo(Config\Connection::class),
+		])->castTo(Config::class);
 	}
 
 	#[Override]
@@ -52,7 +51,7 @@ final class CouchDbExtension extends DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$configuration = $this->getConfig();
-		assert($configuration instanceof stdClass);
+		assert($configuration instanceof Config);
 
 		$builder->addDefinition($this->prefix('connection'))
 			->setType(Connections\Connection::class)

@@ -262,6 +262,10 @@ violations: any violation fails it.
   values the schema can hand over. The schema stays the single source of keys, types and
   defaults; the class declares no defaults. A child reads `$this->getConfig()` after
   `assert($configuration instanceof Config)`.
+- Every other package's extension that takes configuration follows the same pattern: its section
+  is cast to `FastyBird\<Type>\<Name>\DI\Config`, and each nested structure to
+  `FastyBird\<Type>\<Name>\DI\Config\<Path>` (`fbRabbitMqPlugin > client` is
+  `RabbitMq\DI\Config\Client`).
 - The denylist applies to every key path, sections and leaves alike. `application` may not be a
   top-level key.
 
