@@ -6,9 +6,10 @@
 #
 # The placeholder is an empty manifest. It lets the DI container compile, which is all the dev
 # PHP services need: the JSON:API and the WebSocket server never read the manifest. The one
-# template that does is behind `GET /`, which 404s on a case-sensitive filesystem because the
-# template file names are lowercase, but renders on a case-insensitive bind mount such as macOS's
-# (see docs/architecture.md, Request routing). Run `pnpm build` before using that page.
+# template that does is behind `GET /` and the sign-in page: the layout resolves its script through
+# the manifest, so with this placeholder those pages end in a Nette "Server Error" body
+# (see docs/architecture.md, Request routing). Run `pnpm build` before using them, or enable the
+# Vite dev server, which bypasses the manifest.
 
 contributteVite:
     manifestFile: %appDir%/docker/dev/php/no-frontend-build/vite-manifest.json

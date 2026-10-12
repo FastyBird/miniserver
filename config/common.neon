@@ -112,7 +112,7 @@ fbUiModule:
 # Application
 #############
 contributteConsole:
-    name: "FastyBird:MiniServer!"
+    name: "FastyBird MiniServer"
     version: "1.0.0"
     catchExceptions: true
     autoExit: true
@@ -127,9 +127,14 @@ contributteTranslation:
     dirs:
         - %appDir%/vendor/fastybird/miniserver-core/src/Api/Translations
 
+# `basePath` is the URL prefix of the built assets. Vite writes them to public/assets/ and its
+# manifest to public/.vite/manifest.json, and without this option the extension derives the
+# prefix from the manifest's directory, so every script and style URL became /.vite/assets/...,
+# which 404s. It is not used while the Vite dev server is enabled: assets then come from `server`.
 contributteVite:
     server: http://localhost:3000
     cookie: fb-app-vite
+    basePath: /
 
 # Doctrine
 ##########

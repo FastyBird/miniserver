@@ -154,13 +154,11 @@ VOLUME /data
 
 EXPOSE 80 8888
 
-# "/" cannot be used here: the Nette application routes it to
-# App:Default:default, but the presenter looks its template up as
-# Default.latte and the file is default.latte, so on this image's
-# case-sensitive filesystem it 404s (see docs/architecture.md, Request
-# routing) and `curl -f` would exit non-zero forever, leaving the container
-# permanently "unhealthy". /favicon.ico is served directly by nginx from
-# public/ and genuinely returns 200.
+# /favicon.ico is served directly by nginx from public/ and returns 200, so
+# this reports that the container's web server is up. "/" answers 200 as well
+# (see docs/architecture.md, Request routing) and CI checks the page, but it
+# renders through php-fpm, the Nette application and the frontend build's Vite
+# manifest, which is a different question from whether the container is alive.
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
     CMD curl -f http://localhost/favicon.ico || exit 1
 

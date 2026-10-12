@@ -472,22 +472,48 @@ jobs:
       - name: "The migrated schema matches the mapping (orm:validate-schema)"
         run: "docker exec miniserver php bin/fb-console.php orm:validate-schema"
 
-      # GET / is not asserted to return 200. The Nette application does route
-      # "/": CoreExtension::beforeCompile() adds Presenters\AppRouter::createRouter
-      # (src/FastyBird/Core/Core/src/Presenters/AppRouter.php) to its route list,
-      # fbCore.ui.routes, which maps "/" to App:Default:default. But the presenter
-      # looks its template up as templates/presenters/Default.latte and the file is
-      # default.latte, so on a case-sensitive filesystem, this image's included,
-      # the request ends in a 404 "Missing template". Do not "fix" this assertion
-      # to expect 200 -- that needs a code change, out of scope here. What we can
-      # and do assert is that the request reached and was handled by the Nette
-      # application.
-      - name: "GET / is handled by the Nette application (any status)"
+      # GET / and GET /sign/in are the Nette application's pages. CoreExtension::beforeCompile()
+      # adds Presenters\AppRouter::createRouter to its route list, fbCore.ui.routes, which maps
+      # "/" to App:Default:default; the Accounts module adds /sign/in. Each presenter renders
+      # templates/presenters/<Presenter>.latte -- the file name must match formatTemplateFiles()'s
+      # capitalised lookup exactly, because this image's filesystem is case-sensitive -- inside
+      # templates/@layout.latte, which resolves the frontend build's script through the Vite
+      # manifest.
+      #
+      # A status line is not enough. Latte streams the page, so an exception thrown part-way
+      # through (a layout asset that is not in the manifest, which is how this page once failed)
+      # arrives after "200 OK" has gone out, as a Nette "Server Error" page spliced into the
+      # body. So the body is checked too: no "Server Error", the #app mount point, the closing
+      # </html>, and the first module script's URL, which must itself answer 200. That last check
+      # is what catches a wrong Vite basePath (/.vite/assets/... instead of /assets/...).
+      - name: "GET / and GET /sign/in render the SPA shell"
         run: |
-          headers=$(curl -s -D - -o /dev/null http://127.0.0.1:80/)
-          echo "$headers"
-          echo "$headers" | grep -qi "^X-Powered-By: Nette Framework 3" \
-            || { echo "Missing X-Powered-By: Nette Framework 3 header"; exit 1; }
+          for path in / /sign/in; do
+            echo "== GET $path"
+            headers=$(mktemp)
+            body=$(mktemp)
+            curl -s -D "$headers" -o "$body" "http://127.0.0.1:80$path"
+            head -n 1 "$headers"
+            head -n 1 "$headers" | grep -q " 200" \
+              || { echo "GET $path did not answer 200"; exit 1; }
+            grep -qi "^X-Powered-By: Nette Framework 3" "$headers" \
+              || { echo "GET $path: missing X-Powered-By: Nette Framework 3 header"; exit 1; }
+            ! grep -q "Server Error" "$body" \
+              || { echo "GET $path: the body is a Nette Server Error page"; head -c 2000 "$body"; docker logs miniserver 2>&1 | tail -n 20; exit 1; }
+            grep -q 'id="app"' "$body" \
+              || { echo "GET $path: the #app mount point is missing"; exit 1; }
+            grep -q '</html>' "$body" \
+              || { echo "GET $path: the page is truncated"; exit 1; }
+            script=$(grep -oE '<script[^>]*src="[^"]+"' "$body" | head -n 1 | sed -E 's/.*src="([^"]+)".*/\1/')
+            echo "first script: $script"
+            case "$script" in
+              /assets/*.js) ;;
+              *) echo "GET $path: the first script is not under /assets/"; exit 1;;
+            esac
+            code=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:80$script")
+            [ "$code" = "200" ] \
+              || { echo "GET $script answered $code"; exit 1; }
+          done
 
       - name: "GET /api/v1 dispatches to the API stack (any status)"
         run: |
