@@ -2,25 +2,25 @@
 
 namespace FastyBird\Connector\HomeKit\Subscribers;
 
-use Closure;
+use FastyBird\Connector\HomeKit\Events as HomeKitEvents;
 use FastyBird\Connector\HomeKit\Types;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
-use Nette\Utils;
 use Override;
-use Symfony\Component\EventDispatcher;
+use Psr\EventDispatcher as PsrEventDispatcher;
+use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 
 /**
  * Doctrine entities events
  */
-final class Entities implements EventDispatcher\EventSubscriberInterface
+final class Entities implements ComponentEventDispatcher\EventSubscriberInterface
 {
 
-	/** @var array<Closure(DevicesEntities\Connectors\Properties\Variable $property): void> */
-	public array $onUpdateSharedKey = [];
-
-	/** @var array<Closure(DevicesEntities\Connectors\Properties\Variable $property): void> */
-	public array $onRefresh = [];
+	public function __construct(
+		private readonly PsrEventDispatcher\EventDispatcherInterface $dispatcher,
+	)
+	{
+	}
 
 	#[Override]
 	public static function getSubscribedEvents(): array
@@ -36,14 +36,14 @@ final class Entities implements EventDispatcher\EventSubscriberInterface
 	{
 		if ($event->getEntity() instanceof DevicesEntities\Connectors\Properties\Variable) {
 			if ($event->getEntity()->getIdentifier() === Types\ConnectorPropertyIdentifier::SHARED_KEY->value) {
-				Utils\Arrays::invoke($this->onUpdateSharedKey, $event->getEntity());
+				$this->dispatcher->dispatch(new HomeKitEvents\SharedKeyChanged($event->getEntity()));
 			}
 
 			if (
 				$event->getEntity()->getIdentifier() === Types\ConnectorPropertyIdentifier::PAIRED->value
 				|| $event->getEntity()->getIdentifier() === Types\ConnectorPropertyIdentifier::CONFIG_VERSION->value
 			) {
-				Utils\Arrays::invoke($this->onRefresh, $event->getEntity());
+				$this->dispatcher->dispatch(new HomeKitEvents\AccessoryConfigurationChanged($event->getEntity()));
 			}
 		}
 	}
@@ -52,14 +52,14 @@ final class Entities implements EventDispatcher\EventSubscriberInterface
 	{
 		if ($event->getEntity() instanceof DevicesEntities\Connectors\Properties\Variable) {
 			if ($event->getEntity()->getIdentifier() === Types\ConnectorPropertyIdentifier::SHARED_KEY->value) {
-				Utils\Arrays::invoke($this->onUpdateSharedKey, $event->getEntity());
+				$this->dispatcher->dispatch(new HomeKitEvents\SharedKeyChanged($event->getEntity()));
 			}
 
 			if (
 				$event->getEntity()->getIdentifier() === Types\ConnectorPropertyIdentifier::PAIRED->value
 				|| $event->getEntity()->getIdentifier() === Types\ConnectorPropertyIdentifier::CONFIG_VERSION->value
 			) {
-				Utils\Arrays::invoke($this->onRefresh, $event->getEntity());
+				$this->dispatcher->dispatch(new HomeKitEvents\AccessoryConfigurationChanged($event->getEntity()));
 			}
 		}
 	}
@@ -71,7 +71,7 @@ final class Entities implements EventDispatcher\EventSubscriberInterface
 				$event->getEntity()->getIdentifier() === Types\ConnectorPropertyIdentifier::PAIRED->value
 				|| $event->getEntity()->getIdentifier() === Types\ConnectorPropertyIdentifier::CONFIG_VERSION->value
 			) {
-				Utils\Arrays::invoke($this->onRefresh, $event->getEntity());
+				$this->dispatcher->dispatch(new HomeKitEvents\AccessoryConfigurationChanged($event->getEntity()));
 			}
 		}
 	}

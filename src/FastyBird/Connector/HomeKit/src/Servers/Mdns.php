@@ -2,11 +2,12 @@
 
 namespace FastyBird\Connector\HomeKit\Servers;
 
+use Closure;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Documents;
+use FastyBird\Connector\HomeKit\Events as HomeKitEvents;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
-use FastyBird\Connector\HomeKit\Subscribers;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -15,10 +16,10 @@ use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette\Utils;
 use Override;
-use Psr\EventDispatcher as PsrEventDispatcher;
 use React\Datagram;
 use React\Dns;
 use React\EventLoop;
+use Symfony\Component\EventDispatcher;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -71,13 +72,15 @@ final class Mdns implements Server
 
 	private Datagram\SocketInterface|null $socket = null;
 
+	/** @var (Closure(HomeKitEvents\AccessoryConfigurationChanged $event): void)|null */
+	private Closure|null $configurationListener = null;
+
 	public function __construct(
 		private readonly Documents\Connectors\Connector $connector,
 		private readonly Helpers\Connector $connectorHelper,
-		private readonly Subscribers\Entities $entitiesSubscriber,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly HomeKit\Logger $logger,
-		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
+		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
 		$this->parser = new Dns\Protocol\Parser();
@@ -96,9 +99,16 @@ final class Mdns implements Server
 	#[Override]
 	public function initialize(): void
 	{
-		$this->entitiesSubscriber->onRefresh[] = function (DevicesEntities\Connectors\Properties\Variable $property): void {
-			$this->refresh($property);
-		};
+		if ($this->configurationListener === null) {
+			$this->configurationListener = function (HomeKitEvents\AccessoryConfigurationChanged $event): void {
+				$this->refresh($event->getProperty());
+			};
+
+			$this->dispatcher?->addListener(
+				HomeKitEvents\AccessoryConfigurationChanged::class,
+				$this->configurationListener,
+			);
+		}
 
 		$this->createZone();
 	}
@@ -221,6 +231,15 @@ final class Mdns implements Server
 				],
 			],
 		);
+
+		if ($this->configurationListener !== null) {
+			$this->dispatcher?->removeListener(
+				HomeKitEvents\AccessoryConfigurationChanged::class,
+				$this->configurationListener,
+			);
+
+			$this->configurationListener = null;
+		}
 
 		$this->socket?->close();
 

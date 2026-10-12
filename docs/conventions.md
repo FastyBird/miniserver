@@ -353,6 +353,29 @@ rules are kept by review, not by a gate.
   fallback dispatcher and no subscriber collection. It must not also implement
   `EventSubscriberInterface`, or production would register it twice.
 
+The extensions follow three more rules, decided in
+[#725](https://github.com/FastyBird/miniserver/issues/725):
+
+- **Service-level hooks are PSR-14 events.** A DI service in any package that announces something
+  follows the rules above: it dispatches an event class, and whoever reacts is a subscriber
+  registered through DI. If an event for that moment already exists, the listener subscribes to
+  it; a service does not pass it on under a second name. `Devices\Commands\Connector`
+  subscribes to `Events\TerminateConnector` and `Events\RestartConnector` and acts only while it
+  runs a connector. HomeKit's `Subscribers\Entities` dispatches `Events\SharedKeyChanged` and
+  `Events\AccessoryConfigurationChanged`.
+- **Per-connection client callbacks are private, behind typed registration methods.** A transport
+  client that a connector creates for one connection keeps its callbacks in a private property
+  and exposes one typed method per hook, such as `onMessage(Closure $listener): void`. A global
+  event would make every listener filter by client instance. The connectors' transport clients
+  still carry public `$onX` arrays until the rest of #725 lands.
+- **A runtime listener has a matching removal.** An object created per connector, outside DI,
+  may add a listener at runtime. It does that with `addListener()` on
+  `Symfony\Component\EventDispatcher\EventDispatcherInterface`, because PSR-14 has no
+  registration API. It keeps the listener in a property and calls `removeListener()` with that
+  same callable when it stops. A fresh closure is never identical to the one that was added.
+  HomeKit's `Servers\Http` and `Servers\Mdns` add their listeners in `initialize()` and remove
+  them in `disconnect()`.
+
 ## Docblocks
 
 **No file header.** The licence is in `LICENSE.md`, the author in `composer.json`, and the

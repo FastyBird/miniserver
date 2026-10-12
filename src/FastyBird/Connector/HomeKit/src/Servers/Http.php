@@ -2,15 +2,16 @@
 
 namespace FastyBird\Connector\HomeKit\Servers;
 
+use Closure;
 use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Clients;
 use FastyBird\Connector\HomeKit\Documents;
+use FastyBird\Connector\HomeKit\Events as HomeKitEvents;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Middleware;
 use FastyBird\Connector\HomeKit\Protocol;
 use FastyBird\Connector\HomeKit\Queue;
-use FastyBird\Connector\HomeKit\Subscribers;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -19,12 +20,12 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Override;
-use Psr\EventDispatcher as PsrEventDispatcher;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use React\EventLoop;
 use React\Http as ReactHttp;
 use React\Socket;
+use Symfony\Component\EventDispatcher;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -47,6 +48,9 @@ final class Http implements Server
 
 	private SecureServer|null $socket = null;
 
+	/** @var (Closure(HomeKitEvents\SharedKeyChanged $event): void)|null */
+	private Closure|null $sharedKeyListener = null;
+
 	public function __construct(
 		private readonly Documents\Connectors\Connector $connector,
 		private readonly Middleware\Router $routerMiddleware,
@@ -57,9 +61,8 @@ final class Http implements Server
 		private readonly Helpers\Connector $connectorHelper,
 		private readonly Queue\Queue $queue,
 		private readonly HomeKit\Logger $logger,
-		private readonly Subscribers\Entities $entitiesSubscriber,
 		private readonly EventLoop\LoopInterface $eventLoop,
-		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
+		private readonly EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
 	}
@@ -67,9 +70,15 @@ final class Http implements Server
 	#[Override]
 	public function initialize(): void
 	{
-		$this->entitiesSubscriber->onUpdateSharedKey[] = function (DevicesEntities\Connectors\Properties\Variable $property): void {
-			$this->setSharedKey($property);
+		if ($this->sharedKeyListener !== null) {
+			return;
+		}
+
+		$this->sharedKeyListener = function (HomeKitEvents\SharedKeyChanged $event): void {
+			$this->setSharedKey($event->getProperty());
 		};
+
+		$this->dispatcher?->addListener(HomeKitEvents\SharedKeyChanged::class, $this->sharedKeyListener);
 	}
 
 	/**
@@ -259,6 +268,12 @@ final class Http implements Server
 				],
 			],
 		);
+
+		if ($this->sharedKeyListener !== null) {
+			$this->dispatcher?->removeListener(HomeKitEvents\SharedKeyChanged::class, $this->sharedKeyListener);
+
+			$this->sharedKeyListener = null;
+		}
 
 		$this->socket?->close();
 

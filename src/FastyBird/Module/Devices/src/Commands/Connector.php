@@ -31,6 +31,7 @@ use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
 use Symfony\Component\Console\Output;
 use Symfony\Component\Console\Style;
+use Symfony\Component\EventDispatcher as ComponentEventDispatcher;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -50,8 +51,11 @@ use const SIGTERM;
 
 /**
  * Module connector command
+ *
+ * It subscribes to the connector termination and restart requests and acts on them only while it
+ * runs a connector.
  */
-final class Connector extends Console\Command\Command
+final class Connector extends Console\Command\Command implements ComponentEventDispatcher\EventSubscriberInterface
 {
 
 	public const string NAME = 'fb:devices-module:connector';
@@ -74,6 +78,12 @@ final class Connector extends Console\Command\Command
 
 	private DateTimeInterface|null $executedAt = null;
 
+	private Documents\Connectors\Connector|null $runningConnector = null;
+
+	private Connectors\Connector|null $runningService = null;
+
+	private Types\ConnectorMode|null $runningMode = null;
+
 	/**
 	 * @param array<Exchange\Factory> $exchangeFactories
 	 */
@@ -93,6 +103,101 @@ final class Connector extends Console\Command\Command
 	)
 	{
 		parent::__construct($name);
+	}
+
+	#[Override]
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			Events\TerminateConnector::class => 'processTermination',
+			Events\RestartConnector::class => 'processRestart',
+		];
+	}
+
+	/**
+	 * @throws DevicesExceptions\Runtime
+	 */
+	public function processTermination(Events\TerminateConnector $event): void
+	{
+		if (
+			$this->runningConnector === null
+			|| $this->runningService === null
+			|| $this->runningMode === null
+		) {
+			return;
+		}
+
+		if ($event->getException() !== null) {
+			$this->logger->warning(
+				'Triggering connector termination due to some error',
+				[
+					'source' => Sources\Module::DEVICES->value,
+					'type' => 'connector-cmd',
+					'exception' => Logging\Logger::buildException($event->getException()),
+					'reason' => [
+						'source' => $event->getSource()->value,
+						'message' => $event->getReason(),
+					],
+				],
+			);
+		} else {
+			$this->logger->info(
+				'Triggering connector termination',
+				[
+					'source' => Sources\Module::DEVICES->value,
+					'type' => 'connector-cmd',
+					'reason' => [
+						'source' => $event->getSource()->value,
+						'message' => $event->getReason(),
+					],
+				],
+			);
+		}
+
+		$this->terminate($this->runningConnector, $this->runningService, $this->runningMode);
+	}
+
+	/**
+	 * @throws DevicesExceptions\Runtime
+	 */
+	public function processRestart(Events\RestartConnector $event): void
+	{
+		if (
+			$this->runningConnector === null
+			|| $this->runningService === null
+			|| $this->runningMode === null
+		) {
+			return;
+		}
+
+		if ($event->getException() !== null) {
+			$this->logger->warning(
+				'Triggering connector restart due to some error',
+				[
+					'source' => Sources\Module::DEVICES->value,
+					'type' => 'connector-cmd',
+					'exception' => Logging\Logger::buildException($event->getException()),
+					'reason' => [
+						'source' => $event->getSource()->value,
+						'message' => $event->getReason(),
+					],
+				],
+			);
+		} else {
+			$this->logger->info(
+				'Triggering connector restart',
+				[
+					'source' => Sources\Module::DEVICES->value,
+					'type' => 'connector-cmd',
+					'reason' => [
+						'source' => $event->getSource()->value,
+						'message' => $event->getReason(),
+					],
+				],
+			);
+		}
+
+		$this->terminate($this->runningConnector, $this->runningService, $this->runningMode);
 	}
 
 	/**
@@ -203,6 +308,10 @@ final class Connector extends Console\Command\Command
 			$this->eventLoop->stop();
 
 			return Console\Command\Command::FAILURE;
+		} finally {
+			$this->runningConnector = null;
+			$this->runningService = null;
+			$this->runningMode = null;
 		}
 	}
 
@@ -260,83 +369,9 @@ final class Connector extends Console\Command\Command
 
 		$service = $this->serviceFactory->create($connector);
 
-		$service->onTerminate[] = function (
-			Sources\Source $source,
-			string|null $reason,
-			Throwable|null $ex,
-		) use (
-			$service,
-			$mode,
-			$connector,
-		): void {
-			if ($ex !== null) {
-				$this->logger->warning(
-					'Triggering connector termination due to some error',
-					[
-						'source' => Sources\Module::DEVICES->value,
-						'type' => 'connector-cmd',
-						'exception' => Logging\Logger::buildException($ex),
-						'reason' => [
-							'source' => $source->value,
-							'message' => $reason,
-						],
-					],
-				);
-			} else {
-				$this->logger->info(
-					'Triggering connector termination',
-					[
-						'source' => Sources\Module::DEVICES->value,
-						'type' => 'connector-cmd',
-						'reason' => [
-							'source' => $source->value,
-							'message' => $reason,
-						],
-					],
-				);
-			}
-
-			$this->terminate($connector, $service, $mode);
-		};
-
-		$service->onRestart[] = function (
-			Sources\Source $source,
-			string|null $reason,
-			Throwable|null $ex,
-		) use (
-			$service,
-			$mode,
-			$connector,
-		): void {
-			if ($ex !== null) {
-				$this->logger->warning(
-					'Triggering connector restart due to some error',
-					[
-						'source' => Sources\Module::DEVICES->value,
-						'type' => 'connector-cmd',
-						'exception' => Logging\Logger::buildException($ex),
-						'reason' => [
-							'source' => $source->value,
-							'message' => $reason,
-						],
-					],
-				);
-			} else {
-				$this->logger->info(
-					'Triggering connector restart',
-					[
-						'source' => Sources\Module::DEVICES->value,
-						'type' => 'connector-cmd',
-						'reason' => [
-							'source' => $source->value,
-							'message' => $reason,
-						],
-					],
-				);
-			}
-
-			$this->terminate($connector, $service, $mode);
-		};
+		$this->runningConnector = $connector;
+		$this->runningService = $service;
+		$this->runningMode = $mode;
 
 		if ($mode === Types\ConnectorMode::DISCOVER) {
 			$this->progressBarTimer = $this->eventLoop->addPeriodicTimer(
