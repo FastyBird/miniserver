@@ -8,7 +8,7 @@ export enum ModuleSource {
 
 export enum PluginSource {
 	NOT_SPECIFIED = '*',
-	COUCHDB_STORAGE = 'com.fastybird.couchdb-storage-plugin',
+	COUCHDB = 'com.fastybird.couchdb-plugin',
 	RABBITMQ = 'com.fastybird.rabbitmq-plugin',
 	REDISDB = 'com.fastybird.redisdb-plugin',
 	REDISDB_CACHE = 'com.fastybird.redisdb-cache-plugin',
@@ -45,6 +45,7 @@ export enum BridgeSource {
 	REDISDB_PLUGIN_TRIGGERS_MODULE = 'com.fastybird.redisdb-plugin-triggers-module-bridge',
 	VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR = 'com.fastybird.virtual-thermostat-addon-homekit-connector-bridge',
 	SHELLY_CONNECTOR_HOMEKIT_CONNECTOR = 'com.fastybird.shelly-connector-homekit-connector-bridge',
+	VIERA_CONNECTOR_HOMEKIT_CONNECTOR = 'com.fastybird.viera-connector-homekit-connector-bridge',
 	DEVICES_MODULE_UI_MODULE = 'com.fastybird.devices-module-ui-module-bridge',
 }
 
