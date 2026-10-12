@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a7a9b0b7ec5eb9cde6c951b089fbd9d4",
+    "content-hash": "ab325f39101d040c11e3b8cad9a0e537",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -246,80 +246,6 @@
                     "Bunny\\": "src/"
                 }
             }
-        },
-        {
-            "name": "carbonphp/carbon-doctrine-types",
-            "version": "3.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/CarbonPHP/carbon-doctrine-types.git",
-                "reference": "5fa5eacafd9ef47c8c6ab9143fc901ba0194d3dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/CarbonPHP/carbon-doctrine-types/zipball/5fa5eacafd9ef47c8c6ab9143fc901ba0194d3dc",
-                "reference": "5fa5eacafd9ef47c8c6ab9143fc901ba0194d3dc",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.1"
-            },
-            "conflict": {
-                "doctrine/dbal": "<4.0.0 || >=5.0.0"
-            },
-            "require-dev": {
-                "doctrine/dbal": "^4.0.0",
-                "nesbot/carbon": "^2.71.0 || ^3.0.0",
-                "phpunit/phpunit": "^10.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Carbon\\Doctrine\\": "src/Carbon/Doctrine/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "KyleKatarn",
-                    "email": "kylekatarnls@gmail.com"
-                }
-            ],
-            "description": "Types to use Carbon in Doctrine",
-            "keywords": [
-                "carbon",
-                "date",
-                "datetime",
-                "doctrine",
-                "time"
-            ],
-            "support": {
-                "issues": "https://github.com/CarbonPHP/carbon-doctrine-types/issues",
-                "source": "https://github.com/CarbonPHP/carbon-doctrine-types/tree/3.2.1"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/kylekatarnls",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/Carbon",
-                    "type": "open_collective"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/nesbot/carbon",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-09-06T14:11:38+00:00"
         },
         {
             "name": "casbin/casbin",
@@ -2289,7 +2215,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Accounts",
-                "reference": "e10920603f266f0c2794182f024ed6df339a185f"
+                "reference": "ec46013d83fb5dffb13cd0f0e3a67b4144a174bd"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -2317,7 +2243,7 @@
                 "psr-4": {
                     "FastyBird\\Module\\Accounts\\Tests\\Cases\\Unit\\": "tests/cases/unit",
                     "FastyBird\\Module\\Accounts\\Tests\\Fixtures\\": "tests/fixtures",
-                    "FastyBird\\Module\\Accounts\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Module\\Accounts\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -2367,7 +2293,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/ApiKey",
-                "reference": "e9d8a946241eb1efcfad707986d2d8426df6a736"
+                "reference": "05cc4c9d505ca23129839b1664491ef1cec0d533"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -2395,7 +2321,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Plugin\\ApiKey\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Plugin\\ApiKey\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Plugin\\ApiKey\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -2508,7 +2434,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Automator/DateTime",
-                "reference": "e7928becc85cca57e96da27b1b53846bb56d10a4"
+                "reference": "40898882802653bba7e6e64994317beba6fcde90"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -2537,7 +2463,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Automator\\DateTime\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Automator\\DateTime\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Automator\\DateTime\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -2580,7 +2506,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Devices",
-                "reference": "f9876fdd91376eadba48d2c7b9220d16db260f30"
+                "reference": "e3e99e945dd1aba4590de0aa85bf59e7140e0ffd"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -2615,7 +2541,7 @@
                     "FastyBird\\Module\\Devices\\Tests\\Cases\\Unit\\": "tests/cases/unit",
                     "FastyBird\\Module\\Devices\\Tests\\Fixtures\\": "tests/fixtures",
                     "FastyBird\\Module\\Devices\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-                    "FastyBird\\Module\\Devices\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Module\\Devices\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -2665,7 +2591,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Automator/DevicesModule",
-                "reference": "30b25096c0d31cd14c718abd4a044c065d2dbb8e"
+                "reference": "b490fcdb2635938ba856b1842b70237c214ca1d4"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -2695,7 +2621,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Automator\\DevicesModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Automator\\DevicesModule\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Automator\\DevicesModule\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -2737,7 +2663,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/DevicesModuleUiModule",
-                "reference": "136b61042ee378e8831be19b37ba07cca8bf8817"
+                "reference": "28065a6120d7911e25eb8d3ed1857dc7046712b3"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -2763,7 +2689,7 @@
                     "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
                     "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Fixtures\\": "tests/fixtures",
                     "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-                    "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Bridge\\DevicesModuleUiModule\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -2805,7 +2731,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/FbMqtt",
-                "reference": "146fdd184ad61cb1ed4a0d0071f24cb29bf7f380"
+                "reference": "c666fc70a92299177a17b2eceb1a00639e640b09"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -2837,7 +2763,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\FbMqtt\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\FbMqtt\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Connector\\FbMqtt\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -2881,7 +2807,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/HomeKit",
-                "reference": "19bffd781acf5ca648dc6d4b50a2721340789721"
+                "reference": "8e653db3800694e94980f692ec6e8fbf069f5cac"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -2925,7 +2851,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\HomeKit\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\HomeKit\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Connector\\HomeKit\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -2970,7 +2896,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Core/Core",
-                "reference": "0f923f7735b283fc7a3a805c7939390a73a9f726"
+                "reference": "04c630cb442d91f75d820f57c2abf4b574271487"
             },
             "require": {
                 "casbin/casbin": "^3.23",
@@ -2994,7 +2920,6 @@
                 "giggsey/libphonenumber-for-php": "^8.12",
                 "latte/latte": "^3.0",
                 "lcobucci/jwt": "^5.6",
-                "mathsolver/mathsolver": "@dev",
                 "neomerx/json-api": "^4.0",
                 "nette/application": "^3.1",
                 "nette/bootstrap": "^3.2",
@@ -3005,6 +2930,7 @@
                 "nettrine/dbal": "^0.10",
                 "nettrine/orm": "^0.10",
                 "nikic/fast-route": "^1.3",
+                "nxp/math-executor": "^2.4",
                 "opis/json-schema": "^2.3",
                 "orisai/nette-object-mapper": "^0.3",
                 "orisai/object-mapper": "^0.3",
@@ -3089,7 +3015,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Modbus",
-                "reference": "40de5df04710225baae0de45a013d80d3ce92c3b"
+                "reference": "4de0822de030b53624bcfab8bc83cef23caa7f3c"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -3121,7 +3047,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\Modbus\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\Modbus\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Connector\\Modbus\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -3166,7 +3092,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/NsPanel",
-                "reference": "3a219f952c984ab98e70fb36336c76d02f21c329"
+                "reference": "54f2199dc34e7868b24d2087aa44895abc04ccf7"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -3204,7 +3130,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\NsPanel\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\NsPanel\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Connector\\NsPanel\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -3317,7 +3243,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/RedisDbCache",
-                "reference": "bccff79537b408417a3faec6d11873c25cdc7477"
+                "reference": "823d1fc9c9a04157c6b73f263661ba4523d97625"
             },
             "require": {
                 "clue/redis-react": "3.0.0",
@@ -3347,7 +3273,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Plugin\\RedisDbCache\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Plugin\\RedisDbCache\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Plugin\\RedisDbCache\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -3469,7 +3395,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/RedisDbPluginDevicesModule",
-                "reference": "7a242b14b9ed3860c0cdbfe79dbd748006bc9938"
+                "reference": "2559d345c9c77c5aaafd1035c0e2886bf7d7c5ea"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -3493,7 +3419,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -3535,7 +3461,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/RedisDbPluginTriggersModule",
-                "reference": "630c15ab35fd36ebb32d2db15a99030d4f37ffa7"
+                "reference": "e8a9413a3cadddeacf1f8678def2edc5dedb6c6f"
             },
             "require": {
                 "cweagans/composer-patches": "^1.7",
@@ -3559,7 +3485,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -3601,7 +3527,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Shelly",
-                "reference": "f8048a0a95f918d6566ed0e48507b3a051156f44"
+                "reference": "231259a144ce37a9ceb9a70bf12f423ec009d9de"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -3636,7 +3562,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\Shelly\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\Shelly\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Connector\\Shelly\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -3682,7 +3608,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/ShellyConnectorHomeKitConnector",
-                "reference": "d240c24df3741ffc1c90d68941c992247406d8fd"
+                "reference": "3b04267b8d82cda03c7f8ee26bae4d5b7a3fd750"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -3711,7 +3637,7 @@
                     "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Cases\\Unit\\": "tests/cases/unit",
                     "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Fixtures\\": "tests/fixtures",
                     "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-                    "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -3753,7 +3679,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Sonoff",
-                "reference": "772fd52bf906ca0e77bb6c9f992828c021870e7f"
+                "reference": "0702fc983bcd1eb6d071e18d766741440a9dc98b"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -3788,7 +3714,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\Sonoff\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\Sonoff\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Connector\\Sonoff\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -3836,7 +3762,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Triggers",
-                "reference": "7cf658ee8626828247dd5d0399ea1277aa211d1a"
+                "reference": "880f8d5a5d014a15d338863dad00c5d61f5a5993"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -3866,7 +3792,7 @@
                     "FastyBird\\Module\\Triggers\\Tests\\Cases\\Unit\\": "tests/cases/unit",
                     "FastyBird\\Module\\Triggers\\Tests\\Fixtures\\": "tests/fixtures",
                     "FastyBird\\Module\\Triggers\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-                    "FastyBird\\Module\\Triggers\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Module\\Triggers\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -3915,7 +3841,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Tuya",
-                "reference": "338526ed4e58187191f39b4ade248d66aa560e8d"
+                "reference": "fe12ae09987d26b7d93892f636569289af6b4ca0"
             },
             "require": {
                 "brick/math": "^0.10",
@@ -3956,7 +3882,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\Tuya\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\Tuya\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Connector\\Tuya\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -4001,7 +3927,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Ui",
-                "reference": "5ebe917fe2d7a28321494e0231817911c876d5ab"
+                "reference": "a61fa16c51f43a7b05d24a8d3b5bd2ed868df49f"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4036,7 +3962,7 @@
                     "FastyBird\\Module\\Ui\\Tests\\Cases\\Unit\\": "tests/cases/unit",
                     "FastyBird\\Module\\Ui\\Tests\\Fixtures\\": "tests/fixtures",
                     "FastyBird\\Module\\Ui\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-                    "FastyBird\\Module\\Ui\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Module\\Ui\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -4086,7 +4012,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Viera",
-                "reference": "c6e00c9e6e9c6338c450272ca876350579992c78"
+                "reference": "e88f07e4cd820202d11e7d2f6c19ba739d50a7b7"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
@@ -4128,7 +4054,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\Viera\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\Viera\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Connector\\Viera\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -4173,7 +4099,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/VieraConnectorHomeKitConnector",
-                "reference": "db7612e41fffbb2535e796e5db3b4792b7f943b9"
+                "reference": "1371c759ccffd48a2d2fa22691409ebaebb5a755"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4202,7 +4128,7 @@
                     "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Tests\\Cases\\Unit\\": "tests/cases/unit",
                     "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Tests\\Fixtures\\": "tests/fixtures",
                     "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-                    "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -4244,7 +4170,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Virtual",
-                "reference": "724695c1ba938ae5f6115bf6708582513cb68c0e"
+                "reference": "5f3cb797fdaec43b37b775770b2a57ce5ee1cc10"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4275,7 +4201,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\Virtual\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\Virtual\\Tests\\Tools\\": "tests/tools",
+                    "FastyBird\\Connector\\Virtual\\Tests\\Support\\": "tests/support",
                     "FastyBird\\Connector\\Virtual\\Tests\\Fixtures\\": "tests/fixtures"
                 }
             },
@@ -4320,7 +4246,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Addon/VirtualThermostat",
-                "reference": "0f439da5192f574855ef2fe2ffd6636f58d657b8"
+                "reference": "0ec788e791f6bd1a7696831afc4995770df41b14"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4353,7 +4279,7 @@
                     "FastyBird\\Addon\\VirtualThermostat\\Tests\\Cases\\Unit\\": "tests/cases/unit",
                     "FastyBird\\Addon\\VirtualThermostat\\Tests\\Fixtures\\": "tests/fixtures",
                     "FastyBird\\Addon\\VirtualThermostat\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-                    "FastyBird\\Addon\\VirtualThermostat\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Addon\\VirtualThermostat\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -4398,7 +4324,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/VirtualThermostatAddonHomeKitConnector",
-                "reference": "f95b0c756c3adbe087f189639210c788bc4e5e14"
+                "reference": "6c5e8115308ebeff7ae34f5433372d9e8e9bbff0"
             },
             "require": {
                 "contributte/console": "^0.9",
@@ -4428,7 +4354,7 @@
                     "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Tests\\Cases\\Unit\\": "tests/cases/unit",
                     "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Tests\\Fixtures\\": "tests/fixtures",
                     "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Tests\\Fixtures\\Dummy\\": "tests/fixtures/dummy",
-                    "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -4470,7 +4396,7 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Zigbee2Mqtt",
-                "reference": "b3f61d8cdb5ef92731be0c2b2f4ba2b763fda097"
+                "reference": "763d27e4d7a79b07bc2dc18885c904d52146503e"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
@@ -4502,7 +4428,7 @@
             "autoload-dev": {
                 "psr-4": {
                     "FastyBird\\Connector\\Zigbee2Mqtt\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Connector\\Zigbee2Mqtt\\Tests\\Tools\\": "tests/tools"
+                    "FastyBird\\Connector\\Zigbee2Mqtt\\Tests\\Support\\": "tests/support"
                 }
             },
             "license": [
@@ -5254,272 +5180,6 @@
             "time": "2025-12-15T11:28:16+00:00"
         },
         {
-            "name": "illuminate/collections",
-            "version": "v9.52.16",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/collections.git",
-                "reference": "d3710b0b244bfc62c288c1a87eaa62dd28352d1f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/collections/zipball/d3710b0b244bfc62c288c1a87eaa62dd28352d1f",
-                "reference": "d3710b0b244bfc62c288c1a87eaa62dd28352d1f",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/conditionable": "^9.0",
-                "illuminate/contracts": "^9.0",
-                "illuminate/macroable": "^9.0",
-                "php": "^8.0.2"
-            },
-            "suggest": {
-                "symfony/var-dumper": "Required to use the dump method (^6.0)."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "9.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "helpers.php"
-                ],
-                "psr-4": {
-                    "Illuminate\\Support\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "The Illuminate Collections package.",
-            "homepage": "https://laravel.com",
-            "support": {
-                "issues": "https://github.com/laravel/framework/issues",
-                "source": "https://github.com/laravel/framework"
-            },
-            "time": "2023-06-11T21:17:10+00:00"
-        },
-        {
-            "name": "illuminate/conditionable",
-            "version": "v9.52.16",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/conditionable.git",
-                "reference": "bea24daa0fa84b7e7b0d5b84f62c71b7e2dc3364"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/conditionable/zipball/bea24daa0fa84b7e7b0d5b84f62c71b7e2dc3364",
-                "reference": "bea24daa0fa84b7e7b0d5b84f62c71b7e2dc3364",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "9.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Illuminate\\Support\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "The Illuminate Conditionable package.",
-            "homepage": "https://laravel.com",
-            "support": {
-                "issues": "https://github.com/laravel/framework/issues",
-                "source": "https://github.com/laravel/framework"
-            },
-            "time": "2023-02-01T21:42:32+00:00"
-        },
-        {
-            "name": "illuminate/contracts",
-            "version": "v9.52.16",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/contracts.git",
-                "reference": "44f65d723b13823baa02ff69751a5948bde60c22"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/44f65d723b13823baa02ff69751a5948bde60c22",
-                "reference": "44f65d723b13823baa02ff69751a5948bde60c22",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0.2",
-                "psr/container": "^1.1.1|^2.0.1",
-                "psr/simple-cache": "^1.0|^2.0|^3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "9.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Illuminate\\Contracts\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "The Illuminate Contracts package.",
-            "homepage": "https://laravel.com",
-            "support": {
-                "issues": "https://github.com/laravel/framework/issues",
-                "source": "https://github.com/laravel/framework"
-            },
-            "time": "2023-02-08T14:36:30+00:00"
-        },
-        {
-            "name": "illuminate/macroable",
-            "version": "v9.52.16",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/macroable.git",
-                "reference": "e3bfaf6401742a9c6abca61b9b10e998e5b6449a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/macroable/zipball/e3bfaf6401742a9c6abca61b9b10e998e5b6449a",
-                "reference": "e3bfaf6401742a9c6abca61b9b10e998e5b6449a",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.0.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "9.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Illuminate\\Support\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "The Illuminate Macroable package.",
-            "homepage": "https://laravel.com",
-            "support": {
-                "issues": "https://github.com/laravel/framework/issues",
-                "source": "https://github.com/laravel/framework"
-            },
-            "time": "2022-08-09T13:29:29+00:00"
-        },
-        {
-            "name": "illuminate/support",
-            "version": "v9.52.16",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/support.git",
-                "reference": "223c608dbca27232df6213f776bfe7bdeec24874"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/223c608dbca27232df6213f776bfe7bdeec24874",
-                "reference": "223c608dbca27232df6213f776bfe7bdeec24874",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/inflector": "^2.0",
-                "ext-ctype": "*",
-                "ext-filter": "*",
-                "ext-mbstring": "*",
-                "illuminate/collections": "^9.0",
-                "illuminate/conditionable": "^9.0",
-                "illuminate/contracts": "^9.0",
-                "illuminate/macroable": "^9.0",
-                "nesbot/carbon": "^2.62.1",
-                "php": "^8.0.2",
-                "voku/portable-ascii": "^2.0"
-            },
-            "conflict": {
-                "tightenco/collect": "<5.5.33"
-            },
-            "suggest": {
-                "illuminate/filesystem": "Required to use the composer class (^9.0).",
-                "league/commonmark": "Required to use Str::markdown() and Stringable::markdown() (^2.0.2).",
-                "ramsey/uuid": "Required to use Str::uuid() (^4.7).",
-                "symfony/process": "Required to use the composer class (^6.0).",
-                "symfony/uid": "Required to use Str::ulid() (^6.0).",
-                "symfony/var-dumper": "Required to use the dd function (^6.0).",
-                "vlucas/phpdotenv": "Required to use the Env class and env helper (^5.4.1)."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "9.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "helpers.php"
-                ],
-                "psr-4": {
-                    "Illuminate\\Support\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "The Illuminate Support package.",
-            "homepage": "https://laravel.com",
-            "support": {
-                "issues": "https://github.com/laravel/framework/issues",
-                "source": "https://github.com/laravel/framework"
-            },
-            "time": "2023-06-11T21:11:53+00:00"
-        },
-        {
             "name": "jean85/pretty-package-versions",
             "version": "2.1.1",
             "source": {
@@ -5797,61 +5457,6 @@
             "time": "2015-12-21T17:00:44+00:00"
         },
         {
-            "name": "mathsolver/mathsolver",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mathsolver/mathsolver.git",
-                "reference": "84f6f1c9d733c2194a64ee944fd8e093c926115d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mathsolver/mathsolver/zipball/84f6f1c9d733c2194a64ee944fd8e093c926115d",
-                "reference": "84f6f1c9d733c2194a64ee944fd8e093c926115d",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/collections": "^9.0",
-                "illuminate/support": "^9.0"
-            },
-            "require-dev": {
-                "pestphp/pest": "^1.21",
-                "pestphp/pest-plugin-parallel": "^1.0",
-                "symfony/var-dumper": "^6.0"
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "MathSolver\\": "src/"
-                }
-            },
-            "scripts": {
-                "test": [
-                    "./vendor/bin/pest --parallel"
-                ],
-                "coverage": [
-                    "./vendor/bin/pest --parallel --coverage --min=100"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeroen van Rensen",
-                    "role": "Developer",
-                    "homepage": "https://www.jeroenvanrensen.nl"
-                }
-            ],
-            "description": "PHP package to simplify mathematical expressions and solve equations.",
-            "support": {
-                "source": "https://github.com/mathsolver/mathsolver/tree/main",
-                "issues": "https://github.com/mathsolver/mathsolver/issues"
-            },
-            "time": "2023-01-01T14:04:56+00:00"
-        },
-        {
             "name": "monolog/monolog",
             "version": "3.12.0",
             "source": {
@@ -6015,113 +5620,6 @@
                 "source": "https://github.com/neomerx/json-api/tree/develop"
             },
             "time": "2020-03-03T05:56:54+00:00"
-        },
-        {
-            "name": "nesbot/carbon",
-            "version": "2.73.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/CarbonPHP/carbon.git",
-                "reference": "9228ce90e1035ff2f0db84b40ec2e023ed802075"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/9228ce90e1035ff2f0db84b40ec2e023ed802075",
-                "reference": "9228ce90e1035ff2f0db84b40ec2e023ed802075",
-                "shasum": ""
-            },
-            "require": {
-                "carbonphp/carbon-doctrine-types": "*",
-                "ext-json": "*",
-                "php": "^7.1.8 || ^8.0",
-                "psr/clock": "^1.0",
-                "symfony/polyfill-mbstring": "^1.0",
-                "symfony/polyfill-php80": "^1.16",
-                "symfony/translation": "^3.4 || ^4.0 || ^5.0 || ^6.0"
-            },
-            "provide": {
-                "psr/clock-implementation": "1.0"
-            },
-            "require-dev": {
-                "doctrine/dbal": "^2.0 || ^3.1.4 || ^4.0",
-                "doctrine/orm": "^2.7 || ^3.0",
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "kylekatarnls/multi-tester": "^2.0",
-                "ondrejmirtes/better-reflection": "<6",
-                "phpmd/phpmd": "^2.9",
-                "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12.99 || ^1.7.14",
-                "phpunit/php-file-iterator": "^2.0.5 || ^3.0.6",
-                "phpunit/phpunit": "^7.5.20 || ^8.5.26 || ^9.5.20",
-                "squizlabs/php_codesniffer": "^3.4"
-            },
-            "bin": [
-                "bin/carbon"
-            ],
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Carbon\\Laravel\\ServiceProvider"
-                    ]
-                },
-                "phpstan": {
-                    "includes": [
-                        "extension.neon"
-                    ]
-                },
-                "branch-alias": {
-                    "dev-2.x": "2.x-dev",
-                    "dev-master": "3.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Carbon\\": "src/Carbon/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Brian Nesbitt",
-                    "email": "brian@nesbot.com",
-                    "homepage": "https://markido.com"
-                },
-                {
-                    "name": "kylekatarnls",
-                    "homepage": "https://github.com/kylekatarnls"
-                }
-            ],
-            "description": "An API extension for DateTime that supports 281 different languages.",
-            "homepage": "https://carbon.nesbot.com",
-            "keywords": [
-                "date",
-                "datetime",
-                "time"
-            ],
-            "support": {
-                "docs": "https://carbon.nesbot.com/docs",
-                "issues": "https://github.com/briannesbitt/Carbon/issues",
-                "source": "https://github.com/briannesbitt/Carbon"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/kylekatarnls",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/Carbon#sponsor",
-                    "type": "opencollective"
-                },
-                {
-                    "url": "https://tidelift.com/subscription/pkg/packagist-nesbot-carbon?utm_source=packagist-nesbot-carbon&utm_medium=referral&utm_campaign=readme",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2025-01-08T20:10:23+00:00"
         },
         {
             "name": "nette/application",
@@ -7420,6 +6918,64 @@
                 "source": "https://github.com/nikic/FastRoute/tree/1.3.1"
             },
             "time": "2026-07-09T19:38:47+00:00"
+        },
+        {
+            "name": "nxp/math-executor",
+            "version": "v2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/neonxp/MathExecutor.git",
+                "reference": "17d3fd09ed734f1e68807d831d53ab4acfc33ab9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/neonxp/MathExecutor/zipball/17d3fd09ed734f1e68807d831d53ab4acfc33ab9",
+                "reference": "17d3fd09ed734f1e68807d831d53ab4acfc33ab9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0 <8.6"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "*",
+                "phpstan/phpstan": "*",
+                "phpunit/phpunit": ">=10.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "NXP\\": "src/NXP"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander 'NeonXP' Kiryukhin",
+                    "email": "a.kiryukhin@mail.ru"
+                },
+                {
+                    "name": "Bruce Wells",
+                    "email": "brucekwells@gmail.com"
+                }
+            ],
+            "description": "Simple math expressions calculator",
+            "homepage": "http://github.com/NeonXP/MathExecutor",
+            "keywords": [
+                "calculator",
+                "expression",
+                "formula",
+                "math",
+                "mathmatics",
+                "parser"
+            ],
+            "support": {
+                "issues": "https://github.com/neonxp/MathExecutor/issues",
+                "source": "https://github.com/neonxp/MathExecutor/tree/v2.4.0"
+            },
+            "time": "2026-09-23T15:19:39+00:00"
         },
         {
             "name": "opis/json-schema",
@@ -9483,57 +9039,6 @@
                 "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
             "time": "2024-09-11T13:17:53+00:00"
-        },
-        {
-            "name": "psr/simple-cache",
-            "version": "3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/simple-cache.git",
-                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/764e0b3939f5ca87cb904f570ef9be2d78a07865",
-                "reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.0.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\SimpleCache\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "https://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interfaces for simple caching",
-            "keywords": [
-                "cache",
-                "caching",
-                "psr",
-                "psr-16",
-                "simple-cache"
-            ],
-            "support": {
-                "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
-            },
-            "time": "2021-10-29T13:26:27+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -14069,80 +13574,6 @@
                 }
             ],
             "time": "2026-08-24T18:07:49+00:00"
-        },
-        {
-            "name": "voku/portable-ascii",
-            "version": "2.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/voku/portable-ascii.git",
-                "reference": "8e1051fe39379367aecf014f41744ce7539a856f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/voku/portable-ascii/zipball/8e1051fe39379367aecf014f41744ce7539a856f",
-                "reference": "8e1051fe39379367aecf014f41744ce7539a856f",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~8.5 || ~9.6 || ~10.5 || ~11.5"
-            },
-            "suggest": {
-                "ext-intl": "Use Intl for transliterator_transliterate() support"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "voku\\": "src/voku/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Lars Moelleken",
-                    "homepage": "https://www.moelleken.org/"
-                }
-            ],
-            "description": "Portable ASCII library - performance optimized (ascii) string functions for php.",
-            "homepage": "https://github.com/voku/portable-ascii",
-            "keywords": [
-                "ascii",
-                "clean",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/voku/portable-ascii/issues",
-                "source": "https://github.com/voku/portable-ascii/tree/2.1.1"
-            },
-            "funding": [
-                {
-                    "url": "https://www.paypal.me/moelleken",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/voku",
-                    "type": "github"
-                },
-                {
-                    "url": "https://opencollective.com/portable-ascii",
-                    "type": "open_collective"
-                },
-                {
-                    "url": "https://www.patreon.com/voku",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/voku/portable-ascii",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-04-26T05:33:54+00:00"
         },
         {
             "name": "webmozart/assert",

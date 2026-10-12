@@ -192,7 +192,8 @@ baseline phase must not change behaviour.
 packages at `@dev` (they are path repositories of this application), `Core/Core` requires
 `mathsolver/mathsolver` at `@dev`, and `Plugin/RedisDb` and `Plugin/RedisDbCache` pin
 `clue/redis-react` to the exact version `3.0.0`. `make composer-validate` therefore runs without
-`--strict`.
+`--strict`. (#443 replaced `mathsolver/mathsolver` with `nxp/math-executor ^2.4`; the other two
+remain.)
 
 **Two runtime defects are recorded in the spec, section 7.1.** The Shelly Gen2 WebSocket
 client raises an argument-count error if executed, and a presenter returns an empty array
@@ -225,6 +226,7 @@ The three dependencies pinned to branch commits all resolved, so upstream has no
 garbage-collected them: `bunny/bunny` at 376626f, `clue/redis-react` at e928901,
 `mathsolver/mathsolver` at 84f6f1c. That was the standing reproducibility risk and it is
 now retired, though it can return at any time since those are branch references.
+(`mathsolver/mathsolver` has since been replaced by the tagged `nxp/math-executor`, #443.)
 
 **A cold install does not produce `vendor/bin/fb-console`,** and nothing is wrong when
 you notice that. Composer does not link a root package's own `bin` entries into
@@ -264,7 +266,8 @@ touched.
   `.nvmrc` is advisory, and there is no `packageManager` field pinning yarn.
 - A true cold reinstall, with `vendor/` and `node_modules/` removed, has not been proven.
   Three dependencies resolve to branch commits that upstream can garbage-collect:
-  `bunny/bunny 0.6.x-dev`, `clue/redis-react 3.x-dev` and `mathsolver/mathsolver dev-main`.
+  `bunny/bunny 0.6.x-dev`, `clue/redis-react 3.x-dev` and `mathsolver/mathsolver dev-main`
+  (the last replaced by the tagged `nxp/math-executor` in #443).
   Worth one run before relying on this.
 
 ## Decisions taken while establishing this

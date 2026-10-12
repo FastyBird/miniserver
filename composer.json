@@ -106,11 +106,6 @@
             "url": "src/FastyBird/*/*"
         },
         {
-            "type": "vcs",
-            "url": "https://github.com/mathsolver/mathsolver.git",
-            "no-api": true
-        },
-        {
             "type": "package",
             "package": {
                 "name": "bunny/bunny",

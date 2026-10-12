@@ -6131,18 +6131,6 @@ parameters:
 			path: ../src/FastyBird/Core/Core/src/WebSockets/Topics/Storage.php
 
 		-
-			message: '#^Parameter \#1 \$array of function implode expects array\<string\>, array given\.$#'
-			identifier: argument.type
-			count: 2
-			path: ../src/FastyBird/Core/Core/src/Values/Transformers/EquationTransformer.php
-
-		-
-			message: '#^Parameter \#2 \$array of function implode expects array\<string\>, array given\.$#'
-			identifier: argument.type
-			count: 4
-			path: ../src/FastyBird/Core/Core/src/Values/Transformers/EquationTransformer.php
-
-		-
 			message: '#^Parameter \#1 \$number of static method FastyBird\\Core\\Phone\\Entities\\Phone\:\:fromNumber\(\) expects string, mixed given\.$#'
 			identifier: argument.type
 			count: 1
