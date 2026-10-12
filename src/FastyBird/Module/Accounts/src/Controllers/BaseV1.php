@@ -261,11 +261,13 @@ abstract class BaseV1
 			}
 		}
 
+		/** @var PersistenceEntities\CrudEntity|array<PersistenceEntities\CrudEntity>|null $entity */
+		$entity = $data instanceof Query\ResultSet ? $data->toArray() : $data;
+
 		return $this->builder->build(
 			$request,
 			$response,
-			// @phpstan-ignore-next-line
-			$data instanceof Query\ResultSet ? $data->toArray() : $data,
+			$entity,
 			$totalCount,
 			fn (string $link): bool => $this->routesValidator->validate($link),
 		);
