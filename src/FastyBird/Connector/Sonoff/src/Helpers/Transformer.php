@@ -8,6 +8,7 @@ use function base64_encode;
 use function md5;
 use function openssl_decrypt;
 use function openssl_encrypt;
+use function strlen;
 use function strval;
 use const OPENSSL_RAW_DATA;
 
@@ -17,14 +18,32 @@ use const OPENSSL_RAW_DATA;
 final class Transformer
 {
 
+	private const int IV_LENGTH = 16;
+
+	/**
+	 * The vector comes with the message, from whoever sent it. One that is not sixteen bytes would be padded or cut by
+	 * OpenSSL, with a warning, so it makes the message one that cannot be decrypted
+	 */
 	public static function decryptMessage(string $message, string $key, string $iv = ''): string|false
 	{
+		$vector = base64_decode($iv, true);
+
+		if ($vector === false || strlen($vector) !== self::IV_LENGTH) {
+			return false;
+		}
+
+		$cipher = base64_decode($message, true);
+
+		if ($cipher === false || $cipher === '') {
+			return false;
+		}
+
 		return openssl_decrypt(
-			strval(base64_decode($message, true)),
+			$cipher,
 			'AES-128-CBC',
 			md5($key, true),
 			OPENSSL_RAW_DATA,
-			strval(base64_decode($iv, true)),
+			$vector,
 		);
 	}
 
