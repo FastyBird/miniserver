@@ -245,12 +245,20 @@ final class DevicesPropertiesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		$findQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findQuery->byValue('device-username');
 
-		self::assertCount(1, $repository->findAllBy($findQuery, Documents\Devices\Properties\Variable::class), 'byValue device-username');
+		self::assertCount(
+			1,
+			$repository->findAllBy($findQuery, Documents\Devices\Properties\Variable::class),
+			'byValue device-username',
+		);
 
 		$findQuery = new Queries\Configuration\FindDeviceVariableProperties();
 		$findQuery->byValue('device.username');
 
-		self::assertCount(0, $repository->findAllBy($findQuery, Documents\Devices\Properties\Variable::class), 'byValue device.username');
+		self::assertCount(
+			0,
+			$repository->findAllBy($findQuery, Documents\Devices\Properties\Variable::class),
+			'byValue device.username',
+		);
 	}
 
 }

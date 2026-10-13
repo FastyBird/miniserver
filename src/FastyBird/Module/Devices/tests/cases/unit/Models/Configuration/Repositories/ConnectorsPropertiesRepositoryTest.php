@@ -214,12 +214,20 @@ final class ConnectorsPropertiesRepositoryTest extends Tests\Cases\Unit\DbTestCa
 		$findQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findQuery->byValue('random@username');
 
-		self::assertCount(1, $repository->findAllBy($findQuery, Documents\Connectors\Properties\Variable::class), 'byValue random@username');
+		self::assertCount(
+			1,
+			$repository->findAllBy($findQuery, Documents\Connectors\Properties\Variable::class),
+			'byValue random@username',
+		);
 
 		$findQuery = new Queries\Configuration\FindConnectorVariableProperties();
 		$findQuery->byValue('random.username');
 
-		self::assertCount(0, $repository->findAllBy($findQuery, Documents\Connectors\Properties\Variable::class), 'byValue random.username');
+		self::assertCount(
+			0,
+			$repository->findAllBy($findQuery, Documents\Connectors\Properties\Variable::class),
+			'byValue random.username',
+		);
 	}
 
 }

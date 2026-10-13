@@ -39,7 +39,9 @@ final class FindDashboardTabs extends QueryObject
 
 	public function byName(string|null $name): void
 	{
-		$this->filter[] = $name === null ? '.[?(@.name == null)]' : '.[?(@.name =~ /(?i)^' . self::literal($name) . '\z/)]';
+		$this->filter[] = $name === null
+			? '.[?(@.name == null)]'
+			: '.[?(@.name =~ /(?i)^' . self::literal($name) . '\z/)]';
 	}
 
 	public function forDashboard(Documents\Dashboards\Dashboard $dashboard): void
