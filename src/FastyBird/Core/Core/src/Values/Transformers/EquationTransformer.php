@@ -25,6 +25,9 @@ use function str_contains;
 use function strlen;
 use function strspn;
 use function substr;
+use function var_export;
+use const PHP_INT_MAX;
+use const PHP_INT_MIN;
 
 /**
  * Equation value transformer
@@ -88,7 +91,7 @@ final class EquationTransformer
 			return $value;
 		}
 
-		return self::toDataType(self::evaluate($this->equationFrom, 'y', $value), $dataType);
+		return self::toDataType(self::evaluate($this->equationFrom, 'y', $value), $dataType, $this->equationFrom);
 	}
 
 	public function getEquationTo(): string|null
@@ -108,7 +111,7 @@ final class EquationTransformer
 			return $value;
 		}
 
-		return self::toDataType(self::evaluate($this->equationTo, 'x', $value), $dataType);
+		return self::toDataType(self::evaluate($this->equationTo, 'x', $value), $dataType, $this->equationTo);
 	}
 
 	public function getValue(): string
@@ -121,9 +124,33 @@ final class EquationTransformer
 		return $this->__toString();
 	}
 
-	private static function toDataType(float $value, Types\DataType $dataType): int|float
+	/**
+	 * An integer result is rounded, and a rounded value that an `int` cannot hold is an error: `(int)` on it
+	 * wraps around without a word on PHP 8.4 (2^63 becomes `PHP_INT_MIN`), and a property would silently take
+	 * a wrong value. The upper limit is exclusive because `(float) PHP_INT_MAX` is 2^63, one more than
+	 * `PHP_INT_MAX`; the lower limit, -2^63, is `PHP_INT_MIN` exactly.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 */
+	private static function toDataType(float $value, Types\DataType $dataType, string $equation): int|float
 	{
-		return $dataType === Types\DataType::FLOAT ? $value : (int) round($value);
+		if ($dataType === Types\DataType::FLOAT) {
+			return $value;
+		}
+
+		$rounded = round($value);
+
+		if (!is_finite($rounded) || $rounded < (float) PHP_INT_MIN || $rounded >= (float) PHP_INT_MAX) {
+			throw new Exceptions\InvalidArgument(
+				sprintf(
+					'Equation "%s" result %s cannot be represented as an integer',
+					$equation,
+					var_export($value, true),
+				),
+			);
+		}
+
+		return (int) $rounded;
 	}
 
 	private static function withoutWhitespace(string $equation): string

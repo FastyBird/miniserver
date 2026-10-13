@@ -8,7 +8,14 @@ use FastyBird\Core\Values\Types;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use function intval;
+use function is_finite;
 use function round;
+use function sprintf;
+use function str_replace;
+use function strlen;
+use function substr;
+use const PHP_INT_MAX;
+use const PHP_INT_MIN;
 
 /**
  * What `Transformers\EquationTransformer` calculates (#443).
@@ -540,6 +547,156 @@ final class EquationTransformerCalculationTest extends TestCase
 		$this->expectExceptionMessage('does not evaluate to a finite number');
 
 		$transformer->calculateEquationFrom($value, Types\DataType::FLOAT);
+	}
+
+	/**
+	 * The integer branch rounds first, so a non-finite result is refused for it exactly as it is for FLOAT.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 */
+	#[DataProvider('provideNonFiniteResults')]
+	public function testNonFiniteResultThrowsForIntegerType(string $equation, int|float $value): void
+	{
+		$transformer = new Transformers\EquationTransformer($equation);
+
+		$this->expectException(Exceptions\InvalidArgument::class);
+		$this->expectExceptionMessage('does not evaluate to a finite number');
+
+		$transformer->calculateEquationFrom($value, Types\DataType::INT);
+	}
+
+	/**
+	 * A float holds integers of this size only in steps: 2^63 is the first value above `PHP_INT_MAX`, and the
+	 * float below it is 1024 less. At -2^63 (`PHP_INT_MIN` exactly) the step is 1024 too, and 2048 below it.
+	 *
+	 * @return array<string, array{string, int|float, int}>
+	 */
+	public static function provideIntegerResultsInsideTheRange(): array
+	{
+		return [
+			'just below the upper limit' => ['equation:x=y', 2.0 ** 63 - 1_024.0, PHP_INT_MAX - 1_023],
+			'the lower limit' => ['equation:x=y', PHP_INT_MIN, PHP_INT_MIN],
+			'just above the lower limit' => ['equation:x=y', -(2.0 ** 63) + 1_024.0, PHP_INT_MIN + 1_024],
+			'a product that lands on the lower limit' => ['equation:x=y*2', -(2 ** 62), PHP_INT_MIN],
+			'a product just below the upper limit' => ['equation:x=y*2', 2.0 ** 62 - 512.0, PHP_INT_MAX - 1_023],
+		];
+	}
+
+	/**
+	 * @return array<string, array{string, int|float}>
+	 */
+	public static function provideIntegerResultsOutsideTheRange(): array
+	{
+		return [
+			'the first float above PHP_INT_MAX' => ['equation:x=y', 2.0 ** 63],
+			'PHP_INT_MAX itself, which is 2^63 as a float' => ['equation:x=y', PHP_INT_MAX],
+			'the first float below PHP_INT_MIN' => ['equation:x=y', -(2.0 ** 63) - 2_048.0],
+			'a product that passes the upper limit' => ['equation:x=y*2', 2 ** 62],
+			'a product that passes the lower limit' => ['equation:x=y*2', -(2.0 ** 62) - 1_024.0],
+			'a sum that passes the upper limit' => ['equation:x=y+y', PHP_INT_MAX],
+			'a power far beyond the limits' => ['equation:x=y^10', 1_000_000],
+			'a negative power far beyond the limits' => ['equation:x=-y^10', 1_000_000],
+			'a quotient of a huge float' => ['equation:x=y/0.001', 1.0E+16],
+		];
+	}
+
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 */
+	#[DataProvider('provideIntegerResultsInsideTheRange')]
+	public function testIntegerResultInsideTheRangeIsKept(string $equation, int|float $value, int $expected): void
+	{
+		$transformer = new Transformers\EquationTransformer($equation);
+
+		foreach ([Types\DataType::INT, Types\DataType::UINT, Types\DataType::CHAR] as $dataType) {
+			self::assertSame($expected, $transformer->calculateEquationFrom($value, $dataType), $equation);
+		}
+
+		self::assertSame(
+			$expected,
+			(new Transformers\EquationTransformer(self::asYEquation($equation)))->calculateEquationTo(
+				$value,
+				Types\DataType::INT,
+			),
+			$equation,
+		);
+	}
+
+	/**
+	 * A result an `int` cannot hold is an error, in both directions and for every non-float data type.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 */
+	#[DataProvider('provideIntegerResultsOutsideTheRange')]
+	public function testIntegerResultOutsideTheRangeThrows(string $equation, int|float $value): void
+	{
+		$from = new Transformers\EquationTransformer($equation);
+		$to = new Transformers\EquationTransformer(self::asYEquation($equation));
+
+		foreach ([Types\DataType::INT, Types\DataType::UINT, Types\DataType::SHORT, Types\DataType::UCHAR] as $dataType) {
+			foreach ([true, false] as $isFrom) {
+				try {
+					$isFrom
+						? $from->calculateEquationFrom($value, $dataType)
+						: $to->calculateEquationTo($value, $dataType);
+
+					self::fail(
+						sprintf(
+							'"%s" did not throw for %s, from: %s',
+							$equation,
+							$dataType->value,
+							$isFrom ? 'yes' : 'no',
+						),
+					);
+				} catch (Exceptions\InvalidArgument $ex) {
+					self::assertStringContainsString('cannot be represented as an integer', $ex->getMessage());
+				}
+			}
+		}
+	}
+
+	/**
+	 * The message names the equation and the unrounded result.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 */
+	public function testIntegerOverflowMessageNamesEquationAndValue(): void
+	{
+		$this->expectException(Exceptions\InvalidArgument::class);
+		$this->expectExceptionMessage(
+			'Equation "y*2" result 9.223372036854776E+18 cannot be represented as an integer',
+		);
+
+		(new Transformers\EquationTransformer('equation:x=y*2'))->calculateEquationFrom(
+			2 ** 62,
+			Types\DataType::INT,
+		);
+	}
+
+	/**
+	 * The y-equation twin of an x-equation: the same expression, over `x` instead of `y`.
+	 */
+	private static function asYEquation(string $equation): string
+	{
+		return 'equation:x=y|y=' . str_replace('y', 'x', substr($equation, strlen('equation:x=')));
+	}
+
+	/**
+	 * The limit is the integer's, so FLOAT still takes the same results.
+	 *
+	 * @throws Exceptions\InvalidArgument
+	 */
+	#[DataProvider('provideIntegerResultsOutsideTheRange')]
+	public function testResultOutsideTheIntegerRangeIsKeptAsFloat(string $equation, int|float $value): void
+	{
+		$result = (new Transformers\EquationTransformer($equation))->calculateEquationFrom(
+			$value,
+			Types\DataType::FLOAT,
+		);
+
+		self::assertIsFloat($result);
+		self::assertTrue(is_finite($result), $equation);
+		self::assertTrue($result >= 2.0 ** 63 || $result <= -(2.0 ** 63), $equation);
 	}
 
 	/**
