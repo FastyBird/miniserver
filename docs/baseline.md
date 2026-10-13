@@ -89,6 +89,11 @@ Substitute your own image name; it is derived from the directory name. Do not "f
 by pointing the tests at compose hostnames, which is what the environment variables
 suggest and what does not work.
 
+`make tests` needs no extra PHP ini. `tools/php.d/tests.ini` used to hide PHP 8.4's
+implicit-nullable deprecations from vendor files, which broke every
+`@runTestsInSeparateProcesses` test (see [deprecations.md](./deprecations.md)); it was removed in
+#773 once `vendor/autoload.php` loaded with none.
+
 Also note that `docker-compose.yml` publishes Redis on a fixed host port, which fails
 outright on a machine already running another Redis. The namespace approach above avoids
 publishing any port. The deployment phase rewrites these compose files and should fold

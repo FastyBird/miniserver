@@ -11,9 +11,7 @@
  * production scope cannot be booted in-process.
  */
 
-// The deprecation notices vendor emits on PHP 8.4 would otherwise be interleaved with the
-// JSON this script writes to stdout. See tools/php.d/tests.ini.
-error_reporting(E_ALL & ~E_DEPRECATED);
+// A diagnostic printed to stdout would be interleaved with the JSON this script writes there.
 ini_set('display_errors', '0');
 
 require __DIR__ . '/../../../vendor/autoload.php';
