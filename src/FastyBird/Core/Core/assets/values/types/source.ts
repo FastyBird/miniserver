@@ -17,7 +17,6 @@ export enum PluginSource {
 	RABBITMQ = 'com.fastybird.rabbitmq-plugin',
 	REDISDB = 'com.fastybird.redisdb-plugin',
 	REDISDB_CACHE = 'com.fastybird.redisdb-cache-plugin',
-	API_KEY = 'com.fastybird.api-key-plugin',
 }
 
 export enum ConnectorSource {

@@ -4,7 +4,7 @@
 
 Every extension lives under `src/FastyBird/<Type>/<Name>/`. Each has its own `src/`, `tests/` (`tests/cases/unit`, and `tests/support` for its test helpers), `docs/`, `README.md` and `composer.json`. An extension with a Vue 3 UI also has `assets/` and a `package.json`; some have a `config/` directory of their own. The PHP namespace is `FastyBird\<Type>\<Name>`, except for `Core/Core`, whose namespace is `FastyBird\Core\…` with no repeated `\Core\Core\` segment.
 
-There are 29 extensions across 7 types:
+There are 28 extensions across 7 types:
 
 | Type | Count | Extensions |
 |---|---|---|
@@ -14,7 +14,7 @@ There are 29 extensions across 7 types:
 | Connector | 10 | FbMqtt, HomeKit, Modbus, NsPanel, Shelly, Sonoff, Tuya, Viera, Virtual, Zigbee2Mqtt |
 | Core | 1 | Core |
 | Module | 4 | Accounts, Devices, Triggers, Ui |
-| Plugin | 5 | ApiKey, CouchDb, RabbitMq, RedisDb, RedisDbCache |
+| Plugin | 4 | CouchDb, RabbitMq, RedisDb, RedisDbCache |
 
 Six extensions have a frontend: Core, the four modules and the HomeKit connector. Every extension is a path repository of this application (composer `fastybird/<name>`, npm `@fastybird/<name>`), not a separately released package.
 
@@ -125,6 +125,6 @@ A schema change adds a new version on top of them, generated with `migrations:di
 - **Character set.** The DBAL connection uses `charset: utf8mb4`, and its `defaultTableOptions` (`charset: utf8mb4`, `collation: utf8mb4_general_ci`) are the only place table options are set. Every generated `CREATE TABLE` carries them explicitly, so the schema does not depend on the server's default collation. Entities declare no table options of their own.
 - **The drift gate.** The production entrypoint runs `migrations:migrate --no-interaction --allow-no-migration` at every start. CI's `Docker Build` job starts the image on an empty database and then runs `orm:validate-schema`, which exits 0 only when the migrated schema equals the entity mapping, so a mapping change without a migration fails CI. `Persistence\Subscribers\SchemaSubscriber` adds the `doctrine_migrations` table to the schema the ORM generates, so neither the gate nor `orm:schema-tool` proposes dropping it.
 - **Tests do not migrate.** The test suites build their schema from the mapping with Doctrine's `SchemaTool`.
-- **Optional extensions ship no schema.** No migration creates what an extension outside the default registration maps. The ApiKey plugin adds a table, so registering it leaves the schema out of sync with its mapping (#730). The two Automators are part of the default registration, and `Version20261012172407` creates their columns.
+- **Optional extensions ship no schema.** No migration creates what an extension outside the default registration maps; today none of them maps an entity. The two Automators are part of the default registration, and `Version20261012172407` creates their columns. API keys were the last exception: the ApiKey plugin mapped a table no migration created, and was removed when Core's Security capability took API keys over (#730).
 
 [deployment.md](./deployment.md) describes what to do with a database created before the baseline.

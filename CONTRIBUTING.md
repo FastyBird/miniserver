@@ -39,7 +39,7 @@ The scope is the surface you changed, mirroring the extension type directories u
 | `core` | `src/FastyBird/Core/**` -- Core, the package every other extension builds on |
 | `module` | `src/FastyBird/Module/**` -- Accounts, Devices, Triggers, Ui |
 | `connector` | `src/FastyBird/Connector/**` -- the ten device connectors |
-| `plugin` | `src/FastyBird/Plugin/**` -- ApiKey, CouchDb, RabbitMq, RedisDb, RedisDbCache |
+| `plugin` | `src/FastyBird/Plugin/**` -- CouchDb, RabbitMq, RedisDb, RedisDbCache |
 | `bridge` | `src/FastyBird/Bridge/**` -- the six inter-extension bridges |
 | `addon` | `src/FastyBird/Addon/**` -- VirtualThermostat |
 | `automator` | `src/FastyBird/Automator/**` -- DateTime, DevicesModule |

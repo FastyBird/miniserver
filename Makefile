@@ -77,7 +77,7 @@ rector-config: ## Apply a committed Rector config: make rector-config RECTOR_CON
 	mkdir -p var/tools/Rector
 	$(PRE_PHP) "vendor/bin/rector" process --config="$(RECTOR_CONFIG)" --no-progress-bar --clear-cache $(ARGS)
 
-# Dependency-direction gate for the 29 packages under src/FastyBird. This is what replaced
+# Dependency-direction gate for the 28 packages under src/FastyBird. This is what replaced
 # the per-package composer manifests (34 of them before the Core merge) as the statement of the
 # dependency direction: they were measured to be fiction (117 undeclared edges against 149
 # declared) and unenforceable by construction anyway.

@@ -12,7 +12,7 @@ The host you are running on may report a different PHP/Node version. It does not
 
 ## Layout
 
-- `src/FastyBird/<Type>/<Name>/` -- 29 extensions across 7 types: Addon (1), Automator (2), Bridge (6), Connector (10), Core (1), Module (4), Plugin (5). `Core/Core` (`fastybird/miniserver-core` / `@fastybird/miniserver-core`, namespace `FastyBird\Core`) is the package every other one builds on, organised by capability. See `docs/architecture.md` for the full inventory, Core's capability layout and the dependency layering.
+- `src/FastyBird/<Type>/<Name>/` -- 28 extensions across 7 types: Addon (1), Automator (2), Bridge (6), Connector (10), Core (1), Module (4), Plugin (4). `Core/Core` (`fastybird/miniserver-core` / `@fastybird/miniserver-core`, namespace `FastyBird\Core`) is the package every other one builds on, organised by capability. See `docs/architecture.md` for the full inventory, Core's capability layout and the dependency layering.
 - `config/` -- shipped wiring (`common.neon`, `defaults.neon`, `extensions.ts`). `config/local.neon` is git-ignored and is where local overrides and secrets belong. `config/supervisor/` is a legacy, currently-unused layout (see `docs/deployment.md`) -- do not assume it is wired into anything.
 - `public/` -- `index.php` is the single entry point for both the JSON:API backend and the Vue SPA shell.
 - `bin/` -- `fb-console`/`fb-console.php` (Symfony-style console), `fb-supervisor`/`fb-supervisor.php` (supervisor event listener). Neither is executable in a fresh checkout (mode 644 in git); invoke them as `php bin/fb-console.php <command>`.
@@ -55,7 +55,7 @@ make bash                # shell into the application container as www-data
 
 ## Console commands (`php bin/fb-console.php <command>`)
 
-Install commands exist per module/connector/addon, not as a single `fb:initialize` (that command does not exist, despite what the old miniserver README claimed): `fb:devices-module:install`, `fb:accounts-module:install`, `fb:triggers-module:install`, `fb:ui-module:install`, `fb:<connector>:install` for each of the ten connectors, `fb:virtual-thermostat-addon:install`, `fb:api-key:create`. Runtime commands: `fb:web-server:start`, `fb:ws-server:start`, `fb:devices-module:exchange`, `fb:devices-module:connector <identifier>`, `fb:<connector>:execute`, `fb:<connector>:discover` (NsPanel, Shelly, Sonoff, Tuya, Viera, Zigbee2Mqtt only), `fb:<bridge>:build` (the three HomeKit bridges). Schema is managed through migrations: `php bin/fb-console.php migrations:migrate --no-interaction --allow-no-migration`. `migrations/` holds one baseline (utf8mb4, `utf8mb4_general_ci`); a schema change adds a version on top of it, generated with `migrations:diff` after `rm -rf var/temp/cache`, and CI's `Docker Build` job fails when `orm:validate-schema` finds the migrated schema out of sync with the mapping. See `docs/architecture.md`.
+Install commands exist per module/connector/addon, not as a single `fb:initialize` (that command does not exist, despite what the old miniserver README claimed): `fb:devices-module:install`, `fb:accounts-module:install`, `fb:triggers-module:install`, `fb:ui-module:install`, `fb:<connector>:install` for each of the ten connectors, `fb:virtual-thermostat-addon:install`. API keys are Core's `fb:api-key:create`, `list`, `suspend` and `delete`, registered only with `fbCore.security.enable.apiKeys` on. Runtime commands: `fb:web-server:start`, `fb:ws-server:start`, `fb:devices-module:exchange`, `fb:devices-module:connector <identifier>`, `fb:<connector>:execute`, `fb:<connector>:discover` (NsPanel, Shelly, Sonoff, Tuya, Viera, Zigbee2Mqtt only), `fb:<bridge>:build` (the three HomeKit bridges). Schema is managed through migrations: `php bin/fb-console.php migrations:migrate --no-interaction --allow-no-migration`. `migrations/` holds one baseline (utf8mb4, `utf8mb4_general_ci`); a schema change adds a version on top of it, generated with `migrations:diff` after `rm -rf var/temp/cache`, and CI's `Docker Build` job fails when `orm:validate-schema` finds the migrated schema out of sync with the mapping. See `docs/architecture.md`.
 
 ## Conventions
 
@@ -67,7 +67,7 @@ it before adding a file to `src/FastyBird/Core/Core`.
 
 ## Architecture reference
 
-Read [docs/architecture.md](./docs/architecture.md) before changing request routing, the config load order, or how extensions register their DI extensions. Read [docs/configuration.md](./docs/configuration.md) before wiring an extension that is present in the tree but not registered by default (RedisDb and its two bridges, RedisDbCache, CouchDb, RabbitMq, ApiKey). Read [docs/deployment.md](./docs/deployment.md) before changing anything under `docker/` or `config/supervisor/`.
+Read [docs/architecture.md](./docs/architecture.md) before changing request routing, the config load order, or how extensions register their DI extensions. Read [docs/configuration.md](./docs/configuration.md) before wiring an extension that is present in the tree but not registered by default (RedisDb and its two bridges, RedisDbCache, CouchDb, RabbitMq). Read [docs/deployment.md](./docs/deployment.md) before changing anything under `docker/` or `config/supervisor/`.
 
 ## Traps already hit once -- do not reintroduce them
 

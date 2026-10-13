@@ -5,7 +5,7 @@
     This file is the standard itself: which sniffs run and how each one is configured. It is
     deliberately free of anything specific to this checkout. tools/phpcs.xml applies it to the
     repository: what is scanned, the cache, the PSR-4 root map for TypeNameMatchesFileName, and
-    the two files exempt from LineLength. Every sniff here applies to all 29 packages, their
+    the two files exempt from LineLength. Every sniff here applies to all 28 packages, their
     tests, and the repository-root tests/ and bin/; no sniff is scoped to a package type. Change
     this file when the standard changes; change tools/phpcs.xml when the repository's
     relationship to it does.

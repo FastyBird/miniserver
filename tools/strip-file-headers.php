@@ -32,7 +32,7 @@
  *     `enum` word. It may be the file's own name or a stale one (120 headers name a file that has
  *     since been renamed), and it may be split at the extension: the first line holds one token
  *     and every further line before the tags is a whitespace-free fragment starting with `.`
- *     (`Plugin/ApiKey/src/Entities/TEntity.php` has ` * trait TEntity` and `.php`). Any other
+ *     (one such header was ` * trait TEntity` and ` * .php`). Any other
  *     second line -- ` * Bootstrap` + ` * Foo.php` -- is prose, and the docblock is left alone.
  *     The header is recognised by its shape, never by comparing the name with the file;
  *   - the nine forbidden tags, @package @subpackage @author @copyright @license @since @created

@@ -61,7 +61,6 @@ parameters:
         - ../src/FastyBird/Module/Devices/tests/cases
         - ../src/FastyBird/Module/Triggers/tests/cases
         - ../src/FastyBird/Module/Ui/tests/cases
-        - ../src/FastyBird/Plugin/ApiKey/tests/cases
         - ../src/FastyBird/Plugin/CouchDb/tests/cases
         - ../src/FastyBird/Plugin/RabbitMq/tests/cases
         - ../src/FastyBird/Plugin/RedisDb/tests/cases
@@ -92,7 +91,6 @@ parameters:
         - ../src/FastyBird/Module/Devices/src
         - ../src/FastyBird/Module/Triggers/src
         - ../src/FastyBird/Module/Ui/src
-        - ../src/FastyBird/Plugin/ApiKey/src
         - ../src/FastyBird/Plugin/CouchDb/src
         - ../src/FastyBird/Plugin/RabbitMq/src
         - ../src/FastyBird/Plugin/RedisDb/src

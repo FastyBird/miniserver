@@ -391,7 +391,7 @@ namespace supersedes `@package`. `@package`, `@subpackage`, `@author`, `@copyrig
 `@license`, `@since`, `@created`, `@version` and `@date` are forbidden. **Enforced everywhere:**
 the coding standard (`tools/phpcs-ruleset.xml`) runs
 `SlevomatCodingStandard.Commenting.ForbiddenAnnotations`, and `tools/phpcs.xml` excludes no
-package from it; `make cs` rejects any of these annotations in all 29 packages and their tests,
+package from it; `make cs` rejects any of these annotations in all 28 packages and their tests,
 and equally in the repository-root `tests/` and `bin/`, which `make cs` scans as well.
 `make naming` also runs `tools/strip-file-headers.php --check`, which refuses the legacy file
 header in PHP and `.neon` files repository-wide.
@@ -430,7 +430,7 @@ Every package keeps an interface only for one of four reasons: K1, two or more p
 implementations; K2, an implementation outside the package; K3, a substitution point
 (configuration, a `findByType()` or tag collection, or a Nette `setImplement()` factory); K4, a
 third-party contract. Test doubles do not count, and (rule R1) an implementation that extends the
-sole other implementation does not count towards K1 or K2. The rule is the same in all 29
+sole other implementation does not count towards K1 or K2. The rule is the same in all 28
 packages.
 
 - **K1 counts implementations of the same contract across a package family**, not only inside
@@ -469,9 +469,9 @@ own interfaces are kept by the same rule, without a table here.
 | `Persistence\Crud\Create\EntityCreatorFactory` | K3 | `setImplement()` at `PersistenceExtension.php:94`. |
 | `Persistence\Crud\Update\EntityUpdaterFactory` | K3 | `setImplement()` at `PersistenceExtension.php:100`. |
 | `Persistence\Crud\Delete\EntityDeleterFactory` | K3 | `setImplement()` at `PersistenceExtension.php:106`. |
-| `Persistence\Entities\CrudEntity` | K1, K2 | 156 implementers, 153 outside Core. In Core: `Security\Entities\ApiKeys\ApiKey`, `Security\Entities\Policies\Policy`, `Security\Entities\Tokens\Token`. Accounts, Devices, Triggers and Ui extend it with their own `Entity` interface. |
-| `Persistence\Entities\EntityCreated` | K1, K2 | 154 implementers, 153 outside Core (28 direct, in Core's `Security\Entities\ApiKeys\ApiKey`, Accounts, Devices, Triggers, Ui, HomeKit and ApiKey). |
-| `Persistence\Entities\EntityUpdated` | K1, K2 | 154 implementers, 153 outside Core (28 direct, as `EntityCreated`). |
+| `Persistence\Entities\CrudEntity` | K1, K2 | 155 implementers, 152 outside Core. In Core: `Security\Entities\ApiKeys\ApiKey`, `Security\Entities\Policies\Policy`, `Security\Entities\Tokens\Token`. Accounts, Devices, Triggers and Ui extend it with their own `Entity` interface. |
+| `Persistence\Entities\EntityCreated` | K1, K2 | 153 implementers, 152 outside Core (27 direct, in Core's `Security\Entities\ApiKeys\ApiKey`, Accounts, Devices, Triggers, Ui and HomeKit). |
+| `Persistence\Entities\EntityUpdated` | K1, K2 | 153 implementers, 152 outside Core (27 direct, as `EntityCreated`). |
 | `Security\Access\Checker` | K1 | `AnnotationChecker`, `LatteChecker`, `LinkChecker`. |
 | `Security\Entities\Owner` | K1, K2 | 45 implementers, all outside Core (6 direct, in Devices, Triggers and Ui). |
 | `Security\Identity\AccountIdentityProvider` | K2 | The one implementer is Accounts' `Security\AccountIdentityFactory`; Core ships none on purpose, so an API key fails closed without it. `Services\Auth` and `Commands\CreateApiKey` take it, autowired. |
@@ -500,7 +500,7 @@ A new interface in Core needs a row in this table, with its reason, in the PR th
   `make phpstan` (`checkMissingOverrideMethodAttribute`, in both configurations), repository-wide.
 - `readonly class` where every property is readonly.
 - Typed class constants, enforced by `SlevomatCodingStandard.TypeHints.ClassConstantTypeHint`.
-  Active in all 29 packages; `tools/phpcs.xml` excludes none.
+  Active in all 28 packages; `tools/phpcs.xml` excludes none.
 - Constructor property promotion, enforced by `SlevomatCodingStandard.Classes.RequireConstructorPropertyPromotion`.
 - **A get/set pair is a property, not two methods.** Where a getter only returns
   a property and a setter only assigns it, declare the property and drop both methods. Kept by

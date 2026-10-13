@@ -250,6 +250,8 @@ For each type, an automator adds its entity, document, JSON:API schema and hydra
 
 None of the extensions below are registered by default. Each snippet is a complete `config/local.neon` that registers the extension's DI extension class alongside whatever `config/common.neon` already registers -- Nette merges the `extensions:` sections, so you do not need to repeat the ones already wired.
 
+API keys are not among them: they are part of Core's Security capability and are switched on with `fbCore.security.enable.apiKeys`, see [API keys](#api-keys). The ApiKey plugin this list used to include was removed in #730.
+
 ## Redis-backed state storage (RedisDb plugin)
 
 Registers `FastyBird\Plugin\RedisDb\DI\RedisDbExtension` (service name `fbRedisDbPlugin`):
@@ -361,23 +363,6 @@ fbRabbitMqPlugin:
 **A WebSocket SET is a command, not a broadcast.** A WAMP SET (`Devices\Controllers\ExchangeV1`) is addressed to its target, the connector or device process that owns the property, and only the target consumes it. It is not propagated to the other WebSocket clients. A document published with the `devices` source is a command (a WebSocket SET or an API write, as an action or as the state write it produces), and the Devices and DevicesModuleUiModule SocketsBridges, which forward exchange documents to WebSocket clients, skip it. So does the DevicesModuleUiModule state subscriber, which publishes a widget data source's document when the state of the property it reads changes: it still cleans the data source's caches, but publishes nothing for a `devices`-sourced change. The clients see the change when the target reports the resulting state under its own source, which is the path every change a connector reports already takes.
 
 What a connector reports about itself is not a command, so it carries the connector's source, not `devices`: its device and connector connection state (`Utilities\DeviceConnection::setState()` and `ConnectorConnection::setState()` take the source of whoever reports) and the validity reset of its properties when it starts or stops. WebSocket clients receive those, which includes Devices clients that did not before.
-
-## API key authentication (ApiKey plugin)
-
-**Superseded by Core's [API keys](#api-keys)**, and to be removed (#730). The plugin's keys are wired into no route, so registering it enforces nothing. Do not register it together with `fbCore.security.enable.apiKeys`: both register a command named `fb:api-key:create`.
-
-Registers `FastyBird\Plugin\ApiKey\DI\ApiKeyExtension` (service name `fbApiKeyPlugin`); it also takes no configuration:
-
-```neon
-extensions:
-    fbApiKeyPlugin: FastyBird\Plugin\ApiKey\DI\ApiKeyExtension
-```
-
-Once registered, create a key with:
-
-```sh
-php bin/fb-console.php fb:api-key:create
-```
 
 ## Compose services
 
