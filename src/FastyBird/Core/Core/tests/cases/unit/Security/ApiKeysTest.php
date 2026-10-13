@@ -8,7 +8,7 @@ use Doctrine\ORM;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Commands;
-use FastyBird\Core\Security\Exceptions;
+use FastyBird\Core\Security\Exceptions as SecurityExceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Models;
 use FastyBird\Core\Security\Services;
@@ -193,7 +193,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 			$this->auth()->login($this->request($secret));
 
 			self::fail('The suspended key signed the user in');
-		} catch (Exceptions\UnauthorizedAccess) {
+		} catch (SecurityExceptions\UnauthorizedAccess) {
 			self::assertFalse($this->container->getByType(Identity\User::class)->isLoggedIn());
 		}
 	}
@@ -213,7 +213,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 
 		$this->container->getByType(Tests\Support\AccountIdentities::class)->active = [self::USER_ACCOUNT];
 
-		$this->expectException(Exceptions\UnauthorizedAccess::class);
+		$this->expectException(SecurityExceptions\UnauthorizedAccess::class);
 
 		try {
 			$this->auth()->login($this->request($secret));
@@ -238,7 +238,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 			$this->reader(),
 		);
 
-		$this->expectException(Exceptions\UnauthorizedAccess::class);
+		$this->expectException(SecurityExceptions\UnauthorizedAccess::class);
 
 		$auth->login($this->request($secret));
 	}
@@ -348,7 +348,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		[$secret] = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
 
-		$this->expectException(Exceptions\UnauthorizedAccess::class);
+		$this->expectException(SecurityExceptions\UnauthorizedAccess::class);
 
 		$this->auth()->login($this->request($secret, 'not.a.token'));
 	}
@@ -360,7 +360,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$this->createKey(self::ADMINISTRATOR_ACCOUNT);
 
-		$this->expectException(Exceptions\UnauthorizedAccess::class);
+		$this->expectException(SecurityExceptions\UnauthorizedAccess::class);
 
 		$this->auth()->login($this->request('wrong'));
 	}
@@ -705,7 +705,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 			$this->reader()->read($this->request($secret));
 
 			self::fail('The key was accepted');
-		} catch (Exceptions\UnauthorizedAccess) {
+		} catch (SecurityExceptions\UnauthorizedAccess) {
 			// Refused, as expected
 		}
 
@@ -713,7 +713,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 			$this->auth()->login($this->request($secret));
 
 			self::fail('The key signed the user in');
-		} catch (Exceptions\UnauthorizedAccess) {
+		} catch (SecurityExceptions\UnauthorizedAccess) {
 			self::assertFalse($this->container->getByType(Identity\User::class)->isLoggedIn());
 		}
 	}
