@@ -87,4 +87,45 @@ final class DevicesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		self::assertSame(4, $resultSet->getTotalCount());
 	}
 
+	/**
+	 * The prefix and suffix filters match their argument as it is: a `_` or `%` in it is not a wildcard, so an
+	 * identifier written with `_` where another has `-` does not find it.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testPrefixAndSuffixFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Entities\Devices\DevicesRepository::class);
+
+		$findQuery = new Queries\Entities\FindDevices();
+		$findQuery->startWithIdentifier('first-');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'startWithIdentifier first-');
+
+		$findQuery = new Queries\Entities\FindDevices();
+		$findQuery->startWithIdentifier('first_');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'startWithIdentifier first_');
+
+		$findQuery = new Queries\Entities\FindDevices();
+		$findQuery->endWithIdentifier('-device');
+
+		self::assertCount(4, $repository->findAllBy($findQuery), 'endWithIdentifier -device');
+
+		$findQuery = new Queries\Entities\FindDevices();
+		$findQuery->endWithIdentifier('_device');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'endWithIdentifier _device');
+
+		$findQuery = new Queries\Entities\FindDevices();
+		$findQuery->endWithIdentifier('%');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'endWithIdentifier %');
+	}
+
 }

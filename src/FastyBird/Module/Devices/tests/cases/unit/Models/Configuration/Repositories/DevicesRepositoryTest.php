@@ -270,4 +270,54 @@ final class DevicesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(2, $entities);
 	}
 
+	/**
+	 * Every filter matches its argument as it is, ignoring case, and never as a pattern: what a pattern would make of
+	 * its characters must not find anything else. A prefix also matches the whole value.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Devices\Repository::class);
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->startWithIdentifier('first-');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'startWithIdentifier first-');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->startWithIdentifier('first-device');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'startWithIdentifier first-device');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->startWithIdentifier('first.');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'startWithIdentifier first.');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->endWithIdentifier('-device');
+
+		self::assertCount(4, $repository->findAllBy($findQuery), 'endWithIdentifier -device');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->endWithIdentifier('.device');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'endWithIdentifier .device');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->byType('dummy');
+
+		self::assertCount(4, $repository->findAllBy($findQuery), 'byType dummy');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->byType('dumm.');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byType dumm.');
+	}
+
 }

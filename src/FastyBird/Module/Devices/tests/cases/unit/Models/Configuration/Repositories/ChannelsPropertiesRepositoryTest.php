@@ -192,4 +192,64 @@ final class ChannelsPropertiesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(1, $entities);
 	}
 
+	/**
+	 * Every filter matches its argument as it is, ignoring case, and never as a pattern: what a pattern would make of
+	 * its characters must not find anything else. A prefix also matches the whole value.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Channels\Properties\Repository::class);
+
+		$findQuery = new Queries\Configuration\FindChannelProperties();
+		$findQuery->byIdentifier('switch');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'byIdentifier switch');
+
+		$findQuery = new Queries\Configuration\FindChannelProperties();
+		$findQuery->byIdentifier('SWITCH');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'byIdentifier SWITCH');
+
+		$findQuery = new Queries\Configuration\FindChannelProperties();
+		$findQuery->byIdentifier('sw.tch');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier sw.tch');
+
+		$findQuery = new Queries\Configuration\FindChannelProperties();
+		$findQuery->byIdentifier('switchh');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier switchh');
+
+		$findQuery = new Queries\Configuration\FindChannelProperties();
+		$findQuery->startWithIdentifier('swi');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'startWithIdentifier swi');
+
+		$findQuery = new Queries\Configuration\FindChannelProperties();
+		$findQuery->startWithIdentifier('switch');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'startWithIdentifier switch');
+
+		$findQuery = new Queries\Configuration\FindChannelProperties();
+		$findQuery->startWithIdentifier('sw.');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'startWithIdentifier sw.');
+
+		$findQuery = new Queries\Configuration\FindChannelProperties();
+		$findQuery->endWithIdentifier('ture');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'endWithIdentifier ture');
+
+		$findQuery = new Queries\Configuration\FindChannelProperties();
+		$findQuery->endWithIdentifier('.ture');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'endWithIdentifier .ture');
+	}
+
 }

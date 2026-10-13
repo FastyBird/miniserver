@@ -79,4 +79,50 @@ final class ChannelsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		self::assertSame(3, $resultSet->getTotalCount());
 	}
 
+	/**
+	 * The prefix and suffix filters match their argument as it is: a `_` or `%` in it is not a wildcard, so an
+	 * identifier written with `_` where another has `-` does not find it.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws PersistenceExceptions\Query
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testPrefixAndSuffixFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Entities\Channels\ChannelsRepository::class);
+
+		$findQuery = new Queries\Entities\FindChannels();
+		$findQuery->startWithIdentifier('channel-');
+
+		self::assertCount(3, $repository->findAllBy($findQuery), 'startWithIdentifier channel-');
+
+		$findQuery = new Queries\Entities\FindChannels();
+		$findQuery->startWithIdentifier('channel_');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'startWithIdentifier channel_');
+
+		$findQuery = new Queries\Entities\FindChannels();
+		$findQuery->startWithIdentifier('%one');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'startWithIdentifier %one');
+
+		$findQuery = new Queries\Entities\FindChannels();
+		$findQuery->endWithIdentifier('-one');
+
+		self::assertCount(2, $repository->findAllBy($findQuery), 'endWithIdentifier -one');
+
+		$findQuery = new Queries\Entities\FindChannels();
+		$findQuery->endWithIdentifier('_one');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'endWithIdentifier _one');
+
+		$findQuery = new Queries\Entities\FindChannels();
+		$findQuery->endWithIdentifier('channel%');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'endWithIdentifier channel%');
+	}
+
 }

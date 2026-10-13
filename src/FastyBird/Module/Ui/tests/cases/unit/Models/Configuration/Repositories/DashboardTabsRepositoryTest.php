@@ -112,4 +112,39 @@ final class DashboardTabsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(1, $entities);
 	}
 
+	/**
+	 * Every filter matches its argument as it is, ignoring case, and never as a pattern: what a pattern would make of
+	 * its characters must not find anything else. A prefix also matches the whole value.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws UiExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Dashboards\Tabs\Repository::class);
+
+		$findQuery = new Queries\Configuration\FindDashboardTabs();
+		$findQuery->byIdentifier('default');
+
+		self::assertCount(2, $repository->findAllBy($findQuery), 'byIdentifier default');
+
+		$findQuery = new Queries\Configuration\FindDashboardTabs();
+		$findQuery->byIdentifier('defaul.');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier defaul.');
+
+		$findQuery = new Queries\Configuration\FindDashboardTabs();
+		$findQuery->byName('Default');
+
+		self::assertCount(2, $repository->findAllBy($findQuery), 'byName Default');
+
+		$findQuery = new Queries\Configuration\FindDashboardTabs();
+		$findQuery->byName('Defaul.');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byName Defaul.');
+	}
+
 }

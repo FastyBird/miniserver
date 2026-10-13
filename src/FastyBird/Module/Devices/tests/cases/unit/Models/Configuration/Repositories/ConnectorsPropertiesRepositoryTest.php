@@ -167,4 +167,59 @@ final class ConnectorsPropertiesRepositoryTest extends Tests\Cases\Unit\DbTestCa
 		self::assertCount(2, $entities);
 	}
 
+	/**
+	 * Every filter matches its argument as it is, ignoring case, and never as a pattern: what a pattern would make of
+	 * its characters must not find anything else. A prefix also matches the whole value.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Connectors\Properties\Repository::class);
+
+		$findQuery = new Queries\Configuration\FindConnectorProperties();
+		$findQuery->byIdentifier('username');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'byIdentifier username');
+
+		$findQuery = new Queries\Configuration\FindConnectorProperties();
+		$findQuery->byIdentifier('user.ame');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier user.ame');
+
+		$findQuery = new Queries\Configuration\FindConnectorProperties();
+		$findQuery->startWithIdentifier('user');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'startWithIdentifier user');
+
+		$findQuery = new Queries\Configuration\FindConnectorProperties();
+		$findQuery->startWithIdentifier('u.er');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'startWithIdentifier u.er');
+
+		$findQuery = new Queries\Configuration\FindConnectorProperties();
+		$findQuery->endWithIdentifier('word');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'endWithIdentifier word');
+
+		$findQuery = new Queries\Configuration\FindConnectorProperties();
+		$findQuery->endWithIdentifier('.ord');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'endWithIdentifier .ord');
+
+		$findQuery = new Queries\Configuration\FindConnectorVariableProperties();
+		$findQuery->byValue('random@username');
+
+		self::assertCount(1, $repository->findAllBy($findQuery, Documents\Connectors\Properties\Variable::class), 'byValue random@username');
+
+		$findQuery = new Queries\Configuration\FindConnectorVariableProperties();
+		$findQuery->byValue('random.username');
+
+		self::assertCount(0, $repository->findAllBy($findQuery, Documents\Connectors\Properties\Variable::class), 'byValue random.username');
+	}
+
 }

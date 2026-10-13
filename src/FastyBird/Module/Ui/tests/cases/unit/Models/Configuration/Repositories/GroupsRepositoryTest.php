@@ -81,4 +81,39 @@ final class GroupsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(3, $entities);
 	}
 
+	/**
+	 * Every filter matches its argument as it is, ignoring case, and never as a pattern: what a pattern would make of
+	 * its characters must not find anything else. A prefix also matches the whole value.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws UiExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Groups\Repository::class);
+
+		$findQuery = new Queries\Configuration\FindGroups();
+		$findQuery->byIdentifier('sleeping-room');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'byIdentifier sleeping-room');
+
+		$findQuery = new Queries\Configuration\FindGroups();
+		$findQuery->byIdentifier('sleeping.room');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier sleeping.room');
+
+		$findQuery = new Queries\Configuration\FindGroups();
+		$findQuery->byName('Sleeping room');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'byName Sleeping room');
+
+		$findQuery = new Queries\Configuration\FindGroups();
+		$findQuery->byName('Sleeping.room');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byName Sleeping.room');
+	}
+
 }
