@@ -368,9 +368,14 @@ The extensions follow three more rules, decided in
   and exposes one typed method per hook, such as `onMessage(Closure $listener): void`. A global
   event would make every listener filter by client instance. FbMqtt's and Zigbee2Mqtt's
   `API\Client` follow this rule: `onConnect()`, `onMessage()` and the other registration methods
-  append to private arrays, and the listeners are called in the order they were registered. The
-  Shelly, Sonoff, Tuya and Viera clients still carry public `$onX` arrays until the rest of #725
-  lands.
+  append to private arrays, and the listeners are called in the order they were registered. So do
+  the Shelly (`Gen1Coap`, `Gen2WsApi`), Sonoff (`CloudWs`, `LanApi`), Tuya (`LocalApi`,
+  `OpenPulsar`) and Viera (`TelevisionApi`) clients, and no package declares a public `$onX`
+  property any more. `make naming` refuses one (check 7); the only name it exempts is Nette's own
+  `onCompile` hook, which an extension writes to and never declares. A registration method takes
+  a `Closure`, appends it, and has no removal counterpart until a caller needs to unsubscribe:
+  the connection manager owns each client for the process, and a client that is replaced is
+  disconnected and dropped with its listeners.
 - **A runtime listener has a matching removal.** An object created per connector, outside DI,
   may add a listener at runtime. It does that with `addListener()` on
   `Symfony\Component\EventDispatcher\EventDispatcherInterface`, because PSR-14 has no

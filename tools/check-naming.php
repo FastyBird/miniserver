@@ -156,6 +156,18 @@
  * it. The `Interface` and `Trait` suffixes need no check here: `make cs` refuses them (SuperfluousInterfaceNaming, SuperfluousTraitNaming).
  * Violations carry the category `prefix`.
  *
+ * CHECK 7: no public `$onX` callback property (#725)
+ *
+ * A property declared `public` (or `var`) with a name that starts `on` and a capital -- `public
+ * array $onMessage`, `public Closure|null $onClose`, a promoted `public readonly array $onError`
+ * -- is refused in every first-party file. A per-connection client keeps its callbacks private
+ * and exposes a typed registration method (`onMessage(Closure $listener): void`); a service-level
+ * hook is a PSR-14 event (docs/conventions.md, Events). A public array lets any caller append,
+ * replace or empty the listeners, and nothing in the type system sees who did. The one exempt
+ * name is Nette's own `onCompile` hook on `CompilerExtension`, which this repository only
+ * writes to (`$config->onCompile[] = ...`) and never declares. Violations carry the category
+ * `hook`.
+ *
  * Exit codes follow tools/check-layering.php:
  *   0  clean
  *   1  at least one violation; there is no baseline, so every violation fails
@@ -210,6 +222,14 @@ const FB_PACKAGES_ROOT = 'src/FastyBird';
 const FB_TYPE_PREFIXES = [
 	'interface' => 'I',
 	'trait' => 'T',
+];
+
+/**
+ * Check 7: the names a public `$onX` property may carry. Nette's `CompilerExtension::$onCompile` is
+ * a framework hook, not one of ours.
+ */
+const FB_PUBLIC_HOOK_EXEMPT = [
+	'onCompile',
 ];
 
 const FB_TYPE_DENYLIST = [
@@ -787,6 +807,22 @@ function fbCheckFile(string $path, string $code, string $relative): array
 			if ($prefix !== null && preg_match('/^' . $prefix . '[A-Z]/', $typeName) === 1) {
 				$violations[] = sprintf("prefix\t%s\t%s %s has the prefix %s", $relative, $keyword, $typeName, $prefix);
 			}
+		}
+	}
+
+	// 7. A public `$onX` property, every first-party file (#725). A visibility modifier, then an
+	// optional `static` / `readonly` and an optional type, then `$on` and a capital. The modifier
+	// must open the line or follow a `(` or `,` (a promoted constructor parameter), so a docblock
+	// line (`* public array $onX`) is not a declaration.
+	preg_match_all(
+		'/(?:^|[(,])[ \t]*(?:public|var)(?:\s+(?:static|readonly))*(?:\s+[\w\\\\|?&()]+)?\s+\$(on[A-Z]\w*)/m',
+		$code,
+		$hookMatches,
+	);
+
+	foreach ($hookMatches[1] as $hookName) {
+		if (!in_array($hookName, FB_PUBLIC_HOOK_EXEMPT, true)) {
+			$violations[] = sprintf("hook\t%s\tpublic property $%s", $relative, $hookName);
 		}
 	}
 
