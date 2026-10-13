@@ -1,0 +1,14 @@
+#
+# Maps the entity graph of tests/fixtures/Persistence, the fixtures EntityMapperInputTest fills
+#
+
+nettrineOrm:
+    managers:
+        default:
+            mapping:
+                persistence:
+                    type: attributes
+                    directories:
+                        - %appDir%/fixtures/Persistence
+
+                    namespace: FastyBird\Core\Tests\Fixtures\Persistence
