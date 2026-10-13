@@ -438,9 +438,9 @@ own interfaces are kept by the same rule, without a table here.
 | `Persistence\Crud\Create\EntityCreatorFactory` | K3 | `setImplement()` at `PersistenceExtension.php:94`. |
 | `Persistence\Crud\Update\EntityUpdaterFactory` | K3 | `setImplement()` at `PersistenceExtension.php:100`. |
 | `Persistence\Crud\Delete\EntityDeleterFactory` | K3 | `setImplement()` at `PersistenceExtension.php:106`. |
-| `Persistence\Entities\CrudEntity` | K1, K2 | 155 implementers, 153 outside Core. In Core: `Security\Entities\Policies\Policy`, `Security\Entities\Tokens\Token`. Accounts, Devices, Triggers and Ui extend it with their own `Entity` interface. |
-| `Persistence\Entities\EntityCreated` | K1, K2 | 153 implementers, all outside Core (27 direct, in Accounts, Devices, Triggers, Ui, HomeKit and ApiKey). |
-| `Persistence\Entities\EntityUpdated` | K1, K2 | 153 implementers, all outside Core (27 direct, as `EntityCreated`). |
+| `Persistence\Entities\CrudEntity` | K1, K2 | 156 implementers, 153 outside Core. In Core: `Security\Entities\ApiKeys\ApiKey`, `Security\Entities\Policies\Policy`, `Security\Entities\Tokens\Token`. Accounts, Devices, Triggers and Ui extend it with their own `Entity` interface. |
+| `Persistence\Entities\EntityCreated` | K1, K2 | 154 implementers, 153 outside Core (28 direct, in Core's `Security\Entities\ApiKeys\ApiKey`, Accounts, Devices, Triggers, Ui, HomeKit and ApiKey). |
+| `Persistence\Entities\EntityUpdated` | K1, K2 | 154 implementers, 153 outside Core (28 direct, as `EntityCreated`). |
 | `Security\Access\Checker` | K1 | `AnnotationChecker`, `LatteChecker`, `LinkChecker`. |
 | `Security\Entities\Owner` | K1, K2 | 45 implementers, all outside Core (6 direct, in Devices, Triggers and Ui). |
 | `Security\Identity\Authenticator` | K2 | The one implementer is Accounts' `Security\Authenticator`. Core's `Identity\User` takes it. |

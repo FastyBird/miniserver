@@ -227,6 +227,17 @@ unless `fbCore.security.token.signature` is set.
 - **Middlewares.** A module puts `Security\Middleware\Authorization` and `Security\Middleware\User`
   on its route group. A request without a token is refused with 403, one with an invalid token
   with 401.
+- **API keys.** A credential for machine clients, off by default
+  (`fbCore.security.enable.apiKeys`). `Security\Entities\ApiKeys\ApiKey` (table
+  `fb_security_api_keys`) belongs to an account and stores only the SHA-256 hash of its 256-bit
+  secret (`Identity\ApiKeySecret`); `Models\ApiKeys\Repository` and `Manager` and
+  `Queries\FindApiKeys` work with it. `Middleware\User`, through `Services\Auth`, reads the
+  bearer token first and, only when the request carries none, the `X-Api-Key` header
+  (`Identity\ApiKeyReader`). A valid key signs in a `PlainIdentity` whose id is the key's account,
+  the Casbin subject; an unknown, suspended (`Types\ApiKeyState`), deleted or expired key is
+  refused with 401. The commands `fb:api-key:create`, `list`, `suspend` and `delete`
+  (`Security\Commands`) manage the keys. Not accepted for WebSocket connections. See
+  [configuration.md](../../../../../docs/configuration.md#api-keys).
 - **Ownership.** `Security\Entities\Owner` marks an entity that records the user who created it,
   through the owner mapping driver (`fbCore.security.enable.doctrine.mapping`).
 

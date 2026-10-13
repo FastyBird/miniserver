@@ -103,11 +103,57 @@ Nothing in this section takes effect unless `token.signature` is set. With an em
 | `enable.doctrine.models` | bool | `false` | Register the token repository and manager, and map Core's security entities on the default entity manager. |
 | `enable.casbin.database` | bool | `false` | Keep Casbin policies in the database (adapter, policy subscriber, policy repository and manager, entity mapping). When `false`, policies are read from the `casbin.policy` file. |
 | `enable.nette.application` | bool | `false` | Dispatch Nette `Application` request and response events, and register the subscriber that signs the user in from the access-token cookie on every presenter request. |
+| `enable.apiKeys` | bool | `false` | Accept API keys in the `X-Api-Key` header and register the `fb:api-key:*` commands, see [API keys](#api-keys). When `false`, the header is ignored and no API key service or command is registered. |
 | `application.signInUrl` | string | `null` | Where a presenter redirects a visitor who is denied access and not signed in. When `null`, a denied request fails with 403 instead of redirecting. |
 | `application.homeUrl` | string | `/` | Where a presenter redirects a signed-in user who is denied access. Used only when `application.signInUrl` is set. |
 | `services.identity` | bool | `false` | Register Core's identity factory. |
 | `casbin.model` | string | Core's `resources/model.conf` | Casbin model file. It must exist. |
 | `casbin.policy` | string | `null` | Casbin policy file. Required, and it must exist, when `enable.casbin.database` is `false`. |
+
+#### API keys
+
+An API key is a credential for a machine client, such as a script or another server. It belongs to an account and authenticates as that account: the account is the Casbin subject, so a key has exactly the roles and permissions a bearer token for that account has. There are no scopes. A key is not meant for the browser frontend, which signs in with a bearer token; a key built into a public bundle would protect nothing.
+
+API keys are off by default. To turn them on:
+
+```neon
+fbCore:
+    security:
+        enable:
+            apiKeys: true
+```
+
+They also need `enable.middleware`, which the application's `config/common.neon` turns on. The `fb_security_api_keys` table exists on every install, created by the migration `Version20261012224409`, whether keys are on or off.
+
+**Commands.** All four are registered only while `enable.apiKeys` is on, and none of them asks a question:
+
+| Command | What it does |
+|---|---|
+| `fb:api-key:create --name=<name> --account=<account UUID> [--expires-at=<date and time>]` | Creates an active key and prints its secret. The secret is shown this once and cannot be read back. With `--quiet`, the secret is the only output. `--expires-at` takes a date and time in the future, ISO 8601 recommended (`2027-01-01T00:00:00+00:00`); without it, the key never expires. |
+| `fb:api-key:list` | Lists every key with its identifier, name, account, state (`active`, `suspended`, `deleted`, or `expired` for an active key past its expiry), expiry and creation time. It never prints a secret or a hash. |
+| `fb:api-key:suspend <key UUID>` | Suspends the key. |
+| `fb:api-key:delete <key UUID>` | Deletes the key. The row is kept in the `deleted` state, so `list` still shows it. |
+
+```sh
+php bin/fb-console.php fb:api-key:create --name="Home Assistant" --account=5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34
+```
+
+**Using a key.** Send the secret in the `X-Api-Key` header:
+
+```sh
+curl -H 'X-Api-Key: <secret>' http://localhost/api/devices-module/v1/devices
+```
+
+- `Security\Middleware\User` checks the bearer token first. **A bearer token wins:** when a request carries an `Authorization: Bearer …` header, `X-Api-Key` is not read at all, so an invalid token is refused with 401 even if a valid key comes with it.
+- A request with no bearer token and a valid key is signed in as the key's account.
+- A key that is unknown, suspended, deleted or expired is refused with 401, as an invalid bearer token is. A request with neither is anonymous and is refused with 403 wherever the route requires a signed-in user.
+- Keys are accepted by every API route group that carries Security's `User` middleware. They are not accepted for WebSocket connections.
+
+**What is stored.** The secret is 256 random bits, hex encoded (64 characters). Only its SHA-256 hash is stored, and Core logs neither the secret nor the hash.
+
+**A key does not follow its account.** Core keeps the account's identifier, not a reference to the Accounts module's account: blocking or deleting an account does not suspend its keys, so suspend or delete them yourself.
+
+**The Accounts module's own-account routes refuse a key.** A key signs in as an account but has no Accounts identity behind it, so `/me` and the routes below it answer 403.
 
 ### `fbCore.clock`
 
@@ -315,6 +361,8 @@ fbRabbitMqPlugin:
 What a connector reports about itself is not a command, so it carries the connector's source, not `devices`: its device and connector connection state (`Utilities\DeviceConnection::setState()` and `ConnectorConnection::setState()` take the source of whoever reports) and the validity reset of its properties when it starts or stops. WebSocket clients receive those, which includes Devices clients that did not before.
 
 ## API key authentication (ApiKey plugin)
+
+**Superseded by Core's [API keys](#api-keys)**, and to be removed (#730). The plugin's keys are wired into no route, so registering it enforces nothing. Do not register it together with `fbCore.security.enable.apiKeys`: both register a command named `fb:api-key:create`.
 
 Registers `FastyBird\Plugin\ApiKey\DI\ApiKeyExtension` (service name `fbApiKeyPlugin`); it also takes no configuration:
 
