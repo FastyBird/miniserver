@@ -6,10 +6,12 @@ use Casbin;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Presenters\Events;
 use FastyBird\Core\Security\Access;
+use FastyBird\Core\Security\Commands;
 use FastyBird\Core\Security\Configuration;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Mapping;
 use FastyBird\Core\Security\Middleware;
+use FastyBird\Core\Security\Models\ApiKeys;
 use FastyBird\Core\Security\Models\Casbin as ModelsCasbin;
 use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Core\Security\Models\Tokens;
@@ -72,6 +74,9 @@ final class SecurityExtension extends DI\CompilerExtension
 				'nette' => Schema\Expect::structure([
 					'application' => Schema\Expect::bool(false),
 				])->castTo(Config\EnableNette::class),
+				// API keys for machine clients, read from the X-Api-Key header. Off by default: no
+				// key service or command is registered and the header is ignored.
+				'apiKeys' => Schema\Expect::bool(false),
 			])->castTo(Config\Enable::class),
 			'application' => Schema\Expect::structure([
 				'signInUrl' => Schema\Expect::string(),
@@ -100,8 +105,22 @@ final class SecurityExtension extends DI\CompilerExtension
 		assert($configuration instanceof Config);
 
 		if ($configuration->token->signature !== '') {
-			$builder->addDefinition($this->prefix('auth'), new DI\Definitions\ServiceDefinition())
-				->setType(Services\Auth::class);
+			$auth = $builder->addDefinition($this->prefix('auth'), new DI\Definitions\ServiceDefinition())
+				->setType(Services\Auth::class)
+				// Explicit, never autowired: with API keys off, Auth gets no reader and ignores
+				// the X-Api-Key header entirely
+				->setArgument(
+					'apiKeyReader',
+					$configuration->enable->apiKeys
+						? new DI\Definitions\Reference($this->prefix('apiKey.reader'))
+						: null,
+				);
+
+			if (!$configuration->enable->apiKeys) {
+				// With keys on, the account identity provider is autowired, when the module that
+				// owns accounts registers one; with keys off, Auth never needs it
+				$auth->setArgument('accountIdentities', null);
+			}
 
 			$builder->addDefinition($this->prefix('token.builder'), new DI\Definitions\ServiceDefinition())
 				->setType(Identity\TokenBuilder::class)
@@ -246,6 +265,47 @@ final class SecurityExtension extends DI\CompilerExtension
 					->setType(Tokens\Manager::class);
 			}
 
+			if ($configuration->enable->apiKeys) {
+				$builder->addDefinition(
+					$this->prefix('doctrine.apiKeysRepository'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(ApiKeys\Repository::class);
+
+				$builder->addDefinition(
+					$this->prefix('doctrine.apiKeysManager'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(ApiKeys\Manager::class);
+
+				$builder->addDefinition($this->prefix('apiKey.reader'), new DI\Definitions\ServiceDefinition())
+					->setType(Identity\ApiKeyReader::class);
+
+				$builder->addDefinition(
+					$this->prefix('commands.apiKeys.create'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(Commands\CreateApiKey::class);
+
+				$builder->addDefinition(
+					$this->prefix('commands.apiKeys.list'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(Commands\ListApiKeys::class);
+
+				$builder->addDefinition(
+					$this->prefix('commands.apiKeys.suspend'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(Commands\SuspendApiKey::class);
+
+				$builder->addDefinition(
+					$this->prefix('commands.apiKeys.delete'),
+					new DI\Definitions\ServiceDefinition(),
+				)
+					->setType(Commands\DeleteApiKey::class);
+			}
+
 			if ($configuration->enable->casbin->database) {
 				$builder->addDefinition(
 					$this->prefix('doctrine.policiesRepository'),
@@ -317,6 +377,7 @@ final class SecurityExtension extends DI\CompilerExtension
 		if (
 			$configuration->enable->doctrine->models
 			|| $configuration->enable->casbin->database
+			|| $configuration->enable->apiKeys
 		) {
 			ORM\DI\Helpers\MappingHelper::of($this)->addAttribute(
 				'default',

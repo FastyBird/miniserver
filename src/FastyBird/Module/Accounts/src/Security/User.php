@@ -27,6 +27,11 @@ final class User extends Identity\User
 			if ($identity instanceof Entities\Identities\Identity) {
 				return $identity->getAccount();
 			}
+
+			// Signed in by an API key, as the account itself
+			if ($identity instanceof AccountIdentity) {
+				return $identity->getAccount();
+			}
 		}
 
 		return null;

@@ -469,14 +469,15 @@ own interfaces are kept by the same rule, without a table here.
 | `Persistence\Crud\Create\EntityCreatorFactory` | K3 | `setImplement()` at `PersistenceExtension.php:94`. |
 | `Persistence\Crud\Update\EntityUpdaterFactory` | K3 | `setImplement()` at `PersistenceExtension.php:100`. |
 | `Persistence\Crud\Delete\EntityDeleterFactory` | K3 | `setImplement()` at `PersistenceExtension.php:106`. |
-| `Persistence\Entities\CrudEntity` | K1, K2 | 155 implementers, 153 outside Core. In Core: `Security\Entities\Policies\Policy`, `Security\Entities\Tokens\Token`. Accounts, Devices, Triggers and Ui extend it with their own `Entity` interface. |
-| `Persistence\Entities\EntityCreated` | K1, K2 | 153 implementers, all outside Core (27 direct, in Accounts, Devices, Triggers, Ui, HomeKit and ApiKey). |
-| `Persistence\Entities\EntityUpdated` | K1, K2 | 153 implementers, all outside Core (27 direct, as `EntityCreated`). |
+| `Persistence\Entities\CrudEntity` | K1, K2 | 156 implementers, 153 outside Core. In Core: `Security\Entities\ApiKeys\ApiKey`, `Security\Entities\Policies\Policy`, `Security\Entities\Tokens\Token`. Accounts, Devices, Triggers and Ui extend it with their own `Entity` interface. |
+| `Persistence\Entities\EntityCreated` | K1, K2 | 154 implementers, 153 outside Core (28 direct, in Core's `Security\Entities\ApiKeys\ApiKey`, Accounts, Devices, Triggers, Ui, HomeKit and ApiKey). |
+| `Persistence\Entities\EntityUpdated` | K1, K2 | 154 implementers, 153 outside Core (28 direct, as `EntityCreated`). |
 | `Security\Access\Checker` | K1 | `AnnotationChecker`, `LatteChecker`, `LinkChecker`. |
 | `Security\Entities\Owner` | K1, K2 | 45 implementers, all outside Core (6 direct, in Devices, Triggers and Ui). |
+| `Security\Identity\AccountIdentityProvider` | K2 | The one implementer is Accounts' `Security\AccountIdentityFactory`; Core ships none on purpose, so an API key fails closed without it. `Services\Auth` and `Commands\CreateApiKey` take it, autowired. |
 | `Security\Identity\Authenticator` | K2 | The one implementer is Accounts' `Security\Authenticator`. Core's `Identity\User` takes it. |
 | `Security\Identity\IdentityProvider` | K1, K2, K3 | Core's `Identity\IdentityFactory`, Accounts' `Security\IdentityFactory`. `fbCore > security > services > identity` (default `false`, `SecurityExtension.php:122`) registers Core's; otherwise Accounts registers its own. |
-| `Security\Identity\UserIdentity` | K1, K2 | Core's `PlainIdentity`, Accounts' `Entities\Identities\Identity`. |
+| `Security\Identity\UserIdentity` | K1, K2 | Core's `PlainIdentity`, Accounts' `Entities\Identities\Identity` and `Security\AccountIdentity` (an API key's account). |
 | `Values\Transformers\Transformer` | K1 | `HsbTransformer`, `HsiTransformer`, `MiredTransformer`, `RgbTransformer`. |
 | `Values\Types\Payloads\Payload` | K1 | The enums `Button`, `Cover`, `Switcher`. An enum cannot extend a class, so this is their only common type. |
 | `Values\Types\Sources\Source` | K1 | The enums `Addon`, `Automator`, `Bridge`, `Connector`, `Core`, `Module`, `Plugin`. |

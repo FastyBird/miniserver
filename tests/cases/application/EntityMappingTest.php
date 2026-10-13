@@ -55,7 +55,7 @@ final class EntityMappingTest extends TestCase
 		'FastyBird\Module\Devices\Entities\Channels\Channel' => 50,
 	];
 
-	private const int EXPECTED_METADATA_CLASSES = 154;
+	private const int EXPECTED_METADATA_CLASSES = 155;
 
 	/**
 	 * @throws JsonException

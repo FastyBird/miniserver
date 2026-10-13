@@ -10,7 +10,6 @@ import { useBackend } from './useBackend';
 interface IAxiosOptions {
 	apiPrefix: string;
 	apiTarget: string | null;
-	apiKey: string | null;
 	apiPrefixedModules: boolean;
 }
 
@@ -30,12 +29,6 @@ export default {
 
 			if (typeof request.headers !== 'undefined') {
 				Object.assign(request.headers, { 'Content-Type': 'application/vnd.api+json' });
-			}
-
-			if (options.apiKey !== null) {
-				if (typeof request.headers !== 'undefined') {
-					Object.assign(request.headers, { 'X-Api-Key': options.apiKey });
-				}
 			}
 
 			return new Promise((resolve) => {
