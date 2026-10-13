@@ -6,6 +6,7 @@ use FastyBird\Core\Exceptions;
 use Lcobucci\JWT;
 use Override;
 use Ramsey\Uuid;
+use SensitiveParameter;
 use function is_array;
 use function is_string;
 
@@ -20,7 +21,10 @@ final class IdentityFactory implements IdentityProvider
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	#[Override]
-	public function create(JWT\UnencryptedToken $token): UserIdentity|null
+	public function create(
+		#[SensitiveParameter]
+		JWT\UnencryptedToken $token,
+	): UserIdentity|null
 	{
 		$claims = $token->claims();
 

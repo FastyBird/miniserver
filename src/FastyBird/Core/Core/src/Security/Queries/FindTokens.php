@@ -9,6 +9,7 @@ use FastyBird\Core\Security\Entities\Tokens;
 use FastyBird\Core\Security\Types;
 use Override;
 use Ramsey\Uuid;
+use SensitiveParameterValue;
 
 /**
  * Find tokens entities query
@@ -34,8 +35,12 @@ final class FindTokens extends Query\QueryObject
 
 	public function byToken(string $token): void
 	{
+		// The filter keeps the token wrapped: this query is an argument of the frames that run it,
+		// and a dump of them would otherwise print the token the closure captures
+		$token = new SensitiveParameterValue($token);
+
 		$this->filter[] = static function (ORM\QueryBuilder $qb) use ($token): void {
-			$qb->andWhere('t.token = :token')->setParameter('token', $token);
+			$qb->andWhere('t.token = :token')->setParameter('token', $token->getValue());
 		};
 	}
 

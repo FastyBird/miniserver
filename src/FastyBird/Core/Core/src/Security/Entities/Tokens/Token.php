@@ -9,6 +9,7 @@ use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Core\Security\Types;
 use Override;
 use Ramsey\Uuid;
+use SensitiveParameter;
 
 #[ORM\Entity]
 #[ORM\Table(
@@ -64,7 +65,11 @@ abstract class Token implements Entities\CrudEntity
 	)]
 	protected Types\TokenState $state;
 
-	public function __construct(string $token, Uuid\UuidInterface|null $id = null)
+	public function __construct(
+		#[SensitiveParameter]
+		string $token,
+		Uuid\UuidInterface|null $id = null,
+	)
 	{
 		$this->id = $id ?? Uuid\Uuid::uuid4();
 
