@@ -64,7 +64,7 @@ final readonly class StoreDeviceConnectionState implements Queue\Consumer
 
 		$findDeviceQuery = new SonoffQueries\Configuration\FindDevices();
 		$findDeviceQuery->byConnectorId($message->getConnector());
-		$findDeviceQuery->startWithIdentifier($message->getIdentifier());
+		$findDeviceQuery->byIdentifier($message->getIdentifier());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(
 			$findDeviceQuery,
