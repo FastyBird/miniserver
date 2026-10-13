@@ -51,7 +51,6 @@ app.use(storesPlugin);
 app.use(backendPlugin, {
 	apiPrefix: get(import.meta.env, 'FB_APP_PARAMETER__API_PREFIX', '/api'),
 	apiTarget: get(import.meta.env, 'FB_APP_PARAMETER__API_TARGET', null),
-	apiKey: get(import.meta.env, 'FB_APP_PARAMETER__API_KEY', null),
 	apiPrefixedModules: `${get(import.meta.env, 'FB_APP_PARAMETER__API_PREFIXED_MODULES', true)}`.toLowerCase() === 'true',
 });
 
