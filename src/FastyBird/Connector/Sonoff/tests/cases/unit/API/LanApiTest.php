@@ -16,6 +16,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use GuzzleHttp;
 use Nette;
 use Override;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http;
 use Psr\Log;
 use React\Datagram;
@@ -762,6 +763,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws SonoffExceptions\LanApiCall
 	 * @throws SonoffExceptions\LanApiError
+	 * @throws Nette\Utils\JsonException
 	 * @throws Error
 	 */
 	public function testEncryptedReplyOfADeviceWithKeyIsDecrypted(): void
@@ -785,6 +787,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws CoreExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws SonoffExceptions\LanApiCall
+	 * @throws Nette\Utils\JsonException
 	 * @throws Error
 	 */
 	public function testPlainReplyOfADeviceWithKeyIsRefused(): void
@@ -818,6 +821,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws CoreExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws SonoffExceptions\LanApiCall
+	 * @throws Nette\Utils\JsonException
 	 * @throws Error
 	 */
 	public function testReplyThatDoesNotDecryptWithTheKeyIsRefused(): void
@@ -867,6 +871,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws SonoffExceptions\LanApiCall
 	 * @throws SonoffExceptions\LanApiError
+	 * @throws Nette\Utils\JsonException
 	 * @throws Error
 	 */
 	public function testReplyToSettingTheStateOfADeviceWithKeyIsCheckedLikeAnyOther(): void
@@ -910,6 +915,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws SonoffExceptions\LanApiCall
 	 * @throws SonoffExceptions\LanApiError
+	 * @throws Nette\Utils\JsonException
 	 * @throws Error
 	 */
 	public function testPlainReplyOfADeviceWithoutKeyIsRead(): void
@@ -1163,8 +1169,12 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 				return $response;
 			});
 
-		$httpClientFactory = $this->createMock(Services\HttpClientFactory::class);
-		$httpClientFactory->method('create')->willReturn($httpClient);
+		$httpClientFactory = $this->mockOf(
+			Services\HttpClientFactory::class,
+			static function (MockObject $mock) use ($httpClient): void {
+				$mock->method('create')->willReturn($httpClient);
+			},
+		);
 
 		$this->mockContainerService(Services\HttpClientFactory::class, $httpClientFactory);
 
@@ -1173,6 +1183,28 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		}
 
 		return $this->container->getByType(API\LanApiFactory::class)->create();
+	}
+
+	/**
+	 * The factory is final, which PHPStan does not let a mock of one be typed as, so the mock is handed over as the
+	 * class it stands in for
+	 *
+	 * @template T of object
+	 *
+	 * @param class-string<T> $class
+	 * @param Closure(MockObject): void $configure
+	 *
+	 * @return T
+	 */
+	private function mockOf(string $class, Closure $configure): object
+	{
+		$mock = $this->createMock($class);
+
+		assert($mock instanceof $class);
+
+		$configure($mock);
+
+		return $mock;
 	}
 
 	/**

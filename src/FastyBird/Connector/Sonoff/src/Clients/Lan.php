@@ -345,6 +345,13 @@ final class Lan extends ClientProcess implements Client
 	 * connected, or one that could not be read then. The configuration decides, and a device that has a key configured
 	 * does not take plain data. There is no setting that says a device is encrypted other than its key, so plain data
 	 * is accepted only for a device that has none.
+	 *
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws TypeError
+	 * @throws ValueError
 	 */
 	private function acceptsData(
 		Documents\Devices\Device $device,
@@ -374,6 +381,11 @@ final class Lan extends ClientProcess implements Client
 
 	/**
 	 * @throws DevicesExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws TypeError
+	 * @throws ValueError
 	 * @throws SonoffExceptions\Runtime
 	 */
 	private function handleDeviceEvent(
