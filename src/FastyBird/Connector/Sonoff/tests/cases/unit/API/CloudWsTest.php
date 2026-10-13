@@ -13,6 +13,7 @@ use GuzzleHttp\Psr7;
 use Nette;
 use Ratchet;
 use Ratchet\RFC6455;
+use React\EventLoop as ReactEventLoop;
 use React\Promise;
 use ReflectionClass;
 use ReflectionException;
@@ -20,7 +21,10 @@ use ReflectionMethod;
 use ReflectionProperty;
 use RuntimeException;
 use Throwable;
+use function array_filter;
+use function array_key_first;
 use function array_map;
+use function array_values;
 use function func_get_args;
 
 final class CloudWsTest extends Tests\Cases\Unit\BaseTestCase
@@ -247,6 +251,87 @@ final class CloudWsTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
+	 * The handshake request is kept until the server answers it, so the answer, matched by its sequence, completes
+	 * the connection
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws ReflectionException
+	 * @throws Error
+	 */
+	public function testHandshakeAnswerCompletesTheConnection(): void
+	{
+		$events = [];
+
+		$client = $this->createClient();
+
+		$client->onError($this->record('error', $events));
+
+		$stream = $this->attach($client);
+
+		self::assertCount(1, $stream->getWritten());
+		self::assertFalse($client->isConnected());
+
+		$this->push(
+			$stream,
+			'{"error":0,"apikey":"api-key","config":{"hb":1,"hbInterval":145},"sequence":"'
+				. $this->getPendingSequence($client) . '"}',
+		);
+
+		self::assertSame([], $events);
+		self::assertTrue($client->isConnected());
+		self::assertFalse($client->isConnecting());
+
+		$heartbeats = array_filter(
+			$this->loop?->getTimers() ?? [],
+			static fn (ReactEventLoop\TimerInterface $timer): bool => $timer->isPeriodic(),
+		);
+
+		self::assertCount(1, $heartbeats);
+		self::assertSame(145, array_values($heartbeats)[0]->getInterval());
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws ReflectionException
+	 * @throws Error
+	 */
+	public function testReadStatesIsAnsweredByTheReplyWithTheSameSequence(): void
+	{
+		$client = $this->createClient();
+
+		$stream = $this->attach($client);
+
+		$this->push(
+			$stream,
+			'{"error":0,"apikey":"api-key","config":{"hb":0,"hbInterval":90},"sequence":"'
+				. $this->getPendingSequence($client) . '"}',
+		);
+
+		$states = [];
+
+		$client->readStates('1000a1b2c3', 'a4b2')->then(static function ($state) use (&$states): void {
+			$states[] = $state;
+		});
+
+		self::assertCount(2, $stream->getWritten());
+		self::assertSame([], $states);
+
+		$this->push(
+			$stream,
+			'{"error":0,"apikey":"a4b2","deviceid":"1000a1b2c3","sequence":"' . $this->getPendingSequence($client)
+				. '","params":{"switch":"on"}}',
+		);
+
+		self::assertCount(1, $states);
+		self::assertInstanceOf(API\Messages\Response\Sockets\DeviceStateEvent::class, $states[0]);
+		self::assertSame('1000a1b2c3', $states[0]->getDeviceId());
+	}
+
+	/**
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
@@ -287,6 +372,21 @@ final class CloudWsTest extends Tests\Cases\Unit\BaseTestCase
 		(new ReflectionMethod($client, 'connectionCreated'))->invoke($client, $connection, new Promise\Deferred());
 
 		return $stream;
+	}
+
+	/**
+	 * The sequence of the one request waiting for its answer, which is what the server echoes back
+	 *
+	 * @throws ReflectionException
+	 */
+	private function getPendingSequence(API\CloudWs $client): string
+	{
+		$pending = (new ReflectionProperty($client, 'messages'))->getValue($client);
+
+		self::assertIsArray($pending);
+		self::assertCount(1, $pending);
+
+		return (string) array_key_first($pending);
 	}
 
 	private function push(Tests\Support\FakeConnection $stream, string $payload): void
