@@ -260,7 +260,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 			mkdir(FB_LOGS_DIR, 0777, true);
 		}
 
-		$before = glob(FB_LOGS_DIR . '/*') ?: [];
+		$before = $this->logFiles();
 
 		try {
 			$this->auth()->login($this->request($secret));
@@ -270,7 +270,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 			Logging\Logger::buildException($ex);
 		}
 
-		$written = array_values(array_diff(glob(FB_LOGS_DIR . '/*') ?: [], $before));
+		$written = array_values(array_diff($this->logFiles(), $before));
 
 		self::assertCount(1, $written);
 
@@ -742,6 +742,16 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 	private function token(string $account): string
 	{
 		return $this->container->getByType(Identity\TokenBuilder::class)->build($account, [])->toString();
+	}
+
+	/**
+	 * @return list<string>
+	 */
+	private function logFiles(): array
+	{
+		$files = glob(FB_LOGS_DIR . '/*');
+
+		return $files === false ? [] : $files;
 	}
 
 	private function signedInAs(Identity\User $user): string|null

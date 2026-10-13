@@ -48,7 +48,10 @@ final readonly class TokenReader
 	 *
 	 * @throws Exceptions\UnauthorizedAccess
 	 */
-	public function readHeader(#[SensitiveParameter] string $header): JWT\UnencryptedToken|null
+	public function readHeader(
+		#[SensitiveParameter]
+		string $header,
+	): JWT\UnencryptedToken|null
 	{
 		if (
 			preg_match(self::HEADER_PATTERN, $header, $matches) === 1

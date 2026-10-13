@@ -56,7 +56,10 @@ final class Repository
 	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 */
-	public function findOneByHash(#[SensitiveParameter] string $hash): ApiKeys\ApiKey|null
+	public function findOneByHash(
+		#[SensitiveParameter]
+		string $hash,
+	): ApiKeys\ApiKey|null
 	{
 		/** @var Queries\FindApiKeys<ApiKeys\ApiKey> $findQuery */
 		$findQuery = new Queries\FindApiKeys();

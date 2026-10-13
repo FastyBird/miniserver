@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Security\Identity;
 
 use Random\RandomException;
-use SensitiveParameter;
 use function bin2hex;
 use function hash;
 use function random_bytes;
@@ -31,7 +30,7 @@ final class ApiKeySecret
 	/**
 	 * @return non-empty-string lowercase hex, 64 characters
 	 */
-	public static function hash(#[SensitiveParameter] string $secret): string
+	public static function hash(string $secret): string
 	{
 		return hash('sha256', $secret);
 	}

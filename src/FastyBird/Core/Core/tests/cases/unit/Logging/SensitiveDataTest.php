@@ -30,8 +30,8 @@ use function str_contains;
 use function substr_count;
 use function sys_get_temp_dir;
 use function uniqid;
-use const GLOB_BRACE;
 use function unlink;
+use const GLOB_BRACE;
 
 /**
  * What Core writes about an error keeps the request's credentials out: the API key, its hash and
@@ -45,7 +45,7 @@ final class SensitiveDataTest extends TestCase
 
 	private const string BEARER = 'eyJhbGciOiJIUzI1NiJ9.PROBEBEARERPAYLOAD0123456789.PROBEBEARERSIGNATURE';
 
-	/** @var array<string, mixed> */
+	/** @var array<mixed> */
 	private array $server = [];
 
 	#[Override]
@@ -163,11 +163,11 @@ final class SensitiveDataTest extends TestCase
 	 */
 	private function assertLoggedWithoutCredentials(Throwable $ex): void
 	{
-		$before = glob(FB_LOGS_DIR . '/*') ?: [];
+		$before = $this->logFiles();
 
 		Logging\Logger::buildException($ex);
 
-		$written = array_values(array_diff(glob(FB_LOGS_DIR . '/*') ?: [], $before));
+		$written = array_values(array_diff($this->logFiles(), $before));
 
 		// The HTML blue screen, and no markdown report beside it
 		self::assertCount(1, $written, implode(', ', $written));
@@ -181,6 +181,16 @@ final class SensitiveDataTest extends TestCase
 		self::assertTrue(str_contains($content, 'ServerRequest'), 'The request is not in the stack');
 
 		array_map(unlink(...), $written);
+	}
+
+	/**
+	 * @return list<string>
+	 */
+	private function logFiles(): array
+	{
+		$files = glob(FB_LOGS_DIR . '/*');
+
+		return $files === false ? [] : $files;
 	}
 
 	private function assertNoCredentials(string $file): void

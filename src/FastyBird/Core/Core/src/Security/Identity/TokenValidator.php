@@ -34,7 +34,10 @@ final readonly class TokenValidator
 	 *
 	 * @throws Exceptions\UnauthorizedAccess
 	 */
-	public function validate(#[SensitiveParameter] string $token): JWT\Token|null
+	public function validate(
+		#[SensitiveParameter]
+		string $token,
+	): JWT\Token|null
 	{
 		$configuration = JWT\Configuration::forSymmetricSigner(
 			new JWT\Signer\Hmac\Sha256(),
