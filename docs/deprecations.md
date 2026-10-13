@@ -105,3 +105,10 @@ The remaining 2 (`optional()` and `with()` in `illuminate/support/helpers.php`) 
 retired by #443, which replaced `mathsolver/mathsolver` with `nxp/math-executor` and
 so dropped Laravel 9's `illuminate/*` and Carbon 2 from the lock. Requiring
 `vendor/autoload.php` on PHP 8.4 now emits **0** of these notices (measured for #443).
+
+`tools/php.d/tests.ini` (`error_reporting = E_ALL & ~E_DEPRECATED`, loaded through `PHP_INI_SCAN_DIR` by the
+`make tests` targets) only existed to hide these notices from the processes PHPUnit forks for
+`@runTestsInSeparateProcesses`, whose stderr must stay empty. #773 removed it and its wiring after the
+full suite passed without it (2447 tests, no `Deprecated:` error from any child process). A temporary
+`bootstrap` include of a function with an implicitly nullable parameter, outside the commit, errored a
+separate-process test without the ini and passed with it, so the run could have shown the problem.

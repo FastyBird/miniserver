@@ -1045,7 +1045,7 @@ function fbDiSnapshotWorker(string $specFile): int
 	$spec = json_decode((string) file_get_contents($specFile), true, flags: JSON_THROW_ON_ERROR);
 	assert(is_array($spec));
 
-	// Vendor deprecations on PHP 8.4 are noise here, exactly as in tools/php.d/tests.ini
+	// Deprecations are noise in a snapshot worker: a compiled container is compared, not the notices it raised
 	error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 	ini_set('display_errors', 'stderr');
 
