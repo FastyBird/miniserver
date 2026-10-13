@@ -40,10 +40,10 @@ final class StoreStateTest extends Tests\Cases\Unit\DbTestCase
 	#[Override]
 	public function setUp(): void
 	{
-		parent::setUp();
-
-		// After the connectors the devices belong to
+		// The files load in the reverse order they are registered in, so this one comes after the connectors
 		$this->registerDatabaseSchemaFile(__DIR__ . '/../../../../sql/identifiers.data.sql');
+
+		parent::setUp();
 	}
 
 	/**
