@@ -30,13 +30,15 @@ final class Manager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function create(Utils\ArrayHash $values): Policies\Policy
+	public function create(array|Utils\ArrayHash $values): Policies\Policy
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
 		assert($entity instanceof Policies\Policy);
@@ -45,6 +47,8 @@ final class Manager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -53,7 +57,7 @@ final class Manager
 	 */
 	public function update(
 		Policies\Policy $entity,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Policies\Policy
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);
