@@ -8,6 +8,8 @@ use FastyBird\Core\Persistence\Query;
 use FastyBird\Core\Security\Entities\ApiKeys;
 use Override;
 use Ramsey\Uuid;
+use SensitiveParameter;
+use SensitiveParameterValue;
 
 /**
  * Find API keys entities query
@@ -34,10 +36,14 @@ final class FindApiKeys extends Query\QueryObject
 	/**
 	 * @param non-empty-string $hash the SHA-256 hash of the secret, never the secret itself
 	 */
-	public function byHash(string $hash): void
+	public function byHash(#[SensitiveParameter] string $hash): void
 	{
-		$this->filter[] = static function (ORM\QueryBuilder $qb) use ($hash): void {
-			$qb->andWhere('k.hash = :hash')->setParameter('hash', $hash);
+		// Kept wrapped, so a dump of this query object, a stack frame on a blue screen for one,
+		// shows the closure's captured value hidden
+		$sensitive = new SensitiveParameterValue($hash);
+
+		$this->filter[] = static function (ORM\QueryBuilder $qb) use ($sensitive): void {
+			$qb->andWhere('k.hash = :hash')->setParameter('hash', $sensitive->getValue());
 		};
 	}
 

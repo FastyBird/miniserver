@@ -1,0 +1,8 @@
+#
+# A Sentry DSN, so the Sentry client is registered. Nothing is sent: the test only reads the client.
+#
+
+fbCore:
+    logging:
+        sentry:
+            dsn: 'https://public@sentry.invalid/1'

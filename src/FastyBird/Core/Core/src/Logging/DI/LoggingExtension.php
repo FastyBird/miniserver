@@ -142,7 +142,11 @@ final class LoggingExtension extends DI\CompilerExtension
 				new DI\Definitions\ServiceDefinition(),
 			)
 				->setFactory('Sentry\ClientBuilder::create')
-				->setArguments([['dsn' => $sentryDSN]]);
+				->setArguments([[
+					'dsn' => $sentryDSN,
+					// The default integrations, with the request integration also filtering the API key
+					'integrations' => new DI\Definitions\Statement([Logging\SensitiveData::class, 'sentryIntegrations']),
+				]]);
 
 			$builder->addDefinition($this->prefix('sentry.client'), new DI\Definitions\ServiceDefinition())
 				->setType(Sentry\ClientInterface::class)

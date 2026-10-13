@@ -5,6 +5,7 @@ namespace FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Exceptions;
 use Lcobucci\JWT;
 use Psr\Http\Message\ServerRequestInterface;
+use SensitiveParameter;
 use function is_array;
 use function is_string;
 use function preg_match;
@@ -47,7 +48,7 @@ final readonly class TokenReader
 	 *
 	 * @throws Exceptions\UnauthorizedAccess
 	 */
-	public function readHeader(string $header): JWT\UnencryptedToken|null
+	public function readHeader(#[SensitiveParameter] string $header): JWT\UnencryptedToken|null
 	{
 		if (
 			preg_match(self::HEADER_PATTERN, $header, $matches) === 1

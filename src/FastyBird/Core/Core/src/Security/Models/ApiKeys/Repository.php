@@ -10,6 +10,7 @@ use FastyBird\Core\Persistence\Query;
 use FastyBird\Core\Security\Entities\ApiKeys;
 use FastyBird\Core\Security\Queries;
 use Ramsey\Uuid;
+use SensitiveParameter;
 use Throwable;
 use function is_array;
 
@@ -55,7 +56,7 @@ final class Repository
 	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 */
-	public function findOneByHash(string $hash): ApiKeys\ApiKey|null
+	public function findOneByHash(#[SensitiveParameter] string $hash): ApiKeys\ApiKey|null
 	{
 		/** @var Queries\FindApiKeys<ApiKeys\ApiKey> $findQuery */
 		$findQuery = new Queries\FindApiKeys();

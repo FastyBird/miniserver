@@ -30,8 +30,8 @@ final class Logger
 	{
 		if ($render) {
 			try {
-				$blueScreen = new Tracy\BlueScreen();
-				$blueScreen->renderToFile($ex, self::getExceptionFile($ex));
+				// Hides the request's credentials, and writes no markdown report (SensitiveData)
+				SensitiveData::renderBlueScreen(new Tracy\BlueScreen(), $ex, self::getExceptionFile($ex));
 			} catch (Throwable) {
 				// Blue scree could not be saved
 			}

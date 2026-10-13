@@ -5,6 +5,8 @@ namespace FastyBird\Core\Tests\Cases\Unit\Security;
 use DateTimeImmutable;
 use Doctrine\DBAL;
 use Doctrine\ORM;
+use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Commands;
 use FastyBird\Core\Security\Exceptions;
 use FastyBird\Core\Security\Identity;
@@ -24,15 +26,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 use Throwable;
 use function array_column;
+use function array_diff;
+use function array_values;
 use function assert;
+use function file_get_contents;
+use function glob;
 use function hash;
+use function is_dir;
 use function is_string;
 use function json_encode;
+use function mkdir;
 use function preg_match;
 use function str_contains;
 use function str_repeat;
 use function substr_count;
 use function trim;
+use function unlink;
 use function var_export;
 
 /**
@@ -232,6 +241,46 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 		$this->expectException(Exceptions\UnauthorizedAccess::class);
 
 		$auth->login($this->request($secret));
+	}
+
+	/**
+	 * The lookup's query fails in the database: the blue screen Core logs for it carries neither the
+	 * key nor its hash, though the query and its parameters are in the stack
+	 *
+	 * @throws Throwable
+	 */
+	public function testBlueScreenOfAFailedLookupHidesTheKeyAndItsHash(): void
+	{
+		[$secret] = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		$this->db()->executeStatement('DROP TABLE fb_security_api_keys');
+		$this->container->getByType(ORM\EntityManagerInterface::class)->clear();
+
+		if (!is_dir(FB_LOGS_DIR)) {
+			mkdir(FB_LOGS_DIR, 0777, true);
+		}
+
+		$before = glob(FB_LOGS_DIR . '/*') ?: [];
+
+		try {
+			$this->auth()->login($this->request($secret));
+
+			self::fail('The lookup did not fail');
+		} catch (PersistenceExceptions\Query $ex) {
+			Logging\Logger::buildException($ex);
+		}
+
+		$written = array_values(array_diff(glob(FB_LOGS_DIR . '/*') ?: [], $before));
+
+		self::assertCount(1, $written);
+
+		$content = file_get_contents($written[0]);
+		assert(is_string($content));
+		unlink($written[0]);
+
+		self::assertTrue(str_contains($content, 'FindApiKeys'), 'The query is not in the stack');
+		self::assertSame(0, substr_count($content, $secret), 'the API key');
+		self::assertSame(0, substr_count($content, hash('sha256', $secret)), 'the hash of the API key');
 	}
 
 	/**

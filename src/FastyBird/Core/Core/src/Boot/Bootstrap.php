@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Boot;
 
 use FastyBird\Core\Exceptions;
+use FastyBird\Core\Logging;
 use Tracy\Debugger;
 use function array_key_exists;
 use function array_merge;
@@ -90,8 +91,14 @@ final class Bootstrap
 		$underTestRunner = defined('PHPUNIT_COMPOSER_INSTALL')
 			|| class_exists('\PHPUnit\Runner\Version', false);
 
+		// The blue screen Tracy shows in debug mode and writes for an error it logs itself hides the
+		// request's credentials, as the ones Logging\Logger writes do
+		Logging\SensitiveData::hideInBlueScreen(Debugger::getBlueScreen());
+
 		if (!$underTestRunner) {
 			$config->enableTracy(FB_LOGS_DIR);
+
+			Debugger::setLogger(new Logging\TracyLogger(Debugger::$logDirectory, Debugger::$email));
 
 			// Nette\Bootstrap\Configurator::enableTracy() unconditionally sets
 			// Debugger::$strictMode = true, and Tracy\Debugger::enable() itself unconditionally
