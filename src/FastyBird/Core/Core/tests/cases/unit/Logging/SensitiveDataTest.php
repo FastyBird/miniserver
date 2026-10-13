@@ -19,6 +19,7 @@ use function array_diff;
 use function array_map;
 use function assert;
 use function basename;
+use function count;
 use function file_get_contents;
 use function glob;
 use function hash;
@@ -46,8 +47,18 @@ final class SensitiveDataTest extends TestCase
 
 	private const string BEARER = 'eyJhbGciOiJIUzI1NiJ9.PROBEBEARERPAYLOAD0123456789.PROBEBEARERSIGNATURE';
 
+	// Shaped as the access token a sign-in issues and its refresh token, as the browser keeps them
+	private const string COOKIE_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQUk9CRUNPT0tJRVRPS0VOIjoxfQ.PROBECOOKIESIGNATURE';
+
+	private const string COOKIE_REFRESH_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQUk9CRVJFRlJFU0hUT0tFTiI6MX0.PROBEREFRESHSIGNATURE';
+
+	private const string COOKIES = 'token=' . self::COOKIE_TOKEN . '; refresh_token=' . self::COOKIE_REFRESH_TOKEN;
+
 	/** @var array<mixed> */
 	private array $server = [];
+
+	/** @var array<mixed> */
+	private array $cookie = [];
 
 	#[Override]
 	protected function setUp(): void
@@ -55,11 +66,15 @@ final class SensitiveDataTest extends TestCase
 		parent::setUp();
 
 		$this->server = $_SERVER;
+		$this->cookie = $_COOKIE;
 
 		// As php-fpm hands them over
 		$_SERVER['HTTP_X_API_KEY'] = self::API_KEY;
 		$_SERVER['HTTP_AUTHORIZATION'] = 'Bearer ' . self::BEARER;
 		$_SERVER['REDIRECT_HTTP_AUTHORIZATION'] = 'Bearer ' . self::BEARER;
+		$_SERVER['HTTP_COOKIE'] = self::COOKIES;
+		$_COOKIE['token'] = self::COOKIE_TOKEN;
+		$_COOKIE['refresh_token'] = self::COOKIE_REFRESH_TOKEN;
 
 		if (!is_dir(FB_LOGS_DIR)) {
 			mkdir(FB_LOGS_DIR, 0777, true);
@@ -70,6 +85,7 @@ final class SensitiveDataTest extends TestCase
 	protected function tearDown(): void
 	{
 		$_SERVER = $this->server;
+		$_COOKIE = $this->cookie;
 
 		parent::tearDown();
 	}
@@ -130,6 +146,67 @@ final class SensitiveDataTest extends TestCase
 	}
 
 	/**
+	 * The lookup of the token cookie's token fails; the stack holds the request with its cookies,
+	 * the token and the query that filters by it
+	 *
+	 * @throws Throwable
+	 */
+	public function testLoggedBlueScreenOfATokenLookupHidesTheToken(): void
+	{
+		$managerRegistry = $this->createMock(Persistence\ManagerRegistry::class);
+		// Thrown from inside the lookup, so its stack holds the frames that carry the token
+		$managerRegistry->method('getRepository')->willReturnCallback(static function (): never {
+			throw new RuntimeException('Database is gone');
+		});
+
+		try {
+			$this->lookUpCookieToken(
+				new Models\Tokens\Repository($managerRegistry),
+				new ServerRequest('GET', '/api/v1/devices', ['Cookie' => self::COOKIES]),
+			);
+
+			self::fail('The lookup did not fail');
+		} catch (RuntimeException $ex) {
+			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
+		}
+	}
+
+	/**
+	 * A token reaches the database layer as a positional query parameter, which no key name marks
+	 *
+	 * @throws Throwable
+	 */
+	public function testLoggedBlueScreenHidesATokenPassedAsAQueryParameter(): void
+	{
+		$request = new ServerRequest('GET', '/api/v1/devices', ['Cookie' => self::COOKIES]);
+
+		try {
+			$this->executeQuery($request, 'SELECT t.token_id FROM fb_security_tokens t WHERE t.token_token = ?', [
+				self::COOKIE_TOKEN,
+				self::COOKIE_REFRESH_TOKEN,
+			]);
+
+			self::fail('The query did not fail');
+		} catch (RuntimeException $ex) {
+			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
+		}
+	}
+
+	/**
+	 * Only a value shaped as a signed token is hidden by its shape
+	 */
+	public function testBlueScreenHidesValuesShapedAsATokenOnly(): void
+	{
+		$blueScreen = Logging\SensitiveData::hideInBlueScreen(new Tracy\BlueScreen());
+
+		self::assertNotNull($blueScreen->scrubber);
+		self::assertTrue(($blueScreen->scrubber)('0', self::COOKIE_TOKEN, null));
+		self::assertFalse(($blueScreen->scrubber)('0', 'www.fastybird.com', null));
+		self::assertFalse(($blueScreen->scrubber)('0', '1.2.3', null));
+		self::assertFalse(($blueScreen->scrubber)('0', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9', null));
+	}
+
+	/**
 	 * Boot configures the blue screen Tracy shows and logs with itself, and Tracy's own logger
 	 * writes it without the markdown report
 	 *
@@ -141,7 +218,9 @@ final class SensitiveDataTest extends TestCase
 
 		$blueScreen = Tracy\Debugger::getBlueScreen();
 
-		foreach (['x-api-key', 'http_x_api_key', 'http_authorization', 'authorization'] as $key) {
+		foreach (
+			['x-api-key', 'http_x_api_key', 'http_authorization', 'authorization', 'token', 'refresh_token', 'cookie', 'http_cookie'] as $key
+		) {
 			self::assertContains($key, $blueScreen->keysToHide);
 		}
 
@@ -213,6 +292,30 @@ final class SensitiveDataTest extends TestCase
 	}
 
 	/**
+	 * Reads the token cookie as the presenter subscriber and the WebSocket handshake read it, and
+	 * looks the token up
+	 *
+	 * @throws Throwable
+	 */
+	private function lookUpCookieToken(Models\Tokens\Repository $repository, ServerRequest $request): void
+	{
+		$token = $request->getCookieParams()[Identity\TokenReader::COOKIE_NAME] ?? null;
+		assert(is_string($token));
+
+		$repository->findOneByToken($token);
+	}
+
+	/**
+	 * Stands in for the database layer's frames, whose arguments are the SQL and its parameters
+	 *
+	 * @param list<string> $params
+	 */
+	private function executeQuery(ServerRequest $request, string $sql, array $params): never
+	{
+		throw new RuntimeException('Database is gone: ' . $request->getMethod() . ' ' . $sql . ' ' . count($params));
+	}
+
+	/**
 	 * @return list<string>
 	 */
 	private function logFiles(): array
@@ -230,6 +333,8 @@ final class SensitiveDataTest extends TestCase
 		self::assertSame(0, substr_count($content, self::API_KEY), 'the API key');
 		self::assertSame(0, substr_count($content, hash('sha256', self::API_KEY)), 'the hash of the API key');
 		self::assertSame(0, substr_count($content, 'PROBEBEARERPAYLOAD0123456789'), 'the bearer token');
+		self::assertSame(0, substr_count($content, 'eyJQUk9CRUNPT0tJRVRPS0VOIjoxfQ'), 'the token cookie');
+		self::assertSame(0, substr_count($content, 'eyJQUk9CRVJFRlJFU0hUT0tFTiI6MX0'), 'the refresh token cookie');
 	}
 
 }
