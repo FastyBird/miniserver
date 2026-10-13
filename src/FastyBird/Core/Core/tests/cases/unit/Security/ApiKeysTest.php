@@ -27,8 +27,8 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Throwable;
 use function array_column;
 use function array_diff;
-use function array_values;
 use function assert;
+use function basename;
 use function file_get_contents;
 use function glob;
 use function hash;
@@ -39,6 +39,7 @@ use function mkdir;
 use function preg_match;
 use function str_contains;
 use function str_repeat;
+use function str_starts_with;
 use function substr_count;
 use function trim;
 use function unlink;
@@ -270,9 +271,11 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 			Logging\Logger::buildException($ex);
 		}
 
-		$written = array_values(array_diff($this->logFiles(), $before));
+		$written = $this->blueScreensOf($before, __FUNCTION__);
 
+		// The HTML blue screen, and no markdown report beside it
 		self::assertCount(1, $written);
+		self::assertStringEndsWith('.html', $written[0]);
 
 		$content = file_get_contents($written[0]);
 		assert(is_string($content));
@@ -742,6 +745,34 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 	private function token(string $account): string
 	{
 		return $this->container->getByType(Identity\TokenBuilder::class)->build($account, [])->toString();
+	}
+
+	/**
+	 * The blue screens and reports written since $before for this test's exception: the test's
+	 * own method is in its stack. The log directory is shared by the tests running in parallel,
+	 * so files of other tests' errors may appear meanwhile
+	 *
+	 * @param list<string> $before
+	 *
+	 * @return list<string>
+	 */
+	private function blueScreensOf(array $before, string $testMethod): array
+	{
+		$mine = [];
+
+		foreach (array_diff($this->logFiles(), $before) as $file) {
+			if (!str_starts_with(basename($file), 'exception')) {
+				continue;
+			}
+
+			$content = file_get_contents($file);
+
+			if (is_string($content) && str_contains($content, $testMethod)) {
+				$mine[] = $file;
+			}
+		}
+
+		return $mine;
 	}
 
 	/**

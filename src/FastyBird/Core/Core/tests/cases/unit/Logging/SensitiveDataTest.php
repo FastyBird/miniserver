@@ -17,8 +17,8 @@ use Throwable;
 use Tracy;
 use function array_diff;
 use function array_map;
-use function array_values;
 use function assert;
+use function basename;
 use function file_get_contents;
 use function glob;
 use function hash;
@@ -27,6 +27,7 @@ use function is_dir;
 use function is_string;
 use function mkdir;
 use function str_contains;
+use function str_starts_with;
 use function substr_count;
 use function sys_get_temp_dir;
 use function uniqid;
@@ -99,7 +100,7 @@ final class SensitiveDataTest extends TestCase
 
 			self::fail('The lookup did not fail');
 		} catch (RuntimeException $ex) {
-			$this->assertLoggedWithoutCredentials($ex);
+			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
 		}
 	}
 
@@ -124,7 +125,7 @@ final class SensitiveDataTest extends TestCase
 
 			self::fail('The token was accepted');
 		} catch (Throwable $ex) {
-			$this->assertLoggedWithoutCredentials($ex);
+			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
 		}
 	}
 
@@ -161,13 +162,13 @@ final class SensitiveDataTest extends TestCase
 	/**
 	 * @throws Throwable
 	 */
-	private function assertLoggedWithoutCredentials(Throwable $ex): void
+	private function assertLoggedWithoutCredentials(Throwable $ex, string $testMethod): void
 	{
 		$before = $this->logFiles();
 
 		Logging\Logger::buildException($ex);
 
-		$written = array_values(array_diff($this->logFiles(), $before));
+		$written = $this->blueScreensOf($before, $testMethod);
 
 		// The HTML blue screen, and no markdown report beside it
 		self::assertCount(1, $written, implode(', ', $written));
@@ -181,6 +182,34 @@ final class SensitiveDataTest extends TestCase
 		self::assertTrue(str_contains($content, 'ServerRequest'), 'The request is not in the stack');
 
 		array_map(unlink(...), $written);
+	}
+
+	/**
+	 * The blue screens and reports written since $before for this test's exception: the test's
+	 * own method is in its stack. The log directory is shared by the tests running in parallel,
+	 * so files of other tests' errors may appear meanwhile
+	 *
+	 * @param list<string> $before
+	 *
+	 * @return list<string>
+	 */
+	private function blueScreensOf(array $before, string $testMethod): array
+	{
+		$mine = [];
+
+		foreach (array_diff($this->logFiles(), $before) as $file) {
+			if (!str_starts_with(basename($file), 'exception')) {
+				continue;
+			}
+
+			$content = file_get_contents($file);
+
+			if (is_string($content) && str_contains($content, $testMethod)) {
+				$mine[] = $file;
+			}
+		}
+
+		return $mine;
 	}
 
 	/**
