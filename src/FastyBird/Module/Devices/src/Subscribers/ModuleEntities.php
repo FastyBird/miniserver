@@ -15,7 +15,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
-use Nette\Utils;
 use Override;
 use ReflectionClass;
 use function count;
@@ -221,7 +220,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 				Sources\Module::DEVICES,
 				$publishRoutingKey,
 				$this->documentFactory->create(
-					Utils\ArrayHash::from($entity->toArray()),
+					$entity->toArray(),
 					$publishRoutingKey,
 				),
 			);
