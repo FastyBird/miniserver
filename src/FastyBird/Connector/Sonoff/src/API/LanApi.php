@@ -80,9 +80,8 @@ final class LanApi
 	private const string MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
 
 	// A device id is ten lowercase hexadecimal characters. Nothing else is looked up by id, in the registered keys or in
-	// the devices the event is handed to: the lookup of the devices matches an identifier case-insensitively and as a
-	// pattern, so an id that is anything but plain characters could name one device to the key check and another
-	// to the device lookup
+	// the devices the event is handed to, so that the key check and the device lookup, which ignores case, always
+	// name the same device
 	private const string MATCH_DEVICE_ID = '/^[0-9a-f]{10}\z/';
 
 	// The values of the `encrypt` text record that announce plain data. A device that sends plain data leaves the record

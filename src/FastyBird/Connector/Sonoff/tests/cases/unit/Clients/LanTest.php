@@ -211,8 +211,8 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * The lookup of a device by its identifier is looser than the id of the announcement, so it can return a device
-	 * that is not the one announced; that device is left alone
+	 * The lookup of a device by its identifier ignores case, which is looser than the id of the announcement, so it can
+	 * return a device that is not exactly the one announced; that device is left alone
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState

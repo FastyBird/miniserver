@@ -297,8 +297,8 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 
 	/**
 	 * What reaches the key check and what reaches the device lookup must be the same id. The lookup of the devices
-	 * matches an identifier case-insensitively and as a pattern, so an id that is only like the id of a device with
-	 * a key is dropped as a whole, not looked up as a device that has no key
+	 * ignores case, so an id that is only like the id of a device with a key is dropped as a whole, not looked up as a
+	 * device that has no key
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
