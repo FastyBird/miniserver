@@ -56,16 +56,28 @@ final readonly class EntityMapper
 	}
 
 	/**
+	 * The values are keyed by the entity's property names, so their shape is the entity's, read
+	 * by reflection, and not one fixed shape. A plain array is turned into the ArrayHash
+	 * Utils\ArrayHash::from() makes of it, nested arrays included, which is what an ArrayHash
+	 * caller builds: both then take the one path below, whose relationship branches test the
+	 * nested values for `instanceof Utils\ArrayHash` (#723).
+	 *
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
 	public function fillEntity(
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 		Entities\CrudEntity $entity,
 		bool $isNew = false,
 	): Entities\CrudEntity
 	{
+		if (is_array($values)) {
+			$values = Utils\ArrayHash::from($values);
+		}
+
 		// This used to unwrap Doctrine\Common\Proxy\Proxy subclasses to reach the real entity class.
 		// That interface left with doctrine/common, and under ORM 3 with native lazy objects there
 		// is no proxy class at all: the entity IS its own class, merely uninitialised. Where a

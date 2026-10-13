@@ -12,6 +12,7 @@ use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use Override;
 use Ramsey\Uuid;
+use SensitiveParameter;
 use function sprintf;
 
 #[ORM\Entity]
@@ -36,6 +37,7 @@ class RefreshToken extends Tokens\Token implements
 
 	public function __construct(
 		AccessToken $accessToken,
+		#[SensitiveParameter]
 		string $token,
 		DateTimeInterface|null $validTill,
 		Uuid\UuidInterface|null $id = null,

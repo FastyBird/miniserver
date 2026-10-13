@@ -39,6 +39,7 @@ use function mkdir;
 use function preg_match;
 use function str_contains;
 use function str_repeat;
+use function str_replace;
 use function str_starts_with;
 use function substr_count;
 use function trim;
@@ -616,6 +617,45 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 		}
 
 		self::assertNotNull($this->reader()->read($this->request($secret)));
+	}
+
+	/**
+	 * The manager takes the plain array a caller builds as well as the ArrayHash it replaces
+	 * (#723, D3), and stores the same key from either
+	 *
+	 * @throws Throwable
+	 */
+	public function testManagerStoresTheSameKeyFromAnArrayAsFromAnArrayHash(): void
+	{
+		$manager = $this->container->getByType(Models\ApiKeys\Manager::class);
+
+		$values = static fn (string $hash): array => [
+			'name' => 'Integration',
+			'account' => Uuid\Uuid::fromString(self::ADMINISTRATOR_ACCOUNT),
+			'hash' => $hash,
+			'state' => Types\ApiKeyState::ACTIVE,
+			'expiresAt' => new DateTimeImmutable('2020-05-01T12:00:00+00:00'),
+		];
+
+		$fromHash = $manager->create(Utils\ArrayHash::from($values(str_repeat('a', 64))));
+		$fromArray = $manager->create($values(str_repeat('b', 64)));
+
+		$manager->update($fromHash, Utils\ArrayHash::from(['state' => Types\ApiKeyState::SUSPENDED]));
+		$manager->update($fromArray, ['state' => Types\ApiKeyState::SUSPENDED]);
+
+		$row = fn (Uuid\UuidInterface $id): array|false => $this->db()->fetchAssociative(
+			'SELECT LOWER(HEX(account_id)) AS account, key_name, key_state, expires_at FROM fb_security_api_keys WHERE key_id = ?',
+			[$id->getBytes()],
+		);
+
+		$stored = $row($fromArray->getId());
+
+		self::assertIsArray($stored);
+		self::assertSame(str_replace('-', '', self::ADMINISTRATOR_ACCOUNT), $stored['account']);
+		self::assertSame('Integration', $stored['key_name']);
+		self::assertSame(Types\ApiKeyState::SUSPENDED->value, $stored['key_state']);
+		self::assertNotNull($stored['expires_at']);
+		self::assertSame($row($fromHash->getId()), $stored);
 	}
 
 	/**

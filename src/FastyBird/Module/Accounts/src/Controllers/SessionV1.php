@@ -43,6 +43,7 @@ final class SessionV1 extends BaseV1
 		private readonly Identity\TokenReader $tokenReader,
 		private readonly Identity\TokenBuilder $tokenBuilder,
 		private readonly Identity\EnforcerFactory $enforcerFactory,
+		private readonly Security\IdentityFactory $identityFactory,
 	)
 	{
 	}
@@ -290,12 +291,27 @@ final class SessionV1 extends BaseV1
 
 		$accessToken = $refreshToken->getAccessToken();
 
+		// The session is refreshed only while its access token could still sign in; otherwise the
+		// refresh token is refused exactly as an unknown one is
+		$identity = $this->identityFactory->forAccessToken($accessToken);
+
+		if ($identity === null) {
+			throw new ApiExceptions\JsonApiError(
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				strval($this->translator->translate('//accounts-module.session.messages.invalidRefreshToken.heading')),
+				strval($this->translator->translate('//accounts-module.session.messages.invalidRefreshToken.message')),
+				[
+					'pointer' => '/data/attributes/refresh',
+				],
+			);
+		}
+
 		try {
 			// Start transaction connection to the database
 			$this->getOrmConnection()->beginTransaction();
 
 			// Auto-login user
-			$this->user->login($accessToken->getIdentity());
+			$this->user->login($identity);
 
 			$validTill = $this->getNow()->modify(Entities\Tokens\AccessToken::TOKEN_EXPIRATION);
 

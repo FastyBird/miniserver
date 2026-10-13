@@ -35,13 +35,21 @@ final class EntityUpdater extends Crud\CrudManager
 	}
 
 	/**
+	 * The values go to Mapping\EntityMapper::fillEntity() as they are, and it turns a plain array
+	 * into the ArrayHash Utils\ArrayHash::from() makes of it
+	 *
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function update(Utils\ArrayHash $values, Entities\CrudEntity|int|string $entity): Entities\CrudEntity
+	public function update(
+		array|Utils\ArrayHash $values,
+		Entities\CrudEntity|int|string $entity,
+	): Entities\CrudEntity
 	{
 		if (!$entity instanceof Entities\CrudEntity) {
 			$entity = $this->entityRepository->find($entity);

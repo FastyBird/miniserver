@@ -22,18 +22,22 @@ use function unlink;
 /**
  * Keeps credentials out of what Core writes about an error: Tracy's blue screens and Sentry events
  *
- * A request's credentials are the bearer token (Authorization) and the API key (X-Api-Key). Tracy
- * hides only `authorization` of them, and only from what it dumps; Sentry filters Authorization but
+ * A request's credentials are the bearer token (Authorization), the API key (X-Api-Key) and the
+ * token cookies a browser sends with every request: `token` (Security\Identity\TokenReader::COOKIE_NAME)
+ * and `refresh_token`, which the Accounts module's front end keeps beside it. Tracy hides only
+ * `authorization` of them, and only from what it dumps; Sentry filters Authorization and Cookie but
  * not X-Api-Key. Credentials passed as arguments are marked #[\SensitiveParameter] where they are
- * read (Security\Identity), which PHP turns into a \SensitiveParameterValue in a stack trace and
- * Tracy prints as hidden.
+ * read (Security\Identity) and looked up (Security\Models, Security\Queries), which PHP turns into a
+ * \SensitiveParameterValue in a stack trace and Tracy prints as hidden.
  */
 final class SensitiveData
 {
 
 	/**
 	 * Keys a blue screen hides wherever it dumps them, compared case-insensitively: request
-	 * headers, $_SERVER, and array keys inside dumped objects, such as a PSR-7 request's headers
+	 * headers, $_SERVER, $_COOKIE, and array keys and properties inside dumped objects, such as a
+	 * PSR-7 request's headers and cookies or a token entity's token. The whole Cookie header is
+	 * hidden, because it carries the token cookies verbatim
 	 */
 	public const array BLUE_SCREEN_KEYS = [
 		'authorization',
@@ -41,12 +45,22 @@ final class SensitiveData
 		'http_authorization',
 		'http_x_api_key',
 		'redirect_http_authorization',
+		'token',
+		'refresh_token',
+		'cookie',
+		'http_cookie',
 	];
 
 	/**
 	 * The shape of an API key's secret and of its SHA-256 hash (Security\Identity\ApiKeySecret)
 	 */
 	public const string API_KEY_MATERIAL = '/^[0-9a-f]{64}$/';
+
+	/**
+	 * The shape of a signed token (Security\Identity\TokenBuilder): its header and its claims are
+	 * both a base64url-encoded JSON object, which always starts with `eyJ`
+	 */
+	public const string TOKEN_MATERIAL = '/^eyJ[A-Za-z0-9_-]*\.eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*$/';
 
 	/**
 	 * Request headers a Sentry event carries as "[Filtered]": Sentry's own defaults
@@ -77,11 +91,16 @@ final class SensitiveData
 
 		// An API key's secret and its hash are both 64 lowercase hex characters. The hash is a
 		// query parameter of the key's lookup, so it reaches DBAL's and PDO's stack frames, whose
-		// arguments no key name marks; any value of that shape is hidden instead
+		// arguments no key name marks; any value of that shape is hidden instead. A signed token is
+		// a query parameter of its own lookup in the same way
 		$scrubber = $blueScreen->scrubber;
 
 		$blueScreen->scrubber = static fn (string $key, mixed $value, string|null $class): bool => (
-			is_string($value) && preg_match(self::API_KEY_MATERIAL, $value) === 1
+			is_string($value)
+			&& (
+				preg_match(self::API_KEY_MATERIAL, $value) === 1
+				|| preg_match(self::TOKEN_MATERIAL, $value) === 1
+			)
 		) || ($scrubber !== null && $scrubber($key, $value, $class) === true);
 
 		return $blueScreen;

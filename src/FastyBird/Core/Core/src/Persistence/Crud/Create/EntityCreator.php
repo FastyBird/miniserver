@@ -15,6 +15,7 @@ use Nette\Utils;
 use ReflectionClass;
 use ReflectionException;
 use function class_exists;
+use function is_array;
 use function is_string;
 use function sprintf;
 
@@ -40,14 +41,26 @@ final class EntityCreator extends Crud\CrudManager
 	}
 
 	/**
+	 * A plain array is turned into the ArrayHash Utils\ArrayHash::from() makes of it, so it takes
+	 * the path an ArrayHash takes; see Mapping\EntityMapper::fillEntity()
+	 *
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function create(Utils\ArrayHash $values, Entities\CrudEntity|null $entity = null): Entities\CrudEntity
+	public function create(
+		array|Utils\ArrayHash $values,
+		Entities\CrudEntity|null $entity = null,
+	): Entities\CrudEntity
 	{
+		if (is_array($values)) {
+			$values = Utils\ArrayHash::from($values);
+		}
+
 		if (!$entity instanceof Entities\CrudEntity) {
 			try {
 				// Entity name is override
