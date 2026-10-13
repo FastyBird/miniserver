@@ -70,6 +70,12 @@ final class AccountsExtension extends NetteDI\CompilerExtension implements Trans
 		$builder->addDefinition($this->prefix('middlewares.access'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Middleware\Access::class);
 
+		$builder->addDefinition(
+			$this->prefix('middlewares.interactiveOnly'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(Middleware\InteractiveOnly::class);
+
 		$builder->addDefinition($this->prefix('middlewares.urlFormat'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Middleware\UrlFormat::class)
 			->setArguments(['usePrefix' => $configuration->apiPrefix])

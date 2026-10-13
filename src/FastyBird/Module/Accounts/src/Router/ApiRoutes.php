@@ -33,6 +33,7 @@ final readonly class ApiRoutes
 		private Controllers\RolesV1 $rolesV1Controller,
 		private Controllers\RoleChildrenV1 $roleChildrenV1Controller,
 		private AccountsMiddleware\Access $authAccessControlMiddleware,
+		private AccountsMiddleware\InteractiveOnly $interactiveOnlyMiddleware,
 		private SecurityMiddleware\Authorization $authorizationMiddleware,
 		private SecurityMiddleware\User $userMiddleware,
 	)
@@ -57,6 +58,9 @@ final readonly class ApiRoutes
 		});
 
 		$routes->addMiddleware($this->authorizationMiddleware);
+		// Between User, which signs the request in, and the route's authorization: no route of this
+		// module is open to an API key
+		$routes->addMiddleware($this->interactiveOnlyMiddleware);
 		$routes->addMiddleware($this->userMiddleware);
 		$routes->addMiddleware($this->authAccessControlMiddleware);
 	}

@@ -236,7 +236,8 @@ unless `fbCore.security.token.signature` is set.
   (`Identity\ApiKeyReader`). A valid key signs in as its account, the Casbin subject, through the
   identity `Identity\AccountIdentityProvider` resolves it to; the module that owns accounts
   implements that interface (Accounts does), and refuses an account that may not sign in. Core
-  ships no implementation, so without one no key signs anyone in. An unknown, suspended
+  ships no implementation, so without one no key signs anyone in. A key is for data: the Accounts
+  module refuses it on all of its own routes (account administration, credentials). An unknown, suspended
   (`Types\ApiKeyState`), deleted or expired key, or one whose account may not sign in, is refused
   with 401. The commands `fb:api-key:create`, `list`, `suspend` and `delete`
   (`Security\Commands`) manage the keys. Not accepted for WebSocket connections. See

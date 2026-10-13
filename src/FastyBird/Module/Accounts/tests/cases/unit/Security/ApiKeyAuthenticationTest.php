@@ -6,6 +6,7 @@ use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Commands;
 use FastyBird\Core\Security\Entities;
+use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;
@@ -27,13 +28,14 @@ use function str_contains;
 use function var_export;
 
 /**
- * API keys end to end, through the Accounts module's route group, its Security middlewares and
- * its User, which is what production runs: a key created with fb:api-key:create authenticates as
- * its account, with that account's roles, until it is suspended, deleted or expired, and only
- * while fbCore > security > enable > apiKeys is on.
+ * API keys end to end, through Security's middlewares and the Accounts module's User and account
+ * identity provider, which is what production runs.
  *
- * GET /v1/accounts requires the manager or administrator role, so it tells a key with the
- * administrator's roles (200) from a key with the user's roles (403) and from no key (403).
+ * A key created with fb:api-key:create authenticates as its account, with that account's roles,
+ * on a data route (DATA_URL, a route as Devices, Triggers or Ui declare one: manager or
+ * administrator), until the key is suspended, deleted or expired or its account may no longer sign
+ * in, and only while fbCore > security > enable > apiKeys is on. It never reaches the Accounts
+ * module's own routes: those are account administration, and some issue credentials.
  */
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -51,7 +53,15 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 
 	private const string UNKNOWN_ACCOUNT = '0b3e4b8a-5c7d-4e2f-9a1b-6c8d0e2f4a6b';
 
-	private const string URL = '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts';
+	private const string ADMINISTRATOR_IDENTITY = '77331268-efbf-bd34-49ef-bfbdefbfbd04';
+
+	private const string ACCOUNTS = '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1';
+
+	private const string DATA_URL = '/api/test-data/v1/data';
+
+	private bool $dataRouteRegistered = false;
+
+	private string $administratorPassword = '';
 
 	/**
 	 * @throws Throwable
@@ -84,25 +94,106 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 
 		$secret = $this->createKey(self::USER_ACCOUNT);
 
-		// Signed in, as the user, who may not list accounts
+		// Signed in, as the user, who is neither manager nor administrator
 		self::assertSame(StatusCodeInterface::STATUS_FORBIDDEN, $this->request(['X-Api-Key' => $secret]));
+
+		$user = $this->getContainer()->getByType(Accounts\Security\User::class);
+
+		self::assertSame(self::USER_ACCOUNT, $user->getId()?->toString());
+		self::assertSame(['user'], $user->getRoles());
 	}
 
 	/**
-	 * A key signs in as its account, so the own-account routes serve that account, as for a token
+	 * @return array<string, array{string, string, string|null}>
+	 */
+	public static function accountsRoutes(): array
+	{
+		$password = '{"data":{"type":"accounts-module/identity","id":"' . self::ADMINISTRATOR_IDENTITY . '",'
+			. '"attributes":{"password":{"current":"123456","new":"changed-by-a-key"}}}}';
+		$session = '{"data":{"type":"accounts-module/session",'
+			. '"attributes":{"uid":"john.doe@fastybird.com","password":"123456"}}}';
+
+		return [
+			'read the session' => ['GET', '/session', null],
+			'create a session (tokens)' => ['POST', '/session', $session],
+			'refresh a session (tokens)' => ['PATCH', '/session', null],
+			'delete the session' => ['DELETE', '/session', null],
+			'read the own account' => ['GET', '/me', null],
+			'update the own account' => ['PATCH', '/me', null],
+			'delete the own account' => ['DELETE', '/me', null],
+			'read the own emails' => ['GET', '/me/emails', null],
+			'add an own email' => ['POST', '/me/emails', null],
+			'read the own identities' => ['GET', '/me/identities', null],
+			'change the own password' => ['PATCH', '/me/identities/' . self::ADMINISTRATOR_IDENTITY, $password],
+			'list the accounts' => ['GET', '/accounts', null],
+			'create an account' => ['POST', '/accounts', null],
+			'read an account' => ['GET', '/accounts/' . self::ADMINISTRATOR_ACCOUNT, null],
+			'create an identity (a credential)' => ['POST', '/accounts/' . self::USER_ACCOUNT . '/identities', null],
+			'change an account password' => [
+				'PATCH',
+				'/accounts/' . self::ADMINISTRATOR_ACCOUNT . '/identities/' . self::ADMINISTRATOR_IDENTITY,
+				$password,
+			],
+			'list the roles' => ['GET', '/roles', null],
+			'register' => ['POST', '/register', null],
+		];
+	}
+
+	/**
+	 * Signed in as the administrator, and still refused: no route of the Accounts module is open to
+	 * a key
 	 *
 	 * @throws Throwable
 	 */
-	public function testOwnAccountRoutesServeTheKeysAccount(): void
+	#[DataProvider('accountsRoutes')]
+	public function testKeyIsRefusedOnEveryAccountsRoute(string $method, string $path, string|null $body): void
 	{
 		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
 
 		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
 
-		foreach (['/v1/me', '/v1/me/emails', '/v1/me/identities'] as $path) {
+		self::assertSame(
+			StatusCodeInterface::STATUS_FORBIDDEN,
+			$this->request(['X-Api-Key' => $secret], self::ACCOUNTS . $path, true, $method, $body),
+		);
+
+		$user = $this->getContainer()->getByType(Accounts\Security\User::class);
+
+		self::assertSame(self::ADMINISTRATOR_ACCOUNT, $user->getId()?->toString());
+
+		// The password is unchanged
+		self::assertSame(
+			$this->administratorPassword,
+			$this->getDb()->fetchOne(
+				'SELECT identity_token FROM fb_accounts_module_identities WHERE identity_id = ?',
+				[Uuid\Uuid::fromString(self::ADMINISTRATOR_IDENTITY)->getBytes()],
+			),
+		);
+	}
+
+	/**
+	 * The same administration stays open to a bearer token, also when a key comes with it
+	 *
+	 * @throws Throwable
+	 */
+	public function testBearerTokenStillAdministers(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		foreach (['/me', '/me/emails', '/me/identities', '/accounts', '/roles', '/session'] as $path) {
 			self::assertSame(
 				StatusCodeInterface::STATUS_OK,
-				$this->request(['X-Api-Key' => $secret], '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . $path),
+				$this->request(['Authorization' => 'Bearer ' . self::ADMINISTRATOR_TOKEN], self::ACCOUNTS . $path),
+				$path,
+			);
+			self::assertSame(
+				StatusCodeInterface::STATUS_OK,
+				$this->request(
+					['Authorization' => 'Bearer ' . self::ADMINISTRATOR_TOKEN, 'X-Api-Key' => $secret],
+					self::ACCOUNTS . $path,
+				),
 				$path,
 			);
 		}
@@ -133,7 +224,10 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 
 		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
 
-		self::assertSame(StatusCodeInterface::STATUS_OK, $this->request(['X-Api-Key' => $secret], self::URL, false));
+		self::assertSame(
+			StatusCodeInterface::STATUS_OK,
+			$this->request(['X-Api-Key' => $secret], self::DATA_URL, false),
+		);
 
 		// Another process changes the account; this one does not clear its entity manager
 		$this->getDb()->executeStatement(
@@ -143,7 +237,7 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertSame(
 			StatusCodeInterface::STATUS_UNAUTHORIZED,
-			$this->request(['X-Api-Key' => $secret], self::URL, false),
+			$this->request(['X-Api-Key' => $secret], self::DATA_URL, false),
 		);
 		self::assertSame(StatusCodeInterface::STATUS_UNAUTHORIZED, $this->request(['X-Api-Key' => $secret]));
 	}
@@ -378,9 +472,37 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function request(array $headers, string $url = self::URL, bool $clear = true): int
+	private function request(
+		array $headers,
+		string $url = self::DATA_URL,
+		bool $clear = true,
+		string $method = RequestMethodInterface::METHOD_GET,
+		string|null $body = null,
+	): int
 	{
 		$router = $this->getContainer()->getByType(Routing\Router::class);
+
+		if (!$this->dataRouteRegistered) {
+			// A data route, protected the way the other modules protect theirs: Security's
+			// authorization and user middlewares and the module's access middleware, without the
+			// Accounts module's refusal of keys
+			$routes = $router->group('/api/test-data/v1', static function (Routing\RouteCollector $group): void {
+				$group->get('/data', [new Tests\Fixtures\Security\DataController(), 'read']);
+			});
+			$routes->addMiddleware($this->getContainer()->getByType(SecurityMiddleware\Authorization::class));
+			$routes->addMiddleware($this->getContainer()->getByType(SecurityMiddleware\User::class));
+			$routes->addMiddleware($this->getContainer()->getByType(Accounts\Middleware\Access::class));
+
+			$this->dataRouteRegistered = true;
+
+			$password = $this->getDb()->fetchOne(
+				'SELECT identity_token FROM fb_accounts_module_identities WHERE identity_id = ?',
+				[Uuid\Uuid::fromString(self::ADMINISTRATOR_IDENTITY)->getBytes()],
+			);
+			assert(is_string($password));
+
+			$this->administratorPassword = $password;
+		}
 
 		// Each request starts clean, as each HTTP request does in production, unless the test
 		// plays a process that keeps its entity manager
@@ -388,7 +510,7 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 			$this->getEntityManager()->clear();
 		}
 
-		$response = $router->handle(new ServerRequest(RequestMethodInterface::METHOD_GET, $url, $headers));
+		$response = $router->handle(new ServerRequest($method, $url, $headers, $body ?? ''));
 
 		self::assertTrue($response instanceof Http\Response);
 
