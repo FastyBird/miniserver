@@ -142,9 +142,10 @@ final class LanApi
 
 		$this->server->on('message', function ($message): void {
 			// A packet that cannot be read, or an announcement that cannot be decrypted or mapped, is that one
-			// announcement lost: the client keeps listening for the next one
+			// announcement lost: the client keeps listening for the next one. Only reading the announcement is
+			// guarded, what a listener throws is the listener's and is not taken for a malformed announcement
 			try {
-				$this->handleAnnouncement($message);
+				$event = $this->readAnnouncement($message);
 			} catch (SonoffExceptions\InvalidState | SonoffExceptions\LanApiError | Utils\JsonException $ex) {
 				$this->logger->warning(
 					'An announcement could not be handled, it was dropped',
@@ -157,6 +158,12 @@ final class LanApi
 						],
 					],
 				);
+
+				return;
+			}
+
+			if ($event !== null) {
+				Utils\Arrays::invoke($this->onMessageListeners, $event);
 			}
 		});
 
@@ -178,7 +185,7 @@ final class LanApi
 	 * @throws SonoffExceptions\LanApiError
 	 * @throws Utils\JsonException
 	 */
-	private function handleAnnouncement(mixed $message): void
+	private function readAnnouncement(mixed $message): Messages\Response\Lan\DeviceEvent|null
 	{
 		try {
 			$response = $this->parser->parseMessage($message);
@@ -267,7 +274,7 @@ final class LanApi
 					],
 				);
 
-				return;
+				return null;
 			}
 
 			if (preg_match(self::MATCH_DEVICE_ID, $deviceData['id']) !== 1) {
@@ -282,7 +289,7 @@ final class LanApi
 					],
 				);
 
-				return;
+				return null;
 			}
 
 			$dataEncrypted = !array_key_exists('encrypt', $deviceData)
@@ -321,17 +328,25 @@ final class LanApi
 					],
 				);
 
-				return;
+				return null;
 			}
 
 			if ($keyKnown || !$dataEncrypted) {
 				if ($dataEncrypted) {
 					foreach ($data as $index => $row) {
-						$data[$index] = Helpers\Transformer::decryptMessage(
+						$decrypted = Helpers\Transformer::decryptMessage(
 							$row,
 							$deviceKey,
 							array_key_exists('iv', $deviceData) ? strval($deviceData['iv']) : '',
 						);
+
+						// A part that does not decrypt with the key is not the device's, even when the parts
+						// around it do
+						if ($decrypted === false) {
+							throw new SonoffExceptions\LanApiError('The data of the announcement could not be decrypted');
+						}
+
+						$data[$index] = $decrypted;
 					}
 				}
 
@@ -341,46 +356,41 @@ final class LanApi
 					throw new Utils\JsonException('The data of the announcement is not a list of values');
 				}
 
-				Utils\Arrays::invoke(
-					$this->onMessageListeners,
-					$this->createEntity(
-						Messages\Response\Lan\DeviceEvent::class,
-						Utils\ArrayHash::from([
-							'id' => $deviceData['id'],
-							'ip_address' => $deviceIpAddress,
-							'domain' => $deviceDomain,
-							'port' => $devicePort,
-							'type' => $deviceData['type'],
-							'seq' => $deviceData['seq'],
-							'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
-							'encrypt' => $dataEncrypted,
-							// The data is mapped together with the event, not before it: an entity made first
-							// would be encoded to JSON as an object without properties, and the event could
-							// never be mapped
-							'data' => Utils\ArrayHash::from($data),
-						]),
-					),
-				);
-			} else {
-				Utils\Arrays::invoke(
-					$this->onMessageListeners,
-					$this->createEntity(
-						Messages\Response\Lan\DeviceEvent::class,
-						Utils\ArrayHash::from([
-							'id' => $deviceData['id'],
-							'ip_address' => $deviceIpAddress,
-							'domain' => $deviceDomain,
-							'port' => $devicePort,
-							'type' => $deviceData['type'],
-							'seq' => $deviceData['seq'],
-							'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
-							'encrypt' => true,
-							'data' => null,
-						]),
-					),
+				return $this->createEntity(
+					Messages\Response\Lan\DeviceEvent::class,
+					Utils\ArrayHash::from([
+						'id' => $deviceData['id'],
+						'ip_address' => $deviceIpAddress,
+						'domain' => $deviceDomain,
+						'port' => $devicePort,
+						'type' => $deviceData['type'],
+						'seq' => $deviceData['seq'],
+						'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
+						'encrypt' => $dataEncrypted,
+						// The data is mapped together with the event, not before it: an entity made first would be
+						// encoded to JSON as an object without properties, and the event could never be mapped
+						'data' => Utils\ArrayHash::from($data),
+					]),
 				);
 			}
+
+			return $this->createEntity(
+				Messages\Response\Lan\DeviceEvent::class,
+				Utils\ArrayHash::from([
+					'id' => $deviceData['id'],
+					'ip_address' => $deviceIpAddress,
+					'domain' => $deviceDomain,
+					'port' => $devicePort,
+					'type' => $deviceData['type'],
+					'seq' => $deviceData['seq'],
+					'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
+					'encrypt' => true,
+					'data' => null,
+				]),
+			);
 		}
+
+		return null;
 	}
 
 	public function disconnect(): void
