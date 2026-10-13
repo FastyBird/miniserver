@@ -30,6 +30,7 @@ use TypeError;
 use ValueError;
 use function in_array;
 use function React\Async\async;
+use function strtolower;
 
 /**
  * Lan client
@@ -117,7 +118,9 @@ final class Lan extends ClientProcess implements Client
 					Documents\Devices\Device::class,
 				);
 
-				if ($device !== null) {
+				// The query matches an identifier as a case-insensitive pattern, which is looser than the exact id the
+				// announcement was checked against, so a device that is not the one announced is left alone
+				if ($device !== null && strtolower($device->getIdentifier()) === $message->getId()) {
 					$this->queue->append(
 						$this->entityHelper->create(
 							Queue\Messages\StoreDeviceConnectionState::class,

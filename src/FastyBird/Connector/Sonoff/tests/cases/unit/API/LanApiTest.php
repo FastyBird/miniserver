@@ -23,7 +23,9 @@ use RuntimeException;
 use Stringable;
 use function array_map;
 use function assert;
+use function array_values;
 use function base64_encode;
+use function count;
 use function func_get_args;
 use function is_string;
 use function serialize;
@@ -274,6 +276,220 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertStringNotContainsString('"switch":"on"', serialize($logs->getArrayCopy()));
 	}
 
+	/**
+	 * What reaches the key check and what reaches the device lookup must be the same id. The lookup of the devices
+	 * matches an identifier case-insensitively and as a pattern, so an id that is only like the id of a device with
+	 * a key is dropped as a whole, not looked up as a device that has no key
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testAnnouncedPlainDataUnderAVariantOfTheIdOfADeviceWithKeyIsDropped(): void
+	{
+		$events = [];
+		$logs = new ArrayObject();
+
+		[$client, $socket] = $this->connectClient($logs);
+
+		// The device is configured with an upper case identifier, and announces itself with a lower case one
+		$client->registerDeviceKey('1000A1B2C3', 'device-key');
+		$client->onMessage($this->record('message', $events));
+
+		$variants = [
+			'1000A1B2C3',
+			' 1000a1b2c3',
+			'1000a1b2c3 ',
+			"1000a1b2c3\n",
+			"1000a1b2c3\0",
+			'1000a1b2c',
+			'1000a1b2c33',
+			'1000a1b2c.',
+			'.*',
+		];
+
+		foreach ($variants as $variant) {
+			$socket->emit('message', [
+				$this->buildAnnouncement(['id=' . $variant, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}']),
+				'10.0.0.7:5353',
+			]);
+		}
+
+		self::assertSame([], $events);
+		self::assertCount(count($variants), $logs);
+
+		// The id the announcement is checked against is the one the key was registered for, in lower case
+		$socket->emit('message', [
+			$this->buildAnnouncement(['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}']),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertSame([], $events);
+		self::assertCount(count($variants) + 1, $logs);
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testAnnouncementRepeatingATextRecordWithAnotherValueIsDropped(): void
+	{
+		$events = [];
+		$logs = new ArrayObject();
+
+		[$client, $socket] = $this->connectClient($logs);
+
+		$client->onMessage($this->record('message', $events));
+
+		$announcements = [
+			// The id twice, in one text and in two
+			['id=' . self::DEVICE_ID, 'id=1000a1b2c4', 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}'],
+			// The flag twice, the last one saying the data is plain
+			['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}', 'encrypt=true', 'encrypt=false'],
+		];
+
+		foreach ($announcements as $text) {
+			$socket->emit('message', [$this->buildAnnouncement($text), '10.0.0.7:5353']);
+		}
+
+		$socket->emit('message', [
+			$this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}'],
+				['id=1000a1b2c4'],
+			),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertSame([], $events);
+		self::assertCount(3, $logs);
+
+		// The same record twice with the same value says nothing different
+		$socket->emit('message', [
+			$this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}'],
+				['id=' . self::DEVICE_ID],
+			),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertCount(1, $events);
+		self::assertCount(3, $logs);
+	}
+
+	/**
+	 * Only `false` and `0` announce plain data, and what is not known is taken as encrypted, never as plain
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testEncryptFlagOfAnAnnouncementOnlyAnnouncesPlainDataAsFalseOrZero(): void
+	{
+		$events = [];
+
+		[$client, $socket] = $this->connectClient();
+
+		$client->onMessage($this->record('message', $events));
+
+		$flags = ['false' => false, 'FALSE' => false, '0' => false, 'true' => true, '1' => true, 'no' => true, '' => true];
+
+		foreach ($flags as $flag => $encrypted) {
+			$socket->emit('message', [
+				$this->buildAnnouncement(
+					['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}', 'encrypt=' . $flag],
+				),
+				'10.0.0.7:5353',
+			]);
+		}
+
+		self::assertSame(
+			array_values($flags),
+			array_map(static fn (array $event): bool => $event[1][0]->isEncrypted(), $events),
+		);
+
+		// Data that is plain is read, data that is said to be encrypted is not, there is no key to read it with
+		self::assertSame(
+			[true, true, true, false, false, false, false],
+			array_map(static fn (array $event): bool => $event[1][0]->getData() !== null, $events),
+		);
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testPlainDataOfADeviceWithKeyIsDroppedWhateverTheEncryptFlagSaysFalse(): void
+	{
+		$events = [];
+		$logs = new ArrayObject();
+
+		[$client, $socket] = $this->connectClient($logs);
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+		$client->onMessage($this->record('message', $events));
+
+		foreach (['false', '0'] as $flag) {
+			$socket->emit('message', [
+				$this->buildAnnouncement(
+					['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}', 'encrypt=' . $flag],
+				),
+				'10.0.0.7:5353',
+			]);
+		}
+
+		self::assertSame([], $events);
+		self::assertCount(2, $logs);
+	}
+
+	/**
+	 * A text record is a key and a value split at the first `=`, and a value can hold more of them, as the padding
+	 * of base64 does
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testAnnouncedValueMayContainEqualSigns(): void
+	{
+		$events = [];
+
+		[$client, $socket] = $this->connectClient();
+
+		$client->onMessage($this->record('message', $events));
+
+		$socket->emit('message', [
+			$this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"ssid":"a=b=c","switch":"on","fwVersion":"3.5.0"}'],
+			),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertCount(1, $events);
+		self::assertSame('a=b=c', $events[0][1][0]->getData()?->getSsid());
+	}
+
 	#[Override]
 	protected function tearDown(): void
 	{
@@ -338,8 +554,9 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 * The mDNS answer a Sonoff device gives to the `_ewelink._tcp` question: its address, its service and its data
 	 *
 	 * @param array<string> $text
+	 * @param array<string>|null $moreText a second text record in the same answer
 	 */
-	private function buildAnnouncement(array $text): string
+	private function buildAnnouncement(array $text, array|null $moreText = null): string
 	{
 		$name = 'eWeLink_' . self::DEVICE_ID;
 
@@ -368,6 +585,16 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 				$text,
 			),
 		];
+
+		if ($moreText !== null) {
+			$message->answers[] = new Dns\Model\Record(
+				$name . '._ewelink._tcp.local',
+				Dns\Model\Message::TYPE_TXT,
+				Dns\Model\Message::CLASS_IN,
+				120,
+				$moreText,
+			);
+		}
 
 		return (new Dns\Protocol\BinaryDumper())->toBinary($message);
 	}

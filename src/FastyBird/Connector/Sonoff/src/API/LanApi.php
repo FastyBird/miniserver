@@ -30,13 +30,15 @@ use stdClass;
 use Throwable;
 use function array_filter;
 use function array_key_exists;
+use function array_keys;
+use function array_map;
 use function assert;
 use function base64_encode;
-use function boolval;
 use function count;
 use function explode;
 use function http_build_query;
 use function implode;
+use function in_array;
 use function intval;
 use function is_array;
 use function is_numeric;
@@ -45,7 +47,9 @@ use function md5;
 use function preg_match;
 use function random_bytes;
 use function sprintf;
+use function strtolower;
 use function strval;
+use function substr;
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -73,6 +77,16 @@ final class LanApi
 	private const string MATCH_DOMAIN = '/^(?:[a-zA-Z]+)_(?P<id>[0-9A-Za-z]+).local$/';
     // phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	private const string MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
+
+	// A device id is ten lowercase hexadecimal characters. Nothing else is looked up by id, in the registered keys or in
+	// the devices the event is handed to: the lookup of the devices matches an identifier case-insensitively and as a
+	// pattern, so an id that is anything but plain characters could name one device to the key check and another
+	// to the device lookup
+	private const string MATCH_DEVICE_ID = '/^[0-9a-f]{10}\z/';
+
+	// The values of the `encrypt` text record that announce plain data. A device that sends plain data leaves the record
+	// out; whatever else the record holds, a value included that nobody knows, is taken as encrypted
+	private const array PLAIN_DATA_FLAGS = ['false', '0'];
 
 	private const string GET_DEVICE_INFO_MESSAGE_SCHEMA_FILENAME = 'lan_api_get_device_info.json';
 
@@ -144,6 +158,7 @@ final class LanApi
 			$deviceDomain = null;
 			$devicePort = self::DEVICE_PORT;
 			$deviceData = [];
+			$conflictingKeys = [];
 
 			foreach ($response->answers as $answer) {
 				if (
@@ -176,7 +191,13 @@ final class LanApi
 					&& is_array($answer->data)
 				) {
 					foreach ($answer->data as $dataRow) {
-						[$key, $value] = explode('=', $dataRow) + [null, null];
+						[$key, $value] = explode('=', strval($dataRow), 2) + [1 => null];
+
+						// The same text record twice with two values leaves no way to tell which one the device
+						// meant, and which one wins is for the sender to choose
+						if (array_key_exists($key, $deviceData) && $deviceData[$key] !== $value) {
+							$conflictingKeys[$key] = true;
+						}
 
 						$deviceData[$key] = $value;
 					}
@@ -195,7 +216,41 @@ final class LanApi
 				&& is_string($deviceData['seq'])
 				&& array_key_exists('data1', $deviceData)
 			) {
-				$dataEncrypted = array_key_exists('encrypt', $deviceData) && boolval($deviceData['encrypt']);
+				if ($conflictingKeys !== []) {
+					$this->logger->warning(
+						'An announcement repeated a text record with another value, the announcement was dropped',
+						[
+							'source' => Sources\Connector::SONOFF->value,
+							'type' => 'lan-api',
+							'records' => array_map(strval(...), array_keys($conflictingKeys)),
+						],
+					);
+
+					return;
+				}
+
+				if (preg_match(self::MATCH_DEVICE_ID, $deviceData['id']) !== 1) {
+					$this->logger->warning(
+						'An announcement came with an id that is not a device id, the announcement was dropped',
+						[
+							'source' => Sources\Connector::SONOFF->value,
+							'type' => 'lan-api',
+							'device' => [
+								'id' => substr($deviceData['id'], 0, 32),
+							],
+						],
+					);
+
+					return;
+				}
+
+				$dataEncrypted = !array_key_exists('encrypt', $deviceData)
+					? false
+					: !in_array(
+						is_string($deviceData['encrypt']) ? strtolower($deviceData['encrypt']) : null,
+						self::PLAIN_DATA_FLAGS,
+						true,
+					);
 
 				$data = array_filter(
 					[
@@ -303,7 +358,8 @@ final class LanApi
 
 	public function registerDeviceKey(string $deviceId, string $deviceKey): void
 	{
-		$this->encodeKeys[$deviceId] = $deviceKey;
+		// Announcements are looked up by the lowercase id, whatever case the device is configured with
+		$this->encodeKeys[strtolower($deviceId)] = $deviceKey;
 	}
 
 	/**
