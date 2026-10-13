@@ -105,7 +105,7 @@ final class SecurityExtension extends DI\CompilerExtension
 		assert($configuration instanceof Config);
 
 		if ($configuration->token->signature !== '') {
-			$builder->addDefinition($this->prefix('auth'), new DI\Definitions\ServiceDefinition())
+			$auth = $builder->addDefinition($this->prefix('auth'), new DI\Definitions\ServiceDefinition())
 				->setType(Services\Auth::class)
 				// Explicit, never autowired: with API keys off, Auth gets no reader and ignores
 				// the X-Api-Key header entirely
@@ -115,6 +115,12 @@ final class SecurityExtension extends DI\CompilerExtension
 						? new DI\Definitions\Reference($this->prefix('apiKey.reader'))
 						: null,
 				);
+
+			if (!$configuration->enable->apiKeys) {
+				// With keys on, the account identity provider is autowired, when the module that
+				// owns accounts registers one; with keys off, Auth never needs it
+				$auth->setArgument('accountIdentities', null);
+			}
 
 			$builder->addDefinition($this->prefix('token.builder'), new DI\Definitions\ServiceDefinition())
 				->setType(Identity\TokenBuilder::class)

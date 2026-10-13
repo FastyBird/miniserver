@@ -51,6 +51,8 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 
 	private const string UNKNOWN_KEY = 'a5ca9b5e-1f5b-4a0c-9d0b-2a7c3f1e9b11';
 
+	private const string UNKNOWN_ACCOUNT = '0b3e4b8a-5c7d-4e2f-9a1b-6c8d0e2f4a6b';
+
 	/**
 	 * @throws Throwable
 	 */
@@ -59,7 +61,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		parent::setUp();
 
-		$this->container = $this->createContainer(__DIR__ . '/../DI/securityApiKeysEnabled.neon');
+		$this->container = $this->createContainer(__DIR__ . '/apiKeysAccounts.neon');
 
 		$entityManager = $this->container->getByType(ORM\EntityManagerInterface::class);
 
@@ -154,6 +156,82 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 		// After it
 		$this->setExpiry($id, new DateTimeImmutable('2020-04-01T11:59:59+00:00'));
 		$this->assertRefused($secret);
+	}
+
+	/**
+	 * A key revoked by another process, the fb:api-key:* commands, is refused on the next lookup,
+	 * even by a process whose entity manager still holds the key from an earlier one
+	 *
+	 * @throws Throwable
+	 */
+	public function testRevocationByAnotherProcessIsSeenWithoutClearing(): void
+	{
+		[$secret, $id] = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		$this->auth()->login($this->request($secret));
+		self::assertSame(
+			self::ADMINISTRATOR_ACCOUNT,
+			$this->signedInAs($this->container->getByType(Identity\User::class)),
+		);
+
+		// Another process suspends it; this one does not clear its entity manager
+		$this->db()->executeStatement(
+			'UPDATE fb_security_api_keys SET key_state = ? WHERE key_id = ?',
+			[Types\ApiKeyState::SUSPENDED->value, Uuid\Uuid::fromString($id)->getBytes()],
+		);
+
+		try {
+			$this->auth()->login($this->request($secret));
+
+			self::fail('The suspended key signed the user in');
+		} catch (Exceptions\UnauthorizedAccess) {
+			self::assertFalse($this->container->getByType(Identity\User::class)->isLoggedIn());
+		}
+	}
+
+	/**
+	 * The key is valid, but its account can no longer sign in (blocked or deleted in the module
+	 * that owns accounts): Auth refuses it, and its roles never apply
+	 *
+	 * @throws Throwable
+	 */
+	public function testKeyOfAnAccountThatCannotSignInIsRefused(): void
+	{
+		[$secret] = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		$this->auth()->login($this->request($secret));
+		self::assertTrue($this->container->getByType(Identity\User::class)->isLoggedIn());
+
+		$this->container->getByType(Tests\Support\AccountIdentities::class)->active = [self::USER_ACCOUNT];
+
+		$this->expectException(Exceptions\UnauthorizedAccess::class);
+
+		try {
+			$this->auth()->login($this->request($secret));
+		} finally {
+			self::assertFalse($this->container->getByType(Identity\User::class)->isLoggedIn());
+		}
+	}
+
+	/**
+	 * Fail closed: with no module to resolve accounts, no key signs anyone in
+	 *
+	 * @throws Throwable
+	 */
+	public function testKeyIsRefusedWithoutAnAccountProvider(): void
+	{
+		[$secret] = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		$auth = new Services\Auth(
+			$this->container->getByType(Identity\TokenReader::class),
+			$this->container->getByType(Identity\IdentityProvider::class),
+			$this->container->getByType(Identity\User::class),
+			$this->reader(),
+		);
+
+		$this->expectException(Exceptions\UnauthorizedAccess::class);
+
+		$auth->login($this->request($secret));
 	}
 
 	/**
@@ -364,6 +442,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 					'--expires-at' => '2020-04-01T12:00:00+00:00',
 				],
 			],
+			'unknown account' => [['--name' => 'Integration', '--account' => self::UNKNOWN_ACCOUNT]],
 			'expiry is not a date' => [
 				['--name' => 'Integration', '--account' => self::ADMINISTRATOR_ACCOUNT, '--expires-at' => 'soon'],
 			],
@@ -404,6 +483,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 		$tester = new CommandTester(new Commands\CreateApiKey(
 			$this->container->getByType(Models\ApiKeys\Manager::class),
 			$this->container->getByType(ClockInterface::class),
+			$this->container->getByType(Identity\AccountIdentityProvider::class),
 			$logger,
 		));
 

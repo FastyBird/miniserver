@@ -1,0 +1,9 @@
+#
+# API keys enabled, and the two accounts of tests/policy.csv, able to sign in (Tests\Support\AccountIdentities)
+#
+
+includes:
+    - ../DI/securityApiKeysEnabled.neon
+
+services:
+    - FastyBird\Core\Tests\Support\AccountIdentities(['5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34', 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd'])

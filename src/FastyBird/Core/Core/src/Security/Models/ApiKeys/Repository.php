@@ -45,6 +45,11 @@ final class Repository
 	 * Finds a key in any state by the hash of its secret. The caller decides whether that state
 	 * and the expiry allow the key to authenticate.
 	 *
+	 * The key is always read from the database. A query does not overwrite an entity the identity
+	 * map already holds, so in a long-running process that kept the key from an earlier request,
+	 * a suspension, deletion or new expiry written by another process (the fb:api-key:* commands)
+	 * would otherwise go unseen until the entity manager is cleared.
+	 *
 	 * @param non-empty-string $hash
 	 *
 	 * @throws CoreExceptions\InvalidState
@@ -56,7 +61,13 @@ final class Repository
 		$findQuery = new Queries\FindApiKeys();
 		$findQuery->byHash($hash);
 
-		return $this->findOneBy($findQuery);
+		$apiKey = $this->findOneBy($findQuery);
+
+		if ($apiKey !== null) {
+			$this->managerRegistry->getManagerForClass(ApiKeys\ApiKey::class)?->refresh($apiKey);
+		}
+
+		return $apiKey;
 	}
 
 	/**

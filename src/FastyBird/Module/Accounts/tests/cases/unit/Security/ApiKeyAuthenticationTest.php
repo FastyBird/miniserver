@@ -10,6 +10,7 @@ use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
@@ -42,6 +43,13 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 	private const string ADMINISTRATOR_ACCOUNT = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
 
 	private const string USER_ACCOUNT = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
+
+	// Accounts in tests/sql/dummy.data.sql that cannot sign in
+	private const string BLOCKED_ACCOUNT = 'fe115286-8cfd-41bf-aceb-6ca95baf6fe9';
+
+	private const string DELETED_ACCOUNT = 'fdbe2ce2-3b18-41f1-aaab-c3c56d286eb4';
+
+	private const string UNKNOWN_ACCOUNT = '0b3e4b8a-5c7d-4e2f-9a1b-6c8d0e2f4a6b';
 
 	private const string URL = '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts';
 
@@ -81,13 +89,11 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * A key has no Accounts identity behind it, so the own-account routes, which resolve the account
-	 * from that identity, refuse it. They used to throw from the Accounts URL-format middleware,
-	 * outside the JSON:API error middleware, which stopped the HTTP server process.
+	 * A key signs in as its account, so the own-account routes serve that account, as for a token
 	 *
 	 * @throws Throwable
 	 */
-	public function testOwnAccountRoutesRefuseAKey(): void
+	public function testOwnAccountRoutesServeTheKeysAccount(): void
 	{
 		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
 
@@ -95,11 +101,99 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 
 		foreach (['/v1/me', '/v1/me/emails', '/v1/me/identities'] as $path) {
 			self::assertSame(
-				StatusCodeInterface::STATUS_FORBIDDEN,
+				StatusCodeInterface::STATUS_OK,
 				$this->request(['X-Api-Key' => $secret], '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . $path),
 				$path,
 			);
 		}
+	}
+
+	/**
+	 * @return array<string, array{string}>
+	 */
+	public static function accountsThatCannotSignIn(): array
+	{
+		return [
+			'blocked' => [Accounts\Types\AccountState::BLOCKED->value],
+			'deleted' => [Accounts\Types\AccountState::DELETED->value],
+			'not activated' => [Accounts\Types\AccountState::NOT_ACTIVATED->value],
+		];
+	}
+
+	/**
+	 * The key stays valid, but its account no longer may sign in: the key is refused, also by a
+	 * process that still holds the account, active, from an earlier request
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('accountsThatCannotSignIn')]
+	public function testKeyOfAnAccountThatCannotSignInIsRefused(string $state): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		self::assertSame(StatusCodeInterface::STATUS_OK, $this->request(['X-Api-Key' => $secret], self::URL, false));
+
+		// Another process changes the account; this one does not clear its entity manager
+		$this->getDb()->executeStatement(
+			'UPDATE fb_accounts_module_accounts SET account_state = ? WHERE account_id = ?',
+			[$state, Uuid\Uuid::fromString(self::ADMINISTRATOR_ACCOUNT)->getBytes()],
+		);
+
+		self::assertSame(
+			StatusCodeInterface::STATUS_UNAUTHORIZED,
+			$this->request(['X-Api-Key' => $secret], self::URL, false),
+		);
+		self::assertSame(StatusCodeInterface::STATUS_UNAUTHORIZED, $this->request(['X-Api-Key' => $secret]));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testKeyOfAnUnknownAccountIsRefused(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = 'b3a1f0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e4f6a8';
+
+		// Written directly: fb:api-key:create refuses an unknown account
+		$entityManager = $this->getEntityManager();
+		$entityManager->persist(new Entities\ApiKeys\ApiKey(
+			Uuid\Uuid::fromString(self::UNKNOWN_ACCOUNT),
+			'Integration',
+			hash('sha256', $secret),
+		));
+		$entityManager->flush();
+
+		self::assertSame(StatusCodeInterface::STATUS_UNAUTHORIZED, $this->request(['X-Api-Key' => $secret]));
+	}
+
+	/**
+	 * @return array<string, array{string}>
+	 */
+	public static function accountsThatCannotGetAKey(): array
+	{
+		return [
+			'unknown' => [self::UNKNOWN_ACCOUNT],
+			'blocked' => [self::BLOCKED_ACCOUNT],
+			'deleted' => [self::DELETED_ACCOUNT],
+		];
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	#[DataProvider('accountsThatCannotGetAKey')]
+	public function testCreateRefusesAnAccountThatCannotSignIn(string $account): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		self::assertSame(
+			Command::FAILURE,
+			$this->runCommand(Commands\CreateApiKey::class, ['--name' => 'Integration', '--account' => $account]),
+		);
+		self::assertEquals(0, $this->getDb()->fetchOne('SELECT COUNT(*) FROM fb_security_api_keys'));
 	}
 
 	/**
@@ -284,12 +378,15 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	private function request(array $headers, string $url = self::URL): int
+	private function request(array $headers, string $url = self::URL, bool $clear = true): int
 	{
 		$router = $this->getContainer()->getByType(Routing\Router::class);
 
-		// Each request starts clean, as each HTTP request does in production
-		$this->getEntityManager()->clear();
+		// Each request starts clean, as each HTTP request does in production, unless the test
+		// plays a process that keeps its entity manager
+		if ($clear) {
+			$this->getEntityManager()->clear();
+		}
 
 		$response = $router->handle(new ServerRequest(RequestMethodInterface::METHOD_GET, $url, $headers));
 

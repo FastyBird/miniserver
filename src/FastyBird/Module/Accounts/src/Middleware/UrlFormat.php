@@ -2,10 +2,13 @@
 
 namespace FastyBird\Module\Accounts\Middleware;
 
+use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Http;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Security;
+use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
+use Nette\Localization;
 use Override;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -14,6 +17,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use RuntimeException;
 use function str_replace;
 use function str_starts_with;
+use function strval;
 
 /**
  * Response url formatter
@@ -24,11 +28,13 @@ final readonly class UrlFormat implements MiddlewareInterface
 	public function __construct(
 		private bool $usePrefix,
 		private Security\User $user,
+		private Localization\Translator $translator,
 	)
 	{
 	}
 
 	/**
+	 * @throws Exceptions\JsonApi
 	 * @throws InvalidArgumentException
 	 * @throws RuntimeException
 	 */
@@ -37,12 +43,8 @@ final readonly class UrlFormat implements MiddlewareInterface
 	{
 		$response = $handler->handle($request);
 
-		// Only a signed-in Accounts identity has an account to rewrite the URLs for. A request
-		// signed in by Core's API key has none: its response passes through unchanged, which for
-		// these routes is the controller's own 403, rather than an exception thrown out here,
-		// outside the JSON:API error middleware.
 		if (
-			$this->user->getAccount() !== null
+			$this->user->isLoggedIn()
 			&& (
 				str_starts_with(
 					$request->getUri()->getPath(),
@@ -58,6 +60,14 @@ final readonly class UrlFormat implements MiddlewareInterface
 				)
 			)
 		) {
+			if ($this->user->getAccount() === null) {
+				throw new Exceptions\JsonApiError(
+					StatusCodeInterface::STATUS_BAD_REQUEST,
+					strval($this->translator->translate('//accounts-module.base.messages.failed.heading')),
+					strval($this->translator->translate('//accounts-module.base.messages.failed.message')),
+				);
+			}
+
 			$body = $response->getBody();
 			$body->rewind();
 

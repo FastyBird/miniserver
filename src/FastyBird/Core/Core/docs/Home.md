@@ -233,9 +233,12 @@ unless `fbCore.security.token.signature` is set.
   secret (`Identity\ApiKeySecret`); `Models\ApiKeys\Repository` and `Manager` and
   `Queries\FindApiKeys` work with it. `Middleware\User`, through `Services\Auth`, reads the
   bearer token first and, only when the request carries none, the `X-Api-Key` header
-  (`Identity\ApiKeyReader`). A valid key signs in a `PlainIdentity` whose id is the key's account,
-  the Casbin subject; an unknown, suspended (`Types\ApiKeyState`), deleted or expired key is
-  refused with 401. The commands `fb:api-key:create`, `list`, `suspend` and `delete`
+  (`Identity\ApiKeyReader`). A valid key signs in as its account, the Casbin subject, through the
+  identity `Identity\AccountIdentityProvider` resolves it to; the module that owns accounts
+  implements that interface (Accounts does), and refuses an account that may not sign in. Core
+  ships no implementation, so without one no key signs anyone in. An unknown, suspended
+  (`Types\ApiKeyState`), deleted or expired key, or one whose account may not sign in, is refused
+  with 401. The commands `fb:api-key:create`, `list`, `suspend` and `delete`
   (`Security\Commands`) manage the keys. Not accepted for WebSocket connections. See
   [configuration.md](../../../../../docs/configuration.md#api-keys).
 - **Ownership.** `Security\Entities\Owner` marks an entity that records the user who created it,

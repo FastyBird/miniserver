@@ -26,7 +26,8 @@ use function trim;
 
 /**
  * Creates an API key for an account and prints its secret, the only time it is ever shown.
- * Non-interactive: everything comes from the options.
+ * Non-interactive: everything comes from the options. The account must be one that can sign in,
+ * as Identity\AccountIdentityProvider decides; without a provider no key can be created.
  */
 final class CreateApiKey extends Console\Command\Command
 {
@@ -38,6 +39,7 @@ final class CreateApiKey extends Console\Command\Command
 	public function __construct(
 		private readonly Models\ApiKeys\Manager $manager,
 		private readonly ClockInterface $clock,
+		private readonly Identity\AccountIdentityProvider|null $accountIdentities = null,
 		private readonly Log\LoggerInterface $logger = new Log\NullLogger(),
 		string|null $name = null,
 	)
@@ -90,6 +92,29 @@ final class CreateApiKey extends Console\Command\Command
 
 		if (!is_string($account) || !Uuid\Uuid::isValid($account)) {
 			$io->error('Provide the account identifier (UUID) with --account.');
+
+			return self::FAILURE;
+		}
+
+		// A key for an account that cannot sign in would be refused on every request; refuse it here,
+		// by the same rule Services\Auth applies
+		try {
+			$identity = $this->accountIdentities?->forAccount(Uuid\Uuid::fromString($account));
+		} catch (Throwable $ex) {
+			$this->logger->error('Account of an API key could not be resolved', [
+				'source' => Sources\Core::CORE->value,
+				'capability' => 'security',
+				'type' => 'api-key-create-command',
+				'exception' => Logging\Logger::buildException($ex, false),
+			]);
+
+			$io->error('The account could not be resolved. Please try again later.');
+
+			return self::FAILURE;
+		}
+
+		if ($identity === null) {
+			$io->error(sprintf('There is no account %s that can sign in.', $account));
 
 			return self::FAILURE;
 		}

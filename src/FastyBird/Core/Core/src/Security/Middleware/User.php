@@ -11,7 +11,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Ramsey\Uuid;
 
 /**
  * User login middleware
@@ -32,7 +31,6 @@ final readonly class User implements MiddlewareInterface
 	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws SecurityExceptions\UnauthorizedAccess
-	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	#[Override]
 	public function process(

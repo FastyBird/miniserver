@@ -7,7 +7,6 @@ use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
 use FastyBird\Core\Security\Identity;
 use Psr\Http\Message\ServerRequestInterface;
-use Ramsey\Uuid;
 
 /**
  * Authentication service, the work of Middleware\User
@@ -15,7 +14,8 @@ use Ramsey\Uuid;
  * A bearer token comes first. Only a request that carries none is authenticated by its X-Api-Key
  * header, and only while API keys are enabled (fbCore > security > enable > apiKeys), which is
  * when SecurityExtension hands this service an Identity\ApiKeyReader. A key authenticates as its
- * account: the identity's id is the account's id, which is the Casbin subject.
+ * account, through the identity Identity\AccountIdentityProvider resolves the account to; the
+ * account is the Casbin subject.
  */
 final class Auth
 {
@@ -25,6 +25,7 @@ final class Auth
 		private Identity\IdentityProvider $identityFactory,
 		private Identity\User $user,
 		private Identity\ApiKeyReader|null $apiKeyReader = null,
+		private Identity\AccountIdentityProvider|null $accountIdentities = null,
 	)
 	{
 	}
@@ -35,7 +36,6 @@ final class Auth
 	 * @throws CoreExceptions\InvalidState
 	 * @throws PersistenceExceptions\Query
 	 * @throws SecurityExceptions\UnauthorizedAccess
-	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public function login(ServerRequestInterface $request): void
 	{
@@ -56,15 +56,23 @@ final class Auth
 			return;
 		}
 
+		// No bearer token. Whoever an earlier request signed in is signed out first, so a refused
+		// key leaves nobody signed in in a long-running process
+		$this->user->logout();
+
 		$apiKey = $this->apiKeyReader?->read($request);
 
 		if ($apiKey !== null) {
-			$this->user->login(new Identity\PlainIdentity($apiKey->getAccount()->toString()));
+			// The module that owns accounts decides whether the key's account may sign in. Without
+			// one, or for an unknown, blocked or deleted account, the key is refused: fail closed.
+			$identity = $this->accountIdentities?->forAccount($apiKey->getAccount());
 
-			return;
+			if ($identity === null) {
+				throw new SecurityExceptions\UnauthorizedAccess('API key is not valid');
+			}
+
+			$this->user->login($identity);
 		}
-
-		$this->user->logout();
 	}
 
 }
