@@ -45,6 +45,7 @@ use function is_numeric;
 use function is_string;
 use function md5;
 use function preg_match;
+use function property_exists;
 use function random_bytes;
 use function sprintf;
 use function strtolower;
@@ -424,9 +425,9 @@ final class LanApi
 		$payload->selfApikey = '123';
 		$payload->data = new stdClass();
 
-		try {
-			$deviceKey = $this->getDeviceKey($id);
+		$deviceKey = $this->getDeviceKey($id);
 
+		try {
 			if ($deviceKey !== null) {
 				$iv = random_bytes(16);
 
@@ -476,9 +477,9 @@ final class LanApi
 
 		if ($result instanceof Promise\PromiseInterface) {
 			$result
-				->then(function (Message\ResponseInterface $response) use ($deferred, $request): void {
+				->then(function (Message\ResponseInterface $response) use ($deferred, $request, $id, $deviceKey): void {
 					try {
-						$deferred->resolve($this->parseGetDeviceInfo($request, $response));
+						$deferred->resolve($this->parseGetDeviceInfo($request, $response, $id, $deviceKey));
 					} catch (Throwable $ex) {
 						$deferred->reject($ex);
 					}
@@ -490,7 +491,7 @@ final class LanApi
 			return $deferred->promise();
 		}
 
-		return $this->parseGetDeviceInfo($request, $result);
+		return $this->parseGetDeviceInfo($request, $result, $id, $deviceKey);
 	}
 
 	/**
@@ -533,9 +534,9 @@ final class LanApi
 		$payload->selfApikey = '123';
 		$payload->data = $params;
 
-		try {
-			$deviceKey = $this->getDeviceKey($id);
+		$deviceKey = $this->getDeviceKey($id);
 
+		try {
 			if ($deviceKey !== null) {
 				$iv = random_bytes(16);
 
@@ -587,9 +588,9 @@ final class LanApi
 
 		if ($result instanceof Promise\PromiseInterface) {
 			$result
-				->then(function (Message\ResponseInterface $response) use ($deferred, $request): void {
+				->then(function (Message\ResponseInterface $response) use ($deferred, $request, $id, $deviceKey): void {
 					try {
-						$deferred->resolve($this->parseSetDeviceState($request, $response));
+						$deferred->resolve($this->parseSetDeviceState($request, $response, $id, $deviceKey));
 					} catch (Throwable $ex) {
 						$deferred->reject($ex);
 					}
@@ -601,7 +602,7 @@ final class LanApi
 			return $deferred->promise();
 		}
 
-		return $this->parseSetDeviceState($request, $result);
+		return $this->parseSetDeviceState($request, $result, $id, $deviceKey);
 	}
 
 	/**
@@ -611,9 +612,17 @@ final class LanApi
 	private function parseGetDeviceInfo(
 		Message\RequestInterface $request,
 		Message\ResponseInterface $response,
+		string $deviceId,
+		string|null $deviceKey,
 	): Messages\Response\Lan\DeviceInfo
 	{
-		$body = $this->validateResponseBody($request, $response, self::GET_DEVICE_INFO_MESSAGE_SCHEMA_FILENAME);
+		$body = $this->validateResponseBody(
+			$request,
+			$response,
+			self::GET_DEVICE_INFO_MESSAGE_SCHEMA_FILENAME,
+			$deviceId,
+			$deviceKey,
+		);
 
 		$error = $body->offsetGet('error');
 		assert(is_numeric($error));
@@ -640,9 +649,17 @@ final class LanApi
 	private function parseSetDeviceState(
 		Message\RequestInterface $request,
 		Message\ResponseInterface $response,
+		string $deviceId,
+		string|null $deviceKey,
 	): bool
 	{
-		$body = $this->validateResponseBody($request, $response, self::SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME);
+		$body = $this->validateResponseBody(
+			$request,
+			$response,
+			self::SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME,
+			$deviceId,
+			$deviceKey,
+		);
 
 		$error = $body->offsetGet('error');
 		assert(is_numeric($error));
@@ -712,10 +729,16 @@ final class LanApi
 		Message\RequestInterface $request,
 		Message\ResponseInterface $response,
 		string $schemaFilename,
+		string $deviceId,
+		string|null $deviceKey,
 		bool $throw = true,
 	): Utils\ArrayHash|bool
 	{
 		$body = $this->getResponseBody($request, $response);
+
+		if ($deviceKey !== null) {
+			$body = $this->decryptResponseBody($request, $response, $body, $deviceId, $deviceKey);
+		}
 
 		try {
 			return $this->schemaValidator->validate(
@@ -734,6 +757,92 @@ final class LanApi
 			}
 
 			return false;
+		}
+	}
+
+	/**
+	 * A device with a key replies with its data encrypted with that key. Nothing else in the reply says it came from
+	 * the device, so data that comes in plain, or that does not decrypt with the key, is refused like an announcement
+	 * of it would be. A reply that carries no data at all has nothing to refuse.
+	 *
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
+	 */
+	private function decryptResponseBody(
+		Message\RequestInterface $request,
+		Message\ResponseInterface $response,
+		string $body,
+		string $deviceId,
+		string $deviceKey,
+	): string
+	{
+		try {
+			$reply = Utils\Json::decode($body);
+		} catch (Utils\JsonException $ex) {
+			throw new SonoffExceptions\LanApiCall(
+				'Could not validate received response payload',
+				$request,
+				$response,
+				$ex->getCode(),
+				$ex,
+			);
+		}
+
+		// The data of a reply that reports an error is never read, the error is
+		if (
+			!$reply instanceof stdClass
+			|| !property_exists($reply, 'data')
+			|| (property_exists($reply, 'error') && $reply->error !== 0)
+		) {
+			return $body;
+		}
+
+		if (!is_string($reply->data)) {
+			$this->logger->warning(
+				'A device with an encryption key replied with plain data, the reply was refused',
+				[
+					'source' => Sources\Connector::SONOFF->value,
+					'type' => 'lan-api',
+					'device' => [
+						'id' => $deviceId,
+					],
+				],
+			);
+
+			throw new SonoffExceptions\LanApiError('Device with an encryption key replied with plain data');
+		}
+
+		$decrypted = property_exists($reply, 'iv') && is_string($reply->iv)
+			? Helpers\Transformer::decryptMessage($reply->data, $deviceKey, $reply->iv)
+			: false;
+
+		try {
+			$data = $decrypted !== false ? Utils\Json::decode($decrypted) : null;
+		} catch (Utils\JsonException) {
+			$data = null;
+		}
+
+		if (!$data instanceof stdClass) {
+			$this->logger->warning(
+				'The data a device with an encryption key replied with could not be decrypted, the reply was refused',
+				[
+					'source' => Sources\Connector::SONOFF->value,
+					'type' => 'lan-api',
+					'device' => [
+						'id' => $deviceId,
+					],
+				],
+			);
+
+			throw new SonoffExceptions\LanApiError('Data of the reply could not be decrypted');
+		}
+
+		$reply->data = $data;
+
+		try {
+			return Utils\Json::encode($reply);
+		} catch (Utils\JsonException $ex) {
+			throw new SonoffExceptions\LanApiError('Decrypted reply could not be prepared', $ex->getCode(), $ex);
 		}
 	}
 
