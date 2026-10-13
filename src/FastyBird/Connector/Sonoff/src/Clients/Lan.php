@@ -176,7 +176,6 @@ final class Lan extends ClientProcess implements Client
 				}
 			}
 		});
-
 	}
 
 	#[Override]

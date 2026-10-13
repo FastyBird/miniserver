@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
 use Override;
-use PHPUnit\Framework\MockObject;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
 use Ramsey\Uuid;
@@ -268,6 +267,7 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 			 * @param array<mixed> $context
 			 */
 			// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
 			#[Override]
 			public function log($level, string|Stringable $message, array $context = []): void
 			{

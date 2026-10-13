@@ -2,10 +2,10 @@
 
 namespace FastyBird\Connector\Sonoff\Tests\Cases\Unit\API;
 
+use ArrayObject;
 use BadMethodCallException;
 use Closure;
 use Error;
-use ArrayObject;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Helpers;
@@ -22,8 +22,8 @@ use ReflectionProperty;
 use RuntimeException;
 use Stringable;
 use function array_map;
-use function assert;
 use function array_values;
+use function assert;
 use function base64_encode;
 use function count;
 use function func_get_args;
@@ -314,7 +314,9 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 
 		foreach ($variants as $variant) {
 			$socket->emit('message', [
-				$this->buildAnnouncement(['id=' . $variant, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}']),
+				$this->buildAnnouncement(
+					['id=' . $variant, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}'],
+				),
 				'10.0.0.7:5353',
 			]);
 		}
@@ -324,7 +326,9 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 
 		// The id the announcement is checked against is the one the key was registered for, in lower case
 		$socket->emit('message', [
-			$this->buildAnnouncement(['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}']),
+			$this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}'],
+			),
 			'10.0.0.7:5353',
 		]);
 
@@ -516,26 +520,30 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	private function connectClient(ArrayObject|null $logs = null): array
 	{
 		if ($logs !== null) {
-			$this->mockContainerService(Sonoff\Logger::class, new Sonoff\Logger(new class ($logs) extends Log\AbstractLogger {
+			$this->mockContainerService(
+				Sonoff\Logger::class,
+				new Sonoff\Logger(new class ($logs) extends Log\AbstractLogger {
 
-				/**
-				 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs
-				 */
-				public function __construct(private readonly ArrayObject $logs)
-				{
-				}
+					/**
+					 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs
+					 */
+					public function __construct(private readonly ArrayObject $logs)
+					{
+					}
 
-				/**
-				 * @param array<mixed> $context
-				 */
-				// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-				#[Override]
-				public function log($level, string|Stringable $message, array $context = []): void
-				{
-					$this->logs[] = ['level' => $level, 'message' => (string) $message, 'context' => $context];
-				}
+					/**
+					 * @param array<mixed> $context
+					 */
+					// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
 
-			}));
+					#[Override]
+					public function log($level, string|Stringable $message, array $context = []): void
+					{
+						$this->logs[] = ['level' => $level, 'message' => (string) $message, 'context' => $context];
+					}
+
+				}),
+			);
 		}
 
 		$client = $this->container->getByType(API\LanApiFactory::class)->create();

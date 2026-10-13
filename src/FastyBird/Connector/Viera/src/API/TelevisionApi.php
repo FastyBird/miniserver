@@ -26,8 +26,8 @@ use SimpleXMLElement;
 use Throwable;
 use ValueError;
 use function array_combine;
-use function array_filter;
 use function array_fill;
+use function array_filter;
 use function array_key_exists;
 use function array_merge;
 use function array_pop;
@@ -1113,20 +1113,23 @@ final class TelevisionApi
 			}
 		}
 
-		$this->eventLoop->addTimer(1.5, async(function () use ($deferred, $runLoop, &$result, $doUnsubscribe, $release): void {
-			$release();
+		$this->eventLoop->addTimer(
+			1.5,
+			async(function () use ($deferred, $runLoop, &$result, $doUnsubscribe, $release): void {
+				$release();
 
-			if ($doUnsubscribe) {
-				$this->unsubscribeEvents();
-			}
+				if ($doUnsubscribe) {
+					$this->unsubscribeEvents();
+				}
 
-			$deferred->resolve(false);
-			$result = false;
+				$deferred->resolve(false);
+				$result = false;
 
-			if ($runLoop) {
-				$this->eventLoop->stop();
-			}
-		}));
+				if ($runLoop) {
+					$this->eventLoop->stop();
+				}
+			}),
+		);
 
 		if ($runLoop) {
 			$this->eventLoop->run();
