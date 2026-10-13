@@ -1,0 +1,376 @@
+{
+    "Entities\\Channels\\Controls\\Control:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a30/calibrate": {
+        "channel": "Tests\\Fixtures\\Dummy\\DummyChannelEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a30",
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "name": "calibrate",
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    },
+    "Entities\\Channels\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a14": {
+        "category": "generic",
+        "channel": "Tests\\Fixtures\\Dummy\\DummyChannelEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a13",
+        "children": [],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "dataType": "switch",
+        "default": null,
+        "format": "switch_on:on:on,switch_off:off:off",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a14",
+        "identifier": "nested-switch",
+        "invalid": null,
+        "name": null,
+        "params": null,
+        "parent": null,
+        "queryable": false,
+        "scale": null,
+        "settable": true,
+        "step": null,
+        "unit": null,
+        "updatedAt": "2020-04-01T12:00:00+02:00",
+        "value": null,
+        "valueTransformer": null
+    },
+    "Entities\\Channels\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a31": {
+        "category": "generic",
+        "channel": "Tests\\Fixtures\\Dummy\\DummyChannelEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a30",
+        "children": [
+            "Entities\\Channels\\Properties\\Mapped:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a32"
+        ],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "dataType": "float",
+        "default": null,
+        "format": "f|-20:f|80",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a31",
+        "identifier": "temperature",
+        "invalid": null,
+        "name": null,
+        "params": null,
+        "parent": null,
+        "queryable": false,
+        "scale": 2,
+        "settable": true,
+        "step": 0.1,
+        "unit": "°C",
+        "updatedAt": "2020-04-01T12:00:00+02:00",
+        "value": null,
+        "valueTransformer": null
+    },
+    "Entities\\Channels\\Properties\\Mapped:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a32": {
+        "category": "generic",
+        "channel": "Tests\\Fixtures\\Dummy\\DummyChannelEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a30",
+        "children": [],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "dataType": "float",
+        "default": null,
+        "format": "-40:125",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a32",
+        "identifier": "temperature-mirror",
+        "invalid": null,
+        "name": null,
+        "params": null,
+        "parent": "Entities\\Channels\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a31",
+        "queryable": false,
+        "scale": null,
+        "settable": false,
+        "step": null,
+        "unit": null,
+        "updatedAt": "2020-04-01T12:00:00+02:00",
+        "value": null,
+        "valueTransformer": null
+    },
+    "Entities\\Connectors\\Controls\\Control:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01/discover": {
+        "connector": "Tests\\Fixtures\\Dummy\\DummyConnectorEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01",
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "name": "discover",
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    },
+    "Entities\\Connectors\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a02": {
+        "category": "generic",
+        "connector": "Tests\\Fixtures\\Dummy\\DummyConnectorEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01",
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "dataType": "enum",
+        "default": null,
+        "format": "running,stopped",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a02",
+        "identifier": "state",
+        "invalid": null,
+        "name": "State",
+        "params": null,
+        "queryable": true,
+        "scale": null,
+        "settable": false,
+        "step": null,
+        "unit": null,
+        "updatedAt": "2020-04-01T12:00:00+02:00",
+        "value": null,
+        "valueTransformer": null
+    },
+    "Entities\\Connectors\\Properties\\Variable:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a03": {
+        "category": "generic",
+        "connector": "Tests\\Fixtures\\Dummy\\DummyConnectorEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01",
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "dataType": "string",
+        "default": null,
+        "format": null,
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a03",
+        "identifier": "username",
+        "invalid": null,
+        "name": null,
+        "params": null,
+        "queryable": false,
+        "scale": null,
+        "settable": false,
+        "step": null,
+        "unit": null,
+        "updatedAt": "2020-04-01T12:00:00+02:00",
+        "value": "graph-user",
+        "valueTransformer": null
+    },
+    "Entities\\Devices\\Controls\\Control:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10/identify": {
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "device": "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10",
+        "name": "identify",
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    },
+    "Entities\\Devices\\Controls\\Control:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10/reboot": {
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "device": "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10",
+        "name": "reboot",
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    },
+    "Entities\\Devices\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a20": {
+        "category": "generic",
+        "children": [
+            "Entities\\Devices\\Properties\\Mapped:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a21"
+        ],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "dataType": "enum",
+        "default": null,
+        "device": "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10",
+        "format": "on:true:1,off:false:0,toggle:toggle:",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a20",
+        "identifier": "power",
+        "invalid": null,
+        "name": "Power state",
+        "params": {
+            "source": {
+                "register": 13
+            },
+            "extra": {
+                "flags": [
+                    true,
+                    false
+                ]
+            }
+        },
+        "parent": null,
+        "queryable": true,
+        "scale": null,
+        "settable": true,
+        "step": null,
+        "unit": null,
+        "updatedAt": "2020-04-01T12:00:00+02:00",
+        "value": null,
+        "valueTransformer": null
+    },
+    "Entities\\Devices\\Properties\\Mapped:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a21": {
+        "category": "generic",
+        "children": [],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "dataType": "enum",
+        "default": null,
+        "device": "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a11",
+        "format": "on:1:true,off:0:false",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a21",
+        "identifier": "power-mirror",
+        "invalid": null,
+        "name": null,
+        "params": null,
+        "parent": "Entities\\Devices\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a20",
+        "queryable": false,
+        "scale": null,
+        "settable": false,
+        "step": null,
+        "unit": null,
+        "updatedAt": "2020-04-01T12:00:00+02:00",
+        "value": null,
+        "valueTransformer": null
+    },
+    "Entities\\Devices\\Properties\\Variable:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a22": {
+        "category": "generic",
+        "children": [],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "dataType": "string",
+        "default": null,
+        "device": "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10",
+        "format": null,
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a22",
+        "identifier": "hardware",
+        "invalid": null,
+        "name": null,
+        "params": null,
+        "parent": null,
+        "queryable": false,
+        "scale": null,
+        "settable": false,
+        "step": null,
+        "unit": null,
+        "updatedAt": "2020-04-01T12:00:00+02:00",
+        "value": "rev-b",
+        "valueTransformer": null
+    },
+    "Tests\\Fixtures\\Dummy\\DummyChannelEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a13": {
+        "category": "generic",
+        "comment": null,
+        "controls": [],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "device": "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a13",
+        "identifier": "nested-channel",
+        "name": "Nested channel",
+        "params": {
+            "index": {
+                "row": 1,
+                "columns": [
+                    1,
+                    2
+                ]
+            }
+        },
+        "properties": [
+            "Entities\\Channels\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a14"
+        ],
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    },
+    "Tests\\Fixtures\\Dummy\\DummyChannelEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a30": {
+        "category": "generic",
+        "comment": "Calibrated",
+        "controls": [
+            "Entities\\Channels\\Controls\\Control:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a30/calibrate"
+        ],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "device": "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a30",
+        "identifier": "sensor",
+        "name": "Sensor renamed",
+        "params": {
+            "calibration": {
+                "offset": -0.5
+            },
+            "history": [
+                {
+                    "at": 1,
+                    "value": 2.5
+                }
+            ]
+        },
+        "properties": [
+            "Entities\\Channels\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a31",
+            "Entities\\Channels\\Properties\\Mapped:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a32"
+        ],
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    },
+    "Tests\\Fixtures\\Dummy\\DummyConnectorEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01": {
+        "category": "generic",
+        "comment": "Updated",
+        "controls": [
+            "Entities\\Connectors\\Controls\\Control:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01/discover"
+        ],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "devices": [
+            "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10",
+            "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a11",
+            "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a12"
+        ],
+        "enabled": false,
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01",
+        "identifier": "graph-connector",
+        "name": "Graph connector renamed",
+        "params": {
+            "transport": {
+                "host": "remote",
+                "ports": [
+                    8080
+                ]
+            },
+            "retries": 3,
+            "timeout": 5
+        },
+        "properties": [
+            "Entities\\Connectors\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a02",
+            "Entities\\Connectors\\Properties\\Variable:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a03"
+        ],
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    },
+    "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10": {
+        "category": "generic",
+        "channels": [
+            "Tests\\Fixtures\\Dummy\\DummyChannelEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a13",
+            "Tests\\Fixtures\\Dummy\\DummyChannelEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a30"
+        ],
+        "children": [],
+        "comment": null,
+        "connector": "Tests\\Fixtures\\Dummy\\DummyConnectorEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01",
+        "controls": [
+            "Entities\\Devices\\Controls\\Control:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10/identify",
+            "Entities\\Devices\\Controls\\Control:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10/reboot"
+        ],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a10",
+        "identifier": "graph-parent",
+        "name": "Graph parent renamed",
+        "params": {
+            "address": {
+                "ip": "10.0.0.2"
+            },
+            "zone": {
+                "floor": [
+                    1,
+                    2
+                ]
+            }
+        },
+        "parents": [],
+        "properties": [
+            "Entities\\Devices\\Properties\\Dynamic:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a20",
+            "Entities\\Devices\\Properties\\Variable:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a22"
+        ],
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    },
+    "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a11": {
+        "category": "generic",
+        "channels": [],
+        "children": [
+            "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a12"
+        ],
+        "comment": null,
+        "connector": "Tests\\Fixtures\\Dummy\\DummyConnectorEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01",
+        "controls": [],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a11",
+        "identifier": "graph-other-parent",
+        "name": null,
+        "params": null,
+        "parents": [],
+        "properties": [
+            "Entities\\Devices\\Properties\\Mapped:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a21"
+        ],
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    },
+    "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a12": {
+        "category": "generic",
+        "channels": [],
+        "children": [],
+        "comment": null,
+        "connector": "Tests\\Fixtures\\Dummy\\DummyConnectorEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a01",
+        "controls": [],
+        "createdAt": "2020-04-01T12:00:00+02:00",
+        "id": "7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a12",
+        "identifier": "graph-child",
+        "name": "Graph child",
+        "params": null,
+        "parents": [
+            "Tests\\Fixtures\\Dummy\\DummyDeviceEntity:7e9a3b56-5d2e-4f4c-9b70-0c6f1b0f2a11"
+        ],
+        "properties": [],
+        "updatedAt": "2020-04-01T12:00:00+02:00"
+    }
+}

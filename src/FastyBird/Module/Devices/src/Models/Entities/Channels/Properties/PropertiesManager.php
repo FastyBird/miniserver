@@ -33,6 +33,8 @@ final class PropertiesManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
@@ -40,7 +42,7 @@ final class PropertiesManager
 	 * @throws ReflectionException
 	 */
 	public function create(
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Channels\Properties\Property
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
@@ -52,6 +54,8 @@ final class PropertiesManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -60,7 +64,7 @@ final class PropertiesManager
 	 */
 	public function update(
 		Entities\Channels\Properties\Property $entity,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Channels\Properties\Property
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);

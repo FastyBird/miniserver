@@ -90,7 +90,7 @@ final readonly class DeviceConnection
 						assert($device instanceof Entities\Devices\Device);
 					}
 
-					$property = $this->devicesPropertiesEntitiesManager->create(Utils\ArrayHash::from([
+					$property = $this->devicesPropertiesEntitiesManager->create([
 						'device' => $device,
 						'entity' => Entities\Devices\Properties\Dynamic::class,
 						'identifier' => DevicesTypes\ConnectorPropertyIdentifier::STATE->value,
@@ -108,7 +108,7 @@ final readonly class DeviceConnection
 						],
 						'settable' => false,
 						'queryable' => false,
-					]));
+					]);
 					assert($property instanceof Entities\Devices\Properties\Dynamic);
 
 					return $property;
