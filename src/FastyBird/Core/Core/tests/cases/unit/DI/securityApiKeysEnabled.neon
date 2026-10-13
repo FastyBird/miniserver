@@ -1,0 +1,8 @@
+#
+# API keys enabled (fbCore > security > enable > apiKeys). Off by default.
+#
+
+fbCore:
+    security:
+        enable:
+            apiKeys: true

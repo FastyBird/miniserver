@@ -1,0 +1,301 @@
+<?php declare(strict_types = 1);
+
+namespace FastyBird\Module\Accounts\Tests\Cases\Unit\Security;
+
+use FastyBird\Core\Http;
+use FastyBird\Core\Http\Routing;
+use FastyBird\Core\Security\Commands;
+use FastyBird\Core\Security\Entities;
+use FastyBird\Module\Accounts;
+use FastyBird\Module\Accounts\Tests;
+use Fig\Http\Message\RequestMethodInterface;
+use Fig\Http\Message\StatusCodeInterface;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Ramsey\Uuid;
+use React\Http\Message\ServerRequest;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Tester\CommandTester;
+use Throwable;
+use function array_column;
+use function assert;
+use function hash;
+use function is_string;
+use function preg_match;
+use function str_contains;
+use function var_export;
+
+/**
+ * API keys end to end, through the Accounts module's route group, its Security middlewares and
+ * its User, which is what production runs: a key created with fb:api-key:create authenticates as
+ * its account, with that account's roles, until it is suspended, deleted or expired, and only
+ * while fbCore > security > enable > apiKeys is on.
+ *
+ * GET /v1/accounts requires the manager or administrator role, so it tells a key with the
+ * administrator's roles (200) from a key with the user's roles (403) and from no key (403).
+ */
+#[PreserveGlobalState(false)]
+#[RunTestsInSeparateProcesses]
+final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
+{
+
+	private const string ADMINISTRATOR_ACCOUNT = '5e79efbf-bd0d-5b7c-46ef-bfbdefbfbd34';
+
+	private const string USER_ACCOUNT = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
+
+	private const string URL = '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts';
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testCreatedKeyAuthenticatesAsItsAccount(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		self::assertSame(StatusCodeInterface::STATUS_OK, $this->request(['X-Api-Key' => $secret]));
+
+		// Only the hash is stored
+		$rows = $this->getDb()->fetchAllAssociative('SELECT * FROM fb_security_api_keys');
+
+		self::assertCount(1, $rows);
+		self::assertSame(hash('sha256', $secret), $rows[0]['key_hash']);
+		self::assertNotSame($secret, $rows[0]['key_hash']);
+
+		// No column holds the secret
+		self::assertFalse(str_contains(var_export($rows, true), $secret));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testKeyGetsTheRolesOfItsAccount(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::USER_ACCOUNT);
+
+		// Signed in, as the user, who may not list accounts
+		self::assertSame(StatusCodeInterface::STATUS_FORBIDDEN, $this->request(['X-Api-Key' => $secret]));
+	}
+
+	/**
+	 * A key has no Accounts identity behind it, so the own-account routes, which resolve the account
+	 * from that identity, refuse it. They used to throw from the Accounts URL-format middleware,
+	 * outside the JSON:API error middleware, which stopped the HTTP server process.
+	 *
+	 * @throws Throwable
+	 */
+	public function testOwnAccountRoutesRefuseAKey(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		foreach (['/v1/me', '/v1/me/emails', '/v1/me/identities'] as $path) {
+			self::assertSame(
+				StatusCodeInterface::STATUS_FORBIDDEN,
+				$this->request(['X-Api-Key' => $secret], '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . $path),
+				$path,
+			);
+		}
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testWrongOrMissingKey(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		self::assertSame(StatusCodeInterface::STATUS_UNAUTHORIZED, $this->request(['X-Api-Key' => $secret . '0']));
+		self::assertSame(StatusCodeInterface::STATUS_UNAUTHORIZED, $this->request(['X-Api-Key' => 'wrong']));
+		self::assertSame(StatusCodeInterface::STATUS_FORBIDDEN, $this->request([]));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testSuspendedKeyIsRefused(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		self::assertSame(StatusCodeInterface::STATUS_OK, $this->request(['X-Api-Key' => $secret]));
+
+		self::assertSame(Command::SUCCESS, $this->runCommand(Commands\SuspendApiKey::class, ['id' => $this->keyId()]));
+
+		self::assertSame(StatusCodeInterface::STATUS_UNAUTHORIZED, $this->request(['X-Api-Key' => $secret]));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testDeletedKeyIsRefused(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		self::assertSame(StatusCodeInterface::STATUS_OK, $this->request(['X-Api-Key' => $secret]));
+
+		self::assertSame(Command::SUCCESS, $this->runCommand(Commands\DeleteApiKey::class, ['id' => $this->keyId()]));
+
+		self::assertSame(StatusCodeInterface::STATUS_UNAUTHORIZED, $this->request(['X-Api-Key' => $secret]));
+
+		// The deleted key is still listed, in its state, and without its hash
+		$tester = new CommandTester($this->getContainer()->getByType(Commands\ListApiKeys::class));
+
+		self::assertSame(Command::SUCCESS, $tester->execute([]));
+		self::assertSame(1, preg_match('/' . $this->keyId() . '\s.*\sdeleted\s/', $tester->getDisplay()));
+		self::assertFalse(str_contains($tester->getDisplay(), hash('sha256', $secret)));
+	}
+
+	/**
+	 * The test clock is frozen at 2020-04-01T12:00:00+00:00
+	 *
+	 * @throws Throwable
+	 */
+	public function testExpiredKeyIsRefused(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT, '2020-04-01T12:00:01+00:00');
+
+		self::assertSame(StatusCodeInterface::STATUS_OK, $this->request(['X-Api-Key' => $secret]));
+
+		$this->getDb()->executeStatement(
+			'UPDATE fb_security_api_keys SET expires_at = ?',
+			['2020-04-01 12:00:00'],
+		);
+		$this->getEntityManager()->clear();
+
+		self::assertSame(StatusCodeInterface::STATUS_UNAUTHORIZED, $this->request(['X-Api-Key' => $secret]));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testBearerTokenWinsOverApiKey(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/apiKeysEnabled.neon');
+
+		$secret = $this->createKey(self::ADMINISTRATOR_ACCOUNT);
+
+		// The user's token decides, not the administrator's key
+		self::assertSame(
+			StatusCodeInterface::STATUS_FORBIDDEN,
+			$this->request(['Authorization' => 'Bearer ' . self::USER_TOKEN, 'X-Api-Key' => $secret]),
+		);
+
+		// An invalid token is refused, the valid key does not rescue it
+		self::assertSame(
+			StatusCodeInterface::STATUS_UNAUTHORIZED,
+			$this->request(['Authorization' => 'Bearer ' . self::INVALID_TOKEN, 'X-Api-Key' => $secret]),
+		);
+
+		// A valid token is not refused for a wrong key: the key is not read at all
+		self::assertSame(
+			StatusCodeInterface::STATUS_OK,
+			$this->request(['Authorization' => 'Bearer ' . self::ADMINISTRATOR_TOKEN, 'X-Api-Key' => 'wrong']),
+		);
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testHeaderIsIgnoredWhenApiKeysAreDisabled(): void
+	{
+		$secret = 'b3a1f0c2d4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e4f6a8';
+
+		$entityManager = $this->getEntityManager();
+		$entityManager->persist(new Entities\ApiKeys\ApiKey(
+			Uuid\Uuid::fromString(self::ADMINISTRATOR_ACCOUNT),
+			'Integration',
+			hash('sha256', $secret),
+		));
+		$entityManager->flush();
+
+		self::assertSame([], $this->getContainer()->findByType(Commands\CreateApiKey::class));
+
+		// Neither the valid key nor a wrong one does anything: both requests are anonymous
+		self::assertSame(StatusCodeInterface::STATUS_FORBIDDEN, $this->request(['X-Api-Key' => $secret]));
+		self::assertSame(StatusCodeInterface::STATUS_FORBIDDEN, $this->request(['X-Api-Key' => 'wrong']));
+	}
+
+	/**
+	 * @return non-empty-string the secret
+	 *
+	 * @throws Throwable
+	 */
+	private function createKey(string $account, string|null $expiresAt = null): string
+	{
+		$input = ['--name' => 'Integration', '--account' => $account];
+
+		if ($expiresAt !== null) {
+			$input['--expires-at'] = $expiresAt;
+		}
+
+		$tester = new CommandTester($this->getContainer()->getByType(Commands\CreateApiKey::class));
+
+		self::assertSame(Command::SUCCESS, $tester->execute($input));
+		self::assertSame(1, preg_match('/^([0-9a-f]{64})$/m', $tester->getDisplay(), $matches));
+
+		return $matches[1];
+	}
+
+	/**
+	 * @param class-string<Command> $type
+	 * @param array<string, string> $input
+	 *
+	 * @throws Throwable
+	 */
+	private function runCommand(string $type, array $input): int
+	{
+		$command = $this->getContainer()->getByType($type);
+		assert($command instanceof Command);
+
+		return (new CommandTester($command))->execute($input);
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	private function keyId(): string
+	{
+		$ids = array_column(
+			$this->getDb()->fetchAllAssociative('SELECT LOWER(HEX(key_id)) AS id FROM fb_security_api_keys'),
+			'id',
+		);
+
+		self::assertCount(1, $ids);
+
+		assert(is_string($ids[0]));
+
+		return Uuid\Uuid::fromString($ids[0])->toString();
+	}
+
+	/**
+	 * @param array<string, string> $headers
+	 *
+	 * @throws Throwable
+	 */
+	private function request(array $headers, string $url = self::URL): int
+	{
+		$router = $this->getContainer()->getByType(Routing\Router::class);
+
+		// Each request starts clean, as each HTTP request does in production
+		$this->getEntityManager()->clear();
+
+		$response = $router->handle(new ServerRequest(RequestMethodInterface::METHOD_GET, $url, $headers));
+
+		self::assertTrue($response instanceof Http\Response);
+
+		return $response->getStatusCode();
+	}
+
+}

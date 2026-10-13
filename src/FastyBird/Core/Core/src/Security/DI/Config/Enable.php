@@ -13,6 +13,7 @@ final readonly class Enable
 		public readonly EnableDoctrine $doctrine,
 		public readonly EnableCasbin $casbin,
 		public readonly EnableNette $nette,
+		public readonly bool $apiKeys,
 	)
 	{
 	}

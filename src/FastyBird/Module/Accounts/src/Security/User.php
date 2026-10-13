@@ -13,10 +13,19 @@ use Ramsey\Uuid;
 final class User extends Identity\User
 {
 
+	/**
+	 * The account's id, which is the Casbin subject. An Accounts identity names its account. Any
+	 * other identity is the account itself: Core's Services\Auth signs an API key in as a
+	 * PlainIdentity whose id is the key's account.
+	 */
 	#[Override]
 	public function getId(): Uuid\UuidInterface|null
 	{
-		return $this->getAccount()?->getId();
+		if ($this->getIdentity() instanceof Entities\Identities\Identity) {
+			return $this->getAccount()?->getId();
+		}
+
+		return parent::getId();
 	}
 
 	public function getAccount(): Entities\Accounts\Account|null
