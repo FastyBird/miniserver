@@ -111,13 +111,13 @@ final class Local implements Client
 
 			$gen1CoapClient->connect();
 
-			$gen1CoapClient->onMessage[] = function (API\Messages\Message $message): void {
+			$gen1CoapClient->onMessage(function (API\Messages\Message $message): void {
 				if ($message instanceof API\Messages\Response\Gen1\ReportDeviceState) {
 					$this->processGen1DeviceReportedStatus($message);
 				}
-			};
+			});
 
-			$gen1CoapClient->onError[] = function (Throwable $ex): void {
+			$gen1CoapClient->onError(function (Throwable $ex): void {
 				$this->logger->error(
 					'An error occur in CoAP connection',
 					[
@@ -138,7 +138,7 @@ final class Local implements Client
 						),
 					);
 				}
-			};
+			});
 		} catch (Throwable $ex) {
 			$this->logger->error(
 				'CoAP client could not be started',
@@ -622,7 +622,7 @@ final class Local implements Client
 			throw new ShellyExceptions\InvalidState('Gen 2 device WS client is already created', $ex->getCode(), $ex);
 		}
 
-		$client->onMessage[] = function (API\Messages\Message $message) use ($device): void {
+		$client->onMessage(function (API\Messages\Message $message) use ($device): void {
 			try {
 				if ($message instanceof API\Messages\Response\Gen2\GetDeviceState) {
 					$this->processGen2DeviceGetState($device, $message);
@@ -645,9 +645,9 @@ final class Local implements Client
 					],
 				);
 			}
-		};
+		});
 
-		$client->onError[] = function (Throwable $ex) use ($device): void {
+		$client->onError(function (Throwable $ex) use ($device): void {
 			$this->logger->warning(
 				'Connection with Gen 2 device failed',
 				[
@@ -673,9 +673,9 @@ final class Local implements Client
 					],
 				),
 			);
-		};
+		});
 
-		$client->onConnected[] = function () use ($client, $device): void {
+		$client->onConnected(function () use ($client, $device): void {
 			$this->logger->debug(
 				'Connected to Gen 2 device',
 				[
@@ -738,9 +738,9 @@ final class Local implements Client
 						],
 					);
 				});
-		};
+		});
 
-		$client->onDisconnected[] = function () use ($device): void {
+		$client->onDisconnected(function () use ($device): void {
 			$this->logger->debug(
 				'Disconnected from Gen 2 device',
 				[
@@ -765,7 +765,7 @@ final class Local implements Client
 					],
 				),
 			);
-		};
+		});
 
 		$this->gen2DevicesWsClients[$device->getId()->toString()] = $client;
 

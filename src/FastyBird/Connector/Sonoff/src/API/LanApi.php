@@ -79,7 +79,7 @@ final class LanApi
 	private const string SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME = 'lan_api_set_device_state.json';
 
 	/** @var array<Closure(Messages\Message $message): void> */
-	public array $onMessage = [];
+	private array $onMessageListeners = [];
 
 	/** @var array<string, string> */
 	private array $encodeKeys = [];
@@ -105,6 +105,16 @@ final class LanApi
 	{
 		$this->parser = new Dns\Protocol\Parser();
 		$this->dumper = new Dns\Protocol\BinaryDumper();
+	}
+
+	/**
+	 * Registers a listener. Called when a message was received.
+	 *
+	 * @param Closure(Messages\Message $message): void $listener
+	 */
+	public function onMessage(Closure $listener): void
+	{
+		$this->onMessageListeners[] = $listener;
 	}
 
 	/**
@@ -215,7 +225,7 @@ final class LanApi
 					assert(is_array($data));
 
 					Utils\Arrays::invoke(
-						$this->onMessage,
+						$this->onMessageListeners,
 						$this->createEntity(
 							Messages\Response\Lan\DeviceEvent::class,
 							Utils\ArrayHash::from([
@@ -236,7 +246,7 @@ final class LanApi
 					);
 				} else {
 					Utils\Arrays::invoke(
-						$this->onMessage,
+						$this->onMessageListeners,
 						$this->createEntity(
 							Messages\Response\Lan\DeviceEvent::class,
 							Utils\ArrayHash::from([

@@ -107,7 +107,7 @@ final class Lan extends ClientProcess implements Client
 
 		$lanClient = $this->connectionManager->getLanConnection();
 
-		$lanClient->onMessage[] = function (API\Messages\Message $message): void {
+		$lanClient->onMessage(function (API\Messages\Message $message): void {
 			if ($message instanceof API\Messages\Response\Lan\DeviceEvent) {
 				$findDeviceQuery = new Queries\Configuration\FindDevices();
 				$findDeviceQuery->byIdentifier($message->getId());
@@ -132,7 +132,7 @@ final class Lan extends ClientProcess implements Client
 					$this->handleDeviceEvent($device, $message);
 				}
 			}
-		};
+		});
 
 		$findDevicesQuery = new Queries\Configuration\FindDevices();
 		$findDevicesQuery->forConnector($this->connector);

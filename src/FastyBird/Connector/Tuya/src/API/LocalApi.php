@@ -97,19 +97,19 @@ final class LocalApi
 	];
 
 	/** @var array<Closure(): void> */
-	public array $onConnected = [];
+	private array $onConnectedListeners = [];
 
 	/** @var array<Closure(): void> */
-	public array $onDisconnected = [];
+	private array $onDisconnectedListeners = [];
 
 	/** @var array<Closure(): void> */
-	public array $onLost = [];
+	private array $onLostListeners = [];
 
 	/** @var array<Closure(Messages\Message $message): void> */
-	public array $onMessage = [];
+	private array $onMessageListeners = [];
 
 	/** @var array<Closure(Throwable $error): void> */
-	public array $onError = [];
+	private array $onErrorListeners = [];
 
 	private Types\LocalDeviceType $deviceType;
 
@@ -179,6 +179,56 @@ final class LocalApi
 		if ($this->children !== []) {
 			$this->deviceType = Types\LocalDeviceType::GATEWAY;
 		}
+	}
+
+	/**
+	 * Registers a listener. Called when the connection was established.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onConnected(Closure $listener): void
+	{
+		$this->onConnectedListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the connection was closed.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onDisconnected(Closure $listener): void
+	{
+		$this->onDisconnectedListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the connection was lost.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onLost(Closure $listener): void
+	{
+		$this->onLostListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when a message was received.
+	 *
+	 * @param Closure(Messages\Message $message): void $listener
+	 */
+	public function onMessage(Closure $listener): void
+	{
+		$this->onMessageListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when an error occurred.
+	 *
+	 * @param Closure(Throwable $error): void $listener
+	 */
+	public function onError(Closure $listener): void
+	{
+		$this->onErrorListeners[] = $listener;
 	}
 
 	/**
@@ -285,13 +335,13 @@ final class LocalApi
 								);
 							}
 
-							Utils\Arrays::invoke($this->onMessage, $message);
+							Utils\Arrays::invoke($this->onMessageListeners, $message);
 						}
 					});
 
 					$this->connection->on('error', function (Throwable $ex): void {
 						Utils\Arrays::invoke(
-							$this->onError,
+							$this->onErrorListeners,
 							new TuyaExceptions\LocalApiError(
 								'An error occurred on device connection',
 								$ex->getCode(),
@@ -316,7 +366,7 @@ final class LocalApi
 
 						$this->disconnect();
 
-						Utils\Arrays::invoke($this->onDisconnected);
+						Utils\Arrays::invoke($this->onDisconnectedListeners);
 					});
 
 					$this->heartBeatTimer = $this->eventLoop->addPeriodicTimer(
@@ -351,7 +401,7 @@ final class LocalApi
 						}),
 					);
 
-					Utils\Arrays::invoke($this->onConnected);
+					Utils\Arrays::invoke($this->onConnectedListeners);
 
 					if (
 						$this->deviceType === Types\LocalDeviceType::DEVICE_22
@@ -649,7 +699,7 @@ final class LocalApi
 
 	private function lost(): void
 	{
-		Utils\Arrays::invoke($this->onLost);
+		Utils\Arrays::invoke($this->onLostListeners);
 
 		$this->lost = $this->clock->now();
 

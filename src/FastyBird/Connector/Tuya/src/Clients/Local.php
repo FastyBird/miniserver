@@ -405,7 +405,7 @@ final class Local implements Client
 
 		$client = $this->connectionManager->getLocalConnection($device);
 
-		$client->onMessage[] = function (API\Messages\Message $message): void {
+		$client->onMessage(function (API\Messages\Message $message): void {
 			if (
 				$message instanceof API\Messages\Response\LocalDeviceMessage
 				&& $message->getCommand() === TuyaTypes\LocalDeviceCommand::STATUS
@@ -431,9 +431,9 @@ final class Local implements Client
 					),
 				);
 			}
-		};
+		});
 
-		$client->onConnected[] = function () use ($device): void {
+		$client->onConnected(function () use ($device): void {
 			$this->logger->debug(
 				'Connected to device',
 				[
@@ -458,9 +458,9 @@ final class Local implements Client
 					],
 				),
 			);
-		};
+		});
 
-		$client->onError[] = function (Throwable $ex) use ($device): void {
+		$client->onError(function (Throwable $ex) use ($device): void {
 			$this->logger->warning(
 				'An error occurred in Tuya local device client',
 				[
@@ -486,7 +486,7 @@ final class Local implements Client
 					],
 				),
 			);
-		};
+		});
 
 		$this->devicesClients[$device->getId()->toString()] = $client;
 	}

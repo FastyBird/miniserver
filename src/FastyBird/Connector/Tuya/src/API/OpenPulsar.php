@@ -50,19 +50,19 @@ final class OpenPulsar
 	public const string WS_MESSAGE_PAYLOAD_DATA_SCHEMA_FILENAME = 'openpulsar_data.json';
 
 	/** @var array<Closure(): void> */
-	public array $onConnected = [];
+	private array $onConnectedListeners = [];
 
 	/** @var array<Closure(): void> */
-	public array $onDisconnected = [];
+	private array $onDisconnectedListeners = [];
 
 	/** @var array<Closure(): void> */
-	public array $onLost = [];
+	private array $onLostListeners = [];
 
 	/** @var array<Closure(Messages\Message $message): void> */
-	public array $onMessage = [];
+	private array $onMessageListeners = [];
 
 	/** @var array<Closure(Throwable $error): void> */
-	public array $onError = [];
+	private array $onErrorListeners = [];
 
 	private bool $connecting = false;
 
@@ -98,6 +98,56 @@ final class OpenPulsar
 	}
 
 	/**
+	 * Registers a listener. Called when the connection was established.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onConnected(Closure $listener): void
+	{
+		$this->onConnectedListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the connection was closed.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onDisconnected(Closure $listener): void
+	{
+		$this->onDisconnectedListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the connection was lost.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onLost(Closure $listener): void
+	{
+		$this->onLostListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when a message was received.
+	 *
+	 * @param Closure(Messages\Message $message): void $listener
+	 */
+	public function onMessage(Closure $listener): void
+	{
+		$this->onMessageListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when an error occurred.
+	 *
+	 * @param Closure(Throwable $error): void $listener
+	 */
+	public function onError(Closure $listener): void
+	{
+		$this->onErrorListeners[] = $listener;
+	}
+
+	/**
 	 * @return Promise\PromiseInterface<bool>
 	 */
 	public function connect(): Promise\PromiseInterface
@@ -124,73 +174,7 @@ final class OpenPulsar
 			$this->generatePassword(),
 		)
 			->then(function (Ratchet\Client\WebSocket $connection) use ($deferred): void {
-				$this->wsConnection = $connection;
-				$this->connecting = false;
-				$this->connected = true;
-
-				$this->lost = null;
-				$this->disconnected = null;
-
-				$this->logger->debug(
-					'Connected to Tuya sockets server',
-					[
-						'source' => Sources\Connector::TUYA->value,
-						'type' => 'openpulsar-api',
-						'connector' => [
-							'identifier' => $this->identifier,
-						],
-					],
-				);
-
-				$connection->on('message', function (RFC6455\Messaging\MessageInterface $message): void {
-					try {
-						$this->handleWsMessage($message->getPayload());
-					} catch (TuyaExceptions\OpenPulsarError $ex) {
-						Utils\Arrays::invoke($this->onError, $ex);
-					}
-				});
-
-				$connection->on('error', function (Throwable $ex): void {
-					$this->lost();
-
-					Utils\Arrays::invoke($this->onError, $ex);
-				});
-
-				$connection->on('close', function ($code = null, $reason = null): void {
-					$this->logger->debug(
-						'Connection to Tuya WS server was closed',
-						[
-							'source' => Sources\Connector::TUYA->value,
-							'type' => 'openpulsar-api',
-							'connection' => [
-								'code' => $code,
-								'reason' => $reason,
-							],
-							'connector' => [
-								'identifier' => $this->identifier,
-							],
-						],
-					);
-
-					$this->disconnect();
-
-					Utils\Arrays::invoke($this->onDisconnected);
-				});
-
-				$this->pingTimer = $this->eventLoop->addPeriodicTimer(
-					self::PING_INTERVAL,
-					async(function () use ($connection): void {
-						$connection->send(new RFC6455\Messaging\Frame(
-							$this->accessId,
-							true,
-							RFC6455\Messaging\Frame::OP_PING,
-						));
-					}),
-				);
-
-				Utils\Arrays::invoke($this->onConnected);
-
-				$deferred->resolve(true);
+				$this->connectionCreated($connection, $deferred);
 			})
 			->catch(function (Throwable $ex) use ($deferred): void {
 				$this->wsConnection = null;
@@ -204,6 +188,80 @@ final class OpenPulsar
 			});
 
 		return $deferred->promise();
+	}
+
+	/**
+	 * @param Promise\Deferred<mixed> $deferred
+	 */
+	private function connectionCreated(Ratchet\Client\WebSocket $connection, Promise\Deferred $deferred): void
+	{
+		$this->wsConnection = $connection;
+		$this->connecting = false;
+		$this->connected = true;
+
+		$this->lost = null;
+		$this->disconnected = null;
+
+		$this->logger->debug(
+			'Connected to Tuya sockets server',
+			[
+				'source' => Sources\Connector::TUYA->value,
+				'type' => 'openpulsar-api',
+				'connector' => [
+					'identifier' => $this->identifier,
+				],
+			],
+		);
+
+		$connection->on('message', function (RFC6455\Messaging\MessageInterface $message): void {
+			try {
+				$this->handleWsMessage($message->getPayload());
+			} catch (TuyaExceptions\OpenPulsarError $ex) {
+				Utils\Arrays::invoke($this->onErrorListeners, $ex);
+			}
+		});
+
+		$connection->on('error', function (Throwable $ex): void {
+			$this->lost();
+
+			Utils\Arrays::invoke($this->onErrorListeners, $ex);
+		});
+
+		$connection->on('close', function ($code = null, $reason = null): void {
+			$this->logger->debug(
+				'Connection to Tuya WS server was closed',
+				[
+					'source' => Sources\Connector::TUYA->value,
+					'type' => 'openpulsar-api',
+					'connection' => [
+						'code' => $code,
+						'reason' => $reason,
+					],
+					'connector' => [
+						'identifier' => $this->identifier,
+					],
+				],
+			);
+
+			$this->disconnect();
+
+			Utils\Arrays::invoke($this->onDisconnectedListeners);
+		});
+
+		$this->pingTimer = $this->eventLoop->addPeriodicTimer(
+			self::PING_INTERVAL,
+			async(function () use ($connection): void {
+				$connection->send(new RFC6455\Messaging\Frame(
+					$this->accessId,
+					true,
+					RFC6455\Messaging\Frame::OP_PING,
+				));
+			}),
+		);
+
+		Utils\Arrays::invoke($this->onConnectedListeners);
+
+		$deferred->resolve(true);
 	}
 
 	public function disconnect(): void
@@ -252,7 +310,7 @@ final class OpenPulsar
 	{
 		$this->lost = $this->clock->now();
 
-		Utils\Arrays::invoke($this->onLost);
+		Utils\Arrays::invoke($this->onLostListeners);
 
 		$this->disconnect();
 	}
@@ -426,7 +484,7 @@ final class OpenPulsar
 
 			try {
 				Utils\Arrays::invoke(
-					$this->onMessage,
+					$this->onMessageListeners,
 					$this->messageBuilder->create(
 						Messages\Response\ReportDeviceState::class,
 						[
@@ -455,7 +513,7 @@ final class OpenPulsar
 		) {
 			try {
 				Utils\Arrays::invoke(
-					$this->onMessage,
+					$this->onMessageListeners,
 					$this->messageBuilder->create(
 						Messages\Response\ReportDeviceOnline::class,
 						[

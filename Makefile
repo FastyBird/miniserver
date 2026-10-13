@@ -109,7 +109,8 @@ discriminators: ## Check every Doctrine inheritance root declares an explicit di
 # name of any package, or in a `use FastyBird\Core\... as X` alias anywhere in the repository
 # -- and no directory under any package's JS assets (src/FastyBird/<Type>/<Name>/assets) is
 # named after one. It also refuses a Hungarian prefix on a declaration, in every package: an
-# `interface I[A-Z]...` or a `trait T[A-Z]...` (check 6, #704).
+# `interface I[A-Z]...` or a `trait T[A-Z]...` (check 6, #704), and a public `$onX` callback
+# property, bar Nette's own `onCompile` (check 7, #725).
 #
 # Aliases are the reason this is a gate rather than a review habit. There were 3,076 of them
 # when the Core identity refactor started, in 131 distinct forms, and they existed purely
