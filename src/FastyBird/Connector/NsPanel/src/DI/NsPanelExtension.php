@@ -73,14 +73,6 @@ final class NsPanelExtension extends NetteDI\CompilerExtension implements Transl
 		 * WRITERS
 		 */
 
-		$builder->addFactoryDefinition($this->prefix('writers.event'))
-			->setImplement(Writers\EventFactory::class)
-			->getResultDefinition()
-			->setType(Writers\Event::class)
-			->setArguments([
-				'logger' => $logger,
-			]);
-
 		$builder->addFactoryDefinition($this->prefix('writers.exchange'))
 			->setImplement(Writers\ExchangeFactory::class)
 			->getResultDefinition()

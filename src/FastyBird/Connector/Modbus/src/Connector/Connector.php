@@ -75,7 +75,7 @@ final class Connector implements DevicesConnectors\Connector
 	 * @throws ValueError
 	 */
 	#[Override]
-	public function execute(bool $standalone = true): Promise\PromiseInterface
+	public function execute(): Promise\PromiseInterface
 	{
 		assert($this->connector instanceof ModbusDocuments\Connectors\Connector);
 
@@ -112,15 +112,7 @@ final class Connector implements DevicesConnectors\Connector
 		$this->client->connect();
 
 		foreach ($this->writersFactories as $writerFactory) {
-			if (
-				(
-					$standalone
-					&& $writerFactory instanceof Writers\ExchangeFactory
-				) || (
-					!$standalone
-					&& $writerFactory instanceof Writers\EventFactory
-				)
-			) {
+			if ($writerFactory instanceof Writers\ExchangeFactory) {
 				$this->writer = $writerFactory->create($this->connector);
 				$this->writer->connect();
 			}

@@ -31,7 +31,7 @@ final class ShellyExtensionTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$container = $this->createContainer();
 
-		self::assertCount(2, $container->findByType(Writers\WriterFactory::class));
+		self::assertCount(1, $container->findByType(Writers\WriterFactory::class));
 
 		self::assertNotNull($container->getByType(Clients\LocalFactory::class, false));
 		self::assertNotNull($container->getByType(Clients\CloudFactory::class, false));

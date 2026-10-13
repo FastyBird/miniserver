@@ -13,7 +13,7 @@ interface Connector
 	/**
 	 * @return Promise\PromiseInterface<bool>
 	 */
-	public function execute(bool $standalone = true): Promise\PromiseInterface;
+	public function execute(): Promise\PromiseInterface;
 
 	/**
 	 * @return Promise\PromiseInterface<bool>

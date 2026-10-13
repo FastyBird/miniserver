@@ -32,7 +32,7 @@ final class Container implements Connector
 	 * @throws Exceptions\InvalidState
 	 */
 	#[Override]
-	public function execute(bool $standalone = true): Promise\PromiseInterface
+	public function execute(): Promise\PromiseInterface
 	{
 		return $this->getService($this->connector)->execute();
 	}
