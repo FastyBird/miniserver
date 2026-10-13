@@ -12,6 +12,7 @@ use FastyBird\Module\Accounts\Entities as AccountsEntities;
 use FastyBird\Module\Accounts\Exceptions;
 use Override;
 use Ramsey\Uuid;
+use SensitiveParameter;
 
 #[ORM\Entity]
 #[PersistenceMapping\DiscriminatorEntry(name: 'access_token')]
@@ -45,6 +46,7 @@ class AccessToken extends Tokens\Token implements
 
 	public function __construct(
 		AccountsEntities\Identities\Identity $identity,
+		#[SensitiveParameter]
 		string $token,
 		DateTimeInterface|null $validTill,
 		Uuid\UuidInterface|null $id = null,
