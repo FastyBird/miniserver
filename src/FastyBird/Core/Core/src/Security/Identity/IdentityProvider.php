@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Security\Identity;
 
 use Lcobucci\JWT;
+use SensitiveParameter;
 
 /**
  * Application identity factory interface
@@ -10,6 +11,9 @@ use Lcobucci\JWT;
 interface IdentityProvider
 {
 
-	public function create(JWT\UnencryptedToken $token): UserIdentity|null;
+	public function create(
+		#[SensitiveParameter]
+		JWT\UnencryptedToken $token,
+	): UserIdentity|null;
 
 }

@@ -54,6 +54,9 @@ final class SensitiveDataTest extends TestCase
 
 	private const string COOKIES = 'token=' . self::COOKIE_TOKEN . '; refresh_token=' . self::COOKIE_REFRESH_TOKEN;
 
+	// Not shaped as a signed token, so only its key or its parameter hides it
+	private const string MALFORMED_COOKIE_TOKEN = 'PROBEMALFORMEDTOKEN0123456789';
+
 	/** @var array<mixed> */
 	private array $server = [];
 
@@ -147,7 +150,8 @@ final class SensitiveDataTest extends TestCase
 
 	/**
 	 * The lookup of the token cookie's token fails; the stack holds the request with its cookies,
-	 * the token and the query that filters by it
+	 * the token and the query that filters by it. The token is malformed, which its lookup does
+	 * not know yet, so nothing hides it by its shape
 	 *
 	 * @throws Throwable
 	 */
@@ -162,7 +166,7 @@ final class SensitiveDataTest extends TestCase
 		try {
 			$this->lookUpCookieToken(
 				new Models\Tokens\Repository($managerRegistry),
-				new ServerRequest('GET', '/api/v1/devices', ['Cookie' => self::COOKIES]),
+				new ServerRequest('GET', '/api/v1/devices', ['Cookie' => 'token=' . self::MALFORMED_COOKIE_TOKEN]),
 			);
 
 			self::fail('The lookup did not fail');
@@ -335,6 +339,7 @@ final class SensitiveDataTest extends TestCase
 		self::assertSame(0, substr_count($content, 'PROBEBEARERPAYLOAD0123456789'), 'the bearer token');
 		self::assertSame(0, substr_count($content, 'eyJQUk9CRUNPT0tJRVRPS0VOIjoxfQ'), 'the token cookie');
 		self::assertSame(0, substr_count($content, 'eyJQUk9CRVJFRlJFU0hUT0tFTiI6MX0'), 'the refresh token cookie');
+		self::assertSame(0, substr_count($content, self::MALFORMED_COOKIE_TOKEN), 'the malformed token cookie');
 	}
 
 }

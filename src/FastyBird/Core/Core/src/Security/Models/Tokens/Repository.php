@@ -11,6 +11,7 @@ use FastyBird\Core\Security\Entities\Tokens;
 use FastyBird\Core\Security\Queries;
 use FastyBird\Core\Security\Types;
 use Ramsey\Uuid;
+use SensitiveParameter;
 use Throwable;
 use function assert;
 use function is_array;
@@ -65,6 +66,7 @@ final class Repository
 	 * @throws PersistenceExceptions\Query
 	 */
 	public function findOneByToken(
+		#[SensitiveParameter]
 		string $token,
 		string $type = Tokens\Token::class,
 	): Tokens\Token|null
