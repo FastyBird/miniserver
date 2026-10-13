@@ -65,12 +65,12 @@ final readonly class FbMqttV1
 	{
 		$client = $this->connectionManager->getConnection($this->connector);
 
-		$client->onConnect[] = function (Mqtt\Connection $connection): void {
+		$client->onConnect(function (Mqtt\Connection $connection): void {
 			$this->onConnect($connection);
-		};
-		$client->onMessage[] = function (Mqtt\Message $message): void {
+		});
+		$client->onMessage(function (Mqtt\Message $message): void {
 			$this->onMessage($message);
-		};
+		});
 
 		$client->connect();
 	}

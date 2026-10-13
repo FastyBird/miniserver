@@ -38,9 +38,9 @@ final readonly class Device
 
 	public function subscribe(API\Client $client): void
 	{
-		$client->onMessage[] = function (NetMqtt\Message $message): void {
+		$client->onMessage(function (NetMqtt\Message $message): void {
 			$this->onMessage($message);
-		};
+		});
 	}
 
 	/**

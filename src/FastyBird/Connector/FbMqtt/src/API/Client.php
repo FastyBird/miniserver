@@ -28,7 +28,8 @@ use function sprintf;
 /**
  * MQTT client service
  *
- * The following events are emitted:
+ * The following events are emitted. Every one except open has a matching on<Event>() method that
+ * registers a listener, and the listeners are called in the order they were registered:
  *  - open - The network connection to the server is established.
  *  - close - The network connection to the server is closed.
  *  - warning - An event of severity "warning" occurred.
@@ -44,31 +45,31 @@ final class Client
 {
 
 	/** @var array<Closure(Mqtt\Connection $connection): void> */
-	public array $onConnect = [];
+	private array $onConnectListeners = [];
 
 	/** @var array<Closure(): void> */
-	public array $onDisconnect = [];
+	private array $onDisconnectListeners = [];
 
 	/** @var array<Closure(): void> */
-	public array $onClose = [];
+	private array $onCloseListeners = [];
 
 	/** @var array<Closure(Mqtt\Message $message): void> */
-	public array $onMessage = [];
+	private array $onMessageListeners = [];
 
 	/** @var array<Closure(Mqtt\Message $message): void> */
-	public array $onPublish = [];
+	private array $onPublishListeners = [];
 
 	/** @var array<Closure(Mqtt\Subscription $subscription): void> */
-	public array $onSubscribe = [];
+	private array $onSubscribeListeners = [];
 
-	/** @var array<Closure(Mqtt\Subscription $subscription): void> */
-	public array $onUnsubscribe = [];
-
-	/** @var array<Closure(Throwable $error): void> */
-	public array $onWarning = [];
+	/** @var array<Closure(array<Mqtt\Subscription> $subscriptions): void> */
+	private array $onUnsubscribeListeners = [];
 
 	/** @var array<Closure(Throwable $error): void> */
-	public array $onError = [];
+	private array $onWarningListeners = [];
+
+	/** @var array<Closure(Throwable $error): void> */
+	private array $onErrorListeners = [];
 
 	private bool $isConnected = false;
 
@@ -77,7 +78,7 @@ final class Client
 	private bool $isDisconnecting = false;
 
 	/** @var Closure(Mqtt\Connection $connection): void|null */
-	private Closure|null $onCloseCallback = null;
+	private Closure|null $disconnectCallback = null;
 
 	/** @var array<EventLoop\TimerInterface> */
 	private array $timer = [];
@@ -126,6 +127,96 @@ final class Client
 			new Mqtt\DefaultIdentifierGenerator(),
 			new Mqtt\DefaultPacketFactory(),
 		);
+	}
+
+	/**
+	 * Registers a listener. Called when the client connected to the broker.
+	 *
+	 * @param Closure(Mqtt\Connection $connection): void $listener
+	 */
+	public function onConnect(Closure $listener): void
+	{
+		$this->onConnectListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the client disconnected from the broker.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onDisconnect(Closure $listener): void
+	{
+		$this->onDisconnectListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the network connection to the server was closed.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onClose(Closure $listener): void
+	{
+		$this->onCloseListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when a message was received.
+	 *
+	 * @param Closure(Mqtt\Message $message): void $listener
+	 */
+	public function onMessage(Closure $listener): void
+	{
+		$this->onMessageListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when a message was published.
+	 *
+	 * @param Closure(Mqtt\Message $message): void $listener
+	 */
+	public function onPublish(Closure $listener): void
+	{
+		$this->onPublishListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the client subscribed to a topic filter.
+	 *
+	 * @param Closure(Mqtt\Subscription $subscription): void $listener
+	 */
+	public function onSubscribe(Closure $listener): void
+	{
+		$this->onSubscribeListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the client unsubscribed from a topic filter.
+	 *
+	 * @param Closure(array<Mqtt\Subscription> $subscriptions): void $listener
+	 */
+	public function onUnsubscribe(Closure $listener): void
+	{
+		$this->onUnsubscribeListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when an event of severity "warning" occurred.
+	 *
+	 * @param Closure(Throwable $error): void $listener
+	 */
+	public function onWarning(Closure $listener): void
+	{
+		$this->onWarningListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when an event of severity "error" occurred.
+	 *
+	 * @param Closure(Throwable $error): void $listener
+	 */
+	public function onError(Closure $listener): void
+	{
+		$this->onErrorListeners[] = $listener;
 	}
 
 	/**
@@ -183,7 +274,7 @@ final class Client
 							],
 						);
 
-						Utils\Arrays::invoke($this->onConnect, $connection);
+						Utils\Arrays::invoke($this->onConnectListeners, $connection);
 
 						$deferred->resolve($result ?? $connection);
 					})
@@ -228,7 +319,7 @@ final class Client
 		/** @var mixed $flowResult */
 		$flowResult = null;
 
-		$this->onCloseCallback = function ($connection) use ($deferred, &$isResolved, &$flowResult): void {
+		$this->disconnectCallback = function ($connection) use ($deferred, &$isResolved, &$flowResult): void {
 			if (!$isResolved) {
 				$isResolved = true;
 
@@ -246,7 +337,7 @@ final class Client
 						],
 					);
 
-					Utils\Arrays::invoke($this->onDisconnect);
+					Utils\Arrays::invoke($this->onDisconnectListeners);
 				}
 
 				$deferred->resolve($flowResult ?? $connection);
@@ -582,10 +673,10 @@ final class Client
 		$this->connection = null;
 		$this->stream = null;
 
-		if ($this->onCloseCallback !== null) {
-			call_user_func($this->onCloseCallback, $connection);
+		if ($this->disconnectCallback !== null) {
+			call_user_func($this->disconnectCallback, $connection);
 
-			$this->onCloseCallback = null;
+			$this->disconnectCallback = null;
 		}
 
 		if ($connection !== null) {
@@ -602,7 +693,7 @@ final class Client
 				],
 			);
 
-			Utils\Arrays::invoke($this->onClose);
+			Utils\Arrays::invoke($this->onCloseListeners);
 		}
 	}
 
@@ -627,7 +718,7 @@ final class Client
 			],
 		);
 
-		Utils\Arrays::invoke($this->onWarning, $error);
+		Utils\Arrays::invoke($this->onWarningListeners, $error);
 	}
 
 	/**
@@ -651,7 +742,7 @@ final class Client
 			],
 		);
 
-		Utils\Arrays::invoke($this->onError, $error);
+		Utils\Arrays::invoke($this->onErrorListeners, $error);
 	}
 
 	/**
@@ -748,7 +839,7 @@ final class Client
 							],
 						);
 
-						Utils\Arrays::invoke($this->onConnect, $result);
+						Utils\Arrays::invoke($this->onConnectListeners, $result);
 
 						break;
 					case 'disconnect':
@@ -768,7 +859,7 @@ final class Client
 							],
 						);
 
-						Utils\Arrays::invoke($this->onDisconnect);
+						Utils\Arrays::invoke($this->onDisconnectListeners);
 
 						break;
 					case 'message':
@@ -797,28 +888,28 @@ final class Client
 							],
 						);
 
-						Utils\Arrays::invoke($this->onMessage, $result);
+						Utils\Arrays::invoke($this->onMessageListeners, $result);
 
 						break;
 					case 'publish':
 						$result = $flow->getResult();
 						assert($result instanceof Mqtt\Message);
 
-						Utils\Arrays::invoke($this->onPublish, $result);
+						Utils\Arrays::invoke($this->onPublishListeners, $result);
 
 						break;
 					case 'subscribe':
 						$result = $flow->getResult();
 						assert($result instanceof Mqtt\Subscription);
 
-						Utils\Arrays::invoke($this->onSubscribe, $result);
+						Utils\Arrays::invoke($this->onSubscribeListeners, $result);
 
 						break;
 					case 'unsubscribe':
 						/** @var array<Mqtt\Subscription> $result */
 						$result = $flow->getResult();
 
-						Utils\Arrays::invoke($this->onUnsubscribe, $result);
+						Utils\Arrays::invoke($this->onUnsubscribeListeners, $result);
 
 						break;
 				}
