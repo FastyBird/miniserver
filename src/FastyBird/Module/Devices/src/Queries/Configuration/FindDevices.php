@@ -8,8 +8,10 @@ use Flow\JSONPath;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
+use function bin2hex;
 use function count;
 use function implode;
+use function preg_replace_callback;
 use function serialize;
 
 /**
@@ -45,9 +47,12 @@ class FindDevices extends QueryObject
 		$this->filter[] = '.[?(@.type in [' . (count($types) > 0 ? ('"' . implode('","', $types) . '"') : '') . '])]';
 	}
 
+	/**
+	 * The identifier is matched as it is, ignoring case, the way the database compares it, not as a pattern
+	 */
 	public function byIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /(?i).*^' . $identifier . '*$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /(?i)^' . self::literal($identifier) . '\z/)]';
 	}
 
 	public function startWithIdentifier(string $identifier): void
@@ -131,6 +136,19 @@ class FindDevices extends QueryObject
 		} catch (Utils\JsonException) {
 			throw new Exceptions\InvalidState('Cache key could not be generated');
 		}
+	}
+
+	/**
+	 * Every character but a letter, a digit, `-` and `_` is written as its byte value: none of them can then mean
+	 * anything to the pattern, nor open or close a bracket of the path expression the pattern sits in
+	 */
+	private static function literal(string $value): string
+	{
+		return (string) preg_replace_callback(
+			'/[^A-Za-z0-9\-_]/',
+			static fn (array $match): string => '\\x' . bin2hex($match[0]),
+			$value,
+		);
 	}
 
 }
