@@ -129,7 +129,7 @@ They also need `enable.middleware`, which the application's `config/common.neon`
 
 | Command | What it does |
 |---|---|
-| `fb:api-key:create --name=<name> --account=<account UUID> [--expires-at=<date and time>]` | Creates an active key and prints its secret. The secret is shown this once and cannot be read back. With `--quiet`, the secret is the only output. `--expires-at` takes a date and time in the future, ISO 8601 recommended (`2027-01-01T00:00:00+00:00`); without it, the key never expires. |
+| `fb:api-key:create --name=<name> --account=<account UUID> [--expires-at=<date and time>]` | Creates an active key for an account that can sign in, and prints its secret. The secret is shown this once and cannot be read back. With `--quiet`, the secret is the only output. `--expires-at` takes a date and time in the future, ISO 8601 recommended (`2027-01-01T00:00:00+00:00`); without it, the key never expires. |
 | `fb:api-key:list` | Lists every key with its identifier, name, account, state (`active`, `suspended`, `deleted`, or `expired` for an active key past its expiry), expiry and creation time. It never prints a secret or a hash. |
 | `fb:api-key:suspend <key UUID>` | Suspends the key. |
 | `fb:api-key:delete <key UUID>` | Deletes the key. The row is kept in the `deleted` state, so `list` still shows it. |
@@ -151,9 +151,9 @@ curl -H 'X-Api-Key: <secret>' http://localhost/api/devices-module/v1/devices
 
 **What is stored.** The secret is 256 random bits, hex encoded (64 characters). Only its SHA-256 hash is stored, and Core logs neither the secret nor the hash.
 
-**A key does not follow its account.** Core keeps the account's identifier, not a reference to the Accounts module's account: blocking or deleting an account does not suspend its keys, so suspend or delete them yourself.
+**A key follows its account.** The module that owns accounts decides whether a key's account may sign in, through `Security\Identity\AccountIdentityProvider`; the Accounts module implements it (`Security\AccountIdentityFactory`) with the rule of a password sign-in: only an `active` account. A key whose account is unknown, blocked, deleted, not activated or awaiting approval is refused with 401 for as long as the account stays that way, and `fb:api-key:create` refuses such an account. Without a module that implements the interface, no key can be created and none signs anyone in. A key signs in as the account itself, so the Accounts module's own-account routes (`/me` and below) serve that account, as for a token.
 
-**The Accounts module's own-account routes refuse a key.** A key signs in as an account but has no Accounts identity behind it, so `/me` and the routes below it answer 403.
+**Revocation takes effect on the next request.** The key and its account are read from the database on every request, also in a long-running process (`fb:web-server:start`) that would otherwise hold them in its entity manager, so a key suspended or deleted, or an account blocked, by another process is refused without a restart.
 
 ### `fbCore.clock`
 
