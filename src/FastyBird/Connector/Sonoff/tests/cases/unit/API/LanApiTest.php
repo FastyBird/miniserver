@@ -6,6 +6,7 @@ use BadMethodCallException;
 use Closure;
 use Error;
 use FastyBird\Connector\Sonoff\API;
+use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette;
@@ -18,7 +19,9 @@ use ReflectionProperty;
 use RuntimeException;
 use function array_map;
 use function assert;
+use function base64_encode;
 use function func_get_args;
+use function is_string;
 
 final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 {
@@ -70,6 +73,163 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 			self::assertTrue($event[1][0]->isEncrypted());
 			self::assertNull($event[1][0]->getData());
 		}
+	}
+
+	/**
+	 * An unencrypted device publishes its state as plain JSON in the `data1` text record, as the eWeLink LAN
+	 * documentation describes, so there is nothing to decrypt and no key is needed to read it.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testAnnouncedUnencryptedDeviceNotifiesMessageListenersInOrderWithData(): void
+	{
+		$events = [];
+
+		[$client, $socket] = $this->connectClient();
+
+		$client->onMessage($this->record('first', $events));
+		$client->onMessage($this->record('second', $events));
+
+		$socket->emit('message', [
+			$this->buildAnnouncement(
+				[
+					'txtvers=1',
+					'id=' . self::DEVICE_ID,
+					'type=plug',
+					'apivers=1',
+					'seq=15',
+					'data1={"switch":"off","startup":"stay","pulse":"off","sledOnline":"on","fwVersion":"3.5.0","pulseWidth":2000,"rssi":-67}',
+				],
+			),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertSame(['first', 'second'], array_map(static fn (array $event): string => $event[0], $events));
+
+		foreach ($events as $event) {
+			self::assertCount(1, $event[1]);
+			self::assertInstanceOf(API\Messages\Response\Lan\DeviceEvent::class, $event[1][0]);
+			self::assertSame(self::DEVICE_ID, $event[1][0]->getId());
+			self::assertSame('10.0.0.7', $event[1][0]->getIpAddress());
+			self::assertSame(8_081, $event[1][0]->getPort());
+			self::assertSame('15', $event[1][0]->getSeq());
+			self::assertFalse($event[1][0]->isEncrypted());
+			self::assertNull($event[1][0]->getIv());
+
+			$data = $event[1][0]->getData();
+
+			self::assertInstanceOf(API\Messages\Response\Lan\DeviceEventData::class, $data);
+			self::assertSame('off', $data->getSwitch());
+			self::assertSame('stay', $data->getStartup());
+			self::assertSame('off', $data->getPulse());
+			self::assertSame(2_000, $data->getPulseWidth());
+			self::assertSame('3.5.0', $data->getFirmwareVersion());
+			self::assertSame(-67, $data->getRssi());
+			self::assertTrue($data->getStatusLed());
+		}
+	}
+
+	/**
+	 * A multi-channel device lists its outlets in `switches`, and a device whose data does not fit one text record
+	 * continues in `data2`
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testAnnouncedUnencryptedMultiChannelDeviceNotifiesMessageListenersWithEveryOutlet(): void
+	{
+		$events = [];
+
+		[$client, $socket] = $this->connectClient();
+
+		$client->onMessage($this->record('message', $events));
+
+		$socket->emit('message', [
+			$this->buildAnnouncement(
+				[
+					'txtvers=1',
+					'id=' . self::DEVICE_ID,
+					'type=strip',
+					'apivers=1',
+					'seq=3',
+					'data1={"switches":[{"switch":"on","outlet":0},{"switch":"off","outlet":1}],',
+					'data2="sledOnline":"off","fwVersion":"3.6.0"}',
+				],
+			),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertCount(1, $events);
+		self::assertInstanceOf(API\Messages\Response\Lan\DeviceEvent::class, $events[0][1][0]);
+
+		$data = $events[0][1][0]->getData();
+
+		self::assertInstanceOf(API\Messages\Response\Lan\DeviceEventData::class, $data);
+		self::assertTrue($data->isSwitches());
+		self::assertSame(
+			[['on', 0], ['off', 1]],
+			array_map(
+				static fn (API\Messages\Response\Lan\SwitchState $state): array => [
+					$state->getSwitch(),
+					$state->getOutlet(),
+				],
+				$data->getSwitchesStates(),
+			),
+		);
+		self::assertFalse($data->getStatusLed());
+		self::assertSame('3.6.0', $data->getFirmwareVersion());
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testAnnouncedEncryptedDeviceWithKeyNotifiesMessageListenersWithDecryptedData(): void
+	{
+		$events = [];
+
+		[$client, $socket] = $this->connectClient();
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+		$client->onMessage($this->record('message', $events));
+
+		$iv = base64_encode('0123456789abcdef');
+
+		$cipher = Helpers\Transformer::encryptMessage('{"switch":"on","fwVersion":"3.5.0"}', 'device-key', $iv);
+		assert(is_string($cipher));
+
+		$socket->emit('message', [
+			$this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1=' . $cipher, 'encrypt=true', 'iv=' . $iv],
+			),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertCount(1, $events);
+		self::assertInstanceOf(API\Messages\Response\Lan\DeviceEvent::class, $events[0][1][0]);
+		self::assertTrue($events[0][1][0]->isEncrypted());
+
+		$data = $events[0][1][0]->getData();
+
+		self::assertInstanceOf(API\Messages\Response\Lan\DeviceEventData::class, $data);
+		self::assertSame('on', $data->getSwitch());
+		self::assertSame('3.5.0', $data->getFirmwareVersion());
 	}
 
 	#[Override]

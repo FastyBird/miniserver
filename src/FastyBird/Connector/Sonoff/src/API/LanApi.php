@@ -237,10 +237,10 @@ final class LanApi
 								'seq' => $deviceData['seq'],
 								'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
 								'encrypt' => $dataEncrypted,
-								'data' => $this->createEntity(
-									Messages\Response\Lan\DeviceEventData::class,
-									Utils\ArrayHash::from($data),
-								),
+								// The data is mapped together with the event, not before it: an entity made first
+								// would be encoded to JSON as an object without properties, and the event could
+								// never be mapped
+								'data' => Utils\ArrayHash::from($data),
 							]),
 						),
 					);
