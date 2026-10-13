@@ -104,9 +104,27 @@ final class Lan extends ClientProcess implements Client
 			}
 		}
 
-		$this->connectionManager->getLanConnection()->connect();
-
 		$lanClient = $this->connectionManager->getLanConnection();
+
+		// The keys are known to the API before it hears of any device, so that nothing it announces is checked against
+		// keys that are not there yet
+		$findDevicesQuery = new Queries\Configuration\FindDevices();
+		$findDevicesQuery->forConnector($this->connector);
+
+		$devices = $this->devicesConfigurationRepository->findAllBy(
+			$findDevicesQuery,
+			Documents\Devices\Device::class,
+		);
+
+		foreach ($devices as $device) {
+			$deviceKey = $this->deviceHelper->getDeviceKey($device);
+
+			if ($deviceKey !== null) {
+				$lanClient->registerDeviceKey($device->getIdentifier(), $deviceKey);
+			}
+		}
+
+		$lanClient->connect();
 
 		$lanClient->onMessage(function (API\Messages\Message $message): void {
 			if ($message instanceof API\Messages\Response\Lan\DeviceEvent) {
@@ -121,6 +139,28 @@ final class Lan extends ClientProcess implements Client
 				// The query matches an identifier as a case-insensitive pattern, which is looser than the exact id the
 				// announcement was checked against, so a device that is not the one announced is left alone
 				if ($device !== null && strtolower($device->getIdentifier()) === $message->getId()) {
+					// What the API knows of the keys can be behind the configuration: a key given to the device after
+					// the client connected, or one that could not be read then. The configuration decides, and a
+					// device that has a key configured does not take plain data. There is no setting that says a
+					// device is encrypted other than its key, so plain data is accepted only for a device that has none.
+					if (!$message->isEncrypted() && $this->deviceHelper->getDeviceKey($device) !== null) {
+						$this->logger->warning(
+							'Plain data was announced for a device with an encryption key, the announcement was dropped',
+							[
+								'source' => Sources\Connector::SONOFF->value,
+								'type' => 'lan-client',
+								'connector' => [
+									'id' => $this->connector->getId()->toString(),
+								],
+								'device' => [
+									'id' => $device->getId()->toString(),
+								],
+							],
+						);
+
+						return;
+					}
+
 					$this->queue->append(
 						$this->entityHelper->create(
 							Queue\Messages\StoreDeviceConnectionState::class,
@@ -137,21 +177,6 @@ final class Lan extends ClientProcess implements Client
 			}
 		});
 
-		$findDevicesQuery = new Queries\Configuration\FindDevices();
-		$findDevicesQuery->forConnector($this->connector);
-
-		$devices = $this->devicesConfigurationRepository->findAllBy(
-			$findDevicesQuery,
-			Documents\Devices\Device::class,
-		);
-
-		foreach ($devices as $device) {
-			if ($this->deviceHelper->getDeviceKey($device) !== null) {
-				$this->connectionManager
-					->getLanConnection()
-					->registerDeviceKey($device->getIdentifier(), $this->deviceHelper->getDeviceKey($device));
-			}
-		}
 	}
 
 	#[Override]
