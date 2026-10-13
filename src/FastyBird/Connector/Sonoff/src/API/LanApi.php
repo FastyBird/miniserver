@@ -144,7 +144,7 @@ final class LanApi
 			// A packet that cannot be read, or an announcement that cannot be decrypted or mapped, is that one
 			// announcement lost: the client keeps listening for the next one
 			try {
-				$this->handleAnnouncement(strval($message));
+				$this->handleAnnouncement($message);
 			} catch (SonoffExceptions\InvalidState | SonoffExceptions\LanApiError | Utils\JsonException $ex) {
 				$this->logger->warning(
 					'An announcement could not be handled, it was dropped',
@@ -178,7 +178,7 @@ final class LanApi
 	 * @throws SonoffExceptions\LanApiError
 	 * @throws Utils\JsonException
 	 */
-	private function handleAnnouncement(string $message): void
+	private function handleAnnouncement(mixed $message): void
 	{
 		try {
 			$response = $this->parser->parseMessage($message);
@@ -325,7 +325,7 @@ final class LanApi
 			}
 
 			if ($keyKnown || !$dataEncrypted) {
-				if ($dataEncrypted && $deviceKey !== null) {
+				if ($dataEncrypted) {
 					foreach ($data as $index => $row) {
 						$data[$index] = Helpers\Transformer::decryptMessage(
 							$row,
