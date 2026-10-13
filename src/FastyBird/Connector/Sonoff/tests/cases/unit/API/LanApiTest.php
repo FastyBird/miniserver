@@ -8,6 +8,7 @@ use Closure;
 use Error;
 use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
+use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -27,6 +28,7 @@ use function assert;
 use function base64_encode;
 use function count;
 use function func_get_args;
+use function is_array;
 use function is_string;
 use function serialize;
 
@@ -509,6 +511,136 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertCount(1, $events);
 		self::assertSame('a=b=c', self::deviceEvent($events[0])->getData()?->getSsid());
+	}
+
+	/**
+	 * Keys are kept under one form of the id, so the requests for a device configured with an upper case identifier
+	 * are encrypted like the ones for any other
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testRequestsForADeviceConfiguredWithAnUpperCaseIdentifierAreEncrypted(): void
+	{
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
+		$logs = new ArrayObject();
+
+		[$client] = $this->connectClient($logs);
+
+		$client->registerDeviceKey('1000A1B2C3', 'device-key');
+
+		// The device is at a loopback address nothing listens on, so no packet leaves the machine
+		foreach (['info', 'state'] as $call) {
+			try {
+				if ($call === 'info') {
+					$client->getDeviceInfo('1000A1B2C3', '127.0.0.1', 1, false);
+				} else {
+					$client->setDeviceState('1000A1B2C3', '127.0.0.1', 1, 'switch', 'on', null, null, false);
+				}
+			} catch (SonoffExceptions\LanApiCall) {
+				// The request was refused, which is what the test wants: it was logged before it was sent
+			}
+		}
+
+		$bodies = [];
+
+		foreach ($logs as $log) {
+			$request = $log['context']['request'] ?? null;
+
+			if (is_array($request) && is_string($request['body'] ?? null)) {
+				$bodies[] = $request['body'];
+			}
+		}
+
+		self::assertCount(2, $bodies);
+
+		foreach ($bodies as $body) {
+			self::assertStringContainsString('"encrypt":true', $body);
+			self::assertStringContainsString('"iv":', $body);
+			self::assertStringNotContainsString('"switch"', $body);
+		}
+	}
+
+	/**
+	 * A packet that cannot be read, or an announcement that cannot be decrypted or mapped, is that one announcement
+	 * lost: the client keeps listening for the next one
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testMalformedAnnouncementsAreDroppedAndTheClientKeepsListening(): void
+	{
+		/** @var array<int, array{string, array<mixed>}> $events */
+		$events = [];
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
+		$logs = new ArrayObject();
+
+		[$client, $socket] = $this->connectClient($logs);
+
+		$otherId = '1000a1b2c4';
+
+		$client->registerDeviceKey($otherId, 'device-key');
+		$client->onMessage($this->record('message', $events));
+
+		$truncated = new Dns\Model\Message();
+		$truncated->qr = true;
+		$truncated->tc = true;
+
+		$malformed = [
+			'a packet that is no message' => "\x00\x01",
+			'a truncated message' => (new Dns\Protocol\BinaryDumper())->toBinary($truncated),
+			'garbage encrypted with the key' => $this->buildAnnouncement(
+				['id=' . $otherId, 'type=plug', 'seq=7', 'data1=Z2FyYmFnZQ==', 'encrypt=true', 'iv=MDEyMzQ1Njc4OWFiY2RlZg=='],
+			),
+			'data that is not JSON' => $this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch"'],
+			),
+			'data that is not an object' => $this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1=5'],
+			),
+			'data that does not map' => $this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"maybe","fwVersion":"3.5.0"}'],
+			),
+		];
+
+		$dropped = 0;
+
+		foreach ($malformed as $packet) {
+			$socket->emit('message', [$packet, '10.0.0.7:5353']);
+
+			$dropped++;
+
+			self::assertCount($dropped, $logs);
+		}
+
+		self::assertEventCount(0, $events);
+
+		foreach ($logs as $log) {
+			self::assertSame(Log\LogLevel::WARNING, $log['level']);
+			self::assertStringNotContainsString('device-key', serialize($log));
+			self::assertStringNotContainsString('Z2FyYmFnZQ', serialize($log));
+		}
+
+		// The next valid announcement is delivered
+		$socket->emit('message', [
+			$this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=8', 'data1={"switch":"on","fwVersion":"3.5.0"}'],
+			),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertEventCount(1, $events);
+		self::assertSame(self::DEVICE_ID, self::deviceEvent($events[0])->getId());
 	}
 
 	#[Override]

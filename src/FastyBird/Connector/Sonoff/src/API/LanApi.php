@@ -141,202 +141,22 @@ final class LanApi
 		$this->server = $this->multicastFactory->create(self::MDNS_ADDRESS, self::MDNS_PORT);
 
 		$this->server->on('message', function ($message): void {
+			// A packet that cannot be read, or an announcement that cannot be decrypted or mapped, is that one
+			// announcement lost: the client keeps listening for the next one
 			try {
-				$response = $this->parser->parseMessage($message);
-
-			} catch (InvalidArgumentException $ex) {
-				throw new SonoffExceptions\InvalidState('Invalid mDNS question response received', $ex->getCode(), $ex);
-			}
-
-			if ($response->tc) {
-				throw new SonoffExceptions\InvalidState(
-					'The server set the truncated bit although we issued a TCP request',
-				);
-			}
-
-			$deviceIpAddress = null;
-			$deviceDomain = null;
-			$devicePort = self::DEVICE_PORT;
-			$deviceData = [];
-			$conflictingKeys = [];
-
-			foreach ($response->answers as $answer) {
-				if (
-					$answer->type === Dns\Model\Message::TYPE_A
-					&& preg_match(self::MATCH_DOMAIN, $answer->name) === 1
-					&& is_string($answer->data)
-					&& preg_match(self::MATCH_IP_ADDRESS, $answer->data) === 1
-					&& $deviceIpAddress === null
-				) {
-					$deviceIpAddress = $answer->data;
-				}
-
-				if (
-					$answer->type === Dns\Model\Message::TYPE_SRV
-					&& preg_match(self::MATCH_NAME, $answer->name) === 1
-					&& is_array($answer->data)
-				) {
-					if (array_key_exists('target', $answer->data)) {
-						$deviceDomain = $answer->data['target'];
-					}
-
-					if (array_key_exists('port', $answer->data)) {
-						$devicePort = intval($answer->data['port']);
-					}
-				}
-
-				if (
-					$answer->type === Dns\Model\Message::TYPE_TXT
-					&& preg_match(self::MATCH_NAME, $answer->name) === 1
-					&& is_array($answer->data)
-				) {
-					foreach ($answer->data as $dataRow) {
-						$parts = explode('=', strval($dataRow), 2);
-						$key = $parts[0];
-						$value = $parts[1] ?? null;
-
-						// The same text record twice with two values leaves no way to tell which one the device
-						// meant, and which one wins is for the sender to choose
-						if (array_key_exists($key, $deviceData) && $deviceData[$key] !== $value) {
-							$conflictingKeys[$key] = true;
-						}
-
-						$deviceData[$key] = $value;
-					}
-				}
-			}
-
-			if (
-				$deviceIpAddress !== null
-				&& $deviceDomain !== null
-				&& $deviceData !== []
-				&& array_key_exists('id', $deviceData)
-				&& is_string($deviceData['id'])
-				&& array_key_exists('type', $deviceData)
-				&& is_string($deviceData['type'])
-				&& array_key_exists('seq', $deviceData)
-				&& is_string($deviceData['seq'])
-				&& array_key_exists('data1', $deviceData)
-			) {
-				if ($conflictingKeys !== []) {
-					$this->logger->warning(
-						'An announcement repeated a text record with another value, the announcement was dropped',
-						[
-							'source' => Sources\Connector::SONOFF->value,
-							'type' => 'lan-api',
-							'records' => array_map(strval(...), array_keys($conflictingKeys)),
-						],
-					);
-
-					return;
-				}
-
-				if (preg_match(self::MATCH_DEVICE_ID, $deviceData['id']) !== 1) {
-					$this->logger->warning(
-						'An announcement came with an id that is not a device id, the announcement was dropped',
-						[
-							'source' => Sources\Connector::SONOFF->value,
-							'type' => 'lan-api',
-							'device' => [
-								'id' => substr($deviceData['id'], 0, 32),
-							],
-						],
-					);
-
-					return;
-				}
-
-				$dataEncrypted = !array_key_exists('encrypt', $deviceData)
-					? false
-					: !in_array(
-						is_string($deviceData['encrypt']) ? strtolower($deviceData['encrypt']) : null,
-						self::PLAIN_DATA_FLAGS,
-						true,
-					);
-
-				$data = array_filter(
+				$this->handleAnnouncement(strval($message));
+			} catch (SonoffExceptions\InvalidState | SonoffExceptions\LanApiError | Utils\JsonException $ex) {
+				$this->logger->warning(
+					'An announcement could not be handled, it was dropped',
 					[
-						$deviceData['data1'],
-						array_key_exists('data2', $deviceData) ? $deviceData['data2'] : null,
-						array_key_exists('data3', $deviceData) ? $deviceData['data3'] : null,
-						array_key_exists('data4', $deviceData) ? $deviceData['data4'] : null,
-					],
-					static fn ($value) => $value !== null,
-				);
-
-				$keyKnown = array_key_exists($deviceData['id'], $this->encodeKeys);
-
-				// The text record is not authenticated, and its `encrypt` flag is whatever the sender wrote. A device
-				// whose key is known is an encrypted device, so plain data announced for it is not taken as its state:
-				// that would let anyone on the network skip the key
-				if (!$dataEncrypted && $keyKnown) {
-					$this->logger->warning(
-						'Plain data was announced for a device with an encryption key, the announcement was dropped',
-						[
-							'source' => Sources\Connector::SONOFF->value,
-							'type' => 'lan-api',
-							'device' => [
-								'id' => $deviceData['id'],
-							],
+						'source' => Sources\Connector::SONOFF->value,
+						'type' => 'lan-api',
+						'exception' => [
+							'type' => $ex::class,
+							'message' => $ex->getMessage(),
 						],
-					);
-
-					return;
-				}
-
-				if (($dataEncrypted && $keyKnown) || !$dataEncrypted) {
-					if ($dataEncrypted) {
-						foreach ($data as $index => $row) {
-							$data[$index] = Helpers\Transformer::decryptMessage(
-								$row,
-								$this->encodeKeys[$deviceData['id']],
-								array_key_exists('iv', $deviceData) ? strval($deviceData['iv']) : '',
-							);
-						}
-					}
-
-					$data = Utils\Json::decode(implode($data), forceArrays: true);
-					assert(is_array($data));
-
-					Utils\Arrays::invoke(
-						$this->onMessageListeners,
-						$this->createEntity(
-							Messages\Response\Lan\DeviceEvent::class,
-							Utils\ArrayHash::from([
-								'id' => $deviceData['id'],
-								'ip_address' => $deviceIpAddress,
-								'domain' => $deviceDomain,
-								'port' => $devicePort,
-								'type' => $deviceData['type'],
-								'seq' => $deviceData['seq'],
-								'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
-								'encrypt' => $dataEncrypted,
-								// The data is mapped together with the event, not before it: an entity made first
-								// would be encoded to JSON as an object without properties, and the event could
-								// never be mapped
-								'data' => Utils\ArrayHash::from($data),
-							]),
-						),
-					);
-				} else {
-					Utils\Arrays::invoke(
-						$this->onMessageListeners,
-						$this->createEntity(
-							Messages\Response\Lan\DeviceEvent::class,
-							Utils\ArrayHash::from([
-								'id' => $deviceData['id'],
-								'ip_address' => $deviceIpAddress,
-								'domain' => $deviceDomain,
-								'port' => $devicePort,
-								'type' => $deviceData['type'],
-								'seq' => $deviceData['seq'],
-								'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
-								'encrypt' => true,
-								'data' => null,
-							]),
-						),
-					);
-				}
+					],
+				);
 			}
 		});
 
@@ -353,6 +173,216 @@ final class LanApi
 		});
 	}
 
+	/**
+	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\LanApiError
+	 * @throws Utils\JsonException
+	 */
+	private function handleAnnouncement(string $message): void
+	{
+		try {
+			$response = $this->parser->parseMessage($message);
+
+		} catch (InvalidArgumentException $ex) {
+			throw new SonoffExceptions\InvalidState('Invalid mDNS question response received', $ex->getCode(), $ex);
+		}
+
+		if ($response->tc) {
+			throw new SonoffExceptions\InvalidState(
+				'The server set the truncated bit although we issued a TCP request',
+			);
+		}
+
+		$deviceIpAddress = null;
+		$deviceDomain = null;
+		$devicePort = self::DEVICE_PORT;
+		$deviceData = [];
+		$conflictingKeys = [];
+
+		foreach ($response->answers as $answer) {
+			if (
+				$answer->type === Dns\Model\Message::TYPE_A
+				&& preg_match(self::MATCH_DOMAIN, $answer->name) === 1
+				&& is_string($answer->data)
+				&& preg_match(self::MATCH_IP_ADDRESS, $answer->data) === 1
+				&& $deviceIpAddress === null
+			) {
+				$deviceIpAddress = $answer->data;
+			}
+
+			if (
+				$answer->type === Dns\Model\Message::TYPE_SRV
+				&& preg_match(self::MATCH_NAME, $answer->name) === 1
+				&& is_array($answer->data)
+			) {
+				if (array_key_exists('target', $answer->data)) {
+					$deviceDomain = $answer->data['target'];
+				}
+
+				if (array_key_exists('port', $answer->data)) {
+					$devicePort = intval($answer->data['port']);
+				}
+			}
+
+			if (
+				$answer->type === Dns\Model\Message::TYPE_TXT
+				&& preg_match(self::MATCH_NAME, $answer->name) === 1
+				&& is_array($answer->data)
+			) {
+				foreach ($answer->data as $dataRow) {
+					$parts = explode('=', strval($dataRow), 2);
+					$key = $parts[0];
+					$value = $parts[1] ?? null;
+
+					// The same text record twice with two values leaves no way to tell which one the device
+					// meant, and which one wins is for the sender to choose
+					if (array_key_exists($key, $deviceData) && $deviceData[$key] !== $value) {
+						$conflictingKeys[$key] = true;
+					}
+
+					$deviceData[$key] = $value;
+				}
+			}
+		}
+
+		if (
+			$deviceIpAddress !== null
+			&& $deviceDomain !== null
+			&& $deviceData !== []
+			&& array_key_exists('id', $deviceData)
+			&& is_string($deviceData['id'])
+			&& array_key_exists('type', $deviceData)
+			&& is_string($deviceData['type'])
+			&& array_key_exists('seq', $deviceData)
+			&& is_string($deviceData['seq'])
+			&& array_key_exists('data1', $deviceData)
+		) {
+			if ($conflictingKeys !== []) {
+				$this->logger->warning(
+					'An announcement repeated a text record with another value, the announcement was dropped',
+					[
+						'source' => Sources\Connector::SONOFF->value,
+						'type' => 'lan-api',
+						'records' => array_map(strval(...), array_keys($conflictingKeys)),
+					],
+				);
+
+				return;
+			}
+
+			if (preg_match(self::MATCH_DEVICE_ID, $deviceData['id']) !== 1) {
+				$this->logger->warning(
+					'An announcement came with an id that is not a device id, the announcement was dropped',
+					[
+						'source' => Sources\Connector::SONOFF->value,
+						'type' => 'lan-api',
+						'device' => [
+							'id' => substr($deviceData['id'], 0, 32),
+						],
+					],
+				);
+
+				return;
+			}
+
+			$dataEncrypted = !array_key_exists('encrypt', $deviceData)
+				? false
+				: !in_array(
+					is_string($deviceData['encrypt']) ? strtolower($deviceData['encrypt']) : null,
+					self::PLAIN_DATA_FLAGS,
+					true,
+				);
+
+			$data = array_filter(
+				[
+					$deviceData['data1'],
+					array_key_exists('data2', $deviceData) ? $deviceData['data2'] : null,
+					array_key_exists('data3', $deviceData) ? $deviceData['data3'] : null,
+					array_key_exists('data4', $deviceData) ? $deviceData['data4'] : null,
+				],
+				static fn ($value) => $value !== null,
+			);
+
+			$deviceKey = $this->getDeviceKey($deviceData['id']);
+			$keyKnown = $deviceKey !== null;
+
+			// The text record is not authenticated, and its `encrypt` flag is whatever the sender wrote. A device
+			// whose key is known is an encrypted device, so plain data announced for it is not taken as its state:
+			// that would let anyone on the network skip the key
+			if (!$dataEncrypted && $keyKnown) {
+				$this->logger->warning(
+					'Plain data was announced for a device with an encryption key, the announcement was dropped',
+					[
+						'source' => Sources\Connector::SONOFF->value,
+						'type' => 'lan-api',
+						'device' => [
+							'id' => $deviceData['id'],
+						],
+					],
+				);
+
+				return;
+			}
+
+			if ($keyKnown || !$dataEncrypted) {
+				if ($dataEncrypted && $deviceKey !== null) {
+					foreach ($data as $index => $row) {
+						$data[$index] = Helpers\Transformer::decryptMessage(
+							$row,
+							$deviceKey,
+							array_key_exists('iv', $deviceData) ? strval($deviceData['iv']) : '',
+						);
+					}
+				}
+
+				$data = Utils\Json::decode(implode($data), forceArrays: true);
+
+				if (!is_array($data)) {
+					throw new Utils\JsonException('The data of the announcement is not a list of values');
+				}
+
+				Utils\Arrays::invoke(
+					$this->onMessageListeners,
+					$this->createEntity(
+						Messages\Response\Lan\DeviceEvent::class,
+						Utils\ArrayHash::from([
+							'id' => $deviceData['id'],
+							'ip_address' => $deviceIpAddress,
+							'domain' => $deviceDomain,
+							'port' => $devicePort,
+							'type' => $deviceData['type'],
+							'seq' => $deviceData['seq'],
+							'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
+							'encrypt' => $dataEncrypted,
+							// The data is mapped together with the event, not before it: an entity made first
+							// would be encoded to JSON as an object without properties, and the event could
+							// never be mapped
+							'data' => Utils\ArrayHash::from($data),
+						]),
+					),
+				);
+			} else {
+				Utils\Arrays::invoke(
+					$this->onMessageListeners,
+					$this->createEntity(
+						Messages\Response\Lan\DeviceEvent::class,
+						Utils\ArrayHash::from([
+							'id' => $deviceData['id'],
+							'ip_address' => $deviceIpAddress,
+							'domain' => $deviceDomain,
+							'port' => $devicePort,
+							'type' => $deviceData['type'],
+							'seq' => $deviceData['seq'],
+							'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
+							'encrypt' => true,
+							'data' => null,
+						]),
+					),
+				);
+			}
+		}
+	}
+
 	public function disconnect(): void
 	{
 		$this->server?->close();
@@ -360,8 +390,7 @@ final class LanApi
 
 	public function registerDeviceKey(string $deviceId, string $deviceKey): void
 	{
-		// Announcements are looked up by the lowercase id, whatever case the device is configured with
-		$this->encodeKeys[strtolower($deviceId)] = $deviceKey;
+		$this->encodeKeys[$this->canonicalDeviceId($deviceId)] = $deviceKey;
 	}
 
 	/**
@@ -386,12 +415,14 @@ final class LanApi
 		$payload->data = new stdClass();
 
 		try {
-			if (array_key_exists($id, $this->encodeKeys)) {
+			$deviceKey = $this->getDeviceKey($id);
+
+			if ($deviceKey !== null) {
 				$iv = random_bytes(16);
 
 				$encrypted = Helpers\Transformer::encryptMessage(
 					Utils\Json::encode($payload->data),
-					$this->encodeKeys[$id],
+					$deviceKey,
 					base64_encode($iv),
 				);
 
@@ -493,12 +524,14 @@ final class LanApi
 		$payload->data = $params;
 
 		try {
-			if (array_key_exists($id, $this->encodeKeys)) {
+			$deviceKey = $this->getDeviceKey($id);
+
+			if ($deviceKey !== null) {
 				$iv = random_bytes(16);
 
 				$encrypted = Helpers\Transformer::encryptMessage(
 					Utils\Json::encode($payload->data),
-					$this->encodeKeys[$id],
+					$deviceKey,
 					base64_encode($iv),
 				);
 
@@ -617,6 +650,19 @@ final class LanApi
 		}
 
 		return true;
+	}
+
+	/**
+	 * Keys are kept, and looked up, under one form of the device id, whatever case the device is configured with
+	 */
+	private function canonicalDeviceId(string $deviceId): string
+	{
+		return strtolower($deviceId);
+	}
+
+	private function getDeviceKey(string $deviceId): string|null
+	{
+		return $this->encodeKeys[$this->canonicalDeviceId($deviceId)] ?? null;
 	}
 
 	/**
