@@ -15,16 +15,20 @@ use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
 use Override;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
 use Ramsey\Uuid;
 use React\EventLoop;
 use ReflectionException;
+use RuntimeException;
 use Stringable;
+use function assert;
 use function serialize;
 
 final class LanTest extends Tests\Cases\Unit\BaseTestCase
@@ -42,6 +46,7 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	/** @var array<string> */
 	private array $calls = [];
 
+	/** @var (Closure(API\Messages\Message): void)|null */
 	private Closure|null $listener = null;
 
 	private Queue\Queue|null $queue = null;
@@ -67,6 +72,11 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws BadMethodCallException
 	 * @throws ReflectionException
 	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\Logic
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Error
 	 */
 	public function testKeysAreRegisteredBeforeTheApiIsConnectedAndListenedTo(): void
@@ -87,6 +97,11 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ReflectionException
 	 * @throws SonoffExceptions\InvalidState
 	 * @throws SonoffExceptions\Runtime
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\Logic
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Error
 	 */
 	public function testPlainDataForADeviceWhoseKeyTheApiDoesNotHoldIsDroppedAtTheClient(): void
@@ -100,7 +115,7 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertTrue($this->getQueue()->isEmpty());
 		self::assertCount(1, $this->logs);
-		self::assertSame(Log\LogLevel::WARNING, $this->logs[0]['level']);
+		self::assertSame(Log\LogLevel::WARNING, $this->logs->getArrayCopy()[0]['level']);
 		self::assertStringNotContainsString(self::DEVICE_KEY, serialize($this->logs->getArrayCopy()));
 		self::assertStringNotContainsString('"switch"', serialize($this->logs->getArrayCopy()));
 	}
@@ -113,6 +128,11 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ReflectionException
 	 * @throws SonoffExceptions\InvalidState
 	 * @throws SonoffExceptions\Runtime
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\Logic
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Error
 	 */
 	public function testPlainDataForADeviceWithAKeyIsDroppedAtTheClient(): void
@@ -133,6 +153,11 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ReflectionException
 	 * @throws SonoffExceptions\InvalidState
 	 * @throws SonoffExceptions\Runtime
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\Logic
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Error
 	 */
 	public function testPlainDataForADeviceWithoutAKeyIsHandled(): void
@@ -157,6 +182,11 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ReflectionException
 	 * @throws SonoffExceptions\InvalidState
 	 * @throws SonoffExceptions\Runtime
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\Logic
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Error
 	 */
 	public function testEncryptedDataForADeviceWithAKeyIsHandled(): void
@@ -183,6 +213,11 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws ReflectionException
 	 * @throws SonoffExceptions\InvalidState
 	 * @throws SonoffExceptions\Runtime
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\Logic
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Error
 	 */
 	public function testEventIsNotAppliedToADeviceWithAnotherIdentifier(): void
@@ -205,6 +240,11 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws BadMethodCallException
 	 * @throws ReflectionException
 	 * @throws SonoffExceptions\InvalidState
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws CoreExceptions\Logic
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Error
 	 */
 	private function connectClient(
@@ -215,42 +255,63 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$connectorId = Uuid\Uuid::fromString(self::CONNECTOR_ID);
 
-		$device = $this->createMock(Documents\Devices\Device::class);
-		$device->method('getId')->willReturn(Uuid\Uuid::fromString('4ac3e4d1-6d0a-4c47-9d32-a0d3c1c6f0a1'));
-		$device->method('getConnector')->willReturn($connectorId);
-		$device->method('getIdentifier')->willReturn($identifier);
-
-		$connector = $this->createMock(Documents\Connectors\Connector::class);
-		$connector->method('getId')->willReturn($connectorId);
-
-		$repository = $this->createMock(DevicesModels\Configuration\Devices\Repository::class);
-		$repository->method('findAllBy')->willReturn([$device]);
-		$repository->method('findOneBy')->willReturn($device);
-
-		$keyRead = 0;
-
-		$deviceHelper = $this->createMock(Helpers\Device::class);
-		$deviceHelper->method('getDeviceKey')->willReturnCallback(
-			static function () use (&$keyRead, $keyAtConnect, $keyLater): string|null {
-				// The first read is the one at the connect, every other is a message being handled
-				return $keyRead++ === 0 ? $keyAtConnect : $keyLater;
+		$device = $this->mockOf(
+			Documents\Devices\Device::class,
+			static function (MockObject $mock) use ($connectorId, $identifier): void {
+				$mock->method('getId')->willReturn(Uuid\Uuid::fromString('4ac3e4d1-6d0a-4c47-9d32-a0d3c1c6f0a1'));
+				$mock->method('getConnector')->willReturn($connectorId);
+				$mock->method('getIdentifier')->willReturn($identifier);
 			},
 		);
 
-		$api = $this->createMock(API\LanApi::class);
-		$api->method('registerDeviceKey')->willReturnCallback(function (): void {
-			$this->calls[] = 'registerDeviceKey';
-		});
-		$api->method('connect')->willReturnCallback(function (): void {
-			$this->calls[] = 'connect';
-		});
-		$api->method('onMessage')->willReturnCallback(function (Closure $listener): void {
-			$this->calls[] = 'onMessage';
-			$this->listener = $listener;
+		$connector = $this->mockOf(
+			Documents\Connectors\Connector::class,
+			static function (MockObject $mock) use ($connectorId): void {
+				$mock->method('getId')->willReturn($connectorId);
+			},
+		);
+
+		$repository = $this->mockOf(
+			DevicesModels\Configuration\Devices\Repository::class,
+			static function (MockObject $mock) use ($device): void {
+				$mock->method('findAllBy')->willReturn([$device]);
+				$mock->method('findOneBy')->willReturn($device);
+			},
+		);
+
+		$keyRead = 0;
+
+		$deviceHelper = $this->mockOf(
+			Helpers\Device::class,
+			static function (MockObject $mock) use (&$keyRead, $keyAtConnect, $keyLater): void {
+				$mock->method('getDeviceKey')->willReturnCallback(
+					static function () use (&$keyRead, $keyAtConnect, $keyLater): string|null {
+						// The first read is the one at the connect, every other is a message being handled
+						return $keyRead++ === 0 ? $keyAtConnect : $keyLater;
+					},
+				);
+			},
+		);
+
+		$api = $this->mockOf(API\LanApi::class, function (MockObject $mock): void {
+			$mock->method('registerDeviceKey')->willReturnCallback(function (): void {
+				$this->calls[] = 'registerDeviceKey';
+			});
+			$mock->method('connect')->willReturnCallback(function (): void {
+				$this->calls[] = 'connect';
+			});
+			$mock->method('onMessage')->willReturnCallback(function (Closure $listener): void {
+				$this->calls[] = 'onMessage';
+				$this->listener = $listener;
+			});
 		});
 
-		$connectionManager = $this->createMock(API\ConnectionManager::class);
-		$connectionManager->method('getLanConnection')->willReturn($api);
+		$connectionManager = $this->mockOf(
+			API\ConnectionManager::class,
+			static function (MockObject $mock) use ($api): void {
+				$mock->method('getLanConnection')->willReturn($api);
+			},
+		);
 
 		$logs = $this->logs;
 
@@ -278,7 +339,7 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 
 		$client = new Clients\Lan(
 			$deviceHelper,
-			$this->createMock(DevicesUtilities\DeviceConnection::class),
+			$this->mockOf(DevicesUtilities\DeviceConnection::class),
 			$this->createMock(ClockInterface::class),
 			$this->createMock(EventLoop\LoopInterface::class),
 			$connector,
@@ -319,6 +380,30 @@ final class LanTest extends Tests\Cases\Unit\BaseTestCase
 				],
 			),
 		);
+	}
+
+	/**
+	 * The classes the client works with are final, which PHPStan does not let a mock of one be typed as, so the mock is
+	 * handed over as the class it stands in for
+	 *
+	 * @template T of object
+	 *
+	 * @param class-string<T> $class
+	 * @param (Closure(MockObject): void)|null $configure
+	 *
+	 * @return T
+	 */
+	private function mockOf(string $class, Closure|null $configure = null): object
+	{
+		$mock = $this->createMock($class);
+
+		assert($mock instanceof $class);
+
+		if ($configure !== null) {
+			$configure($mock);
+		}
+
+		return $mock;
 	}
 
 	/**

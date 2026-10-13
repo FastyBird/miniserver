@@ -191,7 +191,9 @@ final class LanApi
 					&& is_array($answer->data)
 				) {
 					foreach ($answer->data as $dataRow) {
-						[$key, $value] = explode('=', strval($dataRow), 2) + [1 => null];
+						$parts = explode('=', strval($dataRow), 2);
+						$key = $parts[0];
+						$value = $parts[1] ?? null;
 
 						// The same text record twice with two values leaves no way to tell which one the device
 						// meant, and which one wins is for the sender to choose

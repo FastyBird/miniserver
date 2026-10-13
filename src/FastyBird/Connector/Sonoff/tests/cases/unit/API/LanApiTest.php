@@ -55,6 +55,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testAnnouncedEncryptedDeviceWithoutKeyNotifiesMessageListenersInOrderWithoutData(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
 
 		[$client, $socket] = $this->connectClient();
@@ -96,6 +97,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testAnnouncedUnencryptedDeviceNotifiesMessageListenersInOrderWithData(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
 
 		[$client, $socket] = $this->connectClient();
@@ -156,6 +158,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testAnnouncedUnencryptedMultiChannelDeviceNotifiesMessageListenersWithEveryOutlet(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
 
 		[$client, $socket] = $this->connectClient();
@@ -209,6 +212,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testAnnouncedEncryptedDeviceWithKeyNotifiesMessageListenersWithDecryptedData(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
 
 		[$client, $socket] = $this->connectClient();
@@ -253,7 +257,9 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testAnnouncedPlainDataForDeviceWithKeyIsDroppedAndLogged(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
 		$logs = new ArrayObject();
 
 		[$client, $socket] = $this->connectClient($logs);
@@ -268,10 +274,13 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 			'10.0.0.7:5353',
 		]);
 
-		self::assertSame([], $events);
+		self::assertNoEvents($events);
 		self::assertCount(1, $logs);
-		self::assertSame(Log\LogLevel::WARNING, $logs[0]['level']);
-		self::assertSame(self::DEVICE_ID, $logs[0]['context']['device']['id']);
+
+		$log = $logs->getArrayCopy()[0];
+
+		self::assertSame(Log\LogLevel::WARNING, $log['level']);
+		self::assertSame(['id' => self::DEVICE_ID], $log['context']['device'] ?? null);
 		self::assertStringNotContainsString('device-key', serialize($logs->getArrayCopy()));
 		self::assertStringNotContainsString('"switch":"on"', serialize($logs->getArrayCopy()));
 	}
@@ -291,7 +300,9 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testAnnouncedPlainDataUnderAVariantOfTheIdOfADeviceWithKeyIsDropped(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
 		$logs = new ArrayObject();
 
 		[$client, $socket] = $this->connectClient($logs);
@@ -321,7 +332,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 			]);
 		}
 
-		self::assertSame([], $events);
+		self::assertNoEvents($events);
 		self::assertCount(count($variants), $logs);
 
 		// The id the announcement is checked against is the one the key was registered for, in lower case
@@ -332,7 +343,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 			'10.0.0.7:5353',
 		]);
 
-		self::assertSame([], $events);
+		self::assertNoEvents($events);
 		self::assertCount(count($variants) + 1, $logs);
 	}
 
@@ -347,7 +358,9 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testAnnouncementRepeatingATextRecordWithAnotherValueIsDropped(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
 		$logs = new ArrayObject();
 
 		[$client, $socket] = $this->connectClient($logs);
@@ -373,7 +386,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 			'10.0.0.7:5353',
 		]);
 
-		self::assertSame([], $events);
+		self::assertNoEvents($events);
 		self::assertCount(3, $logs);
 
 		// The same record twice with the same value says nothing different
@@ -385,7 +398,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 			'10.0.0.7:5353',
 		]);
 
-		self::assertCount(1, $events);
+		self::assertEventCount(1, $events);
 		self::assertCount(3, $logs);
 	}
 
@@ -402,6 +415,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testEncryptFlagOfAnAnnouncementOnlyAnnouncesPlainDataAsFalseOrZero(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
 
 		[$client, $socket] = $this->connectClient();
@@ -421,13 +435,13 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertSame(
 			array_values($flags),
-			array_map(static fn (array $event): bool => $event[1][0]->isEncrypted(), $events),
+			array_map(static fn (array $event): bool => self::deviceEvent($event)->isEncrypted(), $events),
 		);
 
 		// Data that is plain is read, data that is said to be encrypted is not, there is no key to read it with
 		self::assertSame(
 			[true, true, true, false, false, false, false],
-			array_map(static fn (array $event): bool => $event[1][0]->getData() !== null, $events),
+			array_map(static fn (array $event): bool => self::deviceEvent($event)->getData() !== null, $events),
 		);
 	}
 
@@ -442,7 +456,9 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testPlainDataOfADeviceWithKeyIsDroppedWhateverTheEncryptFlagSaysFalse(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
 		$logs = new ArrayObject();
 
 		[$client, $socket] = $this->connectClient($logs);
@@ -459,7 +475,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 			]);
 		}
 
-		self::assertSame([], $events);
+		self::assertNoEvents($events);
 		self::assertCount(2, $logs);
 	}
 
@@ -477,6 +493,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testAnnouncedValueMayContainEqualSigns(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $events */
 		$events = [];
 
 		[$client, $socket] = $this->connectClient();
@@ -491,7 +508,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		]);
 
 		self::assertCount(1, $events);
-		self::assertSame('a=b=c', $events[0][1][0]->getData()?->getSsid());
+		self::assertSame('a=b=c', self::deviceEvent($events[0])->getData()?->getSsid());
 	}
 
 	#[Override]
@@ -505,7 +522,36 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
+	 * @param array<mixed> $events
+	 */
+	private static function assertNoEvents(array $events): void
+	{
+		self::assertSame([], $events);
+	}
+
+	/**
+	 * @param array<mixed> $events
+	 */
+	private static function assertEventCount(int $count, array $events): void
+	{
+		self::assertCount($count, $events);
+	}
+
+	/**
+	 * @param array{string, array<mixed>} $event
+	 */
+	private static function deviceEvent(array $event): API\Messages\Response\Lan\DeviceEvent
+	{
+		self::assertInstanceOf(API\Messages\Response\Lan\DeviceEvent::class, $event[1][0]);
+
+		return $event[1][0];
+	}
+
+	/**
 	 * `connect()` joins the mDNS multicast group on the real socket; the test then raises what the socket would
+	 *
+	 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}>|null $logs where what the
+	 *        connector logs is collected
 	 *
 	 * @return array{API\LanApi, Datagram\SocketInterface}
 	 *

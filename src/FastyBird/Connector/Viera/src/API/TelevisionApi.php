@@ -2,6 +2,7 @@
 
 namespace FastyBird\Connector\Viera\API;
 
+use ArrayObject;
 use Closure;
 use DateTimeInterface;
 use FastyBird\Connector\Viera;
@@ -41,6 +42,7 @@ use function explode;
 use function hexdec;
 use function http_build_query;
 use function implode;
+use function in_array;
 use function intval;
 use function is_array;
 use function is_string;
@@ -1045,20 +1047,20 @@ final class TelevisionApi
 
 		// The listeners are there to learn the answer to this question, and are taken off the client as soon as it is
 		// answered, so a client that is asked again and again does not collect a pair for every question
-		$messageListener = null;
-		$errorListener = null;
+		/** @var ArrayObject<int, Closure> $registered */
+		$registered = new ArrayObject();
 
-		$release = function () use (&$messageListener, &$errorListener): void {
+		$release = function () use ($registered): void {
 			$this->onMessageListeners = array_values(
 				array_filter(
 					$this->onMessageListeners,
-					static fn (Closure $listener): bool => $listener !== $messageListener,
+					static fn (Closure $listener): bool => !in_array($listener, $registered->getArrayCopy(), true),
 				),
 			);
 			$this->onErrorListeners = array_values(
 				array_filter(
 					$this->onErrorListeners,
-					static fn (Closure $listener): bool => $listener !== $errorListener,
+					static fn (Closure $listener): bool => !in_array($listener, $registered->getArrayCopy(), true),
 				),
 			);
 		};
@@ -1091,6 +1093,9 @@ final class TelevisionApi
 				$this->eventLoop->stop();
 			}
 		};
+
+		$registered->append($messageListener);
+		$registered->append($errorListener);
 
 		$this->onMessage($messageListener);
 		$this->onError($errorListener);

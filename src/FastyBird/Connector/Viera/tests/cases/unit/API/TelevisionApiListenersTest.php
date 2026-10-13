@@ -90,6 +90,7 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 	public function testIsTurnedOnResolvesFromTheNextEventAfterTheListenersRegisteredBeforeIt(): void
 	{
 		$events = [];
+		/** @var array<int, array{string, array<mixed>}> $resolved */
 		$resolved = [];
 
 		$client = $this->createClient();
@@ -147,6 +148,7 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 	public function testIsTurnedOnResolvesToFalseWhenTheSubscriptionConnectionFails(): void
 	{
 		$events = [];
+		/** @var array<int, array{string, array<mixed>}> $resolved */
 		$resolved = [];
 
 		$client = $this->createClient();
@@ -178,6 +180,7 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 	public function testAskingForTheScreenStateAgainAndAgainDoesNotAccumulateListeners(): void
 	{
 		$events = [];
+		/** @var array<int, array{string, array<mixed>}> $resolved */
 		$resolved = [];
 
 		$client = $this->createClient();
@@ -211,6 +214,7 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testQuestionsWaitingTogetherAreAllAnsweredByTheNextEventAndLeaveNoListeners(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $resolved */
 		$resolved = [];
 
 		$client = $this->createClient();
@@ -222,7 +226,7 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 		$connection = $this->openEventsServer($client);
 
 		self::assertSame([4, 4], $this->countListeners($client));
-		self::assertSame([], $resolved);
+		self::assertCount(0, array_values($resolved));
 
 		$connection->emit('data', [$this->buildNotification('On', 'tv')]);
 
@@ -240,6 +244,7 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 	 */
 	public function testQuestionAnsweredByTheFailingConnectionLeavesNoListeners(): void
 	{
+		/** @var array<int, array{string, array<mixed>}> $resolved */
 		$resolved = [];
 
 		$client = $this->createClient();

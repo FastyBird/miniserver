@@ -2,6 +2,7 @@
 
 namespace FastyBird\Connector\Sonoff\Tests\Cases\Unit\API;
 
+use ArrayObject;
 use Closure;
 use Error;
 use FastyBird\Connector\Sonoff\API;
@@ -289,7 +290,7 @@ final class CloudWsTest extends Tests\Cases\Unit\BaseTestCase
 		);
 
 		self::assertCount(1, $heartbeats);
-		self::assertSame(145, array_values($heartbeats)[0]->getInterval());
+		self::assertEquals(145, array_values($heartbeats)[0]->getInterval());
 	}
 
 	/**
@@ -311,14 +312,15 @@ final class CloudWsTest extends Tests\Cases\Unit\BaseTestCase
 				. $this->getPendingSequence($client) . '"}',
 		);
 
-		$states = [];
+		/** @var ArrayObject<int, mixed> $states */
+		$states = new ArrayObject();
 
-		$client->readStates('1000a1b2c3', 'a4b2')->then(static function ($state) use (&$states): void {
+		$client->readStates('1000a1b2c3', 'a4b2')->then(static function ($state) use ($states): void {
 			$states[] = $state;
 		});
 
 		self::assertCount(2, $stream->getWritten());
-		self::assertSame([], $states);
+		self::assertCount(0, $states);
 
 		$this->push(
 			$stream,
@@ -327,8 +329,11 @@ final class CloudWsTest extends Tests\Cases\Unit\BaseTestCase
 		);
 
 		self::assertCount(1, $states);
-		self::assertInstanceOf(API\Messages\Response\Sockets\DeviceStateEvent::class, $states[0]);
-		self::assertSame('1000a1b2c3', $states[0]->getDeviceId());
+
+		$state = $states->getArrayCopy()[0];
+
+		self::assertInstanceOf(API\Messages\Response\Sockets\DeviceStateEvent::class, $state);
+		self::assertSame('1000a1b2c3', $state->getDeviceId());
 	}
 
 	/**
