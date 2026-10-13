@@ -85,10 +85,10 @@ final class TelevisionApi
 	private const string URL_CONTROL_NRC_DEF = '/nrc/sdd_0.xml';
 
 	/** @var array<Closure(Messages\Message $message): void> */
-	public array $onMessage = [];
+	private array $onMessageListeners = [];
 
 	/** @var array<Closure(Throwable $ex): void> */
-	public array $onError = [];
+	private array $onErrorListeners = [];
 
 	private bool $isEncrypted;
 
@@ -122,6 +122,26 @@ final class TelevisionApi
 	)
 	{
 		$this->isEncrypted = $this->appId !== null && $this->encryptionKey !== null;
+	}
+
+	/**
+	 * Registers a listener. Called when a message was received.
+	 *
+	 * @param Closure(Messages\Message $message): void $listener
+	 */
+	public function onMessage(Closure $listener): void
+	{
+		$this->onMessageListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when an error occurred.
+	 *
+	 * @param Closure(Throwable $ex): void $listener
+	 */
+	public function onError(Closure $listener): void
+	{
+		$this->onErrorListeners[] = $listener;
 	}
 
 	/**
@@ -1022,7 +1042,7 @@ final class TelevisionApi
 
 		$result = false;
 
-		$this->onMessage[] = function (Messages\Message $message) use ($deferred, $runLoop, &$result): void {
+		$this->onMessage(function (Messages\Message $message) use ($deferred, $runLoop, &$result): void {
 			if ($message instanceof Messages\Response\Event) {
 				if ($message->getScreenState() !== null) {
 					$deferred->resolve($message->getScreenState());
@@ -1036,16 +1056,16 @@ final class TelevisionApi
 					$this->eventLoop->stop();
 				}
 			}
-		};
+		});
 
-		$this->onError[] = function () use ($deferred, $runLoop, &$result): void {
+		$this->onError(function () use ($deferred, $runLoop, &$result): void {
 			$deferred->resolve(false);
 			$result = false;
 
 			if ($runLoop) {
 				$this->eventLoop->stop();
 			}
-		};
+		});
 
 		$doUnsubscribe = false;
 
@@ -1380,7 +1400,7 @@ final class TelevisionApi
 					}
 
 					Utils\Arrays::invoke(
-						$this->onMessage,
+						$this->onMessageListeners,
 						$this->createMessage(
 							Messages\Response\Event::class,
 							[
@@ -1408,7 +1428,7 @@ final class TelevisionApi
 						],
 					);
 
-					Utils\Arrays::invoke($this->onError, $ex);
+					Utils\Arrays::invoke($this->onErrorListeners, $ex);
 				});
 			},
 		);

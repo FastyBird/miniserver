@@ -108,7 +108,7 @@ final class Cloud extends ClientProcess implements Client
 		) {
 			$cloudWs = $this->connectionManager->getCloudWsConnection($this->connector);
 
-			$cloudWs->onMessage[] = function (API\Messages\Message $message): void {
+			$cloudWs->onMessage(function (API\Messages\Message $message): void {
 				if ($message instanceof API\Messages\Response\Sockets\DeviceConnectionStateEvent) {
 					$this->queue->append(
 						$this->entityHelper->create(
@@ -125,9 +125,9 @@ final class Cloud extends ClientProcess implements Client
 				} elseif ($message instanceof API\Messages\Response\Sockets\DeviceStateEvent) {
 					$this->handleDeviceState($message);
 				}
-			};
+			});
 
-			$cloudWs->onError[] = function (Throwable $ex): void {
+			$cloudWs->onError(function (Throwable $ex): void {
 				$this->logger->error(
 					'An error occurred in eWelink cloud websockets client',
 					[
@@ -147,7 +147,7 @@ final class Cloud extends ClientProcess implements Client
 						$ex,
 					),
 				);
-			};
+			});
 
 			$cloudWs->connect()
 				->then(function (): void {

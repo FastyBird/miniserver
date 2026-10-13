@@ -575,7 +575,7 @@ final class Television
 
 		$client = $this->connectionManager->getConnection($device);
 
-		$client->onMessage[] = function (API\Messages\Message $message) use ($device): void {
+		$client->onMessage(function (API\Messages\Message $message) use ($device): void {
 			if (
 				$message instanceof API\Messages\Response\Event
 				&& $message->getScreenState() !== null
@@ -593,9 +593,9 @@ final class Television
 					),
 				);
 			}
-		};
+		});
 
-		$client->onError[] = function (Throwable $ex) use ($device): void {
+		$client->onError(function (Throwable $ex) use ($device): void {
 			$this->logger->warning(
 				'Event subscription with device failed',
 				[
@@ -621,7 +621,7 @@ final class Television
 					],
 				),
 			);
-		};
+		});
 
 		$this->devicesClients[$device->getId()->toString()] = $client;
 	}

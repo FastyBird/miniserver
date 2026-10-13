@@ -157,7 +157,7 @@ final class Cloud implements Client
 		$wsClient = $this->connectionManager
 			->getCloudWsConnection($this->connector);
 
-		$wsClient->onMessage[] = function (API\Messages\Message $message): void {
+		$wsClient->onMessage(function (API\Messages\Message $message): void {
 			if (
 				$message instanceof API\Messages\Response\ReportDeviceOnline
 				|| $message instanceof API\Messages\Response\ReportDeviceState
@@ -203,9 +203,9 @@ final class Cloud implements Client
 					);
 				}
 			}
-		};
+		});
 
-		$wsClient->onError[] = function (Throwable $ex): void {
+		$wsClient->onError(function (Throwable $ex): void {
 			$this->logger->error(
 				'An error occurred in Tuya cloud WS client',
 				[
@@ -224,7 +224,7 @@ final class Cloud implements Client
 					'An error occurred in Tuya cloud WS client',
 				),
 			);
-		};
+		});
 
 		$wsClient
 			->connect()

@@ -42,13 +42,13 @@ final class Gen1Coap
 	private const string STATE_MESSAGE_SCHEMA_FILENAME = 'gen1_coap_state.json';
 
 	/** @var array<Closure(Messages\Message $message): void> */
-	public array $onMessage = [];
+	private array $onMessageListeners = [];
 
 	/** @var array<Closure(): void> */
-	public array $onClosed = [];
+	private array $onClosedListeners = [];
 
 	/** @var array<Closure(Throwable $error): void> */
-	public array $onError = [];
+	private array $onErrorListeners = [];
 
 	/** @var array<string, string> */
 	private array $validationSchemas = [];
@@ -68,6 +68,36 @@ final class Gen1Coap
 	}
 
 	/**
+	 * Registers a listener. Called when a message was received.
+	 *
+	 * @param Closure(Messages\Message $message): void $listener
+	 */
+	public function onMessage(Closure $listener): void
+	{
+		$this->onMessageListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the socket was closed.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onClosed(Closure $listener): void
+	{
+		$this->onClosedListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when an error occurred.
+	 *
+	 * @param Closure(Throwable $error): void $listener
+	 */
+	public function onError(Closure $listener): void
+	{
+		$this->onErrorListeners[] = $listener;
+	}
+
+	/**
 	 * @throws BadMethodCallException
 	 * @throws RuntimeException
 	 */
@@ -83,7 +113,7 @@ final class Gen1Coap
 		});
 
 		$this->server?->on('error', function (Throwable $ex): void {
-			Utils\Arrays::invoke($this->onError, $ex);
+			Utils\Arrays::invoke($this->onErrorListeners, $ex);
 		});
 
 		$this->server?->on('close', function (): void {
@@ -95,7 +125,7 @@ final class Gen1Coap
 				],
 			);
 
-			Utils\Arrays::invoke($this->onClosed);
+			Utils\Arrays::invoke($this->onClosedListeners);
 		});
 	}
 
@@ -206,7 +236,7 @@ final class Gen1Coap
 				try {
 					$this->handleStatusMessage($deviceIdentifier, $message, $remote);
 				} catch (ShellyExceptions\CoapError | ShellyExceptions\InvalidState $ex) {
-					Utils\Arrays::invoke($this->onError, $ex);
+					Utils\Arrays::invoke($this->onErrorListeners, $ex);
 				}
 			}
 		}
@@ -268,7 +298,7 @@ final class Gen1Coap
 
 		try {
 			Utils\Arrays::invoke(
-				$this->onMessage,
+				$this->onMessageListeners,
 				$this->messageBuilder->create(
 					Messages\Response\Gen1\ReportDeviceState::class,
 					[

@@ -92,19 +92,19 @@ final class Gen2WsApi
 	private const string COMPONENT_KEY = '/^(?P<component>[a-zA-Z]+)(:(?P<channel>[0-9_]+))?$/';
 
 	/** @var array<Closure(): void> */
-	public array $onConnected = [];
+	private array $onConnectedListeners = [];
 
 	/** @var array<Closure(): void> */
-	public array $onDisconnected = [];
+	private array $onDisconnectedListeners = [];
 
 	/** @var array<Closure(Messages\Message $message): void> */
-	public array $onMessage = [];
+	private array $onMessageListeners = [];
 
 	/** @var array<Closure(): void> */
-	public array $onLost = [];
+	private array $onLostListeners = [];
 
 	/** @var array<Closure(Throwable $error): void> */
-	public array $onError = [];
+	private array $onErrorListeners = [];
 
 	private bool $connecting = false;
 
@@ -142,6 +142,56 @@ final class Gen2WsApi
 		private readonly ObjectMapper\Processing\Processor $objectMapper,
 	)
 	{
+	}
+
+	/**
+	 * Registers a listener. Called when the connection was established.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onConnected(Closure $listener): void
+	{
+		$this->onConnectedListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the connection was closed.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onDisconnected(Closure $listener): void
+	{
+		$this->onDisconnectedListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when a message was received.
+	 *
+	 * @param Closure(Messages\Message $message): void $listener
+	 */
+	public function onMessage(Closure $listener): void
+	{
+		$this->onMessageListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when the connection was lost.
+	 *
+	 * @param Closure(): void $listener
+	 */
+	public function onLost(Closure $listener): void
+	{
+		$this->onLostListeners[] = $listener;
+	}
+
+	/**
+	 * Registers a listener. Called when an error occurred.
+	 *
+	 * @param Closure(Throwable $error): void $listener
+	 */
+	public function onError(Closure $listener): void
+	{
+		$this->onErrorListeners[] = $listener;
 	}
 
 	/**
@@ -530,7 +580,7 @@ final class Gen2WsApi
 						],
 					);
 
-					Utils\Arrays::invoke($this->onError, $ex);
+					Utils\Arrays::invoke($this->onErrorListeners, $ex);
 
 					return;
 				}
@@ -552,7 +602,7 @@ final class Gen2WsApi
 								Utils\Json::encode($payload->params),
 							);
 
-							Utils\Arrays::invoke($this->onMessage, $message);
+							Utils\Arrays::invoke($this->onMessageListeners, $message);
 						} catch (ShellyExceptions\WsCall | ShellyExceptions\WsError $ex) {
 							$this->logger->error(
 								'Could not handle received device status message',
@@ -573,7 +623,7 @@ final class Gen2WsApi
 								],
 							);
 
-							Utils\Arrays::invoke($this->onError, $ex);
+							Utils\Arrays::invoke($this->onErrorListeners, $ex);
 						}
 					} elseif ($payload->method === self::NOTIFY_EVENT_METHOD) {
 						try {
@@ -581,7 +631,7 @@ final class Gen2WsApi
 								Utils\Json::encode($payload->params),
 							);
 
-							Utils\Arrays::invoke($this->onMessage, $message);
+							Utils\Arrays::invoke($this->onMessageListeners, $message);
 						} catch (ShellyExceptions\WsCall | ShellyExceptions\WsError $ex) {
 							$this->logger->error(
 								'Could not handle received event message',
@@ -602,7 +652,7 @@ final class Gen2WsApi
 								],
 							);
 
-							Utils\Arrays::invoke($this->onError, $ex);
+							Utils\Arrays::invoke($this->onErrorListeners, $ex);
 						}
 					} else {
 						$this->logger->warning(
@@ -816,7 +866,7 @@ final class Gen2WsApi
 		$connection->on('error', function (Throwable $ex): void {
 			$this->lost();
 
-			Utils\Arrays::invoke($this->onError, $ex);
+			Utils\Arrays::invoke($this->onErrorListeners, $ex);
 		});
 
 		$connection->on('close', function ($code = null, $reason = null): void {
@@ -837,17 +887,17 @@ final class Gen2WsApi
 
 			$this->disconnect();
 
-			Utils\Arrays::invoke($this->onDisconnected);
+			Utils\Arrays::invoke($this->onDisconnectedListeners);
 		});
 
-		Utils\Arrays::invoke($this->onConnected);
+		Utils\Arrays::invoke($this->onConnectedListeners);
 	}
 
 	private function lost(): void
 	{
 		$this->lost = $this->clock->now();
 
-		Utils\Arrays::invoke($this->onLost);
+		Utils\Arrays::invoke($this->onLostListeners);
 
 		$this->disconnect();
 	}

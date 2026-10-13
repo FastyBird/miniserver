@@ -227,7 +227,7 @@ final class Discovery
 
 		$apiClient = $this->getLanConnection();
 
-		$apiClient->onMessage[] = function (API\Messages\Message $message): void {
+		$apiClient->onMessage(function (API\Messages\Message $message): void {
 			if ($message instanceof API\Messages\Response\Lan\DeviceEvent) {
 				$this->foundLocalDevices[$message->getId()] = [
 					'ipAddress' => $message->getIpAddress(),
@@ -235,7 +235,7 @@ final class Discovery
 					'port' => $message->getPort(),
 				];
 			}
-		};
+		});
 
 		// Searching timeout
 		$this->handlerTimer = $this->eventLoop->addTimer(
