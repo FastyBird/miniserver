@@ -66,14 +66,6 @@ final class SonoffExtension extends NetteDI\CompilerExtension implements Transla
 		 * WRITERS
 		 */
 
-		$builder->addFactoryDefinition($this->prefix('writers.event'))
-			->setImplement(Writers\EventFactory::class)
-			->getResultDefinition()
-			->setType(Writers\Event::class)
-			->setArguments([
-				'logger' => $logger,
-			]);
-
 		$builder->addFactoryDefinition($this->prefix('writers.exchange'))
 			->setImplement(Writers\ExchangeFactory::class)
 			->getResultDefinition()

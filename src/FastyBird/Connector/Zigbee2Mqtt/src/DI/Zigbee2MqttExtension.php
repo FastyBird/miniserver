@@ -66,14 +66,6 @@ final class Zigbee2MqttExtension extends NetteDI\CompilerExtension implements Tr
 		 * WRITERS
 		 */
 
-		$builder->addFactoryDefinition($this->prefix('writers.event'))
-			->setImplement(Writers\EventFactory::class)
-			->getResultDefinition()
-			->setType(Writers\Event::class)
-			->setArguments([
-				'logger' => $logger,
-			]);
-
 		$builder->addFactoryDefinition($this->prefix('writers.exchange'))
 			->setImplement(Writers\ExchangeFactory::class)
 			->getResultDefinition()

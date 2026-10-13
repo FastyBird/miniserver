@@ -31,7 +31,7 @@ final class Zigbee2MqttExtensionTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$container = $this->createContainer();
 
-		self::assertCount(2, $container->findByType(Writers\WriterFactory::class));
+		self::assertCount(1, $container->findByType(Writers\WriterFactory::class));
 
 		self::assertNotNull($container->getByType(API\ConnectionManager::class, false));
 		self::assertNotNull($container->getByType(API\ClientFactory::class, false));
