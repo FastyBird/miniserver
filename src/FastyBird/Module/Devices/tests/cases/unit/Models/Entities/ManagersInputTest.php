@@ -85,6 +85,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ReflectionException
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Utils\JsonException
 	 */
 	public function testCreateFromAnArrayHashFillsTheWholeGraph(): void
@@ -104,6 +105,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ReflectionException
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Utils\JsonException
 	 */
 	public function testCreateFromAnArrayFillsTheSameGraph(): void
@@ -123,6 +125,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ReflectionException
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Utils\JsonException
 	 */
 	public function testUpdateFromAnArrayHashChangesTheWholeGraph(): void
@@ -143,6 +146,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ReflectionException
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Utils\JsonException
 	 */
 	public function testUpdateFromAnArrayChangesTheSameGraph(): void
@@ -169,6 +173,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ReflectionException
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function create(callable $input): void
 	{
@@ -352,6 +357,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws ReflectionException
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function update(callable $input): void
 	{
@@ -366,7 +372,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'name' => 'Graph connector renamed',
 			'comment' => 'Updated',
 			'enabled' => false,
-			'params' => ['transport' => ['host' => 'remote', 'ports' => [8080]], 'timeout' => 5],
+			'params' => ['transport' => ['host' => 'remote', 'ports' => [8_080]], 'timeout' => 5],
 		]));
 
 		$connectorProperty = $this->find(Entities\Connectors\Properties\Property::class, self::CONNECTOR_PROPERTY);
@@ -381,7 +387,6 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		);
 
 		$connectorControl = $connector->getControls()[0];
-		assert($connectorControl instanceof Entities\Connectors\Controls\Control);
 
 		$container->getByType(Models\Entities\Connectors\Controls\ControlsManager::class)->update(
 			$connectorControl,
@@ -414,7 +419,6 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		);
 
 		$deviceControl = $parent->getControls()[0];
-		assert($deviceControl instanceof Entities\Devices\Controls\Control);
 
 		$container->getByType(Models\Entities\Devices\Controls\ControlsManager::class)->update(
 			$deviceControl,
@@ -442,7 +446,6 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		);
 
 		$channelControl = $this->find(Entities\Channels\Channel::class, self::CHANNEL)->getControls()[0];
-		assert($channelControl instanceof Entities\Channels\Controls\Control);
 
 		$container->getByType(Models\Entities\Channels\Controls\ControlsManager::class)->update(
 			$channelControl,
@@ -462,6 +465,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	private function find(string $class, string $id): object
 	{
@@ -477,11 +481,11 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Utils\JsonException
 	 */
 	private function assertGraph(string $fixture): void
 	{
-
 		self::assertSame(
 			Utils\Json::decode(Utils\FileSystem::read(self::FIXTURES . $fixture . '.returned.json'), forceArrays: true),
 			$this->dumpGraph(),
@@ -510,6 +514,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Utils\JsonException
 	 */
 	private function dumpGraph(): array
@@ -588,22 +593,27 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		ksort($graph);
 
 		// Through JSON and back, as the pinned record is read, so both sides compare alike
-		return Utils\Json::decode(Utils\Json::encode($graph), forceArrays: true);
+		/** @var array<string, array<string, mixed>> $graph */
+		$graph = Utils\Json::decode(Utils\Json::encode($graph), forceArrays: true);
+
+		return $graph;
 	}
 
 	private function reference(object $entity): string
 	{
 		$class = str_replace('FastyBird\\Module\\Devices\\', '', $entity::class);
 
-		if ($this->isControl($entity)) {
-			// A control's id is always generated, so it is named by its owner and its name
-			$owner = match (true) {
-				$entity instanceof Entities\Connectors\Controls\Control => $entity->getConnector()->getId(),
-				$entity instanceof Entities\Devices\Controls\Control => $entity->getDevice()->getId(),
-				default => $entity->getChannel()->getId(),
-			};
+		// A control's id is always generated, so it is named by its owner and its name
+		if ($entity instanceof Entities\Connectors\Controls\Control) {
+			return sprintf('%s:%s/%s', $class, $entity->getConnector()->getId()->toString(), $entity->getName());
+		}
 
-			return sprintf('%s:%s/%s', $class, $owner->toString(), $entity->getName());
+		if ($entity instanceof Entities\Devices\Controls\Control) {
+			return sprintf('%s:%s/%s', $class, $entity->getDevice()->getId()->toString(), $entity->getName());
+		}
+
+		if ($entity instanceof Entities\Channels\Controls\Control) {
+			return sprintf('%s:%s/%s', $class, $entity->getChannel()->getId()->toString(), $entity->getName());
 		}
 
 		assert($entity instanceof Entities\Entity);

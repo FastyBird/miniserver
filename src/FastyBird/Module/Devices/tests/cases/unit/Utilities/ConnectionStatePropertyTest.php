@@ -33,7 +33,7 @@ final class ConnectionStatePropertyTest extends Tests\Cases\Unit\DbTestCase
 
 	private const string DEVICE = '69786d15-fd0c-4d9f-9378-33287c2009fa';
 
-	/** @var list<array<string, mixed>> */
+	/** @var list<array<mixed>> */
 	private array $stored = [];
 
 	/**
