@@ -136,6 +136,50 @@ final class DevicesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
+	 * An identifier is matched as it is, ignoring case, and never as a pattern: what a pattern would make of its
+	 * characters must not find a device with another identifier
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testReadByIdentifierMatchesTheIdentifierLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Devices\Repository::class);
+
+		foreach (['first-device', 'FIRST-DEVICE', 'First-Device'] as $identifier) {
+			$findQuery = new Queries\Configuration\FindDevices();
+			$findQuery->byIdentifier($identifier);
+
+			$entity = $repository->findOneBy($findQuery);
+
+			self::assertIsObject($entity, $identifier);
+			self::assertSame('first-device', $entity->getIdentifier());
+		}
+
+		foreach (
+			[
+				'first.device',
+				'first-devicee',
+				'first-devic.',
+				'first-[d]evice',
+				'[a-z]+-device',
+				'.+',
+				'first-device/',
+				' first-device',
+				"first-device\n",
+			] as $identifier
+		) {
+			$findQuery = new Queries\Configuration\FindDevices();
+			$findQuery->byIdentifier($identifier);
+
+			self::assertSame([], $repository->findAllBy($findQuery), $identifier);
+		}
+	}
+
+	/**
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
