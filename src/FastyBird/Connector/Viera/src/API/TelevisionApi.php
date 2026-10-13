@@ -26,6 +26,7 @@ use SimpleXMLElement;
 use Throwable;
 use ValueError;
 use function array_combine;
+use function array_filter;
 use function array_fill;
 use function array_key_exists;
 use function array_merge;
@@ -1042,8 +1043,30 @@ final class TelevisionApi
 
 		$result = false;
 
-		$this->onMessage(function (Messages\Message $message) use ($deferred, $runLoop, &$result): void {
+		// The listeners are there to learn the answer to this question, and are taken off the client as soon as it is
+		// answered, so a client that is asked again and again does not collect a pair for every question
+		$messageListener = null;
+		$errorListener = null;
+
+		$release = function () use (&$messageListener, &$errorListener): void {
+			$this->onMessageListeners = array_values(
+				array_filter(
+					$this->onMessageListeners,
+					static fn (Closure $listener): bool => $listener !== $messageListener,
+				),
+			);
+			$this->onErrorListeners = array_values(
+				array_filter(
+					$this->onErrorListeners,
+					static fn (Closure $listener): bool => $listener !== $errorListener,
+				),
+			);
+		};
+
+		$messageListener = function (Messages\Message $message) use ($deferred, $runLoop, &$result, $release): void {
 			if ($message instanceof Messages\Response\Event) {
+				$release();
+
 				if ($message->getScreenState() !== null) {
 					$deferred->resolve($message->getScreenState());
 					$result = $message->getScreenState();
@@ -1056,16 +1079,21 @@ final class TelevisionApi
 					$this->eventLoop->stop();
 				}
 			}
-		});
+		};
 
-		$this->onError(function () use ($deferred, $runLoop, &$result): void {
+		$errorListener = function () use ($deferred, $runLoop, &$result, $release): void {
+			$release();
+
 			$deferred->resolve(false);
 			$result = false;
 
 			if ($runLoop) {
 				$this->eventLoop->stop();
 			}
-		});
+		};
+
+		$this->onMessage($messageListener);
+		$this->onError($errorListener);
 
 		$doUnsubscribe = false;
 
@@ -1075,6 +1103,8 @@ final class TelevisionApi
 			$subscribeResult = $this->subscribeEvents();
 
 			if ($subscribeResult === false) {
+				$release();
+
 				if ($runLoop) {
 					return false;
 				}
@@ -1083,7 +1113,9 @@ final class TelevisionApi
 			}
 		}
 
-		$this->eventLoop->addTimer(1.5, async(function () use ($deferred, $runLoop, &$result, $doUnsubscribe): void {
+		$this->eventLoop->addTimer(1.5, async(function () use ($deferred, $runLoop, &$result, $doUnsubscribe, $release): void {
+			$release();
+
 			if ($doUnsubscribe) {
 				$this->unsubscribeEvents();
 			}
