@@ -207,10 +207,27 @@ final class LanApi
 					static fn ($value) => $value !== null,
 				);
 
-				if (
-					($dataEncrypted && array_key_exists($deviceData['id'], $this->encodeKeys))
-					|| !$dataEncrypted
-				) {
+				$keyKnown = array_key_exists($deviceData['id'], $this->encodeKeys);
+
+				// The text record is not authenticated, and its `encrypt` flag is whatever the sender wrote. A device
+				// whose key is known is an encrypted device, so plain data announced for it is not taken as its state:
+				// that would let anyone on the network skip the key
+				if (!$dataEncrypted && $keyKnown) {
+					$this->logger->warning(
+						'Plain data was announced for a device with an encryption key, the announcement was dropped',
+						[
+							'source' => Sources\Connector::SONOFF->value,
+							'type' => 'lan-api',
+							'device' => [
+								'id' => $deviceData['id'],
+							],
+						],
+					);
+
+					return;
+				}
+
+				if (($dataEncrypted && $keyKnown) || !$dataEncrypted) {
 					if ($dataEncrypted) {
 						foreach ($data as $index => $row) {
 							$data[$index] = Helpers\Transformer::decryptMessage(

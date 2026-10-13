@@ -5,23 +5,28 @@ namespace FastyBird\Connector\Sonoff\Tests\Cases\Unit\API;
 use BadMethodCallException;
 use Closure;
 use Error;
+use ArrayObject;
+use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette;
 use Override;
+use Psr\Log;
 use React\Datagram;
 use React\Dns;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
 use RuntimeException;
+use Stringable;
 use function array_map;
 use function assert;
 use function base64_encode;
 use function func_get_args;
 use function is_string;
+use function serialize;
 
 final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 {
@@ -232,6 +237,43 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertSame('3.5.0', $data->getFirmwareVersion());
 	}
 
+	/**
+	 * The text record is not authenticated, so plain data announced for a device whose key is known is not taken as
+	 * its state: anyone on the network could otherwise skip the encryption
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testAnnouncedPlainDataForDeviceWithKeyIsDroppedAndLogged(): void
+	{
+		$events = [];
+		$logs = new ArrayObject();
+
+		[$client, $socket] = $this->connectClient($logs);
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+		$client->onMessage($this->record('message', $events));
+
+		$socket->emit('message', [
+			$this->buildAnnouncement(
+				['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}'],
+			),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertSame([], $events);
+		self::assertCount(1, $logs);
+		self::assertSame(Log\LogLevel::WARNING, $logs[0]['level']);
+		self::assertSame(self::DEVICE_ID, $logs[0]['context']['device']['id']);
+		self::assertStringNotContainsString('device-key', serialize($logs->getArrayCopy()));
+		self::assertStringNotContainsString('"switch":"on"', serialize($logs->getArrayCopy()));
+	}
+
 	#[Override]
 	protected function tearDown(): void
 	{
@@ -255,8 +297,31 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws RuntimeException
 	 * @throws Error
 	 */
-	private function connectClient(): array
+	private function connectClient(ArrayObject|null $logs = null): array
 	{
+		if ($logs !== null) {
+			$this->mockContainerService(Sonoff\Logger::class, new Sonoff\Logger(new class ($logs) extends Log\AbstractLogger {
+
+				/**
+				 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs
+				 */
+				public function __construct(private readonly ArrayObject $logs)
+				{
+				}
+
+				/**
+				 * @param array<mixed> $context
+				 */
+				// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+				#[Override]
+				public function log($level, string|Stringable $message, array $context = []): void
+				{
+					$this->logs[] = ['level' => $level, 'message' => (string) $message, 'context' => $context];
+				}
+
+			}));
+		}
+
 		$client = $this->container->getByType(API\LanApiFactory::class)->create();
 
 		$client->connect();
