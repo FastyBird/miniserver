@@ -260,6 +260,89 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
+	 * @return array<string, array{string, string, array<string, mixed>}>
+	 */
+	public static function propertyValues(): array
+	{
+		$cases = [];
+
+		foreach (['connector' => true, 'device' => 10, 'channel' => 'on'] as $owner => $value) {
+			foreach (['set', 'write'] as $kind) {
+				$cases[$owner . ' property ' . $kind . ' of both values'] = [
+					$owner,
+					$kind,
+					['actual_value' => $value, 'expected_value' => null],
+				];
+
+				$cases[$owner . ' property ' . $kind . ' of the expected value alone'] = [
+					$owner,
+					$kind,
+					['expected_value' => $value],
+				];
+			}
+		}
+
+		return $cases;
+	}
+
+	/**
+	 * An allowed property SET is carried on with the values the call gives, and only those: a
+	 * value given as null stays null, a value not given stays absent (#723)
+	 *
+	 * @param array<string, mixed> $values
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('propertyValues')]
+	public function testPropertySetCarriesOnTheValuesGiven(string $owner, string $kind, array $values): void
+	{
+		$calls = [
+			'connector' => [
+				Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
+				['connector' => self::CONNECTOR, 'property' => self::CONNECTOR_PROPERTY],
+				Devices\Documents\States\Connectors\Properties\Actions\Action::class,
+			],
+			'device' => [
+				Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+				['device' => self::DEVICE, 'property' => self::DEVICE_PROPERTY],
+				Devices\Documents\States\Devices\Properties\Actions\Action::class,
+			],
+			'channel' => [
+				Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
+				['channel' => self::CHANNEL, 'property' => self::CHANNEL_PROPERTY],
+				Devices\Documents\States\Channels\Properties\Actions\Action::class,
+			],
+		];
+
+		[$routingKey, $ids, $document] = $calls[$owner];
+
+		$this->connectorProperty();
+
+		$frame = $this->call($this->client(['manager']), [
+			'routing_key' => $routingKey,
+			'source' => Sources\Module::DEVICES->value,
+			'data' => ['action' => Types\PropertyAction::SET->value] + $ids + [$kind => $values],
+		]);
+
+		$this->assertAnswer($frame, ['manager'], true);
+
+		self::assertSame(
+			[
+				[
+					'source' => Sources\Module::DEVICES->value,
+					'routing_key' => $routingKey,
+					'document' => $document,
+					'data' => ['id' => $ids['property']] + $ids + [
+						'action' => Types\PropertyAction::SET->value,
+						$kind => $values,
+					],
+				],
+			],
+			$this->publishedDocuments,
+		);
+	}
+
+	/**
 	 * The control action reaches the exchange as its owner's control action document, under the
 	 * control action routing key, carrying the owner, the control, the action and the value
 	 *

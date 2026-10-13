@@ -16,7 +16,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types;
-use Nette\Utils;
 use Override;
 use Throwable;
 use TypeError;
@@ -100,38 +99,38 @@ final readonly class StatesActions implements Consumers\Consumer
 				}
 
 				$result = null;
-				$data = [];
+				$values = States\PropertyUpdate::create();
 
 				if ($document->getSet() !== null) {
 					if ($document->getSet()->getActualValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getSet()->getActualValue();
+						$values = $values->withActualValue($document->getSet()->getActualValue());
 					}
 
 					if ($document->getSet()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getSet()->getExpectedValue();
+						$values = $values->withExpectedValue($document->getSet()->getExpectedValue());
 					}
 
-					if ($data !== []) {
+					if (!$values->isEmpty()) {
 						$result = $this->connectorPropertiesStatesManager->writeState(
 							$property,
-							Utils\ArrayHash::from($data),
+							$values,
 							false,
 							$source,
 						);
 					}
 				} elseif ($document->getWrite() !== null) {
 					if ($document->getWrite()->getActualValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getWrite()->getActualValue();
+						$values = $values->withActualValue($document->getWrite()->getActualValue());
 					}
 
 					if ($document->getWrite()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getWrite()->getExpectedValue();
+						$values = $values->withExpectedValue($document->getWrite()->getExpectedValue());
 					}
 
-					if ($data !== []) {
+					if (!$values->isEmpty()) {
 						$result = $this->connectorPropertiesStatesManager->writeState(
 							$property,
-							Utils\ArrayHash::from($data),
+							$values,
 							true,
 							$source,
 						);
@@ -139,7 +138,7 @@ final readonly class StatesActions implements Consumers\Consumer
 				}
 
 				$result
-					?->then(function () use ($document, $property, $source, $routingKey, $data): void {
+					?->then(function () use ($document, $property, $source, $routingKey, $values): void {
 						$this->logger->debug(
 							'Requested write value to connector property',
 							[
@@ -152,7 +151,7 @@ final readonly class StatesActions implements Consumers\Consumer
 									'id' => $property->getId()->toString(),
 									'identifier' => $property->getIdentifier(),
 								],
-								'data' => $data,
+								'data' => $values->toArray(),
 								'message' => [
 									'routing_key' => $routingKey,
 									'source' => $source->value,
@@ -232,38 +231,38 @@ final readonly class StatesActions implements Consumers\Consumer
 				}
 
 				$result = null;
-				$data = [];
+				$values = States\PropertyUpdate::create();
 
 				if ($document->getSet() !== null) {
 					if ($document->getSet()->getActualValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getSet()->getActualValue();
+						$values = $values->withActualValue($document->getSet()->getActualValue());
 					}
 
 					if ($document->getSet()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getSet()->getExpectedValue();
+						$values = $values->withExpectedValue($document->getSet()->getExpectedValue());
 					}
 
-					if ($data !== []) {
+					if (!$values->isEmpty()) {
 						$result = $this->devicePropertiesStatesManager->writeState(
 							$property,
-							Utils\ArrayHash::from($data),
+							$values,
 							false,
 							$source,
 						);
 					}
 				} elseif ($document->getWrite() !== null) {
 					if ($document->getWrite()->getActualValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getWrite()->getActualValue();
+						$values = $values->withActualValue($document->getWrite()->getActualValue());
 					}
 
 					if ($document->getWrite()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getWrite()->getExpectedValue();
+						$values = $values->withExpectedValue($document->getWrite()->getExpectedValue());
 					}
 
-					if ($data !== []) {
+					if (!$values->isEmpty()) {
 						$result = $this->devicePropertiesStatesManager->writeState(
 							$property,
-							Utils\ArrayHash::from($data),
+							$values,
 							true,
 							$source,
 						);
@@ -271,7 +270,7 @@ final readonly class StatesActions implements Consumers\Consumer
 				}
 
 				$result
-					?->then(function () use ($document, $property, $source, $routingKey, $data): void {
+					?->then(function () use ($document, $property, $source, $routingKey, $values): void {
 						$this->logger->debug(
 							'Requested write value to device property',
 							[
@@ -284,7 +283,7 @@ final readonly class StatesActions implements Consumers\Consumer
 									'id' => $property->getId()->toString(),
 									'identifier' => $property->getIdentifier(),
 								],
-								'data' => $data,
+								'data' => $values->toArray(),
 								'message' => [
 									'routing_key' => $routingKey,
 									'source' => $source->value,
@@ -364,38 +363,38 @@ final readonly class StatesActions implements Consumers\Consumer
 				}
 
 				$result = null;
-				$data = [];
+				$values = States\PropertyUpdate::create();
 
 				if ($document->getSet() !== null) {
 					if ($document->getSet()->getActualValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getSet()->getActualValue();
+						$values = $values->withActualValue($document->getSet()->getActualValue());
 					}
 
 					if ($document->getSet()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getSet()->getExpectedValue();
+						$values = $values->withExpectedValue($document->getSet()->getExpectedValue());
 					}
 
-					if ($data !== []) {
+					if (!$values->isEmpty()) {
 						$result = $this->channelPropertiesStatesManager->writeState(
 							$property,
-							Utils\ArrayHash::from($data),
+							$values,
 							false,
 							$source,
 						);
 					}
 				} elseif ($document->getWrite() !== null) {
 					if ($document->getWrite()->getActualValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::ACTUAL_VALUE_FIELD] = $document->getWrite()->getActualValue();
+						$values = $values->withActualValue($document->getWrite()->getActualValue());
 					}
 
 					if ($document->getWrite()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-						$data[States\Property::EXPECTED_VALUE_FIELD] = $document->getWrite()->getExpectedValue();
+						$values = $values->withExpectedValue($document->getWrite()->getExpectedValue());
 					}
 
-					if ($data !== []) {
+					if (!$values->isEmpty()) {
 						$result = $this->channelPropertiesStatesManager->writeState(
 							$property,
-							Utils\ArrayHash::from($data),
+							$values,
 							true,
 							$source,
 						);
@@ -403,7 +402,7 @@ final readonly class StatesActions implements Consumers\Consumer
 				}
 
 				$result
-					?->then(function () use ($document, $property, $source, $routingKey, $data): void {
+					?->then(function () use ($document, $property, $source, $routingKey, $values): void {
 						$this->logger->debug(
 							'Requested write value to channel property',
 							[
@@ -416,7 +415,7 @@ final readonly class StatesActions implements Consumers\Consumer
 									'id' => $property->getId()->toString(),
 									'identifier' => $property->getIdentifier(),
 								],
-								'data' => $data,
+								'data' => $values->toArray(),
 								'message' => [
 									'routing_key' => $routingKey,
 									'source' => $source->value,
