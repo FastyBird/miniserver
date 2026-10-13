@@ -695,7 +695,7 @@ final class CloudWs
 					'payload' => $payload,
 					'action' => $action,
 					'deferred' => $deferred,
-					'timeout' => $timeout,
+					'timer' => $timeout,
 				],
 				ValueObjects\WsMessage::class,
 			);

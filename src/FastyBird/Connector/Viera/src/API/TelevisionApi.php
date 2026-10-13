@@ -2,6 +2,7 @@
 
 namespace FastyBird\Connector\Viera\API;
 
+use ArrayObject;
 use Closure;
 use DateTimeInterface;
 use FastyBird\Connector\Viera;
@@ -27,6 +28,7 @@ use Throwable;
 use ValueError;
 use function array_combine;
 use function array_fill;
+use function array_filter;
 use function array_key_exists;
 use function array_merge;
 use function array_pop;
@@ -40,6 +42,7 @@ use function explode;
 use function hexdec;
 use function http_build_query;
 use function implode;
+use function in_array;
 use function intval;
 use function is_array;
 use function is_string;
@@ -1042,8 +1045,30 @@ final class TelevisionApi
 
 		$result = false;
 
-		$this->onMessage(function (Messages\Message $message) use ($deferred, $runLoop, &$result): void {
+		// The listeners are there to learn the answer to this question, and are taken off the client as soon as it is
+		// answered, so a client that is asked again and again does not collect a pair for every question
+		/** @var ArrayObject<int, Closure> $registered */
+		$registered = new ArrayObject();
+
+		$release = function () use ($registered): void {
+			$this->onMessageListeners = array_values(
+				array_filter(
+					$this->onMessageListeners,
+					static fn (Closure $listener): bool => !in_array($listener, $registered->getArrayCopy(), true),
+				),
+			);
+			$this->onErrorListeners = array_values(
+				array_filter(
+					$this->onErrorListeners,
+					static fn (Closure $listener): bool => !in_array($listener, $registered->getArrayCopy(), true),
+				),
+			);
+		};
+
+		$messageListener = function (Messages\Message $message) use ($deferred, $runLoop, &$result, $release): void {
 			if ($message instanceof Messages\Response\Event) {
+				$release();
+
 				if ($message->getScreenState() !== null) {
 					$deferred->resolve($message->getScreenState());
 					$result = $message->getScreenState();
@@ -1056,16 +1081,24 @@ final class TelevisionApi
 					$this->eventLoop->stop();
 				}
 			}
-		});
+		};
 
-		$this->onError(function () use ($deferred, $runLoop, &$result): void {
+		$errorListener = function () use ($deferred, $runLoop, &$result, $release): void {
+			$release();
+
 			$deferred->resolve(false);
 			$result = false;
 
 			if ($runLoop) {
 				$this->eventLoop->stop();
 			}
-		});
+		};
+
+		$registered->append($messageListener);
+		$registered->append($errorListener);
+
+		$this->onMessage($messageListener);
+		$this->onError($errorListener);
 
 		$doUnsubscribe = false;
 
@@ -1075,6 +1108,8 @@ final class TelevisionApi
 			$subscribeResult = $this->subscribeEvents();
 
 			if ($subscribeResult === false) {
+				$release();
+
 				if ($runLoop) {
 					return false;
 				}
@@ -1083,18 +1118,23 @@ final class TelevisionApi
 			}
 		}
 
-		$this->eventLoop->addTimer(1.5, async(function () use ($deferred, $runLoop, &$result, $doUnsubscribe): void {
-			if ($doUnsubscribe) {
-				$this->unsubscribeEvents();
-			}
+		$this->eventLoop->addTimer(
+			1.5,
+			async(function () use ($deferred, $runLoop, &$result, $doUnsubscribe, $release): void {
+				$release();
 
-			$deferred->resolve(false);
-			$result = false;
+				if ($doUnsubscribe) {
+					$this->unsubscribeEvents();
+				}
 
-			if ($runLoop) {
-				$this->eventLoop->stop();
-			}
-		}));
+				$deferred->resolve(false);
+				$result = false;
+
+				if ($runLoop) {
+					$this->eventLoop->stop();
+				}
+			}),
+		);
 
 		if ($runLoop) {
 			$this->eventLoop->run();

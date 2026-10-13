@@ -54,7 +54,7 @@ final readonly class DeviceEventData implements API\Messages\Message
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('sledOnline')]
-		private int|null $statusLed = null,
+		private string|null $statusLed = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\ArrayEnumValue([self::VALUE_ON, self::VALUE_OFF]),
 			new ObjectMapper\Rules\NullValue(),
@@ -103,10 +103,9 @@ final readonly class DeviceEventData implements API\Messages\Message
 		])]
 		#[ObjectMapper\Modifiers\FieldName('subDevId')]
 		private string|null $subDeviceId = null,
-		#[ObjectMapper\Rules\AnyOf([
+		#[ObjectMapper\Rules\ArrayOf(
 			new ObjectMapper\Rules\MappedObjectValue(class: SwitchState::class),
-			new ObjectMapper\Rules\NullValue(),
-		])]
+		)]
 		#[ObjectMapper\Modifiers\FieldName('switches')]
 		private array $switchesStates = [],
 	)
@@ -148,9 +147,9 @@ final readonly class DeviceEventData implements API\Messages\Message
 		return $this->bssid;
 	}
 
-	public function getStatusLed(): int|null
+	public function getStatusLed(): bool|null
 	{
-		return $this->statusLed;
+		return $this->statusLed === null ? null : $this->statusLed === self::VALUE_ON;
 	}
 
 	public function getSwitch(): string|null

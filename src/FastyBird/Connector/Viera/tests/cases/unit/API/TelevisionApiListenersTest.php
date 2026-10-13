@@ -16,15 +16,20 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
 use RuntimeException;
+use function array_fill;
 use function array_map;
 use function array_values;
 use function assert;
+use function count;
 use function func_get_args;
+use function is_array;
 
 final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	private Socket\SocketServer|null $eventsServer = null;
+
+	private Tests\Support\InertEventLoop|null $loop = null;
 
 	public function testHooksAreNotPublicProperties(): void
 	{
@@ -85,6 +90,7 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 	public function testIsTurnedOnResolvesFromTheNextEventAfterTheListenersRegisteredBeforeIt(): void
 	{
 		$events = [];
+		/** @var array<int, array{string, array<mixed>}> $resolved */
 		$resolved = [];
 
 		$client = $this->createClient();
@@ -142,6 +148,7 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 	public function testIsTurnedOnResolvesToFalseWhenTheSubscriptionConnectionFails(): void
 	{
 		$events = [];
+		/** @var array<int, array{string, array<mixed>}> $resolved */
 		$resolved = [];
 
 		$client = $this->createClient();
@@ -156,6 +163,101 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 
 		self::assertCount(1, $events);
 		self::assertSame([['resolved', [false]]], $resolved);
+	}
+
+	/**
+	 * Asking for the screen state registers a listener for the answer, and the listener has done its work once the
+	 * question is answered, by the television's event, by its connection failing or by the time running out. A client
+	 * asked over and over does not keep a listener for every question it was ever asked.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws ReflectionException
+	 * @throws VieraExceptions\TelevisionApiError
+	 * @throws Error
+	 */
+	public function testAskingForTheScreenStateAgainAndAgainDoesNotAccumulateListeners(): void
+	{
+		$events = [];
+		/** @var array<int, array{string, array<mixed>}> $resolved */
+		$resolved = [];
+
+		$client = $this->createClient();
+
+		$client->onMessage($this->record('caller', $events));
+		$client->onError($this->record('caller', $events));
+
+		for ($i = 1; $i <= 5; $i++) {
+			$client->isTurnedOn()->then($this->record('resolved', $resolved));
+
+			// The question is waiting for its answer, and the time given for it runs out
+			self::assertSame([2, 2], $this->countListeners($client));
+			self::assertCount($i - 1, $resolved);
+
+			$this->runTimers();
+
+			self::assertCount($i, $resolved);
+			self::assertSame([1, 1], $this->countListeners($client));
+		}
+
+		self::assertSame(array_fill(0, 5, ['resolved', [false]]), $resolved);
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws ReflectionException
+	 * @throws VieraExceptions\TelevisionApiError
+	 * @throws Error
+	 */
+	public function testQuestionsWaitingTogetherAreAllAnsweredByTheNextEventAndLeaveNoListeners(): void
+	{
+		/** @var array<int, array{string, array<mixed>}> $resolved */
+		$resolved = [];
+
+		$client = $this->createClient();
+
+		for ($i = 0; $i < 4; $i++) {
+			$client->isTurnedOn()->then($this->record('resolved', $resolved));
+		}
+
+		$connection = $this->openEventsServer($client);
+
+		self::assertSame([4, 4], $this->countListeners($client));
+		self::assertCount(0, array_values($resolved));
+
+		$connection->emit('data', [$this->buildNotification('On', 'tv')]);
+
+		self::assertSame(array_fill(0, 4, ['resolved', [true]]), $resolved);
+		self::assertSame([0, 0], $this->countListeners($client));
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws ReflectionException
+	 * @throws VieraExceptions\TelevisionApiError
+	 * @throws Error
+	 */
+	public function testQuestionAnsweredByTheFailingConnectionLeavesNoListeners(): void
+	{
+		/** @var array<int, array{string, array<mixed>}> $resolved */
+		$resolved = [];
+
+		$client = $this->createClient();
+
+		$client->isTurnedOn()->then($this->record('resolved', $resolved));
+		$client->isTurnedOn()->then($this->record('resolved', $resolved));
+
+		$connection = $this->openEventsServer($client);
+
+		$connection->emit('error', [new RuntimeException('Connection broke')]);
+
+		self::assertSame(array_fill(0, 2, ['resolved', [false]]), $resolved);
+		self::assertSame([0, 0], $this->countListeners($client));
 	}
 
 	#[Override]
@@ -180,13 +282,46 @@ final class TelevisionApiListenersTest extends Tests\Cases\Unit\BaseTestCase
 	private function createClient(): API\TelevisionApi
 	{
 		// The container's loop runs at the end of the process, and a timer the client sets would keep it alive
-		$this->mockContainerService(CoreEventLoop\Wrapper::class, new Tests\Support\InertEventLoop());
+		$this->loop = new Tests\Support\InertEventLoop();
+
+		$this->mockContainerService(CoreEventLoop\Wrapper::class, $this->loop);
 
 		return $this->container->getByType(API\TelevisionApiFactory::class)->create(
 			'testing-television',
 			'127.0.0.1',
 			1,
 		);
+	}
+
+	/**
+	 * @return array{int, int} the message listeners and the error listeners the client holds
+	 *
+	 * @throws ReflectionException
+	 */
+	private function countListeners(API\TelevisionApi $client): array
+	{
+		$messages = (new ReflectionProperty($client, 'onMessageListeners'))->getValue($client);
+		$errors = (new ReflectionProperty($client, 'onErrorListeners'))->getValue($client);
+
+		assert(is_array($messages) && is_array($errors));
+
+		return [count($messages), count($errors)];
+	}
+
+	/**
+	 * Lets the time pass for every timer the client set
+	 */
+	private function runTimers(): void
+	{
+		$loop = $this->loop;
+
+		assert($loop !== null);
+
+		foreach ($loop->getTimers() as $timer) {
+			$loop->cancelTimer($timer);
+
+			($timer->getCallback())();
+		}
 	}
 
 	/**

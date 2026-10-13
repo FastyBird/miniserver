@@ -326,7 +326,9 @@ review, not by a gate.
 ## Events
 
 Core's capabilities announce what happens through PSR-14 events, and only through them. These
-rules are kept by review, not by a gate.
+rules are kept by review, not by a gate, with one exception: `make naming` (check 7) refuses a
+public `$onX` property in any first-party file. The rest of the "no callback arrays" rule, the
+`Arrays::invoke()` ban and the `addSetup()` ban included, is still review.
 
 - **Dispatch through PSR-14 only.** A class that announces something takes
   `Psr\EventDispatcher\EventDispatcherInterface` in its constructor and calls `dispatch()`. No
