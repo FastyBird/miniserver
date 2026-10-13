@@ -8,10 +8,8 @@ use Flow\JSONPath;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
-use function bin2hex;
 use function count;
 use function implode;
-use function preg_replace_callback;
 use function serialize;
 
 /**
@@ -36,7 +34,7 @@ class FindDevices extends QueryObject
 	 */
 	public function byType(string|int $type): void
 	{
-		$this->filter[] = '.[?(@.type =~ /(?i).*^' . $type . '*$/)]';
+		$this->filter[] = '.[?(@.type =~ /(?i)^' . self::literal((string) $type) . '\z/)]';
 	}
 
 	/**
@@ -57,12 +55,12 @@ class FindDevices extends QueryObject
 
 	public function startWithIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /(?i).*^' . $identifier . '*[\w\d\-_]+$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /(?i)^' . self::literal($identifier) . '[\w\d\-_]*\z/)]';
 	}
 
 	public function endWithIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /^[\w\d\-_]+(?i).*' . $identifier . '*$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /^[\w\d\-_]+(?i).*' . self::literal($identifier) . '\z/)]';
 	}
 
 	public function forConnector(Documents\Connectors\Connector $connector): void
@@ -136,19 +134,6 @@ class FindDevices extends QueryObject
 		} catch (Utils\JsonException) {
 			throw new Exceptions\InvalidState('Cache key could not be generated');
 		}
-	}
-
-	/**
-	 * Every character but a letter, a digit, `-` and `_` is written as its byte value: none of them can then mean
-	 * anything to the pattern, nor open or close a bracket of the path expression the pattern sits in
-	 */
-	private static function literal(string $value): string
-	{
-		return (string) preg_replace_callback(
-			'/[^A-Za-z0-9\-_]/',
-			static fn (array $match): string => '\\x' . bin2hex($match[0]),
-			$value,
-		);
 	}
 
 }

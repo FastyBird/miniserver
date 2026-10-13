@@ -34,7 +34,7 @@ final class FindChannelControls extends QueryObject
 
 	public function byName(string $name): void
 	{
-		$this->filter[] = '.[?(@.name =~ /(?i).*^' . $name . '*$/)]';
+		$this->filter[] = '.[?(@.name =~ /(?i)^' . self::literal($name) . '\z/)]';
 	}
 
 	public function forChannel(Documents\Channels\Channel $channel): void

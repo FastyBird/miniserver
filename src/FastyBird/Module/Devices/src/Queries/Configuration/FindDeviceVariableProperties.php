@@ -44,7 +44,7 @@ class FindDeviceVariableProperties extends FindDeviceProperties
 
 	public function byValue(string $value): void
 	{
-		$this->filter[] = '.[?(@.value =~ /(?i).*^' . $value . '*$/)]';
+		$this->filter[] = '.[?(@.value =~ /(?i)^' . self::literal($value) . '\z/)]';
 	}
 
 }
