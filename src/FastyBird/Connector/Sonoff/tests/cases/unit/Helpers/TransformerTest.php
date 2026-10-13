@@ -21,7 +21,11 @@ final class TransformerTest extends TestCase
 	{
 		self::assertSame(
 			'{"switch":"on"}',
-			Helpers\Transformer::decryptMessage($this->encrypt('{"switch":"on"}'), self::KEY, base64_encode(self::VECTOR)),
+			Helpers\Transformer::decryptMessage(
+				$this->encrypt('{"switch":"on"}'),
+				self::KEY,
+				base64_encode(self::VECTOR),
+			),
 		);
 	}
 

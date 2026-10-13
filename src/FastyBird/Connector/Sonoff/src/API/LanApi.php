@@ -344,7 +344,9 @@ final class LanApi
 						// A part that does not decrypt with the key is not the device's, even when the parts
 						// around it do
 						if ($decrypted === false) {
-							throw new SonoffExceptions\LanApiError('The data of the announcement could not be decrypted');
+							throw new SonoffExceptions\LanApiError(
+								'The data of the announcement could not be decrypted',
+							);
 						}
 
 						$data[$index] = $decrypted;

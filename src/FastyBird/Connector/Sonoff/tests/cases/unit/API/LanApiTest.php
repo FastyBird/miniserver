@@ -826,7 +826,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 
 		$withALongerVector = Nette\Utils\Json::decode(self::encryptedReply(self::deviceInfo(), 'device-key'));
 		assert($withALongerVector instanceof stdClass);
-		$withALongerVector->iv = base64_encode('0123456789abcdef' . 'and-then-more');
+		$withALongerVector->iv = base64_encode('0123456789abcdefand-then-more');
 
 		$withoutVector = Nette\Utils\Json::decode(self::encryptedReply(self::deviceInfo(), 'device-key'));
 		assert($withoutVector instanceof stdClass);
@@ -923,7 +923,9 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertTrue($info->getSwitch());
 
 		self::assertTrue(
-			$this->createReplyingClient(Nette\Utils\Json::encode(['seq' => 1, 'error' => 0, 'data' => ['switch' => 'on']]))
+			$this->createReplyingClient(
+				Nette\Utils\Json::encode(['seq' => 1, 'error' => 0, 'data' => ['switch' => 'on']]),
+			)
 				->setDeviceState(self::DEVICE_ID, '10.0.0.7', 8_081, 'switch', 'on', null, null, false),
 		);
 	}
