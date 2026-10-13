@@ -145,10 +145,6 @@
                 <element key="src/FastyBird/Module/Ui/tests/fixtures/dummy" value="FastyBird\Module\Ui\Tests\Fixtures\Dummy"/>
                 <element key="src/FastyBird/Module/Ui/tests/support" value="FastyBird\Module\Ui\Tests\Support"/>
 
-                <element key="src/FastyBird/Plugin/ApiKey/src" value="FastyBird\Plugin\ApiKey"/>
-                <element key="src/FastyBird/Plugin/ApiKey/tests/cases/unit" value="FastyBird\Plugin\ApiKey\Tests\Cases\Unit"/>
-                <element key="src/FastyBird/Plugin/ApiKey/tests/support" value="FastyBird\Plugin\ApiKey\Tests\Support"/>
-
                 <element key="src/FastyBird/Plugin/CouchDb/src" value="FastyBird\Plugin\CouchDb"/>
                 <element key="src/FastyBird/Plugin/CouchDb/tests/cases/unit" value="FastyBird\Plugin\CouchDb\Tests\Cases\Unit"/>
                 <element key="src/FastyBird/Plugin/CouchDb/tests/fixtures" value="FastyBird\Plugin\CouchDb\Tests\Fixtures"/>

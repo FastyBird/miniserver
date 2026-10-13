@@ -1,5 +1,0 @@
-base:
-    messages:
-        unauthorized:
-            heading	: "Not authorized"
-            message	: "You are not authorized to perform this action"

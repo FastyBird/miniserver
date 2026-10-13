@@ -68,7 +68,6 @@ parameters:
         - ../src/FastyBird/Module/Devices/src
         - ../src/FastyBird/Module/Triggers/src
         - ../src/FastyBird/Module/Ui/src
-        - ../src/FastyBird/Plugin/ApiKey/src
         - ../src/FastyBird/Plugin/CouchDb/src
         - ../src/FastyBird/Plugin/RabbitMq/src
         - ../src/FastyBird/Plugin/RedisDb/src

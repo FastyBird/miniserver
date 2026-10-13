@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab325f39101d040c11e3b8cad9a0e537",
+    "content-hash": "5943a0345906f9ae6a29f0a7ae9c37c8",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2277,78 +2277,6 @@
                 "vue",
                 "vue3",
                 "vuejs"
-            ],
-            "support": {
-                "email": "code@fastybird.com",
-                "issues": "https://github.com/FastyBird/miniserver/issues",
-                "source": "https://github.com/FastyBird/miniserver"
-            },
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
-            "name": "fastybird/apikey-plugin",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "src/FastyBird/Plugin/ApiKey",
-                "reference": "05cc4c9d505ca23129839b1664491ef1cec0d533"
-            },
-            "require": {
-                "cweagans/composer-patches": "^1.7",
-                "fastybird/miniserver-core": "@dev",
-                "fig/http-message-util": "^1.1",
-                "nette/di": "^3.2",
-                "nette/utils": "^4.0",
-                "php": ">=8.4.0",
-                "psr/http-message": "^1.0",
-                "psr/http-server-middleware": "^1.0",
-                "psr/log": "^3.0",
-                "ramsey/uuid": "^4.7",
-                "react/promise": "^3",
-                "symfony/console": "^6.0"
-            },
-            "require-dev": {
-                "symplify/vendor-patches": "^11.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "FastyBird\\Plugin\\ApiKey\\": "src/"
-                }
-            },
-            "autoload-dev": {
-                "psr-4": {
-                    "FastyBird\\Plugin\\ApiKey\\Tests\\Cases\\Unit\\": "tests/cases/unit",
-                    "FastyBird\\Plugin\\ApiKey\\Tests\\Support\\": "tests/support"
-                }
-            },
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "FastyBird s.r.o.",
-                    "email": "code@fastybird.com",
-                    "homepage": "https://www.fastybird.com"
-                },
-                {
-                    "name": "Adam Kadlec",
-                    "email": "adam.kadlec@fastybird.com"
-                }
-            ],
-            "description": "FastyBird IoT api keys management plugin",
-            "homepage": "https://www.fastybird.com",
-            "keywords": [
-                "access",
-                "api",
-                "api-key",
-                "fastybird",
-                "fb",
-                "library",
-                "libs",
-                "middleware"
             ],
             "support": {
                 "email": "code@fastybird.com",
@@ -17932,7 +17860,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "fastybird/accounts-module": 20,
-        "fastybird/apikey-plugin": 20,
         "fastybird/couchdb-plugin": 20,
         "fastybird/date-time-automator": 20,
         "fastybird/devices-module": 20,

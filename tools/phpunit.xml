@@ -65,7 +65,6 @@
         <directory>../src/FastyBird/Module/Devices/tests/cases/</directory>
         <directory>../src/FastyBird/Module/Triggers/tests/cases/</directory>
         <directory>../src/FastyBird/Module/Ui/tests/cases/</directory>
-        <directory>../src/FastyBird/Plugin/ApiKey/tests/cases/</directory>
         <directory>../src/FastyBird/Plugin/CouchDb/tests/cases/</directory>
         <directory>../src/FastyBird/Plugin/RabbitMq/tests/cases/</directory>
         <directory>../src/FastyBird/Plugin/RedisDb/tests/cases/</directory>
