@@ -2,6 +2,7 @@
 
 namespace FastyBird\Connector\Sonoff\Tests\Cases\Unit\Queue\Consumers;
 
+use Closure;
 use Error;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
@@ -16,10 +17,12 @@ use Nette;
 use Override;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use PHPUnit\Framework\MockObject\MockObject;
 use Ramsey\Uuid;
 use React\Promise;
 use RuntimeException;
 use Throwable;
+use function assert;
 
 /**
  * The connector has two devices, `abc` and `abcd`, and the identifier of the second extends the first: what is stored
@@ -55,15 +58,21 @@ final class StoreStateTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$devices = [];
 
-		$connection = $this->createMock(DevicesUtilities\DeviceConnection::class);
-		$connection->method('getState')->willReturn(DevicesTypes\ConnectionState::UNKNOWN);
-		$connection
-			->method('setState')
-			->willReturnCallback(static function (DevicesDocuments\Devices\Device $device) use (&$devices): bool {
-				$devices[] = $device->getId()->toString();
+		$connection = $this->mockOf(
+			DevicesUtilities\DeviceConnection::class,
+			static function (MockObject $mock) use (&$devices): void {
+				$mock->method('getState')->willReturn(DevicesTypes\ConnectionState::UNKNOWN);
+				$mock
+					->method('setState')
+					->willReturnCallback(
+						static function (DevicesDocuments\Devices\Device $device) use (&$devices): bool {
+							$devices[] = $device->getId()->toString();
 
-				return true;
-			});
+							return true;
+						},
+					);
+			},
+		);
 
 		$this->mockContainerService(DevicesUtilities\DeviceConnection::class, $connection);
 
@@ -95,16 +104,20 @@ final class StoreStateTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$devices = [];
 
-		$states = $this->createMock(DevicesModels\States\Async\DevicePropertiesManager::class);
-		$states
-			->method('set')
-			->willReturnCallback(
-				static function (DevicesDocuments\Devices\Properties\Dynamic $property) use (&$devices): Promise\PromiseInterface {
-					$devices[] = $property->getDevice()->toString();
+		$states = $this->mockOf(
+			DevicesModels\States\Async\DevicePropertiesManager::class,
+			static function (MockObject $mock) use (&$devices): void {
+				$mock
+					->method('set')
+					->willReturnCallback(
+						static function (DevicesDocuments\Devices\Properties\Dynamic $property) use (&$devices): Promise\PromiseInterface {
+							$devices[] = $property->getDevice()->toString();
 
-					return Promise\resolve(true);
-				},
-			);
+							return Promise\resolve(true);
+						},
+					);
+			},
+		);
 
 		$this->mockContainerService(DevicesModels\States\Async\DevicePropertiesManager::class, $states);
 
@@ -124,6 +137,28 @@ final class StoreStateTest extends Tests\Cases\Unit\DbTestCase
 		);
 
 		self::assertSame([self::DEVICE_ABC], $devices);
+	}
+
+	/**
+	 * The services replaced are final, which PHPStan does not let a mock of one be typed as, so the mock is handed over
+	 * as the class it stands in for
+	 *
+	 * @template T of object
+	 *
+	 * @param class-string<T> $class
+	 * @param Closure(MockObject): void $configure
+	 *
+	 * @return T
+	 */
+	private function mockOf(string $class, Closure $configure): object
+	{
+		$mock = $this->createMock($class);
+
+		assert($mock instanceof $class);
+
+		$configure($mock);
+
+		return $mock;
 	}
 
 }
