@@ -35,9 +35,11 @@ use function is_string;
  * became a literal in a Values\Types\Sources enum case, under rules C1 to C4 (C5's only constant,
  * TOKEN_URI_NAME, was never read and #635 deleted it). Two of the 63, PLUGIN_WS_SERVER_SOURCE and
  * PLUGIN_WEB_SERVER_SOURCE, are gone from both tables since #744: they were log labels only, and
- * Core's logs now use Sources\Core::CORE with a `capability` context key. VALUES is the table #648
- * recorded against the class itself, unedited; DESTINATIONS says where each constant lives now. A
- * value that changed on the way is a red test, not a review comment.
+ * Core's logs now use Sources\Core::CORE with a `capability` context key. A third, PLUGIN_API_KEY,
+ * went with the ApiKey plugin it labelled (#730), whose keys Core's Security capability replaced.
+ * VALUES is the table #648 recorded against the class itself, unedited otherwise; DESTINATIONS says
+ * where each constant lives now. A value that changed on the way is a red test, not a review
+ * comment.
  *
  * It lives in the application tier because the destinations span Core, four modules, three bridges
  * and a plugin, which no single package's tests may reference (make layers).
@@ -58,7 +60,6 @@ final class ConstantsValuesTest extends TestCase
 		'PLUGIN_RABBITMQ_SOURCE' => 'com.fastybird.rabbitmq-plugin',
 		'PLUGIN_REDISDB_SOURCE' => 'com.fastybird.redisdb-plugin',
 		'PLUGIN_REDISDB_CACHE_SOURCE' => 'com.fastybird.redisdb-cache-plugin',
-		'PLUGIN_API_KEY' => 'com.fastybird.api-key-plugin',
 		'CONNECTOR_FB_BUS_SOURCE' => 'com.fastybird.fb-bus-connector',
 		'CONNECTOR_FB_MQTT_SOURCE' => 'com.fastybird.fb-mqtt-connector',
 		'CONNECTOR_SHELLY_SOURCE' => 'com.fastybird.shelly-connector',
@@ -142,7 +143,6 @@ final class ConstantsValuesTest extends TestCase
 		'PLUGIN_RABBITMQ_SOURCE' => [[Sources\Plugin::class, 'RABBITMQ']],
 		'PLUGIN_REDISDB_SOURCE' => [[Sources\Plugin::class, 'REDISDB']],
 		'PLUGIN_REDISDB_CACHE_SOURCE' => [[Sources\Plugin::class, 'REDISDB_CACHE']],
-		'PLUGIN_API_KEY' => [[Sources\Plugin::class, 'API_KEY']],
 		'CONNECTOR_FB_BUS_SOURCE' => [[Sources\Connector::class, 'FB_BUS']],
 		'CONNECTOR_FB_MQTT_SOURCE' => [[Sources\Connector::class, 'FB_MQTT']],
 		'CONNECTOR_SHELLY_SOURCE' => [[Sources\Connector::class, 'SHELLY']],
@@ -228,7 +228,7 @@ final class ConstantsValuesTest extends TestCase
 	}
 
 	/**
-	 * Each of the 61 is read above, under its old name: testEveryConstantHasItsPinnedValue fails on
+	 * Each of the 60 is read above, under its old name: testEveryConstantHasItsPinnedValue fails on
 	 * any name missing from DESTINATIONS or not in VALUES. What is left to pin is the class itself.
 	 */
 	public function testTheConstantsClassIsGone(): void

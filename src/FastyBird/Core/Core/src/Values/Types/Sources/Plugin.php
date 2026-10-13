@@ -18,6 +18,4 @@ enum Plugin: string implements Source
 
 	case REDISDB_CACHE = 'com.fastybird.redisdb-cache-plugin';
 
-	case API_KEY = 'com.fastybird.api-key-plugin';
-
 }
