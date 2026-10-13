@@ -189,8 +189,6 @@ final class SensitiveDataTest extends TestCase
 				self::COOKIE_TOKEN,
 				self::COOKIE_REFRESH_TOKEN,
 			]);
-
-			self::fail('The query did not fail');
 		} catch (RuntimeException $ex) {
 			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
 		}
@@ -313,6 +311,8 @@ final class SensitiveDataTest extends TestCase
 	 * Stands in for the database layer's frames, whose arguments are the SQL and its parameters
 	 *
 	 * @param list<string> $params
+	 *
+	 * @throws RuntimeException
 	 */
 	private function executeQuery(ServerRequest $request, string $sql, array $params): never
 	{
