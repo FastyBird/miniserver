@@ -128,7 +128,10 @@ final class Lan extends ClientProcess implements Client
 
 		$lanClient->onMessage(function (API\Messages\Message $message): void {
 			if ($message instanceof API\Messages\Response\Lan\DeviceEvent) {
+				// Only the devices of this connector are its devices: an announced id is not looked up among the
+				// devices of another one
 				$findDeviceQuery = new Queries\Configuration\FindDevices();
+				$findDeviceQuery->forConnector($this->connector);
 				$findDeviceQuery->byIdentifier($message->getId());
 
 				$device = $this->devicesConfigurationRepository->findOneBy(
