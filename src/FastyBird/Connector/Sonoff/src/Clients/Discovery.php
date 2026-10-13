@@ -237,9 +237,9 @@ final class Discovery
 
 		$apiClient->onMessage(function (API\Messages\Message $message): void {
 			if ($message instanceof API\Messages\Response\Lan\DeviceEvent) {
-				// Anyone on the network can announce any id from any address. The address of a device with a key is
-				// taken only from an announcement whose data decrypted with that key, which the API does for a device
-				// whose key it holds; a device without a key has nothing to check its announcement against
+				// For a device with a key, only an announcement whose data decrypted with that key may set its address;
+				// the API decrypts the data of a device whose key it holds. The address itself is not part of the
+				// encrypted data. A device without a key has nothing to check its announcement against.
 				if (
 					array_key_exists(strtolower($message->getId()), $this->keyedDevices)
 					&& (!$message->isEncrypted() || $message->getData() === null)
