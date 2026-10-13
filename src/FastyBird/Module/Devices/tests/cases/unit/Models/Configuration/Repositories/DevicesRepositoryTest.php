@@ -136,6 +136,50 @@ final class DevicesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
+	 * An identifier is matched as it is, ignoring case, and never as a pattern: what a pattern would make of its
+	 * characters must not find a device with another identifier
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testReadByIdentifierMatchesTheIdentifierLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Devices\Repository::class);
+
+		foreach (['first-device', 'FIRST-DEVICE', 'First-Device'] as $identifier) {
+			$findQuery = new Queries\Configuration\FindDevices();
+			$findQuery->byIdentifier($identifier);
+
+			$entity = $repository->findOneBy($findQuery);
+
+			self::assertIsObject($entity, $identifier);
+			self::assertSame('first-device', $entity->getIdentifier());
+		}
+
+		foreach (
+			[
+				'first.device',
+				'first-devicee',
+				'first-devic.',
+				'first-[d]evice',
+				'[a-z]+-device',
+				'.+',
+				'first-device/',
+				' first-device',
+				"first-device\n",
+			] as $identifier
+		) {
+			$findQuery = new Queries\Configuration\FindDevices();
+			$findQuery->byIdentifier($identifier);
+
+			self::assertSame([], $repository->findAllBy($findQuery), $identifier);
+		}
+	}
+
+	/**
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
@@ -224,6 +268,56 @@ final class DevicesRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		$entities = $repository->findAllBy($findQuery);
 
 		self::assertCount(2, $entities);
+	}
+
+	/**
+	 * Every filter matches its argument as it is, ignoring case, and never as a pattern: what a pattern would make of
+	 * its characters must not find anything else. A prefix also matches the whole value.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Devices\Repository::class);
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->startWithIdentifier('first-');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'startWithIdentifier first-');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->startWithIdentifier('first-device');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'startWithIdentifier first-device');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->startWithIdentifier('first.');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'startWithIdentifier first.');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->endWithIdentifier('-device');
+
+		self::assertCount(4, $repository->findAllBy($findQuery), 'endWithIdentifier -device');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->endWithIdentifier('.device');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'endWithIdentifier .device');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->byType('dummy');
+
+		self::assertCount(4, $repository->findAllBy($findQuery), 'byType dummy');
+
+		$findQuery = new Queries\Configuration\FindDevices();
+		$findQuery->byType('dumm.');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byType dumm.');
 	}
 
 }

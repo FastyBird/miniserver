@@ -155,4 +155,79 @@ final class ChannelsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(2, $entities);
 	}
 
+	/**
+	 * Every filter matches its argument as it is, ignoring case, and never as a pattern: what a pattern would make of
+	 * its characters must not find anything else. A prefix also matches the whole value.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Channels\Repository::class);
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->byIdentifier('channel-one');
+
+		self::assertCount(2, $repository->findAllBy($findQuery), 'byIdentifier channel-one');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->byIdentifier('CHANNEL-ONE');
+
+		self::assertCount(2, $repository->findAllBy($findQuery), 'byIdentifier CHANNEL-ONE');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->byIdentifier('channel.one');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier channel.one');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->byIdentifier('channel-onee');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier channel-onee');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->byIdentifier('[c]hannel-one');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier [c]hannel-one');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->startWithIdentifier('channel-');
+
+		self::assertCount(3, $repository->findAllBy($findQuery), 'startWithIdentifier channel-');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->startWithIdentifier('CHANNEL-ONE');
+
+		self::assertCount(2, $repository->findAllBy($findQuery), 'startWithIdentifier CHANNEL-ONE');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->startWithIdentifier('channel.');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'startWithIdentifier channel.');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->endWithIdentifier('-two');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'endWithIdentifier -two');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->endWithIdentifier('.two');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'endWithIdentifier .two');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->byType('dummy');
+
+		self::assertCount(3, $repository->findAllBy($findQuery), 'byType dummy');
+
+		$findQuery = new Queries\Configuration\FindChannels();
+		$findQuery->byType('dumm.');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byType dumm.');
+	}
+
 }

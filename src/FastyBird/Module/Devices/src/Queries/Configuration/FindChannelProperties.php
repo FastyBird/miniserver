@@ -37,17 +37,17 @@ class FindChannelProperties extends QueryObject
 
 	public function byIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /(?i).*^' . $identifier . '*$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /(?i)^' . self::literal($identifier) . '\z/)]';
 	}
 
 	public function startWithIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /(?i).*^' . $identifier . '*[\w\d\-_]+$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /(?i)^' . self::literal($identifier) . '[\w\d\-_]*\z/)]';
 	}
 
 	public function endWithIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /^[\w\d\-_]+(?i).*' . $identifier . '*$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /^[\w\d\-_]+(?i).*' . self::literal($identifier) . '\z/)]';
 	}
 
 	public function forChannel(Documents\Channels\Channel $channel): void

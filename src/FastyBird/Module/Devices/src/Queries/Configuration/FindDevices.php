@@ -34,7 +34,7 @@ class FindDevices extends QueryObject
 	 */
 	public function byType(string|int $type): void
 	{
-		$this->filter[] = '.[?(@.type =~ /(?i).*^' . $type . '*$/)]';
+		$this->filter[] = '.[?(@.type =~ /(?i)^' . self::literal((string) $type) . '\z/)]';
 	}
 
 	/**
@@ -45,19 +45,22 @@ class FindDevices extends QueryObject
 		$this->filter[] = '.[?(@.type in [' . (count($types) > 0 ? ('"' . implode('","', $types) . '"') : '') . '])]';
 	}
 
+	/**
+	 * The identifier is matched as it is, ignoring case, the way the database compares it, not as a pattern
+	 */
 	public function byIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /(?i).*^' . $identifier . '*$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /(?i)^' . self::literal($identifier) . '\z/)]';
 	}
 
 	public function startWithIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /(?i).*^' . $identifier . '*[\w\d\-_]+$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /(?i)^' . self::literal($identifier) . '[\w\d\-_]*\z/)]';
 	}
 
 	public function endWithIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /^[\w\d\-_]+(?i).*' . $identifier . '*$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /^[\w\d\-_]+(?i).*' . self::literal($identifier) . '\z/)]';
 	}
 
 	public function forConnector(Documents\Connectors\Connector $connector): void

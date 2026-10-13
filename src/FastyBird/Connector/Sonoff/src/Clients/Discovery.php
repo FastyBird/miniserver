@@ -38,6 +38,7 @@ use function property_exists;
 use function React\Async\async;
 use function React\Async\await;
 use function sprintf;
+use function strtolower;
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -52,6 +53,13 @@ final class Discovery
 
 	/** @var array<string, array<string, string|int>> */
 	private array $foundLocalDevices = [];
+
+	/**
+	 * The ids of the devices the cloud gave a key for
+	 *
+	 * @var array<string, true>
+	 */
+	private array $keyedDevices = [];
 
 	private API\LanApi|null $lanApiConnection = null;
 
@@ -229,6 +237,27 @@ final class Discovery
 
 		$apiClient->onMessage(function (API\Messages\Message $message): void {
 			if ($message instanceof API\Messages\Response\Lan\DeviceEvent) {
+				// For a device with a key, only an announcement whose data decrypted with that key may set its address;
+				// the API decrypts the data of a device whose key it holds. The address itself is not part of the
+				// encrypted data. A device without a key has nothing to check its announcement against.
+				if (
+					array_key_exists(strtolower($message->getId()), $this->keyedDevices)
+					&& (!$message->isEncrypted() || $message->getData() === null)
+				) {
+					$this->logger->warning(
+						'An announcement not decrypted with the device key was not taken as its address',
+						[
+							'source' => Sources\Connector::SONOFF->value,
+							'type' => 'discovery-client',
+							'device' => [
+								'id' => $message->getId(),
+							],
+						],
+					);
+
+					return;
+				}
+
 				$this->foundLocalDevices[$message->getId()] = [
 					'ipAddress' => $message->getIpAddress(),
 					'domain' => $message->getDomain(),
@@ -254,6 +283,16 @@ final class Discovery
 
 	private function handleFoundCloudDevices(API\Messages\Response\Cloud\Things $things): void
 	{
+		// The keys are known to the LAN API before it hears of any device, so that the announcements of a device with
+		// a key are decrypted, and only those are taken as the device's
+		foreach ($things->getDevices() as $device) {
+			if ($device->getDeviceKey() !== '') {
+				$this->keyedDevices[strtolower($device->getDeviceId())] = true;
+
+				$this->getLanConnection()->registerDeviceKey($device->getDeviceId(), $device->getDeviceKey());
+			}
+		}
+
 		foreach ($things->getDevices() as $device) {
 			try {
 				$mappingConfiguration = Utils\Json::decode($this->getUiidMapping($device->getExtra()->getUiid()));

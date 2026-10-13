@@ -42,14 +42,16 @@ class FindDevices extends Query\QueryObject
 	public function startWithIdentifier(string $identifier): void
 	{
 		$this->filter[] = static function (ORM\QueryBuilder $qb) use ($identifier): void {
-			$qb->andWhere('d.identifier LIKE :identifier')->setParameter('identifier', $identifier . '%');
+			$qb->andWhere('d.identifier LIKE :identifier ESCAPE \'' . LikePattern::ESCAPE . '\'')
+				->setParameter('identifier', LikePattern::literal($identifier) . '%');
 		};
 	}
 
 	public function endWithIdentifier(string $identifier): void
 	{
 		$this->filter[] = static function (ORM\QueryBuilder $qb) use ($identifier): void {
-			$qb->andWhere('d.identifier LIKE :identifier')->setParameter('identifier', '%' . $identifier);
+			$qb->andWhere('d.identifier LIKE :identifier ESCAPE \'' . LikePattern::ESCAPE . '\'')
+				->setParameter('identifier', '%' . LikePattern::literal($identifier));
 		};
 	}
 

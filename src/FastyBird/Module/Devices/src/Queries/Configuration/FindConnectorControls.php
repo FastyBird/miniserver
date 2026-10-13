@@ -34,7 +34,7 @@ final class FindConnectorControls extends QueryObject
 
 	public function byName(string $name): void
 	{
-		$this->filter[] = '.[?(@.name =~ /(?i).*^' . $name . '*$/)]';
+		$this->filter[] = '.[?(@.name =~ /(?i)^' . self::literal($name) . '\z/)]';
 	}
 
 	public function forConnector(Documents\Connectors\Connector $connector): void

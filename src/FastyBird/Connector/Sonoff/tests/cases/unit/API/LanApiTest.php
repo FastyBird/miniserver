@@ -10,10 +10,14 @@ use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
+use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
+use GuzzleHttp;
 use Nette;
 use Override;
+use PHPUnit\Framework\MockObject\MockObject;
+use Psr\Http;
 use Psr\Log;
 use React\Datagram;
 use React\Dns;
@@ -21,7 +25,9 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
 use RuntimeException;
+use stdClass;
 use Stringable;
+use function array_filter;
 use function array_map;
 use function array_values;
 use function assert;
@@ -30,7 +36,9 @@ use function count;
 use function func_get_args;
 use function is_array;
 use function is_string;
+use function restore_error_handler;
 use function serialize;
+use function set_error_handler;
 
 final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 {
@@ -289,8 +297,8 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 
 	/**
 	 * What reaches the key check and what reaches the device lookup must be the same id. The lookup of the devices
-	 * matches an identifier case-insensitively and as a pattern, so an id that is only like the id of a device with
-	 * a key is dropped as a whole, not looked up as a device that has no key
+	 * ignores case, so an id that is only like the id of a device with a key is dropped as a whole, not looked up as a
+	 * device that has no key
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -643,6 +651,291 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertSame(self::DEVICE_ID, self::deviceEvent($events[0])->getId());
 	}
 
+	/**
+	 * What a listener throws is the listener's: only reading the announcement is guarded, so the exception is not
+	 * taken for a malformed announcement and logged away
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testExceptionOfAListenerIsNotTakenForAMalformedAnnouncement(): void
+	{
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
+		$logs = new ArrayObject();
+
+		[$client, $socket] = $this->connectClient($logs);
+
+		$client->onMessage(static function (): void {
+			throw new SonoffExceptions\LanApiError('Thrown by the listener');
+		});
+
+		try {
+			$socket->emit('message', [
+				$this->buildAnnouncement(
+					['id=' . self::DEVICE_ID, 'type=plug', 'seq=7', 'data1={"switch":"on","fwVersion":"3.5.0"}'],
+				),
+				'10.0.0.7:5353',
+			]);
+
+			self::fail('The exception of the listener was swallowed');
+		} catch (SonoffExceptions\LanApiError $ex) {
+			self::assertSame('Thrown by the listener', $ex->getMessage());
+		}
+
+		self::assertCount(0, $logs);
+	}
+
+	/**
+	 * An announcement whose vector is not sixteen bytes cannot be decrypted, and is dropped without PHP warning
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testAnnouncementWithAVectorOfAnotherLengthIsDropped(): void
+	{
+		/** @var array<int, array{string, array<mixed>}> $events */
+		$events = [];
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
+		$logs = new ArrayObject();
+
+		[$client, $socket] = $this->connectClient($logs);
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+		$client->onMessage($this->record('message', $events));
+
+		$vector = '0123456789abcdef';
+
+		$cipher = Helpers\Transformer::encryptMessage(
+			'{"switch":"on","fwVersion":"3.5.0"}',
+			'device-key',
+			base64_encode($vector),
+		);
+		assert(is_string($cipher));
+
+		$warnings = [];
+
+		set_error_handler(static function (int $level, string $message) use (&$warnings): bool {
+			$warnings[] = $message;
+
+			return true;
+		});
+
+		try {
+			// The vector the data was encrypted with, and more: OpenSSL would cut it to the first sixteen bytes
+			$socket->emit('message', [
+				$this->buildAnnouncement(
+					[
+						'id=' . self::DEVICE_ID,
+						'type=plug',
+						'seq=7',
+						'data1=' . $cipher,
+						'encrypt=true',
+						'iv=' . base64_encode($vector . 'and-then-more'),
+					],
+				),
+				'10.0.0.7:5353',
+			]);
+		} finally {
+			restore_error_handler();
+		}
+
+		self::assertSame([], $warnings);
+		self::assertNoEvents($events);
+		self::assertCount(1, $logs);
+		self::assertSame(Log\LogLevel::WARNING, $logs->getArrayCopy()[0]['level']);
+	}
+
+	/**
+	 * A device with a key replies with its data encrypted with that key, and the data is decrypted before it is read
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
+	 * @throws Nette\Utils\JsonException
+	 * @throws Error
+	 */
+	public function testEncryptedReplyOfADeviceWithKeyIsDecrypted(): void
+	{
+		$client = $this->createReplyingClient(self::encryptedReply(self::deviceInfo(), 'device-key'));
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+
+		$info = $client->getDeviceInfo(self::DEVICE_ID, '10.0.0.7', 8_081, false);
+
+		self::assertSame(self::DEVICE_ID, $info->getId());
+		self::assertTrue($info->getSwitch());
+		self::assertSame('3.5.0', $info->getFirmwareVersion());
+	}
+
+	/**
+	 * A reply is not authenticated other than by the key, so plain data in the reply of a device with a key is
+	 * refused, whatever it says
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws Nette\Utils\JsonException
+	 * @throws Error
+	 */
+	public function testPlainReplyOfADeviceWithKeyIsRefused(): void
+	{
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
+		$logs = new ArrayObject();
+
+		$client = $this->createReplyingClient(
+			Nette\Utils\Json::encode(['seq' => 1, 'error' => 0, 'data' => self::deviceInfo()]),
+			$logs,
+		);
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+
+		try {
+			$client->getDeviceInfo(self::DEVICE_ID, '10.0.0.7', 8_081, false);
+
+			self::fail('Plain data of a device with a key was read');
+		} catch (SonoffExceptions\LanApiError) {
+			// The reply is refused
+		}
+
+		self::assertRefusalWasLogged($logs);
+	}
+
+	/**
+	 * Data that does not decrypt with the key of the device is not the device's: another key, a vector of another
+	 * length, or no vector at all
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws Nette\Utils\JsonException
+	 * @throws Error
+	 */
+	public function testReplyThatDoesNotDecryptWithTheKeyIsRefused(): void
+	{
+		$withAnotherKey = self::encryptedReply(self::deviceInfo(), 'another-key');
+
+		$withALongerVector = Nette\Utils\Json::decode(self::encryptedReply(self::deviceInfo(), 'device-key'));
+		assert($withALongerVector instanceof stdClass);
+		$withALongerVector->iv = base64_encode('0123456789abcdefand-then-more');
+
+		$withoutVector = Nette\Utils\Json::decode(self::encryptedReply(self::deviceInfo(), 'device-key'));
+		assert($withoutVector instanceof stdClass);
+		unset($withoutVector->iv);
+
+		foreach (
+			[
+				$withAnotherKey,
+				Nette\Utils\Json::encode($withALongerVector),
+				Nette\Utils\Json::encode($withoutVector),
+			] as $reply
+		) {
+			/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
+			$logs = new ArrayObject();
+
+			$client = $this->createReplyingClient($reply, $logs);
+
+			$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+
+			try {
+				$client->getDeviceInfo(self::DEVICE_ID, '10.0.0.7', 8_081, false);
+
+				self::fail('Data that does not decrypt with the key was read');
+			} catch (SonoffExceptions\LanApiError) {
+				// The reply is refused
+			}
+
+			self::assertRefusalWasLogged($logs);
+		}
+	}
+
+	/**
+	 * Setting a state reads no state from the reply, but plain data in the reply of a device with a key is still not
+	 * the device's, and encrypted data is
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
+	 * @throws Nette\Utils\JsonException
+	 * @throws Error
+	 */
+	public function testReplyToSettingTheStateOfADeviceWithKeyIsCheckedLikeAnyOther(): void
+	{
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
+		$logs = new ArrayObject();
+
+		$client = $this->createReplyingClient(
+			Nette\Utils\Json::encode(['seq' => 1, 'error' => 0, 'data' => ['switch' => 'on']]),
+			$logs,
+		);
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+
+		try {
+			$client->setDeviceState(self::DEVICE_ID, '10.0.0.7', 8_081, 'switch', 'on', null, null, false);
+
+			self::fail('Plain data of a device with a key was read');
+		} catch (SonoffExceptions\LanApiError) {
+			// The reply is refused
+		}
+
+		self::assertRefusalWasLogged($logs);
+
+		$client = $this->createReplyingClient(
+			self::encryptedReply(['switch' => 'on'], 'device-key'),
+		);
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+
+		self::assertTrue(
+			$client->setDeviceState(self::DEVICE_ID, '10.0.0.7', 8_081, 'switch', 'on', null, null, false),
+		);
+	}
+
+	/**
+	 * A device without a key replies in plain, and its reply is read as it always was
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws SonoffExceptions\LanApiCall
+	 * @throws SonoffExceptions\LanApiError
+	 * @throws Nette\Utils\JsonException
+	 * @throws Error
+	 */
+	public function testPlainReplyOfADeviceWithoutKeyIsRead(): void
+	{
+		$client = $this->createReplyingClient(
+			Nette\Utils\Json::encode(['seq' => 1, 'error' => 0, 'data' => self::deviceInfo()]),
+		);
+
+		$info = $client->getDeviceInfo(self::DEVICE_ID, '10.0.0.7', 8_081, false);
+
+		self::assertTrue($info->getSwitch());
+
+		self::assertTrue(
+			$this->createReplyingClient(
+				Nette\Utils\Json::encode(['seq' => 1, 'error' => 0, 'data' => ['switch' => 'on']]),
+			)
+				->setDeviceState(self::DEVICE_ID, '10.0.0.7', 8_081, 'switch', 'on', null, null, false),
+		);
+	}
+
 	#[Override]
 	protected function tearDown(): void
 	{
@@ -651,6 +944,62 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		$this->client = null;
 
 		parent::tearDown();
+	}
+
+	/**
+	 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs
+	 */
+	private static function assertRefusalWasLogged(ArrayObject $logs): void
+	{
+		// The request and the reply are logged at debug level, the refusal is the one warning
+		$warnings = array_values(array_filter(
+			$logs->getArrayCopy(),
+			static fn (array $log): bool => $log['level'] !== Log\LogLevel::DEBUG,
+		));
+
+		self::assertCount(1, $warnings);
+
+		$log = $warnings[0];
+
+		self::assertSame(Log\LogLevel::WARNING, $log['level']);
+		self::assertSame(['id' => self::DEVICE_ID], $log['context']['device'] ?? null);
+		self::assertStringNotContainsString('device-key', serialize($warnings));
+		self::assertStringNotContainsString('3.5.0', serialize($warnings));
+	}
+
+	/**
+	 * @return array<string, mixed>
+	 */
+	private static function deviceInfo(): array
+	{
+		return [
+			'deviceid' => self::DEVICE_ID,
+			'switch' => 'on',
+			'ssid' => 'home',
+			'otaUnlock' => false,
+			'fwVersion' => '3.5.0',
+			'bssid' => 'ec:aa:a0:12:34:56',
+			'signalStrength' => -60,
+		];
+	}
+
+	/**
+	 * The reply of a device with a key: its data encrypted with the key, and the vector it was encrypted with
+	 *
+	 * @param array<string, mixed> $data
+	 *
+	 * @throws Nette\Utils\JsonException
+	 */
+	private static function encryptedReply(array $data, string $key): string
+	{
+		$vector = base64_encode('0123456789abcdef');
+
+		$cipher = Helpers\Transformer::encryptMessage(Nette\Utils\Json::encode($data), $key, $vector);
+		assert(is_string($cipher));
+
+		return Nette\Utils\Json::encode(
+			['seq' => 1, 'sequence' => '1', 'error' => 0, 'encrypt' => true, 'iv' => $vector, 'data' => $cipher],
+		);
 	}
 
 	/**
@@ -680,6 +1029,35 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
+	 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs where what the
+	 *        connector logs is collected
+	 */
+	private static function collectingLogger(ArrayObject $logs): Sonoff\Logger
+	{
+		return new Sonoff\Logger(new class ($logs) extends Log\AbstractLogger {
+
+			/**
+			 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs
+			 */
+			public function __construct(private readonly ArrayObject $logs)
+			{
+			}
+
+			/**
+			 * @param array<mixed> $context
+			 */
+			// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
+
+			#[Override]
+			public function log($level, string|Stringable $message, array $context = []): void
+			{
+				$this->logs[] = ['level' => $level, 'message' => (string) $message, 'context' => $context];
+			}
+
+		});
+	}
+
+	/**
 	 * `connect()` joins the mDNS multicast group on the real socket; the test then raises what the socket would
 	 *
 	 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}>|null $logs where what the
@@ -698,30 +1076,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 	private function connectClient(ArrayObject|null $logs = null): array
 	{
 		if ($logs !== null) {
-			$this->mockContainerService(
-				Sonoff\Logger::class,
-				new Sonoff\Logger(new class ($logs) extends Log\AbstractLogger {
-
-					/**
-					 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs
-					 */
-					public function __construct(private readonly ArrayObject $logs)
-					{
-					}
-
-					/**
-					 * @param array<mixed> $context
-					 */
-					// phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
-
-					#[Override]
-					public function log($level, string|Stringable $message, array $context = []): void
-					{
-						$this->logs[] = ['level' => $level, 'message' => (string) $message, 'context' => $context];
-					}
-
-				}),
-			);
+			$this->mockContainerService(Sonoff\Logger::class, self::collectingLogger($logs));
 		}
 
 		$client = $this->container->getByType(API\LanApiFactory::class)->create();
@@ -783,6 +1138,73 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		}
 
 		return (new Dns\Protocol\BinaryDumper())->toBinary($message);
+	}
+
+	/**
+	 * A client whose every request the device answers with the given reply; it is not connected
+	 *
+	 * @param ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}>|null $logs where what the
+	 *        connector logs is collected
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws Error
+	 */
+	private function createReplyingClient(string $reply, ArrayObject|null $logs = null): API\LanApi
+	{
+		// Every client is made from a container of its own, so that the services replaced for it are its own
+		$this->container = $this->createContainer();
+
+		$httpClient = $this->createMock(GuzzleHttp\Client::class);
+		$httpClient
+			->method('send')
+			->willReturnCallback(function () use ($reply): Http\Message\ResponseInterface {
+				$body = $this->createMock(Http\Message\StreamInterface::class);
+				$body->method('getContents')->willReturn($reply);
+
+				$response = $this->createMock(Http\Message\ResponseInterface::class);
+				$response->method('getBody')->willReturn($body);
+
+				return $response;
+			});
+
+		$httpClientFactory = $this->mockOf(
+			Services\HttpClientFactory::class,
+			static function (MockObject $mock) use ($httpClient): void {
+				$mock->method('create')->willReturn($httpClient);
+			},
+		);
+
+		$this->mockContainerService(Services\HttpClientFactory::class, $httpClientFactory);
+
+		if ($logs !== null) {
+			$this->mockContainerService(Sonoff\Logger::class, self::collectingLogger($logs));
+		}
+
+		return $this->container->getByType(API\LanApiFactory::class)->create();
+	}
+
+	/**
+	 * The factory is final, which PHPStan does not let a mock of one be typed as, so the mock is handed over as the
+	 * class it stands in for
+	 *
+	 * @template T of object
+	 *
+	 * @param class-string<T> $class
+	 * @param Closure(MockObject): void $configure
+	 *
+	 * @return T
+	 */
+	private function mockOf(string $class, Closure $configure): object
+	{
+		$mock = $this->createMock($class);
+
+		assert($mock instanceof $class);
+
+		$configure($mock);
+
+		return $mock;
 	}
 
 	/**

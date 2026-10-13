@@ -457,6 +457,7 @@ final class Cloud extends ClientProcess implements Client
 		}
 
 		$findDeviceQuery = new Queries\Configuration\FindDevices();
+		$findDeviceQuery->forConnector($this->connector);
 		$findDeviceQuery->byIdentifier($message->getDeviceId());
 
 		$device = $this->devicesConfigurationRepository->findOneBy(

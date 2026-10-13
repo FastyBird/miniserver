@@ -34,7 +34,7 @@ class FindConnectors extends QueryObject
 	 */
 	public function byType(string|int $type): void
 	{
-		$this->filter[] = '.[?(@.type =~ /(?i).*^' . $type . '*$/)]';
+		$this->filter[] = '.[?(@.type =~ /(?i)^' . self::literal((string) $type) . '\z/)]';
 	}
 
 	/**
@@ -47,7 +47,7 @@ class FindConnectors extends QueryObject
 
 	public function byIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /(?i).*^' . $identifier . '*$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /(?i)^' . self::literal($identifier) . '\z/)]';
 	}
 
 	/**

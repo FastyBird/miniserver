@@ -64,4 +64,39 @@ final class ConnectorsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(2, $entities);
 	}
 
+	/**
+	 * Every filter matches its argument as it is, ignoring case, and never as a pattern: what a pattern would make of
+	 * its characters must not find anything else. A prefix also matches the whole value.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Connectors\Repository::class);
+
+		$findQuery = new Queries\Configuration\FindConnectors();
+		$findQuery->byIdentifier('generic');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'byIdentifier generic');
+
+		$findQuery = new Queries\Configuration\FindConnectors();
+		$findQuery->byIdentifier('gener.c');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier gener.c');
+
+		$findQuery = new Queries\Configuration\FindConnectors();
+		$findQuery->byType('dummy');
+
+		self::assertCount(2, $repository->findAllBy($findQuery), 'byType dummy');
+
+		$findQuery = new Queries\Configuration\FindConnectors();
+		$findQuery->byType('d.mmy');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byType d.mmy');
+	}
+
 }

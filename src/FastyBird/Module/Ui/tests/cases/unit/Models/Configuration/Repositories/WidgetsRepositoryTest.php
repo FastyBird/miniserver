@@ -85,4 +85,39 @@ final class WidgetsRepositoryTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(4, $entities);
 	}
 
+	/**
+	 * Every filter matches its argument as it is, ignoring case, and never as a pattern: what a pattern would make of
+	 * its characters must not find anything else. A prefix also matches the whole value.
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws UiExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	public function testFiltersMatchTheirArgumentLiterally(): void
+	{
+		$repository = $this->getContainer()->getByType(Models\Configuration\Widgets\Repository::class);
+
+		$findQuery = new Queries\Configuration\FindWidgets();
+		$findQuery->byIdentifier('room-temperature');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'byIdentifier room-temperature');
+
+		$findQuery = new Queries\Configuration\FindWidgets();
+		$findQuery->byIdentifier('room.temperature');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byIdentifier room.temperature');
+
+		$findQuery = new Queries\Configuration\FindWidgets();
+		$findQuery->byName('Room temperature');
+
+		self::assertCount(1, $repository->findAllBy($findQuery), 'byName Room temperature');
+
+		$findQuery = new Queries\Configuration\FindWidgets();
+		$findQuery->byName('Room.temperature');
+
+		self::assertCount(0, $repository->findAllBy($findQuery), 'byName Room.temperature');
+	}
+
 }

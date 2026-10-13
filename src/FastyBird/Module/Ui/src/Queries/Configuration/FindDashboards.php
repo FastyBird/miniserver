@@ -29,12 +29,14 @@ final class FindDashboards extends QueryObject
 
 	public function byIdentifier(string $identifier): void
 	{
-		$this->filter[] = '.[?(@.identifier =~ /(?i).*^' . $identifier . '*$/)]';
+		$this->filter[] = '.[?(@.identifier =~ /(?i)^' . self::literal($identifier) . '\z/)]';
 	}
 
 	public function byName(string|null $name): void
 	{
-		$this->filter[] = $name === null ? '.[?(@.name == null)]' : '.[?(@.name =~ /(?i).*^' . $name . '*$/)]';
+		$this->filter[] = $name === null
+			? '.[?(@.name == null)]'
+			: '.[?(@.name =~ /(?i)^' . self::literal($name) . '\z/)]';
 	}
 
 	/**
