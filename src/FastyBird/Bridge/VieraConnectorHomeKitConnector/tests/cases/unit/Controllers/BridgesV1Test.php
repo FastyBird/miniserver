@@ -93,18 +93,21 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.read.json',
 			],
 			'readRelationshipsProperties' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/properties',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.relationships.properties.json',
 			],
 			'readRelationshipsChannels' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/channels',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.relationships.channels.json',
 			],
 			'readRelationshipsChildren' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
@@ -121,12 +124,14 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsUnknown' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/1d0f40bf-e023-4e62-8bec-7a5d81e40e84/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
 			],
 			'readRelationshipsUnknownEntity' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009af/relationships/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
