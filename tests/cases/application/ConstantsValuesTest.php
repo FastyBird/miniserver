@@ -611,12 +611,21 @@ final class ConstantsValuesTest extends TestCase
 		$present = [];
 
 		foreach (['FastyBird\\Core\\Constants', ...array_keys(self::PACKAGE_VALUES)] as $class) {
-			if (class_exists($class)) {
+			if (self::classExists($class)) {
 				$present[] = $class;
 			}
 		}
 
 		self::assertSame([], $present);
+	}
+
+	/**
+	 * Asks the autoloader. PHPStan knows the dissolved classes are gone and would call a direct
+	 * class_exists() on their literal names always false, so the name reaches it as a plain string.
+	 */
+	private static function classExists(string $class): bool
+	{
+		return class_exists($class);
 	}
 
 	/**
