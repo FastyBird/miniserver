@@ -415,10 +415,10 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 							],
 						));
 					} catch (DevicesExceptions\InvalidActualValue $ex) {
-						$this->connectorPropertiesStatesManager->update($property, $state, Utils\ArrayHash::from([
+						$this->connectorPropertiesStatesManager->update($property, $state, [
 							States\Property::ACTUAL_VALUE_FIELD => null,
 							States\Property::VALID_FIELD => false,
-						]))
+						])
 							->then(function () use ($property, $deferred): void {
 								$this->readState($property)
 									->then(static function ($state) use ($deferred): void {
@@ -451,10 +451,10 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 							],
 						);
 					} catch (DevicesExceptions\InvalidExpectedValue $ex) {
-						$this->connectorPropertiesStatesManager->update($property, $state, Utils\ArrayHash::from([
+						$this->connectorPropertiesStatesManager->update($property, $state, [
 							States\Property::EXPECTED_VALUE_FIELD => null,
 							States\Property::PENDING_FIELD => false,
-						]))
+						])
 							->then(function () use ($property, $deferred): void {
 								$this->readState($property)
 									->then(static function ($state) use ($deferred): void {

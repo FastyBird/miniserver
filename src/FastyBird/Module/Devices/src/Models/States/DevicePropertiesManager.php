@@ -420,10 +420,10 @@ final class DevicePropertiesManager extends PropertiesManager
 			);
 		} catch (DevicesExceptions\InvalidActualValue $ex) {
 			try {
-				$this->devicePropertiesStatesManager->update($property, $state, Utils\ArrayHash::from([
+				$this->devicePropertiesStatesManager->update($property, $state, [
 					States\Property::ACTUAL_VALUE_FIELD => null,
 					States\Property::VALID_FIELD => false,
-				]));
+				]);
 
 				$this->logger->error(
 					'Property stored actual value was not valid',
@@ -459,10 +459,10 @@ final class DevicePropertiesManager extends PropertiesManager
 			}
 		} catch (DevicesExceptions\InvalidExpectedValue $ex) {
 			try {
-				$this->devicePropertiesStatesManager->update($property, $state, Utils\ArrayHash::from([
+				$this->devicePropertiesStatesManager->update($property, $state, [
 					States\Property::EXPECTED_VALUE_FIELD => null,
 					States\Property::PENDING_FIELD => false,
-				]));
+				]);
 
 				$this->logger->error(
 					'Property stored expected value was not valid',

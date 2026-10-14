@@ -9,24 +9,31 @@ use React\Promise;
 
 /**
  * Asynchronous channel properties manager interface
+ *
+ * The values to store come as a plain array or as an ArrayHash (#723). An implementation stores an
+ * array exactly as the ArrayHash Utils\ArrayHash::from() makes of it.
  */
 interface Writer
 {
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @return Promise\PromiseInterface<States\ChannelProperty>
 	 */
 	public function create(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Promise\PromiseInterface;
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @return Promise\PromiseInterface<States\ChannelProperty|false>
 	 */
 	public function update(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Promise\PromiseInterface;
 
 	/**

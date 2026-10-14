@@ -19,6 +19,7 @@ use function array_keys;
 use function assert;
 use function get_object_vars;
 use function in_array;
+use function is_array;
 use function is_numeric;
 use function is_object;
 use function is_string;
@@ -49,6 +50,11 @@ final readonly class StatesManager
 	}
 
 	/**
+	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
+	 * the callers built before; an ArrayHash is used as it is given (#723).
+	 *
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @phpstan-return T
 	 *
 	 * @throws Exceptions\InvalidArgument
@@ -56,10 +62,12 @@ final readonly class StatesManager
 	 */
 	public function create(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 		int $database = 0,
 	): States\State
 	{
+		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
+
 		$raw = $this->createKey($id, $values, $this->entity::getCreateFields(), $database);
 
 		try {
@@ -90,6 +98,11 @@ final readonly class StatesManager
 	}
 
 	/**
+	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
+	 * the callers built before; an ArrayHash is used as it is given (#723).
+	 *
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @phpstan-return T
 	 *
 	 * @throws Exceptions\InvalidArgument
@@ -97,10 +110,12 @@ final readonly class StatesManager
 	 */
 	public function update(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 		int $database = 0,
 	): States\State|false
 	{
+		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
+
 		try {
 			$raw = $this->updateKey($id, $values, $this->entity::getUpdateFields(), $database);
 

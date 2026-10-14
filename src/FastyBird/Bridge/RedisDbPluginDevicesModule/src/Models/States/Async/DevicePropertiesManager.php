@@ -35,19 +35,23 @@ final class DevicePropertiesManager implements DevicesModels\States\Devices\Asyn
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws InvalidArgumentException
 	 */
 	#[Override]
-	public function create(Uuid\UuidInterface $id, Utils\ArrayHash $values): Promise\PromiseInterface
+	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): Promise\PromiseInterface
 	{
 		return $this->statesManager->create($id, $values, $this->database);
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws InvalidArgumentException
 	 */
 	#[Override]
-	public function update(Uuid\UuidInterface $id, Utils\ArrayHash $values): Promise\PromiseInterface
+	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): Promise\PromiseInterface
 	{
 		return $this->statesManager->update($id, $values, $this->database);
 	}

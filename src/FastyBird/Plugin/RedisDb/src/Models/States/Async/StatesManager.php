@@ -21,6 +21,7 @@ use function array_keys;
 use function assert;
 use function get_object_vars;
 use function in_array;
+use function is_array;
 use function is_numeric;
 use function is_object;
 use function is_string;
@@ -53,16 +54,23 @@ final readonly class StatesManager
 	}
 
 	/**
+	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
+	 * the callers built before; an ArrayHash is used as it is given (#723).
+	 *
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @return Promise\PromiseInterface<T>
 	 *
 	 * @throws InvalidArgumentException
 	 */
 	public function create(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 		int $database = 0,
 	): Promise\PromiseInterface
 	{
+		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
+
 		$deferred = new Promise\Deferred();
 
 		$this->createKey($id, $values, $this->entity::getCreateFields(), $database)
@@ -116,16 +124,23 @@ final readonly class StatesManager
 	}
 
 	/**
+	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
+	 * the callers built before; an ArrayHash is used as it is given (#723).
+	 *
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @return Promise\PromiseInterface<T|false>
 	 *
 	 * @throws InvalidArgumentException
 	 */
 	public function update(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 		int $database = 0,
 	): Promise\PromiseInterface
 	{
+		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
+
 		$deferred = new Promise\Deferred();
 
 		$this->updateKey($id, $values, $this->entity::getUpdateFields(), $database)
