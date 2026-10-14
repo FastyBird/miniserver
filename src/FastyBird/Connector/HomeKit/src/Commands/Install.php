@@ -2370,7 +2370,7 @@ final class Install extends Console\Command\Command
 	{
 		$question = new Console\Question\Question(
 			(string) $this->translator->translate('//homekit-connector.cmd.install.questions.provide.connector.port'),
-			$connector?->getPort() ?? HomeKit\Constants::DEFAULT_PORT,
+			$connector?->getPort() ?? HomeKitEntities\Connectors\Connector::DEFAULT_PORT,
 		);
 		$question->setValidator(function (string|null $answer) use ($connector): string {
 			if ($answer === '' || $answer === null) {

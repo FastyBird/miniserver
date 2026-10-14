@@ -115,7 +115,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return HomeKit\Constants::DEFAULT_PORT;
+		return self::DEFAULT_PORT;
 	}
 
 	/**

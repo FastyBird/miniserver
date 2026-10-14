@@ -26,7 +26,7 @@ final class Bridge extends Accessory
 	{
 		parent::__construct(
 			$name,
-			HomeKit\Constants::STANDALONE_AID,
+			Accessory::STANDALONE_AID,
 			Types\AccessoryCategory::BRIDGE,
 		);
 

@@ -28,7 +28,7 @@ final class IlluminationLevelFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\IlluminationLevel);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new IlluminationLevel(
 			$channel->getId(),

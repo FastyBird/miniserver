@@ -160,7 +160,7 @@ class Device extends DevicesEntities\Devices\Device
 			return $property->getValue();
 		}
 
-		return Modbus\Constants::DEFAULT_TCP_PORT;
+		return self::DEFAULT_TCP_PORT;
 	}
 
 	/**

@@ -223,7 +223,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return Modbus\Constants::DEFAULT_RTU_SERIAL_INTERFACE;
+		return self::DEFAULT_RTU_SERIAL_INTERFACE;
 	}
 
 }

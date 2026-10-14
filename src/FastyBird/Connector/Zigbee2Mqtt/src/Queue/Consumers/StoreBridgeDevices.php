@@ -348,8 +348,8 @@ final readonly class StoreBridgeDevices implements Queue\Consumer
 				);
 
 				if (
-					preg_match(Zigbee2Mqtt\Constants::CHANNEL_IDENTIFIER_REGEX, $channelIdentifier) !== 1
-					&& preg_match(Zigbee2Mqtt\Constants::CHANNEL_SPECIAL_IDENTIFIER_REGEX, $channelIdentifier) !== 1
+					preg_match(Zigbee2MqttEntities\Channels\Channel::CHANNEL_IDENTIFIER_REGEX, $channelIdentifier) !== 1
+					&& preg_match(Zigbee2MqttEntities\Channels\Channel::CHANNEL_SPECIAL_IDENTIFIER_REGEX, $channelIdentifier) !== 1
 				) {
 					$this->logger->error(
 						'Channel identifier could not be generated',

@@ -90,7 +90,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return NsPanel\Constants::DEFAULT_SERVER_PORT;
+		return self::DEFAULT_SERVER_PORT;
 	}
 
 	/**

@@ -407,7 +407,7 @@ final class Mdns implements Server
 			4_500,
 			[
 				'md=' . $name,
-				'pv=' . HomeKit\Constants::HAP_PROTOCOL_SHORT_VERSION,
+				'pv=' . self::HAP_PROTOCOL_SHORT_VERSION,
 				'id=' . $macAddress,
 				// Represents the 'configuration version' of an Accessory.
 				// Increasing this 'version number' signals iOS devices to

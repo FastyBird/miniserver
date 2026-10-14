@@ -23,19 +23,19 @@ abstract class Type implements Zigbee2Mqtt\Queue\Messages\Message
 	public function __construct(
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Zigbee2Mqtt\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_NOT_AVAILABLE]),
 		])]
-		private readonly string $name = Zigbee2Mqtt\Constants::VALUE_NOT_AVAILABLE,
+		private readonly string $name = self::VALUE_NOT_AVAILABLE,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Zigbee2Mqtt\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_NOT_AVAILABLE]),
 		])]
-		private readonly string $label = Zigbee2Mqtt\Constants::VALUE_NOT_AVAILABLE,
+		private readonly string $label = self::VALUE_NOT_AVAILABLE,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Zigbee2Mqtt\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [self::VALUE_NOT_AVAILABLE]),
 		])]
-		private readonly string $property = Zigbee2Mqtt\Constants::VALUE_NOT_AVAILABLE,
+		private readonly string $property = self::VALUE_NOT_AVAILABLE,
 		#[ObjectMapper\Rules\IntValue(unsigned: true)]
 		private readonly int $access = 0,
 	)
@@ -93,7 +93,7 @@ abstract class Type implements Zigbee2Mqtt\Queue\Messages\Message
 			);
 		}
 
-		return $this->name !== Zigbee2Mqtt\Constants::VALUE_NOT_AVAILABLE ? $this->name : null;
+		return $this->name !== self::VALUE_NOT_AVAILABLE ? $this->name : null;
 	}
 
 	/**
@@ -119,7 +119,7 @@ abstract class Type implements Zigbee2Mqtt\Queue\Messages\Message
 			);
 		}
 
-		return $this->label !== Zigbee2Mqtt\Constants::VALUE_NOT_AVAILABLE ? $this->label : null;
+		return $this->label !== self::VALUE_NOT_AVAILABLE ? $this->label : null;
 	}
 
 	/**
@@ -145,7 +145,7 @@ abstract class Type implements Zigbee2Mqtt\Queue\Messages\Message
 			);
 		}
 
-		if ($this->property === Zigbee2Mqtt\Constants::VALUE_NOT_AVAILABLE) {
+		if ($this->property === self::VALUE_NOT_AVAILABLE) {
 			throw new Exceptions\InvalidState(
 				sprintf(
 					'Property is wrongly configured for given expose type: %s',

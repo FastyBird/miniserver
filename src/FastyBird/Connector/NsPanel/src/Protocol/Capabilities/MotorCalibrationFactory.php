@@ -28,7 +28,7 @@ final class MotorCalibrationFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\MotorCalibration);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new MotorCalibration(
 			$channel->getId(),

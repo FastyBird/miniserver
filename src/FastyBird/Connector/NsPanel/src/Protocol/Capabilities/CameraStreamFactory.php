@@ -28,7 +28,7 @@ final class CameraStreamFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\CameraStream);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new CameraStream(
 			$channel->getId(),

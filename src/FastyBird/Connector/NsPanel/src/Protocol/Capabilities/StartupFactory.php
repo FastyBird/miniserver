@@ -28,7 +28,7 @@ final class StartupFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\Startup);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new Startup(
 			$channel->getId(),

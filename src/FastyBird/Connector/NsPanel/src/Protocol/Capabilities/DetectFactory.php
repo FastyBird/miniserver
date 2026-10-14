@@ -28,7 +28,7 @@ final class DetectFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\Detect);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new Detect(
 			$channel->getId(),

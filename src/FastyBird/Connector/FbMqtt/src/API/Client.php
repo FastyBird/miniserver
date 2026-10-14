@@ -418,7 +418,7 @@ final class Client
 	public function publish(
 		string $topic,
 		string|null $payload = null,
-		int $qos = FbMqtt\Constants::MQTT_API_QOS_0,
+		int $qos = self::MQTT_API_QOS_0,
 		bool $retain = false,
 	): Promise\PromiseInterface
 	{

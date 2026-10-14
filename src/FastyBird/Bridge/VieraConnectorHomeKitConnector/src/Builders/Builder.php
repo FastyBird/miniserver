@@ -298,13 +298,13 @@ final readonly class Builder
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => $vieraModelProperty?->getValue() ?? VieraConnectorHomeKitConnector\Constants::MODEL,
+					'value' => $vieraModelProperty?->getValue() ?? self::MODEL,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($modelProperty, Utils\ArrayHash::from([
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => $vieraModelProperty?->getValue() ?? VieraConnectorHomeKitConnector\Constants::MODEL,
+					'value' => $vieraModelProperty?->getValue() ?? self::MODEL,
 				]));
 			}
 
@@ -313,13 +313,13 @@ final readonly class Builder
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => VieraConnectorHomeKitConnector\Constants::MANUFACTURER,
+					'value' => self::MANUFACTURER,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($manufacturerProperty, Utils\ArrayHash::from([
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => VieraConnectorHomeKitConnector\Constants::MANUFACTURER,
+					'value' => self::MANUFACTURER,
 				]));
 			}
 
@@ -473,10 +473,10 @@ final readonly class Builder
 
 				if (intval($item[1]->getValue()) > 999) {
 					$serviceValues[$nameIndex] = 1_000 + $inputIndex;
-				} elseif (intval($item[1]->getValue()) < VieraConstants::MAX_HDMI_CODE) {
+				} elseif (intval($item[1]->getValue()) < VieraEntities\Devices\Device::MAX_HDMI_CODE) {
 					$serviceValues[$nameIndex] = intval($item[1]->getValue());
-				} elseif (intval($item[1]->getValue()) === VieraConstants::TV_CODE) {
-					$serviceValues[$nameIndex] = VieraConstants::TV_CODE;
+				} elseif (intval($item[1]->getValue()) === VieraEntities\Devices\Device::TV_CODE) {
+					$serviceValues[$nameIndex] = VieraEntities\Devices\Device::TV_CODE;
 				} else {
 					throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
 						sprintf(
@@ -697,12 +697,12 @@ final readonly class Builder
 
 					$inputSourcesNames[] = $item[0]->getValue();
 
-					if (intval($item[1]->getValue()) > VieraConstants::MIN_APPLICATION_CODE) {
+					if (intval($item[1]->getValue()) > VieraEntities\Devices\Device::MIN_APPLICATION_CODE) {
 						$inputSourcesValues[$inputIndex] = 1_000 + $inputIndex;
-					} elseif (intval($item[1]->getValue()) < VieraConstants::MAX_HDMI_CODE) {
+					} elseif (intval($item[1]->getValue()) < VieraEntities\Devices\Device::MAX_HDMI_CODE) {
 						$inputSourcesValues[$inputIndex] = intval($item[1]->getValue());
-					} elseif (intval($item[1]->getValue()) === VieraConstants::TV_CODE) {
-						$inputSourcesValues[$inputIndex] = VieraConstants::TV_CODE;
+					} elseif (intval($item[1]->getValue()) === VieraEntities\Devices\Device::TV_CODE) {
+						$inputSourcesValues[$inputIndex] = VieraEntities\Devices\Device::TV_CODE;
 					} else {
 						throw new VieraConnectorHomeKitConnectorExceptions\InvalidState(
 							sprintf(
@@ -1313,12 +1313,12 @@ final readonly class Builder
 			) {
 				$entity = DevicesEntities\Channels\Properties\Variable::class;
 
-				if ($value > VieraConstants::MIN_APPLICATION_CODE) {
-					$value = VieraConnectorHomeKitConnector\Constants::INPUT_SOURCE_TYPE_APPLICATION;
-				} elseif ($value < VieraConstants::MAX_HDMI_CODE) {
-					$value = VieraConnectorHomeKitConnector\Constants::INPUT_SOURCE_TYPE_HDMI;
-				} elseif ($value === VieraConstants::TV_CODE) {
-					$value = VieraConnectorHomeKitConnector\Constants::INPUT_SOURCE_TYPE_TV;
+				if ($value > VieraEntities\Devices\Device::MIN_APPLICATION_CODE) {
+					$value = self::INPUT_SOURCE_TYPE_APPLICATION;
+				} elseif ($value < VieraEntities\Devices\Device::MAX_HDMI_CODE) {
+					$value = self::INPUT_SOURCE_TYPE_HDMI;
+				} elseif ($value === VieraEntities\Devices\Device::TV_CODE) {
+					$value = self::INPUT_SOURCE_TYPE_TV;
 				} else {
 					$value = null;
 				}

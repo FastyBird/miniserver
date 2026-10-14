@@ -80,7 +80,7 @@ final readonly class Connector
 		);
 
 		if ($property?->getValue() === null) {
-			return FbMqtt\Constants::DEFAULT_SERVER_ADDRESS;
+			return FbMqtt\Entities\Connectors\Connector::DEFAULT_SERVER_ADDRESS;
 		}
 
 		$value = $property->getValue();
@@ -109,7 +109,7 @@ final readonly class Connector
 		);
 
 		if ($property?->getValue() === null) {
-			return FbMqtt\Constants::DEFAULT_SERVER_PORT;
+			return FbMqtt\Entities\Connectors\Connector::DEFAULT_SERVER_PORT;
 		}
 
 		$value = $property->getValue();
@@ -138,7 +138,7 @@ final readonly class Connector
 		);
 
 		if ($property?->getValue() === null) {
-			return FbMqtt\Constants::DEFAULT_SERVER_PORT;
+			return FbMqtt\Entities\Connectors\Connector::DEFAULT_SERVER_PORT;
 		}
 
 		$value = $property->getValue();

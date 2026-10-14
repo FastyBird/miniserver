@@ -1622,7 +1622,7 @@ final class LocalApi
 		if (!array_key_exists($key, $this->validationSchemas)) {
 			try {
 				$this->validationSchemas[$key] = Utils\FileSystem::read(
-					Tuya\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . $schemaFilename,
+					Tuya\DI\TuyaExtension::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . $schemaFilename,
 				);
 
 			} catch (Nette\IOException) {

@@ -34,7 +34,7 @@ final class Builder
 	{
 		if ($this->mapping === null) {
 			try {
-				$mapping = VieraConnectorHomeKitConnector\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'mapping.json';
+				$mapping = self::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'mapping.json';
 				$mapping = Utils\FileSystem::read($mapping);
 
 				$data = (array) Utils\Json::decode($mapping, forceArrays: true);

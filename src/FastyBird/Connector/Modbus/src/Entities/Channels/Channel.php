@@ -135,7 +135,7 @@ class Channel extends DevicesEntities\Channels\Channel
 			return $property->getValue();
 		}
 
-		return Modbus\Constants::READING_DELAY;
+		return self::READING_DELAY;
 	}
 
 }

@@ -133,7 +133,7 @@ final readonly class Properties implements Common\EventSubscriber
 				'dataType' => ValuesTypes\DataType::STRING,
 				'unit' => null,
 				'format' => null,
-				'value' => Virtual\Constants::MANUFACTURER,
+				'value' => self::MANUFACTURER,
 			]));
 		}
 

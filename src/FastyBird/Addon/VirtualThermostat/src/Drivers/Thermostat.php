@@ -814,7 +814,7 @@ final class Thermostat implements VirtualDrivers\Driver
 				}
 			} elseif (
 				preg_match(
-					VirtualThermostat\Constants::PRESET_CHANNEL_PATTERN,
+					self::PRESET_CHANNEL_PATTERN,
 					$channel->getIdentifier(),
 					$matches,
 				) === 1

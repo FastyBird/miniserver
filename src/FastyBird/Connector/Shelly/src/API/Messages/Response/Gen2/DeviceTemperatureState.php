@@ -23,14 +23,14 @@ final class DeviceTemperatureState extends DeviceState implements API\Messages\M
 		int $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('tC')]
 		private readonly float|string|null $temperatureCelsius,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('tF')]
@@ -86,7 +86,7 @@ final class DeviceTemperatureState extends DeviceState implements API\Messages\M
 					'fahrenheit' => $this->getTemperatureFahrenheit(),
 				],
 			),
-			static fn ($value): bool => $value !== Shelly\Constants::VALUE_NOT_AVAILABLE,
+			static fn ($value): bool => $value !== DeviceState::VALUE_NOT_AVAILABLE,
 		);
 	}
 

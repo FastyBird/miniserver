@@ -98,7 +98,7 @@ final readonly class StoreDeviceState implements Queue\Consumer
 		$findDevicePropertyQuery = new Zigbee2MqttQueries\Configuration\FindDeviceVariableProperties();
 		$findDevicePropertyQuery->byValue($message->getDevice());
 
-		if (preg_match(Zigbee2Mqtt\Constants::IEEE_ADDRESS_REGEX, $message->getDevice()) === 1) {
+		if (preg_match(self::IEEE_ADDRESS_REGEX, $message->getDevice()) === 1) {
 			$findDevicePropertyQuery->byIdentifier(Zigbee2Mqtt\Types\DevicePropertyIdentifier::IEEE_ADDRESS);
 
 		} else {

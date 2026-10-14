@@ -262,7 +262,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 			$pending === false
 			|| (
 				$pending instanceof DateTimeInterface
-				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= Shelly\Constants::WRITE_DEBOUNCE_DELAY
+				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= self::WRITE_DEBOUNCE_DELAY
 			)
 		) {
 			return true;

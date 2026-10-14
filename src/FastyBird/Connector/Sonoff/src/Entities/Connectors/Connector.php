@@ -160,7 +160,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	public function getAppId(): string
 	{
 		if ($this->getClientMode() === Types\ClientMode::GATEWAY) {
-			return Sonoff\Constants::COOLKIT_APP_ID;
+			return self::COOLKIT_APP_ID;
 		}
 
 		$property = $this->properties
@@ -177,7 +177,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return Sonoff\Constants::DEFAULT_APP_ID;
+		return self::DEFAULT_APP_ID;
 	}
 
 	/**
@@ -190,7 +190,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	public function getAppSecret(): string
 	{
 		if ($this->getClientMode() === Types\ClientMode::GATEWAY) {
-			return Sonoff\Constants::COOLKIT_APP_SECRET;
+			return self::COOLKIT_APP_SECRET;
 		}
 
 		$property = $this->properties
@@ -207,7 +207,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return Sonoff\Constants::DEFAULT_APP_SECRET;
+		return self::DEFAULT_APP_SECRET;
 	}
 
 	/**

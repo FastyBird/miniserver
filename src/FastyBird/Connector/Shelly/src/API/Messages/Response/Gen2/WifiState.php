@@ -24,7 +24,7 @@ final class WifiState extends DeviceState implements API\Messages\Message
 		private readonly string|null $staIp,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly string $status,
 		#[ObjectMapper\Rules\AnyOf([
@@ -34,12 +34,12 @@ final class WifiState extends DeviceState implements API\Messages\Message
 		private readonly string|null $ssid,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly int|string $rssi,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('ap_client_count')]
 		private readonly int|string $apClientCount,

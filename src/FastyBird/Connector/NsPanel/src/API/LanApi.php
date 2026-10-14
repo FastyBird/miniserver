@@ -185,7 +185,7 @@ final class LanApi
 					'header' => [
 						'name' => NsPanel\Types\Header::DISCOVERY_REQUEST->value,
 						'message_id' => Uuid\Uuid::uuid4()->toString(),
-						'version' => NsPanel\Constants::NS_PANEL_API_VERSION_V1,
+						'version' => self::NS_PANEL_API_VERSION_V1,
 					],
 					'payload' => [
 						'endpoints' => $devices,
@@ -272,7 +272,7 @@ final class LanApi
 					'header' => [
 						'name' => NsPanel\Types\Header::DEVICE_STATES_CHANGE_REPORT->value,
 						'message_id' => Uuid\Uuid::uuid4()->toString(),
-						'version' => NsPanel\Constants::NS_PANEL_API_VERSION_V1,
+						'version' => self::NS_PANEL_API_VERSION_V1,
 					],
 					'endpoint' => [
 						'serial_number' => $serialNumber,
@@ -360,7 +360,7 @@ final class LanApi
 					'header' => [
 						'name' => NsPanel\Types\Header::DEVICE_ONLINE_CHANGE_REPORT->value,
 						'message_id' => Uuid\Uuid::uuid4()->toString(),
-						'version' => NsPanel\Constants::NS_PANEL_API_VERSION_V1,
+						'version' => self::NS_PANEL_API_VERSION_V1,
 					],
 					'endpoint' => [
 						'serial_number' => $serialNumber,
@@ -1039,7 +1039,7 @@ final class LanApi
 		if (!array_key_exists($key, $this->validationSchemas)) {
 			try {
 				$this->validationSchemas[$key] = Utils\FileSystem::read(
-					NsPanel\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'response' . DIRECTORY_SEPARATOR . $schemaFilename,
+					NsPanel\DI\NsPanelExtension::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'response' . DIRECTORY_SEPARATOR . $schemaFilename,
 				);
 
 			} catch (Nette\IOException) {

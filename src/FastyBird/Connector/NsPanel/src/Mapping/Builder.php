@@ -34,7 +34,7 @@ final class Builder
 	{
 		if ($this->categories === null) {
 			try {
-				$mapping = NsPanel\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'categories.json';
+				$mapping = NsPanel\DI\NsPanelExtension::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'categories.json';
 				$mapping = Utils\FileSystem::read($mapping);
 
 				$data = (array) Utils\Json::decode($mapping, forceArrays: true);
@@ -57,7 +57,7 @@ final class Builder
 	{
 		if ($this->capabilities === null) {
 			try {
-				$mapping = NsPanel\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'capabilities.json';
+				$mapping = NsPanel\DI\NsPanelExtension::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'capabilities.json';
 				$mapping = Utils\FileSystem::read($mapping);
 
 				$data = (array) Utils\Json::decode($mapping, forceArrays: true);

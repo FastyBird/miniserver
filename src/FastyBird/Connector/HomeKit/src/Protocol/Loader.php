@@ -589,11 +589,11 @@ final class Loader
 
 			$accessoryFirmwareRevision->setActualValue(strval($firmwareVersion));
 		} else {
-			$packageRevision = Composer\InstalledVersions::getVersion(HomeKit\Constants::PACKAGE_NAME);
+			$packageRevision = Composer\InstalledVersions::getVersion(self::PACKAGE_NAME);
 
 			$accessoryFirmwareRevision->setActualValue(
 				$packageRevision !== null && preg_match(
-					HomeKit\Constants::VERSION_REGEXP,
+					self::VERSION_REGEXP,
 					$packageRevision,
 				) === 1 ? $packageRevision : '0.0.0',
 			);
@@ -611,7 +611,7 @@ final class Loader
 			$manufacturer = $this->deviceHelper->getManufacturer($owner);
 
 			if ($manufacturer === null) {
-				$manufacturer = HomeKit\Constants::DEFAULT_MANUFACTURER;
+				$manufacturer = self::DEFAULT_MANUFACTURER;
 
 				$this->databaseHelper->transaction(
 					function () use ($owner, $manufacturer): void {
@@ -637,7 +637,7 @@ final class Loader
 
 			$accessoryManufacturer->setActualValue($manufacturer);
 		} else {
-			$accessoryManufacturer->setActualValue(HomeKit\Constants::DEFAULT_MANUFACTURER);
+			$accessoryManufacturer->setActualValue(self::DEFAULT_MANUFACTURER);
 		}
 
 		$accessoryInformation->addCharacteristic($accessoryManufacturer);
@@ -652,7 +652,7 @@ final class Loader
 			$model = $this->deviceHelper->getModel($owner);
 
 			if ($model === null) {
-				$model = HomeKit\Constants::DEFAULT_DEVICE_MODEL;
+				$model = self::DEFAULT_DEVICE_MODEL;
 
 				$this->databaseHelper->transaction(
 					function () use ($owner, $model): void {
@@ -678,7 +678,7 @@ final class Loader
 
 			$accessoryModel->setActualValue($model);
 		} else {
-			$accessoryModel->setActualValue(HomeKit\Constants::DEFAULT_BRIDGE_MODEL);
+			$accessoryModel->setActualValue(self::DEFAULT_BRIDGE_MODEL);
 		}
 
 		$accessoryInformation->addCharacteristic($accessoryModel);
@@ -707,7 +707,7 @@ final class Loader
 				HomeKitTypes\ChannelPropertyIdentifier::VERSION,
 				$accessoryProtocolInformation,
 			);
-			$accessoryProtocolVersion->setActualValue(HomeKit\Constants::HAP_PROTOCOL_VERSION);
+			$accessoryProtocolVersion->setActualValue(self::HAP_PROTOCOL_VERSION);
 
 			$accessoryProtocolInformation->addCharacteristic($accessoryProtocolVersion);
 

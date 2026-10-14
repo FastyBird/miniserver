@@ -28,7 +28,7 @@ final class PercentageFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\Percentage);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new Percentage(
 			$channel->getId(),

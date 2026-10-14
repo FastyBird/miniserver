@@ -31,11 +31,11 @@ final class MqttBuilder
 	 */
 	private const string DEVICE_PROPERTY_TOPIC
 		= self::BASE_TOPIC_REPLACE_STRING
-		. Zigbee2Mqtt\Constants::MQTT_TOPIC_DELIMITER
+		. self::MQTT_TOPIC_DELIMITER
 		. self::DEVICE_REPLACE_STRING
-		. Zigbee2Mqtt\Constants::MQTT_TOPIC_DELIMITER
+		. self::MQTT_TOPIC_DELIMITER
 		. self::PROPERTY_REPLACE_STRING
-		. Zigbee2Mqtt\Constants::MQTT_TOPIC_DELIMITER
+		. self::MQTT_TOPIC_DELIMITER
 		. 'set';
 
 	public static function buildDevicePropertyTopic(

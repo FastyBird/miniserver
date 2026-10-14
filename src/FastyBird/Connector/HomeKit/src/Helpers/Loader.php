@@ -29,7 +29,7 @@ final class Loader
 	public function loadAccessories(): Utils\ArrayHash
 	{
 		if ($this->accessories === null) {
-			$metadata = HomeKit\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'accessories.json';
+			$metadata = self::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'accessories.json';
 			$metadata = Utils\FileSystem::read($metadata);
 
 			try {
@@ -51,7 +51,7 @@ final class Loader
 	public function loadServices(): Utils\ArrayHash
 	{
 		if ($this->services === null) {
-			$metadata = HomeKit\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'services.json';
+			$metadata = self::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'services.json';
 			$metadata = Utils\FileSystem::read($metadata);
 
 			try {
@@ -71,7 +71,7 @@ final class Loader
 	public function loadCharacteristics(): Utils\ArrayHash
 	{
 		if ($this->characteristics === null) {
-			$metadata = HomeKit\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'characteristics.json';
+			$metadata = self::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'characteristics.json';
 			$metadata = Utils\FileSystem::read($metadata);
 
 			try {

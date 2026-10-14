@@ -23,12 +23,12 @@ final class DeviceSmokeState extends DeviceState implements API\Messages\Message
 		int $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly bool|string $alarm,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly bool|string $mute,
 		array $errors = [],
@@ -82,7 +82,7 @@ final class DeviceSmokeState extends DeviceState implements API\Messages\Message
 					'mute' => $this->getMute(),
 				],
 			),
-			static fn ($value): bool => $value !== Shelly\Constants::VALUE_NOT_AVAILABLE,
+			static fn ($value): bool => $value !== DeviceState::VALUE_NOT_AVAILABLE,
 		);
 	}
 

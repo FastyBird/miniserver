@@ -35,7 +35,7 @@ abstract class Property implements Message
 		])]
 		private readonly array $attributes = [],
 		#[ObjectMapper\Rules\MappedObjectValue(class: PropertyAttribute::class)]
-		private readonly string|null $value = FbMqtt\Constants::VALUE_NOT_SET,
+		private readonly string|null $value = self::VALUE_NOT_SET,
 		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $retained = false,
 	)
@@ -93,7 +93,7 @@ abstract class Property implements Message
 			$return[$attribute->getAttribute()] = $attribute->getValue();
 		}
 
-		if ($this->getValue() !== FbMqtt\Constants::VALUE_NOT_SET) {
+		if ($this->getValue() !== self::VALUE_NOT_SET) {
 			$return['value'] = $this->getValue();
 		}
 

@@ -52,7 +52,7 @@ final class Protocol
 			return $longType;
 		}
 
-		if (!str_ends_with($longType, HomeKit\Constants::BASE_UUID)) {
+		if (!str_ends_with($longType, self::BASE_UUID)) {
 			return $longType;
 		}
 
@@ -73,7 +73,7 @@ final class Protocol
 		}
 
 		return Uuid\Uuid::fromString(
-			str_repeat('0', 8 - strlen($type)) . $type . HomeKit\Constants::BASE_UUID,
+			str_repeat('0', 8 - strlen($type)) . $type . self::BASE_UUID,
 		);
 	}
 

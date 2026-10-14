@@ -110,8 +110,8 @@ final class Gen1Coap
 	public function connect(): void
 	{
 		$this->server = $this->multicastFactory->create(
-			Shelly\Constants::COAP_ADDRESS,
-			Shelly\Constants::COAP_PORT,
+			self::COAP_ADDRESS,
+			self::COAP_PORT,
 		);
 
 		$this->server->on('message', function ($message, $remote): void {
@@ -359,7 +359,7 @@ final class Gen1Coap
 		if (!array_key_exists($key, $this->validationSchemas)) {
 			try {
 				$this->validationSchemas[$key] = Utils\FileSystem::read(
-					Shelly\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'response' . DIRECTORY_SEPARATOR . $schemaFilename,
+					Shelly\DI\ShellyExtension::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'response' . DIRECTORY_SEPARATOR . $schemaFilename,
 				);
 
 			} catch (Nette\IOException) {

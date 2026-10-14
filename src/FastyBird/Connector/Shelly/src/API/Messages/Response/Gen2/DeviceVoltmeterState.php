@@ -23,13 +23,13 @@ final class DeviceVoltmeterState extends DeviceState implements API\Messages\Mes
 		int $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		private readonly float|string|null $voltage,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		private readonly float|string|null $xvoltage = null,
@@ -84,7 +84,7 @@ final class DeviceVoltmeterState extends DeviceState implements API\Messages\Mes
 					'xvoltage' => $this->getXvoltage(),
 				],
 			),
-			static fn ($value): bool => $value !== Shelly\Constants::VALUE_NOT_AVAILABLE,
+			static fn ($value): bool => $value !== DeviceState::VALUE_NOT_AVAILABLE,
 		);
 	}
 

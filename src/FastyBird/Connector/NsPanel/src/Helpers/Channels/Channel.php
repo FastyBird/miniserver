@@ -24,7 +24,7 @@ final class Channel
 	 */
 	public function getCapability(Documents\Channels\Channel $channel): Types\Capability
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(NsPanel\Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		if (!array_key_exists('capability', $matches)) {
 			throw new Exceptions\InvalidState('Device channel has invalid identifier');
@@ -39,7 +39,7 @@ final class Channel
 
 	public function getName(Documents\Channels\Channel $channel): string|null
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(NsPanel\Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		if (!array_key_exists('name', $matches)) {
 			return null;

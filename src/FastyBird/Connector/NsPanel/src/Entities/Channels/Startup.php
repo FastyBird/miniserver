@@ -30,7 +30,7 @@ class Startup extends Channel
 		Uuid\UuidInterface|null $id = null,
 	)
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $identifier, $matches);
+		preg_match(Channel::CHANNEL_IDENTIFIER, $identifier, $matches);
 
 		if (!array_key_exists('capability', $matches)) {
 			throw new Exceptions\InvalidState('Provided identifier is invalid');

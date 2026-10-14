@@ -176,7 +176,7 @@ final readonly class Device implements EventDispatcher\EventSubscriberInterface
 			);
 		}
 
-		foreach (Viera\Constants::KEYS_PROPERTIES as $actionKey => $identifier) {
+		foreach (VieraTypes\ActionKey::KEYS_PROPERTIES as $actionKey => $identifier) {
 			$this->channelProperty->create(
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),

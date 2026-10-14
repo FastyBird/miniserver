@@ -121,7 +121,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return FbMqtt\Constants::DEFAULT_SERVER_ADDRESS;
+		return self::DEFAULT_SERVER_ADDRESS;
 	}
 
 	/**
@@ -146,7 +146,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return FbMqtt\Constants::DEFAULT_SERVER_PORT;
+		return self::DEFAULT_SERVER_PORT;
 	}
 
 	/**
@@ -171,7 +171,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return FbMqtt\Constants::DEFAULT_SERVER_SECURED_PORT;
+		return self::DEFAULT_SERVER_SECURED_PORT;
 	}
 
 	/**

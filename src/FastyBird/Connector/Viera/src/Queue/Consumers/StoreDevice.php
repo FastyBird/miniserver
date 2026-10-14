@@ -306,9 +306,9 @@ final readonly class StoreDevice implements Queue\Consumer
 				array_merge(
 					[
 						[
-							Viera\Constants::TV_IDENTIFIER,
-							Viera\Constants::TV_CODE,
-							Viera\Constants::TV_CODE,
+							VieraEntities\Devices\Device::TV_IDENTIFIER,
+							VieraEntities\Devices\Device::TV_CODE,
+							VieraEntities\Devices\Device::TV_CODE,
 						],
 					],
 					array_map(

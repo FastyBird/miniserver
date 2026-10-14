@@ -23,7 +23,7 @@ final class Loader
 	public function loadGen2Components(): Utils\ArrayHash
 	{
 		if ($this->gen2components === null) {
-			$metadata = Shelly\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'gen2_components.json';
+			$metadata = Shelly\DI\ShellyExtension::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'gen2_components.json';
 			$metadata = Utils\FileSystem::read($metadata);
 
 			try {

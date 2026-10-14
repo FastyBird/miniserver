@@ -28,7 +28,7 @@ final class MotorReverseFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\MotorReverse);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new MotorReverse(
 			$channel->getId(),

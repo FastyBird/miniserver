@@ -341,13 +341,13 @@ final readonly class Builder
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
 					'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::MODEL->value),
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => $shellyModelProperty?->getValue() ?? ShellyConnectorHomeKitConnector\Constants::MODEL,
+					'value' => $shellyModelProperty?->getValue() ?? self::MODEL,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($modelProperty, Utils\ArrayHash::from([
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => $shellyModelProperty?->getValue() ?? ShellyConnectorHomeKitConnector\Constants::MODEL,
+					'value' => $shellyModelProperty?->getValue() ?? self::MODEL,
 				]));
 			}
 
@@ -359,13 +359,13 @@ final readonly class Builder
 						HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 					),
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => ShellyConnectorHomeKitConnector\Constants::MANUFACTURER,
+					'value' => self::MANUFACTURER,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($manufacturerProperty, Utils\ArrayHash::from([
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => ShellyConnectorHomeKitConnector\Constants::MANUFACTURER,
+					'value' => self::MANUFACTURER,
 				]));
 			}
 

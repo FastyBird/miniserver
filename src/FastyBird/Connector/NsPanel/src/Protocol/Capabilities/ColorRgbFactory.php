@@ -28,7 +28,7 @@ final class ColorRgbFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\ColorRgb);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new ColorRgb(
 			$channel->getId(),

@@ -144,7 +144,7 @@ final readonly class Device
 		);
 
 		if ($property?->getValue() === null) {
-			return Modbus\Constants::DEFAULT_TCP_PORT;
+			return Modbus\Entities\Devices\Device::DEFAULT_TCP_PORT;
 		}
 
 		$value = $property->getValue();

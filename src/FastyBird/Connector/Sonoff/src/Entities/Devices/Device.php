@@ -264,7 +264,7 @@ class Device extends DevicesEntities\Devices\Device
 			return floatval($property->getValue());
 		}
 
-		return Sonoff\Constants::STATE_READING_DELAY;
+		return self::STATE_READING_DELAY;
 	}
 
 	/**

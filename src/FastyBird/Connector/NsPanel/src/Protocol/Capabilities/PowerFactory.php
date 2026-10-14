@@ -28,7 +28,7 @@ final class PowerFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\Power);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new Power(
 			$channel->getId(),

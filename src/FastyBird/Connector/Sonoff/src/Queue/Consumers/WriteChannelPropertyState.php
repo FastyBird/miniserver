@@ -268,7 +268,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 			$pending === false
 			|| (
 				$pending instanceof DateTimeInterface
-				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= Sonoff\Constants::WRITE_DEBOUNCE_DELAY
+				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= self::WRITE_DEBOUNCE_DELAY
 			)
 		) {
 			return true;
@@ -283,7 +283,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 		$group = $outlet = null;
 		$parameter = $property->getIdentifier();
 
-		if (preg_match(Sonoff\Constants::CHANNEL_GROUP, $channel->getIdentifier(), $matches) === 1) {
+		if (preg_match(self::CHANNEL_GROUP, $channel->getIdentifier(), $matches) === 1) {
 			if (array_key_exists('outlet', $matches)) {
 				$outlet = intval($matches['outlet']);
 			}

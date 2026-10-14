@@ -57,7 +57,7 @@ abstract class Channel extends DevicesEntities\Channels\Channel
 	 */
 	public function getServiceType(): Types\ServiceType
 	{
-		preg_match(HomeKit\Constants::SERVICE_IDENTIFIER, $this->getIdentifier(), $matches);
+		preg_match(self::SERVICE_IDENTIFIER, $this->getIdentifier(), $matches);
 
 		if (!array_key_exists('type', $matches)) {
 			throw new Exceptions\InvalidState(

@@ -261,7 +261,7 @@ final readonly class WriteV1ChannelPropertyState implements Queue\Consumer
 			$pending === false
 			|| (
 				$pending instanceof DateTimeInterface
-				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= FbMqtt\Constants::WRITE_DEBOUNCE_DELAY
+				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= self::WRITE_DEBOUNCE_DELAY
 			)
 		) {
 			return true;

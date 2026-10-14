@@ -259,7 +259,7 @@ final readonly class Device
 		);
 
 		if ($property?->getValue() === null) {
-			return Sonoff\Constants::STATE_READING_DELAY;
+			return Sonoff\Entities\Devices\Device::STATE_READING_DELAY;
 		}
 
 		$value = $property->getValue();
@@ -288,7 +288,7 @@ final readonly class Device
 		);
 
 		if ($property?->getValue() === null) {
-			return Sonoff\Constants::HEARTBEAT_DELAY;
+			return self::HEARTBEAT_DELAY;
 		}
 
 		$value = $property->getValue();

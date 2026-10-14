@@ -28,7 +28,7 @@ final class ThermostatTargetSetPointFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\ThermostatTargetSetPoint);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new ThermostatTargetSetPoint(
 			$channel->getId(),
