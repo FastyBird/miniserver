@@ -29,6 +29,8 @@ final readonly class ActionsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws TriggersExceptions\NotImplemented
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -37,7 +39,7 @@ final readonly class ActionsManager
 	 */
 	public function create(
 		Entities\Actions\Action $action,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): States\Action
 	{
 		if ($this->manager === null) {
@@ -52,6 +54,8 @@ final readonly class ActionsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws TriggersExceptions\NotImplemented
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -61,7 +65,7 @@ final readonly class ActionsManager
 	public function update(
 		Entities\Actions\Action $action,
 		States\Action $state,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): States\Action
 	{
 		if ($this->manager === null) {

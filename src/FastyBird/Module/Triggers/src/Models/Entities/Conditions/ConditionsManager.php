@@ -30,13 +30,15 @@ final class ConditionsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function create(Utils\ArrayHash $values): Entities\Conditions\Condition
+	public function create(array|Utils\ArrayHash $values): Entities\Conditions\Condition
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
 		assert($entity instanceof Entities\Conditions\Condition);
@@ -45,6 +47,8 @@ final class ConditionsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -53,7 +57,7 @@ final class ConditionsManager
 	 */
 	public function update(
 		Entities\Conditions\Condition $entity,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Conditions\Condition
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);
