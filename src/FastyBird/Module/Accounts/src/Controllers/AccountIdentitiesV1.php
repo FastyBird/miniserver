@@ -19,7 +19,6 @@ use FastyBird\Module\Accounts\Router;
 use FastyBird\Module\Accounts\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use Nette\Utils;
 use Override;
 use Psr\Http\Message;
 use RuntimeException;
@@ -161,11 +160,10 @@ final class AccountIdentitiesV1 extends BaseV1
 					);
 				}
 
-				$update = new Utils\ArrayHash();
-				$update->offsetSet('password', (string) $passwordAttribute->get('new'));
-
 				// Update item in database
-				$this->identitiesManager->update($identity, $update);
+				$this->identitiesManager->update($identity, [
+					'password' => (string) $passwordAttribute->get('new'),
+				]);
 
 			} else {
 				throw new ApiExceptions\JsonApiError(

@@ -14,7 +14,6 @@ use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
-use Nette\Utils;
 use Override;
 use ReflectionClass;
 use function count;
@@ -185,7 +184,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 				Sources\Module::ACCOUNTS,
 				$publishRoutingKey,
 				$this->documentFactory->create(
-					Utils\ArrayHash::from($entity->toArray()),
+					$entity->toArray(),
 					$publishRoutingKey,
 				),
 			);

@@ -30,13 +30,15 @@ final class EmailsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function create(Utils\ArrayHash $values): Entities\Emails\Email
+	public function create(array|Utils\ArrayHash $values): Entities\Emails\Email
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
 		assert($entity instanceof Entities\Emails\Email);
@@ -45,6 +47,8 @@ final class EmailsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -53,7 +57,7 @@ final class EmailsManager
 	 */
 	public function update(
 		Entities\Emails\Email $entity,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Emails\Email
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);

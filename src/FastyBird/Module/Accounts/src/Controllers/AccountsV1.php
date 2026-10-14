@@ -350,18 +350,14 @@ final class AccountsV1 extends BaseV1
 			// Start transaction connection to the database
 			$this->getOrmConnection()->beginTransaction();
 
-			$updateData = Utils\ArrayHash::from([
+			$this->accountsManager->update($account, [
 				'state' => Types\AccountState::DELETED,
 			]);
 
-			$this->accountsManager->update($account, $updateData);
-
 			foreach ($account->getIdentities() as $identity) {
-				$updateIdentity = Utils\ArrayHash::from([
+				$this->identitiesManager->update($identity, [
 					'state' => Types\IdentityState::DELETED,
 				]);
-
-				$this->identitiesManager->update($identity, $updateIdentity);
 			}
 
 			$this->enforcerFactory->getEnforcer()->deleteUser($account->getId()->toString());

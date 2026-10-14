@@ -33,6 +33,8 @@ final class Manager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -41,7 +43,7 @@ final class Manager
 	 */
 	public function update(
 		Entities\Widgets\Displays\Display $entity,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Widgets\Displays\Display
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);

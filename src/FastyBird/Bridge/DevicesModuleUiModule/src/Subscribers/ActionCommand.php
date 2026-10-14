@@ -12,7 +12,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Ui\Events as UiEvents;
 use FastyBird\Module\Ui\Types as UiTypes;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use Symfony\Component\EventDispatcher;
@@ -64,13 +63,13 @@ final readonly class ActionCommand implements EventDispatcher\EventSubscriberInt
 		$property = $event->getDataSource()->getProperty();
 		$value = $event->getAction()->getExpectedValue();
 
-		$data = [];
+		$data = DevicesStates\PropertyUpdate::create();
 
 		if ($value !== Utilities\Value::NOT_SET) {
-			$data[DevicesStates\Property::EXPECTED_VALUE_FIELD] = $value;
+			$data = $data->withExpectedValue($value);
 		}
 
-		if ($data === []) {
+		if ($data->isEmpty()) {
 			return;
 		}
 
@@ -86,8 +85,6 @@ final readonly class ActionCommand implements EventDispatcher\EventSubscriberInt
 	}
 
 	/**
-	 * @param array<string, mixed> $data
-	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidArgument
@@ -97,7 +94,7 @@ final readonly class ActionCommand implements EventDispatcher\EventSubscriberInt
 	 */
 	private function handleConnectorAction(
 		Uuid\UuidInterface $propertyId,
-		array $data,
+		DevicesStates\PropertyUpdate $data,
 	): void
 	{
 		$property = $this->connectorPropertiesConfigurationRepository->find($propertyId);
@@ -108,14 +105,12 @@ final readonly class ActionCommand implements EventDispatcher\EventSubscriberInt
 
 		$this->connectorPropertiesStatesManager->write(
 			$property,
-			Utils\ArrayHash::from($data),
+			$data,
 			Sources\Module::DEVICES,
 		);
 	}
 
 	/**
-	 * @param array<string, mixed> $data
-	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidArgument
@@ -125,7 +120,7 @@ final readonly class ActionCommand implements EventDispatcher\EventSubscriberInt
 	 */
 	private function handleDeviceAction(
 		Uuid\UuidInterface $propertyId,
-		array $data,
+		DevicesStates\PropertyUpdate $data,
 	): void
 	{
 		$property = $this->devicePropertiesConfigurationRepository->find($propertyId);
@@ -139,14 +134,12 @@ final readonly class ActionCommand implements EventDispatcher\EventSubscriberInt
 
 		$this->devicePropertiesStatesManager->write(
 			$property,
-			Utils\ArrayHash::from($data),
+			$data,
 			Sources\Module::DEVICES,
 		);
 	}
 
 	/**
-	 * @param array<string, mixed> $data
-	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidArgument
@@ -156,7 +149,7 @@ final readonly class ActionCommand implements EventDispatcher\EventSubscriberInt
 	 */
 	private function handleChannelAction(
 		Uuid\UuidInterface $propertyId,
-		array $data,
+		DevicesStates\PropertyUpdate $data,
 	): void
 	{
 		$property = $this->channelPropertiesConfigurationRepository->find($propertyId);
@@ -170,7 +163,7 @@ final readonly class ActionCommand implements EventDispatcher\EventSubscriberInt
 
 		$this->channelPropertiesStatesManager->write(
 			$property,
-			Utils\ArrayHash::from($data),
+			$data,
 			Sources\Module::DEVICES,
 		);
 	}

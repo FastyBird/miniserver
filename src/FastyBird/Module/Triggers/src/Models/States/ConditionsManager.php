@@ -29,6 +29,8 @@ final readonly class ConditionsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws TriggersExceptions\NotImplemented
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -37,7 +39,7 @@ final readonly class ConditionsManager
 	 */
 	public function create(
 		Entities\Conditions\Condition $condition,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): States\Condition
 	{
 		if ($this->manager === null) {
@@ -52,6 +54,8 @@ final readonly class ConditionsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws TriggersExceptions\NotImplemented
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -61,7 +65,7 @@ final readonly class ConditionsManager
 	public function update(
 		Entities\Conditions\Condition $condition,
 		States\Condition $state,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): States\Condition
 	{
 		if ($this->manager === null) {

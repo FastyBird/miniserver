@@ -36,11 +36,13 @@ class TimeCondition extends TriggersEntities\Conditions\Condition
 	private array|null $days;
 
 	/**
+	 * @param array<int>|Utils\ArrayHash<int> $days
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(
 		DateTimeInterface $time,
-		Utils\ArrayHash $days,
+		array|Utils\ArrayHash $days,
 		TriggersEntities\Triggers\Automatic $trigger,
 		Uuid\UuidInterface|null $id = null,
 	)
