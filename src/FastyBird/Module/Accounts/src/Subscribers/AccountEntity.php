@@ -11,9 +11,12 @@ use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use Override;
+use function array_key_exists;
 use function array_merge;
+use function array_values;
 use function count;
 use function in_array;
+use function spl_object_id;
 use function sprintf;
 
 /**
@@ -77,6 +80,8 @@ final readonly class AccountEntity implements Common\EventSubscriber
 		$manager = $eventArgs->getObjectManager();
 		$uow = $manager->getUnitOfWork();
 
+		$this->removeTokensOfIdentitiesThatCannotSignIn($manager);
+
 		// Check all scheduled updates
 		foreach (array_merge($uow->getScheduledEntityInsertions(), $uow->getScheduledEntityUpdates()) as $object) {
 			if (!$object instanceof Entities\Accounts\Account) {
@@ -120,6 +125,65 @@ final readonly class AccountEntity implements Common\EventSubscriber
 					);
 				}
 			}
+		}
+	}
+
+	/**
+	 * An identity that may no longer sign in loses its access tokens and their refresh tokens: its
+	 * state, or its account's, is changed to anything but active, or it or its account is removed.
+	 * They are removed as signing out removes them, in the same flush, so making the account or
+	 * the identity active again does not make them valid again. Every writer that goes through the
+	 * entity manager is covered: the HTTP API, the console and anything else.
+	 */
+	private function removeTokensOfIdentitiesThatCannotSignIn(ORM\EntityManagerInterface $manager): void
+	{
+		$uow = $manager->getUnitOfWork();
+
+		$identities = [];
+
+		foreach ($uow->getScheduledEntityUpdates() as $object) {
+			// The change set holds an enum's backing value; the entity holds the enum
+			if (!array_key_exists('state', $uow->getEntityChangeSet($object))) {
+				continue;
+			}
+
+			if ($object instanceof Entities\Accounts\Account && !$object->isActivated()) {
+				foreach ($object->getIdentities() as $identity) {
+					$identities[spl_object_id($identity)] = $identity;
+				}
+			}
+
+			if ($object instanceof Entities\Identities\Identity && !$object->isActive()) {
+				$identities[spl_object_id($object)] = $object;
+			}
+		}
+
+		foreach ($uow->getScheduledEntityDeletions() as $object) {
+			if ($object instanceof Entities\Accounts\Account) {
+				foreach ($object->getIdentities() as $identity) {
+					$identities[spl_object_id($identity)] = $identity;
+				}
+			}
+
+			if ($object instanceof Entities\Identities\Identity) {
+				$identities[spl_object_id($object)] = $object;
+			}
+		}
+
+		if ($identities === []) {
+			return;
+		}
+
+		$accessTokens = $manager->getRepository(Entities\Tokens\AccessToken::class)->findBy([
+			'identity' => array_values($identities),
+		]);
+
+		foreach ($accessTokens as $accessToken) {
+			foreach ($accessToken->getChildren() as $refreshToken) {
+				$manager->remove($refreshToken);
+			}
+
+			$manager->remove($accessToken);
 		}
 	}
 

@@ -5,6 +5,7 @@ namespace FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Exceptions;
 use Nette\Utils;
 use Override;
+use SensitiveParameter;
 use function hash;
 
 /**
@@ -26,6 +27,7 @@ final class Password
 	 */
 	public function __construct(
 		string|null $hash = null,
+		#[SensitiveParameter]
 		string|null $password = null,
 		string|null $salt = null,
 	)
@@ -67,7 +69,10 @@ final class Password
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public static function createFromString(string $password): self
+	public static function createFromString(
+		#[SensitiveParameter]
+		string $password,
+	): self
 	{
 		return new self(null, $password);
 	}
@@ -87,14 +92,22 @@ final class Password
 		return $this->password;
 	}
 
-	public function setPassword(string $password, string|null $salt = null): void
+	public function setPassword(
+		#[SensitiveParameter]
+		string $password,
+		string|null $salt = null,
+	): void
 	{
 		$this->password = $password;
 		$this->salt = $salt ?? $this->createSalt();
 		$this->hash = $this->hashPassword($password, $this->salt);
 	}
 
-	public function isEqual(string $password, string|null $salt = null): bool
+	public function isEqual(
+		#[SensitiveParameter]
+		string $password,
+		string|null $salt = null,
+	): bool
 	{
 		if ($salt !== null) {
 			$this->salt = $salt;
@@ -103,7 +116,11 @@ final class Password
 		return $this->hash === $this->hashPassword($password, $this->salt);
 	}
 
-	private function hashPassword(string $password, string|null $salt = null): string
+	private function hashPassword(
+		#[SensitiveParameter]
+		string $password,
+		string|null $salt = null,
+	): string
 	{
 		return hash('sha512', $salt . self::SEPARATOR . $password);
 	}

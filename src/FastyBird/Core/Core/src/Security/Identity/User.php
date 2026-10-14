@@ -6,6 +6,7 @@ use Casbin\Exceptions as CasbinExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
 use Ramsey\Uuid;
+use SensitiveParameter;
 use function func_get_args;
 
 /**
@@ -52,7 +53,11 @@ class User
 	 * @throws SecurityExceptions\Authentication
 	 * @throws CoreExceptions\InvalidState
 	 */
-	public function login(string|UserIdentity $user, string|null $password = null): void
+	public function login(
+		string|UserIdentity $user,
+		#[SensitiveParameter]
+		string|null $password = null,
+	): void
 	{
 		$this->logout();
 

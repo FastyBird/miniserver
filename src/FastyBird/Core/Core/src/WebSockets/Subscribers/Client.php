@@ -2,7 +2,9 @@
 
 namespace FastyBird\Core\WebSockets\Subscribers;
 
+use DateTimeImmutable;
 use Doctrine\DBAL;
+use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
@@ -15,8 +17,11 @@ use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
 use Override;
+use Psr\Clock\ClockInterface;
 use Psr\Log;
 use Symfony\Component\EventDispatcher;
+use Throwable;
+use WeakMap;
 use function explode;
 use function in_array;
 use function is_string;
@@ -32,6 +37,23 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	public const string HEADER_WS_KEY = 'x-ws-key';
 
 	public const string HEADER_ORIGIN = 'origin';
+
+	/**
+	 * Seconds for which a client's token is not looked up again before an event is pushed to it.
+	 * The lookup is the one a message from the client gets (the accounts module reads the token,
+	 * its identity and its account from the database), so a busy topic costs one lookup per
+	 * subscriber per interval rather than one per event per subscriber; a token revoked, or an
+	 * account blocked, stops the events within the interval. A lookup that fails is not tried again
+	 * for the same interval either.
+	 */
+	public const int RECHECK_INTERVAL = 5;
+
+	/**
+	 * When the latest lookup for a client failed, until a lookup for it succeeds
+	 *
+	 * @var WeakMap<Entities\Client, DateTimeImmutable>
+	 */
+	private WeakMap $failedAt;
 
 	/** @var array<string> */
 	private array $wsKeys;
@@ -54,10 +76,12 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 		string|null $wsKeys = null,
 		string|null $allowedOrigins = null,
 		private readonly Identity\User|null $user = null,
+		private readonly ClockInterface $clock = new Clock\SystemClock(),
 	)
 	{
 		$this->wsKeys = $wsKeys !== null ? explode(',', $wsKeys) : [];
 		$this->allowedOrigins = $allowedOrigins !== null ? explode(',', $allowedOrigins) : [];
+		$this->failedAt = new WeakMap();
 	}
 
 	#[Override]
@@ -87,20 +111,65 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	 */
 	public function incomingMessage(Events\MessageReceived $event): void
 	{
-		// Check if ping to DB is possible...
-		if (!$this->database->ping()) {
-			// ...if not, try to reconnect
-			$this->database->reconnect();
-
-			// ...and ping again
-			if (!$this->database->ping()) {
-				throw new WebSocketsExceptions\Terminate(
-					'Connection to database could not be re-established',
-				);
-			}
+		if (!$this->connectDatabase()) {
+			throw new WebSocketsExceptions\Terminate(
+				'Connection to database could not be re-established',
+			);
 		}
 
 		$this->checkSecurity($event->getClient(), $event->getHttpRequest(), $this->wsKeys, $this->allowedOrigins);
+	}
+
+	/**
+	 * Whether an event may be pushed to the client: it holds an identity its token resolved to at
+	 * most RECHECK_INTERVAL seconds ago, or its token resolves to one now. A client whose token no
+	 * longer resolves is closed, as it is when it sends a message. When the token cannot be looked
+	 * up, the client gets nothing and stays connected, and the first event at least RECHECK_INTERVAL
+	 * seconds later asks again: the lookup pings, and may reconnect, the database synchronously in
+	 * the server's loop, so a database that cannot be reached is not asked once per event.
+	 */
+	public function mayReceive(Entities\Client $client): bool
+	{
+		if ($client->getIdentity() === null) {
+			return false;
+		}
+
+		$now = $this->clock->now();
+
+		$checkedAt = $client->getCheckedAt();
+
+		if ($checkedAt !== null && $now->getTimestamp() - $checkedAt->getTimestamp() < self::RECHECK_INTERVAL) {
+			return true;
+		}
+
+		$failedAt = $this->failedAt[$client] ?? null;
+
+		if ($failedAt !== null && $now->getTimestamp() - $failedAt->getTimestamp() < self::RECHECK_INTERVAL) {
+			return false;
+		}
+
+		try {
+			if ($this->connectDatabase()) {
+				unset($this->failedAt[$client]);
+
+				return $this->checkSecurity($client, $client->getRequest(), $this->wsKeys, $this->allowedOrigins);
+			}
+
+			$error = 'Connection to database could not be re-established';
+		} catch (Throwable $ex) {
+			$error = $ex->getMessage();
+		}
+
+		$this->failedAt[$client] = $now;
+
+		$this->logger->error('Client access token could not be checked', [
+			'source' => Sources\Core::CORE->value,
+			'capability' => 'ws-server',
+			'type' => 'subscriber',
+			'error' => $error,
+		]);
+
+		return false;
 	}
 
 	/**
@@ -209,7 +278,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 
 		// Kept for the whole connection and replaced on every check, so the WAMP controllers
 		// always see what the client's token resolves to right now
-		$client->setIdentity($identity, $this->resolveRoles($identity));
+		$client->setIdentity($identity, $this->resolveRoles($identity), $this->clock->now());
 
 		return true;
 	}
@@ -244,6 +313,24 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 		} finally {
 			$this->user->logout();
 		}
+	}
+
+	/**
+	 * Pings the database, and reconnects when the ping fails: a long-running server's connection
+	 * may have been closed by the database meanwhile
+	 *
+	 * @throws DBAL\Exception
+	 * @throws CoreExceptions\InvalidState
+	 */
+	private function connectDatabase(): bool
+	{
+		if ($this->database->ping()) {
+			return true;
+		}
+
+		$this->database->reconnect();
+
+		return $this->database->ping();
 	}
 
 	/**

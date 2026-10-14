@@ -3,12 +3,14 @@
 namespace FastyBird\Core\Tests\Cases\Unit\Logging;
 
 use FastyBird\Core\Tests;
+use React\Http\Message\ServerRequest;
 use ReflectionMethod;
 use Sentry;
 use Throwable;
 
 /**
- * The Sentry client Core configures sends the API key header, as the bearer token, as "[Filtered]"
+ * The Sentry client Core configures sends the API key header, as the bearer token, as "[Filtered]",
+ * and no request body
  */
 final class SentryHeadersTest extends Tests\Cases\Unit\BaseTestCase
 {
@@ -51,6 +53,39 @@ final class SentryHeadersTest extends Tests\Cases\Unit\BaseTestCase
 			],
 			$headers,
 		);
+	}
+
+	/**
+	 * A request body can carry a password or a token, so an event carries no body at all: a JSON
+	 * body would be decoded into it, and any other sent as it is
+	 *
+	 * @throws Throwable
+	 */
+	public function testClientSendsNoRequestBody(): void
+	{
+		$container = $this->createContainer(__DIR__ . '/sentry.neon');
+
+		$options = $container->getByType(Sentry\ClientBuilderInterface::class)->getOptions();
+
+		// The name Sentry keeps for it; it deprecated the other one, 'none', in 3.10
+		self::assertSame('never', $options->getMaxRequestBodySize());
+
+		$integration = new Sentry\Integration\RequestIntegration();
+
+		foreach (['application/json', 'application/vnd.api+json'] as $contentType) {
+			$body = (new ReflectionMethod($integration, 'captureRequestBody'))->invoke(
+				$integration,
+				$options,
+				new ServerRequest(
+					'POST',
+					'/api/accounts-module/v1/session',
+					['Content-Type' => $contentType, 'Content-Length' => '64'],
+					'{"data":{"attributes":{"uid":"john","password":"PROBEPASSWORD"}}}',
+				),
+			);
+
+			self::assertTrue($body === null || $body === '', $contentType);
+		}
 	}
 
 }

@@ -148,6 +148,8 @@ final class LoggingExtension extends DI\CompilerExtension
 					'integrations' => new DI\Definitions\Statement(
 						[Logging\SensitiveData::class, 'sentryIntegrations'],
 					),
+					// No request body: a body can carry a password or a token
+					'max_request_body_size' => Logging\SensitiveData::SENTRY_REQUEST_BODY,
 				]]);
 
 			$builder->addDefinition($this->prefix('sentry.client'), new DI\Definitions\ServiceDefinition())

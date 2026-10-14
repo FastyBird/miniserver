@@ -9,6 +9,7 @@ use FastyBird\Core\WebSockets\Entities\Topics as EntitiesTopics;
 use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Server;
+use FastyBird\Core\WebSockets\Subscribers;
 use FastyBird\Core\WebSockets\Topics as WebSocketsTopics;
 use FastyBird\Core\WebSockets\Wamp;
 use Nette\Http as NetteHttp;
@@ -64,6 +65,7 @@ final class WampApplication extends Application
 		Clients\Storage $clientsStorage,
 		EventDispatcher\EventDispatcherInterface $dispatcher,
 		Log\LoggerInterface|null $logger = null,
+		private Subscribers\Client|null $clientSubscriber = null,
 	)
 	{
 		parent::__construct($router, $controllerFactory, $clientsStorage, $dispatcher, $logger);
@@ -298,7 +300,15 @@ final class WampApplication extends Application
 	private function getTopic(string $topic): EntitiesTopics\Topic
 	{
 		if (!$this->topicsStorage->hasTopic($topic)) {
-			$this->topicsStorage->addTopic($topic, new EntitiesTopics\Topic($topic));
+			// An event reaches a subscriber only while its token could still sign in, as a message
+			// from it is processed only then
+			$mayReceive = null;
+
+			if ($this->clientSubscriber !== null) {
+				$mayReceive = $this->clientSubscriber->mayReceive(...);
+			}
+
+			$this->topicsStorage->addTopic($topic, new EntitiesTopics\Topic($topic, $mayReceive));
 		}
 
 		return $this->topicsStorage->getTopic($topic);

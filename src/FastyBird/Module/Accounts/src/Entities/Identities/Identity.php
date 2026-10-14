@@ -13,6 +13,7 @@ use FastyBird\Module\Accounts\Types;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
+use SensitiveParameter;
 use function strval;
 
 #[ORM\Entity]
@@ -64,8 +65,6 @@ class Identity implements AccountsEntities\Entity,
 	#[ORM\Column(name: 'identity_token', type: 'string', nullable: false)]
 	protected string $password;
 
-	protected string|null $plainPassword = null;
-
 	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'identity_state',
@@ -82,6 +81,7 @@ class Identity implements AccountsEntities\Entity,
 	public function __construct(
 		AccountsEntities\Accounts\Account $account,
 		string $uid,
+		#[SensitiveParameter]
 		string $password,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -99,7 +99,10 @@ class Identity implements AccountsEntities\Entity,
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public function verifyPassword(string $rawPassword): bool
+	public function verifyPassword(
+		#[SensitiveParameter]
+		string $rawPassword,
+	): bool
 	{
 		return $this->getPassword()
 			->isEqual($rawPassword, $this->getSalt());
@@ -110,25 +113,24 @@ class Identity implements AccountsEntities\Entity,
 	 */
 	public function getPassword(): Helpers\Password
 	{
-		return $this->plainPassword !== null
-			? new Helpers\Password(null, $this->plainPassword, $this->getSalt())
-			: new Helpers\Password($this->password, null, $this->getSalt());
+		return new Helpers\Password($this->password, null, $this->getSalt());
 	}
 
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public function setPassword(string|Helpers\Password $password): void
+	public function setPassword(
+		#[SensitiveParameter]
+		string|Helpers\Password $password,
+	): void
 	{
-		if ($password instanceof Helpers\Password) {
-			$this->password = $password->getHash();
-
-		} else {
+		// Only the hash and its salt are kept: an identity is dumped with its properties, into a
+		// blue screen among others, while the password is changed
+		if (!$password instanceof Helpers\Password) {
 			$password = Helpers\Password::createFromString($password);
-
-			$this->password = $password->getHash();
-			$this->plainPassword = $password->getPassword();
 		}
+
+		$this->password = $password->getHash();
 
 		$this->setSalt($password->salt);
 	}

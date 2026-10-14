@@ -80,7 +80,7 @@ Since Epic #460 (#640), the root `fbCore.configuration` service (`FastyBird\Core
 | `stdOut.level` | int | `Monolog\Level::Info` (200) | Lowest level written to stdout. |
 | `console.enabled` | bool | `false` | Register Symfony's Monolog `ConsoleHandler` and the subscriber that sets its level when a console command starts. |
 | `console.level` | int | `Monolog\Level::Info` (200) | The level that subscriber sets. |
-| `sentry.dsn` | string or null | `null` | Sentry DSN. The environment variable `FB_APP_PARAMETER__SENTRY_DSN` takes precedence. With neither set, no Sentry service is registered. |
+| `sentry.dsn` | string or null | `null` | Sentry DSN. The environment variable `FB_APP_PARAMETER__SENTRY_DSN` takes precedence. With neither set, no Sentry service is registered. An event carries no request body, which can hold a password or a token. |
 | `sentry.level` | int | `Monolog\Level::Warning` (300) | Lowest level sent to Sentry. |
 
 ### `fbCore.documents`
@@ -106,7 +106,7 @@ Nothing in this section takes effect unless `token.signature` is set. With an em
 | `enable.apiKeys` | bool | `false` | Accept API keys in the `X-Api-Key` header and register the `fb:api-key:*` commands, see [API keys](#api-keys). When `false`, the header is ignored and no API key service or command is registered. |
 | `application.signInUrl` | string | `null` | Where a presenter redirects a visitor who is denied access and not signed in. When `null`, a denied request fails with 403 instead of redirecting. |
 | `application.homeUrl` | string | `/` | Where a presenter redirects a signed-in user who is denied access. Used only when `application.signInUrl` is set. |
-| `services.identity` | bool | `false` | Register Core's identity factory. |
+| `services.identity` | bool | `false` | Register Core's identity factory, which reads the user and the roles from the token's claims and looks nothing up: a correctly signed token is accepted until it expires, and nothing revokes it. Only for an application without the Accounts module. Accounts registers its own identity factory, which also requires the token, its identity and its account to be active, and with both registered the container does not compile (`Multiple services of type ...IdentityProvider found`). |
 | `casbin.model` | string | Core's `resources/model.conf` | Casbin model file. It must exist. |
 | `casbin.policy` | string | `null` | Casbin policy file. Required, and it must exist, when `enable.casbin.database` is `false`. |
 

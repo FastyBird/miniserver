@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\WebSockets\Entities\Topics;
 
+use Closure;
 use Countable;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\WebSockets\Controllers;
@@ -15,6 +16,7 @@ use Traversable;
 use function count;
 use function in_array;
 use function is_string;
+use function iterator_to_array;
 use function sprintf;
 
 /**
@@ -39,8 +41,11 @@ final class Topic implements IteratorAggregate, Countable
 
 	/**
 	 * @param string $topicId Unique ID for this object
+	 * @param (Closure(Entities\Client): bool)|null $mayReceive Asked before a message is sent to a
+	 *        subscriber; the WAMP application passes the client subscriber's check of the client's
+	 *        token (Subscribers\Client::mayReceive()). Without it every subscriber is sent the message
 	 */
-	public function __construct(string $topicId)
+	public function __construct(string $topicId, private readonly Closure|null $mayReceive = null)
 	{
 		$this->id = $topicId;
 		$this->subscribers = new SplObjectStorage();
@@ -78,12 +83,17 @@ final class Topic implements IteratorAggregate, Countable
 
 		$useEligible = (bool) count($eligible);
 
-		foreach ($this->subscribers as $client) {
+		// A copy: a subscriber the check refuses is closed, and closing removes it from the topic
+		foreach (iterator_to_array($this->subscribers, false) as $client) {
 			if (in_array($client->getId(), $exclude, true)) {
 				continue;
 			}
 
 			if ($useEligible && !in_array($client->getParameter('subscribedTopics'), $eligible, true)) {
+				continue;
+			}
+
+			if ($this->mayReceive !== null && !($this->mayReceive)($client)) {
 				continue;
 			}
 
