@@ -15,6 +15,8 @@ use Throwable;
 use Tracy;
 use function bin2hex;
 use function file_get_contents;
+use function ini_get;
+use function ini_set;
 use function is_file;
 use function is_string;
 use function random_bytes;
@@ -29,6 +31,10 @@ use function var_export;
  * error raised on the way: the blue screen Core's logger writes and the stack trace of a Sentry
  * event, which both show the arguments of every frame. The password is generated per test, so the
  * source of the test's own frame, which a blue screen shows as well, does not contain it.
+ *
+ * A stack trace carries the arguments only with zend.exception_ignore_args off, as the application
+ * images leave it (they ship no php.ini). php.ini-production turns it on, and so does the CI runner's
+ * PHP, so the tests turn it off for themselves; each checks that the arguments are there.
  */
 final class PasswordInErrorReportsTest extends DbTestCase
 {
@@ -40,6 +46,8 @@ final class PasswordInErrorReportsTest extends DbTestCase
 
 	private string $file;
 
+	private string|false $ignoreArgs = false;
+
 	/**
 	 * @throws Throwable
 	 */
@@ -47,6 +55,9 @@ final class PasswordInErrorReportsTest extends DbTestCase
 	public function setUp(): void
 	{
 		parent::setUp();
+
+		$this->ignoreArgs = ini_get('zend.exception_ignore_args');
+		ini_set('zend.exception_ignore_args', '0');
 
 		$this->password = 'pw-' . bin2hex(random_bytes(12));
 		$this->file = sys_get_temp_dir() . '/' . uniqid('password-in-error-reports-', true) . '.html';
@@ -57,6 +68,10 @@ final class PasswordInErrorReportsTest extends DbTestCase
 	{
 		if (is_file($this->file)) {
 			unlink($this->file);
+		}
+
+		if ($this->ignoreArgs !== false) {
+			ini_set('zend.exception_ignore_args', $this->ignoreArgs);
 		}
 
 		parent::tearDown();
