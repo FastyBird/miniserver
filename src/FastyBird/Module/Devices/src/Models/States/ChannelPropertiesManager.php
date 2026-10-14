@@ -421,10 +421,10 @@ final class ChannelPropertiesManager extends PropertiesManager
 			);
 		} catch (DevicesExceptions\InvalidActualValue $ex) {
 			try {
-				$this->channelPropertiesStatesManager->update($property, $state, Utils\ArrayHash::from([
+				$this->channelPropertiesStatesManager->update($property, $state, [
 					States\Property::ACTUAL_VALUE_FIELD => null,
 					States\Property::VALID_FIELD => false,
-				]));
+				]);
 
 				$this->logger->error(
 					'Property stored actual value was not valid',
@@ -460,10 +460,10 @@ final class ChannelPropertiesManager extends PropertiesManager
 			}
 		} catch (DevicesExceptions\InvalidExpectedValue $ex) {
 			try {
-				$this->channelPropertiesStatesManager->update($property, $state, Utils\ArrayHash::from([
+				$this->channelPropertiesStatesManager->update($property, $state, [
 					States\Property::EXPECTED_VALUE_FIELD => null,
 					States\Property::PENDING_FIELD => false,
-				]));
+				]);
 
 				$this->logger->error(
 					'Property stored expected value was not valid',
