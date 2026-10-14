@@ -553,7 +553,8 @@ final class EmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'default' => [
-				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/' . self::USER_ACCOUNT_ID . '/emails/' . self::USER_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX
+					. '/v1/accounts/' . self::USER_ACCOUNT_ID . '/emails/' . self::USER_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/emails/emails.delete.default.json',

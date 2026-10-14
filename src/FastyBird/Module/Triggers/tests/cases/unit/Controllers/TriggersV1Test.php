@@ -97,7 +97,8 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.read.include.json',
 			],
 			'readRelationshipsActions' => [
-				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/actions',
+				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX
+					. '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/actions',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.readRelationships.actions.json',
@@ -110,7 +111,8 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.readRelationships.notifications.json',
 			],
 			'readRelationshipsConditions' => [
-				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX . '/v1/triggers/0b48dfbc-fac2-4292-88dc-7981a121602d/relationships/conditions',
+				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX
+					. '/v1/triggers/0b48dfbc-fac2-4292-88dc-7981a121602d/relationships/conditions',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.readRelationships.conditions.json',
@@ -137,19 +139,22 @@ final class TriggersV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsConditionsInvalid' => [
-				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX . '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/conditions',
+				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX
+					. '/v1/triggers/c64ba1c4-0eda-4cab-87a0-4d634f7b67f4/relationships/conditions',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/triggers.readRelationships.conditionsInvalid.json',
 			],
 			'readRelationshipsUnknown' => [
-				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX . '/v1/triggers/0b48dfbc-fac2-4292-88dc-7981a121602d/relationships/unknown',
+				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX
+					. '/v1/triggers/0b48dfbc-fac2-4292-88dc-7981a121602d/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
 			],
 			'readRelationshipsUnknownTrigger' => [
-				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX . '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888/relationships/actions',
+				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX
+					. '/v1/triggers/74e40f3e-84cb-4e0c-b3b3-fbf8246e0888/relationships/actions',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',

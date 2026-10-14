@@ -95,19 +95,22 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.read.included.json',
 			],
 			'readRelationshipsEmails' => [
-				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX
+					. '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.relationship.emails.json',
 			],
 			'readRelationshipsIdentities' => [
-				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_IDENTITIES,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX
+					. '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_IDENTITIES,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.relationship.identities.json',
 			],
 			'readRelationshipsRoles' => [
-				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_ROLES,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX
+					. '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_ROLES,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/account.relationship.roles.json',
@@ -146,25 +149,29 @@ final class AccountV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readRelationshipsNoToken' => [
-				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX
+					. '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readRelationshipsEmptyToken' => [
-				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX
+					. '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readRelationshipsInvalidToken' => [
-				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX
+					. '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readRelationshipsExpiredToken' => [
-				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX
+					. '/v1/me/relationships/' . Schemas\Accounts\Account::RELATIONSHIPS_EMAILS,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
