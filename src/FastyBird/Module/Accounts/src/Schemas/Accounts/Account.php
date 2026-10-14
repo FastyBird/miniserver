@@ -10,7 +10,6 @@ use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Models\Policies;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Router;

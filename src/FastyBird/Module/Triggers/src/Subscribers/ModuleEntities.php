@@ -12,7 +12,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Types;
 use Nette\Utils;

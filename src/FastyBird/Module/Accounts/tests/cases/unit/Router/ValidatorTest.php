@@ -34,9 +34,13 @@ final class ValidatorTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$validator = $this->getContainer()->getByType(Router\Validator::class);
 
-		self::assertTrue($validator->validate('/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me'));
+		self::assertTrue(
+			$validator->validate('/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me'),
+		);
 		self::assertFalse(
-			$validator->validate('/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/no-such-resource'),
+			$validator->validate(
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/no-such-resource',
+			),
 		);
 	}
 

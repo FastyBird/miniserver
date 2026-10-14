@@ -5,7 +5,6 @@ namespace FastyBird\Module\Ui\Schemas\Widgets\Display;
 use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
 use Neomerx\JsonApi;

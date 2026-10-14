@@ -6,7 +6,6 @@ use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Router;
 use Neomerx\JsonApi;

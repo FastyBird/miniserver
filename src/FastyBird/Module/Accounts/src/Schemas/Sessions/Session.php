@@ -7,7 +7,6 @@ use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Router;

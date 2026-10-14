@@ -5,7 +5,6 @@ namespace FastyBird\Module\Triggers\Schemas\Notifications;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Router;
 use Neomerx\JsonApi;

@@ -7,7 +7,6 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Identity;
-use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use Override;

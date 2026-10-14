@@ -5,7 +5,6 @@ namespace FastyBird\Module\Triggers\Schemas\Actions;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;

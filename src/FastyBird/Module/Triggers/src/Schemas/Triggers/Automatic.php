@@ -5,7 +5,6 @@ namespace FastyBird\Module\Triggers\Schemas\Triggers;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;

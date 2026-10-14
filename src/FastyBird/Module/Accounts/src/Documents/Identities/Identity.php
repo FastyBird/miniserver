@@ -5,7 +5,6 @@ namespace FastyBird\Module\Accounts\Documents\Identities;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 use Orisai\ObjectMapper;

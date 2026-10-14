@@ -9,7 +9,6 @@ use FastyBird\Core\WebSockets\Controllers as WebSocketsControllers;
 use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Handshake;
 use FastyBird\Core\WebSockets\Topics;
-use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Controllers as UiControllers;
 use FastyBird\Module\Ui\Documents;
 use FastyBird\Module\Ui\Events;
