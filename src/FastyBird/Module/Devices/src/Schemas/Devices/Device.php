@@ -8,7 +8,6 @@ use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;

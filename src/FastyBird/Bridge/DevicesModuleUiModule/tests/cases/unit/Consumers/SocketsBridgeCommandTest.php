@@ -18,7 +18,6 @@ use FastyBird\Core\WebSockets\Entities;
 use FastyBird\Core\WebSockets\Entities\Topics as EntitiesTopics;
 use FastyBird\Core\WebSockets\Routing;
 use FastyBird\Core\WebSockets\Topics as WebSocketsTopics;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Consumers as DevicesConsumers;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;

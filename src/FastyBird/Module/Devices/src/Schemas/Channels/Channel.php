@@ -6,7 +6,6 @@ use DateTimeInterface;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;
 use Neomerx\JsonApi;

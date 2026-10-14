@@ -7,7 +7,6 @@ use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Caching as DevicesCaching;
 use FastyBird\Module\Devices\Consumers;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;

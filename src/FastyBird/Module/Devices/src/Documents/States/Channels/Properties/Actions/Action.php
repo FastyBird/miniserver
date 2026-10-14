@@ -4,7 +4,6 @@ namespace FastyBird\Module\Devices\Documents\States\Channels\Properties\Actions;
 
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Rules;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;

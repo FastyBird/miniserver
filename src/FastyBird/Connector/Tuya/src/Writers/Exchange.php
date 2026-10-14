@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\Tuya\Writers;
 
-use FastyBird\Module\Devices;
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
@@ -15,6 +14,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
+use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;

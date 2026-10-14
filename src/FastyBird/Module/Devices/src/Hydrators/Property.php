@@ -6,7 +6,6 @@ use FastyBird\Core\Api\Encoding\Objects;
 use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Values\Types;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Utils;
