@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Viera\Subscribers;
 
 use Doctrine\DBAL;
-use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;

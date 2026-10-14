@@ -6,7 +6,6 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;

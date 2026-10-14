@@ -12,7 +12,6 @@ use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers as HomeKitHelpers;
 use FastyBird\Connector\HomeKit\Queries as HomeKitQueries;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use FastyBird\Connector\Viera\Constants as VieraConstants;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Queries as VieraQueries;

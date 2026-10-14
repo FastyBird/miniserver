@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
-use FastyBird\Connector\FbMqtt;
 use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;

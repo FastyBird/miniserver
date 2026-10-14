@@ -4,7 +4,6 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Nette\Utils;

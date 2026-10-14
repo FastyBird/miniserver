@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\FbMqtt\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Entities as FbMqttEntities;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Types;

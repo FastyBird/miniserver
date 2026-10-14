@@ -2,7 +2,6 @@
 
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use Nette;

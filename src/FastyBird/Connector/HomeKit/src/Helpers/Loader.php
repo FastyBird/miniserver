@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\HomeKit\Helpers;
 
-use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Exceptions;
 use Nette;
 use Nette\Utils;

@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
-use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Core\Values\Types;

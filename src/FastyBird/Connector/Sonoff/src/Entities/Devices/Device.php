@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Sonoff\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;

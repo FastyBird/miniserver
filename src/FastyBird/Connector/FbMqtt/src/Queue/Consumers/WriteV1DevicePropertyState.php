@@ -212,7 +212,9 @@ final readonly class WriteV1DevicePropertyState implements Queue\Consumer
 			$pending === false
 			|| (
 				$pending instanceof DateTimeInterface
-				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= WriteV1ChannelPropertyState::WRITE_DEBOUNCE_DELAY
+				&& (float) $now->format('Uv') - (float) $pending->format(
+					'Uv',
+				) <= WriteV1ChannelPropertyState::WRITE_DEBOUNCE_DELAY
 			)
 		) {
 			return true;

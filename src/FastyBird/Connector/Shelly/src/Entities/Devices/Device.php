@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Shelly\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Types;

@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\NsPanel\Protocol\Capabilities;
 
-use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Documents;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Mapping;

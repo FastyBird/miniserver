@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Modbus\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types;

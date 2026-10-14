@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\HomeKit\Protocol\Accessories;
 
-use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Types;

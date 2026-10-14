@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\NsPanel\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Types;

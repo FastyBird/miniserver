@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\NsPanel\Documents\Channels;
 
-use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Documents;

@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\FbMqtt\API;
 
-use FastyBird\Connector\FbMqtt;
 use function preg_match;
 use function str_contains;
 use function trim;

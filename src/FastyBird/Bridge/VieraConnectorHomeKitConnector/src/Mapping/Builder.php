@@ -2,7 +2,6 @@
 
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 
-use FastyBird\Bridge\VieraConnectorHomeKitConnector;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use Nette;
