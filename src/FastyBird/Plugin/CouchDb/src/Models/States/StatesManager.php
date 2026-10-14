@@ -19,6 +19,7 @@ use Ramsey\Uuid;
 use stdClass;
 use Throwable;
 use function assert;
+use function is_array;
 use function is_numeric;
 use function is_object;
 use function is_string;
@@ -55,13 +56,20 @@ final class StatesManager
 	}
 
 	/**
+	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
+	 * the callers built before; an ArrayHash is used as it is given (#723).
+	 *
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function create(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): States\State
 	{
+		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
+
 		try {
 			$doc = $this->createDoc($id, $values, $this->entity::getCreateFields());
 
@@ -86,13 +94,20 @@ final class StatesManager
 	}
 
 	/**
+	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
+	 * the callers built before; an ArrayHash is used as it is given (#723).
+	 *
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	public function update(
 		States\State $state,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): States\State
 	{
+		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
+
 		try {
 			$doc = $this->updateDoc($state, $values, $state::getUpdateFields());
 
