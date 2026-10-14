@@ -123,7 +123,9 @@ abstract class PropertiesManager
 				}
 
 				$updateValues[States\Property::EXPECTED_VALUE_FIELD] = $expectedValue;
-			} catch (ValuesExceptions\InvalidValue $ex) {
+			} catch (ValuesExceptions\InvalidValue | CoreExceptions\InvalidArgument $ex) {
+				// An equation transformer that cannot evaluate the stored value (division by zero, a result
+				// that is not finite or an integer result out of range) is an invalid value like any other
 				if ($mappedProperty !== null) {
 					$updateValues[States\Property::EXPECTED_VALUE_FIELD] = null;
 					$updateValues[States\Property::PENDING_FIELD] = false;
