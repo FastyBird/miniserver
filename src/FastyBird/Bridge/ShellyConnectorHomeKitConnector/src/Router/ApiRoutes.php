@@ -2,8 +2,8 @@
 
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\DI;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
@@ -39,7 +39,7 @@ final readonly class ApiRoutes
 		): void {
 			if ($this->usePrefix) {
 				$group->group(
-					'/' . ShellyConnectorHomeKitConnector\DI\ShellyConnectorHomeKitConnectorExtension::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
+					'/' . DI\ShellyConnectorHomeKitConnectorExtension::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
 					function (
 						Routing\RouteCollector $group,
 					): void {

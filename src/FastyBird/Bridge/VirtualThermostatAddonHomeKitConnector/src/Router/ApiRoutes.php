@@ -2,8 +2,8 @@
 
 namespace FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Router;
 
-use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\Controllers;
+use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector\DI;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
@@ -39,7 +39,7 @@ final readonly class ApiRoutes
 		): void {
 			if ($this->usePrefix) {
 				$group->group(
-					'/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX,
+					'/' . DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX,
 					function (
 						Routing\RouteCollector $group,
 					): void {

@@ -73,6 +73,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'readAll' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
@@ -138,6 +139,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readAllMissingToken' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -151,6 +153,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllEmptyToken' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -164,6 +167,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllInvalidToken' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -177,6 +181,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readAllExpiredToken' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -322,6 +327,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'create' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
@@ -332,6 +338,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'missingRequired' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
@@ -341,6 +348,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.create.missing.required.json',
 			],
 			'notUnique' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.notUnique.json'),
@@ -348,6 +356,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.create.notUnique.json',
 			],
 			'invalidType' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.invalid.type.json'),
@@ -355,6 +364,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'missingToken' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
@@ -362,6 +372,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
@@ -369,6 +380,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'emptyToken' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
@@ -376,6 +388,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'expiredToken' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
@@ -383,6 +396,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'notAllowed' => [
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 				'/api/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),

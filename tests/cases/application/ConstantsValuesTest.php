@@ -561,7 +561,8 @@ final class ConstantsValuesTest extends TestCase
 			'MQTT_API_QOS_2' => 2,
 			'VALUE_NOT_AVAILABLE' => 'n/a',
 			'CHANNEL_IDENTIFIER_REGEX' => '/^(?P<type>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/',
-			'CHANNEL_SPECIAL_IDENTIFIER_REGEX' => '/^(?P<type>(light|switch|fan|cover|lock|climate){1})_(?P<subtype>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/',
+			'CHANNEL_SPECIAL_IDENTIFIER_REGEX' => '/^(?P<type>(light|switch|fan|cover|lock|climate){1})_(?P<subtype>(binary|numeric|enum|'
+				. 'text|composite){1})_(?P<identifier>[a-z0-9_]+)$/',
 			'IEEE_ADDRESS_REGEX' => '/^0x([a-zA-Z0-9]+)$/',
 			'EVENT_CONNECT' => 'connect',
 			'EVENT_DISCONNECT' => 'disconnect',

@@ -2,8 +2,8 @@
 
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Router;
 
-use FastyBird\Bridge\VieraConnectorHomeKitConnector;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Controllers;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\DI;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
@@ -39,7 +39,7 @@ final readonly class ApiRoutes
 		): void {
 			if ($this->usePrefix) {
 				$group->group(
-					'/' . VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
+					'/' . DI\VieraConnectorHomeKitConnectorExtension::BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
 					function (
 						Routing\RouteCollector $group,
 					): void {
