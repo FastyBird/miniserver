@@ -9,8 +9,8 @@ use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Events as UiEvents;
 use FastyBird\Module\Ui\Types as UiTypes;
@@ -96,7 +96,7 @@ final class ActionCommandTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					Sources\Module::DEVICES->value,
-					Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
+					DevicesTypes\RoutingKey::CONNECTOR_PROPERTY_ACTION->value,
 					DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 					[
 						'id' => self::CONNECTOR_PROPERTY,
@@ -131,7 +131,7 @@ final class ActionCommandTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					Sources\Module::DEVICES->value,
-					Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+					DevicesTypes\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 					DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 					[
 						'id' => self::DEVICE_PROPERTY,
@@ -166,7 +166,7 @@ final class ActionCommandTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					Sources\Module::DEVICES->value,
-					Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
+					DevicesTypes\RoutingKey::CHANNEL_PROPERTY_ACTION->value,
 					DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 					[
 						'id' => self::CHANNEL_PROPERTY,
