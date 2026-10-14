@@ -180,12 +180,23 @@ reads them: `Security\Configuration` holds the token and application settings
 `Security\Presenters\HasAuthorization` reads, and `Persistence\TimestampableConfiguration` holds
 the settings of the timestampable driver.
 
-There is no root-level `Constants` class. A constant lives, typed, on the type that owns its meaning
+There is no root-level `Constants` class. A constant lives, typed, with the class that owns it
 (`Http\Routing\Router::API_PREFIX`, `Security\Identity\User::ROLE_ADMINISTRATOR`,
-`Security\Identity\TokenReader::HEADER_NAME`); a value used by one extension only lives in that
-extension (`FastyBird\Module\Devices\Constants::MODULE_DEVICES_PREFIX`); and an extension's
-identity is the literal of its `Values\Types\Sources\*` enum case. Do not add a shared constants
-class back.
+`Security\Identity\TokenReader::HEADER_NAME`), and an extension's identity is the literal of its
+`Values\Types\Sources\*` enum case. The same holds in every other package, routed like this:
+
+- a route name lives on the package's `Router\ApiRoutes`
+  (`FastyBird\Module\Devices\Router\ApiRoutes::ROUTE_NAME_DEVICE`);
+- the exchange routing keys are the cases of one backed enum per package, `Types\RoutingKey`
+  (`FastyBird\Module\Devices\Types\RoutingKey::DEVICE_DOCUMENT_CREATED`), and the prefixes the keys
+  are built from are that enum's constants (`RoutingKey::DELETED_PREFIX`);
+- the package's URL prefix lives on its DI extension
+  (`FastyBird\Module\Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX`);
+- any other constant lives on the class that reads it, privately when that class is its only
+  reader (`FastyBird\Module\Devices\Entities\Property::VALUE_FORMAT_NUMBER_RANGE`).
+
+Do not add a constants class back, in Core or in a package. The packages #726 has not reached yet
+still have their `Constants` class until it does; do not add a constant to one.
 
 ## DI
 

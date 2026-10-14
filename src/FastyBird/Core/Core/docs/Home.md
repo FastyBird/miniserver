@@ -140,7 +140,7 @@ The API stack, PSR-7 and PSR-15, with a FastRoute-based router.
           Routing\RouteCollector $group,
       ): void {
           if ($this->usePrefix) {
-              $group->group('/' . Devices\Constants::MODULE_DEVICES_PREFIX, function (
+              $group->group('/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX, function (
                   Routing\RouteCollector $group,
               ): void {
                   $this->buildRoutes($group);
