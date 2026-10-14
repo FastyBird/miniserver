@@ -27,6 +27,11 @@ const SESSION_API_URL = '/v1/session';
 // An access token closer to its expiration than this is refreshed before anything signs in with it
 const ACCESS_TOKEN_EXPIRATION_MARGIN = 30000;
 
+// The statuses the server refuses a session refresh with: 422 for an unknown, expired or no longer
+// usable refresh token (SessionV1::update), 400 for a document it cannot read (BaseV1), 401 and 403
+// from the access check in front of the action, which is open to guests only
+const REFRESH_REFUSED_STATUSES = [400, 401, 403, 422];
+
 const hasAccessTokenCookie = (): boolean => {
 	const { cookies } = useCookies();
 
@@ -215,14 +220,16 @@ export default {
 				}
 
 				try {
-					// False when there is no refresh token left to refresh with
+					// False when there is no refresh token left to refresh with. A refresh already
+					// under way (e.g. the API client's, after a 401) is awaited, not started again
 					return await sessionStore.refresh();
 				} catch (e: unknown) {
 					const status = Number(get(e, 'exception.response.status', 0));
 
-					// Refused by the server: the session is gone. Not answered, or failed on the
-					// server's side: the session may still be valid, it is asked again later
-					return status < 400 || status >= 500;
+					// Refused by the server: the session is gone. Anything else -- no answer, a
+					// timeout, rate limiting, a server error -- leaves the session as it is, and the
+					// caller asks again later
+					return !REFRESH_REFUSED_STATUSES.includes(status);
 				}
 			},
 			lock: (): Promise<boolean> => {
