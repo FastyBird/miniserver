@@ -3,9 +3,20 @@
 namespace FastyBird\MiniServer\Tests\Cases\Application;
 
 use BackedEnum;
+use FastyBird\Addon\VirtualThermostat;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector;
 use FastyBird\Bridge\VirtualThermostatAddonHomeKitConnector;
+use FastyBird\Connector\FbMqtt;
+use FastyBird\Connector\HomeKit;
+use FastyBird\Connector\Modbus;
+use FastyBird\Connector\NsPanel;
+use FastyBird\Connector\Shelly;
+use FastyBird\Connector\Sonoff;
+use FastyBird\Connector\Tuya;
+use FastyBird\Connector\Viera;
+use FastyBird\Connector\Virtual;
+use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Access;
@@ -27,8 +38,17 @@ use function array_unique;
 use function array_values;
 use function class_exists;
 use function count;
+use function dirname;
 use function is_array;
+use function is_file;
+use function is_float;
+use function is_int;
 use function is_string;
+use function realpath;
+use function str_starts_with;
+use function strlen;
+use function substr;
+use const DIRECTORY_SEPARATOR;
 
 /**
  * Every value of the dissolved Core `Constants` class, pinned at its census T5 destination (T12-22).
@@ -49,8 +69,9 @@ use function is_string;
  * PACKAGE_VALUES pins each of those values as it was before the move, and PACKAGE_DESTINATIONS says
  * where it lives now.
  *
- * It lives in the application tier because the destinations span Core, four modules, three bridges
- * and a plugin, which no single package's tests may reference (make layers).
+ * It lives in the application tier because the destinations span Core, four modules, three bridges,
+ * a plugin, ten connectors and an addon, which no single package's tests may reference (make
+ * layers).
  */
 final class ConstantsValuesTest extends TestCase
 {
@@ -179,14 +200,20 @@ final class ConstantsValuesTest extends TestCase
 		'MODULE_TRIGGERS_PREFIX' => [[Triggers\Constants::class, 'MODULE_TRIGGERS_PREFIX']],
 		'MODULE_UI_PREFIX' => [[Ui\Constants::class, 'MODULE_UI_PREFIX']],
 		'BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX' => [
-			[ShellyConnectorHomeKitConnector\Constants::class, 'BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX'],
+			[
+				ShellyConnectorHomeKitConnector\DI\ShellyConnectorHomeKitConnectorExtension::class,
+				'BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX',
+			],
 		],
 		'BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX' => [
-			[VieraConnectorHomeKitConnector\Constants::class, 'BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX'],
+			[
+				VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::class,
+				'BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX',
+			],
 		],
 		'BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX' => [
 			[
-				VirtualThermostatAddonHomeKitConnector\Constants::class,
+				VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::class,
 				'BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX',
 			],
 		],
@@ -216,6 +243,10 @@ final class ConstantsValuesTest extends TestCase
 	 * Every value of a package's dissolved `Constants` class (#726 part 2), keyed by the class's
 	 * old name and then by the constant's old name, as it was on the base of the change that
 	 * dissolved it. A value Core's table above already pins is read from there.
+	 *
+	 * A RESOURCES_FOLDER was `__DIR__ . '/../resources'` in the Constants class, so its text named
+	 * the directory of the file declaring it. It is pinned as the directory it resolves to,
+	 * relative to the owner's package: `'resources'`.
 	 */
 	private const array PACKAGE_VALUES = [
 		'FastyBird\\Module\\Devices\\Constants' => [
@@ -371,6 +402,176 @@ final class ConstantsValuesTest extends TestCase
 				Devices\Entities\Channels\Properties\Property::class => 'fb.exchange.module.document.deleted.channel.property',
 				Devices\Entities\Channels\Controls\Control::class => 'fb.exchange.module.document.deleted.channel.control',
 			],
+		],
+		'FastyBird\\Addon\\VirtualThermostat\\Constants' => [
+			'MANUFACTURER' => 'FastyBird',
+			'PRESET_CHANNEL_PATTERN' => '/^preset(_(?P<preset>[a-zA-Z_]+))?$/',
+		],
+		'FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Constants' => [
+			'BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX' => self::VALUES['BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX'],
+			'MANUFACTURER' => 'FastyBird & Shelly',
+			'MODEL' => 'Shelly',
+			'ROUTE_NAME_BRIDGES' => 'bridges',
+			'ROUTE_NAME_BRIDGE' => 'bridge',
+			'RESOURCES_FOLDER' => 'resources',
+		],
+		'FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Constants' => [
+			'BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX' => self::VALUES['BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX'],
+			'MANUFACTURER' => 'FastyBird & Panasonic',
+			'MODEL' => 'Panasonic TV',
+			'ROUTE_NAME_BRIDGES' => 'bridges',
+			'ROUTE_NAME_BRIDGE' => 'bridge',
+			'DEFAULT_ACTIVE_IDENTIFIER' => 'TV',
+			'DEFAULT_ACTIVE_CODE' => 500,
+			'RESOURCES_FOLDER' => 'resources',
+			'INPUT_SOURCE_TYPE_TV' => 2,
+			'INPUT_SOURCE_TYPE_HDMI' => 3,
+			'INPUT_SOURCE_TYPE_APPLICATION' => 10,
+		],
+		'FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Constants' => [
+			'BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX' => self::VALUES['BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX'],
+			'MODEL' => 'Virtual Thermostat Bridge',
+			'MANUFACTURER' => 'FastyBird',
+			'ROUTE_NAME_BRIDGES' => 'bridges',
+			'ROUTE_NAME_BRIDGE' => 'bridge',
+		],
+		'FastyBird\\Connector\\FbMqtt\\Constants' => [
+			'MQTT_TOPIC_DELIMITER' => '/',
+			'MQTT_API_PREFIX' => '/fb',
+			'MQTT_API_V1_VERSION_PREFIX' => '/v1',
+			'MQTT_API_QOS_0' => 0,
+			'MQTT_API_QOS_1' => 1,
+			'MQTT_API_QOS_2' => 2,
+			'PAYLOAD_BOOL_TRUE_VALUE' => 'true',
+			'PAYLOAD_BOOL_FALSE_VALUE' => 'false',
+			'VALUE_NOT_SET' => 'value_not_set',
+			'DEFAULT_SERVER_ADDRESS' => '127.0.0.1',
+			'DEFAULT_SERVER_PORT' => 1_883,
+			'DEFAULT_SERVER_SECURED_PORT' => 8_883,
+			'WRITE_DEBOUNCE_DELAY' => 2_000.0,
+		],
+		'FastyBird\\Connector\\HomeKit\\Constants' => [
+			'PACKAGE_NAME' => 'fastybird/homekit-connector',
+			'DEFAULT_MANUFACTURER' => 'FastyBird',
+			'DEFAULT_BRIDGE_MODEL' => 'Virtual bridge',
+			'DEFAULT_DEVICE_MODEL' => 'Virtual device',
+			'BASE_UUID' => '-0000-1000-8000-0026BB765291',
+			'RESOURCES_FOLDER' => 'resources',
+			'DEFAULT_CONFIG_VERSION' => 1,
+			'DEFAULT_PORT' => 51_827,
+			'MAX_CONFIG_VERSION' => 65_535,
+			'STANDALONE_AID' => 1,
+			'HAP_PROTOCOL_VERSION' => '01.01.00',
+			'HAP_PROTOCOL_SHORT_VERSION' => '1.1',
+			'VERSION_REGEXP' => '/^(?:[0-9]*).(?:[0-9]*).(?:[0-9]*)$/',
+			'SERVICE_IDENTIFIER' => '/^(?P<type>[a-z_]+)(?:_(?P<cnt>[0-9]+){1})$/',
+		],
+		'FastyBird\\Connector\\Modbus\\Constants' => [
+			'DEFAULT_RTU_SERIAL_INTERFACE' => '/dev/ttyAMA0',
+			'MAX_ANALOG_REGISTERS_PER_MODBUS_REQUEST' => 124,
+			'MAX_DISCRETE_REGISTERS_PER_MODBUS_REQUEST' => 2_048,
+			'WRITE_DEBOUNCE_DELAY' => 2_000.0,
+			'READING_DELAY' => 150.0,
+			'DEFAULT_TCP_PORT' => 502,
+		],
+		'FastyBird\\Connector\\NsPanel\\Constants' => [
+			'RESOURCES_FOLDER' => 'resources',
+			'DEFAULT_SERVER_PORT' => 52_323,
+			'NS_PANEL_API_VERSION_V1' => '1',
+			'STATE_NAME_KEY' => '/^(?P<capability>[a-z\-]+)(?:_(?P<name>[0-9a-zA-Z\-]+))?$/',
+			'CHANNEL_IDENTIFIER' => '/^(?P<capability>[a-z\-]+)(?:_(?P<name>[0-9a-zA-Z\-]+))?$/',
+		],
+		'FastyBird\\Connector\\Shelly\\Constants' => [
+			'RESOURCES_FOLDER' => 'resources',
+			'VALUE_NOT_AVAILABLE' => 'n/a',
+			'WRITE_DEBOUNCE_DELAY' => 2_000.0,
+			'COAP_ADDRESS' => '224.0.1.187',
+			'COAP_PORT' => 5_683,
+			'STATE_READING_DELAY' => 300.0,
+			'EVENT_ERROR' => 'error',
+			'EVENT_CLOSED' => 'closed',
+			'EVENT_MESSAGE' => 'message',
+			'EVENT_CONNECTED' => 'connected',
+			'EVENT_DISCONNECTED' => 'disconnected',
+			'EVENT_LOST' => 'lost',
+		],
+		'FastyBird\\Connector\\Sonoff\\Constants' => [
+			'RESOURCES_FOLDER' => 'resources',
+			'COOLKIT_APP_ID' => '4s1FXKC9FaGfoqXhmXSJneb3qcm1gOak',
+			'COOLKIT_APP_SECRET' => 'oKvCM06gvwkRbfetd6qWRrbC3rFrbIpV',
+			'DEFAULT_APP_ID' => 'R8Oq3y0eSZSYdKccHlrQzT1ACCOUT9Gv',
+			'DEFAULT_APP_SECRET' => '1ve5Qk9GXfUhKAn1svnKwpAlxXkMarru',
+			'VALUE_NOT_AVAILABLE' => 'N/A',
+			'CHANNEL_GROUP' => '/^(?P<group>[a-zA-Z]+)(_(?P<outlet>[0-9]+))?$/',
+			'STATE_READING_DELAY' => 300.0,
+			'HEARTBEAT_DELAY' => 150.0,
+			'WRITE_DEBOUNCE_DELAY' => 2_000.0,
+		],
+		'FastyBird\\Connector\\Tuya\\Constants' => [
+			'RESOURCES_FOLDER' => 'resources',
+			'EVENT_MESSAGE' => 'message',
+			'EVENT_ERROR' => 'error',
+			'EVENT_DISCONNECTED' => 'disconnected',
+			'EVENT_CONNECTED' => 'connected',
+			'EVENT_LOST' => 'lost',
+		],
+		'FastyBird\\Connector\\Viera\\Constants' => [
+			'KEYS_PROPERTIES' => [
+				'NRC_TV-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_TV,
+				'NRC_HOME-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_HOME,
+				'NRC_CH_UP-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_CHANNEL_UP,
+				'NRC_CH_DOWN-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_CHANNEL_DOWN,
+				'NRC_VOLUP-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_VOLUME_UP,
+				'NRC_VOLDOWN-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_VOLUME_DOWN,
+				'NRC_UP-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_ARROW_UP,
+				'NRC_DOWN-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_ARROW_DOWN,
+				'NRC_LEFT-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_ARROW_LEFT,
+				'NRC_RIGHT-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_ARROW_RIGHT,
+				'NRC_D0-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_0,
+				'NRC_D1-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_1,
+				'NRC_D2-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_2,
+				'NRC_D3-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_3,
+				'NRC_D4-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_4,
+				'NRC_D5-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_5,
+				'NRC_D6-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_6,
+				'NRC_D7-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_7,
+				'NRC_D8-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_8,
+				'NRC_D9-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_9,
+				'NRC_RED-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_RED,
+				'NRC_GREEN-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_GREEN,
+				'NRC_YELLOW-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_YELLOW,
+				'NRC_BLUE-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_BLUE,
+				'NRC_ENTER-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_OK,
+				'NRC_RETURN-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_BACK,
+				'NRC_MENU-ONOFF' => Viera\Types\ChannelPropertyIdentifier::KEY_MENU,
+			],
+			'TV_IDENTIFIER' => 'TV',
+			'TV_CODE' => 500,
+			'MAX_HDMI_CODE' => 100,
+			'MIN_APPLICATION_CODE' => 1_000,
+		],
+		'FastyBird\\Connector\\Virtual\\Constants' => [
+			'MANUFACTURER' => 'FastyBird',
+		],
+		'FastyBird\\Connector\\Zigbee2Mqtt\\Constants' => [
+			'BRIDGE_TOPIC' => '%s/#',
+			'MQTT_TOPIC_DELIMITER' => '/',
+			'MQTT_API_QOS_0' => 0,
+			'MQTT_API_QOS_1' => 1,
+			'MQTT_API_QOS_2' => 2,
+			'VALUE_NOT_AVAILABLE' => 'n/a',
+			'CHANNEL_IDENTIFIER_REGEX' => '/^(?P<type>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/',
+			'CHANNEL_SPECIAL_IDENTIFIER_REGEX' => '/^(?P<type>(light|switch|fan|cover|lock|climate){1})_(?P<subtype>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/',
+			'IEEE_ADDRESS_REGEX' => '/^0x([a-zA-Z0-9]+)$/',
+			'EVENT_CONNECT' => 'connect',
+			'EVENT_DISCONNECT' => 'disconnect',
+			'EVENT_CLOSE' => 'close',
+			'EVENT_WARNING' => 'warning',
+			'EVENT_ERROR' => 'error',
+			'EVENT_MESSAGE' => 'message',
+			'EVENT_PUBLISH' => 'publish',
+			'EVENT_SUBSCRIBE' => 'subscribe',
+			'EVENT_UNSUBSCRIBE' => 'unsubscribe',
 		],
 	];
 
@@ -557,6 +758,157 @@ final class ConstantsValuesTest extends TestCase
 				'MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING',
 			],
 		],
+		'FastyBird\\Addon\\VirtualThermostat\\Constants' => [
+			'MANUFACTURER' => [VirtualThermostat\Entities\Devices\Device::class, 'MANUFACTURER'],
+			'PRESET_CHANNEL_PATTERN' => [VirtualThermostat\Drivers\Thermostat::class, 'PRESET_CHANNEL_PATTERN'],
+		],
+		'FastyBird\\Bridge\\ShellyConnectorHomeKitConnector\\Constants' => [
+			'BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX' => [
+				ShellyConnectorHomeKitConnector\DI\ShellyConnectorHomeKitConnectorExtension::class,
+				'BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX',
+			],
+			'MANUFACTURER' => [ShellyConnectorHomeKitConnector\Builders\Builder::class, 'MANUFACTURER'],
+			'MODEL' => [ShellyConnectorHomeKitConnector\Builders\Builder::class, 'MODEL'],
+			'ROUTE_NAME_BRIDGES' => [ShellyConnectorHomeKitConnector\Router\ApiRoutes::class, 'ROUTE_NAME_BRIDGES'],
+			'ROUTE_NAME_BRIDGE' => [ShellyConnectorHomeKitConnector\Router\ApiRoutes::class, 'ROUTE_NAME_BRIDGE'],
+			'RESOURCES_FOLDER' => [ShellyConnectorHomeKitConnector\Mapping\Builder::class, 'RESOURCES_FOLDER'],
+		],
+		'FastyBird\\Bridge\\VieraConnectorHomeKitConnector\\Constants' => [
+			'BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX' => [
+				VieraConnectorHomeKitConnector\DI\VieraConnectorHomeKitConnectorExtension::class,
+				'BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX',
+			],
+			'MANUFACTURER' => [VieraConnectorHomeKitConnector\Builders\Builder::class, 'MANUFACTURER'],
+			'MODEL' => [VieraConnectorHomeKitConnector\Builders\Builder::class, 'MODEL'],
+			'ROUTE_NAME_BRIDGES' => [VieraConnectorHomeKitConnector\Router\ApiRoutes::class, 'ROUTE_NAME_BRIDGES'],
+			'ROUTE_NAME_BRIDGE' => [VieraConnectorHomeKitConnector\Router\ApiRoutes::class, 'ROUTE_NAME_BRIDGE'],
+			'DEFAULT_ACTIVE_IDENTIFIER' => [VieraConnectorHomeKitConnector\Builders\Builder::class, 'DEFAULT_ACTIVE_IDENTIFIER'],
+			'DEFAULT_ACTIVE_CODE' => [VieraConnectorHomeKitConnector\Builders\Builder::class, 'DEFAULT_ACTIVE_CODE'],
+			'RESOURCES_FOLDER' => [VieraConnectorHomeKitConnector\Mapping\Builder::class, 'RESOURCES_FOLDER'],
+			'INPUT_SOURCE_TYPE_TV' => [VieraConnectorHomeKitConnector\Builders\Builder::class, 'INPUT_SOURCE_TYPE_TV'],
+			'INPUT_SOURCE_TYPE_HDMI' => [VieraConnectorHomeKitConnector\Builders\Builder::class, 'INPUT_SOURCE_TYPE_HDMI'],
+			'INPUT_SOURCE_TYPE_APPLICATION' => [VieraConnectorHomeKitConnector\Builders\Builder::class, 'INPUT_SOURCE_TYPE_APPLICATION'],
+		],
+		'FastyBird\\Bridge\\VirtualThermostatAddonHomeKitConnector\\Constants' => [
+			'BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX' => [
+				VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::class,
+				'BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX',
+			],
+			'MODEL' => [VirtualThermostatAddonHomeKitConnector\Builders\Builder::class, 'MODEL'],
+			'MANUFACTURER' => [VirtualThermostatAddonHomeKitConnector\Builders\Builder::class, 'MANUFACTURER'],
+			'ROUTE_NAME_BRIDGES' => [VirtualThermostatAddonHomeKitConnector\Router\ApiRoutes::class, 'ROUTE_NAME_BRIDGES'],
+			'ROUTE_NAME_BRIDGE' => [VirtualThermostatAddonHomeKitConnector\Router\ApiRoutes::class, 'ROUTE_NAME_BRIDGE'],
+		],
+		'FastyBird\\Connector\\FbMqtt\\Constants' => [
+			'MQTT_TOPIC_DELIMITER' => [FbMqtt\API\V1Builder::class, 'MQTT_TOPIC_DELIMITER'],
+			'MQTT_API_PREFIX' => [FbMqtt\API\V1Builder::class, 'MQTT_API_PREFIX'],
+			'MQTT_API_V1_VERSION_PREFIX' => [FbMqtt\API\V1Builder::class, 'MQTT_API_V1_VERSION_PREFIX'],
+			'MQTT_API_QOS_0' => [FbMqtt\API\Client::class, 'MQTT_API_QOS_0'],
+			'MQTT_API_QOS_1' => [FbMqtt\API\Client::class, 'MQTT_API_QOS_1'],
+			'MQTT_API_QOS_2' => [FbMqtt\API\Client::class, 'MQTT_API_QOS_2'],
+			'PAYLOAD_BOOL_TRUE_VALUE' => [FbMqtt\Queue\Messages\PropertyAttribute::class, 'PAYLOAD_BOOL_TRUE_VALUE'],
+			'PAYLOAD_BOOL_FALSE_VALUE' => [FbMqtt\Queue\Messages\PropertyAttribute::class, 'PAYLOAD_BOOL_FALSE_VALUE'],
+			'VALUE_NOT_SET' => [FbMqtt\Queue\Messages\Property::class, 'VALUE_NOT_SET'],
+			'DEFAULT_SERVER_ADDRESS' => [FbMqtt\Entities\Connectors\Connector::class, 'DEFAULT_SERVER_ADDRESS'],
+			'DEFAULT_SERVER_PORT' => [FbMqtt\Entities\Connectors\Connector::class, 'DEFAULT_SERVER_PORT'],
+			'DEFAULT_SERVER_SECURED_PORT' => [FbMqtt\Entities\Connectors\Connector::class, 'DEFAULT_SERVER_SECURED_PORT'],
+			'WRITE_DEBOUNCE_DELAY' => [FbMqtt\Queue\Consumers\WriteV1ChannelPropertyState::class, 'WRITE_DEBOUNCE_DELAY'],
+		],
+		'FastyBird\\Connector\\HomeKit\\Constants' => [
+			'PACKAGE_NAME' => [HomeKit\Protocol\Loader::class, 'PACKAGE_NAME'],
+			'DEFAULT_MANUFACTURER' => [HomeKit\Protocol\Loader::class, 'DEFAULT_MANUFACTURER'],
+			'DEFAULT_BRIDGE_MODEL' => [HomeKit\Protocol\Loader::class, 'DEFAULT_BRIDGE_MODEL'],
+			'DEFAULT_DEVICE_MODEL' => [HomeKit\Protocol\Loader::class, 'DEFAULT_DEVICE_MODEL'],
+			'BASE_UUID' => [HomeKit\Helpers\Protocol::class, 'BASE_UUID'],
+			'RESOURCES_FOLDER' => [HomeKit\Helpers\Loader::class, 'RESOURCES_FOLDER'],
+			'DEFAULT_CONFIG_VERSION' => [HomeKit\Entities\Connectors\Connector::class, 'DEFAULT_CONFIG_VERSION'],
+			'DEFAULT_PORT' => [HomeKit\Entities\Connectors\Connector::class, 'DEFAULT_PORT'],
+			'MAX_CONFIG_VERSION' => [HomeKit\Entities\Connectors\Connector::class, 'MAX_CONFIG_VERSION'],
+			'STANDALONE_AID' => [HomeKit\Protocol\Accessories\Accessory::class, 'STANDALONE_AID'],
+			'HAP_PROTOCOL_VERSION' => [HomeKit\Protocol\Loader::class, 'HAP_PROTOCOL_VERSION'],
+			'HAP_PROTOCOL_SHORT_VERSION' => [HomeKit\Servers\Mdns::class, 'HAP_PROTOCOL_SHORT_VERSION'],
+			'VERSION_REGEXP' => [HomeKit\Protocol\Loader::class, 'VERSION_REGEXP'],
+			'SERVICE_IDENTIFIER' => [HomeKit\Entities\Channels\Channel::class, 'SERVICE_IDENTIFIER'],
+		],
+		'FastyBird\\Connector\\Modbus\\Constants' => [
+			'DEFAULT_RTU_SERIAL_INTERFACE' => [Modbus\Entities\Connectors\Connector::class, 'DEFAULT_RTU_SERIAL_INTERFACE'],
+			'MAX_ANALOG_REGISTERS_PER_MODBUS_REQUEST' => [Modbus\Clients\Client::class, 'MAX_ANALOG_REGISTERS_PER_MODBUS_REQUEST'],
+			'MAX_DISCRETE_REGISTERS_PER_MODBUS_REQUEST' => [Modbus\Clients\Client::class, 'MAX_DISCRETE_REGISTERS_PER_MODBUS_REQUEST'],
+			'WRITE_DEBOUNCE_DELAY' => [Modbus\Queue\Consumers\WriteChannelPropertyState::class, 'WRITE_DEBOUNCE_DELAY'],
+			'READING_DELAY' => [Modbus\Entities\Channels\Channel::class, 'READING_DELAY'],
+			'DEFAULT_TCP_PORT' => [Modbus\Entities\Devices\Device::class, 'DEFAULT_TCP_PORT'],
+		],
+		'FastyBird\\Connector\\NsPanel\\Constants' => [
+			'RESOURCES_FOLDER' => [NsPanel\DI\NsPanelExtension::class, 'RESOURCES_FOLDER'],
+			'DEFAULT_SERVER_PORT' => [NsPanel\Entities\Connectors\Connector::class, 'DEFAULT_SERVER_PORT'],
+			'NS_PANEL_API_VERSION_V1' => [NsPanel\API\LanApi::class, 'NS_PANEL_API_VERSION_V1'],
+			'STATE_NAME_KEY' => [NsPanel\Types\Capability::class, 'STATE_NAME_KEY'],
+			'CHANNEL_IDENTIFIER' => [NsPanel\Entities\Channels\Channel::class, 'CHANNEL_IDENTIFIER'],
+		],
+		'FastyBird\\Connector\\Shelly\\Constants' => [
+			'RESOURCES_FOLDER' => [Shelly\DI\ShellyExtension::class, 'RESOURCES_FOLDER'],
+			'VALUE_NOT_AVAILABLE' => [Shelly\API\Messages\Response\Gen2\DeviceState::class, 'VALUE_NOT_AVAILABLE'],
+			'WRITE_DEBOUNCE_DELAY' => [Shelly\Queue\Consumers\WriteChannelPropertyState::class, 'WRITE_DEBOUNCE_DELAY'],
+			'COAP_ADDRESS' => [Shelly\API\Gen1Coap::class, 'COAP_ADDRESS'],
+			'COAP_PORT' => [Shelly\API\Gen1Coap::class, 'COAP_PORT'],
+			'STATE_READING_DELAY' => [Shelly\Entities\Devices\Device::class, 'STATE_READING_DELAY'],
+			'EVENT_ERROR' => [Shelly\API\Gen2WsApi::class, 'EVENT_ERROR'],
+			'EVENT_CLOSED' => [Shelly\API\Gen1Coap::class, 'EVENT_CLOSED'],
+			'EVENT_MESSAGE' => [Shelly\API\Gen2WsApi::class, 'EVENT_MESSAGE'],
+			'EVENT_CONNECTED' => [Shelly\API\Gen2WsApi::class, 'EVENT_CONNECTED'],
+			'EVENT_DISCONNECTED' => [Shelly\API\Gen2WsApi::class, 'EVENT_DISCONNECTED'],
+			'EVENT_LOST' => [Shelly\API\Gen2WsApi::class, 'EVENT_LOST'],
+		],
+		'FastyBird\\Connector\\Sonoff\\Constants' => [
+			'RESOURCES_FOLDER' => [Sonoff\DI\SonoffExtension::class, 'RESOURCES_FOLDER'],
+			'COOLKIT_APP_ID' => [Sonoff\Entities\Connectors\Connector::class, 'COOLKIT_APP_ID'],
+			'COOLKIT_APP_SECRET' => [Sonoff\Entities\Connectors\Connector::class, 'COOLKIT_APP_SECRET'],
+			'DEFAULT_APP_ID' => [Sonoff\Entities\Connectors\Connector::class, 'DEFAULT_APP_ID'],
+			'DEFAULT_APP_SECRET' => [Sonoff\Entities\Connectors\Connector::class, 'DEFAULT_APP_SECRET'],
+			'VALUE_NOT_AVAILABLE' => [Sonoff\Commands\Install::class, 'VALUE_NOT_AVAILABLE'],
+			'CHANNEL_GROUP' => [Sonoff\Queue\Consumers\WriteChannelPropertyState::class, 'CHANNEL_GROUP'],
+			'STATE_READING_DELAY' => [Sonoff\Entities\Devices\Device::class, 'STATE_READING_DELAY'],
+			'HEARTBEAT_DELAY' => [Sonoff\Helpers\Device::class, 'HEARTBEAT_DELAY'],
+			'WRITE_DEBOUNCE_DELAY' => [Sonoff\Queue\Consumers\WriteChannelPropertyState::class, 'WRITE_DEBOUNCE_DELAY'],
+		],
+		'FastyBird\\Connector\\Tuya\\Constants' => [
+			'RESOURCES_FOLDER' => [Tuya\DI\TuyaExtension::class, 'RESOURCES_FOLDER'],
+			'EVENT_MESSAGE' => [Tuya\API\LocalApi::class, 'EVENT_MESSAGE'],
+			'EVENT_ERROR' => [Tuya\API\LocalApi::class, 'EVENT_ERROR'],
+			'EVENT_DISCONNECTED' => [Tuya\API\LocalApi::class, 'EVENT_DISCONNECTED'],
+			'EVENT_CONNECTED' => [Tuya\API\LocalApi::class, 'EVENT_CONNECTED'],
+			'EVENT_LOST' => [Tuya\API\LocalApi::class, 'EVENT_LOST'],
+		],
+		'FastyBird\\Connector\\Viera\\Constants' => [
+			'KEYS_PROPERTIES' => [Viera\Types\ActionKey::class, 'KEYS_PROPERTIES'],
+			'TV_IDENTIFIER' => [Viera\Entities\Devices\Device::class, 'TV_IDENTIFIER'],
+			'TV_CODE' => [Viera\Entities\Devices\Device::class, 'TV_CODE'],
+			'MAX_HDMI_CODE' => [Viera\Entities\Devices\Device::class, 'MAX_HDMI_CODE'],
+			'MIN_APPLICATION_CODE' => [Viera\Entities\Devices\Device::class, 'MIN_APPLICATION_CODE'],
+		],
+		'FastyBird\\Connector\\Virtual\\Constants' => [
+			'MANUFACTURER' => [Virtual\Subscribers\Properties::class, 'MANUFACTURER'],
+		],
+		'FastyBird\\Connector\\Zigbee2Mqtt\\Constants' => [
+			'BRIDGE_TOPIC' => [Zigbee2Mqtt\API\MqttBuilder::class, 'BRIDGE_TOPIC'],
+			'MQTT_TOPIC_DELIMITER' => [Zigbee2Mqtt\API\MqttBuilder::class, 'MQTT_TOPIC_DELIMITER'],
+			'MQTT_API_QOS_0' => [Zigbee2Mqtt\API\Client::class, 'MQTT_API_QOS_0'],
+			'MQTT_API_QOS_1' => [Zigbee2Mqtt\API\Client::class, 'MQTT_API_QOS_1'],
+			'MQTT_API_QOS_2' => [Zigbee2Mqtt\API\Client::class, 'MQTT_API_QOS_2'],
+			'VALUE_NOT_AVAILABLE' => [Zigbee2Mqtt\Queue\Messages\Exposes\Type::class, 'VALUE_NOT_AVAILABLE'],
+			'CHANNEL_IDENTIFIER_REGEX' => [Zigbee2Mqtt\Entities\Channels\Channel::class, 'CHANNEL_IDENTIFIER_REGEX'],
+			'CHANNEL_SPECIAL_IDENTIFIER_REGEX' => [Zigbee2Mqtt\Entities\Channels\Channel::class, 'CHANNEL_SPECIAL_IDENTIFIER_REGEX'],
+			'IEEE_ADDRESS_REGEX' => [Zigbee2Mqtt\Queue\Consumers\StoreDeviceState::class, 'IEEE_ADDRESS_REGEX'],
+			'EVENT_CONNECT' => [Zigbee2Mqtt\API\Client::class, 'EVENT_CONNECT'],
+			'EVENT_DISCONNECT' => [Zigbee2Mqtt\API\Client::class, 'EVENT_DISCONNECT'],
+			'EVENT_CLOSE' => [Zigbee2Mqtt\API\Client::class, 'EVENT_CLOSE'],
+			'EVENT_WARNING' => [Zigbee2Mqtt\API\Client::class, 'EVENT_WARNING'],
+			'EVENT_ERROR' => [Zigbee2Mqtt\API\Client::class, 'EVENT_ERROR'],
+			'EVENT_MESSAGE' => [Zigbee2Mqtt\API\Client::class, 'EVENT_MESSAGE'],
+			'EVENT_PUBLISH' => [Zigbee2Mqtt\API\Client::class, 'EVENT_PUBLISH'],
+			'EVENT_SUBSCRIBE' => [Zigbee2Mqtt\API\Client::class, 'EVENT_SUBSCRIBE'],
+			'EVENT_UNSUBSCRIBE' => [Zigbee2Mqtt\API\Client::class, 'EVENT_UNSUBSCRIBE'],
+		],
 	];
 
 	/**
@@ -594,7 +946,13 @@ final class ConstantsValuesTest extends TestCase
 
 		foreach (self::PACKAGE_DESTINATIONS as $package => $destinations) {
 			foreach ($destinations as $name => [$class, $member]) {
-				$actual[$package][$name] = self::constantAt($class, $member);
+				$value = self::constantAt($class, $member);
+
+				if ($name === 'RESOURCES_FOLDER' && is_string($value)) {
+					$value = self::belowPackage($class, $value);
+				}
+
+				$actual[$package][$name] = $value;
 			}
 		}
 
@@ -633,7 +991,7 @@ final class ConstantsValuesTest extends TestCase
 	 *
 	 * @throws ReflectionException
 	 */
-	private static function valueAt(string $class, string $member): string|int|null
+	private static function valueAt(string $class, string $member): string|int|float|null
 	{
 		$value = self::constantAt($class, $member);
 
@@ -645,11 +1003,11 @@ final class ConstantsValuesTest extends TestCase
 	 *
 	 * @param class-string $class
 	 *
-	 * @return array<mixed>|string|int|null
+	 * @return array<mixed>|string|int|float|null
 	 *
 	 * @throws ReflectionException
 	 */
-	private static function constantAt(string $class, string $member): array|string|int|null
+	private static function constantAt(string $class, string $member): array|string|int|float|null
 	{
 		$reflection = new ReflectionClass($class);
 
@@ -663,7 +1021,44 @@ final class ConstantsValuesTest extends TestCase
 			return $value->value;
 		}
 
-		return is_string($value) || is_array($value) ? $value : null;
+		return is_string($value) || is_int($value) || is_float($value) || is_array($value) ? $value : null;
+	}
+
+	/**
+	 * The directory $path resolves to, relative to the root of the package that declares $class:
+	 * the nearest directory above the declaring file that holds a composer.json. Null when $path
+	 * does not exist or lies outside that package.
+	 *
+	 * @param class-string $class
+	 *
+	 * @throws ReflectionException
+	 */
+	private static function belowPackage(string $class, string $path): string|null
+	{
+		$file = (new ReflectionClass($class))->getFileName();
+
+		if ($file === false) {
+			return null;
+		}
+
+		$package = dirname($file);
+
+		while (!is_file($package . DIRECTORY_SEPARATOR . 'composer.json')) {
+			if (dirname($package) === $package) {
+				return null;
+			}
+
+			$package = dirname($package);
+		}
+
+		$package = realpath($package);
+		$resolved = realpath($path);
+
+		if ($package === false || $resolved === false || !str_starts_with($resolved, $package . DIRECTORY_SEPARATOR)) {
+			return null;
+		}
+
+		return substr($resolved, strlen($package) + 1);
 	}
 
 }
