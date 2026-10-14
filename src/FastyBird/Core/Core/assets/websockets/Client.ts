@@ -120,12 +120,13 @@ export class Client implements IWampClient {
 
 		this._logger.event('reconnect');
 
-		const attempts = this.reconnectAttempts;
+		// An explicit reconnect is no evidence the server accepts the client again, so the delay
+		// before a following attempt keeps growing -- unless the connection it replaces had been
+		// established, which is as good as one closing by itself after the same time
+		const attempts = this.isStable() ? 0 : this.reconnectAttempts;
 
 		this.close(1000, 'Reconnecting');
 
-		// An explicit reconnect is no evidence the server accepts the client again, so the
-		// delay before a following attempt keeps growing
 		this.reconnectAttempts = attempts;
 		this.wanted = true;
 		this.isLost.value = true;
@@ -197,8 +198,7 @@ export class Client implements IWampClient {
 
 			this.socket = null;
 
-			const wasConnected = this.isConnected.value;
-			const wasStable = wasConnected && this.connectedAt !== null && Date.now() - this.connectedAt >= STABLE_CONNECTION_PERIOD;
+			const wasStable = this.isStable();
 
 			if (this.isConnected.value) {
 				this.onDisconnectEvents.forEach((eventCallback): void => {
@@ -536,6 +536,15 @@ export class Client implements IWampClient {
 		} catch {
 			this.scheduleReconnect();
 		}
+	}
+
+	/**
+	 * Whether the current connection has been open for at least STABLE_CONNECTION_PERIOD
+	 *
+	 * @private
+	 */
+	private isStable(): boolean {
+		return this.isConnected.value && this.connectedAt !== null && Date.now() - this.connectedAt >= STABLE_CONNECTION_PERIOD;
 	}
 
 	/**
