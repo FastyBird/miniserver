@@ -131,6 +131,35 @@ final class PasswordInErrorReportsTest extends DbTestCase
 	}
 
 	/**
+	 * An identity whose password was just set is an argument of the frames that store it, as the
+	 * entity creator's and updater's are when the account creation command or a password change
+	 * stores it; a blue screen dumps the identity's properties
+	 *
+	 * @throws Throwable
+	 */
+	public function testBlueScreenOfAFailedPasswordChangeHidesThePassword(): void
+	{
+		$identity = new Entities\Identities\Identity(new Entities\Accounts\Account(), self::UID, 'previous');
+		$identity->setPassword($this->password);
+
+		$store = static function (Entities\Identities\Identity $identity): never {
+			throw new RuntimeException('Identity could not be stored');
+		};
+
+		try {
+			$store($identity);
+		} catch (RuntimeException $ex) {
+			$content = $this->renderBlueScreen($ex);
+
+			self::assertTrue(str_contains($content, self::UID), 'The identity is not in the blue screen');
+			self::assertFalse(str_contains($content, $this->password), 'The password is in the blue screen');
+
+			// The stored hash and salt still verify the password
+			self::assertTrue($identity->verifyPassword($this->password));
+		}
+	}
+
+	/**
 	 * Signs in, with the container's user and the module's authenticator, as an identity whose salt
 	 * cannot be read, so the error is raised inside the password's verification. The identity is
 	 * the one the authenticator's lookup returns, as the entity manager already holds it

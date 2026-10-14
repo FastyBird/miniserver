@@ -65,8 +65,6 @@ class Identity implements AccountsEntities\Entity,
 	#[ORM\Column(name: 'identity_token', type: 'string', nullable: false)]
 	protected string $password;
 
-	protected string|null $plainPassword = null;
-
 	#[Attribute\Crud(writable: true)]
 	#[ORM\Column(
 		name: 'identity_state',
@@ -115,9 +113,7 @@ class Identity implements AccountsEntities\Entity,
 	 */
 	public function getPassword(): Helpers\Password
 	{
-		return $this->plainPassword !== null
-			? new Helpers\Password(null, $this->plainPassword, $this->getSalt())
-			: new Helpers\Password($this->password, null, $this->getSalt());
+		return new Helpers\Password($this->password, null, $this->getSalt());
 	}
 
 	/**
@@ -128,15 +124,13 @@ class Identity implements AccountsEntities\Entity,
 		string|Helpers\Password $password,
 	): void
 	{
-		if ($password instanceof Helpers\Password) {
-			$this->password = $password->getHash();
-
-		} else {
+		// Only the hash and its salt are kept: an identity is dumped with its properties, into a
+		// blue screen among others, while the password is changed
+		if (!$password instanceof Helpers\Password) {
 			$password = Helpers\Password::createFromString($password);
-
-			$this->password = $password->getHash();
-			$this->plainPassword = $password->getPassword();
 		}
+
+		$this->password = $password->getHash();
 
 		$this->setSalt($password->salt);
 	}
