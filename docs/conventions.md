@@ -192,8 +192,10 @@ There is no root-level `Constants` class. A constant lives, typed, with the clas
   are built from are that enum's constants (`RoutingKey::DELETED_PREFIX`);
 - the package's URL prefix lives on its DI extension
   (`FastyBird\Module\Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX`);
-- any other constant lives on the class that reads it, privately when that class is its only
-  reader (`FastyBird\Module\Devices\Entities\Property::VALUE_FORMAT_NUMBER_RANGE`).
+- any other constant lives on the class that owns it
+  (`FastyBird\Module\Devices\Entities\Property::VALUE_FORMAT_NUMBER_RANGE`), privately when one
+  class is its only reader (`FastyBird\Module\Devices\Subscribers\ModuleEntities`'
+  `MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING`).
 
 Do not add a constants class back, in Core or in a package. The packages #726 has not reached yet
 still have their `Constants` class until it does; do not add a constant to one.
