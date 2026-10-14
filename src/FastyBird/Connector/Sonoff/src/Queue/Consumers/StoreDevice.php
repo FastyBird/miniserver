@@ -165,27 +165,32 @@ final readonly class StoreDevice implements Queue\Consumer
 			SonoffTypes\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS,
 			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::HARDWARE_MAC_ADDRESS->value),
 		);
-		$this->setDeviceProperty(
-			$device->getId(),
-			$message->getIpAddress(),
-			ValuesTypes\DataType::STRING,
-			SonoffTypes\DevicePropertyIdentifier::IP_ADDRESS,
-			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::IP_ADDRESS->value),
-		);
-		$this->setDeviceProperty(
-			$device->getId(),
-			$message->getDomain(),
-			ValuesTypes\DataType::STRING,
-			SonoffTypes\DevicePropertyIdentifier::ADDRESS,
-			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::ADDRESS->value),
-		);
-		$this->setDeviceProperty(
-			$device->getId(),
-			$message->getPort(),
-			ValuesTypes\DataType::UINT,
-			SonoffTypes\DevicePropertyIdentifier::PORT,
-			DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::PORT->value),
-		);
+
+		// A device the search of the network did not find comes without an address; that says nothing about where the
+		// device is, so the address it was stored with before is kept
+		if ($message->getIpAddress() !== null) {
+			$this->setDeviceProperty(
+				$device->getId(),
+				$message->getIpAddress(),
+				ValuesTypes\DataType::STRING,
+				SonoffTypes\DevicePropertyIdentifier::IP_ADDRESS,
+				DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::IP_ADDRESS->value),
+			);
+			$this->setDeviceProperty(
+				$device->getId(),
+				$message->getDomain(),
+				ValuesTypes\DataType::STRING,
+				SonoffTypes\DevicePropertyIdentifier::ADDRESS,
+				DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::ADDRESS->value),
+			);
+			$this->setDeviceProperty(
+				$device->getId(),
+				$message->getPort(),
+				ValuesTypes\DataType::UINT,
+				SonoffTypes\DevicePropertyIdentifier::PORT,
+				DevicesUtilities\Name::createName(SonoffTypes\DevicePropertyIdentifier::PORT->value),
+			);
+		}
 
 		foreach ($message->getParameters() as $parameter) {
 			if ($parameter->getType() === SonoffTypes\ParameterType::DEVICE) {

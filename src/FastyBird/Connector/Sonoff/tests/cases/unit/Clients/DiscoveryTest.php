@@ -40,6 +40,8 @@ final class DiscoveryTest extends Tests\Cases\Unit\BaseTestCase
 
 	private const string DEVICE_KEY = 'secret-device-key';
 
+	private const string OTHER_KEYED_DEVICE_ID = '1000a7b8c9';
+
 	/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> */
 	private ArrayObject $logs;
 
@@ -51,6 +53,9 @@ final class DiscoveryTest extends Tests\Cases\Unit\BaseTestCase
 
 	private Clients\Discovery|null $discovery = null;
 
+	/** @var (Closure(): mixed)|null */
+	private Closure|null $lanSearchTimeout = null;
+
 	#[Override]
 	protected function setUp(): void
 	{
@@ -60,6 +65,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\BaseTestCase
 		$this->calls = [];
 		$this->listener = null;
 		$this->discovery = null;
+		$this->lanSearchTimeout = null;
 	}
 
 	/**
@@ -122,12 +128,66 @@ final class DiscoveryTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
+	 * The devices the cloud knows are stored once the search of the network is over, a device it found with the
+	 * address it was found at, and a device it did not find without one
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws SonoffExceptions\Runtime
+	 * @throws Throwable
+	 */
+	public function testDeviceFoundOnTheLanIsStoredWithTheAddressItWasFoundAt(): void
+	{
+		$this->discover([
+			$this->storableCloudDevice(self::KEYED_DEVICE_ID),
+			$this->storableCloudDevice(self::OTHER_KEYED_DEVICE_ID),
+		]);
+
+		$this->announce(self::KEYED_DEVICE_ID, '10.0.0.7', true, ['switch' => 'on', 'fwVersion' => '3.5.0']);
+
+		$this->endLanSearch();
+
+		self::assertSame(
+			[
+				self::KEYED_DEVICE_ID => ['10.0.0.7', 'eWeLink_' . self::KEYED_DEVICE_ID . '.local', 8_081],
+				self::OTHER_KEYED_DEVICE_ID => [null, null, null],
+			],
+			$this->storedAddresses(),
+		);
+	}
+
+	/**
+	 * An announcement that did not decrypt with the key of a device does not give the device its address, not even
+	 * when the device is stored at the end of the search
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws SonoffExceptions\Runtime
+	 * @throws Throwable
+	 */
+	public function testAddressOfAnAnnouncementNotDecryptedWithTheKeyIsNotStored(): void
+	{
+		$this->discover([$this->storableCloudDevice(self::KEYED_DEVICE_ID)]);
+
+		$this->announce(self::KEYED_DEVICE_ID, '10.0.0.66', false, ['switch' => 'on', 'fwVersion' => '3.5.0']);
+		$this->announce(self::KEYED_DEVICE_ID, '10.0.0.67', true, null);
+
+		$this->endLanSearch();
+
+		self::assertSame([self::KEYED_DEVICE_ID => [null, null, null]], $this->storedAddresses());
+	}
+
+	/**
+	 * @param array<API\Messages\Response\Cloud\Device>|null $devices
+	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws Throwable
 	 */
-	private function discover(): void
+	private function discover(array|null $devices = null): void
 	{
 		$connector = $this->mockOf(
 			Documents\Connectors\Connector::class,
@@ -158,8 +218,8 @@ final class DiscoveryTest extends Tests\Cases\Unit\BaseTestCase
 
 		$things = $this->mockOf(
 			API\Messages\Response\Cloud\Things::class,
-			function (MockObject $mock): void {
-				$mock->method('getDevices')->willReturn([
+			function (MockObject $mock) use ($devices): void {
+				$mock->method('getDevices')->willReturn($devices ?? [
 					$this->cloudDevice(self::KEYED_DEVICE_ID, self::DEVICE_KEY),
 					$this->cloudDevice(self::PLAIN_DEVICE_ID, ''),
 				]);
@@ -228,11 +288,19 @@ final class DiscoveryTest extends Tests\Cases\Unit\BaseTestCase
 			$connectorHelper,
 			$this->container->getByType(Queue\Queue::class),
 			$logger,
-			$this->createMock(EventLoop\LoopInterface::class),
+			$this->mockOf(EventLoop\LoopInterface::class, function (MockObject $mock): void {
+				$mock->method('addTimer')->willReturnCallback(
+					function (float $interval, Closure $callback): EventLoop\TimerInterface {
+						$this->lanSearchTimeout = $callback;
+
+						return $this->createMock(EventLoop\TimerInterface::class);
+					},
+				);
+			}),
 		);
 
-		// The cloud answers at once; the LAN search then waits for a timer that never fires, so the test speaks for
-		// the network
+		// The cloud answers at once; the LAN search then waits for its timeout, which fires only when the test ends
+		// the search, so the test speaks for the network
 		$discovery->discover();
 
 		$this->discovery = $discovery;
@@ -250,6 +318,63 @@ final class DiscoveryTest extends Tests\Cases\Unit\BaseTestCase
 				$mock->method('getDeviceKey')->willReturn($key);
 			},
 		);
+	}
+
+	/**
+	 * A cloud device with a key and with a UIID that has a mapping, so that discovery stores it
+	 */
+	private function storableCloudDevice(string $id): API\Messages\Response\Cloud\Device
+	{
+		$extra = $this->mockOf(
+			API\Messages\Response\Cloud\DeviceExtra::class,
+			static function (MockObject $mock): void {
+				$mock->method('getUiid')->willReturn(1);
+				$mock->method('getModel')->willReturn('PSF-BD1-GL');
+				$mock->method('getMac')->willReturn('d0:27:00:00:00:01');
+			},
+		);
+
+		return $this->mockOf(
+			API\Messages\Response\Cloud\Device::class,
+			static function (MockObject $mock) use ($id, $extra): void {
+				$mock->method('getDeviceId')->willReturn($id);
+				$mock->method('getDeviceKey')->willReturn(self::DEVICE_KEY);
+				$mock->method('getApiKey')->willReturn('api-key');
+				$mock->method('getName')->willReturn('Plug ' . $id);
+				$mock->method('getBrandName')->willReturn('SONOFF');
+				$mock->method('getProductModel')->willReturn('BASICR2');
+				$mock->method('getExtra')->willReturn($extra);
+			},
+		);
+	}
+
+	private function endLanSearch(): void
+	{
+		self::assertNotNull($this->lanSearchTimeout);
+
+		($this->lanSearchTimeout)();
+	}
+
+	/**
+	 * The address of every device discovery stored, by the device id
+	 *
+	 * @return array<string, array{string|null, string|null, int|null}>
+	 *
+	 * @throws Nette\DI\MissingServiceException
+	 */
+	private function storedAddresses(): array
+	{
+		$queue = $this->container->getByType(Queue\Queue::class);
+
+		$addresses = [];
+
+		while (($message = $queue->dequeue()) !== false) {
+			self::assertInstanceOf(Queue\Messages\StoreDevice::class, $message);
+
+			$addresses[$message->getId()] = [$message->getIpAddress(), $message->getDomain(), $message->getPort()];
+		}
+
+		return $addresses;
 	}
 
 	/**

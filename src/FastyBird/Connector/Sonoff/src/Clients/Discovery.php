@@ -36,7 +36,6 @@ use function is_array;
 use function method_exists;
 use function property_exists;
 use function React\Async\async;
-use function React\Async\await;
 use function sprintf;
 use function strtolower;
 use const DIRECTORY_SEPARATOR;
@@ -60,6 +59,11 @@ final class Discovery
 	 * @var array<string, true>
 	 */
 	private array $keyedDevices = [];
+
+	/**
+	 * The devices the cloud returned, stored once the search of the network is over
+	 */
+	private API\Messages\Response\Cloud\Things|null $cloudDevices = null;
 
 	private API\LanApi|null $lanApiConnection = null;
 
@@ -89,14 +93,23 @@ final class Discovery
 	public function discover(): void
 	{
 		$this->discoverCloudDevices()
-			->then(async(function (): void {
+			->then(function (): Promise\PromiseInterface {
 				$mode = $this->connectorHelper->getClientMode($this->connector);
 
 				if (
 					$mode === Types\ClientMode::LAN
 					|| $mode === Types\ClientMode::AUTO
 				) {
-					await($this->discoverLanDevices());
+					return $this->discoverLanDevices();
+				}
+
+				return Promise\resolve(true);
+			})
+			->then(function (): void {
+				// The devices are stored once the search of the network is over, so that each takes the address it
+				// was found at
+				if ($this->cloudDevices !== null) {
+					$this->handleFoundCloudDevices($this->cloudDevices);
 				}
 
 				$this->dispatcher?->dispatch(
@@ -105,7 +118,7 @@ final class Discovery
 						'Devices discovery finished',
 					),
 				);
-			}))
+			})
 			->catch(function (): void {
 				$this->dispatcher?->dispatch(
 					new DevicesEvents\TerminateConnector(
@@ -181,7 +194,9 @@ final class Discovery
 			->then(function (API\Messages\Response\Cloud\Family $family) use ($deferred, $apiClient): void {
 				$apiClient->getFamilyThings($family->getFamilyId())
 					->then(function (API\Messages\Response\Cloud\Things $things) use ($deferred): void {
-						$this->handleFoundCloudDevices($things);
+						$this->registerDeviceKeys($things);
+
+						$this->cloudDevices = $things;
 
 						$deferred->resolve(true);
 					})
@@ -258,7 +273,7 @@ final class Discovery
 					return;
 				}
 
-				$this->foundLocalDevices[$message->getId()] = [
+				$this->foundLocalDevices[strtolower($message->getId())] = [
 					'ipAddress' => $message->getIpAddress(),
 					'domain' => $message->getDomain(),
 					'port' => $message->getPort(),
@@ -281,7 +296,7 @@ final class Discovery
 		return $deferred->promise();
 	}
 
-	private function handleFoundCloudDevices(API\Messages\Response\Cloud\Things $things): void
+	private function registerDeviceKeys(API\Messages\Response\Cloud\Things $things): void
 	{
 		// The keys are known to the LAN API before it hears of any device, so that the announcements of a device with
 		// a key are decrypted, and only those are taken as the device's
@@ -292,7 +307,10 @@ final class Discovery
 				$this->getLanConnection()->registerDeviceKey($device->getDeviceId(), $device->getDeviceKey());
 			}
 		}
+	}
 
+	private function handleFoundCloudDevices(API\Messages\Response\Cloud\Things $things): void
+	{
 		foreach ($things->getDevices() as $device) {
 			try {
 				$mappingConfiguration = Utils\Json::decode($this->getUiidMapping($device->getExtra()->getUiid()));
@@ -423,11 +441,9 @@ final class Discovery
 				}
 			}
 
-			$localConfiguration = null;
-
-			if (array_key_exists($device->getDeviceId(), $this->foundLocalDevices)) {
-				$localConfiguration = $this->foundLocalDevices[$device->getDeviceId()];
-			}
+			// The address the search of the network found the device at; a device it did not find is stored without
+			// one, which leaves the address it was stored with before as it is
+			$localConfiguration = $this->foundLocalDevices[strtolower($device->getDeviceId())] ?? null;
 
 			try {
 				$this->queue->append(
