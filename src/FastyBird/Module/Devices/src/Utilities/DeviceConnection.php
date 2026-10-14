@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette\Utils;
 use TypeError;
 use ValueError;
 use function assert;
@@ -121,10 +120,7 @@ final readonly class DeviceConnection
 
 		$this->propertiesStatesManager->set(
 			$property,
-			Utils\ArrayHash::from([
-				States\Property::ACTUAL_VALUE_FIELD => $state->value,
-				States\Property::EXPECTED_VALUE_FIELD => null,
-			]),
+			States\PropertyUpdate::create()->withActualValue($state->value)->withExpectedValue(null),
 			$source,
 		);
 

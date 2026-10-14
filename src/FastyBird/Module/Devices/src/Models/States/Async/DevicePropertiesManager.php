@@ -143,10 +143,12 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 */
 	public function write(
 		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped $property,
-		Utils\ArrayHash $data,
+		Utils\ArrayHash|States\PropertyUpdate $data,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
 	{
+		$data = $data instanceof States\PropertyUpdate ? $data->toArrayHash() : $data;
+
 		if ($this->useExchange) {
 			try {
 				return $this->publisher->publish(
@@ -195,10 +197,12 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 */
 	public function set(
 		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped $property,
-		Utils\ArrayHash $data,
+		Utils\ArrayHash|States\PropertyUpdate $data,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
 	{
+		$data = $data instanceof States\PropertyUpdate ? $data->toArrayHash() : $data;
+
 		if ($this->useExchange) {
 			try {
 				return $this->publisher->publish(
@@ -261,9 +265,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 			foreach ($property as $item) {
 				$promises[] = $this->set(
 					$item,
-					Utils\ArrayHash::from([
-						States\Property::VALID_FIELD => $state,
-					]),
+					States\PropertyUpdate::create()->withValid($state),
 					$source,
 				);
 			}
@@ -281,9 +283,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 
 		return $this->set(
 			$property,
-			Utils\ArrayHash::from([
-				States\Property::VALID_FIELD => $state,
-			]),
+			States\PropertyUpdate::create()->withValid($state),
 			$source,
 		);
 	}
@@ -313,18 +313,11 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 			foreach ($property as $item) {
 				$promises[] = $pending === false ? $this->set(
 					$item,
-					Utils\ArrayHash::from([
-						States\Property::EXPECTED_VALUE_FIELD => null,
-						States\Property::PENDING_FIELD => false,
-					]),
+					States\PropertyUpdate::create()->withExpectedValue(null)->withPending(false),
 					$source,
 				) : $this->set(
 					$item,
-					Utils\ArrayHash::from([
-						States\Property::PENDING_FIELD => $this->clock->now()->format(
-							DateTimeInterface::ATOM,
-						),
-					]),
+					States\PropertyUpdate::create()->withPending($this->clock->now()),
 					$source,
 				);
 			}
@@ -342,16 +335,11 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 
 		return $pending === false ? $this->set(
 			$property,
-			Utils\ArrayHash::from([
-				States\Property::EXPECTED_VALUE_FIELD => null,
-				States\Property::PENDING_FIELD => false,
-			]),
+			States\PropertyUpdate::create()->withExpectedValue(null)->withPending(false),
 			$source,
 		) : $this->set(
 			$property,
-			Utils\ArrayHash::from([
-				States\Property::PENDING_FIELD => $this->clock->now()->format(DateTimeInterface::ATOM),
-			]),
+			States\PropertyUpdate::create()->withPending($this->clock->now()),
 			$source,
 		);
 	}
@@ -564,11 +552,14 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 	 */
 	public function writeState(
 		DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Devices\Properties\Mapped $property,
-		Utils\ArrayHash $data,
+		Utils\ArrayHash|States\PropertyUpdate $data,
 		bool $forWriting,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
 	{
+		// The internals still read the ArrayHash the callers built before PropertyUpdate (#723)
+		$data = $data instanceof States\PropertyUpdate ? $data->toArrayHash() : $data;
+
 		$mappedProperty = null;
 
 		if ($property instanceof DevicesDocuments\Devices\Properties\Mapped) {

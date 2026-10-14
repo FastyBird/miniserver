@@ -409,38 +409,38 @@ final class ExchangeV1 extends Controllers\Controller
 			}
 
 			if ($entity->getSet() !== null) {
-				$data = [];
+				$values = States\PropertyUpdate::create();
 
 				if ($entity->getSet()->getActualValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
+					$values = $values->withActualValue($entity->getSet()->getActualValue());
 				}
 
 				if ($entity->getSet()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
+					$values = $values->withExpectedValue($entity->getSet()->getExpectedValue());
 				}
 
-				if ($data !== []) {
+				if (!$values->isEmpty()) {
 					$this->connectorPropertiesStatesManager->set(
 						$property,
-						Utils\ArrayHash::from($data),
+						$values,
 						Sources\Module::DEVICES,
 					);
 				}
 			} elseif ($entity->getWrite() !== null) {
-				$data = [];
+				$values = States\PropertyUpdate::create();
 
 				if ($entity->getWrite()->getActualValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
+					$values = $values->withActualValue($entity->getWrite()->getActualValue());
 				}
 
 				if ($entity->getWrite()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
+					$values = $values->withExpectedValue($entity->getWrite()->getExpectedValue());
 				}
 
-				if ($data !== []) {
+				if (!$values->isEmpty()) {
 					$this->connectorPropertiesStatesManager->write(
 						$property,
-						Utils\ArrayHash::from($data),
+						$values,
 						Sources\Module::DEVICES,
 					);
 				}
@@ -502,38 +502,38 @@ final class ExchangeV1 extends Controllers\Controller
 			}
 
 			if ($entity->getSet() !== null) {
-				$data = [];
+				$values = States\PropertyUpdate::create();
 
 				if ($entity->getSet()->getActualValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
+					$values = $values->withActualValue($entity->getSet()->getActualValue());
 				}
 
 				if ($entity->getSet()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
+					$values = $values->withExpectedValue($entity->getSet()->getExpectedValue());
 				}
 
-				if ($data !== []) {
+				if (!$values->isEmpty()) {
 					$this->devicePropertiesStatesManager->set(
 						$property,
-						Utils\ArrayHash::from($data),
+						$values,
 						Sources\Module::DEVICES,
 					);
 				}
 			} elseif ($entity->getWrite() !== null) {
-				$data = [];
+				$values = States\PropertyUpdate::create();
 
 				if ($entity->getWrite()->getActualValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
+					$values = $values->withActualValue($entity->getWrite()->getActualValue());
 				}
 
 				if ($entity->getWrite()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
+					$values = $values->withExpectedValue($entity->getWrite()->getExpectedValue());
 				}
 
-				if ($data !== []) {
+				if (!$values->isEmpty()) {
 					$this->devicePropertiesStatesManager->write(
 						$property,
-						Utils\ArrayHash::from($data),
+						$values,
 						Sources\Module::DEVICES,
 					);
 				}
@@ -595,38 +595,38 @@ final class ExchangeV1 extends Controllers\Controller
 			}
 
 			if ($entity->getSet() !== null) {
-				$data = [];
+				$values = States\PropertyUpdate::create();
 
 				if ($entity->getSet()->getActualValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getSet()->getActualValue();
+					$values = $values->withActualValue($entity->getSet()->getActualValue());
 				}
 
 				if ($entity->getSet()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getSet()->getExpectedValue();
+					$values = $values->withExpectedValue($entity->getSet()->getExpectedValue());
 				}
 
-				if ($data !== []) {
+				if (!$values->isEmpty()) {
 					$this->channelPropertiesStatesManager->set(
 						$property,
-						Utils\ArrayHash::from($data),
+						$values,
 						Sources\Module::DEVICES,
 					);
 				}
 			} elseif ($entity->getWrite() !== null) {
-				$data = [];
+				$values = States\PropertyUpdate::create();
 
 				if ($entity->getWrite()->getActualValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::ACTUAL_VALUE_FIELD] = $entity->getWrite()->getActualValue();
+					$values = $values->withActualValue($entity->getWrite()->getActualValue());
 				}
 
 				if ($entity->getWrite()->getExpectedValue() !== Utilities\Value::NOT_SET) {
-					$data[States\Property::EXPECTED_VALUE_FIELD] = $entity->getWrite()->getExpectedValue();
+					$values = $values->withExpectedValue($entity->getWrite()->getExpectedValue());
 				}
 
-				if ($data !== []) {
+				if (!$values->isEmpty()) {
 					$this->channelPropertiesStatesManager->write(
 						$property,
-						Utils\ArrayHash::from($data),
+						$values,
 						Sources\Module::DEVICES,
 					);
 				}
