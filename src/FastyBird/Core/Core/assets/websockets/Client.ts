@@ -358,22 +358,28 @@ export class Client implements IWampClient {
 	public unsubscribe(topic: string, handler: SubscribeCallback): boolean {
 		this._logger.event('unsubscribe', topic);
 
-		for (let i = 0, len = this.subscriptions.length; i < len; i++) {
-			if (this.subscriptions[i].topic === topic) {
-				const callLen = this.subscriptions[i].callbacks.length;
+		const index = this.subscriptions.findIndex((subscription): boolean => subscription.topic === topic);
 
-				for (let j = 0; j < callLen; j++) {
-					if (this.subscriptions[i].callbacks[j] === handler) {
-						this.subscriptions[i].callbacks.splice(i, 1);
+		if (index === -1) {
+			return true;
+		}
 
-						break;
-					}
-				}
+		const subscription = this.subscriptions[index];
+		const callbackIndex = subscription.callbacks.indexOf(handler);
 
-				if (this.subscriptions[i].callbacks.length === 0 && this.isConnected.value) {
-					return this.send([MessageCode.MSG_UNSUBSCRIBE, topic]);
-				}
-			}
+		if (callbackIndex !== -1) {
+			subscription.callbacks.splice(callbackIndex, 1);
+		}
+
+		if (subscription.callbacks.length > 0) {
+			return true;
+		}
+
+		// No handler left: the topic is forgotten, so the next connection does not subscribe it again
+		this.subscriptions.splice(index, 1);
+
+		if (this.isConnected.value) {
+			return this.send([MessageCode.MSG_UNSUBSCRIBE, topic]);
 		}
 
 		return true;
