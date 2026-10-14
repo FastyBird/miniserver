@@ -223,11 +223,22 @@ export const useSession = defineStore<'accounts_module_session', SessionStoreSet
 		}
 	};
 
-	const refresh = async (): Promise<boolean> => {
-		if (semaphore.value.updating) {
-			return false;
+	// The refresh in flight. Whoever asks for one meanwhile -- the API client after a 401, the route
+	// guard, the WebSocket reconnect guard -- awaits that one and gets its result, instead of
+	// a false that reads as a failed refresh
+	let pendingRefresh: Promise<boolean> | null = null;
+
+	const refresh = (): Promise<boolean> => {
+		if (pendingRefresh === null) {
+			pendingRefresh = performRefresh().finally((): void => {
+				pendingRefresh = null;
+			});
 		}
 
+		return pendingRefresh;
+	};
+
+	const performRefresh = async (): Promise<boolean> => {
 		cookies.remove(ACCESS_TOKEN_COOKIE_NAME);
 
 		const refreshToken = readCookie(cookies, REFRESH_TOKEN_COOKIE_NAME);

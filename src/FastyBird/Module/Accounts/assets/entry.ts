@@ -203,11 +203,6 @@ export default {
 					return false;
 				}
 
-				// A refresh already under way replaces the access token when it completes
-				if (sessionStore.semaphore.updating) {
-					return true;
-				}
-
 				const tokenExpiration = sessionStore.data.tokenExpiration;
 
 				if (
