@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\WebSockets\Entities;
 
+use DateTimeImmutable;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Controllers\Responses;
@@ -19,6 +20,8 @@ class Client
 
 	/** @var array<string> */
 	private array $roles = [];
+
+	private DateTimeImmutable|null $checkedAt = null;
 
 	/**
 	 * Whether the client's HTTP handshake request has been read completely
@@ -105,14 +108,20 @@ class Client
 
 	/**
 	 * Keeps the identity the client's access token resolved to at its latest check, with the
-	 * role names the HTTP API would check for it. A failed check stores null, and no roles.
+	 * role names the HTTP API would check for it, and when the check was made. A failed check
+	 * stores null, no roles and no time.
 	 *
 	 * @param array<string> $roles
 	 */
-	public function setIdentity(Identity\UserIdentity|null $identity, array $roles = []): void
+	public function setIdentity(
+		Identity\UserIdentity|null $identity,
+		array $roles = [],
+		DateTimeImmutable|null $checkedAt = null,
+	): void
 	{
 		$this->identity = $identity;
 		$this->roles = $identity !== null ? $roles : [];
+		$this->checkedAt = $identity !== null ? $checkedAt : null;
 	}
 
 	public function getIdentity(): Identity\UserIdentity|null
@@ -126,6 +135,14 @@ class Client
 	public function getRoles(): array
 	{
 		return $this->roles;
+	}
+
+	/**
+	 * When the identity the client holds was last confirmed, or null when it holds none
+	 */
+	public function getCheckedAt(): DateTimeImmutable|null
+	{
+		return $this->checkedAt;
 	}
 
 }

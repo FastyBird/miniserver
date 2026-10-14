@@ -1,0 +1,22 @@
+#
+# A clock the test moves forward, in place of Core's frozen and system clocks; an identity
+# provider the test controls, in place of Core's; and a WAMP route to a topic (the test maps
+# its controller)
+#
+
+fbCore:
+    clock:
+        system: false
+        frozen: null
+
+    security:
+        services:
+            identity: false
+
+    webSockets:
+        routes:
+            '/probe/v1/exchange': 'Probe:WebSockets:'
+
+services:
+    - FastyBird\Core\Tests\Support\MovableClock(DateTimeImmutable('2020-04-01T12:00:00+00:00'))
+    - FastyBird\Core\Tests\Support\TokenIdentities
