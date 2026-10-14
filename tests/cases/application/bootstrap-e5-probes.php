@@ -317,7 +317,7 @@ $wampModuleRoutes = static function () use ($boot): array {
 
 	foreach ([
 		'/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/exchange',
-		'/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
+		'/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/exchange',
 	] as $path) {
 		$request = $router->match(new Handshake\Request(new Http\UrlScript('ws://localhost' . $path)));
 
@@ -376,7 +376,7 @@ $socketsBridges = static function () use ($boot): array {
 
 	$topics = [
 		'/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/exchange',
-		'/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
+		'/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/exchange',
 	];
 
 	$subscribers = [];
@@ -430,7 +430,7 @@ $socketsBridges = static function () use ($boot): array {
 		'Ui' => [
 			'fbUiModule.exchange.consumer.socketsBridge',
 			Sources\Module::UI,
-			Ui\Constants::MESSAGE_BUS_GROUP_DOCUMENT_REPORTED_ROUTING_KEY,
+			Ui\Types\RoutingKey::GROUP_DOCUMENT_REPORTED->value,
 			new UiDocuments\Groups\Group(
 				Uuid\Uuid::fromString('89f4a14f-7f78-4216-99b8-584ab9229f1c'),
 				'living-room',

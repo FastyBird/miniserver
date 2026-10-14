@@ -83,7 +83,7 @@ final class Session extends Schemas\JsonApiSchema
 	{
 		return new JsonApi\Schema\Link(
 			false,
-			$this->router->urlFor(Accounts\Constants::ROUTE_NAME_SESSION),
+			$this->router->urlFor(Router\ApiRoutes::ROUTE_NAME_SESSION),
 			false,
 		);
 	}
@@ -131,7 +131,7 @@ final class Session extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getIdentity()
 							->getAccount()
@@ -163,7 +163,7 @@ final class Session extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_SESSION_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_SESSION_RELATIONSHIP,
 					[
 						Router\ApiRoutes::RELATION_ENTITY => $name,
 					],

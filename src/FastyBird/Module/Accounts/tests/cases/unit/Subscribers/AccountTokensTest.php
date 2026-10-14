@@ -40,9 +40,9 @@ final class AccountTokensTest extends Tests\Cases\Unit\DbTestCase
 
 	private const string USER_ACCOUNT = 'efbfbdef-bfbd-68ef-bfbd-770b40efbfbd';
 
-	private const string SESSION = '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/session';
+	private const string SESSION = '/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/session';
 
-	private const string ACCOUNTS = '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/';
+	private const string ACCOUNTS = '/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/accounts/';
 
 	/**
 	 * @return array<string, array{Types\AccountState}>

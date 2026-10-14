@@ -15,10 +15,10 @@ use Ramsey\Uuid;
  */
 #[Documents\Mapping\Document(entity: Entities\Triggers\Controls\Control::class)]
 #[Documents\Mapping\RoutingMap([
-	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_REPORTED_ROUTING_KEY,
-	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_CREATED_ROUTING_KEY,
-	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_UPDATED_ROUTING_KEY,
-	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_DOCUMENT_DELETED_ROUTING_KEY,
+	Triggers\Types\RoutingKey::TRIGGER_CONTROL_DOCUMENT_REPORTED->value,
+	Triggers\Types\RoutingKey::TRIGGER_CONTROL_DOCUMENT_CREATED->value,
+	Triggers\Types\RoutingKey::TRIGGER_CONTROL_DOCUMENT_UPDATED->value,
+	Triggers\Types\RoutingKey::TRIGGER_CONTROL_DOCUMENT_DELETED->value,
 ])]
 final readonly class Control implements Documents\Document, Documents\Owner
 {

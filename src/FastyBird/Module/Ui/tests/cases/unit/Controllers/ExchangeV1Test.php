@@ -113,7 +113,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 		}
 
 		$this->call($this->client($roles), [
-			'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_ACTION_ROUTING_KEY,
+			'routing_key' => Types\RoutingKey::WIDGET_DATA_SOURCE_ACTION->value,
 			'source' => Sources\Module::UI->value,
 			'data' => $data,
 		]);
@@ -151,7 +151,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	public function testADataSourceCallWithoutAnActionIsRefusedToAUser(): void
 	{
 		$this->call($this->client(['user']), [
-			'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_ACTION_ROUTING_KEY,
+			'routing_key' => Types\RoutingKey::WIDGET_DATA_SOURCE_ACTION->value,
 			'source' => Sources\Module::UI->value,
 		]);
 

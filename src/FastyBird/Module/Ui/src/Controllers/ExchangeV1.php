@@ -78,7 +78,7 @@ final class ExchangeV1 extends Controllers\Controller
 					Controllers\WampApplication::MSG_EVENT,
 					$topic->getId(),
 					Utils\Json::encode([
-						'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
+						'routing_key' => Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_REPORTED->value,
 						'source' => Sources\Module::UI->value,
 						'data' => $dataSource->toArray(),
 					]),
@@ -134,7 +134,7 @@ final class ExchangeV1 extends Controllers\Controller
 		}
 
 		switch ($args['routing_key']) {
-			case Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_ACTION_ROUTING_KEY:
+			case Types\RoutingKey::WIDGET_DATA_SOURCE_ACTION->value:
 				/** @var array<string, mixed>|null $data */
 				$data = isset($args['data']) && is_array($args['data']) ? $args['data'] : null;
 
@@ -198,7 +198,7 @@ final class ExchangeV1 extends Controllers\Controller
 				Controllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
-					'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
+					'routing_key' => Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_REPORTED->value,
 					'source' => Sources\Module::UI->value,
 					'data' => $dataSource->toArray(),
 				]),

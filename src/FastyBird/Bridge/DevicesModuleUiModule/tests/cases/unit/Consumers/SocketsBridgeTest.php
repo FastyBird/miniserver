@@ -122,7 +122,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 
 		$this->service('fbUiModule.exchange.consumer.socketsBridge', UiConsumers\SocketsBridge::class)->consume(
 			Sources\Module::UI,
-			Ui\Constants::MESSAGE_BUS_GROUP_DOCUMENT_REPORTED_ROUTING_KEY,
+			Ui\Types\RoutingKey::GROUP_DOCUMENT_REPORTED->value,
 			$document,
 		);
 
@@ -131,7 +131,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 				[
 					'topic' => self::UI_TOPIC,
 					'message' => [
-						'routing_key' => Ui\Constants::MESSAGE_BUS_GROUP_DOCUMENT_REPORTED_ROUTING_KEY,
+						'routing_key' => Ui\Types\RoutingKey::GROUP_DOCUMENT_REPORTED->value,
 						'source' => Sources\Module::UI->value,
 						'data' => $document->toArray(),
 					],
@@ -192,7 +192,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertIsArray($message);
 		self::assertSame(
-			Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
+			Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_REPORTED->value,
 			$message['routing_key'] ?? null,
 		);
 		self::assertSame(Sources\Bridge::DEVICES_MODULE_UI_MODULE->value, $message['source'] ?? null);

@@ -76,7 +76,7 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 				StatusCodeInterface::STATUS_OK,
 			],
 			'readAllInvalid' => [
-				'/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards',
+				'/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/dashboards',
 				'Bearer ' . VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 			],

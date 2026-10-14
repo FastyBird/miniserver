@@ -55,7 +55,7 @@ final class ApiKeyAuthenticationTest extends Tests\Cases\Unit\DbTestCase
 
 	private const string ADMINISTRATOR_IDENTITY = '77331268-efbf-bd34-49ef-bfbdefbfbd04';
 
-	private const string ACCOUNTS = '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1';
+	private const string ACCOUNTS = '/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1';
 
 	private const string DATA_URL = '/api/test-data/v1/data';
 

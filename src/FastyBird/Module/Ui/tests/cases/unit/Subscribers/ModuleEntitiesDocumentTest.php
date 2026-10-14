@@ -55,7 +55,7 @@ final class ModuleEntitiesDocumentTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					Sources\Module::DEVICES->value,
-					Ui\Constants::MESSAGE_BUS_DASHBOARD_DOCUMENT_CREATED_ROUTING_KEY,
+					Ui\Types\RoutingKey::DASHBOARD_DOCUMENT_CREATED->value,
 					UiDocuments\Dashboards\Dashboard::class,
 					[
 						'id' => self::DASHBOARD,
@@ -86,7 +86,7 @@ final class ModuleEntitiesDocumentTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					Sources\Module::DEVICES->value,
-					Ui\Constants::MESSAGE_BUS_WIDGET_DOCUMENT_CREATED_ROUTING_KEY,
+					Ui\Types\RoutingKey::WIDGET_DOCUMENT_CREATED->value,
 					UiDocuments\Widgets\AnalogSensor::class,
 					[
 						'id' => self::WIDGET,
@@ -119,7 +119,7 @@ final class ModuleEntitiesDocumentTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					Sources\Module::DEVICES->value,
-					Ui\Constants::MESSAGE_BUS_WIDGET_DISPLAY_DOCUMENT_CREATED_ROUTING_KEY,
+					Ui\Types\RoutingKey::WIDGET_DISPLAY_DOCUMENT_CREATED->value,
 					UiDocuments\Widgets\Displays\ChartGraph::class,
 					[
 						'id' => self::DISPLAY,

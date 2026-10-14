@@ -77,7 +77,7 @@ final readonly class ApiRoutes
 			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
-				$group->group('/' . Ui\Constants::MODULE_UI_PREFIX, function (
+				$group->group('/' . Ui\DI\UiExtension::MODULE_UI_PREFIX, function (
 					Routing\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);
@@ -103,10 +103,10 @@ final readonly class ApiRoutes
 				 * DASHBOARDS
 				 */
 				$route = $group->get('', [$this->dashboardsV1Controller, 'index']);
-				$route->setName(Ui\Constants::ROUTE_NAME_DASHBOARDS);
+				$route->setName(self::ROUTE_NAME_DASHBOARDS);
 
 				$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->dashboardsV1Controller, 'read']);
-				$route->setName(Ui\Constants::ROUTE_NAME_DASHBOARD);
+				$route->setName(self::ROUTE_NAME_DASHBOARD);
 
 				$group->post('', [$this->dashboardsV1Controller, 'create']);
 
@@ -118,7 +118,7 @@ final readonly class ApiRoutes
 					$this->dashboardsV1Controller,
 					'readRelationship',
 				]);
-				$route->setName(Ui\Constants::ROUTE_NAME_DASHBOARD_RELATIONSHIP);
+				$route->setName(self::ROUTE_NAME_DASHBOARD_RELATIONSHIP);
 			});
 
 			$group->group(
@@ -129,10 +129,10 @@ final readonly class ApiRoutes
 						 * DASHBOARD TABS
 						 */
 						$route = $group->get('', [$this->tabsV1Controller, 'index']);
-						$route->setName(Ui\Constants::ROUTE_NAME_DASHBOARD_TABS);
+						$route->setName(self::ROUTE_NAME_DASHBOARD_TABS);
 
 						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->tabsV1Controller, 'read']);
-						$route->setName(Ui\Constants::ROUTE_NAME_DASHBOARD_TAB);
+						$route->setName(self::ROUTE_NAME_DASHBOARD_TAB);
 
 						$group->post('', [$this->tabsV1Controller, 'create']);
 
@@ -147,7 +147,7 @@ final readonly class ApiRoutes
 								'readRelationship',
 							],
 						);
-						$route->setName(Ui\Constants::ROUTE_NAME_DASHBOARD_TAB_RELATIONSHIP);
+						$route->setName(self::ROUTE_NAME_DASHBOARD_TAB_RELATIONSHIP);
 					});
 				},
 			);
@@ -157,10 +157,10 @@ final readonly class ApiRoutes
 				 * GROUPS
 				 */
 				$route = $group->get('', [$this->groupsV1Controller, 'index']);
-				$route->setName(Ui\Constants::ROUTE_NAME_GROUPS);
+				$route->setName(self::ROUTE_NAME_GROUPS);
 
 				$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->groupsV1Controller, 'read']);
-				$route->setName(Ui\Constants::ROUTE_NAME_GROUP);
+				$route->setName(self::ROUTE_NAME_GROUP);
 
 				$group->post('', [$this->groupsV1Controller, 'create']);
 
@@ -172,7 +172,7 @@ final readonly class ApiRoutes
 					$this->groupsV1Controller,
 					'readRelationship',
 				]);
-				$route->setName(Ui\Constants::ROUTE_NAME_GROUP_RELATIONSHIP);
+				$route->setName(self::ROUTE_NAME_GROUP_RELATIONSHIP);
 			});
 
 			$group->group('/widgets', function (Routing\RouteCollector $group): void {
@@ -180,10 +180,10 @@ final readonly class ApiRoutes
 				 * WIDGETS
 				 */
 				$route = $group->get('', [$this->widgetsV1Controller, 'index']);
-				$route->setName(Ui\Constants::ROUTE_NAME_WIDGETS);
+				$route->setName(self::ROUTE_NAME_WIDGETS);
 
 				$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->widgetsV1Controller, 'read']);
-				$route->setName(Ui\Constants::ROUTE_NAME_WIDGET);
+				$route->setName(self::ROUTE_NAME_WIDGET);
 
 				$group->post('', [$this->widgetsV1Controller, 'create']);
 
@@ -195,7 +195,7 @@ final readonly class ApiRoutes
 					$this->widgetsV1Controller,
 					'readRelationship',
 				]);
-				$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_RELATIONSHIP);
+				$route->setName(self::ROUTE_NAME_WIDGET_RELATIONSHIP);
 			});
 
 			$group->group(
@@ -206,7 +206,7 @@ final readonly class ApiRoutes
 						 * WIDGET DISPLAY
 						 */
 						$route = $group->get('', [$this->displayV1Controller, 'read']);
-						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY);
+						$route->setName(self::ROUTE_NAME_WIDGET_DISPLAY);
 
 						$group->patch('', [$this->displayV1Controller, 'update']);
 
@@ -214,7 +214,7 @@ final readonly class ApiRoutes
 							$this->displayV1Controller,
 							'readRelationship',
 						]);
-						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY_RELATIONSHIP);
+						$route->setName(self::ROUTE_NAME_WIDGET_DISPLAY_RELATIONSHIP);
 					});
 
 					$group->group('/data-sources', function (Routing\RouteCollector $group): void {
@@ -222,10 +222,10 @@ final readonly class ApiRoutes
 						 * WIDGET DATA SOURCES
 						 */
 						$route = $group->get('', [$this->dataSourceV1Controller, 'index']);
-						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCES);
+						$route->setName(self::ROUTE_NAME_WIDGET_DATA_SOURCES);
 
 						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->dataSourceV1Controller, 'read']);
-						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE);
+						$route->setName(self::ROUTE_NAME_WIDGET_DATA_SOURCE);
 
 						$group->post('', [$this->dataSourceV1Controller, 'create']);
 
@@ -240,7 +240,7 @@ final readonly class ApiRoutes
 								'readRelationship',
 							],
 						);
-						$route->setName(Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCE_RELATIONSHIP);
+						$route->setName(self::ROUTE_NAME_WIDGET_DATA_SOURCE_RELATIONSHIP);
 					});
 				},
 			);

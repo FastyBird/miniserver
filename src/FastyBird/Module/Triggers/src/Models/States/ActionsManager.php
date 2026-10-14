@@ -125,7 +125,7 @@ final readonly class ActionsManager
 
 		$this->publisher->publish(
 			$action->getSource(),
-			Triggers\Constants::MESSAGE_BUS_ACTION_DOCUMENT_UPDATED_ROUTING_KEY,
+			Triggers\Types\RoutingKey::ACTION_DOCUMENT_UPDATED->value,
 			$this->documentFactory->create(
 				TriggersDocuments\Actions\Action::class,
 				array_merge(

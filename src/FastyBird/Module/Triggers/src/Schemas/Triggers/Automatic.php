@@ -125,7 +125,7 @@ final class Automatic extends Trigger
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITIONS,
+					Router\ApiRoutes::ROUTE_NAME_TRIGGER_CONDITIONS,
 					[
 						Router\ApiRoutes::URL_TRIGGER_ID => $resource->getPlainId(),
 					],
@@ -156,7 +156,7 @@ final class Automatic extends Trigger
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Triggers\Constants::ROUTE_NAME_TRIGGER_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_TRIGGER_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getPlainId(),
 						Router\ApiRoutes::RELATION_ENTITY => $name,

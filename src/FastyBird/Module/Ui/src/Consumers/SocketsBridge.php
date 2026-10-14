@@ -63,7 +63,7 @@ final readonly class SocketsBridge implements Consumers\Consumer
 		Documents\Document|null $document,
 	): void
 	{
-		if (!in_array($routingKey, Ui\Constants::MESSAGE_BUS_ROUTING_KEYS, true)) {
+		if (!in_array($routingKey, self::MESSAGE_BUS_ROUTING_KEYS, true)) {
 			return;
 		}
 

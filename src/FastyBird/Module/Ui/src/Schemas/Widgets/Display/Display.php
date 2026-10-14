@@ -61,7 +61,7 @@ abstract class Display extends Schemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY,
+				Router\ApiRoutes::ROUTE_NAME_WIDGET_DISPLAY,
 				[
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 					Router\ApiRoutes::URL_WIDGET_ID => $resource->getWidget()->getId()->toString(),
@@ -111,7 +111,7 @@ abstract class Display extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Ui\Constants::ROUTE_NAME_WIDGET,
+					Router\ApiRoutes::ROUTE_NAME_WIDGET,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getWidget()->getId()->toString(),
 					],
@@ -141,7 +141,7 @@ abstract class Display extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_WIDGET_DISPLAY_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 						Router\ApiRoutes::URL_WIDGET_ID => $resource->getWidget()->getId()->toString(),

@@ -250,7 +250,7 @@ final class StoredChangesTest extends Tests\Cases\Unit\DbTestCase
 
 		$response = $router->handle(new ServerRequest(
 			$method,
-			'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . $path,
+			'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . $path,
 			$authorization !== null ? ['authorization' => $authorization] : [],
 			$body ?? '',
 		));

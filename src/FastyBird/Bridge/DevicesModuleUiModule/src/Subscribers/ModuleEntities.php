@@ -134,7 +134,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 	{
 		$this->getPublisher($this->eventLoopStatus->running)->publish(
 			Sources\Bridge::DEVICES_MODULE_UI_MODULE,
-			Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
+			Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_REPORTED->value,
 			$dataSource,
 		);
 	}

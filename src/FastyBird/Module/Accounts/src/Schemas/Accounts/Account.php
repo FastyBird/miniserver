@@ -115,7 +115,7 @@ final class Account extends Schemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Accounts\Constants::ROUTE_NAME_ACCOUNT,
+				Router\ApiRoutes::ROUTE_NAME_ACCOUNT,
 				[
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 				],
@@ -177,7 +177,7 @@ final class Account extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITIES,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT_IDENTITIES,
 					[
 						Router\ApiRoutes::URL_ACCOUNT_ID => $resource->getId()->toString(),
 					],
@@ -191,7 +191,7 @@ final class Account extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAILS,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT_EMAILS,
 					[
 						Router\ApiRoutes::URL_ACCOUNT_ID => $resource->getId()->toString(),
 					],
@@ -227,7 +227,7 @@ final class Account extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 						Router\ApiRoutes::RELATION_ENTITY => $name,
@@ -239,7 +239,7 @@ final class Account extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 						Router\ApiRoutes::RELATION_ENTITY => $name,

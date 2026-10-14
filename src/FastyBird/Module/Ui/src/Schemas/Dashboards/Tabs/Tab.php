@@ -84,7 +84,7 @@ final class Tab extends Schemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Ui\Constants::ROUTE_NAME_DASHBOARD_TAB,
+				Router\ApiRoutes::ROUTE_NAME_DASHBOARD_TAB,
 				[
 					Router\ApiRoutes::URL_DASHBOARD_ID => $resource->getDashboard()->getId()->toString(),
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
@@ -139,7 +139,7 @@ final class Tab extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Ui\Constants::ROUTE_NAME_DASHBOARD,
+					Router\ApiRoutes::ROUTE_NAME_DASHBOARD,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getDashboard()->getId()->toString(),
 					],
@@ -150,7 +150,7 @@ final class Tab extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Ui\Constants::ROUTE_NAME_DASHBOARD_TAB_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_DASHBOARD_TAB_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_DASHBOARD_ID => $resource->getDashboard()->getId()->toString(),
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),

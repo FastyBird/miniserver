@@ -19,10 +19,10 @@ use function array_map;
  */
 #[Documents\Mapping\Document(entity: Entities\Accounts\Account::class)]
 #[Documents\Mapping\RoutingMap([
-	Accounts\Constants::MESSAGE_BUS_ACCOUNT_DOCUMENT_REPORTED_ROUTING_KEY,
-	Accounts\Constants::MESSAGE_BUS_ACCOUNT_DOCUMENT_CREATED_ROUTING_KEY,
-	Accounts\Constants::MESSAGE_BUS_ACCOUNT_DOCUMENT_UPDATED_ROUTING_KEY,
-	Accounts\Constants::MESSAGE_BUS_ACCOUNT_DOCUMENT_DELETED_ROUTING_KEY,
+	Types\RoutingKey::ACCOUNT_DOCUMENT_REPORTED->value,
+	Types\RoutingKey::ACCOUNT_DOCUMENT_CREATED->value,
+	Types\RoutingKey::ACCOUNT_DOCUMENT_UPDATED->value,
+	Types\RoutingKey::ACCOUNT_DOCUMENT_DELETED->value,
 ])]
 final readonly class Account implements Documents\Document
 {

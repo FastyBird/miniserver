@@ -89,7 +89,7 @@ final class Role extends Schemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Accounts\Constants::ROUTE_NAME_ROLE,
+				Router\ApiRoutes::ROUTE_NAME_ROLE,
 				[
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 				],
@@ -150,7 +150,7 @@ final class Role extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ROLE,
+					Router\ApiRoutes::ROUTE_NAME_ROLE,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getParent()->getId()->toString(),
 					],
@@ -161,7 +161,7 @@ final class Role extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ROLE_CHILDREN,
+					Router\ApiRoutes::ROUTE_NAME_ROLE_CHILDREN,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 					],
@@ -197,7 +197,7 @@ final class Role extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ROLE_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_ROLE_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 						Router\ApiRoutes::RELATION_ENTITY => $name,

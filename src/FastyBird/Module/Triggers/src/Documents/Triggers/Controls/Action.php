@@ -15,7 +15,7 @@ use Ramsey\Uuid;
  */
 #[Documents\Mapping\Document]
 #[Documents\Mapping\RoutingMap([
-	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_ACTION_ROUTING_KEY,
+	Types\RoutingKey::TRIGGER_CONTROL_ACTION->value,
 ])]
 final readonly class Action implements Documents\Document
 {

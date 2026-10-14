@@ -92,7 +92,7 @@ final readonly class ApiRoutes
 			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
-				$group->group('/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX, function (
+				$group->group('/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX, function (
 					Routing\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);
@@ -125,7 +125,7 @@ final readonly class ApiRoutes
 			 */
 			$group->group('/session', function (Routing\RouteCollector $group): void {
 				$route = $group->get('', [$this->sessionV1Controller, 'read']);
-				$route->setName(Accounts\Constants::ROUTE_NAME_SESSION);
+				$route->setName(self::ROUTE_NAME_SESSION);
 
 				$group->post('', [$this->sessionV1Controller, 'create']);
 
@@ -137,7 +137,7 @@ final readonly class ApiRoutes
 					$this->sessionV1Controller,
 					'readRelationship',
 				]);
-				$route->setName(Accounts\Constants::ROUTE_NAME_SESSION_RELATIONSHIP);
+				$route->setName(self::ROUTE_NAME_SESSION_RELATIONSHIP);
 			});
 
 			/**
@@ -145,7 +145,7 @@ final readonly class ApiRoutes
 			 */
 			$group->group('/me', function (Routing\RouteCollector $group): void {
 				$route = $group->get('', [$this->accountV1Controller, 'read']);
-				$route->setName(Accounts\Constants::ROUTE_NAME_ME);
+				$route->setName(self::ROUTE_NAME_ME);
 
 				$group->patch('', [$this->accountV1Controller, 'update']);
 
@@ -155,17 +155,17 @@ final readonly class ApiRoutes
 					$this->accountV1Controller,
 					'readRelationship',
 				]);
-				$route->setName(Accounts\Constants::ROUTE_NAME_ME_RELATIONSHIP);
+				$route->setName(self::ROUTE_NAME_ME_RELATIONSHIP);
 
 				/**
 				 * PROFILE EMAILS
 				 */
 				$group->group('/emails', function (Routing\RouteCollector $group): void {
 					$route = $group->get('', [$this->accountEmailsV1Controller, 'index']);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ME_EMAILS);
+					$route->setName(self::ROUTE_NAME_ME_EMAILS);
 
 					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->accountEmailsV1Controller, 'read']);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ME_EMAIL);
+					$route->setName(self::ROUTE_NAME_ME_EMAIL);
 
 					$group->post('', [$this->accountEmailsV1Controller, 'create']);
 
@@ -180,7 +180,7 @@ final readonly class ApiRoutes
 							'readRelationship',
 						],
 					);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ME_EMAIL_RELATIONSHIP);
+					$route->setName(self::ROUTE_NAME_ME_EMAIL_RELATIONSHIP);
 				});
 
 				/**
@@ -188,13 +188,13 @@ final readonly class ApiRoutes
 				 */
 				$group->group('/identities', function (Routing\RouteCollector $group): void {
 					$route = $group->get('', [$this->accountIdentitiesV1Controller, 'index']);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ME_IDENTITIES);
+					$route->setName(self::ROUTE_NAME_ME_IDENTITIES);
 
 					$route = $group->get('/{' . self::URL_ITEM_ID . '}', [
 						$this->accountIdentitiesV1Controller,
 						'read',
 					]);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ME_IDENTITY);
+					$route->setName(self::ROUTE_NAME_ME_IDENTITY);
 
 					$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->accountIdentitiesV1Controller, 'update']);
 
@@ -205,7 +205,7 @@ final readonly class ApiRoutes
 							'readRelationship',
 						],
 					);
-					$route->setName(Accounts\Constants::ROUTE_NAME_ME_IDENTITY_RELATIONSHIP);
+					$route->setName(self::ROUTE_NAME_ME_IDENTITY_RELATIONSHIP);
 				});
 			});
 
@@ -214,10 +214,10 @@ final readonly class ApiRoutes
 			 */
 			$group->group('/accounts', function (Routing\RouteCollector $group): void {
 				$route = $group->get('', [$this->accountsV1Controller, 'index']);
-				$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNTS);
+				$route->setName(self::ROUTE_NAME_ACCOUNTS);
 
 				$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->accountsV1Controller, 'read']);
-				$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT);
+				$route->setName(self::ROUTE_NAME_ACCOUNT);
 
 				$group->post('', [$this->accountsV1Controller, 'create']);
 
@@ -229,7 +229,7 @@ final readonly class ApiRoutes
 					$this->accountsV1Controller,
 					'readRelationship',
 				]);
-				$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_RELATIONSHIP);
+				$route->setName(self::ROUTE_NAME_ACCOUNT_RELATIONSHIP);
 			});
 
 			$group->group(
@@ -240,10 +240,10 @@ final readonly class ApiRoutes
 					 */
 					$group->group('/identities', function (Routing\RouteCollector $group): void {
 						$route = $group->get('', [$this->identitiesV1Controller, 'index']);
-						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITIES);
+						$route->setName(self::ROUTE_NAME_ACCOUNT_IDENTITIES);
 
 						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->identitiesV1Controller, 'read']);
-						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITY);
+						$route->setName(self::ROUTE_NAME_ACCOUNT_IDENTITY);
 
 						$group->post('', [$this->identitiesV1Controller, 'create']);
 
@@ -256,7 +256,7 @@ final readonly class ApiRoutes
 								'readRelationship',
 							],
 						);
-						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITY_RELATIONSHIP);
+						$route->setName(self::ROUTE_NAME_ACCOUNT_IDENTITY_RELATIONSHIP);
 					});
 
 					/**
@@ -264,10 +264,10 @@ final readonly class ApiRoutes
 					 */
 					$group->group('/emails', function (Routing\RouteCollector $group): void {
 						$route = $group->get('', [$this->emailsV1Controller, 'index']);
-						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAILS);
+						$route->setName(self::ROUTE_NAME_ACCOUNT_EMAILS);
 
 						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->emailsV1Controller, 'read']);
-						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAIL);
+						$route->setName(self::ROUTE_NAME_ACCOUNT_EMAIL);
 
 						$group->post('', [$this->emailsV1Controller, 'create']);
 
@@ -282,7 +282,7 @@ final readonly class ApiRoutes
 								'readRelationship',
 							],
 						);
-						$route->setName(Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAIL_RELATIONSHIP);
+						$route->setName(self::ROUTE_NAME_ACCOUNT_EMAIL_RELATIONSHIP);
 					});
 				},
 			);
@@ -292,10 +292,10 @@ final readonly class ApiRoutes
 			 */
 			$group->group('/roles', function (Routing\RouteCollector $group): void {
 				$route = $group->get('', [$this->rolesV1Controller, 'index']);
-				$route->setName(Accounts\Constants::ROUTE_NAME_ROLES);
+				$route->setName(self::ROUTE_NAME_ROLES);
 
 				$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->rolesV1Controller, 'read']);
-				$route->setName(Accounts\Constants::ROUTE_NAME_ROLE);
+				$route->setName(self::ROUTE_NAME_ROLE);
 
 				$group->patch('/{' . self::URL_ITEM_ID . '}', [$this->rolesV1Controller, 'update']);
 
@@ -303,7 +303,7 @@ final readonly class ApiRoutes
 					$this->rolesV1Controller,
 					'readRelationship',
 				]);
-				$route->setName(Accounts\Constants::ROUTE_NAME_ROLE_RELATIONSHIP);
+				$route->setName(self::ROUTE_NAME_ROLE_RELATIONSHIP);
 
 				/**
 				 * CHILDREN
@@ -312,7 +312,7 @@ final readonly class ApiRoutes
 					$this->roleChildrenV1Controller,
 					'index',
 				]);
-				$route->setName(Accounts\Constants::ROUTE_NAME_ROLE_CHILDREN);
+				$route->setName(self::ROUTE_NAME_ROLE_CHILDREN);
 			});
 
 			$group->group('/authenticate', static function (Routing\RouteCollector $group): void {

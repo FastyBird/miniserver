@@ -109,7 +109,7 @@ final readonly class AccountEntity implements Common\EventSubscriber
 			$roles = $this->enforcerFactory->getEnforcer()->getRolesForUser($object->getId()->toString());
 
 			if ($roles === []) {
-				foreach (Accounts\Constants::DEFAULT_ROLES as $role) {
+				foreach (self::DEFAULT_ROLES as $role) {
 					$this->enforcerFactory->getEnforcer()->addRoleForUser($object->getId()->toString(), $role);
 					$this->enforcerFactory->getEnforcer()->invalidateCache();
 				}
@@ -121,7 +121,7 @@ final readonly class AccountEntity implements Common\EventSubscriber
 				 * can not be assigned to account with other roles
 				 */
 				if (
-					in_array($role, Accounts\Constants::SINGLE_ROLES, true)
+					in_array($role, self::SINGLE_ROLES, true)
 					&& count($roles) > 1
 				) {
 					throw new AccountsExceptions\AccountRoleInvalid(
@@ -133,7 +133,7 @@ final readonly class AccountEntity implements Common\EventSubscriber
 				 * Special roles like visitor or guest
 				 * can not be assigned to account
 				 */
-				if (in_array($role, Accounts\Constants::NOT_ASSIGNABLE_ROLES, true)) {
+				if (in_array($role, self::NOT_ASSIGNABLE_ROLES, true)) {
 					throw new AccountsExceptions\AccountRoleInvalid(
 						sprintf('Role %s could not be assigned to account', $role),
 					);

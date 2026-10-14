@@ -17,7 +17,7 @@ use Ramsey\Uuid;
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
-	Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_ACTION_ROUTING_KEY,
+	Types\RoutingKey::WIDGET_DATA_SOURCE_ACTION->value,
 ])]
 final readonly class Action implements UiDocuments\Document
 {

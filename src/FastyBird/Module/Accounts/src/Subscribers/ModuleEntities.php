@@ -169,7 +169,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 		switch ($action) {
 			case self::ACTION_CREATED:
-				foreach (Accounts\Constants::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -179,7 +179,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_UPDATED:
-				foreach (Accounts\Constants::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -189,7 +189,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_DELETED:
-				foreach (Accounts\Constants::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 

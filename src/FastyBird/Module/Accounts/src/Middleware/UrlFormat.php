@@ -49,13 +49,13 @@ final readonly class UrlFormat implements MiddlewareInterface
 				str_starts_with(
 					$request->getUri()->getPath(),
 					'/' . Http\Routing\Router::API_PREFIX
-					. ($this->usePrefix ? '/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX : '')
+					. ($this->usePrefix ? '/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX : '')
 					. '/v1/session',
 				)
 				|| str_starts_with(
 					$request->getUri()->getPath(),
 					'/' . Http\Routing\Router::API_PREFIX
-					. ($this->usePrefix ? '/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX : '')
+					. ($this->usePrefix ? '/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX : '')
 					. '/v1/me',
 				)
 			)
@@ -88,18 +88,18 @@ final readonly class UrlFormat implements MiddlewareInterface
 				$content,
 			);
 			$content = str_replace(
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/emails',
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/emails',
+				'\/api\/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/emails',
+				'\/api\/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/emails',
 				$content,
 			);
 			$content = str_replace(
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/identities',
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/identities',
+				'\/api\/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/identities',
+				'\/api\/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/identities',
 				$content,
 			);
 			$content = str_replace(
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/accounts\/' . $this->user->getAccount()->getId()->toString(),
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me',
+				'\/api\/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/accounts\/' . $this->user->getAccount()->getId()->toString(),
+				'\/api\/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/me',
 				$content,
 			);
 

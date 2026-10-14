@@ -521,7 +521,7 @@ final class AccountsV1 extends BaseV1
 				 * can not be assigned to account with other roles
 				 */
 				if (
-					in_array($assignRole->getName(), Accounts\Constants::SINGLE_ROLES, true)
+					in_array($assignRole->getName(), Accounts\Subscribers\AccountEntity::SINGLE_ROLES, true)
 					&& count($assignRoles) > 1
 				) {
 					throw new AccountsExceptions\AccountRoleInvalid(
@@ -533,7 +533,7 @@ final class AccountsV1 extends BaseV1
 				 * Special roles like visitor or guest
 				 * can not be assigned to account
 				 */
-				if (in_array($assignRole->getName(), Accounts\Constants::NOT_ASSIGNABLE_ROLES, true)) {
+				if (in_array($assignRole->getName(), Accounts\Subscribers\AccountEntity::NOT_ASSIGNABLE_ROLES, true)) {
 					throw new AccountsExceptions\AccountRoleInvalid(
 						sprintf('Role %s could not be assigned to account', $assignRole->getName()),
 					);

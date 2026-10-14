@@ -36,8 +36,8 @@ final class ValidatorTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$validator = $this->getContainer()->getByType(Router\Validator::class);
 
-		self::assertTrue($validator->validate('/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/dashboards'));
-		self::assertFalse($validator->validate('/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/no-such-resource'));
+		self::assertTrue($validator->validate('/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/dashboards'));
+		self::assertFalse($validator->validate('/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/no-such-resource'));
 	}
 
 }

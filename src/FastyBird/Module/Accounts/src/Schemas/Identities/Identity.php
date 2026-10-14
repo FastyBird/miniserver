@@ -80,7 +80,7 @@ final class Identity extends Schemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITY,
+				Router\ApiRoutes::ROUTE_NAME_ACCOUNT_IDENTITY,
 				[
 					Router\ApiRoutes::URL_ACCOUNT_ID => $resource->getAccount()->getId()->toString(),
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
@@ -130,7 +130,7 @@ final class Identity extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getAccount()->getId()->toString(),
 					],
@@ -160,7 +160,7 @@ final class Identity extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT_IDENTITY_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT_IDENTITY_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ACCOUNT_ID => $resource->getAccount()->getId()->toString(),
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),

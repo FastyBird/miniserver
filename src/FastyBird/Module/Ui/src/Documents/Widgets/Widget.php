@@ -22,10 +22,10 @@ use function array_map;
 #[CoreDocuments\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
 #[CoreDocuments\Mapping\MappedSuperclass]
 #[CoreDocuments\Mapping\RoutingMap([
-	Ui\Constants::MESSAGE_BUS_WIDGET_DOCUMENT_REPORTED_ROUTING_KEY,
-	Ui\Constants::MESSAGE_BUS_WIDGET_DOCUMENT_CREATED_ROUTING_KEY,
-	Ui\Constants::MESSAGE_BUS_WIDGET_DOCUMENT_UPDATED_ROUTING_KEY,
-	Ui\Constants::MESSAGE_BUS_WIDGET_DOCUMENT_DELETED_ROUTING_KEY,
+	Ui\Types\RoutingKey::WIDGET_DOCUMENT_REPORTED->value,
+	Ui\Types\RoutingKey::WIDGET_DOCUMENT_CREATED->value,
+	Ui\Types\RoutingKey::WIDGET_DOCUMENT_UPDATED->value,
+	Ui\Types\RoutingKey::WIDGET_DOCUMENT_DELETED->value,
 ])]
 abstract class Widget implements UiDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {
