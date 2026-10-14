@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\NsPanel\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities as NsPanelEntities;
 use FastyBird\Connector\NsPanel\Exceptions as NsPanelExceptions;
 use FastyBird\Connector\NsPanel\Types;
@@ -21,6 +20,8 @@ use function is_string;
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Connector extends DevicesEntities\Connectors\Connector
 {
+
+	public const int DEFAULT_SERVER_PORT = 52_323;
 
 	public const string TYPE = 'ns-panel-connector';
 
@@ -88,7 +89,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return NsPanel\Constants::DEFAULT_SERVER_PORT;
+		return self::DEFAULT_SERVER_PORT;
 	}
 
 	/**

@@ -55,7 +55,7 @@ final readonly class Connector
 			return $value;
 		}
 
-		return HomeKit\Constants::DEFAULT_PORT;
+		return HomeKit\Entities\Connectors\Connector::DEFAULT_PORT;
 	}
 
 	/**

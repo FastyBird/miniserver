@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Shelly\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Types;
@@ -27,6 +26,8 @@ use function is_string;
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Device extends DevicesEntities\Devices\Device
 {
+
+	public const float STATE_READING_DELAY = 300.0;
 
 	public const string TYPE = 'shelly-connector';
 
@@ -313,7 +314,7 @@ class Device extends DevicesEntities\Devices\Device
 			return floatval($property->getValue());
 		}
 
-		return Shelly\Constants::STATE_READING_DELAY;
+		return self::STATE_READING_DELAY;
 	}
 
 	/**

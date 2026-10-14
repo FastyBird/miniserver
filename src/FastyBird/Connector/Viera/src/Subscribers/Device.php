@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Viera\Subscribers;
 
 use Doctrine\DBAL;
-use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
@@ -176,7 +175,7 @@ final readonly class Device implements EventDispatcher\EventSubscriberInterface
 			);
 		}
 
-		foreach (Viera\Constants::KEYS_PROPERTIES as $actionKey => $identifier) {
+		foreach (VieraTypes\ActionKey::KEYS_PROPERTIES as $actionKey => $identifier) {
 			$this->channelProperty->create(
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),

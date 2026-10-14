@@ -303,7 +303,7 @@ final readonly class Device
 		);
 
 		if ($property?->getValue() === null) {
-			return Shelly\Constants::STATE_READING_DELAY;
+			return Shelly\Entities\Devices\Device::STATE_READING_DELAY;
 		}
 
 		$value = $property->getValue();

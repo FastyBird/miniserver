@@ -27,6 +27,8 @@ use function str_starts_with;
 class Device extends VirtualEntities\Devices\Device
 {
 
+	public const string MANUFACTURER = 'FastyBird';
+
 	public const string TYPE = 'virtual-thermostat-addon';
 
 	public const float MINIMUM_TEMPERATURE = 7.0;

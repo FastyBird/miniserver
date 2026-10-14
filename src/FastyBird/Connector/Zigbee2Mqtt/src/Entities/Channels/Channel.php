@@ -16,6 +16,10 @@ use function assert;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
+	public const string CHANNEL_IDENTIFIER_REGEX = '/^(?P<type>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/';
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string CHANNEL_SPECIAL_IDENTIFIER_REGEX = '/^(?P<type>(light|switch|fan|cover|lock|climate){1})_(?P<subtype>(binary|numeric|enum|text|composite){1})_(?P<identifier>[a-z0-9_]+)$/';
+
 	public const string TYPE = 'zigbee2mqtt-connector';
 
 	public function __construct(

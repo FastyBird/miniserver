@@ -4,7 +4,6 @@ namespace FastyBird\Connector\HomeKit\Entities\Connectors;
 
 use Doctrine\Common;
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Entities as HomeKitEntities;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Types;
@@ -24,6 +23,12 @@ use function is_string;
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Connector extends DevicesEntities\Connectors\Connector
 {
+
+	public const int DEFAULT_CONFIG_VERSION = 1;
+
+	public const int DEFAULT_PORT = 51_827;
+
+	public const int MAX_CONFIG_VERSION = 65_535;
 
 	public const string TYPE = 'homekit-connector';
 
@@ -109,7 +114,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return HomeKit\Constants::DEFAULT_PORT;
+		return self::DEFAULT_PORT;
 	}
 
 	/**

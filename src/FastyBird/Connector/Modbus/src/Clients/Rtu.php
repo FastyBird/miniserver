@@ -340,28 +340,28 @@ final class Rtu implements Client
 		if ($coilsAddresses !== []) {
 			$requests = array_merge(
 				$requests,
-				$this->split($coilsAddresses, Modbus\Constants::MAX_DISCRETE_REGISTERS_PER_MODBUS_REQUEST),
+				$this->split($coilsAddresses, Client::MAX_DISCRETE_REGISTERS_PER_MODBUS_REQUEST),
 			);
 		}
 
 		if ($discreteInputsAddresses !== []) {
 			$requests = array_merge(
 				$requests,
-				$this->split($discreteInputsAddresses, Modbus\Constants::MAX_DISCRETE_REGISTERS_PER_MODBUS_REQUEST),
+				$this->split($discreteInputsAddresses, Client::MAX_DISCRETE_REGISTERS_PER_MODBUS_REQUEST),
 			);
 		}
 
 		if ($holdingAddresses !== []) {
 			$requests = array_merge(
 				$requests,
-				$this->split($holdingAddresses, Modbus\Constants::MAX_ANALOG_REGISTERS_PER_MODBUS_REQUEST),
+				$this->split($holdingAddresses, Client::MAX_ANALOG_REGISTERS_PER_MODBUS_REQUEST),
 			);
 		}
 
 		if ($inputsAddresses !== []) {
 			$requests = array_merge(
 				$requests,
-				$this->split($inputsAddresses, Modbus\Constants::MAX_ANALOG_REGISTERS_PER_MODBUS_REQUEST),
+				$this->split($inputsAddresses, Client::MAX_ANALOG_REGISTERS_PER_MODBUS_REQUEST),
 			);
 		}
 

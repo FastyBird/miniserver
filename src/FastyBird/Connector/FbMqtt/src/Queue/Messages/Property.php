@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
-use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Core\Persistence\Rules;
 use Orisai\ObjectMapper;
@@ -16,6 +15,8 @@ use ValueError;
  */
 abstract class Property implements Message
 {
+
+	public const string VALUE_NOT_SET = 'value_not_set';
 
 	/**
 	 * @param array<PropertyAttribute> $attributes
@@ -33,7 +34,7 @@ abstract class Property implements Message
 		])]
 		private readonly array $attributes = [],
 		#[ObjectMapper\Rules\MappedObjectValue(class: PropertyAttribute::class)]
-		private readonly string|null $value = FbMqtt\Constants::VALUE_NOT_SET,
+		private readonly string|null $value = self::VALUE_NOT_SET,
 		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $retained = false,
 	)
@@ -91,7 +92,7 @@ abstract class Property implements Message
 			$return[$attribute->getAttribute()] = $attribute->getValue();
 		}
 
-		if ($this->getValue() !== FbMqtt\Constants::VALUE_NOT_SET) {
+		if ($this->getValue() !== self::VALUE_NOT_SET) {
 			$return['value'] = $this->getValue();
 		}
 

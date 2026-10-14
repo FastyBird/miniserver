@@ -2,7 +2,6 @@
 
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use Nette;
@@ -15,6 +14,8 @@ use const DIRECTORY_SEPARATOR;
  */
 final class Builder
 {
+
+	private const string RESOURCES_FOLDER = __DIR__ . '/../../resources';
 
 	private Mapping\Gen1|null $gen1 = null;
 
@@ -34,7 +35,7 @@ final class Builder
 	{
 		if ($this->gen1 === null) {
 			try {
-				$mapping = ShellyConnectorHomeKitConnector\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'gen1.json';
+				$mapping = self::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'gen1.json';
 				$mapping = Utils\FileSystem::read($mapping);
 
 				$data = (array) Utils\Json::decode($mapping, forceArrays: true);
@@ -57,7 +58,7 @@ final class Builder
 	{
 		if ($this->gen2 === null) {
 			try {
-				$mapping = ShellyConnectorHomeKitConnector\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'gen2.json';
+				$mapping = self::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'gen2.json';
 				$mapping = Utils\FileSystem::read($mapping);
 
 				$data = (array) Utils\Json::decode($mapping, forceArrays: true);

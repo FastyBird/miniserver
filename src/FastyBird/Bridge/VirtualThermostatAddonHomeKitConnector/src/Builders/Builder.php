@@ -47,6 +47,10 @@ use function strval;
 final readonly class Builder
 {
 
+	private const string MODEL = 'Virtual Thermostat Bridge';
+
+	private const string MANUFACTURER = 'FastyBird';
+
 	public function __construct(
 		private VirtualThermostatAddonHomeKitConnector\Logger $logger,
 		private HomeKitHelpers\Loader $loader,
@@ -238,13 +242,13 @@ final readonly class Builder
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => VirtualThermostatAddonHomeKitConnector\Constants::MODEL,
+					'value' => self::MODEL,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($modelProperty, Utils\ArrayHash::from([
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => VirtualThermostatAddonHomeKitConnector\Constants::MODEL,
+					'value' => self::MODEL,
 				]));
 			}
 
@@ -253,13 +257,13 @@ final readonly class Builder
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => VirtualThermostatAddonHomeKitConnector\Constants::MANUFACTURER,
+					'value' => self::MANUFACTURER,
 					'device' => $accessory,
 				]));
 			} else {
 				$this->devicesPropertiesManager->update($manufacturerProperty, Utils\ArrayHash::from([
 					'dataType' => ValuesTypes\DataType::STRING,
-					'value' => VirtualThermostatAddonHomeKitConnector\Constants::MANUFACTURER,
+					'value' => self::MANUFACTURER,
 				]));
 			}
 

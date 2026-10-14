@@ -34,6 +34,8 @@ use const DIRECTORY_SEPARATOR;
 final class ShellyConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
+	public const string BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX = 'shelly-connector-homekit-connector-bridge';
+
 	public const string NAME = 'fbShellyConnectorHomeKitConnectorBridge';
 
 	public static function register(

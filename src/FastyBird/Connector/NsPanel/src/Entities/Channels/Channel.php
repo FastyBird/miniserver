@@ -15,6 +15,8 @@ use function assert;
 abstract class Channel extends DevicesEntities\Channels\Channel
 {
 
+	public const string CHANNEL_IDENTIFIER = '/^(?P<capability>[a-z\-]+)(?:_(?P<name>[0-9a-zA-Z\-]+))?$/';
+
 	public function __construct(
 		NsPanelEntities\Devices\Device $device,
 		string $identifier,

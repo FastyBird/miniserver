@@ -6,7 +6,6 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Entities as VieraEntities;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
 use FastyBird\Connector\Viera\Helpers;
@@ -188,7 +187,7 @@ final readonly class Properties implements Common\EventSubscriber
 	 */
 	private function configureDeviceKeys(DevicesEntities\Channels\Channel $channel): void
 	{
-		foreach (Viera\Constants::KEYS_PROPERTIES as $actionKey => $identifier) {
+		foreach (VieraTypes\ActionKey::KEYS_PROPERTIES as $actionKey => $identifier) {
 			$this->channelProperty->create(
 				DevicesEntities\Channels\Properties\Dynamic::class,
 				$channel->getId(),
@@ -278,9 +277,9 @@ final readonly class Properties implements Common\EventSubscriber
 			array_merge(
 				[
 					[
-						Viera\Constants::TV_IDENTIFIER,
-						Viera\Constants::TV_CODE,
-						Viera\Constants::TV_CODE,
+						VieraEntities\Devices\Device::TV_IDENTIFIER,
+						VieraEntities\Devices\Device::TV_CODE,
+						VieraEntities\Devices\Device::TV_CODE,
 					],
 				],
 				$hdmiFormat,

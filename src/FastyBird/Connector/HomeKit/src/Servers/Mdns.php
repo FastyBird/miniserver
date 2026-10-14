@@ -45,6 +45,8 @@ use function substr;
 final class Mdns implements Server
 {
 
+	private const string HAP_PROTOCOL_SHORT_VERSION = '1.1';
+
 	private const string DNS_ADDRESS = '224.0.0.251';
 
 	private const int DNS_PORT = 5_353;
@@ -405,7 +407,7 @@ final class Mdns implements Server
 			4_500,
 			[
 				'md=' . $name,
-				'pv=' . HomeKit\Constants::HAP_PROTOCOL_SHORT_VERSION,
+				'pv=' . self::HAP_PROTOCOL_SHORT_VERSION,
 				'id=' . $macAddress,
 				// Represents the 'configuration version' of an Accessory.
 				// Increasing this 'version number' signals iOS devices to

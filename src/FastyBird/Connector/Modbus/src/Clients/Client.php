@@ -8,6 +8,10 @@ namespace FastyBird\Connector\Modbus\Clients;
 interface Client
 {
 
+	public const int MAX_ANALOG_REGISTERS_PER_MODBUS_REQUEST = 124;
+
+	public const int MAX_DISCRETE_REGISTERS_PER_MODBUS_REQUEST = 2_048;
+
 	/**
 	 * Create servers/clients
 	 */

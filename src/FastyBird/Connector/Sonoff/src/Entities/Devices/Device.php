@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Sonoff\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
@@ -27,6 +26,8 @@ use function is_string;
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Device extends DevicesEntities\Devices\Device
 {
+
+	public const float STATE_READING_DELAY = 300.0;
 
 	public const string TYPE = 'sonoff-connector';
 
@@ -262,7 +263,7 @@ class Device extends DevicesEntities\Devices\Device
 			return floatval($property->getValue());
 		}
 
-		return Sonoff\Constants::STATE_READING_DELAY;
+		return self::STATE_READING_DELAY;
 	}
 
 	/**

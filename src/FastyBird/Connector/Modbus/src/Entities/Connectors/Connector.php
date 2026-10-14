@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Modbus\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types;
@@ -23,6 +22,8 @@ use function is_string;
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Connector extends DevicesEntities\Connectors\Connector
 {
+
+	public const string DEFAULT_RTU_SERIAL_INTERFACE = '/dev/ttyAMA0';
 
 	public const string TYPE = 'modbus-connector';
 
@@ -221,7 +222,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return Modbus\Constants::DEFAULT_RTU_SERIAL_INTERFACE;
+		return self::DEFAULT_RTU_SERIAL_INTERFACE;
 	}
 
 }

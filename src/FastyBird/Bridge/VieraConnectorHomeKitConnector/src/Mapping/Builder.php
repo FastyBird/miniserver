@@ -2,7 +2,6 @@
 
 namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 
-use FastyBird\Bridge\VieraConnectorHomeKitConnector;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Exceptions;
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use Nette;
@@ -15,6 +14,8 @@ use const DIRECTORY_SEPARATOR;
  */
 final class Builder
 {
+
+	private const string RESOURCES_FOLDER = __DIR__ . '/../../resources';
 
 	private Mapping\Services|null $mapping = null;
 
@@ -32,7 +33,7 @@ final class Builder
 	{
 		if ($this->mapping === null) {
 			try {
-				$mapping = VieraConnectorHomeKitConnector\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'mapping.json';
+				$mapping = self::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'mapping.json';
 				$mapping = Utils\FileSystem::read($mapping);
 
 				$data = (array) Utils\Json::decode($mapping, forceArrays: true);

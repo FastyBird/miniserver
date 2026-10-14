@@ -44,6 +44,30 @@ use function sprintf;
 final class Client
 {
 
+	public const int MQTT_API_QOS_0 = 0;
+
+	public const int MQTT_API_QOS_1 = 1;
+
+	public const int MQTT_API_QOS_2 = 2;
+
+	public const string EVENT_CONNECT = 'connect';
+
+	public const string EVENT_DISCONNECT = 'disconnect';
+
+	public const string EVENT_CLOSE = 'close';
+
+	public const string EVENT_WARNING = 'warning';
+
+	public const string EVENT_ERROR = 'error';
+
+	public const string EVENT_MESSAGE = 'message';
+
+	public const string EVENT_PUBLISH = 'publish';
+
+	public const string EVENT_SUBSCRIBE = 'subscribe';
+
+	public const string EVENT_UNSUBSCRIBE = 'unsubscribe';
+
 	/** @var array<Closure(): void> */
 	private array $onConnectListeners = [];
 
@@ -417,7 +441,7 @@ final class Client
 	public function publish(
 		string $topic,
 		string|null $payload = null,
-		int $qos = Zigbee2Mqtt\Constants::MQTT_API_QOS_0,
+		int $qos = self::MQTT_API_QOS_0,
 		bool $retain = false,
 	): Promise\PromiseInterface
 	{

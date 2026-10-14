@@ -297,7 +297,11 @@ final readonly class WriteSubDeviceChannelPropertyState implements Queue\Consume
 		$updateCallbacks = [];
 
 		if (
-			preg_match(Zigbee2Mqtt\Constants::CHANNEL_IDENTIFIER_REGEX, $channel->getIdentifier(), $matches) === 1
+			preg_match(
+				Zigbee2Mqtt\Entities\Channels\Channel::CHANNEL_IDENTIFIER_REGEX,
+				$channel->getIdentifier(),
+				$matches,
+			) === 1
 			&& Types\ExposeType::tryFrom($matches['type']) !== null
 		) {
 			$writeData = new stdClass();
@@ -337,7 +341,7 @@ final readonly class WriteSubDeviceChannelPropertyState implements Queue\Consume
 			}
 		} elseif (
 			preg_match(
-				Zigbee2Mqtt\Constants::CHANNEL_SPECIAL_IDENTIFIER_REGEX,
+				Zigbee2Mqtt\Entities\Channels\Channel::CHANNEL_SPECIAL_IDENTIFIER_REGEX,
 				$channel->getIdentifier(),
 				$matches,
 			) === 1

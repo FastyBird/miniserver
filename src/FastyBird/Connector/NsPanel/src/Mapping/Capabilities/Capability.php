@@ -56,7 +56,7 @@ final readonly class Capability implements Mapping\Mapping
 	 */
 	public function getCapability(): Types\Capability
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $this->capabilityWithName, $matches);
+		preg_match(NsPanel\Entities\Channels\Channel::CHANNEL_IDENTIFIER, $this->capabilityWithName, $matches);
 
 		if (!array_key_exists('capability', $matches)) {
 			throw new Exceptions\InvalidState('Capability definition invalid value');
@@ -71,7 +71,7 @@ final readonly class Capability implements Mapping\Mapping
 
 	public function getName(): string|null
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $this->capabilityWithName, $matches);
+		preg_match(NsPanel\Entities\Channels\Channel::CHANNEL_IDENTIFIER, $this->capabilityWithName, $matches);
 
 		return $matches['name'] ?? null;
 	}

@@ -190,7 +190,7 @@ final class DirectiveController extends BaseController
 
 			if (
 				is_string($key)
-				&& preg_match(NsPanel\Constants::STATE_NAME_KEY, $key, $matches) === 1
+				&& preg_match(Types\Capability::STATE_NAME_KEY, $key, $matches) === 1
 				&& array_key_exists('name', $matches) === true
 			) {
 				$identifier = $matches['name'];
@@ -226,7 +226,7 @@ final class DirectiveController extends BaseController
 						'header' => [
 							'name' => Types\Header::UPDATE_DEVICE_STATES_RESPONSE->value,
 							'message_id' => $requestData->getDirective()->getHeader()->getMessageId(),
-							'version' => NsPanel\Constants::NS_PANEL_API_VERSION_V1,
+							'version' => NsPanel\API\LanApi::NS_PANEL_API_VERSION_V1,
 						],
 					],
 				],

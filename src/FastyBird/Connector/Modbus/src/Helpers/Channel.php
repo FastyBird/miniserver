@@ -114,7 +114,7 @@ final readonly class Channel
 		);
 
 		if ($property?->getValue() === null) {
-			return Modbus\Constants::READING_DELAY;
+			return Modbus\Entities\Channels\Channel::READING_DELAY;
 		}
 
 		$value = $property->getValue();

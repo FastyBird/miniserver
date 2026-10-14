@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\Zigbee2Mqtt\API;
 
-use FastyBird\Connector\Zigbee2Mqtt;
 use FastyBird\Connector\Zigbee2Mqtt\Documents as Zigbee2MqttDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use function str_replace;
@@ -12,6 +11,10 @@ use function str_replace;
  */
 final class MqttBuilder
 {
+
+	public const string BRIDGE_TOPIC = '%s/#';
+
+	private const string MQTT_TOPIC_DELIMITER = '/';
 
 	/**
 	 * Replace placeholders
@@ -27,11 +30,11 @@ final class MqttBuilder
 	 */
 	private const string DEVICE_PROPERTY_TOPIC
 		= self::BASE_TOPIC_REPLACE_STRING
-		. Zigbee2Mqtt\Constants::MQTT_TOPIC_DELIMITER
+		. self::MQTT_TOPIC_DELIMITER
 		. self::DEVICE_REPLACE_STRING
-		. Zigbee2Mqtt\Constants::MQTT_TOPIC_DELIMITER
+		. self::MQTT_TOPIC_DELIMITER
 		. self::PROPERTY_REPLACE_STRING
-		. Zigbee2Mqtt\Constants::MQTT_TOPIC_DELIMITER
+		. self::MQTT_TOPIC_DELIMITER
 		. 'set';
 
 	public static function buildDevicePropertyTopic(
