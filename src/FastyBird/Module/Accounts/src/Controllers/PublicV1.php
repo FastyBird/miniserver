@@ -15,7 +15,6 @@ use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Schemas;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use Nette\Utils;
 use Psr\Http\Message;
 use Throwable;
 use function is_scalar;
@@ -119,9 +118,9 @@ final class PublicV1 extends BaseV1
 
 			if ($hash === null || !$this->securityHash->isValid($hash)) {
 				// Verification hash is expired, create new one for user
-				$this->accountsManager->update($account, Utils\ArrayHash::from([
+				$this->accountsManager->update($account, [
 					'requestHash' => $this->securityHash->createKey(),
-				]));
+				]);
 			}
 
 			// TODO: Send new user email
@@ -150,9 +149,9 @@ final class PublicV1 extends BaseV1
 			$this->getOrmConnection()->beginTransaction();
 
 			// Update entity
-			$this->accountsManager->update($account, Utils\ArrayHash::from([
+			$this->accountsManager->update($account, [
 				'requestHash' => $this->securityHash->createKey(),
-			]));
+			]);
 
 			// TODO: Send reset password email
 

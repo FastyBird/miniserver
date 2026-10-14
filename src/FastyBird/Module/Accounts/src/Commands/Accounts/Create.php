@@ -229,30 +229,25 @@ final class Create extends Console\Command\Command
 
 			$id = Uuid\Uuid::uuid4();
 
-			$create = new Utils\ArrayHash();
-			$create->offsetSet('id', $id);
-			$create->offsetSet('entity', Entities\Accounts\Account::class);
-			$create->offsetSet('state', Types\AccountState::ACTIVE);
-
-			$details = new Utils\ArrayHash();
-			$details->offsetSet('entity', Entities\Details\Details::class);
-			$details->offsetSet('firstName', $firstName);
-			$details->offsetSet('lastName', $lastName);
-
-			$create->offsetSet('details', $details);
-
 			$this->enforcerFactory->getEnforcer()->addRoleForUser($id->toString(), $role->getName());
 
-			$account = $this->accountsManager->create($create);
+			$account = $this->accountsManager->create([
+				'id' => $id,
+				'entity' => Entities\Accounts\Account::class,
+				'state' => Types\AccountState::ACTIVE,
+				'details' => [
+					'entity' => Entities\Details\Details::class,
+					'firstName' => $firstName,
+					'lastName' => $lastName,
+				],
+			]);
 
 			// Create new email entity for user
-			$create = new Utils\ArrayHash();
-			$create->offsetSet('account', $account);
-			$create->offsetSet('address', $emailAddress);
-			$create->offsetSet('default', true);
-
-			// Create new email entity
-			$this->emailsManager->create($create);
+			$this->emailsManager->create([
+				'account' => $account,
+				'address' => $emailAddress,
+				'default' => true,
+			]);
 
 			$this->enforcerFactory->getEnforcer()->deleteRolesForUser($account->getId()->toString());
 			$this->enforcerFactory->getEnforcer()->addRoleForUser($account->getId()->toString(), $role->getName());
@@ -302,15 +297,14 @@ final class Create extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->getOrmConnection()->beginTransaction();
 
-			// Create new email entity for user
-			$create = new Utils\ArrayHash();
-			$create->offsetSet('entity', Entities\Identities\Identity::class);
-			$create->offsetSet('account', $account);
-			$create->offsetSet('uid', $email->getAddress());
-			$create->offsetSet('password', $password);
-			$create->offsetSet('state', Types\IdentityState::ACTIVE);
-
-			$this->identitiesManager->create($create);
+			// Create new identity entity for user
+			$this->identitiesManager->create([
+				'entity' => Entities\Identities\Identity::class,
+				'account' => $account,
+				'uid' => $email->getAddress(),
+				'password' => $password,
+				'state' => Types\IdentityState::ACTIVE,
+			]);
 
 			// Commit all changes into database
 			$this->getOrmConnection()->commit();

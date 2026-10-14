@@ -22,7 +22,6 @@ use FastyBird\Module\Accounts\Schemas;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use Nette\Utils;
 use Override;
 use Psr\Http\Message;
 use Ramsey\Uuid;
@@ -164,7 +163,7 @@ final class SessionV1 extends BaseV1
 
 			$validTill = $this->getNow()->modify(Entities\Tokens\AccessToken::TOKEN_EXPIRATION);
 
-			$values = Utils\ArrayHash::from([
+			$values = [
 				'id' => Uuid\Uuid::uuid4(),
 				'entity' => Entities\Tokens\AccessToken::class,
 				'token' => $this->createToken(
@@ -177,20 +176,20 @@ final class SessionV1 extends BaseV1
 				'validTill' => $validTill,
 				'state' => Types\TokenState::ACTIVE,
 				'identity' => $this->user->getIdentity(),
-			]);
+			];
 
 			$accessToken = $this->tokensManager->create($values);
 
 			$validTill = $this->getNow()->modify(Entities\Tokens\RefreshToken::TOKEN_EXPIRATION);
 
-			$values = Utils\ArrayHash::from([
+			$values = [
 				'id' => Uuid\Uuid::uuid4(),
 				'entity' => Entities\Tokens\RefreshToken::class,
 				'accessToken' => $accessToken,
 				'token' => $this->createToken($this->user->getId() ?? Uuid\Uuid::uuid4(), [], $validTill),
 				'validTill' => $validTill,
 				'state' => Types\TokenState::ACTIVE,
-			]);
+			];
 
 			$this->tokensManager->create($values);
 
@@ -315,7 +314,7 @@ final class SessionV1 extends BaseV1
 
 			$validTill = $this->getNow()->modify(Entities\Tokens\AccessToken::TOKEN_EXPIRATION);
 
-			$values = Utils\ArrayHash::from([
+			$values = [
 				'id' => Uuid\Uuid::uuid4(),
 				'entity' => Entities\Tokens\AccessToken::class,
 				'token' => $this->createToken(
@@ -328,20 +327,20 @@ final class SessionV1 extends BaseV1
 				'validTill' => $validTill,
 				'state' => Types\TokenState::ACTIVE,
 				'identity' => $this->user->getIdentity(),
-			]);
+			];
 
 			$newAccessToken = $this->tokensManager->create($values);
 
 			$validTill = $this->getNow()->modify(Entities\Tokens\RefreshToken::TOKEN_EXPIRATION);
 
-			$values = Utils\ArrayHash::from([
+			$values = [
 				'id' => Uuid\Uuid::uuid4(),
 				'entity' => Entities\Tokens\RefreshToken::class,
 				'accessToken' => $newAccessToken,
 				'token' => $this->createToken($this->user->getId() ?? Uuid\Uuid::uuid4(), [], $validTill),
 				'validTill' => $validTill,
 				'state' => Types\TokenState::ACTIVE,
-			]);
+			];
 
 			$this->tokensManager->create($values);
 

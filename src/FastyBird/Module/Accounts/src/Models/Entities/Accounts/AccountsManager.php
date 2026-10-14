@@ -30,13 +30,15 @@ final class AccountsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function create(Utils\ArrayHash $values): Entities\Accounts\Account
+	public function create(array|Utils\ArrayHash $values): Entities\Accounts\Account
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
 		assert($entity instanceof Entities\Accounts\Account);
@@ -45,6 +47,8 @@ final class AccountsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -53,7 +57,7 @@ final class AccountsManager
 	 */
 	public function update(
 		Entities\Accounts\Account $entity,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Accounts\Account
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);

@@ -30,6 +30,8 @@ final class IdentitiesManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
@@ -37,7 +39,7 @@ final class IdentitiesManager
 	 * @throws ReflectionException
 	 */
 	public function create(
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Identities\Identity
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
@@ -47,6 +49,8 @@ final class IdentitiesManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -55,7 +59,7 @@ final class IdentitiesManager
 	 */
 	public function update(
 		Entities\Identities\Identity $entity,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Identities\Identity
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);

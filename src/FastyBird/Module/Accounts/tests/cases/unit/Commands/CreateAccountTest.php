@@ -15,6 +15,7 @@ use FastyBird\Module\Accounts\Helpers;
 use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Tests;
+use FastyBird\Module\Accounts\Types;
 use Nette;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -22,6 +23,8 @@ use RuntimeException;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Throwable;
+use function array_values;
 
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -109,6 +112,87 @@ final class CreateAccountTest extends Tests\Cases\Unit\DbTestCase
 		);
 
 		self::assertSame($password->getHash(), $identity->getPassword()->getHash());
+	}
+
+	/**
+	 * What the command stores, field by field: the account with its details, its default email
+	 * address and its identity. It builds these as plain arrays since #723 and as ArrayHash, the
+	 * details nested inside the account, before; this test passes on both.
+	 *
+	 * @throws Throwable
+	 */
+	public function testExecuteStoresTheAccountItsDetailsItsEmailAndItsIdentity(): void
+	{
+		$this->executeTheCommand();
+
+		$entityManager = $this->getEntityManager();
+		$entityManager->clear();
+
+		$findEmailQuery = new Queries\Entities\FindEmails();
+		$findEmailQuery->byAddress('rocky@balboa.com');
+
+		$email = $this->getContainer()->getByType(Models\Entities\Emails\EmailsRepository::class)
+			->findOneBy($findEmailQuery);
+
+		self::assertNotNull($email);
+		self::assertSame('rocky@balboa.com', $email->getAddress());
+		self::assertTrue($email->isDefault());
+		self::assertFalse($email->isVerified());
+		self::assertSame(Types\EmailVisibility::PUBLIC, $email->getVisibility());
+
+		$account = $email->getAccount();
+
+		self::assertSame(Types\AccountState::ACTIVE, $account->getState());
+		self::assertNull($account->getRequestHash());
+		self::assertSame('Rocky', $account->getDetails()->getFirstName());
+		self::assertSame('Balboa', $account->getDetails()->getLastName());
+		self::assertNull($account->getDetails()->getMiddleName());
+		self::assertSame($email->getId()->toString(), $account->getEmail()?->getId()->toString());
+		self::assertSame(
+			[Identity\User::ROLE_USER],
+			$this->getContainer()->getByType(Identity\EnforcerFactory::class)
+				->getEnforcer()
+				->getRolesForUser($account->getId()->toString()),
+		);
+
+		$identities = array_values($account->getIdentities());
+
+		self::assertCount(1, $identities);
+		self::assertSame('rocky@balboa.com', $identities[0]->getUid());
+		self::assertSame(Types\IdentityState::ACTIVE, $identities[0]->getState());
+		self::assertTrue($identities[0]->verifyPassword('someRandomPassword'));
+	}
+
+	/**
+	 * Runs the command as testExecute() does
+	 *
+	 * @throws Throwable
+	 */
+	private function executeTheCommand(): void
+	{
+		$container = $this->getContainer();
+
+		$application = new Application();
+		$application->add(new Commands\Accounts\Create(
+			$container->getByType(Models\Entities\Accounts\AccountsManager::class),
+			$container->getByType(Models\Entities\Emails\EmailsRepository::class),
+			$container->getByType(Models\Entities\Emails\EmailsManager::class),
+			$container->getByType(Models\Entities\Identities\IdentitiesManager::class),
+			$container->getByType(Translation\Translator::class),
+			$container->getByType(Identity\EnforcerFactory::class),
+			$container->getByType(Policies\Repository::class),
+			$container->getByType(Persistence\ManagerRegistry::class),
+		));
+
+		$commandTester = new CommandTester($application->get(Commands\Accounts\Create::NAME));
+
+		self::assertSame(0, $commandTester->execute([
+			'lastName' => 'Balboa',
+			'firstName' => 'Rocky',
+			'email' => 'rocky@balboa.com',
+			'password' => 'someRandomPassword',
+			'role' => Identity\User::ROLE_USER,
+		]));
 	}
 
 }
