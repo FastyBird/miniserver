@@ -11,6 +11,7 @@ use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Models;
 use Override;
 use PHPUnit\Framework\TestCase;
+use React\Http\Message\Response;
 use React\Http\Message\ServerRequest;
 use RuntimeException;
 use Throwable;
@@ -29,6 +30,7 @@ use function is_string;
 use function mkdir;
 use function str_contains;
 use function str_starts_with;
+use function strlen;
 use function substr_count;
 use function sys_get_temp_dir;
 use function uniqid;
@@ -56,6 +58,21 @@ final class SensitiveDataTest extends TestCase
 
 	// Not shaped as a signed token, so only its key or its parameter hides it
 	private const string MALFORMED_COOKIE_TOKEN = 'PROBEMALFORMEDTOKEN0123456789';
+
+	// Not shaped as a signed token either, so only the hiding of a body hides them
+	private const string PASSWORD = 'PROBEPASSWORD0123456789';
+
+	private const string FORM_PASSWORD = 'PROBEFORMPASSWORD0123456789';
+
+	private const string BODY_TOKEN = 'PROBEBODYTOKEN0123456789';
+
+	private const string BODY_REFRESH_TOKEN = 'PROBEBODYREFRESHTOKEN0123456789';
+
+	private const string SIGN_IN_BODY = '{"data":{"type":"session","attributes":{"uid":"john","password":"'
+		. self::PASSWORD . '"}}}';
+
+	private const string SESSION_BODY = '{"data":{"attributes":{"token":"' . self::BODY_TOKEN
+		. '","refresh_token":"' . self::BODY_REFRESH_TOKEN . '"}}}';
 
 	/** @var array<mixed> */
 	private array $server = [];
@@ -195,6 +212,58 @@ final class SensitiveDataTest extends TestCase
 	}
 
 	/**
+	 * A sign-in request's body carries the password, a session refresh's the refresh token, and the
+	 * session they create comes back with both tokens in the response body. The stack holds the
+	 * requests and the response, whose buffered bodies keep the body verbatim, and the raw JSON
+	 * body as the argument it is decoded from
+	 *
+	 * @throws Throwable
+	 */
+	public function testLoggedBlueScreenHidesTheBodiesOfRequestsAndResponses(): void
+	{
+		$request = new ServerRequest(
+			'POST',
+			'/api/accounts-module/v1/session',
+			['Content-Type' => 'application/vnd.api+json'],
+			self::SIGN_IN_BODY,
+		);
+
+		$response = new Response(201, ['Content-Type' => 'application/vnd.api+json'], self::SESSION_BODY);
+
+		// Not JSON, so only the hiding of the buffered body hides it
+		$form = new ServerRequest(
+			'POST',
+			'/sign/in',
+			['Content-Type' => 'application/x-www-form-urlencoded'],
+			'uid=john&password=' . self::FORM_PASSWORD,
+		);
+
+		try {
+			$this->handleBody($request, $response, (string) $request->getBody(), $form);
+		} catch (RuntimeException $ex) {
+			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
+		}
+	}
+
+	/**
+	 * A string is hidden as a body when it is a JSON text with one of the credential members;
+	 * other JSON is not
+	 */
+	public function testBlueScreenHidesJsonCarryingCredentialsOnly(): void
+	{
+		$blueScreen = Logging\SensitiveData::hideInBlueScreen(new Tracy\BlueScreen());
+
+		self::assertNotNull($blueScreen->scrubber);
+		self::assertTrue(($blueScreen->scrubber)('0', self::SIGN_IN_BODY, null));
+		self::assertTrue(($blueScreen->scrubber)('0', self::SESSION_BODY, null));
+		self::assertTrue(($blueScreen->scrubber)('0', '{"refresh_token": "abc"}', null));
+		self::assertFalse(
+			($blueScreen->scrubber)('0', '{"data":{"type":"device","attributes":{"name":"Token"}}}', null),
+		);
+		self::assertFalse(($blueScreen->scrubber)('0', 'password', null));
+	}
+
+	/**
 	 * Only a value shaped as a signed token is hidden by its shape
 	 */
 	public function testBlueScreenHidesValuesShapedAsATokenOnly(): void
@@ -320,6 +389,20 @@ final class SensitiveDataTest extends TestCase
 	}
 
 	/**
+	 * Stands in for a controller's frames, whose arguments are the request, the response and the
+	 * body being decoded
+	 *
+	 * @throws RuntimeException
+	 */
+	private function handleBody(ServerRequest $request, Response $response, string $body, ServerRequest $form): never
+	{
+		throw new RuntimeException(
+			'Body could not be decoded: ' . $request->getMethod() . ' ' . $response->getStatusCode() . ' '
+			. strlen($body) . ' ' . $form->getMethod(),
+		);
+	}
+
+	/**
 	 * @return list<string>
 	 */
 	private function logFiles(): array
@@ -340,6 +423,10 @@ final class SensitiveDataTest extends TestCase
 		self::assertSame(0, substr_count($content, 'eyJQUk9CRUNPT0tJRVRPS0VOIjoxfQ'), 'the token cookie');
 		self::assertSame(0, substr_count($content, 'eyJQUk9CRVJFRlJFU0hUT0tFTiI6MX0'), 'the refresh token cookie');
 		self::assertSame(0, substr_count($content, self::MALFORMED_COOKIE_TOKEN), 'the malformed token cookie');
+		self::assertSame(0, substr_count($content, self::PASSWORD), 'the password in a body');
+		self::assertSame(0, substr_count($content, self::FORM_PASSWORD), 'the password in a form body');
+		self::assertSame(0, substr_count($content, self::BODY_TOKEN), 'the token in a body');
+		self::assertSame(0, substr_count($content, self::BODY_REFRESH_TOKEN), 'the refresh token in a body');
 	}
 
 }

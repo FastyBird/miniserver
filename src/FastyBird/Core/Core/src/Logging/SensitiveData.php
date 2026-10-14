@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Logging;
 
+use React\Http\Io\BufferedBody;
 use Sentry\Integration;
 use Throwable;
 use Tracy;
@@ -29,6 +30,11 @@ use function unlink;
  * not X-Api-Key. Credentials passed as arguments are marked #[\SensitiveParameter] where they are
  * read (Security\Identity) and looked up (Security\Models, Security\Queries), which PHP turns into a
  * \SensitiveParameterValue in a stack trace and Tracy prints as hidden.
+ *
+ * A request's body carries credentials as well: a sign-in's password, a session refresh's refresh
+ * token, and the response to either carries both tokens. The HTTP server buffers each body whole
+ * (React\Http\Io\BufferedBody), and a controller decodes it from a string, so both reach the frames
+ * a blue screen dumps; Sentry would attach a request's body to its event. Neither shows one.
  */
 final class SensitiveData
 {
@@ -37,7 +43,8 @@ final class SensitiveData
 	 * Keys a blue screen hides wherever it dumps them, compared case-insensitively: request
 	 * headers, $_SERVER, $_COOKIE, and array keys and properties inside dumped objects, such as a
 	 * PSR-7 request's headers and cookies or a token entity's token. The whole Cookie header is
-	 * hidden, because it carries the token cookies verbatim
+	 * hidden, because it carries the token cookies verbatim, and so is the whole of a buffered
+	 * request or response body
 	 */
 	public const array BLUE_SCREEN_KEYS = [
 		'authorization',
@@ -49,6 +56,7 @@ final class SensitiveData
 		'refresh_token',
 		'cookie',
 		'http_cookie',
+		BufferedBody::class . '::$buffer',
 	];
 
 	/**
@@ -61,6 +69,18 @@ final class SensitiveData
 	 * both a base64url-encoded JSON object, which always starts with `eyJ`
 	 */
 	public const string TOKEN_MATERIAL = '/^eyJ[A-Za-z0-9_-]*\.eyJ[A-Za-z0-9_-]*\.[A-Za-z0-9_-]*$/';
+
+	/**
+	 * A JSON text with a member that holds a credential, the shape of a body that carries one: a
+	 * sign-in's `password`, a session's `token` and `refresh` (Accounts' session resource), and
+	 * the `refresh_token` cookie's name
+	 */
+	public const string BODY_MATERIAL = '/"(?:password|token|refresh|refresh_token)"\s*:/i';
+
+	/**
+	 * How much of a request's body a Sentry event carries: none
+	 */
+	public const string SENTRY_REQUEST_BODY = 'none';
 
 	/**
 	 * Request headers a Sentry event carries as "[Filtered]": Sentry's own defaults
@@ -92,7 +112,8 @@ final class SensitiveData
 		// An API key's secret and its hash are both 64 lowercase hex characters. The hash is a
 		// query parameter of the key's lookup, so it reaches DBAL's and PDO's stack frames, whose
 		// arguments no key name marks; any value of that shape is hidden instead. A signed token is
-		// a query parameter of its own lookup in the same way
+		// a query parameter of its own lookup in the same way. A body is decoded from a string,
+		// which is an argument of the decoder's frame
 		$scrubber = $blueScreen->scrubber;
 
 		$blueScreen->scrubber = static fn (string $key, mixed $value, string|null $class): bool => (
@@ -100,6 +121,7 @@ final class SensitiveData
 			&& (
 				preg_match(self::API_KEY_MATERIAL, $value) === 1
 				|| preg_match(self::TOKEN_MATERIAL, $value) === 1
+				|| preg_match(self::BODY_MATERIAL, $value) === 1
 			)
 		) || ($scrubber !== null && $scrubber($key, $value, $class) === true);
 
