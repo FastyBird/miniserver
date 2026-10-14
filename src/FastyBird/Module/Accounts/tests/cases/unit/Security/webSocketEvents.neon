@@ -1,0 +1,16 @@
+#
+# A clock the test moves forward, in place of Core's frozen clock, and a WAMP route to a topic
+# (the test maps its controller)
+#
+
+fbCore:
+    clock:
+        system: false
+        frozen: null
+
+    webSockets:
+        routes:
+            '/probe/v1/exchange': 'Probe:WebSockets:'
+
+services:
+    - FastyBird\Module\Accounts\Tests\Support\MovableClock(DateTimeImmutable('2020-04-01T12:00:00+00:00'))
