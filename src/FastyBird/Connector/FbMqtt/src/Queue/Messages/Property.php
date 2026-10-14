@@ -17,6 +17,8 @@ use ValueError;
 abstract class Property implements Message
 {
 
+	public const string VALUE_NOT_SET = 'value_not_set';
+
 	/**
 	 * @param array<PropertyAttribute> $attributes
 	 */

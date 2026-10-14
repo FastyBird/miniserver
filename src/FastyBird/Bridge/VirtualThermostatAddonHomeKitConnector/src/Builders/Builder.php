@@ -47,6 +47,10 @@ use function strval;
 final readonly class Builder
 {
 
+	private const string MODEL = 'Virtual Thermostat Bridge';
+
+	private const string MANUFACTURER = 'FastyBird';
+
 	public function __construct(
 		private VirtualThermostatAddonHomeKitConnector\Logger $logger,
 		private HomeKitHelpers\Loader $loader,

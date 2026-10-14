@@ -8,6 +8,37 @@ namespace FastyBird\Connector\Viera\Types;
 enum ActionKey: string
 {
 
+	/** array<string, ChannelPropertyIdentifier> */
+	public const array KEYS_PROPERTIES = [
+		self::TV->value => ChannelPropertyIdentifier::KEY_TV,
+		self::HOME->value => ChannelPropertyIdentifier::KEY_HOME,
+		self::CH_UP->value => ChannelPropertyIdentifier::KEY_CHANNEL_UP,
+		self::CH_DOWN->value => ChannelPropertyIdentifier::KEY_CHANNEL_DOWN,
+		self::VOLUME_UP->value => ChannelPropertyIdentifier::KEY_VOLUME_UP,
+		self::VOLUME_DOWN->value => ChannelPropertyIdentifier::KEY_VOLUME_DOWN,
+		self::UP->value => ChannelPropertyIdentifier::KEY_ARROW_UP,
+		self::DOWN->value => ChannelPropertyIdentifier::KEY_ARROW_DOWN,
+		self::LEFT->value => ChannelPropertyIdentifier::KEY_ARROW_LEFT,
+		self::RIGHT->value => ChannelPropertyIdentifier::KEY_ARROW_RIGHT,
+		self::NUM_0->value => ChannelPropertyIdentifier::KEY_0,
+		self::NUM_1->value => ChannelPropertyIdentifier::KEY_1,
+		self::NUM_2->value => ChannelPropertyIdentifier::KEY_2,
+		self::NUM_3->value => ChannelPropertyIdentifier::KEY_3,
+		self::NUM_4->value => ChannelPropertyIdentifier::KEY_4,
+		self::NUM_5->value => ChannelPropertyIdentifier::KEY_5,
+		self::NUM_6->value => ChannelPropertyIdentifier::KEY_6,
+		self::NUM_7->value => ChannelPropertyIdentifier::KEY_7,
+		self::NUM_8->value => ChannelPropertyIdentifier::KEY_8,
+		self::NUM_9->value => ChannelPropertyIdentifier::KEY_9,
+		self::RED->value => ChannelPropertyIdentifier::KEY_RED,
+		self::GREEN->value => ChannelPropertyIdentifier::KEY_GREEN,
+		self::YELLOW->value => ChannelPropertyIdentifier::KEY_YELLOW,
+		self::BLUE->value => ChannelPropertyIdentifier::KEY_BLUE,
+		self::ENTER->value => ChannelPropertyIdentifier::KEY_OK,
+		self::RETURN->value => ChannelPropertyIdentifier::KEY_BACK,
+		self::MENU->value => ChannelPropertyIdentifier::KEY_MENU,
+	];
+
 	case THIRTY_SECOND_SKIP = 'NRC_30S_SKIP-ONOFF';
 
 	case TOGGLE_3D = 'NRC_3D-ONOFF';

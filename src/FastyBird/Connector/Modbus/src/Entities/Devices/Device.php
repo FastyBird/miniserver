@@ -24,6 +24,8 @@ use function is_string;
 class Device extends DevicesEntities\Devices\Device
 {
 
+	public const int DEFAULT_TCP_PORT = 502;
+
 	public const string TYPE = 'modbus-connector';
 
 	public function __construct(

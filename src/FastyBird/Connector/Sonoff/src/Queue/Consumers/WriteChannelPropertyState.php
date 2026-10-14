@@ -43,6 +43,10 @@ use function strval;
 final readonly class WriteChannelPropertyState implements Queue\Consumer
 {
 
+	private const string CHANNEL_GROUP = '/^(?P<group>[a-zA-Z]+)(_(?P<outlet>[0-9]+))?$/';
+
+	public const float WRITE_DEBOUNCE_DELAY = 2_000.0;
+
 	public function __construct(
 		private Queue\Queue $queue,
 		private API\ConnectionManager $connectionManager,

@@ -26,6 +26,14 @@ use function is_string;
 class Device extends DevicesEntities\Devices\Device
 {
 
+	public const string TV_IDENTIFIER = 'TV';
+
+	public const int TV_CODE = 500;
+
+	public const int MAX_HDMI_CODE = 100;
+
+	public const int MIN_APPLICATION_CODE = 1_000;
+
 	public const string TYPE = 'viera-connector';
 
 	public const int DEFAULT_PORT = 55_000;

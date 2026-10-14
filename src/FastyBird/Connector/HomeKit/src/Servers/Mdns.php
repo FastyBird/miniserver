@@ -45,6 +45,8 @@ use function substr;
 final class Mdns implements Server
 {
 
+	private const string HAP_PROTOCOL_SHORT_VERSION = '1.1';
+
 	private const string DNS_ADDRESS = '224.0.0.251';
 
 	private const int DNS_PORT = 5_353;

@@ -14,6 +14,8 @@ use const DIRECTORY_SEPARATOR;
 final class Loader
 {
 
+	private const string RESOURCES_FOLDER = __DIR__ . '/../../resources';
+
 	private Utils\ArrayHash|null $accessories = null;
 
 	private Utils\ArrayHash|null $services = null;

@@ -37,6 +37,12 @@ use const DIRECTORY_SEPARATOR;
 final class Gen1Coap
 {
 
+	private const string COAP_ADDRESS = '224.0.1.187';
+
+	private const int COAP_PORT = 5_683;
+
+	public const string EVENT_CLOSED = 'closed';
+
 	private const int STATE_MESSAGE_CODE = 30;
 
 	private const string STATE_MESSAGE_SCHEMA_FILENAME = 'gen1_coap_state.json';

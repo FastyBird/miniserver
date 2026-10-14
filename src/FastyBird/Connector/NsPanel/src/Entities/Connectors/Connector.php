@@ -22,6 +22,8 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
+	public const int DEFAULT_SERVER_PORT = 52_323;
+
 	public const string TYPE = 'ns-panel-connector';
 
 	#[Override]

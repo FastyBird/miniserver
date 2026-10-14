@@ -59,6 +59,20 @@ use function strval;
 final readonly class Builder
 {
 
+	private const string MANUFACTURER = 'FastyBird & Panasonic';
+
+	private const string MODEL = 'Panasonic TV';
+
+	public const string DEFAULT_ACTIVE_IDENTIFIER = VieraEntities\Devices\Device::TV_IDENTIFIER; // TV tuner
+
+	public const int DEFAULT_ACTIVE_CODE = VieraEntities\Devices\Device::TV_CODE; // TV tuner
+
+	private const int INPUT_SOURCE_TYPE_TV = 2;
+
+	private const int INPUT_SOURCE_TYPE_HDMI = 3;
+
+	private const int INPUT_SOURCE_TYPE_APPLICATION = 10;
+
 	public function __construct(
 		private VieraConnectorHomeKitConnector\Logger $logger,
 		private Mapping\Builder $mappingBuilder,

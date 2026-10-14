@@ -37,6 +37,8 @@ use function strval;
 final readonly class WriteV1ChannelPropertyState implements Queue\Consumer
 {
 
+	public const float WRITE_DEBOUNCE_DELAY = 2_000.0;
+
 	public function __construct(
 		private API\ConnectionManager $connectionManager,
 		private Helpers\Connector $connectorHelper,

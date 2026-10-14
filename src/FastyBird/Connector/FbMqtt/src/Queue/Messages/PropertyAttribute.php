@@ -26,6 +26,10 @@ use function strtolower;
 final readonly class PropertyAttribute implements Message
 {
 
+	private const string PAYLOAD_BOOL_TRUE_VALUE = 'true';
+
+	private const string PAYLOAD_BOOL_FALSE_VALUE = 'false';
+
 	public const string NAME = 'name';
 
 	public const string SETTABLE = 'settable';

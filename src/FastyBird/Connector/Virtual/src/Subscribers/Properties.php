@@ -28,6 +28,8 @@ use ReflectionException;
 final readonly class Properties implements Common\EventSubscriber
 {
 
+	private const string MANUFACTURER = 'FastyBird';
+
 	public function __construct(
 		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
 		private DevicesModels\Entities\Devices\Properties\PropertiesManager $propertiesManager,

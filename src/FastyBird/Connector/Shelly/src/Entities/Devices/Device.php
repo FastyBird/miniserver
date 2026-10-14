@@ -28,6 +28,8 @@ use function is_string;
 class Device extends DevicesEntities\Devices\Device
 {
 
+	public const float STATE_READING_DELAY = 300.0;
+
 	public const string TYPE = 'shelly-connector';
 
 	public function __construct(

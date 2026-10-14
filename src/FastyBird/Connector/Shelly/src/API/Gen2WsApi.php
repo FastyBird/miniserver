@@ -59,6 +59,16 @@ use const DIRECTORY_SEPARATOR;
 final class Gen2WsApi
 {
 
+	public const string EVENT_ERROR = 'error';
+
+	public const string EVENT_MESSAGE = 'message';
+
+	public const string EVENT_CONNECTED = 'connected';
+
+	public const string EVENT_DISCONNECTED = 'disconnected';
+
+	public const string EVENT_LOST = 'lost';
+
 	private const string REQUEST_SRC = 'fb_ws_client';
 
 	private const string DEVICE_STATUS_METHOD = 'Shelly.GetStatus';

@@ -37,6 +37,8 @@ use const DIRECTORY_SEPARATOR;
 final class LanApi
 {
 
+	public const string NS_PANEL_API_VERSION_V1 = '1';
+
 	public const int GATEWAY_PORT = 8_081;
 
 	private const string GET_GATEWAY_INFO_MESSAGE_SCHEMA_FILENAME = 'get_gateway_info.json';

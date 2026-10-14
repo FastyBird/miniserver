@@ -53,6 +53,10 @@ use function strval;
 final readonly class Builder
 {
 
+	private const string MANUFACTURER = 'FastyBird & Shelly';
+
+	private const string MODEL = 'Shelly';
+
 	public function __construct(
 		private ShellyConnectorHomeKitConnector\Logger $logger,
 		private Mapping\Builder $mappingBuilder,

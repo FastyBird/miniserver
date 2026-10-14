@@ -39,6 +39,8 @@ use const SOL_UDP;
 final class Protocol
 {
 
+	private const string BASE_UUID = '-0000-1000-8000-0026BB765291';
+
 	/**
 	 * Convert a UUID to a HAP type
 	 */

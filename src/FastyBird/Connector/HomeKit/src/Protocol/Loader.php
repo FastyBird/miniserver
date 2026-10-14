@@ -58,6 +58,18 @@ use function usort;
 final class Loader
 {
 
+	private const string PACKAGE_NAME = 'fastybird/homekit-connector';
+
+	private const string DEFAULT_MANUFACTURER = 'FastyBird';
+
+	private const string DEFAULT_BRIDGE_MODEL = 'Virtual bridge';
+
+	private const string DEFAULT_DEVICE_MODEL = 'Virtual device';
+
+	private const string HAP_PROTOCOL_VERSION = '01.01.00';
+
+	private const string VERSION_REGEXP = '/^(?:[0-9]*).(?:[0-9]*).(?:[0-9]*)$/';
+
 	private Hashids\Hashids $hashIds;
 
 	/**

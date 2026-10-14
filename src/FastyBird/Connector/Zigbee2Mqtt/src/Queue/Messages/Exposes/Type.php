@@ -18,6 +18,8 @@ use function sprintf;
 abstract class Type implements Zigbee2Mqtt\Queue\Messages\Message
 {
 
+	private const string VALUE_NOT_AVAILABLE = 'n/a';
+
 	public function __construct(
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),

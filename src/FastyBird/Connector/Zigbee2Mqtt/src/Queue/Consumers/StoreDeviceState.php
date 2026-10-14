@@ -34,6 +34,8 @@ use function sprintf;
 final readonly class StoreDeviceState implements Queue\Consumer
 {
 
+	private const string IEEE_ADDRESS_REGEX = '/^0x([a-zA-Z0-9]+)$/';
+
 	public function __construct(
 		private Zigbee2MqttModels\StateRepository $stateRepository,
 		private Zigbee2Mqtt\Logger $logger,

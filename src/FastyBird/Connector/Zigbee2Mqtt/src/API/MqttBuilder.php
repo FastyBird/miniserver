@@ -13,6 +13,10 @@ use function str_replace;
 final class MqttBuilder
 {
 
+	public const string BRIDGE_TOPIC = '%s/#';
+
+	private const string MQTT_TOPIC_DELIMITER = '/';
+
 	/**
 	 * Replace placeholders
 	 */

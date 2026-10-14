@@ -24,6 +24,8 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
+	public const string DEFAULT_RTU_SERIAL_INTERFACE = '/dev/ttyAMA0';
+
 	public const string TYPE = 'modbus-connector';
 
 	#[Override]

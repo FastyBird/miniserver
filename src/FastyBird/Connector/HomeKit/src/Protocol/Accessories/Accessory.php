@@ -23,6 +23,8 @@ use function sprintf;
 abstract class Accessory
 {
 
+	public const int STANDALONE_AID = 1; // Standalone accessory ID (i.e. not bridged)
+
 	/** @var SplObjectStorage<Protocol\Services\Service, null> */
 	protected SplObjectStorage $services;
 

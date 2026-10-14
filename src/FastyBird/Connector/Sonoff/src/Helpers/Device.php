@@ -26,6 +26,8 @@ use function is_string;
 final readonly class Device
 {
 
+	private const float HEARTBEAT_DELAY = 150.0;
+
 	public function __construct(
 		private DevicesModels\Configuration\Devices\Properties\Repository $devicesPropertiesConfigurationRepository,
 	)

@@ -13,6 +13,12 @@ use function str_replace;
 final class V1Builder
 {
 
+	public const string MQTT_TOPIC_DELIMITER = '/';
+
+	public const string MQTT_API_PREFIX = self::MQTT_TOPIC_DELIMITER . 'fb';
+
+	public const string MQTT_API_V1_VERSION_PREFIX = self::MQTT_TOPIC_DELIMITER . FbMqtt\Types\ProtocolVersion::VERSION_1->value;
+
 	/**
 	 * Replace placeholders
 	 */

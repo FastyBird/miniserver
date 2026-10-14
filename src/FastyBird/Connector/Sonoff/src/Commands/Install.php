@@ -44,6 +44,8 @@ use function usort;
 final class Install extends Console\Command\Command
 {
 
+	public const string VALUE_NOT_AVAILABLE = 'N/A';
+
 	public const string NAME = 'fb:sonoff-connector:install';
 
 	private Input\InputInterface|null $input = null;

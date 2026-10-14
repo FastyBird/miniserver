@@ -22,6 +22,12 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
+	public const string DEFAULT_SERVER_ADDRESS = '127.0.0.1';
+
+	public const int DEFAULT_SERVER_PORT = 1_883;
+
+	public const int DEFAULT_SERVER_SECURED_PORT = 8_883;
+
 	public const string TYPE = 'fb-mqtt-connector';
 
 	#[Override]

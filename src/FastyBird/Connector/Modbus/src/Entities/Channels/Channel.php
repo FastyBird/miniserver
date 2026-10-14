@@ -25,6 +25,8 @@ use function is_string;
 class Channel extends DevicesEntities\Channels\Channel
 {
 
+	public const float READING_DELAY = 150.0;
+
 	public const string TYPE = 'modbus-connector';
 
 	public function __construct(

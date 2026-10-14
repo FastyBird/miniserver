@@ -42,6 +42,8 @@ use const DIRECTORY_SEPARATOR;
 final class NsPanelExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
+	public const string RESOURCES_FOLDER = __DIR__ . '/../../resources';
+
 	public const string NAME = 'fbNsPanelConnector';
 
 	public static function register(

@@ -16,6 +16,8 @@ use const DIRECTORY_SEPARATOR;
 final class Builder
 {
 
+	private const string RESOURCES_FOLDER = __DIR__ . '/../../resources';
+
 	private Mapping\Services|null $mapping = null;
 
 	public function __construct(

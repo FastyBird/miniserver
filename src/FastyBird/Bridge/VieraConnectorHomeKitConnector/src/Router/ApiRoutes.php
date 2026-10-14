@@ -14,6 +14,10 @@ use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
 final readonly class ApiRoutes
 {
 
+	public const string ROUTE_NAME_BRIDGES = 'bridges';
+
+	public const string ROUTE_NAME_BRIDGE = 'bridge';
+
 	public const string URL_ITEM_ID = 'id';
 
 	public const string RELATION_ENTITY = 'relationEntity';

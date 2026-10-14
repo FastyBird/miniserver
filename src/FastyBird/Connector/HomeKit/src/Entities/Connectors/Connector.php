@@ -25,6 +25,12 @@ use function is_string;
 class Connector extends DevicesEntities\Connectors\Connector
 {
 
+	public const int DEFAULT_CONFIG_VERSION = 1;
+
+	public const int DEFAULT_PORT = 51_827;
+
+	public const int MAX_CONFIG_VERSION = 65_535;
+
 	public const string TYPE = 'homekit-connector';
 
 	/** @var Common\Collections\Collection<int, HomeKitEntities\Clients\Client> */
