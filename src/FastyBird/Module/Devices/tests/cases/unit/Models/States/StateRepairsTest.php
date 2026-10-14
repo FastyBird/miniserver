@@ -29,6 +29,10 @@ use function React\Async\await;
  * again. What is recorded is exactly what reaches the state storage (`Writer::update()`): which
  * keys are present, their order and their values. The pins were written by hand and pass
  * unchanged on the code from before the repairs were handed on as plain arrays.
+ *
+ * A stored expected value the property's equation transformer cannot evaluate (#782) is repaired
+ * the same way as one the property cannot hold: the managers store it as nulled and no longer
+ * pending, then read the state again.
  */
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -116,6 +120,87 @@ final class StateRepairsTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
+	 * Three ways an equation transformer refuses to evaluate a value, for each of the six managers.
+	 * The y-equation (over `x`) is the one applied to a stored value read for display.
+	 *
+	 * @return array<string, array{string, bool, ValuesTypes\DataType, string, string}>
+	 */
+	public static function unevaluableExpectedValues(): array
+	{
+		$equations = [
+			'division by zero' => [ValuesTypes\DataType::FLOAT, 'equation:x=y|y=x/0', '10'],
+			'result that is not a finite number' => [ValuesTypes\DataType::FLOAT, 'equation:x=y|y=(-x)^(1/2)', '4'],
+			'integer result out of the int range' => [ValuesTypes\DataType::INT, 'equation:x=y|y=x*10^19', '1'],
+		];
+
+		$cases = [];
+
+		foreach (['connector', 'device', 'channel'] as $owner) {
+			foreach ([false, true] as $async) {
+				foreach ($equations as $trigger => [$dataType, $transformer, $expected]) {
+					$cases[$owner . ($async ? ' async' : '') . ' manager, ' . $trigger] = [
+						$owner,
+						$async,
+						$dataType,
+						$transformer,
+						$expected,
+					];
+				}
+			}
+		}
+
+		return $cases;
+	}
+
+	/**
+	 * The repair is the one stored for an expected value of a property that is not settable: the
+	 * value is nulled and the state is no longer pending, since nothing is on its way to the device
+	 * any more. It is the expected-value twin of the actual value's repair (nulled, not valid).
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('unevaluableExpectedValues')]
+	public function testAStoredExpectedValueItsEquationCannotEvaluateIsRepaired(
+		string $owner,
+		bool $async,
+		ValuesTypes\DataType $dataType,
+		string $transformer,
+		string $expected,
+	): void
+	{
+		$this->recordStates([null, $expected]);
+
+		$readState = [$this->manager($owner, $async), 'readState'];
+		self::assertIsCallable($readState);
+
+		$result = $readState($this->property($owner, $dataType, null, $transformer, true));
+
+		if ($result instanceof Promise\PromiseInterface) {
+			$result = await($result);
+		}
+
+		self::assertSame(
+			[
+				[
+					$owner,
+					'update',
+					self::PROPERTY,
+					[
+						States\Property::EXPECTED_VALUE_FIELD => null,
+						States\Property::PENDING_FIELD => false,
+					],
+				],
+			],
+			$this->stored,
+		);
+
+		self::assertInstanceOf(DevicesDocuments\States\Property::class, $result);
+		self::assertNull($result->getRead()->getExpectedValue());
+		self::assertNull($result->getGet()->getExpectedValue());
+		self::assertFalse($result->isPending());
+	}
+
+	/**
 	 * @throws Throwable
 	 */
 	private function manager(string $owner, bool $async): object
@@ -133,12 +218,18 @@ final class StateRepairsTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * An enum of "on" and "off" that is not settable
+	 * An enum of "on" and "off" that is not settable, unless told otherwise
+	 *
+	 * @param list<string>|null $format
 	 *
 	 * @throws Throwable
 	 */
 	private function property(
 		string $owner,
+		ValuesTypes\DataType $dataType = ValuesTypes\DataType::ENUM,
+		array|null $format = ['on', 'off'],
+		string|null $transformer = null,
+		bool $settable = false,
 	): DevicesDocuments\Connectors\Properties\Dynamic|DevicesDocuments\Devices\Properties\Dynamic|DevicesDocuments\Channels\Properties\Dynamic
 	{
 		$id = Uuid\Uuid::fromString(self::PROPERTY);
@@ -150,8 +241,10 @@ final class StateRepairsTest extends Tests\Cases\Unit\BaseTestCase
 				DevicesTypes\PropertyCategory::GENERIC,
 				'property',
 				null,
-				ValuesTypes\DataType::ENUM,
-				format: ['on', 'off'],
+				$dataType,
+				format: $format,
+				valueTransformer: $transformer,
+				settable: $settable,
 			);
 		}
 
@@ -162,8 +255,10 @@ final class StateRepairsTest extends Tests\Cases\Unit\BaseTestCase
 				DevicesTypes\PropertyCategory::GENERIC,
 				'property',
 				null,
-				ValuesTypes\DataType::ENUM,
-				format: ['on', 'off'],
+				$dataType,
+				format: $format,
+				valueTransformer: $transformer,
+				settable: $settable,
 			);
 		}
 
@@ -173,8 +268,10 @@ final class StateRepairsTest extends Tests\Cases\Unit\BaseTestCase
 			DevicesTypes\PropertyCategory::GENERIC,
 			'property',
 			null,
-			ValuesTypes\DataType::ENUM,
-			format: ['on', 'off'],
+			$dataType,
+			format: $format,
+			valueTransformer: $transformer,
+			settable: $settable,
 		);
 	}
 
