@@ -48,7 +48,16 @@ final class Discovery
 
 	private const int LAN_SEARCH_TIMEOUT = 60;
 
+	private const float STORING_CHECK_INTERVAL = 0.1;
+
+	// 60 seconds of checks
+	private const int STORING_CHECK_ATTEMPTS = 600;
+
 	private EventLoop\TimerInterface|null $handlerTimer = null;
+
+	private EventLoop\TimerInterface|null $storingTimer = null;
+
+	private int $storingChecks = 0;
 
 	/** @var array<string, array<string, string|int>> */
 	private array $foundLocalDevices = [];
@@ -112,12 +121,7 @@ final class Discovery
 					$this->handleFoundCloudDevices($this->cloudDevices);
 				}
 
-				$this->dispatcher?->dispatch(
-					new DevicesEvents\TerminateConnector(
-						Sources\Connector::SONOFF,
-						'Devices discovery finished',
-					),
-				);
+				$this->finishWhenStored();
 			})
 			->catch(function (): void {
 				$this->dispatcher?->dispatch(
@@ -144,8 +148,69 @@ final class Discovery
 			$this->handlerTimer = null;
 		}
 
+		if ($this->storingTimer !== null) {
+			$this->eventLoop->cancelTimer($this->storingTimer);
+			$this->storingTimer = null;
+		}
+
 		$this->getCloudApiConnection()->disconnect();
 		$this->getLanConnection()->disconnect();
+	}
+
+	/**
+	 * Discovery is finished once the devices it found are stored. The connector is stopped a few seconds after it is
+	 * asked to terminate and does not wait for its queue, so the queue is checked until it is empty, for a minute at
+	 * most
+	 */
+	private function finishWhenStored(): void
+	{
+		if ($this->queue->isEmpty()) {
+			$this->finish();
+
+			return;
+		}
+
+		$this->storingChecks = 0;
+
+		$this->storingTimer = $this->eventLoop->addPeriodicTimer(
+			self::STORING_CHECK_INTERVAL,
+			function (): void {
+				$this->storingChecks++;
+
+				$stored = $this->queue->isEmpty();
+
+				if (!$stored && $this->storingChecks < self::STORING_CHECK_ATTEMPTS) {
+					return;
+				}
+
+				if ($this->storingTimer !== null) {
+					$this->eventLoop->cancelTimer($this->storingTimer);
+					$this->storingTimer = null;
+				}
+
+				if (!$stored) {
+					$this->logger->warning(
+						'Found devices were not all stored in time, devices discovery is finished anyway',
+						[
+							'source' => Sources\Connector::SONOFF->value,
+							'type' => 'discovery-client',
+						],
+					);
+				}
+
+				$this->finish();
+			},
+		);
+	}
+
+	private function finish(): void
+	{
+		$this->dispatcher?->dispatch(
+			new DevicesEvents\TerminateConnector(
+				Sources\Connector::SONOFF,
+				'Devices discovery finished',
+			),
+		);
 	}
 
 	/**
