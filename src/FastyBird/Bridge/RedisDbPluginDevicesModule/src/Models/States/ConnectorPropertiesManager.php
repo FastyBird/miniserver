@@ -33,21 +33,25 @@ final class ConnectorPropertiesManager implements DevicesModels\States\Connector
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function create(Uuid\UuidInterface $id, Utils\ArrayHash $values): States\ConnectorProperty
+	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\ConnectorProperty
 	{
 		return $this->statesManager->create($id, $values, $this->database);
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function update(Uuid\UuidInterface $id, Utils\ArrayHash $values): States\ConnectorProperty|false
+	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\ConnectorProperty|false
 	{
 		return $this->statesManager->update($id, $values, $this->database);
 	}

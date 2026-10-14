@@ -33,21 +33,25 @@ final class DevicePropertiesManager implements DevicesModels\States\Devices\Writ
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function create(Uuid\UuidInterface $id, Utils\ArrayHash $values): States\DeviceProperty
+	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\DeviceProperty
 	{
 		return $this->statesManager->create($id, $values, $this->database);
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function update(Uuid\UuidInterface $id, Utils\ArrayHash $values): States\DeviceProperty|false
+	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\DeviceProperty|false
 	{
 		return $this->statesManager->update($id, $values, $this->database);
 	}

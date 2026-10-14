@@ -8,13 +8,22 @@ use Ramsey\Uuid;
 
 /**
  * Channel properties manager interface
+ *
+ * The values to store come as a plain array or as an ArrayHash (#723). An implementation stores an
+ * array exactly as the ArrayHash Utils\ArrayHash::from() makes of it.
  */
 interface Writer
 {
 
-	public function create(Uuid\UuidInterface $id, Utils\ArrayHash $values): States\ChannelProperty;
+	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 */
+	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\ChannelProperty;
 
-	public function update(Uuid\UuidInterface $id, Utils\ArrayHash $values): States\ChannelProperty|false;
+	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 */
+	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\ChannelProperty|false;
 
 	public function delete(Uuid\UuidInterface $id): bool;
 

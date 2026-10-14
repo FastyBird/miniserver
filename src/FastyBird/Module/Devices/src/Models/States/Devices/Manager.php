@@ -21,6 +21,8 @@ final readonly class Manager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws Exceptions\NotImplemented
 	 * @throws Exceptions\InvalidState
 	 *
@@ -28,7 +30,7 @@ final readonly class Manager
 	 */
 	public function create(
 		Documents\Devices\Properties\Dynamic $property,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): States\DeviceProperty
 	{
 		if ($this->manager === null) {
@@ -43,6 +45,8 @@ final readonly class Manager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws Exceptions\NotImplemented
 	 * @throws Exceptions\InvalidState
 	 *
@@ -51,7 +55,7 @@ final readonly class Manager
 	public function update(
 		Documents\Devices\Properties\Dynamic $property,
 		States\DeviceProperty $state,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): States\DeviceProperty|false
 	{
 		if ($this->manager === null) {

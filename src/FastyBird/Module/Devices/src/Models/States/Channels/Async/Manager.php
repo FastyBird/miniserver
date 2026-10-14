@@ -26,13 +26,15 @@ final readonly class Manager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @return Promise\PromiseInterface<States\ChannelProperty>
 	 *
 	 * @interal
 	 */
 	public function create(
 		Documents\Channels\Properties\Dynamic $property,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Promise\PromiseInterface
 	{
 		if ($this->manager === null) {
@@ -51,6 +53,8 @@ final readonly class Manager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @return Promise\PromiseInterface<States\ChannelProperty|bool>
 	 *
 	 * @interal
@@ -58,7 +62,7 @@ final readonly class Manager
 	public function update(
 		Documents\Channels\Properties\Dynamic $property,
 		States\ChannelProperty $state,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Promise\PromiseInterface
 	{
 		if ($this->manager === null) {
