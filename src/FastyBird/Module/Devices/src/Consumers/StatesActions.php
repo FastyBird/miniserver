@@ -30,9 +30,9 @@ final readonly class StatesActions implements Consumers\Consumer
 {
 
 	private const array CONSUMER_ROUTING_KEYS = [
-		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
-		Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
-		Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
+		Types\RoutingKey::CONNECTOR_PROPERTY_ACTION->value,
+		Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
+		Types\RoutingKey::CHANNEL_PROPERTY_ACTION->value,
 	];
 
 	public function __construct(
@@ -181,7 +181,7 @@ final readonly class StatesActions implements Consumers\Consumer
 
 				$this->publisher->publish(
 					Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+					Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 					$state,
 				)
 					->then(function () use ($document, $property, $source, $routingKey): void {
@@ -313,7 +313,7 @@ final readonly class StatesActions implements Consumers\Consumer
 
 				$this->publisher->publish(
 					Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+					Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 					$state,
 				)
 					->then(function () use ($document, $property, $source, $routingKey): void {
@@ -445,7 +445,7 @@ final readonly class StatesActions implements Consumers\Consumer
 
 				$this->publisher->publish(
 					Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+					Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 					$state,
 				)
 					->then(function () use ($document, $property, $source, $routingKey): void {

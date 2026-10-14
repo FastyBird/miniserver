@@ -80,7 +80,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 			try {
 				return $this->publisher->publish(
 					$source ?? Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
+					Types\RoutingKey::CONNECTOR_PROPERTY_ACTION->value,
 					$this->documentFactory->create(
 						DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 						[
@@ -131,7 +131,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 			try {
 				$this->publisher->publish(
 					$source ?? Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
+					Types\RoutingKey::CONNECTOR_PROPERTY_ACTION->value,
 					$this->documentFactory->create(
 						DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 						array_merge(
@@ -184,7 +184,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 			try {
 				$this->publisher->publish(
 					$source ?? Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
+					Types\RoutingKey::CONNECTOR_PROPERTY_ACTION->value,
 					$this->documentFactory->create(
 						DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 						array_merge(

@@ -50,12 +50,12 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 	private const string DEVICE = '69786d15-fd0c-4d9f-9378-33287c2009fa';
 
 	private const array STATE_ROUTING_KEYS = [
-		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
-		Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
-		Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
-		Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
-		Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
-		Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
+		Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED->value,
+		Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_UPDATED->value,
+		Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_CREATED->value,
+		Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_UPDATED->value,
+		Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_CREATED->value,
+		Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED->value,
 	];
 
 	/** @var list<array{source: int|string, routing_key: string}> */
@@ -91,7 +91,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					'source' => Sources\Connector::VIRTUAL->value,
-					'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
+					'routing_key' => Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_CREATED->value,
 				],
 			],
 			$this->published,
@@ -115,7 +115,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					'source' => Sources\Connector::VIRTUAL->value,
-					'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
+					'routing_key' => Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED->value,
 				],
 			],
 			$this->published,
@@ -138,7 +138,7 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					'source' => Sources\Connector::VIRTUAL->value,
-					'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
+					'routing_key' => Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED->value,
 				],
 			],
 			$this->published,
@@ -167,9 +167,9 @@ final class ConnectionStateSourceTest extends Tests\Cases\Unit\DbTestCase
 
 		foreach ($this->published as $item) {
 			foreach ([
-				'connector' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
-				'device' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
-				'channel' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
+				'connector' => Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED->value,
+				'device' => Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_CREATED->value,
+				'channel' => Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_CREATED->value,
 			] as $kind => $routingKey) {
 				if ($item['routing_key'] === $routingKey) {
 					$kinds[$kind] = true;

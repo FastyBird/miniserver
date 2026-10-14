@@ -14,7 +14,6 @@ use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Utils;
@@ -50,6 +49,12 @@ abstract class Property implements Entity,
 	use Entities\HasEntityUpdated;
 
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_NUMBER_RANGE = '/^(?:(?:(?:i8|u8|i16|u16|i32|u32|f){1}\|)?(?:(?:\-)?(?:\d)*(?:.(?:\d)+)?))?(?:\:(?:(?:(?:i8|u8|i16|u16|i32|u32|f){1}\|)?(?:\d)*(?:.(?:\d)+)?)){1}$/';
+
+	public const string VALUE_FORMAT_STRING_ENUM = '/^(?:[a-zA-Z0-9+°](?:[a-zA-Z0-9-?_?:?.+\+\/°])*)(?:,(?:[a-zA-Z0-9+°](?:[a-zA-Z0-9-?_?:?.+\+\/°])*))*(?:,)?$/u';
+
+	public const string VALUE_FORMAT_COMBINED_ENUM = '/^(?:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*)(?:\:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*){2}(?:,(?:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*)(?:\:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*){2})*$/u';
+
 	private const string MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
 
 	private const string MATCH_MAC_ADDRESS = '/^([0-9a-fA-F][0-9a-fA-F]){1}(:([0-9a-fA-F][0-9a-fA-F])){5,7}$/';
@@ -290,7 +295,7 @@ abstract class Property implements Entity,
 					return strval($item);
 				}, $format));
 
-				if (preg_match(Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
+				if (preg_match(self::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
 					$this->format = $plainFormat;
 
 					return;
@@ -330,8 +335,8 @@ abstract class Property implements Entity,
 				}, $format));
 
 				if (
-					preg_match(Devices\Constants::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
-					|| preg_match(Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
+					preg_match(self::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
+					|| preg_match(self::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
 				) {
 					$this->format = $plainFormat;
 
@@ -743,7 +748,7 @@ abstract class Property implements Entity,
 				true,
 			)
 		) {
-			if (preg_match(Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
+			if (preg_match(self::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
 				return new Formats\NumberRange($format);
 			}
 		} elseif (
@@ -758,9 +763,9 @@ abstract class Property implements Entity,
 				true,
 			)
 		) {
-			if (preg_match(Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
+			if (preg_match(self::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
 				return new Formats\CombinedEnum($format);
-			} elseif (preg_match(Devices\Constants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
+			} elseif (preg_match(self::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
 				return new Formats\StringEnum($format);
 			}
 		}

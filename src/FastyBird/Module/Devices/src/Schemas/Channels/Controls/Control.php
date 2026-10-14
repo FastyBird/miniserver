@@ -7,7 +7,6 @@ use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;
 use Neomerx\JsonApi;
@@ -83,7 +82,7 @@ final class Control extends ApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Devices\Constants::ROUTE_NAME_CHANNEL_CONTROL,
+				Router\ApiRoutes::ROUTE_NAME_CHANNEL_CONTROL,
 				[
 					Router\ApiRoutes::URL_DEVICE_ID => $resource->getChannel()->getDevice()->getId()->toString(),
 					Router\ApiRoutes::URL_CHANNEL_ID => $resource->getChannel()->getId()->toString(),
@@ -134,7 +133,7 @@ final class Control extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CHANNEL,
+					Router\ApiRoutes::ROUTE_NAME_CHANNEL,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getChannel()->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getChannel()->getId()->toString(),

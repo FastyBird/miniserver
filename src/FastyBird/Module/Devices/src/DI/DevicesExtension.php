@@ -50,6 +50,8 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 
 	public const string CONNECTOR_TYPE_TAG = 'connector_type';
 
+	public const string MODULE_DEVICES_PREFIX = 'devices-module';
+
 	public static function register(
 		Boot\Configurator $config,
 		string $extensionName = self::NAME,

@@ -8,7 +8,6 @@ use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
@@ -89,7 +88,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Devices\Constants::ROUTE_NAME_DEVICE,
+				Router\ApiRoutes::ROUTE_NAME_DEVICE,
 				[
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 				],
@@ -169,7 +168,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_PROPERTIES,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE_PROPERTIES,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getId()->toString(),
 					],
@@ -186,7 +185,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_CONTROLS,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE_CONTROLS,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getId()->toString(),
 					],
@@ -203,7 +202,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_CHANNELS,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE_CHANNELS,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getId()->toString(),
 					],
@@ -220,7 +219,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_PARENTS,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE_PARENTS,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getId()->toString(),
 					],
@@ -237,7 +236,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_CHILDREN,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE_CHILDREN,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getId()->toString(),
 					],
@@ -251,7 +250,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CONNECTOR,
+					Router\ApiRoutes::ROUTE_NAME_CONNECTOR,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getConnector()->getId()->toString(),
 					],
@@ -288,7 +287,7 @@ abstract class Device extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 						Router\ApiRoutes::RELATION_ENTITY => $name,

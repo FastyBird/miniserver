@@ -17,7 +17,7 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices\Constants as DevicesConstants;
+use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -122,7 +122,7 @@ final class Exchange extends Periodic implements Writer, Consumers\Consumer
 				$document instanceof DevicesDocuments\States\Devices\Properties\Property
 				|| $document instanceof DevicesDocuments\States\Channels\Properties\Property
 			) {
-				if (str_starts_with($routingKey, DevicesConstants::MESSAGE_BUS_DELETED_ROUTING_KEY)) {
+				if (str_starts_with($routingKey, Devices\Types\RoutingKey::DELETED_PREFIX)) {
 					return;
 				}
 
@@ -279,7 +279,7 @@ final class Exchange extends Periodic implements Writer, Consumers\Consumer
 				$document instanceof DevicesDocuments\Devices\Properties\Variable
 				|| $document instanceof DevicesDocuments\Channels\Properties\Variable
 			) {
-				if (str_starts_with($routingKey, DevicesConstants::MESSAGE_BUS_DELETED_ROUTING_KEY)) {
+				if (str_starts_with($routingKey, Devices\Types\RoutingKey::DELETED_PREFIX)) {
 					return;
 				}
 

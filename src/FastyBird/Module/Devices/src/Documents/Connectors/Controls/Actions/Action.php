@@ -5,7 +5,6 @@ namespace FastyBird\Module\Devices\Documents\Connectors\Controls\Actions;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Types;
 use Orisai\ObjectMapper;
@@ -17,7 +16,7 @@ use Ramsey\Uuid;
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY,
+	Types\RoutingKey::CONNECTOR_CONTROL_ACTION->value,
 ])]
 final readonly class Action implements DevicesDocuments\Document
 {

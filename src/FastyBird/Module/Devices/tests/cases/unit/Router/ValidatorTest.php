@@ -36,9 +36,11 @@ final class ValidatorTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$validator = $this->getContainer()->getByType(Router\Validator::class);
 
-		self::assertTrue($validator->validate('/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices'));
+		self::assertTrue(
+			$validator->validate('/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices'),
+		);
 		self::assertFalse(
-			$validator->validate('/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/no-such-resource'),
+			$validator->validate('/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/no-such-resource'),
 		);
 	}
 

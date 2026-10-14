@@ -78,7 +78,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 			try {
 				return $this->publisher->publish(
 					$source ?? Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+					Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 					$this->documentFactory->create(
 						DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 						[
@@ -153,7 +153,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 			try {
 				return $this->publisher->publish(
 					$source ?? Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+					Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 					$this->documentFactory->create(
 						DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 						array_merge(
@@ -207,7 +207,7 @@ final class DevicePropertiesManager extends Models\States\PropertiesManager
 			try {
 				return $this->publisher->publish(
 					$source ?? Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+					Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 					$this->documentFactory->create(
 						DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 						array_merge(
