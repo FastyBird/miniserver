@@ -115,8 +115,8 @@ declares. A bare import silently shadows a same-namespace type of the same short
 naming the file's own class does not compile. So `Http\Routing\RouteHandler`, which sits beside
 Core's own `Routing\RouteCollector`, imports `FastRoute\RouteCollector as FastRouteRouteCollector`,
 and `Logging\Subscribers\Console` imports `Symfony\Component\Console as ComponentConsole`. A file
-never imports a namespace it is already inside: `FastyBird\Module\Triggers\Constants` writes
-`Entities\Triggers\Trigger` relative to its own namespace. `ORM` stays the one named exception.
+never imports a namespace it is already inside: `FastyBird\Module\Ui\Logger` writes
+`DI\UiExtension` relative to its own namespace. `ORM` stays the one named exception.
 This is kept by review, not by `make naming`.
 
 ```php
