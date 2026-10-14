@@ -81,9 +81,10 @@ final class SensitiveData
 	public const string BODY_MATERIAL = '/"(?:password|token|refresh|refresh_token)"\s*:/i';
 
 	/**
-	 * How much of a request's body a Sentry event carries: none
+	 * How much of a request's body a Sentry event carries: none. Sentry deprecated the other name
+	 * of the value, 'none', in 3.10
 	 */
-	public const string SENTRY_REQUEST_BODY = 'none';
+	public const string SENTRY_REQUEST_BODY = 'never';
 
 	/**
 	 * Request headers a Sentry event carries as "[Filtered]": Sentry's own defaults

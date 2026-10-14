@@ -67,6 +67,9 @@ final class SentryHeadersTest extends Tests\Cases\Unit\BaseTestCase
 
 		$options = $container->getByType(Sentry\ClientBuilderInterface::class)->getOptions();
 
+		// The name Sentry keeps for it; it deprecated the other one, 'none', in 3.10
+		self::assertSame('never', $options->getMaxRequestBodySize());
+
 		$integration = new Sentry\Integration\RequestIntegration();
 
 		foreach (['application/json', 'application/vnd.api+json'] as $contentType) {
