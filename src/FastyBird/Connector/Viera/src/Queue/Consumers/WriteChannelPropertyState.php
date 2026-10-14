@@ -335,9 +335,9 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 
 					break;
 				case VieraTypes\ChannelPropertyIdentifier::INPUT_SOURCE->value:
-					if (intval($expectedValue) < Viera\Constants::MAX_HDMI_CODE) {
+					if (intval($expectedValue) < Viera\Entities\Devices\Device::MAX_HDMI_CODE) {
 						$result = $client->sendKey('NRC_HDMI' . $expectedValue . '-ONOFF');
-					} elseif (intval($expectedValue) === Viera\Constants::TV_CODE) {
+					} elseif (intval($expectedValue) === Viera\Entities\Devices\Device::TV_CODE) {
 						$result = $client->sendKey(VieraTypes\ActionKey::AD_CHANGE);
 					} else {
 						$result = $client->launchApplication(strval($expectedValue));
@@ -641,7 +641,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 							DevicesStates\Property::ACTUAL_VALUE_FIELD =>
 								intval(
 									Utilities\Value::toString($expectedValue, true),
-								) > Viera\Constants::MIN_APPLICATION_CODE
+								) > Viera\Entities\Devices\Device::MIN_APPLICATION_CODE
 									? $expectedValue
 									: null,
 							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
@@ -665,7 +665,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 							DevicesStates\Property::ACTUAL_VALUE_FIELD =>
 								intval(
 									Utilities\Value::toString($expectedValue, true),
-								) < Viera\Constants::MAX_HDMI_CODE
+								) < Viera\Entities\Devices\Device::MAX_HDMI_CODE
 									? $expectedValue
 									: null,
 							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,

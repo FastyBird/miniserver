@@ -32,12 +32,12 @@ final readonly class FbMqttV1
 
 	// MQTT api topics subscribe format
 	public const array DEVICES_TOPICS = [
-		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+',
-		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+/+',
-		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+',
-		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+/+',
-		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+/+/+',
-		FbMqtt\Constants::MQTT_API_PREFIX . FbMqtt\Constants::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+/+/+/+',
+		API\V1Builder::MQTT_API_PREFIX . API\V1Builder::MQTT_API_V1_VERSION_PREFIX . '/+/+',
+		API\V1Builder::MQTT_API_PREFIX . API\V1Builder::MQTT_API_V1_VERSION_PREFIX . '/+/+/+',
+		API\V1Builder::MQTT_API_PREFIX . API\V1Builder::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+',
+		API\V1Builder::MQTT_API_PREFIX . API\V1Builder::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+/+',
+		API\V1Builder::MQTT_API_PREFIX . API\V1Builder::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+/+/+',
+		API\V1Builder::MQTT_API_PREFIX . API\V1Builder::MQTT_API_V1_VERSION_PREFIX . '/+/+/+/+/+/+/+',
 	];
 
 	// When new client is connected, broker send specific payload
@@ -183,7 +183,7 @@ final readonly class FbMqttV1
 				$param1,
 				$param2,
 				$param3,
-			] = explode(FbMqtt\Constants::MQTT_TOPIC_DELIMITER, $message->getTopic()) + [
+			] = explode(API\V1Builder::MQTT_TOPIC_DELIMITER, $message->getTopic()) + [
 				null,
 				null,
 				null,

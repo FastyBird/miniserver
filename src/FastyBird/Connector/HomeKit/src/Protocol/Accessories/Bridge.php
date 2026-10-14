@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\HomeKit\Protocol\Accessories;
 
-use FastyBird\Connector\HomeKit;
 use FastyBird\Connector\HomeKit\Documents;
 use FastyBird\Connector\HomeKit\Exceptions;
 use FastyBird\Connector\HomeKit\Types;
@@ -26,7 +25,7 @@ final class Bridge extends Accessory
 	{
 		parent::__construct(
 			$name,
-			HomeKit\Constants::STANDALONE_AID,
+			Accessory::STANDALONE_AID,
 			Types\AccessoryCategory::BRIDGE,
 		);
 

@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\NsPanel\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Types;
@@ -30,7 +29,7 @@ class Toggle extends Channel
 		Uuid\UuidInterface|null $id = null,
 	)
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $identifier, $matches);
+		preg_match(Channel::CHANNEL_IDENTIFIER, $identifier, $matches);
 
 		if (!array_key_exists('capability', $matches)) {
 			throw new Exceptions\InvalidState('Provided identifier is invalid');

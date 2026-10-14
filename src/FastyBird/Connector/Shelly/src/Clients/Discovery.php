@@ -592,7 +592,7 @@ final class Discovery
 													$status === null
 													|| (
 														array_key_exists($type, $status)
-														&& $status[$type] !== Shelly\Constants::VALUE_NOT_AVAILABLE
+														&& $status[$type] !== API\Messages\Response\Gen2\DeviceState::VALUE_NOT_AVAILABLE
 													)
 												) {
 													$channel['properties'][] = array_merge(

@@ -6,7 +6,6 @@ use Doctrine\Common;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use Doctrine\Persistence;
-use FastyBird\Connector\Virtual;
 use FastyBird\Connector\Virtual\Entities as VirtualEntities;
 use FastyBird\Connector\Virtual\Exceptions as VirtualExceptions;
 use FastyBird\Connector\Virtual\Helpers;
@@ -27,6 +26,8 @@ use ReflectionException;
  */
 final readonly class Properties implements Common\EventSubscriber
 {
+
+	private const string MANUFACTURER = 'FastyBird';
 
 	public function __construct(
 		private DevicesModels\Entities\Devices\Properties\PropertiesRepository $propertiesRepository,
@@ -131,7 +132,7 @@ final readonly class Properties implements Common\EventSubscriber
 				'dataType' => ValuesTypes\DataType::STRING,
 				'unit' => null,
 				'format' => null,
-				'value' => Virtual\Constants::MANUFACTURER,
+				'value' => self::MANUFACTURER,
 			]));
 		}
 

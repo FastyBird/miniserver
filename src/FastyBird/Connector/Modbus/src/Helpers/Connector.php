@@ -198,7 +198,7 @@ final readonly class Connector
 		);
 
 		if ($property?->getValue() === null) {
-			return Modbus\Constants::DEFAULT_RTU_SERIAL_INTERFACE;
+			return Modbus\Entities\Connectors\Connector::DEFAULT_RTU_SERIAL_INTERFACE;
 		}
 
 		$value = $property->getValue();

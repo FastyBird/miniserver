@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
-use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Helpers;
 use FastyBird\Core\Values\Types;
@@ -25,6 +24,10 @@ use function strtolower;
  */
 final readonly class PropertyAttribute implements Message
 {
+
+	private const string PAYLOAD_BOOL_TRUE_VALUE = 'true';
+
+	private const string PAYLOAD_BOOL_FALSE_VALUE = 'false';
 
 	public const string NAME = 'name';
 
@@ -85,7 +88,7 @@ final readonly class PropertyAttribute implements Message
 			$this->attribute === self::SETTABLE
 			|| $this->attribute === self::QUERYABLE
 		) {
-			return $value === FbMqtt\Constants::PAYLOAD_BOOL_TRUE_VALUE;
+			return $value === self::PAYLOAD_BOOL_TRUE_VALUE;
 		}
 
 		return $value;
@@ -120,9 +123,9 @@ final readonly class PropertyAttribute implements Message
 			$this->getAttribute() === self::SETTABLE
 			|| $this->getAttribute() === self::QUERYABLE
 		) {
-			return $this->value === FbMqtt\Constants::PAYLOAD_BOOL_TRUE_VALUE
-				? FbMqtt\Constants::PAYLOAD_BOOL_TRUE_VALUE
-				: FbMqtt\Constants::PAYLOAD_BOOL_FALSE_VALUE;
+			return $this->value === self::PAYLOAD_BOOL_TRUE_VALUE
+				? self::PAYLOAD_BOOL_TRUE_VALUE
+				: self::PAYLOAD_BOOL_FALSE_VALUE;
 		} elseif ($this->getAttribute() === self::NAME) {
 			return Helpers\Payload::cleanName($this->value);
 		} elseif ($this->getAttribute() === self::DATA_TYPE) {
@@ -168,13 +171,13 @@ final readonly class PropertyAttribute implements Message
 				$value = array_values($value);
 
 				return array_unique($value);
-			} elseif ($this->value === FbMqtt\Constants::VALUE_NOT_SET || $this->value === '') {
+			} elseif ($this->value === Property::VALUE_NOT_SET || $this->value === '') {
 				return null;
 			} elseif (!in_array($this->value, self::FORMAT_ALLOWED_PAYLOADS, true)) {
 				throw new Exceptions\ParseMessage('Provided payload is not valid');
 			}
 		} else {
-			return $this->value === FbMqtt\Constants::VALUE_NOT_SET || $this->value === '' ? null : $this->value;
+			return $this->value === Property::VALUE_NOT_SET || $this->value === '' ? null : $this->value;
 		}
 
 		return null;

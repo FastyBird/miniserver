@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Modbus\Entities\Devices;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Exceptions as ModbusExceptions;
 use FastyBird\Connector\Modbus\Types;
@@ -23,6 +22,8 @@ use function is_string;
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Device extends DevicesEntities\Devices\Device
 {
+
+	public const int DEFAULT_TCP_PORT = 502;
 
 	public const string TYPE = 'modbus-connector';
 
@@ -158,7 +159,7 @@ class Device extends DevicesEntities\Devices\Device
 			return $property->getValue();
 		}
 
-		return Modbus\Constants::DEFAULT_TCP_PORT;
+		return self::DEFAULT_TCP_PORT;
 	}
 
 	/**

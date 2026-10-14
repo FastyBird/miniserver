@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\FbMqtt\API;
 
-use FastyBird\Connector\FbMqtt;
 use function preg_match;
 use function str_contains;
 use function trim;
@@ -46,8 +45,8 @@ final class V1Validator
 	{
 		// Check if message is sent from broker
 		if (str_contains(
-			trim($topic, FbMqtt\Constants::MQTT_TOPIC_DELIMITER),
-			FbMqtt\Constants::MQTT_TOPIC_DELIMITER . 'set',
+			trim($topic, V1Builder::MQTT_TOPIC_DELIMITER),
+			V1Builder::MQTT_TOPIC_DELIMITER . 'set',
 		)) {
 			return false;
 		}

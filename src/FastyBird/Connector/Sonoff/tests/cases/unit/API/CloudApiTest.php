@@ -105,8 +105,8 @@ final class CloudApiTest extends Tests\Cases\Unit\DbTestCase
 		$cloudApi = $cloudApiFactory->create(
 			self::USERNAME,
 			self::PASSWORD,
-			Sonoff\Constants::DEFAULT_APP_ID,
-			Sonoff\Constants::DEFAULT_APP_SECRET,
+			Sonoff\Entities\Connectors\Connector::DEFAULT_APP_ID,
+			Sonoff\Entities\Connectors\Connector::DEFAULT_APP_SECRET,
 		);
 
 		$family = $cloudApi->getFamily(false);
@@ -229,8 +229,8 @@ final class CloudApiTest extends Tests\Cases\Unit\DbTestCase
 		$cloudApi = $cloudApiFactory->create(
 			self::USERNAME,
 			self::PASSWORD,
-			Sonoff\Constants::DEFAULT_APP_ID,
-			Sonoff\Constants::DEFAULT_APP_SECRET,
+			Sonoff\Entities\Connectors\Connector::DEFAULT_APP_ID,
+			Sonoff\Entities\Connectors\Connector::DEFAULT_APP_SECRET,
 		);
 
 		$things = $cloudApi->getFamilyThings('15483473418e0ab1093dbf66', false);
@@ -315,8 +315,8 @@ final class CloudApiTest extends Tests\Cases\Unit\DbTestCase
 		$cloudApi = $cloudApiFactory->create(
 			self::USERNAME,
 			self::PASSWORD,
-			Sonoff\Constants::DEFAULT_APP_ID,
-			Sonoff\Constants::DEFAULT_APP_SECRET,
+			Sonoff\Entities\Connectors\Connector::DEFAULT_APP_ID,
+			Sonoff\Entities\Connectors\Connector::DEFAULT_APP_SECRET,
 		);
 
 		$device = $cloudApi->getThing('1000191aa7', 1, false);
@@ -401,8 +401,8 @@ final class CloudApiTest extends Tests\Cases\Unit\DbTestCase
 		$cloudApi = $cloudApiFactory->create(
 			self::USERNAME,
 			self::PASSWORD,
-			Sonoff\Constants::DEFAULT_APP_ID,
-			Sonoff\Constants::DEFAULT_APP_SECRET,
+			Sonoff\Entities\Connectors\Connector::DEFAULT_APP_ID,
+			Sonoff\Entities\Connectors\Connector::DEFAULT_APP_SECRET,
 		);
 
 		$result = $cloudApi->setThingState('1000191aa7', 'switch', 'off', Types\ChannelGroup::SWITCHES, 0, 1, false);

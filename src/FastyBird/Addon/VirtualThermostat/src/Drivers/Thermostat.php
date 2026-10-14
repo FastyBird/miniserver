@@ -52,6 +52,8 @@ use function str_starts_with;
 final class Thermostat implements VirtualDrivers\Driver
 {
 
+	private const string PRESET_CHANNEL_PATTERN = '/^preset(_(?P<preset>[a-zA-Z_]+))?$/';
+
 	private const float PROCESSING_DEBOUNCE_DELAY = 150.0;
 
 	/** @var array<string, bool|null> */
@@ -812,7 +814,7 @@ final class Thermostat implements VirtualDrivers\Driver
 				}
 			} elseif (
 				preg_match(
-					VirtualThermostat\Constants::PRESET_CHANNEL_PATTERN,
+					self::PRESET_CHANNEL_PATTERN,
 					$channel->getIdentifier(),
 					$matches,
 				) === 1

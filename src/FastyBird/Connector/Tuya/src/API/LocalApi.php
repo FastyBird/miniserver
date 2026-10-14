@@ -66,6 +66,16 @@ use const OPENSSL_RAW_DATA;
 final class LocalApi
 {
 
+	public const string EVENT_MESSAGE = 'message';
+
+	public const string EVENT_ERROR = 'error';
+
+	public const string EVENT_DISCONNECTED = 'disconnected';
+
+	public const string EVENT_CONNECTED = 'connected';
+
+	public const string EVENT_LOST = 'lost';
+
 	public const string DP_QUERY_MESSAGE_SCHEMA_FILENAME = 'localapi_dp_query.json';
 
 	public const string DP_STATE_MESSAGE_SCHEMA_FILENAME = 'localapi_dp_state.json';
@@ -1612,7 +1622,7 @@ final class LocalApi
 		if (!array_key_exists($key, $this->validationSchemas)) {
 			try {
 				$this->validationSchemas[$key] = Utils\FileSystem::read(
-					Tuya\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . $schemaFilename,
+					Tuya\DI\TuyaExtension::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . $schemaFilename,
 				);
 
 			} catch (Nette\IOException) {

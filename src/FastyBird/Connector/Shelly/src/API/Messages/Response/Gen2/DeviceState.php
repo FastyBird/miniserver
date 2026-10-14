@@ -13,6 +13,8 @@ use Override;
 abstract class DeviceState implements API\Messages\Message
 {
 
+	public const string VALUE_NOT_AVAILABLE = 'n/a';
+
 	/**
 	 * @param array<string> $errors
 	 */

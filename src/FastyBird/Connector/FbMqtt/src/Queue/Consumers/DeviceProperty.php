@@ -117,7 +117,7 @@ final readonly class DeviceProperty implements Queue\Consumer
 			return true;
 		}
 
-		if ($message->getValue() !== FbMqtt\Constants::VALUE_NOT_SET) {
+		if ($message->getValue() !== Queue\Messages\Property::VALUE_NOT_SET) {
 			if ($property instanceof DevicesDocuments\Devices\Properties\Variable) {
 				$this->databaseHelper->transaction(function () use ($message, $property): void {
 					$property = $this->devicesPropertiesRepository->find($property->getId());

@@ -31,6 +31,8 @@ use const DIRECTORY_SEPARATOR;
 final class VirtualThermostatAddonHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
+	public const string BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX = 'virtual-thermostat-addon-homekit-connector-bridge';
+
 	public const string NAME = 'fbVirtualThermostatAddonHomeKitConnectorBridge';
 
 	public static function register(

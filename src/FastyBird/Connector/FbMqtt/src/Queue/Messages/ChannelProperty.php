@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\FbMqtt\Queue\Messages;
 
-use FastyBird\Connector\FbMqtt;
 use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
@@ -24,7 +23,7 @@ final class ChannelProperty extends Property
 		private readonly string $channel,
 		string $property,
 		array $attributes = [],
-		string|null $value = FbMqtt\Constants::VALUE_NOT_SET,
+		string|null $value = Property::VALUE_NOT_SET,
 		bool $retained = false,
 	)
 	{

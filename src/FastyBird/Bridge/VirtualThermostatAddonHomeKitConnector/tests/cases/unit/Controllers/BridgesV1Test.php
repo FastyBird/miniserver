@@ -73,13 +73,15 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'readAll' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.index.json',
 			],
 			'readAllPaging' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX
 					. '/v1/bridges?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
@@ -87,7 +89,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readOne' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.read.json',
@@ -118,7 +120,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'readOneUnknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
@@ -138,53 +140,57 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readAllMissingToken' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneMissingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllEmptyToken' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneEmptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllInvalidToken' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readOneInvalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readAllExpiredToken' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readOneExpiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
@@ -332,7 +338,8 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'create' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_CREATED,
@@ -342,7 +349,8 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'missingRequired' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.missing.required.json',
@@ -351,49 +359,56 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.create.missing.required.json',
 			],
 			'notUnique' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.notUnique.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.create.notUnique.json',
 			],
 			'invalidType' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.invalid.type.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'missingToken' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'emptyToken' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'expiredToken' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'notAllowed' => [
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.create.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -448,7 +463,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'update' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_OK,
@@ -459,7 +474,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'invalidType' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.invalid.type.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
@@ -467,7 +482,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'idMismatch' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.invalid.id.json'),
 				StatusCodeInterface::STATUS_BAD_REQUEST,
@@ -475,7 +490,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'missingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				null,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -483,7 +498,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'invalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -491,7 +506,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'emptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'',
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -499,7 +514,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'expiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
@@ -507,7 +522,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'notAllowed' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/bridges.update.json'),
 				StatusCodeInterface::STATUS_FORBIDDEN,
@@ -561,7 +576,7 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'delete' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.delete.json',
@@ -571,42 +586,42 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'unknown' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/69786d15-fd0c-4d9f-9378-33287c2009af',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/69786d15-fd0c-4d9f-9378-33287c2009af',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'missingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'emptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'expiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'notAllowed' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . VirtualThermostatAddonHomeKitConnector\Constants::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
+				'/api/' . VirtualThermostatAddonHomeKitConnector\DI\VirtualThermostatAddonHomeKitConnectorExtension::BRIDGE_VIRTUAL_THERMOSTAT_ADDON_HOMEKIT_CONNECTOR_PREFIX . '/v1/bridges/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2',
 				'Bearer ' . self::VALID_TOKEN_USER,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',

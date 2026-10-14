@@ -37,6 +37,8 @@ use function strval;
 final readonly class WriteV1ChannelPropertyState implements Queue\Consumer
 {
 
+	public const float WRITE_DEBOUNCE_DELAY = 2_000.0;
+
 	public function __construct(
 		private API\ConnectionManager $connectionManager,
 		private Helpers\Connector $connectorHelper,
@@ -259,7 +261,7 @@ final readonly class WriteV1ChannelPropertyState implements Queue\Consumer
 			$pending === false
 			|| (
 				$pending instanceof DateTimeInterface
-				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= FbMqtt\Constants::WRITE_DEBOUNCE_DELAY
+				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= self::WRITE_DEBOUNCE_DELAY
 			)
 		) {
 			return true;

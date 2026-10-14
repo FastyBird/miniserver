@@ -1874,7 +1874,7 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $identifier, $matches);
+			preg_match(NsPanelEntities\Channels\Channel::CHANNEL_IDENTIFIER, $identifier, $matches);
 
 			$channel = $this->channelsManager->create(Utils\ArrayHash::from([
 				'entity' => $capabilityMetadata->getClass(),
@@ -2228,7 +2228,7 @@ final class Install extends Console\Command\Command
 		NsPanelEntities\Channels\Channel $channel,
 	): DevicesEntities\Channels\Properties\Property|null
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(NsPanelEntities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		$capabilityMetadata = $this->mappingBuilder->getCapabilitiesMapping()->findByCapabilityName(
 			$channel->getCapability(),
@@ -2343,7 +2343,7 @@ final class Install extends Console\Command\Command
 		NsPanelEntities\Channels\Channel $channel,
 	): void
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(NsPanelEntities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		$capabilityMetadata = $this->mappingBuilder->getCapabilitiesMapping()->findByCapabilityName(
 			$channel->getCapability(),
@@ -2643,7 +2643,7 @@ final class Install extends Console\Command\Command
 			(string) $this->translator->translate('//ns-panel-connector.cmd.install.data.value'),
 		]);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(NsPanelEntities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		$capabilityMetadata = $this->mappingBuilder->getCapabilitiesMapping()->findByCapabilityName(
 			$channel->getCapability(),
@@ -3644,7 +3644,7 @@ final class Install extends Console\Command\Command
 		NsPanelEntities\Channels\Channel $channel,
 	): NsPanelTypes\Attribute|null
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(NsPanelEntities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		$capabilityMetadata = $this->mappingBuilder->getCapabilitiesMapping()->findByCapabilityName(
 			$channel->getCapability(),

@@ -214,7 +214,9 @@ final readonly class WriteDevicePropertyState implements Queue\Consumer
 			$pending === false
 			|| (
 				$pending instanceof DateTimeInterface
-				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= Sonoff\Constants::WRITE_DEBOUNCE_DELAY
+				&& (float) $now->format('Uv') - (float) $pending->format(
+					'Uv',
+				) <= WriteChannelPropertyState::WRITE_DEBOUNCE_DELAY
 			)
 		) {
 			return true;

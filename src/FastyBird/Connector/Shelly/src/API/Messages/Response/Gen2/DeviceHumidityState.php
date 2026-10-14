@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
-use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Orisai\ObjectMapper;
@@ -23,7 +22,7 @@ final class DeviceHumidityState extends DeviceState implements API\Messages\Mess
 		int $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('rh')]
@@ -72,7 +71,7 @@ final class DeviceHumidityState extends DeviceState implements API\Messages\Mess
 					'relative_humidity' => $this->getRelativeHumidity(),
 				],
 			),
-			static fn ($value): bool => $value !== Shelly\Constants::VALUE_NOT_AVAILABLE,
+			static fn ($value): bool => $value !== DeviceState::VALUE_NOT_AVAILABLE,
 		);
 	}
 

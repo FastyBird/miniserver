@@ -35,6 +35,8 @@ use const DIRECTORY_SEPARATOR;
 final class SonoffExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
+	public const string RESOURCES_FOLDER = __DIR__ . '/../../resources';
+
 	public const string NAME = 'fbSonoffConnector';
 
 	public static function register(

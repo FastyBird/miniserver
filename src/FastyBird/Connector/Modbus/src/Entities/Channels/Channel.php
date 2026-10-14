@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Modbus\Entities\Channels;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Modbus;
 use FastyBird\Connector\Modbus\Entities as ModbusEntities;
 use FastyBird\Connector\Modbus\Types;
 use FastyBird\Core\Exceptions;
@@ -24,6 +23,8 @@ use function is_string;
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Channel extends DevicesEntities\Channels\Channel
 {
+
+	public const float READING_DELAY = 150.0;
 
 	public const string TYPE = 'modbus-connector';
 
@@ -133,7 +134,7 @@ class Channel extends DevicesEntities\Channels\Channel
 			return $property->getValue();
 		}
 
-		return Modbus\Constants::READING_DELAY;
+		return self::READING_DELAY;
 	}
 
 }

@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\FbMqtt\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\FbMqtt;
 use FastyBird\Connector\FbMqtt\Entities as FbMqttEntities;
 use FastyBird\Connector\FbMqtt\Exceptions as FbMqttExceptions;
 use FastyBird\Connector\FbMqtt\Types;
@@ -21,6 +20,12 @@ use function is_string;
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Connector extends DevicesEntities\Connectors\Connector
 {
+
+	public const string DEFAULT_SERVER_ADDRESS = '127.0.0.1';
+
+	public const int DEFAULT_SERVER_PORT = 1_883;
+
+	public const int DEFAULT_SERVER_SECURED_PORT = 8_883;
 
 	public const string TYPE = 'fb-mqtt-connector';
 
@@ -115,7 +120,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return FbMqtt\Constants::DEFAULT_SERVER_ADDRESS;
+		return self::DEFAULT_SERVER_ADDRESS;
 	}
 
 	/**
@@ -140,7 +145,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return FbMqtt\Constants::DEFAULT_SERVER_PORT;
+		return self::DEFAULT_SERVER_PORT;
 	}
 
 	/**
@@ -165,7 +170,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return FbMqtt\Constants::DEFAULT_SERVER_SECURED_PORT;
+		return self::DEFAULT_SERVER_SECURED_PORT;
 	}
 
 	/**

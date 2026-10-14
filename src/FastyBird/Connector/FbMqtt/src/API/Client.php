@@ -44,6 +44,12 @@ use function sprintf;
 final class Client
 {
 
+	public const int MQTT_API_QOS_0 = 0;
+
+	public const int MQTT_API_QOS_1 = 1;
+
+	public const int MQTT_API_QOS_2 = 2;
+
 	/** @var array<Closure(Mqtt\Connection $connection): void> */
 	private array $onConnectListeners = [];
 
@@ -412,7 +418,7 @@ final class Client
 	public function publish(
 		string $topic,
 		string|null $payload = null,
-		int $qos = FbMqtt\Constants::MQTT_API_QOS_0,
+		int $qos = self::MQTT_API_QOS_0,
 		bool $retain = false,
 	): Promise\PromiseInterface
 	{

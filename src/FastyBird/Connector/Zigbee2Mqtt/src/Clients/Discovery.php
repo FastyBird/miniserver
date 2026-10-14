@@ -204,7 +204,7 @@ final class Discovery
 		$deferred = new Promise\Deferred();
 
 		if ($this->subscribed) {
-			$topic = sprintf(Zigbee2Mqtt\Constants::BRIDGE_TOPIC, $this->bridgeHelper->getBaseTopic($bridge));
+			$topic = sprintf(API\MqttBuilder::BRIDGE_TOPIC, $this->bridgeHelper->getBaseTopic($bridge));
 			$topic = new NetMqtt\DefaultSubscription($topic);
 
 			$this->getClient()

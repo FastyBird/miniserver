@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\NsPanel\Documents\Channels;
 
-use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Exceptions;
 use FastyBird\Connector\NsPanel\Types;
@@ -28,7 +27,7 @@ final class Toggle extends Channel
 	#[Override]
 	public function toDefinition(): array
 	{
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $this->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $this->getIdentifier(), $matches);
 
 		if (!array_key_exists('capability', $matches) || !array_key_exists('name', $matches)) {
 			throw new Exceptions\InvalidState('Channel identifier is invalid');

@@ -43,6 +43,10 @@ use function strval;
 final readonly class WriteChannelPropertyState implements Queue\Consumer
 {
 
+	private const string CHANNEL_GROUP = '/^(?P<group>[a-zA-Z]+)(_(?P<outlet>[0-9]+))?$/';
+
+	public const float WRITE_DEBOUNCE_DELAY = 2_000.0;
+
 	public function __construct(
 		private Queue\Queue $queue,
 		private API\ConnectionManager $connectionManager,
@@ -264,7 +268,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 			$pending === false
 			|| (
 				$pending instanceof DateTimeInterface
-				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= Sonoff\Constants::WRITE_DEBOUNCE_DELAY
+				&& (float) $now->format('Uv') - (float) $pending->format('Uv') <= self::WRITE_DEBOUNCE_DELAY
 			)
 		) {
 			return true;
@@ -279,7 +283,7 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 		$group = $outlet = null;
 		$parameter = $property->getIdentifier();
 
-		if (preg_match(Sonoff\Constants::CHANNEL_GROUP, $channel->getIdentifier(), $matches) === 1) {
+		if (preg_match(self::CHANNEL_GROUP, $channel->getIdentifier(), $matches) === 1) {
 			if (array_key_exists('outlet', $matches)) {
 				$outlet = intval($matches['outlet']);
 			}

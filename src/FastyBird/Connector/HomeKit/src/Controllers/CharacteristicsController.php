@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\HomeKit\Controllers;
 
 use FastyBird\Connector\HomeKit\Clients;
-use FastyBird\Connector\HomeKit\Constants;
 use FastyBird\Connector\HomeKit\Exceptions as HomeKitExceptions;
 use FastyBird\Connector\HomeKit\Helpers;
 use FastyBird\Connector\HomeKit\Protocol;
@@ -713,7 +712,7 @@ final class CharacteristicsController extends BaseController
 			return null;
 		}
 
-		if ($aid === Constants::STANDALONE_AID) {
+		if ($aid === Protocol\Accessories\Accessory::STANDALONE_AID) {
 			$characteristic = $bridge->getIidManager()->getObject($iid);
 
 			if ($characteristic instanceof Protocol\Characteristics\Characteristic) {

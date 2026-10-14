@@ -2,8 +2,8 @@
 
 namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Router;
 
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Controllers;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\DI;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Security\Middleware as SecurityMiddleware;
 use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
@@ -13,6 +13,10 @@ use FastyBird\Module\Devices\Middleware as DevicesMiddleware;
  */
 final readonly class ApiRoutes
 {
+
+	public const string ROUTE_NAME_BRIDGES = 'bridges';
+
+	public const string ROUTE_NAME_BRIDGE = 'bridge';
 
 	public const string URL_ITEM_ID = 'id';
 
@@ -35,7 +39,7 @@ final readonly class ApiRoutes
 		): void {
 			if ($this->usePrefix) {
 				$group->group(
-					'/' . ShellyConnectorHomeKitConnector\Constants::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
+					'/' . DI\ShellyConnectorHomeKitConnectorExtension::BRIDGE_SHELLY_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX,
 					function (
 						Routing\RouteCollector $group,
 					): void {
@@ -63,10 +67,10 @@ final readonly class ApiRoutes
 			 */
 			$group->group('/bridges', function (Routing\RouteCollector $group): void {
 				$route = $group->get('', [$this->bridgesV1Controller, 'index']);
-				$route->setName(ShellyConnectorHomeKitConnector\Constants::ROUTE_NAME_BRIDGES);
+				$route->setName(self::ROUTE_NAME_BRIDGES);
 
 				$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->bridgesV1Controller, 'read']);
-				$route->setName(ShellyConnectorHomeKitConnector\Constants::ROUTE_NAME_BRIDGE);
+				$route->setName(self::ROUTE_NAME_BRIDGE);
 
 				$group->post('', [$this->bridgesV1Controller, 'create']);
 

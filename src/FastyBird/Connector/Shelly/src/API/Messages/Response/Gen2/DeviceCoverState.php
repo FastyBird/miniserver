@@ -4,7 +4,6 @@ namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
 use DateTimeInterface;
 use Exception;
-use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Nette\Utils;
@@ -34,78 +33,78 @@ final class DeviceCoverState extends DeviceState implements API\Messages\Message
 		private readonly string|null $source,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BackedEnumValue(class: Types\Payloads\CoverPayload::class),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly Types\Payloads\CoverPayload|string $state,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('apower')]
 		private readonly float|string $activePower,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly float|string $voltage,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly float|string $current,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('pf')]
 		private readonly float|string $powerFactor,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('freq')]
 		private readonly float|string $frequency,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: ActiveEnergyStateBlock::class),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('aenergy')]
 		private readonly ActiveEnergyStateBlock|string $activeEnergy,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 0, max: 100, unsigned: true),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('current_pos')]
 		private readonly int|string|null $currentPosition,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(min: 0, max: 100, unsigned: true),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('target_pos')]
 		private readonly int|string|null $targetPosition,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('move_timeout')]
 		private readonly float|string $moveTimeout,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('move_started_at')]
 		private readonly float|string $moveStartedAt,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('pos_control')]
 		private readonly bool|string $hasPositionControl,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: TemperatureBlockState::class),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly TemperatureBlockState|string $temperature,
 		array $errors = [],
@@ -248,7 +247,7 @@ final class DeviceCoverState extends DeviceState implements API\Messages\Message
 				$this->getActiveEnergy() instanceof ActiveEnergyStateBlock ? $this->getActiveEnergy()->toState() : [],
 				$this->getTemperature() instanceof TemperatureBlockState ? $this->getTemperature()->toState() : [],
 			),
-			static fn ($value): bool => $value !== Shelly\Constants::VALUE_NOT_AVAILABLE,
+			static fn ($value): bool => $value !== DeviceState::VALUE_NOT_AVAILABLE,
 		);
 	}
 

@@ -78,7 +78,7 @@ final readonly class Connector
 		);
 
 		if ($property?->getValue() === null) {
-			return NsPanel\Constants::DEFAULT_SERVER_PORT;
+			return NsPanel\Entities\Connectors\Connector::DEFAULT_SERVER_PORT;
 		}
 
 		$value = $property->getValue();

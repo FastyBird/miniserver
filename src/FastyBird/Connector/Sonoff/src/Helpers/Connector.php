@@ -135,7 +135,7 @@ final readonly class Connector
 		);
 
 		if ($property?->getValue() === null) {
-			return Sonoff\Constants::DEFAULT_APP_ID;
+			return Sonoff\Entities\Connectors\Connector::DEFAULT_APP_ID;
 		}
 
 		$value = $property->getValue();
@@ -164,7 +164,7 @@ final readonly class Connector
 		);
 
 		if ($property?->getValue() === null) {
-			return Sonoff\Constants::DEFAULT_APP_SECRET;
+			return Sonoff\Entities\Connectors\Connector::DEFAULT_APP_SECRET;
 		}
 
 		$value = $property->getValue();

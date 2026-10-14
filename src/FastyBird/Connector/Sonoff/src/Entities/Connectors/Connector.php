@@ -3,7 +3,6 @@
 namespace FastyBird\Connector\Sonoff\Entities\Connectors;
 
 use Doctrine\ORM\Mapping as ORM;
-use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Types;
@@ -21,6 +20,14 @@ use function is_string;
 #[PersistenceMapping\DiscriminatorEntry(name: self::TYPE)]
 class Connector extends DevicesEntities\Connectors\Connector
 {
+
+	private const string COOLKIT_APP_ID = '4s1FXKC9FaGfoqXhmXSJneb3qcm1gOak'; // CoolKit application ID extracted from ha CoolKit addon
+
+	private const string COOLKIT_APP_SECRET = 'oKvCM06gvwkRbfetd6qWRrbC3rFrbIpV'; // CoolKit application secret extracted from ha CoolKit addon
+
+	public const string DEFAULT_APP_ID = 'R8Oq3y0eSZSYdKccHlrQzT1ACCOUT9Gv'; // CoolKit application ID extracted from ha CoolKit addon
+
+	public const string DEFAULT_APP_SECRET = '1ve5Qk9GXfUhKAn1svnKwpAlxXkMarru'; // CoolKit application secret extracted from ha CoolKit addon
 
 	public const string TYPE = 'sonoff-connector';
 
@@ -152,7 +159,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	public function getAppId(): string
 	{
 		if ($this->getClientMode() === Types\ClientMode::GATEWAY) {
-			return Sonoff\Constants::COOLKIT_APP_ID;
+			return self::COOLKIT_APP_ID;
 		}
 
 		$property = $this->properties
@@ -169,7 +176,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return Sonoff\Constants::DEFAULT_APP_ID;
+		return self::DEFAULT_APP_ID;
 	}
 
 	/**
@@ -182,7 +189,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 	public function getAppSecret(): string
 	{
 		if ($this->getClientMode() === Types\ClientMode::GATEWAY) {
-			return Sonoff\Constants::COOLKIT_APP_SECRET;
+			return self::COOLKIT_APP_SECRET;
 		}
 
 		$property = $this->properties
@@ -199,7 +206,7 @@ class Connector extends DevicesEntities\Connectors\Connector
 			return $property->getValue();
 		}
 
-		return Sonoff\Constants::DEFAULT_APP_SECRET;
+		return self::DEFAULT_APP_SECRET;
 	}
 
 	/**

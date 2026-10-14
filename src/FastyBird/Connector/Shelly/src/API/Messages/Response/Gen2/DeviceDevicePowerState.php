@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
-use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Orisai\ObjectMapper;
@@ -23,12 +22,12 @@ final class DeviceDevicePowerState extends DeviceState implements API\Messages\M
 		int $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: BatteryStateBlock::class),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly BatteryStateBlock|string $battery,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\MappedObjectValue(class: ExternalPowerStateBlock::class),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly ExternalPowerStateBlock|string $external,
 		array $errors = [],

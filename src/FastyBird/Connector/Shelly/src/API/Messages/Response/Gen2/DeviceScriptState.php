@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\Shelly\API\Messages\Response\Gen2;
 
-use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
 use FastyBird\Connector\Shelly\Types;
 use Orisai\ObjectMapper;
@@ -23,7 +22,7 @@ final class DeviceScriptState extends DeviceState implements API\Messages\Messag
 		int $id,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\ArrayEnumValue(cases: [Shelly\Constants::VALUE_NOT_AVAILABLE]),
+			new ObjectMapper\Rules\ArrayEnumValue(cases: [DeviceState::VALUE_NOT_AVAILABLE]),
 		])]
 		private readonly bool|string $running,
 		array $errors = [],
@@ -70,7 +69,7 @@ final class DeviceScriptState extends DeviceState implements API\Messages\Messag
 					'running' => $this->getRunning(),
 				],
 			),
-			static fn ($value): bool => $value !== Shelly\Constants::VALUE_NOT_AVAILABLE,
+			static fn ($value): bool => $value !== DeviceState::VALUE_NOT_AVAILABLE,
 		);
 	}
 

@@ -32,6 +32,8 @@ use const DIRECTORY_SEPARATOR;
 final class VieraConnectorHomeKitConnectorExtension extends NetteDI\CompilerExtension implements Translation\DI\TranslationProviderInterface
 {
 
+	public const string BRIDGE_VIERA_CONNECTOR_HOMEKIT_CONNECTOR_PREFIX = 'viera-connector-homekit-connector-bridge';
+
 	public const string NAME = 'fbVieraConnectorHomeKitConnectorBridge';
 
 	public static function register(

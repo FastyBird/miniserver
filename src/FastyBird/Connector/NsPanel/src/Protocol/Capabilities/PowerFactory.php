@@ -2,7 +2,6 @@
 
 namespace FastyBird\Connector\NsPanel\Protocol\Capabilities;
 
-use FastyBird\Connector\NsPanel;
 use FastyBird\Connector\NsPanel\Documents;
 use FastyBird\Connector\NsPanel\Entities;
 use FastyBird\Connector\NsPanel\Mapping;
@@ -28,7 +27,7 @@ final class PowerFactory implements CapabilityFactory
 	{
 		assert($channel instanceof Documents\Channels\Power);
 
-		preg_match(NsPanel\Constants::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
+		preg_match(Entities\Channels\Channel::CHANNEL_IDENTIFIER, $channel->getIdentifier(), $matches);
 
 		return new Power(
 			$channel->getId(),

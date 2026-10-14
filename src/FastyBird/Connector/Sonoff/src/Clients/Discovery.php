@@ -568,7 +568,7 @@ final class Discovery
 	{
 		try {
 			$mapping = Utils\FileSystem::read(
-				Sonoff\Constants::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'uiid' . DIRECTORY_SEPARATOR . sprintf(
+				Sonoff\DI\SonoffExtension::RESOURCES_FOLDER . DIRECTORY_SEPARATOR . 'uiid' . DIRECTORY_SEPARATOR . sprintf(
 					'uiid%d_mapping.json',
 					$uiid,
 				),
