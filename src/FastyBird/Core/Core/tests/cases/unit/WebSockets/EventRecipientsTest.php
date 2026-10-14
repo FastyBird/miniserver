@@ -192,8 +192,8 @@ final class EventRecipientsTest extends BaseTestCase
 	}
 
 	/**
-	 * A lookup that cannot be made sends nothing, and leaves the client connected: the next event
-	 * asks again
+	 * A lookup that cannot be made sends nothing, and leaves the client connected: the first event
+	 * after the interval asks again
 	 *
 	 * @throws Throwable
 	 */
@@ -213,9 +213,51 @@ final class EventRecipientsTest extends BaseTestCase
 
 		$this->identities->failing = false;
 
+		$this->advance(Subscribers\Client::RECHECK_INTERVAL);
+
 		$this->publish('second');
 
 		self::assertSame(['second'], $this->eventsOf($client));
+	}
+
+	/**
+	 * A failed lookup is not tried again for the interval, so a database that cannot be reached
+	 * costs one lookup per subscriber per interval, not one per event; the events in between are
+	 * not sent
+	 *
+	 * @throws Throwable
+	 */
+	public function testAFailedLookupIsTriedAgainAtMostOncePerInterval(): void
+	{
+		$client = $this->connect(1, $this->issue());
+		$this->subscribe($client);
+
+		$this->advance(Subscribers\Client::RECHECK_INTERVAL);
+
+		$this->identities->failing = true;
+		$this->identities->lookups = 0;
+
+		$this->publish('first');
+		$this->advance(Subscribers\Client::RECHECK_INTERVAL - 1);
+		$this->publish('second');
+
+		self::assertSame(1, $this->identities->lookups);
+		self::assertSame([], $this->eventsOf($client));
+
+		// Once the database answers again, the events before the next lookup are not sent either
+		$this->identities->failing = false;
+
+		$this->publish('third');
+
+		self::assertSame(1, $this->identities->lookups);
+		self::assertSame([], $this->eventsOf($client));
+
+		$this->advance(1);
+		$this->publish('fourth');
+
+		self::assertSame(2, $this->identities->lookups);
+		self::assertSame(['fourth'], $this->eventsOf($client));
+		self::assertArrayNotHasKey(1, $this->closed);
 	}
 
 	/**

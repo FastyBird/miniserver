@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\WebSockets\Subscribers;
 
+use DateTimeImmutable;
 use Doctrine\DBAL;
 use FastyBird\Core\Clock;
 use FastyBird\Core\Exceptions as CoreExceptions;
@@ -20,6 +21,7 @@ use Psr\Clock\ClockInterface;
 use Psr\Log;
 use Symfony\Component\EventDispatcher;
 use Throwable;
+use WeakMap;
 use function explode;
 use function in_array;
 use function is_string;
@@ -41,9 +43,17 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	 * The lookup is the one a message from the client gets (the accounts module reads the token,
 	 * its identity and its account from the database), so a busy topic costs one lookup per
 	 * subscriber per interval rather than one per event per subscriber; a token revoked, or an
-	 * account blocked, stops the events within the interval.
+	 * account blocked, stops the events within the interval. A lookup that fails is not tried again
+	 * for the same interval either.
 	 */
 	public const int RECHECK_INTERVAL = 5;
+
+	/**
+	 * When the latest lookup for a client failed, until a lookup for it succeeds
+	 *
+	 * @var WeakMap<Entities\Client, DateTimeImmutable>
+	 */
+	private WeakMap $failedAt;
 
 	/** @var array<string> */
 	private array $wsKeys;
@@ -71,6 +81,7 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	{
 		$this->wsKeys = $wsKeys !== null ? explode(',', $wsKeys) : [];
 		$this->allowedOrigins = $allowedOrigins !== null ? explode(',', $allowedOrigins) : [];
+		$this->failedAt = new WeakMap();
 	}
 
 	#[Override]
@@ -113,7 +124,9 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 	 * Whether an event may be pushed to the client: it holds an identity its token resolved to at
 	 * most RECHECK_INTERVAL seconds ago, or its token resolves to one now. A client whose token no
 	 * longer resolves is closed, as it is when it sends a message. When the token cannot be looked
-	 * up, the client gets nothing and stays connected, and the next event asks again.
+	 * up, the client gets nothing and stays connected, and the first event at least RECHECK_INTERVAL
+	 * seconds later asks again: the lookup pings, and may reconnect, the database synchronously in
+	 * the server's loop, so a database that cannot be reached is not asked once per event.
 	 */
 	public function mayReceive(Entities\Client $client): bool
 	{
@@ -121,17 +134,24 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 			return false;
 		}
 
+		$now = $this->clock->now();
+
 		$checkedAt = $client->getCheckedAt();
 
-		if (
-			$checkedAt !== null
-			&& $this->clock->now()->getTimestamp() - $checkedAt->getTimestamp() < self::RECHECK_INTERVAL
-		) {
+		if ($checkedAt !== null && $now->getTimestamp() - $checkedAt->getTimestamp() < self::RECHECK_INTERVAL) {
 			return true;
+		}
+
+		$failedAt = $this->failedAt[$client] ?? null;
+
+		if ($failedAt !== null && $now->getTimestamp() - $failedAt->getTimestamp() < self::RECHECK_INTERVAL) {
+			return false;
 		}
 
 		try {
 			if ($this->connectDatabase()) {
+				unset($this->failedAt[$client]);
+
 				return $this->checkSecurity($client, $client->getRequest(), $this->wsKeys, $this->allowedOrigins);
 			}
 
@@ -139,6 +159,8 @@ final class Client implements EventDispatcher\EventSubscriberInterface
 		} catch (Throwable $ex) {
 			$error = $ex->getMessage();
 		}
+
+		$this->failedAt[$client] = $now;
 
 		$this->logger->error('Client access token could not be checked', [
 			'source' => Sources\Core::CORE->value,
