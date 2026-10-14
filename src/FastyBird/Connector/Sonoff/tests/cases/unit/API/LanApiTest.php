@@ -280,37 +280,7 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 
 		$iv = base64_encode('0123456789abcdef');
 
-		// The state of a four-outlet strip, as long as such a device announces it
-		$cipher = Helpers\Transformer::encryptMessage(
-			Nette\Utils\Json::encode([
-				'sledOnline' => 'on',
-				'configure' => [
-					['startup' => 'off', 'outlet' => 0],
-					['startup' => 'off', 'outlet' => 1],
-					['startup' => 'stay', 'outlet' => 2],
-					['startup' => 'on', 'outlet' => 3],
-				],
-				'pulses' => [
-					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 0],
-					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 1],
-					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 2],
-					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 3],
-				],
-				'switches' => [
-					['switch' => 'on', 'outlet' => 0],
-					['switch' => 'off', 'outlet' => 1],
-					['switch' => 'on', 'outlet' => 2],
-					['switch' => 'off', 'outlet' => 3],
-				],
-				'fwVersion' => '3.6.0',
-				'rssi' => -61,
-			]),
-			'device-key',
-			$iv,
-		);
-		assert(is_string($cipher));
-
-		$parts = str_split($cipher, 249);
+		$parts = self::stripStateParts($iv);
 
 		self::assertCount(3, $parts);
 
@@ -342,6 +312,56 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertTrue($data->getStatusLed());
 		self::assertSame('3.6.0', $data->getFirmwareVersion());
 		self::assertSame(-61, $data->getRssi());
+	}
+
+	/**
+	 * Parts that leave a gap are not the device's data; they do not decrypt, and the announcement is dropped
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Nette\Utils\JsonException
+	 */
+	public function testAnnouncedEncryptedDataWithAMissingPartIsDropped(): void
+	{
+		/** @var array<int, array{string, array<mixed>}> $events */
+		$events = [];
+
+		/** @var ArrayObject<int, array{level: mixed, message: string, context: array<mixed>}> $logs */
+		$logs = new ArrayObject();
+
+		[$client, $socket] = $this->connectClient($logs);
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+		$client->onMessage($this->record('message', $events));
+
+		$iv = base64_encode('0123456789abcdef');
+
+		$parts = self::stripStateParts($iv);
+
+		self::assertCount(3, $parts);
+
+		$socket->emit('message', [
+			$this->buildAnnouncement(
+				[
+					'id=' . self::DEVICE_ID,
+					'type=strip',
+					'seq=7',
+					'encrypt=true',
+					'iv=' . $iv,
+					'data1=' . $parts[0],
+					'data3=' . $parts[2],
+				],
+			),
+			'10.0.0.7:5353',
+		]);
+
+		self::assertNoEvents($events);
+		self::assertNotSame([], $logs->getArrayCopy());
 	}
 
 	/**
@@ -1091,6 +1111,48 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		return Nette\Utils\Json::encode(
 			['seq' => 1, 'sequence' => '1', 'error' => 0, 'encrypt' => true, 'iv' => $vector, 'data' => $cipher],
 		);
+	}
+
+	/**
+	 * The state of a four-outlet strip, as long as such a device announces it, encrypted with `device-key` and cut
+	 * into the parts of 249 bytes the device announces it in
+	 *
+	 * @return array<int, string>
+	 *
+	 * @throws Nette\Utils\JsonException
+	 */
+	private static function stripStateParts(string $iv): array
+	{
+		$cipher = Helpers\Transformer::encryptMessage(
+			Nette\Utils\Json::encode([
+				'sledOnline' => 'on',
+				'configure' => [
+					['startup' => 'off', 'outlet' => 0],
+					['startup' => 'off', 'outlet' => 1],
+					['startup' => 'stay', 'outlet' => 2],
+					['startup' => 'on', 'outlet' => 3],
+				],
+				'pulses' => [
+					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 0],
+					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 1],
+					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 2],
+					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 3],
+				],
+				'switches' => [
+					['switch' => 'on', 'outlet' => 0],
+					['switch' => 'off', 'outlet' => 1],
+					['switch' => 'on', 'outlet' => 2],
+					['switch' => 'off', 'outlet' => 3],
+				],
+				'fwVersion' => '3.6.0',
+				'rssi' => -61,
+			]),
+			'device-key',
+			$iv,
+		);
+		assert(is_string($cipher));
+
+		return str_split($cipher, 249);
 	}
 
 	/**
