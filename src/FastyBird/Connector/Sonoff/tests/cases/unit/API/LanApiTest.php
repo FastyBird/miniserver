@@ -39,6 +39,7 @@ use function is_string;
 use function restore_error_handler;
 use function serialize;
 use function set_error_handler;
+use function str_split;
 
 final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 {
@@ -251,6 +252,96 @@ final class LanApiTest extends Tests\Cases\Unit\BaseTestCase
 		self::assertInstanceOf(API\Messages\Response\Lan\DeviceEventData::class, $data);
 		self::assertSame('on', $data->getSwitch());
 		self::assertSame('3.5.0', $data->getFirmwareVersion());
+	}
+
+	/**
+	 * Data longer than one text record holds is cut into parts of 249 bytes, carried in `data1` to `data4` (eWeLink
+	 * DIY mode protocol, TXT record note 4). An encrypted device cuts its encoded cipher text, so the parts are joined
+	 * and decrypted as one, with the one vector the announcement carries
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws BadMethodCallException
+	 * @throws ReflectionException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Nette\Utils\JsonException
+	 */
+	public function testAnnouncedEncryptedDataCutIntoSeveralPartsIsDecryptedAsOne(): void
+	{
+		/** @var array<int, array{string, array<mixed>}> $events */
+		$events = [];
+
+		[$client, $socket] = $this->connectClient();
+
+		$client->registerDeviceKey(self::DEVICE_ID, 'device-key');
+		$client->onMessage($this->record('message', $events));
+
+		$iv = base64_encode('0123456789abcdef');
+
+		// The state of a four-outlet strip, as long as such a device announces it
+		$cipher = Helpers\Transformer::encryptMessage(
+			Nette\Utils\Json::encode([
+				'sledOnline' => 'on',
+				'configure' => [
+					['startup' => 'off', 'outlet' => 0],
+					['startup' => 'off', 'outlet' => 1],
+					['startup' => 'stay', 'outlet' => 2],
+					['startup' => 'on', 'outlet' => 3],
+				],
+				'pulses' => [
+					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 0],
+					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 1],
+					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 2],
+					['pulse' => 'off', 'switch' => 'off', 'width' => 1_000, 'outlet' => 3],
+				],
+				'switches' => [
+					['switch' => 'on', 'outlet' => 0],
+					['switch' => 'off', 'outlet' => 1],
+					['switch' => 'on', 'outlet' => 2],
+					['switch' => 'off', 'outlet' => 3],
+				],
+				'fwVersion' => '3.6.0',
+				'rssi' => -61,
+			]),
+			'device-key',
+			$iv,
+		);
+		assert(is_string($cipher));
+
+		$parts = str_split($cipher, 249);
+
+		self::assertCount(3, $parts);
+
+		$text = ['id=' . self::DEVICE_ID, 'type=strip', 'seq=7', 'encrypt=true', 'iv=' . $iv];
+
+		foreach ($parts as $index => $part) {
+			$text[] = 'data' . ($index + 1) . '=' . $part;
+		}
+
+		$socket->emit('message', [$this->buildAnnouncement($text), '10.0.0.7:5353']);
+
+		self::assertCount(1, $events);
+		self::assertInstanceOf(API\Messages\Response\Lan\DeviceEvent::class, $events[0][1][0]);
+		self::assertTrue($events[0][1][0]->isEncrypted());
+
+		$data = $events[0][1][0]->getData();
+
+		self::assertInstanceOf(API\Messages\Response\Lan\DeviceEventData::class, $data);
+		self::assertSame(
+			[['on', 0], ['off', 1], ['on', 2], ['off', 3]],
+			array_map(
+				static fn (API\Messages\Response\Lan\SwitchState $state): array => [
+					$state->getSwitch(),
+					$state->getOutlet(),
+				],
+				$data->getSwitchesStates(),
+			),
+		);
+		self::assertTrue($data->getStatusLed());
+		self::assertSame('3.6.0', $data->getFirmwareVersion());
+		self::assertSame(-61, $data->getRssi());
 	}
 
 	/**

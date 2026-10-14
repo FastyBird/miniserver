@@ -332,27 +332,28 @@ final class LanApi
 			}
 
 			if ($keyKnown || !$dataEncrypted) {
+				// Data longer than one text record holds is cut into data1 to data4 as it is sent, so the parts are
+				// joined before anything is read from them. Encrypted data is cut after it was encrypted and encoded:
+				// the joined parts are one cipher text, decrypted once with the one vector the announcement carries
+				$data = implode($data);
+
 				if ($dataEncrypted) {
-					foreach ($data as $index => $row) {
-						$decrypted = Helpers\Transformer::decryptMessage(
-							$row,
-							$deviceKey,
-							array_key_exists('iv', $deviceData) ? strval($deviceData['iv']) : '',
+					$decrypted = Helpers\Transformer::decryptMessage(
+						$data,
+						$deviceKey,
+						array_key_exists('iv', $deviceData) ? strval($deviceData['iv']) : '',
+					);
+
+					if ($decrypted === false) {
+						throw new SonoffExceptions\LanApiError(
+							'The data of the announcement could not be decrypted',
 						);
-
-						// A part that does not decrypt with the key is not the device's, even when the parts
-						// around it do
-						if ($decrypted === false) {
-							throw new SonoffExceptions\LanApiError(
-								'The data of the announcement could not be decrypted',
-							);
-						}
-
-						$data[$index] = $decrypted;
 					}
+
+					$data = $decrypted;
 				}
 
-				$data = Utils\Json::decode(implode($data), forceArrays: true);
+				$data = Utils\Json::decode($data, forceArrays: true);
 
 				if (!is_array($data)) {
 					throw new Utils\JsonException('The data of the announcement is not a list of values');
