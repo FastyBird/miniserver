@@ -130,15 +130,15 @@ final readonly class StateEntities implements EventDispatcher\EventSubscriberInt
 		if ($property instanceof DevicesDocuments\Connectors\Properties\Dynamic) {
 			switch ($action) {
 				case self::ACTION_CREATED:
-					$routingKey = Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY;
+					$routingKey = Devices\Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED->value;
 
 					break;
 				case self::ACTION_UPDATED:
-					$routingKey = Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY;
+					$routingKey = Devices\Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_UPDATED->value;
 
 					break;
 				case self::ACTION_DELETED:
-					$routingKey = Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_DELETED_ROUTING_KEY;
+					$routingKey = Devices\Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_DELETED->value;
 
 					break;
 				default:
@@ -167,15 +167,15 @@ final readonly class StateEntities implements EventDispatcher\EventSubscriberInt
 		) {
 			switch ($action) {
 				case self::ACTION_CREATED:
-					$routingKey = Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY;
+					$routingKey = Devices\Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_CREATED->value;
 
 					break;
 				case self::ACTION_UPDATED:
-					$routingKey = Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY;
+					$routingKey = Devices\Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_UPDATED->value;
 
 					break;
 				case self::ACTION_DELETED:
-					$routingKey = Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_DELETED_ROUTING_KEY;
+					$routingKey = Devices\Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_DELETED->value;
 
 					break;
 				default:
@@ -201,15 +201,15 @@ final readonly class StateEntities implements EventDispatcher\EventSubscriberInt
 		} else {
 			switch ($action) {
 				case self::ACTION_CREATED:
-					$routingKey = Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY;
+					$routingKey = Devices\Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_CREATED->value;
 
 					break;
 				case self::ACTION_UPDATED:
-					$routingKey = Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY;
+					$routingKey = Devices\Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED->value;
 
 					break;
 				case self::ACTION_DELETED:
-					$routingKey = Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_DELETED_ROUTING_KEY;
+					$routingKey = Devices\Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_DELETED->value;
 
 					break;
 				default:

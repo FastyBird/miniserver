@@ -6,7 +6,6 @@ use DateTimeInterface;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Router;
 use Neomerx\JsonApi;
@@ -75,7 +74,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Devices\Constants::ROUTE_NAME_CONNECTOR,
+				Router\ApiRoutes::ROUTE_NAME_CONNECTOR,
 				[
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 				],
@@ -134,7 +133,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CONNECTOR_DEVICES,
+					Router\ApiRoutes::ROUTE_NAME_CONNECTOR_DEVICES,
 					[
 						Router\ApiRoutes::URL_CONNECTOR_ID => $resource->getId()->toString(),
 					],
@@ -148,7 +147,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CONNECTOR_PROPERTIES,
+					Router\ApiRoutes::ROUTE_NAME_CONNECTOR_PROPERTIES,
 					[
 						Router\ApiRoutes::URL_CONNECTOR_ID => $resource->getId()->toString(),
 					],
@@ -162,7 +161,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CONNECTOR_CONTROLS,
+					Router\ApiRoutes::ROUTE_NAME_CONNECTOR_CONTROLS,
 					[
 						Router\ApiRoutes::URL_CONNECTOR_ID => $resource->getId()->toString(),
 					],
@@ -199,7 +198,7 @@ abstract class Connector extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CONNECTOR_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_CONNECTOR_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 						Router\ApiRoutes::RELATION_ENTITY => $name,

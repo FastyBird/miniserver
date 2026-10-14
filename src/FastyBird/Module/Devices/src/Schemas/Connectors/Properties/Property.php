@@ -7,7 +7,6 @@ use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Utilities;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Router;
@@ -94,7 +93,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Devices\Constants::ROUTE_NAME_CONNECTOR_PROPERTY,
+				Router\ApiRoutes::ROUTE_NAME_CONNECTOR_PROPERTY,
 				[
 					Router\ApiRoutes::URL_CONNECTOR_ID => $resource->getConnector()->getId()->toString(),
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
@@ -144,7 +143,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CONNECTOR,
+					Router\ApiRoutes::ROUTE_NAME_CONNECTOR,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getConnector()->getId()->toString(),
 					],

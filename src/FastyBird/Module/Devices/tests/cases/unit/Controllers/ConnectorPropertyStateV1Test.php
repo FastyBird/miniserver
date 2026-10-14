@@ -121,7 +121,7 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			//////////////////
 			'readConnector' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
 				true,
@@ -133,7 +133,7 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			////////////////////
 			'readNoState' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/' . self::PROPERTY_ID . '/state',
 				'Bearer ' . self::VALID_TOKEN,
 				1,
 				false,
@@ -142,7 +142,7 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readVariableProperty' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366/state',
+				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/5a8b01f2-621c-4c41-bc83-c089d72b2366/state',
 				'Bearer ' . self::VALID_TOKEN,
 				0,
 				true,
@@ -151,7 +151,7 @@ final class ConnectorPropertyStateV1Test extends Tests\Cases\Unit\DbTestCase
 			],
 			'readMissingToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/' . self::PROPERTY_ID . '/state',
+				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/connectors/17c59dfa-2edd-438e-8c49-faa4e38e5a5e/properties/' . self::PROPERTY_ID . '/state',
 				null,
 				0,
 				true,

@@ -93,19 +93,22 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.read.json',
 			],
 			'readRelationshipsProperties' => [
-				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2/relationships/properties',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2/relationships/properties',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.relationships.properties.json',
 			],
 			'readRelationshipsChannels' => [
-				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2/relationships/channels',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2/relationships/channels',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.relationships.channels.json',
 			],
 			'readRelationshipsChildren' => [
-				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2/relationships/children',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2/relationships/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/bridges.relationships.children.json',
@@ -121,13 +124,15 @@ final class BridgesV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsUnknown' => [
-				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2/relationships/unknown',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/cfb6e9cc-29a7-48d6-aecb-5f901d79eba2/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
 			],
 			'readRelationshipsUnknownEntity' => [
-				'/api/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009af/relationships/children',
+				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+				'/api/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/devices/69786d15-fd0c-4d9f-9378-33287c2009af/relationships/children',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',

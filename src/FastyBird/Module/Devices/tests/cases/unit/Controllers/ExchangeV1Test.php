@@ -195,17 +195,17 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		$calls = [
 			'connector' => [
-				Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
+				Types\RoutingKey::CONNECTOR_PROPERTY_ACTION->value,
 				['connector' => self::CONNECTOR, 'property' => self::CONNECTOR_PROPERTY],
 				true,
 			],
 			'device' => [
-				Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+				Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 				['device' => self::DEVICE, 'property' => self::DEVICE_PROPERTY],
 				10,
 			],
 			'channel' => [
-				Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
+				Types\RoutingKey::CHANNEL_PROPERTY_ACTION->value,
 				['channel' => self::CHANNEL, 'property' => self::CHANNEL_PROPERTY],
 				'on',
 			],
@@ -298,17 +298,17 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		$calls = [
 			'connector' => [
-				Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
+				Types\RoutingKey::CONNECTOR_PROPERTY_ACTION->value,
 				['connector' => self::CONNECTOR, 'property' => self::CONNECTOR_PROPERTY],
 				Devices\Documents\States\Connectors\Properties\Actions\Action::class,
 			],
 			'device' => [
-				Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+				Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 				['device' => self::DEVICE, 'property' => self::DEVICE_PROPERTY],
 				Devices\Documents\States\Devices\Properties\Actions\Action::class,
 			],
 			'channel' => [
-				Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
+				Types\RoutingKey::CHANNEL_PROPERTY_ACTION->value,
 				['channel' => self::CHANNEL, 'property' => self::CHANNEL_PROPERTY],
 				Devices\Documents\States\Channels\Properties\Actions\Action::class,
 			],
@@ -477,7 +477,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	public function testAControlCallWithoutDataIsRefusedToAUser(): void
 	{
 		$frame = $this->call($this->client(['user']), [
-			'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY,
+			'routing_key' => Types\RoutingKey::DEVICE_CONTROL_ACTION->value,
 			'source' => Sources\Module::DEVICES->value,
 		]);
 
@@ -494,7 +494,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	public function testAPropertyCallWithoutAnActionIsRefusedToAUser(): void
 	{
 		$frame = $this->call($this->client(['user']), [
-			'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+			'routing_key' => Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 			'source' => Sources\Module::DEVICES->value,
 		]);
 
@@ -511,7 +511,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'connector' => [
-				Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY,
+				Types\RoutingKey::CONNECTOR_CONTROL_ACTION->value,
 				[
 					'action' => Types\ControlAction::SET->value,
 					'connector' => self::CONNECTOR,
@@ -520,7 +520,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 				],
 			],
 			'device' => [
-				Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY,
+				Types\RoutingKey::DEVICE_CONTROL_ACTION->value,
 				[
 					'action' => Types\ControlAction::SET->value,
 					'device' => self::DEVICE,
@@ -529,7 +529,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 				],
 			],
 			'channel' => [
-				Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY,
+				Types\RoutingKey::CHANNEL_CONTROL_ACTION->value,
 				[
 					'action' => Types\ControlAction::SET->value,
 					'channel' => self::CHANNEL,

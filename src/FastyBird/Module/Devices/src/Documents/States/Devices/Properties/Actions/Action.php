@@ -4,7 +4,6 @@ namespace FastyBird\Module\Devices\Documents\States\Devices\Properties\Actions;
 
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Rules;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
@@ -19,7 +18,7 @@ use function sprintf;
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+	Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 ])]
 final readonly class Action implements CoreDocuments\Document
 {

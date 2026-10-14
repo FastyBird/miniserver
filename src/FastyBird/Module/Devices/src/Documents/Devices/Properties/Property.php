@@ -7,7 +7,6 @@ use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types as ValuesTypes;
-use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
@@ -31,10 +30,10 @@ use function array_merge;
 ])]
 #[CoreDocuments\Mapping\MappedSuperclass]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_DOCUMENT_REPORTED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_DOCUMENT_CREATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_DOCUMENT_UPDATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_DOCUMENT_DELETED_ROUTING_KEY,
+	DevicesTypes\RoutingKey::DEVICE_PROPERTY_DOCUMENT_REPORTED->value,
+	DevicesTypes\RoutingKey::DEVICE_PROPERTY_DOCUMENT_CREATED->value,
+	DevicesTypes\RoutingKey::DEVICE_PROPERTY_DOCUMENT_UPDATED->value,
+	DevicesTypes\RoutingKey::DEVICE_PROPERTY_DOCUMENT_DELETED->value,
 ])]
 abstract class Property extends DevicesDocuments\Property
 {

@@ -18,10 +18,10 @@ use Ramsey\Uuid;
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Devices\Controls\Control::class)]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_DOCUMENT_REPORTED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_DOCUMENT_CREATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_DOCUMENT_UPDATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_DOCUMENT_DELETED_ROUTING_KEY,
+	Devices\Types\RoutingKey::DEVICE_CONTROL_DOCUMENT_REPORTED->value,
+	Devices\Types\RoutingKey::DEVICE_CONTROL_DOCUMENT_CREATED->value,
+	Devices\Types\RoutingKey::DEVICE_CONTROL_DOCUMENT_UPDATED->value,
+	Devices\Types\RoutingKey::DEVICE_CONTROL_DOCUMENT_DELETED->value,
 ])]
 final readonly class Control implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {

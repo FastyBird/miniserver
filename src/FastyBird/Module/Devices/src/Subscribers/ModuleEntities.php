@@ -33,6 +33,45 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 	private const string ACTION_DELETED = 'deleted';
 
+	private const array MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING
+		= [
+			Entities\Connectors\Connector::class => Devices\Types\RoutingKey::CONNECTOR_DOCUMENT_CREATED->value,
+			Entities\Connectors\Properties\Property::class => Devices\Types\RoutingKey::CONNECTOR_PROPERTY_DOCUMENT_CREATED->value,
+			Entities\Connectors\Controls\Control::class => Devices\Types\RoutingKey::CONNECTOR_CONTROL_DOCUMENT_CREATED->value,
+			Entities\Devices\Device::class => Devices\Types\RoutingKey::DEVICE_DOCUMENT_CREATED->value,
+			Entities\Devices\Properties\Property::class => Devices\Types\RoutingKey::DEVICE_PROPERTY_DOCUMENT_CREATED->value,
+			Entities\Devices\Controls\Control::class => Devices\Types\RoutingKey::DEVICE_CONTROL_DOCUMENT_CREATED->value,
+			Entities\Channels\Channel::class => Devices\Types\RoutingKey::CHANNEL_DOCUMENT_CREATED->value,
+			Entities\Channels\Properties\Property::class => Devices\Types\RoutingKey::CHANNEL_PROPERTY_DOCUMENT_CREATED->value,
+			Entities\Channels\Controls\Control::class => Devices\Types\RoutingKey::CHANNEL_CONTROL_DOCUMENT_CREATED->value,
+		];
+
+	private const array MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING
+		= [
+			Entities\Connectors\Connector::class => Devices\Types\RoutingKey::CONNECTOR_DOCUMENT_UPDATED->value,
+			Entities\Connectors\Properties\Property::class => Devices\Types\RoutingKey::CONNECTOR_PROPERTY_DOCUMENT_UPDATED->value,
+			Entities\Connectors\Controls\Control::class => Devices\Types\RoutingKey::CONNECTOR_CONTROL_DOCUMENT_UPDATED->value,
+			Entities\Devices\Device::class => Devices\Types\RoutingKey::DEVICE_DOCUMENT_UPDATED->value,
+			Entities\Devices\Properties\Property::class => Devices\Types\RoutingKey::DEVICE_PROPERTY_DOCUMENT_UPDATED->value,
+			Entities\Devices\Controls\Control::class => Devices\Types\RoutingKey::DEVICE_CONTROL_DOCUMENT_UPDATED->value,
+			Entities\Channels\Channel::class => Devices\Types\RoutingKey::CHANNEL_DOCUMENT_UPDATED->value,
+			Entities\Channels\Properties\Property::class => Devices\Types\RoutingKey::CHANNEL_PROPERTY_DOCUMENT_UPDATED->value,
+			Entities\Channels\Controls\Control::class => Devices\Types\RoutingKey::CHANNEL_CONTROL_DOCUMENT_UPDATED->value,
+		];
+
+	private const array MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING
+		= [
+			Entities\Connectors\Connector::class => Devices\Types\RoutingKey::CONNECTOR_DOCUMENT_DELETED->value,
+			Entities\Connectors\Properties\Property::class => Devices\Types\RoutingKey::CONNECTOR_PROPERTY_DOCUMENT_DELETED->value,
+			Entities\Connectors\Controls\Control::class => Devices\Types\RoutingKey::CONNECTOR_CONTROL_DOCUMENT_DELETED->value,
+			Entities\Devices\Device::class => Devices\Types\RoutingKey::DEVICE_DOCUMENT_DELETED->value,
+			Entities\Devices\Properties\Property::class => Devices\Types\RoutingKey::DEVICE_PROPERTY_DOCUMENT_DELETED->value,
+			Entities\Devices\Controls\Control::class => Devices\Types\RoutingKey::DEVICE_CONTROL_DOCUMENT_DELETED->value,
+			Entities\Channels\Channel::class => Devices\Types\RoutingKey::CHANNEL_DOCUMENT_DELETED->value,
+			Entities\Channels\Properties\Property::class => Devices\Types\RoutingKey::CHANNEL_PROPERTY_DOCUMENT_DELETED->value,
+			Entities\Channels\Controls\Control::class => Devices\Types\RoutingKey::CHANNEL_CONTROL_DOCUMENT_DELETED->value,
+		];
+
 	public function __construct(
 		private ORM\EntityManagerInterface $entityManager,
 		private Models\States\ConnectorPropertiesManager $connectorPropertiesStatesManager,
@@ -184,7 +223,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 		switch ($action) {
 			case self::ACTION_CREATED:
-				foreach (Devices\Constants::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -194,7 +233,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_UPDATED:
-				foreach (Devices\Constants::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -204,7 +243,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_DELETED:
-				foreach (Devices\Constants::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 

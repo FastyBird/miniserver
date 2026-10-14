@@ -78,7 +78,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 			try {
 				return $this->publisher->publish(
 					$source ?? Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
+					Types\RoutingKey::CHANNEL_PROPERTY_ACTION->value,
 					$this->documentFactory->create(
 						DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 						[
@@ -153,7 +153,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 			try {
 				return $this->publisher->publish(
 					$source ?? Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
+					Types\RoutingKey::CHANNEL_PROPERTY_ACTION->value,
 					$this->documentFactory->create(
 						DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 						array_merge(
@@ -207,7 +207,7 @@ final class ChannelPropertiesManager extends Models\States\PropertiesManager
 			try {
 				return $this->publisher->publish(
 					$source ?? Sources\Module::DEVICES,
-					Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
+					Types\RoutingKey::CHANNEL_PROPERTY_ACTION->value,
 					$this->documentFactory->create(
 						DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 						array_merge(
