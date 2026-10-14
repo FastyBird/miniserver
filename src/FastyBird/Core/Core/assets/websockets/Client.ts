@@ -12,16 +12,38 @@ import {
 	OnConnectCallback,
 	OnDisconnectCallback,
 	OnOpenCallback,
+	ReconnectGuard,
 	RpCallResponse,
 	SubscribeCallback,
 } from './types';
 
+// Delay before the first attempt to re-establish a lost connection; it doubles with every
+// further attempt, up to the maximum
+export const RECONNECT_BASE_DELAY = 1000;
+export const RECONNECT_MAX_DELAY = 60000;
+
+// A connection that stayed open at least this long counts as established, so the delay before
+// re-establishing it starts from the base again. One closed sooner keeps the delay growing,
+// which is what keeps a server that accepts and then drops the client from being hit in a loop.
+export const STABLE_CONNECTION_PERIOD = 10000;
+
 export class Client implements IWampClient {
 	private _host: string;
 	private _logger: IWampLogger;
+	private _autoReestablish = true;
 
 	private socket: WebSocket | null;
 	private sessionId: string | null = null;
+
+	// Whether the application wants the connection open: set by open(), cleared by close()
+	private wanted = false;
+	private reconnectGuard: ReconnectGuard | null = null;
+	private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+	private reconnectAttempts = 0;
+	// Bumped whenever a pending re-establishment is cancelled, so an attempt which was waiting
+	// for its timer or its guard knows it has been superseded
+	private reconnectGeneration = 0;
+	private connectedAt: number | null = null;
 
 	private onOpenEvents: OnOpenCallback[];
 	private onCloseEvents: OnCloseCallback[];
@@ -71,29 +93,113 @@ export class Client implements IWampClient {
 		this._logger = logger;
 	}
 
+	set autoReestablish(autoReestablish: boolean) {
+		this._autoReestablish = autoReestablish;
+	}
+
+	public setReconnectGuard(guard: ReconnectGuard | null): void {
+		this.reconnectGuard = guard;
+	}
+
 	public open(): void {
 		if (this.isConnected.value || this.isConnecting.value) {
 			return;
 		}
 
+		this.wanted = true;
+
+		this.cancelReconnect();
+
+		this.connect();
+	}
+
+	public reconnect(): void {
+		if (!this.wanted) {
+			return;
+		}
+
+		this._logger.event('reconnect');
+
+		// An explicit reconnect is no evidence the server accepts the client again, so the delay
+		// before a following attempt keeps growing -- unless the connection it replaces had been
+		// established, which is as good as one closing by itself after the same time
+		const attempts = this.isStable() ? 0 : this.reconnectAttempts;
+
+		this.close(1000, 'Reconnecting');
+
+		this.reconnectAttempts = attempts;
+		this.wanted = true;
+		this.isLost.value = true;
+
+		try {
+			this.connect();
+		} catch {
+			this.scheduleReconnect();
+		}
+	}
+
+	public close(reason?: number, message?: string): void {
+		this.wanted = false;
+		this.reconnectAttempts = 0;
+
+		this.cancelReconnect();
+
+		if (this.socket !== null) {
+			const socket = this.socket;
+
+			// Cleared first, so the listeners know this socket is no longer the client's
+			this.socket = null;
+
+			socket.close(reason, message);
+		}
+
+		this.resetConnection();
+
+		this.isLost.value = false;
+	}
+
+	/**
+	 * Opens a new socket. Its listeners act only while it is the client's current socket, so a
+	 * socket closed by close() or replaced by reconnect() can no longer change the client's state.
+	 *
+	 * @private
+	 */
+	private connect(): void {
+		let socket: WebSocket;
+
 		try {
 			// Open connection to WS server
-			this.socket = new WebSocket(this._host);
+			socket = new WebSocket(this._host);
 		} catch {
 			throw new Error('Connection could not be established');
 		}
 
+		this.socket = socket;
+
 		this.isConnecting.value = true;
 
 		// Connection established with WS server
-		this.socket.addEventListener('open', () => {
+		socket.addEventListener('open', () => {
+			if (socket !== this.socket) {
+				return;
+			}
+
 			this.onOpenEvents.forEach((eventCallback): void => {
 				eventCallback();
 			});
 		});
 
-		// Connection closed by WS server
-		this.socket.addEventListener('close', (event) => {
+		// Connection closed by WS server, or lost
+		socket.addEventListener('close', (event) => {
+			if (socket !== this.socket) {
+				// Closed by close(), or replaced by another socket meanwhile
+				return;
+			}
+
+			this.socket = null;
+
+			const wasStable = this.isStable();
+
 			if (this.isConnected.value) {
 				this.onDisconnectEvents.forEach((eventCallback): void => {
 					eventCallback();
@@ -117,16 +223,27 @@ export class Client implements IWampClient {
 				});
 			}
 
-			this.subscriptions.forEach((subscription, index) => {
-				if (subscription.subscribed) {
-					this.subscriptions[index].subscribed = false;
-				}
-			});
+			this.resetConnection();
 
-			this.isConnected.value = false;
+			if (wasStable) {
+				this.reconnectAttempts = 0;
+			}
+
+			if (this.wanted && this._autoReestablish) {
+				this.isLost.value = true;
+
+				this.scheduleReconnect();
+			} else {
+				this.wanted = false;
+				this.isLost.value = false;
+			}
 		});
 
-		this.socket.addEventListener('message', (event): void => {
+		socket.addEventListener('message', (event): void => {
+			if (socket !== this.socket) {
+				return;
+			}
+
 			let message: any[] = [];
 
 			try {
@@ -157,6 +274,8 @@ export class Client implements IWampClient {
 					} else {
 						this._logger.event('opened', this.sessionId, version, server);
 					}
+
+					this.connectedAt = Date.now();
 
 					this.isLost.value = false;
 					this.isConnecting.value = false;
@@ -204,24 +323,6 @@ export class Client implements IWampClient {
 		});
 	}
 
-	public reconnect(): void {
-		this.close();
-		this.isLost.value = true;
-		this.open();
-	}
-
-	public close(reason?: number, message?: string): void {
-		if (this.socket !== null) {
-			this.socket.close(reason, message);
-
-			this.socket = null;
-		}
-
-		this.isLost.value = false;
-		this.isConnecting.value = false;
-		this.isConnected.value = false;
-	}
-
 	public subscribe(topic: string, handler: SubscribeCallback): boolean {
 		this._logger.event('subscribe', topic);
 
@@ -257,22 +358,28 @@ export class Client implements IWampClient {
 	public unsubscribe(topic: string, handler: SubscribeCallback): boolean {
 		this._logger.event('unsubscribe', topic);
 
-		for (let i = 0, len = this.subscriptions.length; i < len; i++) {
-			if (this.subscriptions[i].topic === topic) {
-				const callLen = this.subscriptions[i].callbacks.length;
+		const index = this.subscriptions.findIndex((subscription): boolean => subscription.topic === topic);
 
-				for (let j = 0; j < callLen; j++) {
-					if (this.subscriptions[i].callbacks[j] === handler) {
-						this.subscriptions[i].callbacks.splice(i, 1);
+		if (index === -1) {
+			return true;
+		}
 
-						break;
-					}
-				}
+		const subscription = this.subscriptions[index];
+		const callbackIndex = subscription.callbacks.indexOf(handler);
 
-				if (this.subscriptions[i].callbacks.length === 0 && this.isConnected.value) {
-					return this.send([MessageCode.MSG_UNSUBSCRIBE, topic]);
-				}
-			}
+		if (callbackIndex !== -1) {
+			subscription.callbacks.splice(callbackIndex, 1);
+		}
+
+		if (subscription.callbacks.length > 0) {
+			return true;
+		}
+
+		// No handler left: the topic is forgotten, so the next connection does not subscribe it again
+		this.subscriptions.splice(index, 1);
+
+		if (this.isConnected.value) {
+			return this.send([MessageCode.MSG_UNSUBSCRIBE, topic]);
 		}
 
 		return true;
@@ -362,6 +469,133 @@ export class Client implements IWampClient {
 				break;
 			}
 		}
+	}
+
+	/**
+	 * Waits, then re-establishes the lost connection. The wait doubles with every attempt up to
+	 * RECONNECT_MAX_DELAY, and a random part of it (at most half) spreads the clients of a
+	 * restarted server apart; it is never shorter than half of RECONNECT_BASE_DELAY.
+	 *
+	 * @private
+	 */
+	private scheduleReconnect(): void {
+		const ceiling = Math.min(RECONNECT_MAX_DELAY, RECONNECT_BASE_DELAY * 2 ** Math.min(this.reconnectAttempts, 16));
+		const delay = Math.round(ceiling / 2 + Math.random() * (ceiling / 2));
+
+		this.reconnectAttempts++;
+
+		const generation = this.reconnectGeneration;
+
+		this._logger.info('reconnect scheduled', this.reconnectAttempts, delay);
+
+		this.reconnectTimer = setTimeout((): void => {
+			void this.attemptReconnect(generation);
+		}, delay);
+	}
+
+	/**
+	 * Asks the guard whether the connection may be re-established (it may refresh the session the
+	 * connection signs in with), then connects. A guard answering false stops re-establishing it,
+	 * one failing is asked again after the next wait.
+	 *
+	 * @private
+	 */
+	private async attemptReconnect(generation: number): Promise<void> {
+		this.reconnectTimer = null;
+
+		if (generation !== this.reconnectGeneration || !this.wanted) {
+			return;
+		}
+
+		if (this.reconnectGuard !== null) {
+			let proceed: boolean;
+
+			try {
+				proceed = await this.reconnectGuard();
+			} catch (e: unknown) {
+				if (generation === this.reconnectGeneration && this.wanted) {
+					this._logger.warn('reconnect guard failed', e);
+
+					this.scheduleReconnect();
+				}
+
+				return;
+			}
+
+			// Opened, closed or re-established by the application while the guard was asked
+			if (generation !== this.reconnectGeneration || !this.wanted) {
+				return;
+			}
+
+			if (!proceed) {
+				this._logger.info('reconnect refused by guard');
+
+				this.wanted = false;
+				this.isLost.value = false;
+
+				return;
+			}
+		}
+
+		try {
+			this.connect();
+		} catch {
+			this.scheduleReconnect();
+		}
+	}
+
+	/**
+	 * Whether the current connection has been open for at least STABLE_CONNECTION_PERIOD
+	 *
+	 * @private
+	 */
+	private isStable(): boolean {
+		return this.isConnected.value && this.connectedAt !== null && Date.now() - this.connectedAt >= STABLE_CONNECTION_PERIOD;
+	}
+
+	/**
+	 * Cancels a pending re-establishment, including one already waiting for its guard
+	 *
+	 * @private
+	 */
+	private cancelReconnect(): void {
+		this.reconnectGeneration++;
+
+		if (this.reconnectTimer !== null) {
+			clearTimeout(this.reconnectTimer);
+
+			this.reconnectTimer = null;
+		}
+	}
+
+	/**
+	 * Forgets the state of the connection which has just ended: its topics have to be subscribed
+	 * again on the next one, and its pending RPC calls can no longer be answered
+	 *
+	 * @private
+	 */
+	private resetConnection(): void {
+		this.subscriptions.forEach((subscription, index) => {
+			if (subscription.subscribed) {
+				this.subscriptions[index].subscribed = false;
+			}
+		});
+
+		const rpcCalls = this.rpcCalls;
+
+		this.rpcCalls = [];
+
+		rpcCalls.forEach((rpcCall): void => {
+			if (typeof rpcCall.reject === 'function') {
+				rpcCall.reject(new Error('Connection closed before the RPC call was answered'));
+			}
+		});
+
+		this.sessionId = null;
+		this.connectedAt = null;
+
+		this.isConnecting.value = false;
+		this.isConnected.value = false;
 	}
 
 	/**

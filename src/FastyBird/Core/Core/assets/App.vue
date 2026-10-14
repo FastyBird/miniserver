@@ -128,6 +128,23 @@ const userSignStatusListener = async (state: string): Promise<void> => {
 	}
 };
 
+// Asked before the WS connection, once lost, is established again: its session has to be signed
+// in, and is refreshed first when its access token has expired. A session which can no longer be
+// refreshed is signed out, which closes the connection for good.
+const wsReconnectGuard = async (): Promise<boolean> => {
+	if (!userAccount?.isSignedIn.value) {
+		return false;
+	}
+
+	if (typeof userAccount.ensureSession !== 'function' || (await userAccount.ensureSession())) {
+		return true;
+	}
+
+	await userAccount.signOut();
+
+	return false;
+};
+
 const onToggleMenu = (): void => {
 	menuState.value = !menuState.value;
 };
@@ -135,6 +152,8 @@ const onToggleMenu = (): void => {
 onBeforeMount((): void => {
 	eventBus.register('loadingOverlay', overlayLoadingListener);
 	eventBus.register('userSigned', userSignStatusListener);
+
+	wampV1Client.client?.setReconnectGuard(wsReconnectGuard);
 });
 
 onMounted((): void => {
@@ -146,7 +165,30 @@ onMounted((): void => {
 onBeforeUnmount((): void => {
 	eventBus.unregister('loadingOverlay', overlayLoadingListener);
 	eventBus.unregister('userSigned', userSignStatusListener);
+
+	wampV1Client.client?.setReconnectGuard(null);
 });
+
+// Signing out, by the user or because the session could not be refreshed, ends the WS connection
+watch(
+	(): boolean => userAccount?.isSignedIn.value ?? false,
+	(signedIn: boolean): void => {
+		if (!signedIn) {
+			wampV1Client.close();
+		}
+	}
+);
+
+// The connection signs in with the access token it was opened with. A refreshed session has a new
+// one and the server removed the old, so the connection is opened again with the new token.
+watch(
+	(): string | null => userAccount?.accessToken?.value ?? null,
+	(accessToken: string | null, previousAccessToken: string | null): void => {
+		if (accessToken !== null && previousAccessToken !== null && accessToken !== previousAccessToken) {
+			wampV1Client.client?.reconnect();
+		}
+	}
+);
 
 watch(
 	(): boolean => isXLDevice.value,

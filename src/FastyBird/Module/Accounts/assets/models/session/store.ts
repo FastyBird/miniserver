@@ -36,19 +36,21 @@ const jsonApiFormatter = new Jsona({
 	jsonPropertiesMapper: new JsonApiJsonPropertiesMapper(),
 });
 
-const defaultSemaphore = {
+// Factories, not shared objects: the store's refs mutate what they hold, and clear() has to
+// start from values nothing has written to
+const defaultSemaphore = (): ISessionStateSemaphore => ({
 	fetching: false,
 	creating: false,
 	updating: false,
-};
+});
 
-const defaultData = {
+const defaultData = (): ISession => ({
 	accessToken: null,
 	refreshToken: null,
 	tokenType: 'Bearer',
 	tokenExpiration: null,
 	accountId: null,
-};
+});
 
 const storeRecordFactory = (cookies: CookiesPlugin, rawData: ISessionRecordFactoryPayload): ISession => {
 	const decodedAccessToken = jwtDecode<{ exp: number; user: string }>(rawData.accessToken);
@@ -93,9 +95,9 @@ export const useSession = defineStore<'accounts_module_session', SessionStoreSet
 
 	const { cookies } = useCookies();
 
-	const semaphore = ref<ISessionStateSemaphore>(defaultSemaphore);
+	const semaphore = ref<ISessionStateSemaphore>(defaultSemaphore());
 
-	const data = ref<ISession>(defaultData);
+	const data = ref<ISession>(defaultData());
 
 	const accessToken = (): string | null => data.value.accessToken;
 
@@ -142,8 +144,8 @@ export const useSession = defineStore<'accounts_module_session', SessionStoreSet
 	};
 
 	const clear = (): void => {
-		semaphore.value = defaultSemaphore;
-		data.value = defaultData;
+		semaphore.value = defaultSemaphore();
+		data.value = defaultData();
 
 		cookies.remove(ACCESS_TOKEN_COOKIE_NAME);
 		cookies.remove(REFRESH_TOKEN_COOKIE_NAME);
@@ -221,11 +223,22 @@ export const useSession = defineStore<'accounts_module_session', SessionStoreSet
 		}
 	};
 
-	const refresh = async (): Promise<boolean> => {
-		if (semaphore.value.updating) {
-			return false;
+	// The refresh in flight. Whoever asks for one meanwhile -- the API client after a 401, the route
+	// guard, the WebSocket reconnect guard -- awaits that one and gets its result, instead of
+	// a false that reads as a failed refresh
+	let pendingRefresh: Promise<boolean> | null = null;
+
+	const refresh = (): Promise<boolean> => {
+		if (pendingRefresh === null) {
+			pendingRefresh = performRefresh().finally((): void => {
+				pendingRefresh = null;
+			});
 		}
 
+		return pendingRefresh;
+	};
+
+	const performRefresh = async (): Promise<boolean> => {
 		cookies.remove(ACCESS_TOKEN_COOKIE_NAME);
 
 		const refreshToken = readCookie(cookies, REFRESH_TOKEN_COOKIE_NAME);

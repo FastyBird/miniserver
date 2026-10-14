@@ -1,4 +1,5 @@
 import { App, computed } from 'vue';
+import { useCookies } from 'vue3-cookies';
 
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import defaultsDeep from 'lodash.defaultsdeep';
@@ -17,10 +18,27 @@ import {
 	registerRolesStore,
 	registerSessionStore,
 } from './models';
+import { ACCESS_TOKEN_COOKIE_NAME } from './models/session';
 import { IAccount } from './models/types';
 import moduleRouter from './router';
 
 const SESSION_API_URL = '/v1/session';
+
+// An access token closer to its expiration than this is refreshed before anything signs in with it
+const ACCESS_TOKEN_EXPIRATION_MARGIN = 30000;
+
+// The statuses the server refuses a session refresh with: 422 for an unknown, expired or no longer
+// usable refresh token (SessionV1::update), 400 for a document it cannot read (BaseV1), 401 and 403
+// from the access check in front of the action, which is open to guests only
+const REFRESH_REFUSED_STATUSES = [400, 401, 403, 422];
+
+const hasAccessTokenCookie = (): boolean => {
+	const { cookies } = useCookies();
+
+	const token = cookies.get(ACCESS_TOKEN_COOKIE_NAME);
+
+	return typeof token === 'string' && token !== '';
+};
 
 export default {
 	install: (app: App, options: IExtensionOptions<{ 'en-US': MessageSchema }>): void => {
@@ -180,6 +198,38 @@ export default {
 					return true;
 				} catch {
 					return false;
+				}
+			},
+			accessToken: computed<string | null>((): string | null => {
+				return sessionStore.data.accessToken;
+			}),
+			ensureSession: async (): Promise<boolean> => {
+				if (!sessionStore.isSignedIn()) {
+					return false;
+				}
+
+				const tokenExpiration = sessionStore.data.tokenExpiration;
+
+				if (
+					sessionStore.accessToken() !== null &&
+					tokenExpiration !== null &&
+					new Date(tokenExpiration).getTime() - ACCESS_TOKEN_EXPIRATION_MARGIN > Date.now() &&
+					hasAccessTokenCookie()
+				) {
+					return true;
+				}
+
+				try {
+					// False when there is no refresh token left to refresh with. A refresh already
+					// under way (e.g. the API client's, after a 401) is awaited, not started again
+					return await sessionStore.refresh();
+				} catch (e: unknown) {
+					const status = Number(get(e, 'exception.response.status', 0));
+
+					// Refused by the server: the session is gone. Anything else -- no answer, a
+					// timeout, rate limiting, a server error -- leaves the session as it is, and the
+					// caller asks again later
+					return !REFRESH_REFUSED_STATUSES.includes(status);
 				}
 			},
 			lock: (): Promise<boolean> => {

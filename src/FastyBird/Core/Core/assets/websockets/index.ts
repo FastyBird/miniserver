@@ -25,6 +25,7 @@ export function createWampV1Client(): InstallFunction {
 
 			wampClient.host = pluginOptions.host;
 			wampClient.logger = new Logger(pluginOptions.debug);
+			wampClient.autoReestablish = pluginOptions.autoReestablish;
 
 			app.provide(key, wampClient);
 		},
