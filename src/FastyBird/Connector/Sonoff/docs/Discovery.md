@@ -60,4 +60,11 @@ a list of found devices will be displayed.
  [OK] Devices discovery was successfully finished
 ```
 
+In the `lan` and `auto` client modes, devices are stored once the search of the local network is over. A device found
+on the network is stored with the address it announced; a device the search did not hear keeps the address it was
+stored with before. A device with an encryption key takes its address only from an announcement that decrypts with that
+key. In the `cloud` client mode there is no search of the local network: devices are stored as soon as the cloud
+answers, and each keeps the address it was stored with before. Discovery finishes once every found device is stored,
+or after one minute at most.
+
 Now that all newly discovered devices have been found, they are available in the [FastyBird](https://www.fastybird.com) [IoT](https://en.wikipedia.org/wiki/Internet_of_things) system and can be utilized.
