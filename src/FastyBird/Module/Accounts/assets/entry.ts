@@ -1,4 +1,5 @@
 import { App, computed } from 'vue';
+import { useCookies } from 'vue3-cookies';
 
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import defaultsDeep from 'lodash.defaultsdeep';
@@ -17,10 +18,22 @@ import {
 	registerRolesStore,
 	registerSessionStore,
 } from './models';
+import { ACCESS_TOKEN_COOKIE_NAME } from './models/session';
 import { IAccount } from './models/types';
 import moduleRouter from './router';
 
 const SESSION_API_URL = '/v1/session';
+
+// An access token closer to its expiration than this is refreshed before anything signs in with it
+const ACCESS_TOKEN_EXPIRATION_MARGIN = 30000;
+
+const hasAccessTokenCookie = (): boolean => {
+	const { cookies } = useCookies();
+
+	const token = cookies.get(ACCESS_TOKEN_COOKIE_NAME);
+
+	return typeof token === 'string' && token !== '';
+};
 
 export default {
 	install: (app: App, options: IExtensionOptions<{ 'en-US': MessageSchema }>): void => {
@@ -180,6 +193,41 @@ export default {
 					return true;
 				} catch {
 					return false;
+				}
+			},
+			accessToken: computed<string | null>((): string | null => {
+				return sessionStore.data.accessToken;
+			}),
+			ensureSession: async (): Promise<boolean> => {
+				if (!sessionStore.isSignedIn()) {
+					return false;
+				}
+
+				// A refresh already under way replaces the access token when it completes
+				if (sessionStore.semaphore.updating) {
+					return true;
+				}
+
+				const tokenExpiration = sessionStore.data.tokenExpiration;
+
+				if (
+					sessionStore.accessToken() !== null &&
+					tokenExpiration !== null &&
+					new Date(tokenExpiration).getTime() - ACCESS_TOKEN_EXPIRATION_MARGIN > Date.now() &&
+					hasAccessTokenCookie()
+				) {
+					return true;
+				}
+
+				try {
+					// False when there is no refresh token left to refresh with
+					return await sessionStore.refresh();
+				} catch (e: unknown) {
+					const status = Number(get(e, 'exception.response.status', 0));
+
+					// Refused by the server: the session is gone. Not answered, or failed on the
+					// server's side: the session may still be valid, it is asked again later
+					return status < 400 || status >= 500;
 				}
 			},
 			lock: (): Promise<boolean> => {
