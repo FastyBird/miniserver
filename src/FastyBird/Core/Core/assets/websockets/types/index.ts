@@ -7,6 +7,12 @@ export type OnDisconnectCallback = () => void;
 
 export type SubscribeCallback = (content: string) => void;
 
+/**
+ * Asked before a lost connection is re-established: true to connect again, false to stop
+ * (there is nothing to sign in with any more). A rejected promise is asked again after the next wait.
+ */
+export type ReconnectGuard = () => Promise<boolean>;
+
 export interface RpCallResponse<T> {
 	data: T;
 }
@@ -40,8 +46,16 @@ export interface IWampClient {
 
 	set logger(logger: IWampLogger);
 
+	set autoReestablish(autoReestablish: boolean);
+
+	setReconnectGuard(guard: ReconnectGuard | null): void;
+
 	open(): void;
 
+	/**
+	 * Replaces the connection with a new one, e.g. after the credentials it signs in with changed.
+	 * Does nothing when the connection is closed and is not being re-established.
+	 */
 	reconnect(): void;
 
 	close(reason?: number, message?: string): void;
