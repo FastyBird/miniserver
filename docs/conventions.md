@@ -197,8 +197,7 @@ There is no root-level `Constants` class. A constant lives, typed, with the clas
   class is its only reader (`FastyBird\Module\Devices\Subscribers\ModuleEntities`'
   `MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING`).
 
-Do not add a constants class back, in Core or in a package. The packages #726 has not reached yet
-still have their `Constants` class until it does; do not add a constant to one.
+Do not add a constants class back, in Core or in a package.
 
 ## DI
 
