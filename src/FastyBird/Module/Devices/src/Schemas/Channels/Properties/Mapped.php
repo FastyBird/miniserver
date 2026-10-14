@@ -153,7 +153,7 @@ final class Mapped extends Property
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CHANNEL_PROPERTY,
+					Router\ApiRoutes::ROUTE_NAME_CHANNEL_PROPERTY,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $parent->getChannel()->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_CHANNEL_ID => $parent->getChannel()->getId()->toString(),
@@ -166,7 +166,7 @@ final class Mapped extends Property
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CHANNEL_PROPERTY_STATE,
+					Router\ApiRoutes::ROUTE_NAME_CHANNEL_PROPERTY_STATE,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getChannel()->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_CHANNEL_ID => $resource->getChannel()->getId()->toString(),
@@ -201,7 +201,7 @@ final class Mapped extends Property
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CHANNEL_PROPERTY_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_CHANNEL_PROPERTY_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getChannel()->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_CHANNEL_ID => $resource->getChannel()->getId()->toString(),

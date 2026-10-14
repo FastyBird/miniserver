@@ -103,7 +103,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Devices\Constants::ROUTE_NAME_CHANNEL_PROPERTY,
+				Router\ApiRoutes::ROUTE_NAME_CHANNEL_PROPERTY,
 				[
 					Router\ApiRoutes::URL_DEVICE_ID => $resource->getChannel()->getDevice()->getId()->toString(),
 					Router\ApiRoutes::URL_CHANNEL_ID => $resource->getChannel()->getId()->toString(),
@@ -154,7 +154,7 @@ abstract class Property extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CHANNEL,
+					Router\ApiRoutes::ROUTE_NAME_CHANNEL,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getChannel()->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getChannel()->getId()->toString(),

@@ -16,10 +16,10 @@ use function array_merge;
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_DELETED_ROUTING_KEY,
+	Devices\Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED->value,
+	Devices\Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_CREATED->value,
+	Devices\Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_UPDATED->value,
+	Devices\Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_DELETED->value,
 ])]
 final class Property extends Devices\Documents\States\Property
 {

@@ -17,7 +17,7 @@ use Ramsey\Uuid;
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY,
+	Types\RoutingKey::CHANNEL_CONTROL_ACTION->value,
 ])]
 final readonly class Action implements DevicesDocuments\Document
 {

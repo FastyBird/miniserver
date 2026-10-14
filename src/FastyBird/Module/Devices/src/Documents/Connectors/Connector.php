@@ -23,10 +23,10 @@ use function array_map;
 #[CoreDocuments\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
 #[CoreDocuments\Mapping\MappedSuperclass]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_CONNECTOR_DOCUMENT_REPORTED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CONNECTOR_DOCUMENT_CREATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CONNECTOR_DOCUMENT_UPDATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CONNECTOR_DOCUMENT_DELETED_ROUTING_KEY,
+	Types\RoutingKey::CONNECTOR_DOCUMENT_REPORTED->value,
+	Types\RoutingKey::CONNECTOR_DOCUMENT_CREATED->value,
+	Types\RoutingKey::CONNECTOR_DOCUMENT_UPDATED->value,
+	Types\RoutingKey::CONNECTOR_DOCUMENT_DELETED->value,
 ])]
 abstract class Connector implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {

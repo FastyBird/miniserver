@@ -122,7 +122,7 @@ final class SocketsBridgeCommandTest extends Tests\Cases\Unit\DbTestCase
 
 		$consumers->consume(
 			Sources\Module::DEVICES,
-			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
+			DevicesTypes\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED->value,
 			$this->channelPropertyState($actualValue, $expectedValue),
 		);
 
@@ -144,7 +144,7 @@ final class SocketsBridgeCommandTest extends Tests\Cases\Unit\DbTestCase
 
 		$consumers->consume(
 			Sources\Connector::VIRTUAL,
-			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
+			DevicesTypes\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED->value,
 			$document,
 		);
 
@@ -153,7 +153,7 @@ final class SocketsBridgeCommandTest extends Tests\Cases\Unit\DbTestCase
 				[
 					'topic' => self::DEVICES_TOPIC,
 					'message' => [
-						'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
+						'routing_key' => DevicesTypes\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED->value,
 						'source' => Sources\Connector::VIRTUAL->value,
 						'data' => $document->toArray(),
 					],
@@ -206,7 +206,7 @@ final class SocketsBridgeCommandTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(1, $events);
 		self::assertSame(self::DEVICES_TOPIC, $events[0]['topic']);
 		self::assertSame(
-			Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_CREATED_ROUTING_KEY,
+			DevicesTypes\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_CREATED->value,
 			$this->field($events[0]['message'], 'routing_key'),
 		);
 		self::assertSame(Sources\Connector::VIRTUAL->value, $this->field($events[0]['message'], 'source'));

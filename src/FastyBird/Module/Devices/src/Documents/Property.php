@@ -385,7 +385,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 				}, $format));
 			}
 
-			if (preg_match(Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
+			if (preg_match(Devices\Entities\Property::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
 				return new Formats\NumberRange($format);
 			}
 		} elseif (
@@ -416,9 +416,9 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 				}, $format));
 			}
 
-			if (preg_match(Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
+			if (preg_match(Devices\Entities\Property::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
 				return new Formats\CombinedEnum($format);
-			} elseif (preg_match(Devices\Constants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
+			} elseif (preg_match(Devices\Entities\Property::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
 				return new Formats\StringEnum($format);
 			}
 		}

@@ -96,7 +96,7 @@ final class ModuleEntitiesTest extends TestCase
 				self::callback(static function ($key): bool {
 					self::assertTrue(is_string($key));
 					self::assertSame(
-						Devices\Constants::MESSAGE_BUS_DEVICE_DOCUMENT_CREATED_ROUTING_KEY,
+						Devices\Types\RoutingKey::DEVICE_DOCUMENT_CREATED->value,
 						$key,
 					);
 
@@ -217,7 +217,7 @@ final class ModuleEntitiesTest extends TestCase
 				self::callback(static function ($key): bool {
 					self::assertTrue(is_string($key));
 					self::assertSame(
-						Devices\Constants::MESSAGE_BUS_DEVICE_DOCUMENT_UPDATED_ROUTING_KEY,
+						Devices\Types\RoutingKey::DEVICE_DOCUMENT_UPDATED->value,
 						$key,
 					);
 
@@ -338,7 +338,7 @@ final class ModuleEntitiesTest extends TestCase
 				self::callback(static function ($key): bool {
 					self::assertTrue(is_string($key));
 					self::assertSame(
-						Devices\Constants::MESSAGE_BUS_DEVICE_DOCUMENT_DELETED_ROUTING_KEY,
+						Devices\Types\RoutingKey::DEVICE_DOCUMENT_DELETED->value,
 						$key,
 					);
 

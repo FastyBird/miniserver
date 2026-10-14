@@ -133,7 +133,7 @@ final class ConnectorProperty extends Property
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CONNECTOR_PROPERTY,
+					DevicesRouter\ApiRoutes::ROUTE_NAME_CONNECTOR_PROPERTY,
 					[
 						DevicesRouter\ApiRoutes::URL_CONNECTOR_ID => $resource->getProperty()->getConnector()->getId()->toString(),
 						DevicesRouter\ApiRoutes::URL_ITEM_ID => $resource->getProperty()->getId()->toString(),

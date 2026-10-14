@@ -99,7 +99,7 @@ final class ExchangeV1 extends Controllers\Controller
 							Controllers\WampApplication::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
-								'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+								'routing_key' => Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 								'source' => Sources\Module::DEVICES->value,
 								'data' => $state->toArray(),
 							]),
@@ -126,7 +126,7 @@ final class ExchangeV1 extends Controllers\Controller
 							Controllers\WampApplication::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
-								'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+								'routing_key' => Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 								'source' => Sources\Module::DEVICES->value,
 								'data' => $state->toArray(),
 							]),
@@ -150,7 +150,7 @@ final class ExchangeV1 extends Controllers\Controller
 							Controllers\WampApplication::MSG_EVENT,
 							$topic->getId(),
 							Utils\Json::encode([
-								'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+								'routing_key' => Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 								'source' => Sources\Module::DEVICES->value,
 								'data' => $state->toArray(),
 							]),
@@ -215,7 +215,7 @@ final class ExchangeV1 extends Controllers\Controller
 		$data = isset($args['data']) && is_array($args['data']) ? $args['data'] : null;
 
 		switch ($args['routing_key']) {
-			case Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY:
+			case Types\RoutingKey::CONNECTOR_CONTROL_ACTION->value:
 				// No HTTP endpoint runs a control; it changes state, so it takes the rule for a change
 				$this->authorize($client, ...self::WRITE_ROLES);
 
@@ -231,12 +231,12 @@ final class ExchangeV1 extends Controllers\Controller
 				}
 
 				$this->publishControlAction(
-					Devices\Constants::MESSAGE_BUS_CONNECTOR_CONTROL_ACTION_ROUTING_KEY,
+					Types\RoutingKey::CONNECTOR_CONTROL_ACTION->value,
 					$document,
 				);
 
 				break;
-			case Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY:
+			case Types\RoutingKey::DEVICE_CONTROL_ACTION->value:
 				// No HTTP endpoint runs a control; it changes state, so it takes the rule for a change
 				$this->authorize($client, ...self::WRITE_ROLES);
 
@@ -252,12 +252,12 @@ final class ExchangeV1 extends Controllers\Controller
 				}
 
 				$this->publishControlAction(
-					Devices\Constants::MESSAGE_BUS_DEVICE_CONTROL_ACTION_ROUTING_KEY,
+					Types\RoutingKey::DEVICE_CONTROL_ACTION->value,
 					$document,
 				);
 
 				break;
-			case Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY:
+			case Types\RoutingKey::CHANNEL_CONTROL_ACTION->value:
 				// No HTTP endpoint runs a control; it changes state, so it takes the rule for a change
 				$this->authorize($client, ...self::WRITE_ROLES);
 
@@ -273,12 +273,12 @@ final class ExchangeV1 extends Controllers\Controller
 				}
 
 				$this->publishControlAction(
-					Devices\Constants::MESSAGE_BUS_CHANNEL_CONTROL_ACTION_ROUTING_KEY,
+					Types\RoutingKey::CHANNEL_CONTROL_ACTION->value,
 					$document,
 				);
 
 				break;
-			case Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY:
+			case Types\RoutingKey::CONNECTOR_PROPERTY_ACTION->value:
 				$document = $data !== null
 					? $this->documentFactory->create(
 						DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
@@ -293,7 +293,7 @@ final class ExchangeV1 extends Controllers\Controller
 				}
 
 				break;
-			case Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY:
+			case Types\RoutingKey::DEVICE_PROPERTY_ACTION->value:
 				$document = $data !== null
 					? $this->documentFactory->create(
 						DevicesDocuments\States\Devices\Properties\Actions\Action::class,
@@ -308,7 +308,7 @@ final class ExchangeV1 extends Controllers\Controller
 				}
 
 				break;
-			case Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY:
+			case Types\RoutingKey::CHANNEL_PROPERTY_ACTION->value:
 				$document = $data !== null
 					? $this->documentFactory->create(
 						DevicesDocuments\States\Channels\Properties\Actions\Action::class,
@@ -464,7 +464,7 @@ final class ExchangeV1 extends Controllers\Controller
 				Controllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
-					'routing_key' => Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+					'routing_key' => Types\RoutingKey::CONNECTOR_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 					'source' => Sources\Module::DEVICES->value,
 					'data' => $state->toArray(),
 				]),
@@ -557,7 +557,7 @@ final class ExchangeV1 extends Controllers\Controller
 				Controllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
-					'routing_key' => Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+					'routing_key' => Types\RoutingKey::DEVICE_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 					'source' => Sources\Module::DEVICES->value,
 					'data' => $state->toArray(),
 				]),
@@ -650,7 +650,7 @@ final class ExchangeV1 extends Controllers\Controller
 				Controllers\WampApplication::MSG_EVENT,
 				$topic->getId(),
 				Utils\Json::encode([
-					'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+					'routing_key' => Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 					'source' => Sources\Module::DEVICES->value,
 					'data' => $state->toArray(),
 				]),

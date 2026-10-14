@@ -2,6 +2,7 @@
 
 namespace FastyBird\Connector\Viera\Writers;
 
+use FastyBird\Module\Devices;
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\Documents as VieraDocuments;
 use FastyBird\Connector\Viera\Exceptions as VieraExceptions;
@@ -14,7 +15,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Consumers;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Devices\Constants as DevicesConstants;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
@@ -101,7 +101,7 @@ final class Exchange extends Periodic implements Writer, Consumers\Consumer
 	{
 		try {
 			if ($document instanceof DevicesDocuments\States\Channels\Properties\Property) {
-				if (str_starts_with($routingKey, DevicesConstants::MESSAGE_BUS_DELETED_ROUTING_KEY)) {
+				if (str_starts_with($routingKey, Devices\Types\RoutingKey::DELETED_PREFIX)) {
 					return;
 				}
 

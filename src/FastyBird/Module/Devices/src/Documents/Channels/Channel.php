@@ -23,10 +23,10 @@ use function array_map;
 #[CoreDocuments\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
 #[CoreDocuments\Mapping\MappedSuperclass]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_CHANNEL_DOCUMENT_REPORTED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CHANNEL_DOCUMENT_CREATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CHANNEL_DOCUMENT_UPDATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CHANNEL_DOCUMENT_DELETED_ROUTING_KEY,
+	Types\RoutingKey::CHANNEL_DOCUMENT_REPORTED->value,
+	Types\RoutingKey::CHANNEL_DOCUMENT_CREATED->value,
+	Types\RoutingKey::CHANNEL_DOCUMENT_UPDATED->value,
+	Types\RoutingKey::CHANNEL_DOCUMENT_DELETED->value,
 ])]
 abstract class Channel implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {

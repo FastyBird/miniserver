@@ -299,7 +299,7 @@ abstract class Property implements Entity,
 					return strval($item);
 				}, $format));
 
-				if (preg_match(Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
+				if (preg_match(self::VALUE_FORMAT_NUMBER_RANGE, $plainFormat) === 1) {
 					$this->format = $plainFormat;
 
 					return;
@@ -339,8 +339,8 @@ abstract class Property implements Entity,
 				}, $format));
 
 				if (
-					preg_match(Devices\Constants::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
-					|| preg_match(Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
+					preg_match(self::VALUE_FORMAT_STRING_ENUM, $plainFormat) === 1
+					|| preg_match(self::VALUE_FORMAT_COMBINED_ENUM, $plainFormat) === 1
 				) {
 					$this->format = $plainFormat;
 
@@ -752,7 +752,7 @@ abstract class Property implements Entity,
 				true,
 			)
 		) {
-			if (preg_match(Devices\Constants::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
+			if (preg_match(self::VALUE_FORMAT_NUMBER_RANGE, $format) === 1) {
 				return new Formats\NumberRange($format);
 			}
 		} elseif (
@@ -767,9 +767,9 @@ abstract class Property implements Entity,
 				true,
 			)
 		) {
-			if (preg_match(Devices\Constants::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
+			if (preg_match(self::VALUE_FORMAT_COMBINED_ENUM, $format) === 1) {
 				return new Formats\CombinedEnum($format);
-			} elseif (preg_match(Devices\Constants::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
+			} elseif (preg_match(self::VALUE_FORMAT_STRING_ENUM, $format) === 1) {
 				return new Formats\StringEnum($format);
 			}
 		}

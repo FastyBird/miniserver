@@ -579,7 +579,7 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 
 		if ($owner === 'connector') {
 			return [
-				Devices\Constants::MESSAGE_BUS_CONNECTOR_PROPERTY_ACTION_ROUTING_KEY,
+				DevicesTypes\RoutingKey::CONNECTOR_PROPERTY_ACTION->value,
 				$documentFactory->create(
 					DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 					$data + ['connector' => self::CONNECTOR],
@@ -589,7 +589,7 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 
 		if ($owner === 'device') {
 			return [
-				Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+				DevicesTypes\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 				$documentFactory->create(
 					DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 					$data + ['device' => self::DEVICE],
@@ -598,7 +598,7 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 		}
 
 		return [
-			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_ACTION_ROUTING_KEY,
+			DevicesTypes\RoutingKey::CHANNEL_PROPERTY_ACTION->value,
 			$documentFactory->create(
 				DevicesDocuments\States\Channels\Properties\Actions\Action::class,
 				$data + ['channel' => self::CHANNEL],

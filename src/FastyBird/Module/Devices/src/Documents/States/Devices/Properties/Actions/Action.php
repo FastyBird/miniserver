@@ -19,7 +19,7 @@ use function sprintf;
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_DEVICE_PROPERTY_ACTION_ROUTING_KEY,
+	Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 ])]
 final readonly class Action implements CoreDocuments\Document
 {

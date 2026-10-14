@@ -73,7 +73,7 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Devices\Constants::ROUTE_NAME_CHANNEL,
+				Router\ApiRoutes::ROUTE_NAME_CHANNEL,
 				[
 					Router\ApiRoutes::URL_DEVICE_ID => $resource->getDevice()->getId()->toString(),
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
@@ -133,7 +133,7 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CHANNEL_PROPERTIES,
+					Router\ApiRoutes::ROUTE_NAME_CHANNEL_PROPERTIES,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_CHANNEL_ID => $resource->getId()->toString(),
@@ -148,7 +148,7 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CHANNEL_CONTROLS,
+					Router\ApiRoutes::ROUTE_NAME_CHANNEL_CONTROLS,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_CHANNEL_ID => $resource->getId()->toString(),
@@ -163,7 +163,7 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getDevice()->getId()->toString(),
 					],
@@ -196,7 +196,7 @@ abstract class Channel extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CHANNEL_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_CHANNEL_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),

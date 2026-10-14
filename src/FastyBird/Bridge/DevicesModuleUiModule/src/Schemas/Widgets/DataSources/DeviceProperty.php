@@ -158,7 +158,7 @@ final class DeviceProperty extends Property
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_PROPERTY,
+					DevicesRouter\ApiRoutes::ROUTE_NAME_DEVICE_PROPERTY,
 					[
 						DevicesRouter\ApiRoutes::URL_DEVICE_ID => $resource->getProperty()->getDevice()->getId()->toString(),
 						DevicesRouter\ApiRoutes::URL_ITEM_ID => $resource->getProperty()->getId()->toString(),

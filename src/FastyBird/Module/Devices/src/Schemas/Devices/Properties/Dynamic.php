@@ -144,7 +144,7 @@ final class Dynamic extends Property
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_PROPERTY_CHILDREN,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE_PROPERTY_CHILDREN,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_PROPERTY_ID => $resource->getId()->toString(),
@@ -159,7 +159,7 @@ final class Dynamic extends Property
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_PROPERTY_STATE,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE_PROPERTY_STATE,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_PROPERTY_ID => $resource->getId()->toString(),
@@ -193,7 +193,7 @@ final class Dynamic extends Property
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_DEVICE_PROPERTY_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_DEVICE_PROPERTY_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_DEVICE_ID => $resource->getDevice()->getId()->toString(),
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),

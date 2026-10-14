@@ -31,10 +31,10 @@ use function array_merge;
 ])]
 #[CoreDocuments\Mapping\MappedSuperclass]
 #[CoreDocuments\Mapping\RoutingMap([
-	Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_DOCUMENT_REPORTED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_DOCUMENT_CREATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_DOCUMENT_UPDATED_ROUTING_KEY,
-	Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_DOCUMENT_DELETED_ROUTING_KEY,
+	DevicesTypes\RoutingKey::CHANNEL_PROPERTY_DOCUMENT_REPORTED->value,
+	DevicesTypes\RoutingKey::CHANNEL_PROPERTY_DOCUMENT_CREATED->value,
+	DevicesTypes\RoutingKey::CHANNEL_PROPERTY_DOCUMENT_UPDATED->value,
+	DevicesTypes\RoutingKey::CHANNEL_PROPERTY_DOCUMENT_DELETED->value,
 ])]
 abstract class Property extends DevicesDocuments\Property
 {

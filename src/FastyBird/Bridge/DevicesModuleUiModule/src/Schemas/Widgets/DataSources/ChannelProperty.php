@@ -158,7 +158,7 @@ final class ChannelProperty extends Property
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Devices\Constants::ROUTE_NAME_CHANNEL_PROPERTY,
+					DevicesRouter\ApiRoutes::ROUTE_NAME_CHANNEL_PROPERTY,
 					[
 						DevicesRouter\ApiRoutes::URL_DEVICE_ID => $resource->getProperty()->getChannel()->getDevice()->getId()->toString(),
 						DevicesRouter\ApiRoutes::URL_CHANNEL_ID => $resource->getProperty()->getChannel()->getId()->toString(),

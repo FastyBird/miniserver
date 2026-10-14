@@ -79,7 +79,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 			DevicesConsumers\SocketsBridge::class,
 		)->consume(
 			Sources\Connector::VIRTUAL,
-			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+			Devices\Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 			$document,
 		);
 
@@ -88,7 +88,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 				[
 					'topic' => self::DEVICES_TOPIC,
 					'message' => [
-						'routing_key' => Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+						'routing_key' => Devices\Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 						'source' => Sources\Connector::VIRTUAL->value,
 						'data' => $document->toArray(),
 					],
@@ -175,7 +175,7 @@ final class SocketsBridgeTest extends Tests\Cases\Unit\DbTestCase
 
 		$bridge->consume(
 			Sources\Connector::VIRTUAL,
-			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+			Devices\Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 			$this->channelPropertyState(
 				'bbcccf8c-33ab-431b-a795-d7bb38b6b6db',
 				'17c59dfa-2edd-438e-8c49-faa4e38e5a5e',

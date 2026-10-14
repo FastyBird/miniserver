@@ -316,7 +316,7 @@ $wampModuleRoutes = static function () use ($boot): array {
 	$routes = [];
 
 	foreach ([
-		'/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
+		'/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/exchange',
 		'/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
 	] as $path) {
 		$request = $router->match(new Handshake\Request(new Http\UrlScript('ws://localhost' . $path)));
@@ -375,7 +375,7 @@ $socketsBridges = static function () use ($boot): array {
 	$loop = EventLoop\Loop::get();
 
 	$topics = [
-		'/' . Devices\Constants::MODULE_DEVICES_PREFIX . '/v1/exchange',
+		'/' . Devices\DI\DevicesExtension::MODULE_DEVICES_PREFIX . '/v1/exchange',
 		'/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
 	];
 
@@ -417,14 +417,14 @@ $socketsBridges = static function () use ($boot): array {
 		'Devices' => [
 			'fbDevicesModule.exchange.consumer.socketsBridge',
 			Sources\Connector::VIRTUAL,
-			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED_ROUTING_KEY,
+			Devices\Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_REPORTED->value,
 			$state,
 		],
 		// the same state, written by a SET: a command for its target, which no client is sent (#679)
 		'Devices command' => [
 			'fbDevicesModule.exchange.consumer.socketsBridge',
 			Sources\Module::DEVICES,
-			Devices\Constants::MESSAGE_BUS_CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED_ROUTING_KEY,
+			Devices\Types\RoutingKey::CHANNEL_PROPERTY_STATE_DOCUMENT_UPDATED->value,
 			$state,
 		],
 		'Ui' => [
