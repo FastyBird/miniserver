@@ -33,6 +33,8 @@ final class Manager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
@@ -40,7 +42,7 @@ final class Manager
 	 * @throws ReflectionException
 	 */
 	public function create(
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Widgets\DataSources\DataSource
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
@@ -52,6 +54,8 @@ final class Manager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -60,7 +64,7 @@ final class Manager
 	 */
 	public function update(
 		Entities\Widgets\DataSources\DataSource $entity,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Widgets\DataSources\DataSource
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);
