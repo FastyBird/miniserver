@@ -34,6 +34,27 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 	private const string ACTION_DELETED = 'deleted';
 
+	private const array MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING = [
+		Entities\Triggers\Trigger::class => Types\RoutingKey::TRIGGER_DOCUMENT_CREATED->value,
+		Entities\Actions\Action::class => Types\RoutingKey::ACTION_DOCUMENT_CREATED->value,
+		Entities\Notifications\Notification::class => Types\RoutingKey::NOTIFICATION_DOCUMENT_CREATED->value,
+		Entities\Conditions\Condition::class => Types\RoutingKey::CONDITION_DOCUMENT_CREATED->value,
+	];
+
+	private const array MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING = [
+		Entities\Triggers\Trigger::class => Types\RoutingKey::TRIGGER_DOCUMENT_UPDATED->value,
+		Entities\Actions\Action::class => Types\RoutingKey::ACTION_DOCUMENT_UPDATED->value,
+		Entities\Notifications\Notification::class => Types\RoutingKey::NOTIFICATION_DOCUMENT_UPDATED->value,
+		Entities\Conditions\Condition::class => Types\RoutingKey::CONDITION_DOCUMENT_UPDATED->value,
+	];
+
+	private const array MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING = [
+		Entities\Triggers\Trigger::class => Types\RoutingKey::TRIGGER_DOCUMENT_DELETED->value,
+		Entities\Actions\Action::class => Types\RoutingKey::ACTION_DOCUMENT_DELETED->value,
+		Entities\Notifications\Notification::class => Types\RoutingKey::NOTIFICATION_DOCUMENT_DELETED->value,
+		Entities\Conditions\Condition::class => Types\RoutingKey::CONDITION_DOCUMENT_DELETED->value,
+	];
+
 	public function __construct(
 		private ORM\EntityManagerInterface $entityManager,
 		private EventLoop\Status $eventLoopStatus,

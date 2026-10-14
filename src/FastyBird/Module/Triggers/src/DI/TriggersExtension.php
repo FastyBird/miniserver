@@ -35,6 +35,8 @@ final class TriggersExtension extends NetteDI\CompilerExtension implements Trans
 
 	public const string TRIGGER_TYPE_TAG = 'trigger_type';
 
+	public const string MODULE_TRIGGERS_PREFIX = 'triggers-module';
+
 	public static function register(
 		Boot\Configurator $config,
 		string $extensionName = self::NAME,

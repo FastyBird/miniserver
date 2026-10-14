@@ -44,6 +44,8 @@ final class UiExtension extends NetteDI\CompilerExtension implements Translation
 
 	public const string NAME = 'fbUiModule';
 
+	public const string MODULE_UI_PREFIX = 'ui-module';
+
 	public static function register(
 		Boot\Configurator $config,
 		string $extensionName = self::NAME,

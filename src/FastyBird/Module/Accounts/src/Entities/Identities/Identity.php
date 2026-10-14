@@ -38,6 +38,10 @@ class Identity implements AccountsEntities\Entity,
 	use PersistenceEntities\HasEntityCreated;
 	use PersistenceEntities\HasEntityUpdated;
 
+	public const int IDENTITY_UID_MAXIMAL_LENGTH = 50;
+
+	public const int IDENTITY_PASSWORD_MINIMAL_LENGTH = 8;
+
 	#[ORM\Id]
 	#[ORM\Column(name: 'identity_id', type: Uuid\Doctrine\UuidBinaryType::NAME)]
 	#[ORM\CustomIdGenerator(class: Uuid\Doctrine\UuidGenerator::class)]

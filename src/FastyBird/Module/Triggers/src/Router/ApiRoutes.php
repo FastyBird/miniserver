@@ -20,6 +20,36 @@ final readonly class ApiRoutes
 
 	public const string RELATION_ENTITY = 'relationEntity';
 
+	public const string ROUTE_NAME_TRIGGERS = 'triggers';
+
+	public const string ROUTE_NAME_TRIGGER = 'trigger';
+
+	public const string ROUTE_NAME_TRIGGER_RELATIONSHIP = 'trigger.relationship';
+
+	public const string ROUTE_NAME_TRIGGER_ACTIONS = 'trigger.actions';
+
+	public const string ROUTE_NAME_TRIGGER_ACTION = 'trigger.action';
+
+	public const string ROUTE_NAME_TRIGGER_ACTION_RELATIONSHIP = 'trigger.action.relationship';
+
+	public const string ROUTE_NAME_TRIGGER_CONDITIONS = 'trigger.conditions';
+
+	public const string ROUTE_NAME_TRIGGER_CONDITION = 'trigger.condition';
+
+	public const string ROUTE_NAME_TRIGGER_CONDITION_RELATIONSHIP = 'trigger.condition.relationship';
+
+	public const string ROUTE_NAME_TRIGGER_NOTIFICATIONS = 'trigger.notifications';
+
+	public const string ROUTE_NAME_TRIGGER_NOTIFICATION = 'trigger.notification';
+
+	public const string ROUTE_NAME_TRIGGER_NOTIFICATION_RELATIONSHIP = 'trigger.v.relationship';
+
+	public const string ROUTE_NAME_TRIGGER_CONTROLS = 'trigger.controls';
+
+	public const string ROUTE_NAME_TRIGGER_CONTROL = 'trigger.control';
+
+	public const string ROUTE_NAME_TRIGGER_CONTROL_RELATIONSHIP = 'trigger.control.relationship';
+
 	public function __construct(
 		private bool $usePrefix,
 		private Controllers\TriggersV1 $triggersV1Controller,

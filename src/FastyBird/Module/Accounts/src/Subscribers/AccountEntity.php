@@ -25,6 +25,20 @@ use function sprintf;
 final readonly class AccountEntity implements Common\EventSubscriber
 {
 
+	private const array DEFAULT_ROLES = [
+		Identity\User::ROLE_USER,
+	];
+
+	public const array SINGLE_ROLES = [
+		Identity\User::ROLE_ADMINISTRATOR,
+		Identity\User::ROLE_USER,
+	];
+
+	public const array NOT_ASSIGNABLE_ROLES = [
+		Identity\User::ROLE_VISITOR,
+		Identity\User::ROLE_ANONYMOUS,
+	];
+
 	public function __construct(
 		private Identity\EnforcerFactory $enforcerFactory,
 	)
