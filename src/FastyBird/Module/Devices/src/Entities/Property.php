@@ -50,6 +50,15 @@ abstract class Property implements Entity,
 	use Entities\HasEntityUpdated;
 
 	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_NUMBER_RANGE = '/^(?:(?:(?:i8|u8|i16|u16|i32|u32|f){1}\|)?(?:(?:\-)?(?:\d)*(?:.(?:\d)+)?))?(?:\:(?:(?:(?:i8|u8|i16|u16|i32|u32|f){1}\|)?(?:\d)*(?:.(?:\d)+)?)){1}$/';
+
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_STRING_ENUM = '/^(?:[a-zA-Z0-9+°](?:[a-zA-Z0-9-?_?:?.+\+\/°])*)(?:,(?:[a-zA-Z0-9+°](?:[a-zA-Z0-9-?_?:?.+\+\/°])*))*(?:,)?$/u';
+
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
+	public const string VALUE_FORMAT_COMBINED_ENUM = '/^(?:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*)(?:\:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*){2}(?:,(?:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*)(?:\:(?:(?:i8|u8|i16|u16|i32|u32|f|b|s|btn|sw|cvr){1}\|)?(?:[a-zA-Z0-9+°]-?_?\.?)*){2})*$/u';
+
+	// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 	private const string MATCH_IP_ADDRESS = '/^((?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])[.]){3}(?:[0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$/';
 
 	private const string MATCH_MAC_ADDRESS = '/^([0-9a-fA-F][0-9a-fA-F]){1}(:([0-9a-fA-F][0-9a-fA-F])){5,7}$/';

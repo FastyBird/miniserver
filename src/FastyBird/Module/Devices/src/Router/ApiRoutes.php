@@ -26,6 +26,118 @@ final readonly class ApiRoutes
 
 	public const string RELATION_ENTITY = 'relationEntity';
 
+	public const string ROUTE_NAME_DEVICES = 'devices';
+
+	public const string ROUTE_NAME_DEVICE = 'device';
+
+	public const string ROUTE_NAME_DEVICE_RELATIONSHIP = 'device.relationship';
+
+	public const string ROUTE_NAME_DEVICE_PARENTS = 'device.parents';
+
+	public const string ROUTE_NAME_DEVICE_CHILDREN = 'device.children';
+
+	public const string ROUTE_NAME_DEVICE_PROPERTIES = 'device.properties';
+
+	public const string ROUTE_NAME_DEVICE_PROPERTY = 'device.property';
+
+	public const string ROUTE_NAME_DEVICE_PROPERTY_RELATIONSHIP = 'device.property.relationship';
+
+	public const string ROUTE_NAME_DEVICE_PROPERTY_CHILDREN = 'device.property.children';
+
+	public const string ROUTE_NAME_DEVICE_PROPERTY_STATE = 'device.property.state';
+
+	public const string ROUTE_NAME_DEVICE_CONTROLS = 'device.controls';
+
+	public const string ROUTE_NAME_DEVICE_CONTROL = 'device.control';
+
+	public const string ROUTE_NAME_DEVICE_CONTROL_RELATIONSHIP = 'device.control.relationship';
+
+	public const string ROUTE_NAME_DEVICE_CHANNELS = 'device.channels';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL = 'device.channel';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL_RELATIONSHIP = 'device.channel.relationship';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL_PROPERTIES = 'device.channel.properties';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL_PROPERTY = 'device.channel.property';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL_PROPERTY_RELATIONSHIP = 'device.channel.property.relationship';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL_PROPERTY_CHILDREN = 'device.channel.property.children';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL_PROPERTY_STATE = 'device.channel.property.state';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL_CONTROLS = 'device.channel.controls';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL_CONTROL = 'device.channel.control';
+
+	public const string ROUTE_NAME_DEVICE_CHANNEL_CONTROL_RELATIONSHIP = 'device.channel.control.relationship';
+
+	public const string ROUTE_NAME_CHANNELS = 'channels';
+
+	public const string ROUTE_NAME_CHANNEL = 'channel';
+
+	public const string ROUTE_NAME_CHANNEL_RELATIONSHIP = 'channel.relationship';
+
+	public const string ROUTE_NAME_CHANNEL_PROPERTIES = 'channel.properties';
+
+	public const string ROUTE_NAME_CHANNEL_PROPERTY = 'channel.property';
+
+	public const string ROUTE_NAME_CHANNEL_PROPERTY_RELATIONSHIP = 'channel.property.relationship';
+
+	public const string ROUTE_NAME_CHANNEL_PROPERTY_CHILDREN = 'channel.property.children';
+
+	public const string ROUTE_NAME_CHANNEL_PROPERTY_STATE = 'channel.property.state';
+
+	public const string ROUTE_NAME_CHANNEL_CONTROLS = 'channel.controls';
+
+	public const string ROUTE_NAME_CHANNEL_CONTROL = 'channel.control';
+
+	public const string ROUTE_NAME_CHANNEL_CONTROL_RELATIONSHIP = 'channel.control.relationship';
+
+	public const string ROUTE_NAME_CONNECTORS = 'connectors';
+
+	public const string ROUTE_NAME_CONNECTOR = 'connector';
+
+	public const string ROUTE_NAME_CONNECTOR_RELATIONSHIP = 'connector.relationship';
+
+	public const string ROUTE_NAME_CONNECTOR_PROPERTIES = 'connector.properties';
+
+	public const string ROUTE_NAME_CONNECTOR_PROPERTY = 'connector.property';
+
+	public const string ROUTE_NAME_CONNECTOR_PROPERTY_RELATIONSHIP = 'connector.property.relationship';
+
+	public const string ROUTE_NAME_CONNECTOR_PROPERTY_STATE = 'connector.property.state';
+
+	public const string ROUTE_NAME_CONNECTOR_CONTROLS = 'connector.controls';
+
+	public const string ROUTE_NAME_CONNECTOR_CONTROL = 'connector.control';
+
+	public const string ROUTE_NAME_CONNECTOR_CONTROL_RELATIONSHIP = 'connector.control.relationship';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICES = 'connector.devices';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE = 'connector.device';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE_RELATIONSHIP = 'connector.device.relationship';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE_PROPERTIES = 'connector.device.properties';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE_PROPERTY = 'connector.device.property';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE_PROPERTY_RELATIONSHIP = 'connector.device.property.relationship';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE_PROPERTY_CHILDREN = 'connector.device.property.children';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE_PROPERTY_STATE = 'connector.device.property.state';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE_CONTROLS = 'connector.device.controls';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE_CONTROL = 'connector.device.control';
+
+	public const string ROUTE_NAME_CONNECTOR_DEVICE_CONTROL_RELATIONSHIP = 'connector.device.control.relationship';
+
 	public function __construct(
 		private bool $usePrefix,
 		private Controllers\DevicesV1 $devicesV1Controller,
