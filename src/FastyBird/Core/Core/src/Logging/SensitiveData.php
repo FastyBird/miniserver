@@ -29,7 +29,10 @@ use function unlink;
  * `authorization` of them, and only from what it dumps; Sentry filters Authorization and Cookie but
  * not X-Api-Key. Credentials passed as arguments are marked #[\SensitiveParameter] where they are
  * read (Security\Identity) and looked up (Security\Models, Security\Queries), which PHP turns into a
- * \SensitiveParameterValue in a stack trace and Tracy prints as hidden.
+ * \SensitiveParameterValue in a stack trace and Tracy prints as hidden. So is a password, along a
+ * sign-in (Security\Identity\User::login(), Security\Identity\Authenticator::authenticate()), which a
+ * blue screen would otherwise show under a parameter name it does not hide, and a Sentry event
+ * under any name.
  *
  * A request's body carries credentials as well: a sign-in's password, a session refresh's refresh
  * token, and the response to either carries both tokens. The HTTP server buffers each body whole

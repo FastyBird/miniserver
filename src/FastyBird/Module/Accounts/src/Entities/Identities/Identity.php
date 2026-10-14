@@ -13,6 +13,7 @@ use FastyBird\Module\Accounts\Types;
 use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
+use SensitiveParameter;
 use function strval;
 
 #[ORM\Entity]
@@ -82,6 +83,7 @@ class Identity implements AccountsEntities\Entity,
 	public function __construct(
 		AccountsEntities\Accounts\Account $account,
 		string $uid,
+		#[SensitiveParameter]
 		string $password,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -99,7 +101,10 @@ class Identity implements AccountsEntities\Entity,
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public function verifyPassword(string $rawPassword): bool
+	public function verifyPassword(
+		#[SensitiveParameter]
+		string $rawPassword,
+	): bool
 	{
 		return $this->getPassword()
 			->isEqual($rawPassword, $this->getSalt());
@@ -118,7 +123,10 @@ class Identity implements AccountsEntities\Entity,
 	/**
 	 * @throws Exceptions\InvalidState
 	 */
-	public function setPassword(string|Helpers\Password $password): void
+	public function setPassword(
+		#[SensitiveParameter]
+		string|Helpers\Password $password,
+	): void
 	{
 		if ($password instanceof Helpers\Password) {
 			$this->password = $password->getHash();

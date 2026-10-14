@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Security\Identity;
 
 use FastyBird\Core\Security\Exceptions;
+use SensitiveParameter;
 
 /**
  * Application authenticator interface
@@ -29,6 +30,9 @@ interface Authenticator
 	 *
 	 * @throws Exceptions\Authentication
 	 */
-	public function authenticate(array $credentials): UserIdentity;
+	public function authenticate(
+		#[SensitiveParameter]
+		array $credentials,
+	): UserIdentity;
 
 }
