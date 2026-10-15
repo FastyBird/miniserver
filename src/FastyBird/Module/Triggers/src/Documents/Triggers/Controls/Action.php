@@ -4,7 +4,6 @@ namespace FastyBird\Module\Triggers\Documents\Triggers\Controls;
 
 use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
-use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Types;
 use Orisai\ObjectMapper;
 use Override;
@@ -15,7 +14,7 @@ use Ramsey\Uuid;
  */
 #[Documents\Mapping\Document]
 #[Documents\Mapping\RoutingMap([
-	Triggers\Constants::MESSAGE_BUS_TRIGGER_CONTROL_ACTION_ROUTING_KEY,
+	Types\RoutingKey::TRIGGER_CONTROL_ACTION->value,
 ])]
 final readonly class Action implements Documents\Document
 {

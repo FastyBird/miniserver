@@ -115,8 +115,8 @@ declares. A bare import silently shadows a same-namespace type of the same short
 naming the file's own class does not compile. So `Http\Routing\RouteHandler`, which sits beside
 Core's own `Routing\RouteCollector`, imports `FastRoute\RouteCollector as FastRouteRouteCollector`,
 and `Logging\Subscribers\Console` imports `Symfony\Component\Console as ComponentConsole`. A file
-never imports a namespace it is already inside: `FastyBird\Module\Triggers\Constants` writes
-`Entities\Triggers\Trigger` relative to its own namespace. `ORM` stays the one named exception.
+never imports a namespace it is already inside: `FastyBird\Module\Ui\Logger` writes
+`DI\UiExtension` relative to its own namespace. `ORM` stays the one named exception.
 This is kept by review, not by `make naming`.
 
 ```php
@@ -197,8 +197,7 @@ There is no root-level `Constants` class. A constant lives, typed, with the clas
   class is its only reader (`FastyBird\Module\Devices\Subscribers\ModuleEntities`'
   `MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING`).
 
-Do not add a constants class back, in Core or in a package. The packages #726 has not reached yet
-still have their `Constants` class until it does; do not add a constant to one.
+Do not add a constants class back, in Core or in a package.
 
 ## DI
 

@@ -18,10 +18,10 @@ use Ramsey\Uuid;
 #[Documents\Mapping\DiscriminatorColumn(name: 'type', type: 'string')]
 #[Documents\Mapping\MappedSuperclass]
 #[Documents\Mapping\RoutingMap([
-	Triggers\Constants::MESSAGE_BUS_CONDITION_DOCUMENT_REPORTED_ROUTING_KEY,
-	Triggers\Constants::MESSAGE_BUS_CONDITION_DOCUMENT_CREATED_ROUTING_KEY,
-	Triggers\Constants::MESSAGE_BUS_CONDITION_DOCUMENT_UPDATED_ROUTING_KEY,
-	Triggers\Constants::MESSAGE_BUS_CONDITION_DOCUMENT_DELETED_ROUTING_KEY,
+	Triggers\Types\RoutingKey::CONDITION_DOCUMENT_REPORTED->value,
+	Triggers\Types\RoutingKey::CONDITION_DOCUMENT_CREATED->value,
+	Triggers\Types\RoutingKey::CONDITION_DOCUMENT_UPDATED->value,
+	Triggers\Types\RoutingKey::CONDITION_DOCUMENT_DELETED->value,
 ])]
 abstract class Condition implements Documents\Document, Documents\Owner
 {

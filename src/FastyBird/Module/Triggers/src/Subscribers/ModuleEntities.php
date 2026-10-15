@@ -12,7 +12,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exchange\Publisher;
 use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Types;
 use Nette\Utils;
@@ -33,6 +32,27 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 	private const string ACTION_UPDATED = 'updated';
 
 	private const string ACTION_DELETED = 'deleted';
+
+	private const array MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING = [
+		Entities\Triggers\Trigger::class => Types\RoutingKey::TRIGGER_DOCUMENT_CREATED->value,
+		Entities\Actions\Action::class => Types\RoutingKey::ACTION_DOCUMENT_CREATED->value,
+		Entities\Notifications\Notification::class => Types\RoutingKey::NOTIFICATION_DOCUMENT_CREATED->value,
+		Entities\Conditions\Condition::class => Types\RoutingKey::CONDITION_DOCUMENT_CREATED->value,
+	];
+
+	private const array MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING = [
+		Entities\Triggers\Trigger::class => Types\RoutingKey::TRIGGER_DOCUMENT_UPDATED->value,
+		Entities\Actions\Action::class => Types\RoutingKey::ACTION_DOCUMENT_UPDATED->value,
+		Entities\Notifications\Notification::class => Types\RoutingKey::NOTIFICATION_DOCUMENT_UPDATED->value,
+		Entities\Conditions\Condition::class => Types\RoutingKey::CONDITION_DOCUMENT_UPDATED->value,
+	];
+
+	private const array MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING = [
+		Entities\Triggers\Trigger::class => Types\RoutingKey::TRIGGER_DOCUMENT_DELETED->value,
+		Entities\Actions\Action::class => Types\RoutingKey::ACTION_DOCUMENT_DELETED->value,
+		Entities\Notifications\Notification::class => Types\RoutingKey::NOTIFICATION_DOCUMENT_DELETED->value,
+		Entities\Conditions\Condition::class => Types\RoutingKey::CONDITION_DOCUMENT_DELETED->value,
+	];
 
 	public function __construct(
 		private ORM\EntityManagerInterface $entityManager,
@@ -170,7 +190,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 		switch ($action) {
 			case self::ACTION_CREATED:
-				foreach (Triggers\Constants::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -180,7 +200,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_UPDATED:
-				foreach (Triggers\Constants::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -190,7 +210,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_DELETED:
-				foreach (Triggers\Constants::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 

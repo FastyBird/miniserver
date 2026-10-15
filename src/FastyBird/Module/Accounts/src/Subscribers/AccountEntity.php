@@ -7,7 +7,6 @@ use Doctrine\ORM;
 use Doctrine\Persistence;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Security\Identity;
-use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use Override;
@@ -24,6 +23,20 @@ use function sprintf;
  */
 final readonly class AccountEntity implements Common\EventSubscriber
 {
+
+	private const array DEFAULT_ROLES = [
+		Identity\User::ROLE_USER,
+	];
+
+	public const array SINGLE_ROLES = [
+		Identity\User::ROLE_ADMINISTRATOR,
+		Identity\User::ROLE_USER,
+	];
+
+	public const array NOT_ASSIGNABLE_ROLES = [
+		Identity\User::ROLE_VISITOR,
+		Identity\User::ROLE_ANONYMOUS,
+	];
 
 	public function __construct(
 		private Identity\EnforcerFactory $enforcerFactory,
@@ -95,7 +108,7 @@ final readonly class AccountEntity implements Common\EventSubscriber
 			$roles = $this->enforcerFactory->getEnforcer()->getRolesForUser($object->getId()->toString());
 
 			if ($roles === []) {
-				foreach (Accounts\Constants::DEFAULT_ROLES as $role) {
+				foreach (self::DEFAULT_ROLES as $role) {
 					$this->enforcerFactory->getEnforcer()->addRoleForUser($object->getId()->toString(), $role);
 					$this->enforcerFactory->getEnforcer()->invalidateCache();
 				}
@@ -107,7 +120,7 @@ final readonly class AccountEntity implements Common\EventSubscriber
 				 * can not be assigned to account with other roles
 				 */
 				if (
-					in_array($role, Accounts\Constants::SINGLE_ROLES, true)
+					in_array($role, self::SINGLE_ROLES, true)
 					&& count($roles) > 1
 				) {
 					throw new AccountsExceptions\AccountRoleInvalid(
@@ -119,7 +132,7 @@ final readonly class AccountEntity implements Common\EventSubscriber
 				 * Special roles like visitor or guest
 				 * can not be assigned to account
 				 */
-				if (in_array($role, Accounts\Constants::NOT_ASSIGNABLE_ROLES, true)) {
+				if (in_array($role, self::NOT_ASSIGNABLE_ROLES, true)) {
 					throw new AccountsExceptions\AccountRoleInvalid(
 						sprintf('Role %s could not be assigned to account', $role),
 					);

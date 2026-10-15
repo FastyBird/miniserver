@@ -5,7 +5,6 @@ namespace FastyBird\Module\Triggers\Schemas\Actions;
 use FastyBird\Core\Api\Schemas as ApiSchemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
@@ -74,7 +73,7 @@ abstract class Action extends ApiSchemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Triggers\Constants::ROUTE_NAME_TRIGGER_ACTION,
+				Router\ApiRoutes::ROUTE_NAME_TRIGGER_ACTION,
 				[
 					Router\ApiRoutes::URL_TRIGGER_ID => $resource->getTrigger()->getPlainId(),
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getPlainId(),
@@ -124,7 +123,7 @@ abstract class Action extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Triggers\Constants::ROUTE_NAME_TRIGGER,
+					Router\ApiRoutes::ROUTE_NAME_TRIGGER,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getTrigger()->getPlainId(),
 					],
@@ -154,7 +153,7 @@ abstract class Action extends ApiSchemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Triggers\Constants::ROUTE_NAME_TRIGGER_ACTION_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_TRIGGER_ACTION_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_TRIGGER_ID => $resource->getTrigger()->getPlainId(),
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getPlainId(),

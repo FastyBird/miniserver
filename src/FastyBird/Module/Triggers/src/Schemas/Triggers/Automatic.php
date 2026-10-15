@@ -5,7 +5,6 @@ namespace FastyBird\Module\Triggers\Schemas\Triggers;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\Models;
@@ -125,7 +124,7 @@ final class Automatic extends Trigger
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITIONS,
+					Router\ApiRoutes::ROUTE_NAME_TRIGGER_CONDITIONS,
 					[
 						Router\ApiRoutes::URL_TRIGGER_ID => $resource->getPlainId(),
 					],
@@ -156,7 +155,7 @@ final class Automatic extends Trigger
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Triggers\Constants::ROUTE_NAME_TRIGGER_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_TRIGGER_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getPlainId(),
 						Router\ApiRoutes::RELATION_ENTITY => $name,

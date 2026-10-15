@@ -36,9 +36,13 @@ final class ValidatorTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$validator = $this->getContainer()->getByType(Router\Validator::class);
 
-		self::assertTrue($validator->validate('/api/' . Triggers\Constants::MODULE_TRIGGERS_PREFIX . '/v1/triggers'));
+		self::assertTrue(
+			$validator->validate('/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX . '/v1/triggers'),
+		);
 		self::assertFalse(
-			$validator->validate('/api/' . Triggers\Constants::MODULE_TRIGGERS_PREFIX . '/v1/no-such-resource'),
+			$validator->validate(
+				'/api/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX . '/v1/no-such-resource',
+			),
 		);
 	}
 

@@ -72,7 +72,7 @@ final class RouterTest extends Tests\Cases\Unit\DbTestCase
 				StatusCodeInterface::STATUS_OK,
 			],
 			'readAllInvalid' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 			],

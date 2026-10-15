@@ -32,6 +32,36 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 	private const string ACTION_DELETED = 'deleted';
 
+	private const array MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING
+		= [
+			Entities\Dashboards\Dashboard::class => Ui\Types\RoutingKey::DASHBOARD_DOCUMENT_CREATED->value,
+			Entities\Dashboards\Tabs\Tab::class => Ui\Types\RoutingKey::DASHBOARD_TAB_DOCUMENT_CREATED->value,
+			Entities\Groups\Group::class => Ui\Types\RoutingKey::GROUP_DOCUMENT_CREATED->value,
+			Entities\Widgets\Widget::class => Ui\Types\RoutingKey::WIDGET_DOCUMENT_CREATED->value,
+			Entities\Widgets\DataSources\DataSource::class => Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_CREATED->value,
+			Entities\Widgets\Displays\Display::class => Ui\Types\RoutingKey::WIDGET_DISPLAY_DOCUMENT_CREATED->value,
+		];
+
+	private const array MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING
+		= [
+			Entities\Dashboards\Dashboard::class => Ui\Types\RoutingKey::DASHBOARD_DOCUMENT_UPDATED->value,
+			Entities\Dashboards\Tabs\Tab::class => Ui\Types\RoutingKey::DASHBOARD_TAB_DOCUMENT_UPDATED->value,
+			Entities\Groups\Group::class => Ui\Types\RoutingKey::GROUP_DOCUMENT_UPDATED->value,
+			Entities\Widgets\Widget::class => Ui\Types\RoutingKey::WIDGET_DOCUMENT_UPDATED->value,
+			Entities\Widgets\DataSources\DataSource::class => Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_UPDATED->value,
+			Entities\Widgets\Displays\Display::class => Ui\Types\RoutingKey::WIDGET_DISPLAY_DOCUMENT_UPDATED->value,
+		];
+
+	private const array MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING
+		= [
+			Entities\Dashboards\Dashboard::class => Ui\Types\RoutingKey::DASHBOARD_DOCUMENT_DELETED->value,
+			Entities\Dashboards\Tabs\Tab::class => Ui\Types\RoutingKey::DASHBOARD_TAB_DOCUMENT_DELETED->value,
+			Entities\Groups\Group::class => Ui\Types\RoutingKey::GROUP_DOCUMENT_DELETED->value,
+			Entities\Widgets\Widget::class => Ui\Types\RoutingKey::WIDGET_DOCUMENT_DELETED->value,
+			Entities\Widgets\DataSources\DataSource::class => Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_DELETED->value,
+			Entities\Widgets\Displays\Display::class => Ui\Types\RoutingKey::WIDGET_DISPLAY_DOCUMENT_DELETED->value,
+		];
+
 	public function __construct(
 		private ORM\EntityManagerInterface $entityManager,
 		private EventLoop\Status $eventLoopStatus,
@@ -145,7 +175,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 		switch ($action) {
 			case self::ACTION_CREATED:
-				foreach (Ui\Constants::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -155,7 +185,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_UPDATED:
-				foreach (Ui\Constants::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -165,7 +195,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_DELETED:
-				foreach (Ui\Constants::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 

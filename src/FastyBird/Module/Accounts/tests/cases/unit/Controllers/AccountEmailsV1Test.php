@@ -80,26 +80,26 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'readAll' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/emails/account.emails.index.json',
 			],
 			'readAllPaging' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails?page[offset]=1&page[limit]=1',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails?page[offset]=1&page[limit]=1',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/emails/account.emails.index.paging.json',
 			],
 			'readOne' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/emails/account.emails.read.json',
 			],
 			'readRelationshipsAccount' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/emails/account.emails.relationships.account.json',
@@ -108,109 +108,110 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'readOneUnknown' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::UNKNOWN_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::UNKNOWN_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readOneFromOtherUser' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::USER_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::USER_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsUnknown' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/unknown',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX
+					. '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/unknown',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
 			],
 			'readRelationshipsUnknownEntity' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::UNKNOWN_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::UNKNOWN_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsFromOtherUserEntity' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::USER_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::USER_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readAllNoToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneNoToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readAllEmptyToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneEmptyToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readOneExpiredToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readAllInvalidToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readAllExpiredToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readOneInvalidToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readRelationshipsNoToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readRelationshipsEmptyToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'readRelationshipsInvalidToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'readRelationshipsExpiredToken' => [
 				// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID . '/relationships/' . Schemas\Emails\Email::RELATIONSHIPS_ACCOUNT,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
@@ -264,7 +265,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'create' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.create.json',
@@ -276,7 +277,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'missingRequired' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.create.missing.required.json',
@@ -285,7 +286,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/emails/account.emails.create.missing.required.json',
 			],
 			'invalidType' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.create.invalid.type.json',
@@ -294,7 +295,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'identifierNotUnique' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/emails.create.identifier.notUnique.json',
@@ -303,7 +304,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/identifier.notUnique.json',
 			],
 			'invalidEmail' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.create.invalid.email.json',
@@ -312,7 +313,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/emails/account.emails.invalidEmail.json',
 			],
 			'usedEmail' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.create.usedEmail.json',
@@ -321,7 +322,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/emails/account.emails.create.usedEmail.json',
 			],
 			'noToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				null,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.create.json',
@@ -330,7 +331,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'',
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.create.json',
@@ -339,7 +340,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.create.json',
@@ -348,7 +349,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails',
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.create.json',
@@ -405,7 +406,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'update' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.update.json',
@@ -417,7 +418,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'unknown' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::UNKNOWN_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::UNKNOWN_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.update.unknown.json',
@@ -426,7 +427,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'invalidType' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.update.invalid.type.json',
@@ -435,7 +436,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'idMismatch' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.update.invalid.id.json',
@@ -444,7 +445,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.identifier.json',
 			],
 			'fromOtherUser' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::USER_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::USER_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.update.otherUser.json',
@@ -453,7 +454,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'noToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				null,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.update.json',
@@ -462,7 +463,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'',
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.update.json',
@@ -471,7 +472,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::INVALID_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.update.json',
@@ -480,7 +481,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				file_get_contents(
 					__DIR__ . '/../../../fixtures/Controllers/requests/account/emails/account.emails.update.json',
@@ -536,7 +537,7 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Valid responses
 			//////////////////
 			'delete' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NO_CONTENT,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/emails/account.emails.delete.json',
@@ -545,43 +546,43 @@ final class AccountEmailsV1Test extends Tests\Cases\Unit\DbTestCase
 			// Invalid responses
 			////////////////////
 			'default' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_PRIMARY_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_PRIMARY_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/account/emails/account.emails.delete.default.json',
 			],
 			'unknown' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::UNKNOWN_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::UNKNOWN_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'fromOtherUser' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::USER_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::USER_EMAIL_ID,
 				'Bearer ' . self::ADMINISTRATOR_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'noToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				null,
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'emptyToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'',
 				StatusCodeInterface::STATUS_FORBIDDEN,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/forbidden.json',
 			],
 			'invalidToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::INVALID_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',
 			],
 			'expiredToken' => [
-				'/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
+				'/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/me/emails/' . self::ADMINISTRATOR_EMAIL_ID,
 				'Bearer ' . self::EXPIRED_TOKEN,
 				StatusCodeInterface::STATUS_UNAUTHORIZED,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/unauthorized.json',

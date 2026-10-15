@@ -6,7 +6,6 @@ use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Router;
 use Neomerx\JsonApi;
@@ -82,7 +81,7 @@ final class Email extends Schemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAIL,
+				Router\ApiRoutes::ROUTE_NAME_ACCOUNT_EMAIL,
 				[
 					Router\ApiRoutes::URL_ACCOUNT_ID => $resource->getAccount()->getId()->toString(),
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
@@ -132,7 +131,7 @@ final class Email extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getAccount()->getId()->toString(),
 					],
@@ -162,7 +161,7 @@ final class Email extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT_EMAIL_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT_EMAIL_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ACCOUNT_ID => $resource->getAccount()->getId()->toString(),
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),

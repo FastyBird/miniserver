@@ -20,6 +20,36 @@ final readonly class ApiRoutes
 
 	public const string RELATION_ENTITY = 'relationEntity';
 
+	public const string ROUTE_NAME_TRIGGERS = 'triggers';
+
+	public const string ROUTE_NAME_TRIGGER = 'trigger';
+
+	public const string ROUTE_NAME_TRIGGER_RELATIONSHIP = 'trigger.relationship';
+
+	public const string ROUTE_NAME_TRIGGER_ACTIONS = 'trigger.actions';
+
+	public const string ROUTE_NAME_TRIGGER_ACTION = 'trigger.action';
+
+	public const string ROUTE_NAME_TRIGGER_ACTION_RELATIONSHIP = 'trigger.action.relationship';
+
+	public const string ROUTE_NAME_TRIGGER_CONDITIONS = 'trigger.conditions';
+
+	public const string ROUTE_NAME_TRIGGER_CONDITION = 'trigger.condition';
+
+	public const string ROUTE_NAME_TRIGGER_CONDITION_RELATIONSHIP = 'trigger.condition.relationship';
+
+	public const string ROUTE_NAME_TRIGGER_NOTIFICATIONS = 'trigger.notifications';
+
+	public const string ROUTE_NAME_TRIGGER_NOTIFICATION = 'trigger.notification';
+
+	public const string ROUTE_NAME_TRIGGER_NOTIFICATION_RELATIONSHIP = 'trigger.v.relationship';
+
+	public const string ROUTE_NAME_TRIGGER_CONTROLS = 'trigger.controls';
+
+	public const string ROUTE_NAME_TRIGGER_CONTROL = 'trigger.control';
+
+	public const string ROUTE_NAME_TRIGGER_CONTROL_RELATIONSHIP = 'trigger.control.relationship';
+
 	public function __construct(
 		private bool $usePrefix,
 		private Controllers\TriggersV1 $triggersV1Controller,
@@ -40,7 +70,7 @@ final readonly class ApiRoutes
 			Routing\RouteCollector $group,
 		): void {
 			if ($this->usePrefix) {
-				$group->group('/' . Triggers\Constants::MODULE_TRIGGERS_PREFIX, function (
+				$group->group('/' . Triggers\DI\TriggersExtension::MODULE_TRIGGERS_PREFIX, function (
 					Routing\RouteCollector $group,
 				): void {
 					$this->buildRoutes($group);
@@ -66,10 +96,10 @@ final readonly class ApiRoutes
 				 * TRIGGERS
 				 */
 				$route = $group->get('', [$this->triggersV1Controller, 'index']);
-				$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGERS);
+				$route->setName(self::ROUTE_NAME_TRIGGERS);
 
 				$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->triggersV1Controller, 'read']);
-				$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER);
+				$route->setName(self::ROUTE_NAME_TRIGGER);
 
 				$group->post('', [$this->triggersV1Controller, 'create']);
 
@@ -81,7 +111,7 @@ final readonly class ApiRoutes
 					$this->triggersV1Controller,
 					'readRelationship',
 				]);
-				$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_RELATIONSHIP);
+				$route->setName(self::ROUTE_NAME_TRIGGER_RELATIONSHIP);
 			});
 
 			$group->group(
@@ -92,10 +122,10 @@ final readonly class ApiRoutes
 						 * ACTIONS
 						 */
 						$route = $group->get('', [$this->actionsV1Controller, 'index']);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTIONS);
+						$route->setName(self::ROUTE_NAME_TRIGGER_ACTIONS);
 
 						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->actionsV1Controller, 'read']);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTION);
+						$route->setName(self::ROUTE_NAME_TRIGGER_ACTION);
 
 						$group->post('', [$this->actionsV1Controller, 'create']);
 
@@ -110,7 +140,7 @@ final readonly class ApiRoutes
 								'readRelationship',
 							],
 						);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_ACTION_RELATIONSHIP);
+						$route->setName(self::ROUTE_NAME_TRIGGER_ACTION_RELATIONSHIP);
 					});
 
 					$group->group('/notifications', function (Routing\RouteCollector $group): void {
@@ -118,13 +148,13 @@ final readonly class ApiRoutes
 						 * NOTIFICATIONS
 						 */
 						$route = $group->get('', [$this->notificationsV1Controller, 'index']);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATIONS);
+						$route->setName(self::ROUTE_NAME_TRIGGER_NOTIFICATIONS);
 
 						$route = $group->get(
 							'/{' . self::URL_ITEM_ID . '}',
 							[$this->notificationsV1Controller, 'read'],
 						);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATION);
+						$route->setName(self::ROUTE_NAME_TRIGGER_NOTIFICATION);
 
 						$group->post('', [$this->notificationsV1Controller, 'create']);
 
@@ -139,7 +169,7 @@ final readonly class ApiRoutes
 								'readRelationship',
 							],
 						);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_NOTIFICATION_RELATIONSHIP);
+						$route->setName(self::ROUTE_NAME_TRIGGER_NOTIFICATION_RELATIONSHIP);
 					});
 
 					$group->group('/conditions', function (Routing\RouteCollector $group): void {
@@ -147,10 +177,10 @@ final readonly class ApiRoutes
 						 * CONDITIONS
 						 */
 						$route = $group->get('', [$this->conditionsV1Controller, 'index']);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITIONS);
+						$route->setName(self::ROUTE_NAME_TRIGGER_CONDITIONS);
 
 						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->conditionsV1Controller, 'read']);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITION);
+						$route->setName(self::ROUTE_NAME_TRIGGER_CONDITION);
 
 						$group->post('', [$this->conditionsV1Controller, 'create']);
 
@@ -165,7 +195,7 @@ final readonly class ApiRoutes
 								'readRelationship',
 							],
 						);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONDITION_RELATIONSHIP);
+						$route->setName(self::ROUTE_NAME_TRIGGER_CONDITION_RELATIONSHIP);
 					});
 
 					$group->group('/controls', function (Routing\RouteCollector $group): void {
@@ -173,10 +203,10 @@ final readonly class ApiRoutes
 						 * CONTROLS
 						 */
 						$route = $group->get('', [$this->controlsV1Controller, 'index']);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROLS);
+						$route->setName(self::ROUTE_NAME_TRIGGER_CONTROLS);
 
 						$route = $group->get('/{' . self::URL_ITEM_ID . '}', [$this->controlsV1Controller, 'read']);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROL);
+						$route->setName(self::ROUTE_NAME_TRIGGER_CONTROL);
 
 						$route = $group->get(
 							'/{' . self::URL_ITEM_ID . '}/relationships/{' . self::RELATION_ENTITY . '}',
@@ -185,7 +215,7 @@ final readonly class ApiRoutes
 								'readRelationship',
 							],
 						);
-						$route->setName(Triggers\Constants::ROUTE_NAME_TRIGGER_CONTROL_RELATIONSHIP);
+						$route->setName(self::ROUTE_NAME_TRIGGER_CONTROL_RELATIONSHIP);
 					});
 				},
 			);

@@ -47,7 +47,7 @@ final class AccessTokenStateTest extends Tests\Cases\Unit\DbTestCase
 
 	private const string REFRESH_TOKEN = '35be5624-0160-4323-83ee-6f59000934b4';
 
-	private const string SESSION = '/api/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '/v1/session';
+	private const string SESSION = '/api/' . Accounts\DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '/v1/session';
 
 	private const string FIXTURES = __DIR__ . '/../../../fixtures/Controllers';
 

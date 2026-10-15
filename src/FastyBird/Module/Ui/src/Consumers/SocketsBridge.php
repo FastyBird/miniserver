@@ -20,6 +20,34 @@ use function in_array;
 final readonly class SocketsBridge implements Consumers\Consumer
 {
 
+	private const array MESSAGE_BUS_ROUTING_KEYS
+		= [
+			Ui\Types\RoutingKey::WIDGET_DOCUMENT_REPORTED->value,
+			Ui\Types\RoutingKey::WIDGET_DOCUMENT_CREATED->value,
+			Ui\Types\RoutingKey::WIDGET_DOCUMENT_UPDATED->value,
+			Ui\Types\RoutingKey::WIDGET_DOCUMENT_DELETED->value,
+			Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_REPORTED->value,
+			Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_CREATED->value,
+			Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_UPDATED->value,
+			Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_DELETED->value,
+			Ui\Types\RoutingKey::WIDGET_DISPLAY_DOCUMENT_REPORTED->value,
+			Ui\Types\RoutingKey::WIDGET_DISPLAY_DOCUMENT_CREATED->value,
+			Ui\Types\RoutingKey::WIDGET_DISPLAY_DOCUMENT_UPDATED->value,
+			Ui\Types\RoutingKey::WIDGET_DISPLAY_DOCUMENT_DELETED->value,
+			Ui\Types\RoutingKey::GROUP_DOCUMENT_REPORTED->value,
+			Ui\Types\RoutingKey::GROUP_DOCUMENT_CREATED->value,
+			Ui\Types\RoutingKey::GROUP_DOCUMENT_UPDATED->value,
+			Ui\Types\RoutingKey::GROUP_DOCUMENT_DELETED->value,
+			Ui\Types\RoutingKey::DASHBOARD_DOCUMENT_REPORTED->value,
+			Ui\Types\RoutingKey::DASHBOARD_DOCUMENT_CREATED->value,
+			Ui\Types\RoutingKey::DASHBOARD_DOCUMENT_UPDATED->value,
+			Ui\Types\RoutingKey::DASHBOARD_DOCUMENT_DELETED->value,
+			Ui\Types\RoutingKey::DASHBOARD_TAB_DOCUMENT_REPORTED->value,
+			Ui\Types\RoutingKey::DASHBOARD_TAB_DOCUMENT_CREATED->value,
+			Ui\Types\RoutingKey::DASHBOARD_TAB_DOCUMENT_UPDATED->value,
+			Ui\Types\RoutingKey::DASHBOARD_TAB_DOCUMENT_DELETED->value,
+		];
+
 	public function __construct(
 		private Ui\Logger $logger,
 		private Routing\LinkGenerator $linkGenerator,
@@ -35,7 +63,7 @@ final readonly class SocketsBridge implements Consumers\Consumer
 		Documents\Document|null $document,
 	): void
 	{
-		if (!in_array($routingKey, Ui\Constants::MESSAGE_BUS_ROUTING_KEYS, true)) {
+		if (!in_array($routingKey, self::MESSAGE_BUS_ROUTING_KEYS, true)) {
 			return;
 		}
 

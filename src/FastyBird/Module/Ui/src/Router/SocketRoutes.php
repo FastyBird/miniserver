@@ -21,7 +21,7 @@ final class SocketRoutes
 	{
 		$router = new Wamp\RouteList();
 		$router[] = new Wamp\WampRoute(
-			'/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/exchange',
+			'/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/exchange',
 			'UiModule:Exchange:',
 		);
 

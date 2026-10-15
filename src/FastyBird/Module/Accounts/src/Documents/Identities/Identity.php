@@ -5,7 +5,6 @@ namespace FastyBird\Module\Accounts\Documents\Identities;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 use Orisai\ObjectMapper;
@@ -17,10 +16,10 @@ use Ramsey\Uuid;
  */
 #[Documents\Mapping\Document(entity: Entities\Identities\Identity::class)]
 #[Documents\Mapping\RoutingMap([
-	Accounts\Constants::MESSAGE_BUS_IDENTITY_DOCUMENT_REPORTED_ROUTING_KEY,
-	Accounts\Constants::MESSAGE_BUS_IDENTITY_DOCUMENT_CREATED_ROUTING_KEY,
-	Accounts\Constants::MESSAGE_BUS_IDENTITY_DOCUMENT_UPDATED_ROUTING_KEY,
-	Accounts\Constants::MESSAGE_BUS_IDENTITY_DOCUMENT_DELETED_ROUTING_KEY,
+	Types\RoutingKey::IDENTITY_DOCUMENT_REPORTED->value,
+	Types\RoutingKey::IDENTITY_DOCUMENT_CREATED->value,
+	Types\RoutingKey::IDENTITY_DOCUMENT_UPDATED->value,
+	Types\RoutingKey::IDENTITY_DOCUMENT_DELETED->value,
 ])]
 final readonly class Identity implements Documents\Document
 {

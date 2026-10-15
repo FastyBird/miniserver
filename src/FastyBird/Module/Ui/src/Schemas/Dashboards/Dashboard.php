@@ -6,7 +6,6 @@ use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
 use Neomerx\JsonApi;
@@ -82,7 +81,7 @@ final class Dashboard extends Schemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Ui\Constants::ROUTE_NAME_DASHBOARD,
+				Router\ApiRoutes::ROUTE_NAME_DASHBOARD,
 				[
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 				],
@@ -131,7 +130,7 @@ final class Dashboard extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Ui\Constants::ROUTE_NAME_DASHBOARD_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_DASHBOARD_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 						Router\ApiRoutes::RELATION_ENTITY => $name,

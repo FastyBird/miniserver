@@ -19,10 +19,10 @@ use function array_map;
  */
 #[CoreDocuments\Mapping\Document(entity: Entities\Groups\Group::class)]
 #[CoreDocuments\Mapping\RoutingMap([
-	Ui\Constants::MESSAGE_BUS_GROUP_DOCUMENT_REPORTED_ROUTING_KEY,
-	Ui\Constants::MESSAGE_BUS_GROUP_DOCUMENT_CREATED_ROUTING_KEY,
-	Ui\Constants::MESSAGE_BUS_GROUP_DOCUMENT_UPDATED_ROUTING_KEY,
-	Ui\Constants::MESSAGE_BUS_GROUP_DOCUMENT_DELETED_ROUTING_KEY,
+	Ui\Types\RoutingKey::GROUP_DOCUMENT_REPORTED->value,
+	Ui\Types\RoutingKey::GROUP_DOCUMENT_CREATED->value,
+	Ui\Types\RoutingKey::GROUP_DOCUMENT_UPDATED->value,
+	Ui\Types\RoutingKey::GROUP_DOCUMENT_DELETED->value,
 ])]
 final readonly class Group implements UiDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
 {

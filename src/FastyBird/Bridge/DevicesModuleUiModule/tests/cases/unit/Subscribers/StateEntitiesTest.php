@@ -68,7 +68,7 @@ final class StateEntitiesTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(1, $published);
 		self::assertSame(Sources\Bridge::DEVICES_MODULE_UI_MODULE->value, $published[0]['source']);
 		self::assertSame(
-			Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
+			Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_REPORTED->value,
 			$published[0]['routing_key'],
 		);
 

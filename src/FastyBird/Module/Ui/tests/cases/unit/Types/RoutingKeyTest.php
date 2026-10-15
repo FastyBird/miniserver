@@ -1,21 +1,19 @@
 <?php declare(strict_types = 1);
 
-namespace FastyBird\Module\Ui\Tests\Cases\Unit;
+namespace FastyBird\Module\Ui\Tests\Cases\Unit\Types;
 
-use FastyBird\Module\Ui;
+use FastyBird\Module\Ui\Types;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
-use function is_string;
 use function preg_match;
 use function strtolower;
 
 /**
  * Every exchange routing key the module declares is well-formed. Publishers, consumers and the
- * document routing map all use the constant, so a malformed key never fails a lookup: it only
+ * document routing map all use the case, so a malformed key never fails a lookup: it only
  * stops matching what other parties (the frontend, a broker binding) expect on the wire.
  */
-final class ConstantsTest extends TestCase
+final class RoutingKeyTest extends TestCase
 {
 
 	private const string SUBJECT_PATTERN = '[a-z][a-zA-Z]*(\.[a-z][a-zA-Z]*)*';
@@ -25,9 +23,9 @@ final class ConstantsTest extends TestCase
 
 	private const string ACTION_ROUTING_KEY_PATTERN = '/^fb\.exchange\.action\.' . self::SUBJECT_PATTERN . '$/';
 
-	private const string DOCUMENT_CONSTANT_PATTERN = '/^MESSAGE_BUS_\w+_DOCUMENT_(REPORTED|CREATED|UPDATED|DELETED)_ROUTING_KEY$/';
+	private const string DOCUMENT_CASE_PATTERN = '/^\w+_DOCUMENT_(REPORTED|CREATED|UPDATED|DELETED)$/';
 
-	private const string ACTION_CONSTANT_PATTERN = '/^MESSAGE_BUS_\w+_ACTION_ROUTING_KEY$/';
+	private const string ACTION_CASE_PATTERN = '/^\w+_ACTION$/';
 
 	#[DataProvider('documentRoutingKeys')]
 	public function testDocumentRoutingKeyIsWellFormed(string $action, string $routingKey): void
@@ -49,9 +47,9 @@ final class ConstantsTest extends TestCase
 	{
 		$keys = [];
 
-		foreach (self::routingKeyConstants() as $name => $value) {
-			if (preg_match(self::DOCUMENT_CONSTANT_PATTERN, $name, $matches) === 1) {
-				$keys[$name] = [strtolower($matches[1]), $value];
+		foreach (Types\RoutingKey::cases() as $case) {
+			if (preg_match(self::DOCUMENT_CASE_PATTERN, $case->name, $matches) === 1) {
+				$keys[$case->name] = [strtolower($matches[1]), $case->value];
 			}
 		}
 
@@ -65,29 +63,13 @@ final class ConstantsTest extends TestCase
 	{
 		$keys = [];
 
-		foreach (self::routingKeyConstants() as $name => $value) {
-			if (preg_match(self::ACTION_CONSTANT_PATTERN, $name) === 1) {
-				$keys[$name] = [$value];
+		foreach (Types\RoutingKey::cases() as $case) {
+			if (preg_match(self::ACTION_CASE_PATTERN, $case->name) === 1) {
+				$keys[$case->name] = [$case->value];
 			}
 		}
 
 		return $keys;
-	}
-
-	/**
-	 * @return array<string, string>
-	 */
-	private static function routingKeyConstants(): array
-	{
-		$constants = [];
-
-		foreach ((new ReflectionClass(Ui\Constants::class))->getConstants() as $name => $value) {
-			if (is_string($value)) {
-				$constants[$name] = $value;
-			}
-		}
-
-		return $constants;
 	}
 
 }

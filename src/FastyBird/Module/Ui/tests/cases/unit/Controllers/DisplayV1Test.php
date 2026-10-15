@@ -63,25 +63,25 @@ final class DisplayV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'readOne' => [
-				'/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display',
+				'/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/display.read.json',
 			],
 			'readOneUnknownWidget' => [
-				'/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/11553443-4564-454d-af04-0dfeef08aa96/display',
+				'/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/widgets/11553443-4564-454d-af04-0dfeef08aa96/display',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/notFound.json',
 			],
 			'readRelationshipsWidget' => [
-				'/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display/relationships/widget',
+				'/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display/relationships/widget',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/display.readRelationships.widget.json',
 			],
 			'readRelationshipsUnknown' => [
-				'/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display/relationships/unknown',
+				'/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display/relationships/unknown',
 				'Bearer ' . self::VALID_TOKEN,
 				StatusCodeInterface::STATUS_NOT_FOUND,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/relation.unknown.json',
@@ -132,21 +132,21 @@ final class DisplayV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		return [
 			'update' => [
-				'/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display',
+				'/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/display.update.json'),
 				StatusCodeInterface::STATUS_OK,
 				__DIR__ . '/../../../fixtures/Controllers/responses/display.update.json',
 			],
 			'invalidType' => [
-				'/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display',
+				'/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/display.update.invalidType.json'),
 				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
 				__DIR__ . '/../../../fixtures/Controllers/responses/generic/invalid.type.json',
 			],
 			'widgetNotFound' => [
-				'/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/11553443-4564-454d-af04-0dfeef08aa96/display',
+				'/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/widgets/11553443-4564-454d-af04-0dfeef08aa96/display',
 				'Bearer ' . self::VALID_TOKEN,
 				file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/display.update.json'),
 				StatusCodeInterface::STATUS_NOT_FOUND,
@@ -171,7 +171,7 @@ final class DisplayV1Test extends Tests\Cases\Unit\DbTestCase
 	{
 		$router = $this->getContainer()->getByType(Routing\Router::class);
 
-		$url = '/api/' . Ui\Constants::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display';
+		$url = '/api/' . Ui\DI\UiExtension::MODULE_UI_PREFIX . '/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/display';
 
 		$body = file_get_contents(__DIR__ . '/../../../fixtures/Controllers/requests/display.update.json');
 		self::assertIsString($body);

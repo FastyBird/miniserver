@@ -47,7 +47,7 @@ final class ModuleEntitiesDocumentTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					Sources\Module::ACCOUNTS->value,
-					Accounts\Constants::MESSAGE_BUS_ACCOUNT_DOCUMENT_CREATED_ROUTING_KEY,
+					Accounts\Types\RoutingKey::ACCOUNT_DOCUMENT_CREATED->value,
 					AccountsDocuments\Accounts\Account::class,
 					[
 						'id' => self::ACCOUNT,
@@ -80,7 +80,7 @@ final class ModuleEntitiesDocumentTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					Sources\Module::ACCOUNTS->value,
-					Accounts\Constants::MESSAGE_BUS_EMAIL_DOCUMENT_CREATED_ROUTING_KEY,
+					Accounts\Types\RoutingKey::EMAIL_DOCUMENT_CREATED->value,
 					AccountsDocuments\Emails\Email::class,
 					[
 						'id' => self::EMAIL,
@@ -109,7 +109,7 @@ final class ModuleEntitiesDocumentTest extends Tests\Cases\Unit\DbTestCase
 			[
 				[
 					Sources\Module::ACCOUNTS->value,
-					Accounts\Constants::MESSAGE_BUS_IDENTITY_DOCUMENT_CREATED_ROUTING_KEY,
+					Accounts\Types\RoutingKey::IDENTITY_DOCUMENT_CREATED->value,
 					AccountsDocuments\Identities\Identity::class,
 					[
 						'id' => self::IDENTITY,

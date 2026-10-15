@@ -4,7 +4,7 @@ namespace FastyBird\Module\Accounts\Middleware;
 
 use FastyBird\Core\Api\Exceptions;
 use FastyBird\Core\Http;
-use FastyBird\Module\Accounts;
+use FastyBird\Module\Accounts\DI;
 use FastyBird\Module\Accounts\Security;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
@@ -49,13 +49,13 @@ final readonly class UrlFormat implements MiddlewareInterface
 				str_starts_with(
 					$request->getUri()->getPath(),
 					'/' . Http\Routing\Router::API_PREFIX
-					. ($this->usePrefix ? '/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX : '')
+					. ($this->usePrefix ? '/' . DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX : '')
 					. '/v1/session',
 				)
 				|| str_starts_with(
 					$request->getUri()->getPath(),
 					'/' . Http\Routing\Router::API_PREFIX
-					. ($this->usePrefix ? '/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX : '')
+					. ($this->usePrefix ? '/' . DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX : '')
 					. '/v1/me',
 				)
 			)
@@ -88,18 +88,18 @@ final readonly class UrlFormat implements MiddlewareInterface
 				$content,
 			);
 			$content = str_replace(
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/emails',
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/emails',
+				'\/api\/' . DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/emails',
+				'\/api\/' . DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/emails',
 				$content,
 			);
 			$content = str_replace(
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/identities',
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/identities',
+				'\/api\/' . DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/identities',
+				'\/api\/' . DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/me\/identities',
 				$content,
 			);
 			$content = str_replace(
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/accounts\/' . $this->user->getAccount()->getId()->toString(),
-				'\/api\/' . Accounts\Constants::MODULE_ACCOUNTS_PREFIX . '\/v1\/me',
+				'\/api\/' . DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/accounts\/' . $this->user->getAccount()->getId()->toString(),
+				'\/api\/' . DI\AccountsExtension::MODULE_ACCOUNTS_PREFIX . '\/v1\/me',
 				$content,
 			);
 

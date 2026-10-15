@@ -32,6 +32,27 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 	private const string ACTION_DELETED = 'deleted';
 
+	private const array MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING = [
+		Entities\Accounts\Account::class => Accounts\Types\RoutingKey::ACCOUNT_DOCUMENT_CREATED->value,
+		Entities\Emails\Email::class => Accounts\Types\RoutingKey::EMAIL_DOCUMENT_CREATED->value,
+		Entities\Identities\Identity::class => Accounts\Types\RoutingKey::IDENTITY_DOCUMENT_CREATED->value,
+		Entities\Roles\Role::class => Accounts\Types\RoutingKey::ROLE_DOCUMENT_CREATED->value,
+	];
+
+	private const array MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING = [
+		Entities\Accounts\Account::class => Accounts\Types\RoutingKey::ACCOUNT_DOCUMENT_UPDATED->value,
+		Entities\Emails\Email::class => Accounts\Types\RoutingKey::EMAIL_DOCUMENT_UPDATED->value,
+		Entities\Identities\Identity::class => Accounts\Types\RoutingKey::IDENTITY_DOCUMENT_UPDATED->value,
+		Entities\Roles\Role::class => Accounts\Types\RoutingKey::ROLE_DOCUMENT_UPDATED->value,
+	];
+
+	private const array MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING = [
+		Entities\Accounts\Account::class => Accounts\Types\RoutingKey::ACCOUNT_DOCUMENT_DELETED->value,
+		Entities\Emails\Email::class => Accounts\Types\RoutingKey::EMAIL_DOCUMENT_DELETED->value,
+		Entities\Identities\Identity::class => Accounts\Types\RoutingKey::IDENTITY_DOCUMENT_DELETED->value,
+		Entities\Roles\Role::class => Accounts\Types\RoutingKey::ROLE_DOCUMENT_DELETED->value,
+	];
+
 	public function __construct(
 		private ORM\EntityManagerInterface $entityManager,
 		private EventLoop\Status $eventLoopStatus,
@@ -148,7 +169,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 		switch ($action) {
 			case self::ACTION_CREATED:
-				foreach (Accounts\Constants::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_CREATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -158,7 +179,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_UPDATED:
-				foreach (Accounts\Constants::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_UPDATED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 
@@ -168,7 +189,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 
 				break;
 			case self::ACTION_DELETED:
-				foreach (Accounts\Constants::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
+				foreach (self::MESSAGE_BUS_DELETED_ENTITIES_ROUTING_KEYS_MAPPING as $class => $routingKey) {
 					if (is_a($entity, $class)) {
 						$publishRoutingKey = $routingKey;
 

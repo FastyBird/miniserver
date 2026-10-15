@@ -166,7 +166,7 @@ final class SocketsBridgeCommandTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(1, $events);
 		self::assertSame(self::UI_TOPIC, $events[0]['topic']);
 		self::assertSame(
-			Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
+			Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_REPORTED->value,
 			$this->field($events[0]['message'], 'routing_key'),
 		);
 		self::assertSame(self::DATA_SOURCE, $this->field($this->field($events[0]['message'], 'data'), 'id'));
@@ -219,7 +219,7 @@ final class SocketsBridgeCommandTest extends Tests\Cases\Unit\DbTestCase
 		self::assertCount(1, $events);
 		self::assertSame(self::UI_TOPIC, $events[0]['topic']);
 		self::assertSame(
-			Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
+			Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_REPORTED->value,
 			$this->field($events[0]['message'], 'routing_key'),
 		);
 		self::assertSame(

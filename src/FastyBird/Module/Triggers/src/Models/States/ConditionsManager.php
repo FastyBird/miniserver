@@ -125,7 +125,7 @@ final readonly class ConditionsManager
 
 		$this->publisher->publish(
 			$condition->getSource(),
-			Triggers\Constants::MESSAGE_BUS_CONDITION_DOCUMENT_UPDATED_ROUTING_KEY,
+			Triggers\Types\RoutingKey::CONDITION_DOCUMENT_UPDATED->value,
 			$this->documentFactory->create(
 				TriggersDocuments\Conditions\Condition::class,
 				array_merge(

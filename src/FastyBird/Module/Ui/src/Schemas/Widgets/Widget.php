@@ -5,7 +5,6 @@ namespace FastyBird\Module\Ui\Schemas\Widgets;
 use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions;
 use FastyBird\Core\Http\Routing;
-use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Router;
 use Neomerx\JsonApi;
@@ -69,7 +68,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 		return new JsonApi\Schema\Link(
 			false,
 			$this->router->urlFor(
-				Ui\Constants::ROUTE_NAME_WIDGET,
+				Router\ApiRoutes::ROUTE_NAME_WIDGET,
 				[
 					Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 				],
@@ -133,7 +132,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Ui\Constants::ROUTE_NAME_WIDGET_DISPLAY,
+					Router\ApiRoutes::ROUTE_NAME_WIDGET_DISPLAY,
 					[
 						Router\ApiRoutes::URL_WIDGET_ID => $resource->getId()->toString(),
 					],
@@ -144,7 +143,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Ui\Constants::ROUTE_NAME_WIDGET_DATA_SOURCES,
+					Router\ApiRoutes::ROUTE_NAME_WIDGET_DATA_SOURCES,
 					[
 						Router\ApiRoutes::URL_WIDGET_ID => $resource->getId()->toString(),
 					],
@@ -182,7 +181,7 @@ abstract class Widget extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Ui\Constants::ROUTE_NAME_WIDGET_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_WIDGET_RELATIONSHIP,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getId()->toString(),
 						Router\ApiRoutes::RELATION_ENTITY => $name,

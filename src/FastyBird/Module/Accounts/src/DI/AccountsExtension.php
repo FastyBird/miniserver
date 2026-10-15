@@ -39,6 +39,8 @@ final class AccountsExtension extends NetteDI\CompilerExtension implements Trans
 
 	public const string NAME = 'fbAccountsModule';
 
+	public const string MODULE_ACCOUNTS_PREFIX = 'accounts-module';
+
 	public static function register(
 		Boot\Configurator $config,
 		string $extensionName = self::NAME,

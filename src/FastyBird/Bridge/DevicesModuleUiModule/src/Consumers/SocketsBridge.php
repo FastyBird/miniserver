@@ -115,7 +115,7 @@ final readonly class SocketsBridge implements Consumers\Consumer
 
 		foreach ($dataSources as $dataSource) {
 			$message = [
-				'routing_key' => Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_DOCUMENT_REPORTED_ROUTING_KEY,
+				'routing_key' => Ui\Types\RoutingKey::WIDGET_DATA_SOURCE_DOCUMENT_REPORTED->value,
 				'source' => Sources\Bridge::DEVICES_MODULE_UI_MODULE->value,
 				'data' => array_merge(
 					$dataSource->toArray(),

@@ -5,7 +5,6 @@ namespace FastyBird\Module\Ui\Documents\Widgets\DataSources\Actions;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Types;
 use Orisai\ObjectMapper;
@@ -17,7 +16,7 @@ use Ramsey\Uuid;
  */
 #[CoreDocuments\Mapping\Document]
 #[CoreDocuments\Mapping\RoutingMap([
-	Ui\Constants::MESSAGE_BUS_WIDGET_DATA_SOURCE_ACTION_ROUTING_KEY,
+	Types\RoutingKey::WIDGET_DATA_SOURCE_ACTION->value,
 ])]
 final readonly class Action implements UiDocuments\Document
 {

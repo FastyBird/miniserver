@@ -7,7 +7,6 @@ use FastyBird\Core\Api\Schemas;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Core\Values\Types\Sources;
-use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Exceptions as AccountsExceptions;
 use FastyBird\Module\Accounts\Router;
@@ -83,7 +82,7 @@ final class Session extends Schemas\JsonApiSchema
 	{
 		return new JsonApi\Schema\Link(
 			false,
-			$this->router->urlFor(Accounts\Constants::ROUTE_NAME_SESSION),
+			$this->router->urlFor(Router\ApiRoutes::ROUTE_NAME_SESSION),
 			false,
 		);
 	}
@@ -131,7 +130,7 @@ final class Session extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_ACCOUNT,
+					Router\ApiRoutes::ROUTE_NAME_ACCOUNT,
 					[
 						Router\ApiRoutes::URL_ITEM_ID => $resource->getIdentity()
 							->getAccount()
@@ -163,7 +162,7 @@ final class Session extends Schemas\JsonApiSchema
 			return new JsonApi\Schema\Link(
 				false,
 				$this->router->urlFor(
-					Accounts\Constants::ROUTE_NAME_SESSION_RELATIONSHIP,
+					Router\ApiRoutes::ROUTE_NAME_SESSION_RELATIONSHIP,
 					[
 						Router\ApiRoutes::RELATION_ENTITY => $name,
 					],
