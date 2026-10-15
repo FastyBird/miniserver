@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Tests\Fixtures\Dummy;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Core\Documents;
 use Orisai\ObjectMapper;
@@ -25,23 +26,27 @@ class DummyDocument implements Documents\Document, Documents\CreatedAt, Document
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private readonly string|null $name = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private readonly string|null $comment = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('created_at')]
+		#[Configurator\MapFromKey('created_at')]
 		private readonly DateTimeInterface|null $createdAt = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('updated_at')]
+		#[Configurator\MapFromKey('updated_at')]
 		private readonly DateTimeInterface|null $updatedAt = null,
 	)
 	{

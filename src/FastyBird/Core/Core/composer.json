@@ -39,6 +39,7 @@
     "contributte/monolog": "^0.6",
     "contributte/translation": "^2.0",
     "contributte/vite": "^0.3",
+    "cuyz/valinor": "^2.6",
     "cweagans/composer-patches": "^1.7",
     "doctrine/orm": "^3.3",
     "doctrine/persistence": "^3.4 || ^4.0",
