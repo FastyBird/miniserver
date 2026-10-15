@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use TypeError;
 use ValueError;
@@ -171,14 +170,14 @@ final readonly class StoreBridgeDevices implements Queue\Consumer
 
 				$device = $this->databaseHelper->transaction(
 					function () use ($connector, $bridge, $deviceDescription): Zigbee2MqttEntities\Devices\SubDevice {
-						$device = $this->devicesManager->create(Utils\ArrayHash::from([
+						$device = $this->devicesManager->create([
 							'entity' => Zigbee2MqttEntities\Devices\SubDevice::class,
 							'connector' => $connector,
 							'parent' => $bridge,
 							'identifier' => $deviceDescription->getIeeeAddress(),
 							'name' => $deviceDescription->getDefinition()?->getDescription(),
 							'comment' => $deviceDescription->getDescription(),
-						]));
+						]);
 						assert($device instanceof Zigbee2MqttEntities\Devices\SubDevice);
 
 						return $device;
@@ -442,12 +441,12 @@ final readonly class StoreBridgeDevices implements Queue\Consumer
 				);
 
 				if ($channel === null) {
-					$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+					$channel = $this->channelsManager->create([
 						'entity' => Zigbee2MqttEntities\Channels\Channel::class,
 						'device' => $device,
 						'identifier' => $identifier,
 						'name' => $name,
-					]));
+					]);
 
 					$this->logger->debug(
 						'Device channel was created',

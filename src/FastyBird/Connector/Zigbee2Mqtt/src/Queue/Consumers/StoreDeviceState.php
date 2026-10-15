@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use TypeError;
 use ValueError;
@@ -244,9 +243,8 @@ final readonly class StoreDeviceState implements Queue\Consumer
 
 				await($this->channelPropertiesStatesManager->set(
 					$property,
-					Utils\ArrayHash::from([
-						DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getValue(),
-					]),
+					DevicesStates\PropertyUpdate::create()
+						->withActualValue($state->getValue()),
 					Sources\Connector::ZIGBEE2MQTT,
 				));
 

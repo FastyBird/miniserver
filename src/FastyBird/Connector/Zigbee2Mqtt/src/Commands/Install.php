@@ -20,7 +20,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\Console;
@@ -200,63 +199,63 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => Zigbee2MqttEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($connector instanceof Zigbee2MqttEntities\Connectors\Connector);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => Zigbee2MqttTypes\ClientMode::MQTT->value,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::SERVER->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $serverAddress,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::PORT->value,
 				'dataType' => ValuesTypes\DataType::UINT,
 				'value' => $serverPort,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::SECURED_PORT->value,
 				'dataType' => ValuesTypes\DataType::UINT,
 				'value' => $serverSecuredPort,
 				'connector' => $connector,
-			]));
+			]);
 
 			if ($username !== null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::USERNAME->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $username,
 					'connector' => $connector,
-				]));
+				]);
 			}
 
 			if ($password !== null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::PASSWORD->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $password,
 					'connector' => $connector,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -415,77 +414,77 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof Zigbee2MqttEntities\Connectors\Connector);
 
 			if ($clientModeProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => Zigbee2MqttTypes\ClientMode::MQTT->value,
 					'connector' => $connector,
-				]));
+				]);
 			}
 
 			if ($serverAddressProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::SERVER->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $serverAddress,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($serverAddressProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-				$this->connectorsPropertiesManager->update($serverAddressProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($serverAddressProperty, [
 					'value' => $serverAddress,
-				]));
+				]);
 			}
 
 			if ($serverPortProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::PORT->value,
 					'dataType' => ValuesTypes\DataType::UINT,
 					'value' => $serverPort,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($serverPortProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-				$this->connectorsPropertiesManager->update($serverPortProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($serverPortProperty, [
 					'value' => $serverPort,
-				]));
+				]);
 			}
 
 			if ($serverSecuredProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::SECURED_PORT->value,
 					'dataType' => ValuesTypes\DataType::UINT,
 					'value' => $serverSecuredPort,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($serverSecuredProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-				$this->connectorsPropertiesManager->update($serverSecuredProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($serverSecuredProperty, [
 					'value' => $serverSecuredPort,
-				]));
+				]);
 			}
 
 			if ($username !== null) {
 				if ($usernameProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::USERNAME->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $username,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($usernameProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-					$this->connectorsPropertiesManager->update($usernameProperty, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($usernameProperty, [
 						'value' => $username,
-					]));
+					]);
 				}
 			} elseif ($usernameProperty !== null) {
 				$this->connectorsPropertiesManager->delete($usernameProperty);
@@ -493,17 +492,17 @@ final class Install extends Console\Command\Command
 
 			if ($password !== null) {
 				if ($passwordProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => Zigbee2MqttTypes\ConnectorPropertyIdentifier::PASSWORD->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $password,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($passwordProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-					$this->connectorsPropertiesManager->update($passwordProperty, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($passwordProperty, [
 						'value' => $password,
-					]));
+					]);
 				}
 			} elseif ($passwordProperty !== null) {
 				$this->connectorsPropertiesManager->delete($passwordProperty);
@@ -726,21 +725,21 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$bridge = $this->devicesManager->create(Utils\ArrayHash::from([
+			$bridge = $this->devicesManager->create([
 				'entity' => Zigbee2MqttEntities\Devices\Bridge::class,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($bridge instanceof Zigbee2MqttEntities\Devices\Bridge);
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => Zigbee2MqttTypes\DevicePropertyIdentifier::BASE_TOPIC->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $baseTopic,
 				'device' => $bridge,
-			]));
+			]);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -841,23 +840,23 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$bridge = $this->devicesManager->update($bridge, Utils\ArrayHash::from([
+			$bridge = $this->devicesManager->update($bridge, [
 				'name' => $name,
-			]));
+			]);
 			assert($bridge instanceof Zigbee2MqttEntities\Devices\Bridge);
 
 			if ($baseTopicProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => Zigbee2MqttTypes\DevicePropertyIdentifier::BASE_TOPIC->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $baseTopic,
 					'device' => $bridge,
-				]));
+				]);
 			} elseif ($baseTopicProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-				$this->devicesPropertiesManager->update($baseTopicProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($baseTopicProperty, [
 					'value' => $baseTopic,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -1222,9 +1221,9 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$this->devicesManager->update($device, Utils\ArrayHash::from([
+			$this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
