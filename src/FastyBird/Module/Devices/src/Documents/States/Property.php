@@ -14,7 +14,7 @@ use function is_bool;
  * Channel property state document
  */
 #[Documents\Mapping\MappedSuperclass]
-abstract class Property implements Documents\Document, Documents\CreatedAt, Documents\UpdatedAt
+abstract class Property implements Documents\Document, ObjectMapper\MappedObject, Documents\CreatedAt, Documents\UpdatedAt
 {
 
 	use Documents\HasCreatedAt;

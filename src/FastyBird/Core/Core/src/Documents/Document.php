@@ -2,12 +2,10 @@
 
 namespace FastyBird\Core\Documents;
 
-use Orisai\ObjectMapper;
-
 /**
  * Data document interface
  */
-interface Document extends ObjectMapper\MappedObject
+interface Document
 {
 
 	/**

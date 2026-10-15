@@ -20,7 +20,7 @@ use Ramsey\Uuid;
 	Triggers\Types\RoutingKey::TRIGGER_CONTROL_DOCUMENT_UPDATED->value,
 	Triggers\Types\RoutingKey::TRIGGER_CONTROL_DOCUMENT_DELETED->value,
 ])]
-final readonly class Control implements Documents\Document, Documents\Owner
+final readonly class Control implements Documents\Document, ObjectMapper\MappedObject, Documents\Owner
 {
 
 	use Documents\HasOwner;

@@ -23,7 +23,7 @@ use function array_map;
 	Types\RoutingKey::ACCOUNT_DOCUMENT_UPDATED->value,
 	Types\RoutingKey::ACCOUNT_DOCUMENT_DELETED->value,
 ])]
-final readonly class Account implements Documents\Document
+final readonly class Account implements Documents\Document, ObjectMapper\MappedObject
 {
 
 	/**

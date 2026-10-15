@@ -21,7 +21,7 @@ use Ramsey\Uuid;
 	Accounts\Types\RoutingKey::EMAIL_DOCUMENT_UPDATED->value,
 	Accounts\Types\RoutingKey::EMAIL_DOCUMENT_DELETED->value,
 ])]
-final readonly class Email implements Documents\Document
+final readonly class Email implements Documents\Document, ObjectMapper\MappedObject
 {
 
 	public function __construct(

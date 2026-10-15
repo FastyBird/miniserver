@@ -23,7 +23,7 @@ use Ramsey\Uuid;
 	Triggers\Types\RoutingKey::CONDITION_DOCUMENT_UPDATED->value,
 	Triggers\Types\RoutingKey::CONDITION_DOCUMENT_DELETED->value,
 ])]
-abstract class Condition implements Documents\Document, Documents\Owner
+abstract class Condition implements Documents\Document, ObjectMapper\MappedObject, Documents\Owner
 {
 
 	use Documents\HasOwner;

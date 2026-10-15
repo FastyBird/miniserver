@@ -16,7 +16,7 @@ use Ramsey\Uuid;
 #[Documents\Mapping\RoutingMap([
 	Types\RoutingKey::TRIGGER_CONTROL_ACTION->value,
 ])]
-final readonly class Action implements Documents\Document
+final readonly class Action implements Documents\Document, ObjectMapper\MappedObject
 {
 
 	public function __construct(

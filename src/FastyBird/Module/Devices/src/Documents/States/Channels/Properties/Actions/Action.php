@@ -20,7 +20,7 @@ use function sprintf;
 #[CoreDocuments\Mapping\RoutingMap([
 	Types\RoutingKey::CHANNEL_PROPERTY_ACTION->value,
 ])]
-final readonly class Action implements CoreDocuments\Document
+final readonly class Action implements CoreDocuments\Document, ObjectMapper\MappedObject
 {
 
 	public function __construct(
