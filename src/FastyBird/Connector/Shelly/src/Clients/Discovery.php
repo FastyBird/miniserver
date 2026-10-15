@@ -4,13 +4,15 @@ namespace FastyBird\Connector\Shelly\Clients;
 
 use FastyBird\Connector\Shelly;
 use FastyBird\Connector\Shelly\API;
-use FastyBird\Connector\Shelly\Documents;
+use FastyBird\Connector\Shelly\Documents as ShellyDocuments;
 use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Queue;
 use FastyBird\Connector\Shelly\Services;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Connector\Shelly\ValueObjects;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
@@ -20,7 +22,6 @@ use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\Datagram;
 use React\Dns;
@@ -77,7 +78,7 @@ final class Discovery
 	private Datagram\SocketInterface|null $server = null;
 
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
+		private readonly ShellyDocuments\Connectors\Connector $connector,
 		private readonly API\Gen1HttpApiFactory $gen1HttpApiFactory,
 		private readonly API\Gen2HttpApiFactory $gen2HttpApiFactory,
 		private readonly Services\MulticastFactory $multicastFactory,
@@ -86,7 +87,7 @@ final class Discovery
 		private readonly Helpers\Connector $connectorHelper,
 		private readonly Queue\Queue $queue,
 		private readonly Shelly\Logger $logger,
-		private readonly ObjectMapper\Processing\Processor $objectMapper,
+		private readonly CoreDocuments\Mapping\Mapper $objectMapper,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
@@ -234,10 +235,7 @@ final class Discovery
 
 			if ($serviceIpAddress !== null && $serviceName !== null) {
 				try {
-					$options = new ObjectMapper\Processing\Options();
-					$options->setAllowUnknownFields();
-
-					$serviceResult = $this->objectMapper->process(
+					$serviceResult = $this->objectMapper->map(
 						[
 							'address' => $serviceIpAddress,
 							'name' => $serviceName,
@@ -245,15 +243,11 @@ final class Discovery
 							'data' => $serviceData,
 						],
 						ValueObjects\MdnsResult::class,
-						$options,
+						new CoreDocuments\Mapping\MappingOptions(allowUnknownFields: true),
 					);
-				} catch (ObjectMapper\Exception\InvalidData $ex) {
-					$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-						new ObjectMapper\Printers\TypeToStringConverter(),
-					);
-
+				} catch (DocumentsExceptions\MappingFailed $ex) {
 					$this->logger->error(
-						'Could not map mDNS result to message: ' . $errorPrinter->printError($ex),
+						'Could not map mDNS result to message: ' . $ex->getMessage(),
 						[
 							'source' => Sources\Connector::SHELLY->value,
 							'type' => 'discovery-client',

@@ -5,11 +5,10 @@ namespace FastyBird\Connector\NsPanel\Tests\Cases\Unit\API\Messages\Request;
 use Error;
 use FastyBird\Connector\NsPanel\API;
 use FastyBird\Connector\NsPanel\Tests;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions;
 use Nette;
 use Nette\Utils;
-use Orisai\ObjectMapper;
-use function assert;
 
 final class SetDeviceStatusTest extends Tests\Cases\Unit\BaseTestCase
 {
@@ -19,7 +18,7 @@ final class SetDeviceStatusTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Exceptions\InvalidState
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws Nette\IOException
-	 * @throws ObjectMapper\Exception\InvalidData
+	 * @throws Documents\Exceptions\MappingFailed
 	 * @throws Utils\JsonException
 	 * @throws Error
 	 */
@@ -27,11 +26,10 @@ final class SetDeviceStatusTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$container = $this->createContainer();
 
-		$processor = $container->getByType(ObjectMapper\Processing\Processor::class);
-		assert($processor instanceof ObjectMapper\Processing\DefaultProcessor);
+		$mapper = $container->getByType(Documents\Mapping\Mapper::class);
 
-		$message = $processor->process(
-			Utils\Json::decode(
+		$message = $mapper->map(
+			(array) Utils\Json::decode(
 				Utils\FileSystem::read(
 					__DIR__ . '/../../../../../fixtures/API/request/set_device_state.json',
 				),

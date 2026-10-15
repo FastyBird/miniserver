@@ -14,12 +14,12 @@ use function is_dir;
 use function sprintf;
 
 /**
- * Documents: the document factory, its attribute mapping driver chain and metadata cache
+ * Documents: the document factory, the mapper behind every array-to-object mapping, its attribute mapping driver chain and metadata cache
  *
  * A child of the composite FastyBird\Core\DI\CoreExtension, which owns and runs it; it is never
  * registered with the compiler itself. It runs as fbCore.documents and reads its
  * fbCore > documents section, so its services are fbCore.documents.cache,
- * fbCore.documents.factory and fbCore.documents.mapping.*. Module extensions add their own
+ * fbCore.documents.factory, fbCore.documents.mapper and fbCore.documents.mapping.*. Module extensions add their own
  * drivers to the chain through DRIVER_TAG.
  */
 final class DocumentsExtension extends DI\CompilerExtension
@@ -61,6 +61,9 @@ final class DocumentsExtension extends DI\CompilerExtension
 			->setType(Caching\Cache::class)
 			->setArguments(['namespace' => 'metadata_class_metadata'])
 			->setAutowired(false);
+
+		$builder->addDefinition($this->prefix('mapper'), new DI\Definitions\ServiceDefinition())
+			->setType(Documents\Mapping\Mapper::class);
 
 		$builder->addDefinition($this->prefix('factory'), new DI\Definitions\ServiceDefinition())
 			->setType(Documents\DocumentFactory::class);

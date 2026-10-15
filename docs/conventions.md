@@ -398,6 +398,20 @@ The extensions follow three more rules, decided in
   HomeKit's `Servers\Http` and `Servers\Mdns` add their listeners in `initialize()` and remove
   them in `disconnect()`.
 
+## Mapping arrays to objects
+
+A plain array becomes an object of a mapped class in one place: `Documents\Mapping\Mapper::map()`
+(service `fbCore.documents.mapper`). A consumer takes the `Mapper`, passes the array, the class and,
+when it needs one, a `Documents\Mapping\MappingOptions`, and catches `Documents\Exceptions\MappingFailed`,
+whose message is the printed list of what was wrong. It rethrows that as its own exception where its
+callers expect one (a connector's `Helpers\MessageBuilder` throws `Exceptions\Runtime`, `Could not map data
+to message: ` followed by the text). Nothing outside `Mapper` injects or calls the mapping library's
+processor, builds its options or prints its errors (#724).
+
+Options are declared at the call as a `MappingOptions` argument, never set on a shared mapper: the
+only one today is `allowUnknownFields`, which every builder of input from outside the process
+(messages, documents, stored states) turns on and a value object built from local data leaves off.
+
 ## Docblocks
 
 **No file header.** The licence is in `LICENSE.md`, the author in `composer.json`, and the

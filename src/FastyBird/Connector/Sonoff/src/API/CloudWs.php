@@ -10,6 +10,7 @@ use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Services;
 use FastyBird\Connector\Sonoff\Types;
 use FastyBird\Connector\Sonoff\ValueObjects;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -21,7 +22,6 @@ use GuzzleHttp;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use Ratchet;
@@ -117,7 +117,7 @@ final class CloudWs
 		private readonly Sonoff\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
 		private readonly ClockInterface $clock,
-		private readonly ObjectMapper\Processing\Processor $objectMapper,
+		private readonly CoreDocuments\Mapping\Mapper $objectMapper,
 		private readonly EventLoop\LoopInterface $eventLoop,
 	)
 	{
@@ -690,7 +690,7 @@ final class CloudWs
 		);
 
 		try {
-			$this->messages[$seqId] = $this->objectMapper->process(
+			$this->messages[$seqId] = $this->objectMapper->map(
 				[
 					'payload' => $payload,
 					'action' => $action,
@@ -699,14 +699,10 @@ final class CloudWs
 				],
 				ValueObjects\WsMessage::class,
 			);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
-			);
-
+		} catch (DocumentsExceptions\MappingFailed $ex) {
 			$deferred?->reject(
 				new SonoffExceptions\CloudWsCall(
-					'Request sign could not be created: ' . $errorPrinter->printError($ex),
+					'Request sign could not be created: ' . $ex->getMessage(),
 				),
 			);
 

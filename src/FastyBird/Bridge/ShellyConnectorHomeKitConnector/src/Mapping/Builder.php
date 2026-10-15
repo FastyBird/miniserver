@@ -4,9 +4,9 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
+use FastyBird\Core\Documents;
 use Nette;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -22,7 +22,7 @@ final class Builder
 	private Mapping\Gen2|null $gen2 = null;
 
 	public function __construct(
-		private readonly ObjectMapper\Processing\Processor $processor,
+		private readonly Documents\Mapping\Mapper $mapper,
 	)
 	{
 	}
@@ -86,16 +86,13 @@ final class Builder
 	private function create(string $mapping, array $data): Mapping\Mapping
 	{
 		try {
-			$options = new ObjectMapper\Processing\Options();
-			$options->setAllowUnknownFields();
-
-			return $this->processor->process($data, $mapping, $options);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
+			return $this->mapper->map(
+				$data,
+				$mapping,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: true),
 			);
-
-			throw new Exceptions\Runtime('Could not map data to mapping: ' . $errorPrinter->printError($ex));
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			throw new Exceptions\Runtime('Could not map data to mapping: ' . $ex->getMessage());
 		}
 	}
 

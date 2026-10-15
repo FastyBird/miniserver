@@ -9,6 +9,7 @@ use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -19,7 +20,6 @@ use GuzzleHttp;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use Ramsey\Uuid;
@@ -137,7 +137,7 @@ final class OpenApi
 		private readonly Services\HttpClientFactory $httpClientFactory,
 		private readonly Tuya\Logger $logger,
 		private readonly Schemas\Validator $schemaValidator,
-		private readonly ObjectMapper\Processing\Processor $objectMapper,
+		private readonly CoreDocuments\Mapping\Mapper $objectMapper,
 		private readonly ClockInterface $clock,
 	)
 	{
@@ -1716,20 +1716,16 @@ final class OpenApi
 		$sign = Utils\Strings::upper(hash_hmac('sha256', $message, $this->accessSecret));
 
 		try {
-			return $this->objectMapper->process(
+			return $this->objectMapper->map(
 				[
 					'sign' => $sign,
 					'timestamp' => $timestamp,
 				],
 				ValueObjects\OpenApiRequestSign::class,
 			);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
-			);
-
+		} catch (DocumentsExceptions\MappingFailed $ex) {
 			throw new TuyaExceptions\OpenApiError(
-				'Request sign could not be created: ' . $errorPrinter->printError($ex),
+				'Request sign could not be created: ' . $ex->getMessage(),
 			);
 		}
 	}

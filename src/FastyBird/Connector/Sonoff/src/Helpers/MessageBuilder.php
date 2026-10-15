@@ -6,13 +6,13 @@ use FastyBird\Connector\Sonoff;
 use FastyBird\Connector\Sonoff\API;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Queue;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Schemas;
 use Nette;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use function array_key_exists;
 use function assert;
 use function class_exists;
@@ -33,7 +33,7 @@ final class MessageBuilder
 	private array $validationSchemas = [];
 
 	public function __construct(
-		private readonly ObjectMapper\Processing\Processor $processor,
+		private readonly CoreDocuments\Mapping\Mapper $mapper,
 		private readonly Schemas\Validator $schemaValidator,
 	)
 	{
@@ -67,16 +67,13 @@ final class MessageBuilder
 		}
 
 		try {
-			$options = new ObjectMapper\Processing\Options();
-			$options->setAllowUnknownFields();
-
-			return $this->processor->process($data, $message, $options);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
+			return $this->mapper->map(
+				$data,
+				$message,
+				new CoreDocuments\Mapping\MappingOptions(allowUnknownFields: true),
 			);
-
-			throw new SonoffExceptions\Runtime('Could not map data to message: ' . $errorPrinter->printError($ex));
+		} catch (DocumentsExceptions\MappingFailed $ex) {
+			throw new SonoffExceptions\Runtime('Could not map data to message: ' . $ex->getMessage());
 		}
 	}
 

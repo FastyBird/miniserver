@@ -10,6 +10,7 @@ use FastyBird\Connector\Shelly\Exceptions as ShellyExceptions;
 use FastyBird\Connector\Shelly\Helpers;
 use FastyBird\Connector\Shelly\Types;
 use FastyBird\Connector\Shelly\ValueObjects;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
@@ -21,7 +22,6 @@ use GuzzleHttp\Psr7;
 use InvalidArgumentException;
 use Nette;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use Psr\Clock\ClockInterface;
 use Psr\Http\Message;
 use Ramsey\Uuid;
@@ -149,7 +149,7 @@ final class Gen2WsApi
 		private readonly ClockInterface $clock,
 		private readonly EventLoop\LoopInterface $eventLoop,
 		private readonly Schemas\Validator $schemaValidator,
-		private readonly ObjectMapper\Processing\Processor $objectMapper,
+		private readonly CoreDocuments\Mapping\Mapper $objectMapper,
 	)
 	{
 	}
@@ -441,7 +441,7 @@ final class Gen2WsApi
 		$deferred = new Promise\Deferred();
 
 		try {
-			$messageFrame = $this->objectMapper->process(
+			$messageFrame = $this->objectMapper->map(
 				[
 					'id' => uniqid(),
 					'src' => $this->getClientIdentifier(),
@@ -451,13 +451,9 @@ final class Gen2WsApi
 				],
 				ValueObjects\WsFrame::class,
 			);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
-			);
-
+		} catch (DocumentsExceptions\MappingFailed $ex) {
 			return Promise\reject(
-				new ShellyExceptions\WsError('Message frame could not be created: ' . $errorPrinter->printError($ex)),
+				new ShellyExceptions\WsError('Message frame could not be created: ' . $ex->getMessage()),
 			);
 		}
 
@@ -508,7 +504,7 @@ final class Gen2WsApi
 		}
 
 		try {
-			$messageFrame = $componentAttribute !== null ? $this->objectMapper->process(
+			$messageFrame = $componentAttribute !== null ? $this->objectMapper->map(
 				[
 					'id' => uniqid(),
 					'src' => $this->getClientIdentifier(),
@@ -520,7 +516,7 @@ final class Gen2WsApi
 					'auth' => $this->session?->toArray(),
 				],
 				ValueObjects\WsFrame::class,
-			) : $this->objectMapper->process(
+			) : $this->objectMapper->map(
 				[
 					'id' => uniqid(),
 					'src' => $this->getClientIdentifier(),
@@ -532,13 +528,9 @@ final class Gen2WsApi
 				],
 				ValueObjects\WsFrame::class,
 			);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
-			);
-
+		} catch (DocumentsExceptions\MappingFailed $ex) {
 			return Promise\reject(
-				new ShellyExceptions\WsError('Message frame could not be created: ' . $errorPrinter->printError($ex)),
+				new ShellyExceptions\WsError('Message frame could not be created: ' . $ex->getMessage()),
 			);
 		}
 
@@ -785,7 +777,7 @@ final class Gen2WsApi
 							);
 
 							try {
-								$this->session = $this->objectMapper->process(
+								$this->session = $this->objectMapper->map(
 									[
 										'realm' => $errorMessage->realm,
 										'username' => strval($this->username),
@@ -797,20 +789,14 @@ final class Gen2WsApi
 									],
 									ValueObjects\WsSession::class,
 								);
-							} catch (ObjectMapper\Exception\InvalidData $ex) {
-								$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-									new ObjectMapper\Printers\TypeToStringConverter(),
-								);
-
+							} catch (DocumentsExceptions\MappingFailed $ex) {
 								throw new ShellyExceptions\WsError(
-									'Connection session could not be created: ' . $errorPrinter->printError(
-										$ex,
-									),
+									'Connection session could not be created: ' . $ex->getMessage(),
 								);
 							}
 
 							try {
-								$messageFrame = $this->objectMapper->process(
+								$messageFrame = $this->objectMapper->map(
 									[
 										'id' => $this->messages[$payload->id]->getFrame()->getId(),
 										'src' => $this->messages[$payload->id]->getFrame()->getSrc(),
@@ -820,13 +806,9 @@ final class Gen2WsApi
 									],
 									ValueObjects\WsFrame::class,
 								);
-							} catch (ObjectMapper\Exception\InvalidData $ex) {
-								$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-									new ObjectMapper\Printers\TypeToStringConverter(),
-								);
-
+							} catch (DocumentsExceptions\MappingFailed $ex) {
 								throw new ShellyExceptions\WsError(
-									'Message frame could not be created: ' . $errorPrinter->printError($ex),
+									'Message frame could not be created: ' . $ex->getMessage(),
 								);
 							}
 
@@ -935,7 +917,7 @@ final class Gen2WsApi
 		);
 
 		try {
-			$this->messages[$frame->getId()] = $this->objectMapper->process(
+			$this->messages[$frame->getId()] = $this->objectMapper->map(
 				[
 					'frame' => $frame,
 					'deferred' => $deferred,
@@ -943,12 +925,8 @@ final class Gen2WsApi
 				],
 				ValueObjects\WsMessage::class,
 			);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
-			);
-
-			throw new ShellyExceptions\WsError('Message could not be created: ' . $errorPrinter->printError($ex));
+		} catch (DocumentsExceptions\MappingFailed $ex) {
+			throw new ShellyExceptions\WsError('Message could not be created: ' . $ex->getMessage());
 		}
 
 		$this->connection?->send(strval($frame));

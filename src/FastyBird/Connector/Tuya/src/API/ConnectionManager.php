@@ -2,17 +2,17 @@
 
 namespace FastyBird\Connector\Tuya\API;
 
-use FastyBird\Connector\Tuya\Documents;
+use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
 use FastyBird\Connector\Tuya\Entities;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queries;
 use FastyBird\Connector\Tuya\Types;
 use FastyBird\Connector\Tuya\ValueObjects;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Orisai\ObjectMapper;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -41,7 +41,7 @@ final class ConnectionManager
 		private readonly Helpers\Connector $connectorHelper,
 		private readonly Helpers\Device $deviceHelper,
 		private readonly DevicesModels\Configuration\Devices\Repository $devicesConfigurationRepository,
-		private readonly ObjectMapper\Processing\Processor $objectMapper,
+		private readonly CoreDocuments\Mapping\Mapper $objectMapper,
 	)
 	{
 	}
@@ -56,7 +56,7 @@ final class ConnectionManager
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getLocalConnection(Documents\Devices\Device $device): LocalApi
+	public function getLocalConnection(TuyaDocuments\Devices\Device $device): LocalApi
 	{
 		$connector = $device->getConnector();
 		assert($connector instanceof Entities\Connectors\Connector);
@@ -67,7 +67,7 @@ final class ConnectionManager
 
 			$children = $this->devicesConfigurationRepository->findAllBy(
 				$findChildrenDevicesQuery,
-				Documents\Devices\Device::class,
+				TuyaDocuments\Devices\Device::class,
 			);
 
 			assert(is_string($this->deviceHelper->getLocalKey($device)));
@@ -81,11 +81,11 @@ final class ConnectionManager
 				$this->deviceHelper->getIpAddress($device),
 				$this->deviceHelper->getProtocolVersion($device),
 				array_map(
-					function (Documents\Devices\Device $child): ValueObjects\LocalChild {
+					function (TuyaDocuments\Devices\Device $child): ValueObjects\LocalChild {
 						assert(is_string($this->deviceHelper->getNodeId($child)));
 
 						try {
-							return $this->objectMapper->process(
+							return $this->objectMapper->map(
 								[
 									'identifier' => $child->getIdentifier(),
 									'node_id' => $this->deviceHelper->getNodeId($child),
@@ -115,7 +115,7 @@ final class ConnectionManager
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getCloudApiConnection(Documents\Connectors\Connector $connector): OpenApi
+	public function getCloudApiConnection(TuyaDocuments\Connectors\Connector $connector): OpenApi
 	{
 		if ($this->cloudApiConnection === null) {
 			assert(is_string($this->connectorHelper->getAccessId($connector)));
@@ -140,7 +140,7 @@ final class ConnectionManager
 	 * @throws TypeError
 	 * @throws ValueError
 	 */
-	public function getCloudWsConnection(Documents\Connectors\Connector $connector): OpenPulsar
+	public function getCloudWsConnection(TuyaDocuments\Connectors\Connector $connector): OpenPulsar
 	{
 		if ($this->cloudWsConnection === null) {
 			assert(is_string($this->connectorHelper->getAccessId($connector)));

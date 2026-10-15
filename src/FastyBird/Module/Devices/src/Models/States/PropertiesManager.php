@@ -3,6 +3,8 @@
 namespace FastyBird\Module\Devices\Models\States;
 
 use DateTimeInterface;
+use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
@@ -11,10 +13,9 @@ use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices;
-use FastyBird\Module\Devices\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\States;
-use Orisai\ObjectMapper;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -26,8 +27,8 @@ use function is_string;
 /**
  * Useful dynamic property state helpers
  *
- * @template TParent of (Documents\Connectors\Properties\Dynamic | Documents\Devices\Properties\Dynamic | Documents\Channels\Properties\Dynamic)
- * @template TChild of (Documents\Devices\Properties\Mapped | Documents\Channels\Properties\Mapped | null)
+ * @template TParent of (DevicesDocuments\Connectors\Properties\Dynamic | DevicesDocuments\Devices\Properties\Dynamic | DevicesDocuments\Channels\Properties\Dynamic)
+ * @template TChild of (DevicesDocuments\Devices\Properties\Mapped | DevicesDocuments\Channels\Properties\Mapped | null)
  * @template TState of States\Property
  */
 abstract class PropertiesManager
@@ -35,7 +36,7 @@ abstract class PropertiesManager
 
 	public function __construct(
 		protected readonly Devices\Logger $logger,
-		protected readonly ObjectMapper\Processing\Processor $stateMapper,
+		protected readonly CoreDocuments\Mapping\Mapper $stateMapper,
 	)
 	{
 	}
@@ -446,10 +447,7 @@ abstract class PropertiesManager
 	protected function updateState($state, string $class, array $update)
 	{
 		try {
-			$options = new ObjectMapper\Processing\Options();
-			$options->setAllowUnknownFields();
-
-			return $this->stateMapper->process(
+			return $this->stateMapper->map(
 				array_merge(
 					$state->toArray(),
 					[
@@ -463,16 +461,10 @@ abstract class PropertiesManager
 					$update,
 				),
 				$class,
-				$options,
+				new CoreDocuments\Mapping\MappingOptions(allowUnknownFields: true),
 			);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
-			);
-
-			throw new DevicesExceptions\InvalidArgument(
-				'Could not map data to state: ' . $errorPrinter->printError($ex),
-			);
+		} catch (DocumentsExceptions\MappingFailed $ex) {
+			throw new DevicesExceptions\InvalidArgument('Could not map data to state: ' . $ex->getMessage());
 		}
 	}
 

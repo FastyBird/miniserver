@@ -2,6 +2,7 @@
 
 namespace FastyBird\Plugin\RedisDb\Tests\Cases\Unit\Models;
 
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
@@ -89,7 +90,7 @@ final class StatesRepositoryTest extends TestCase
 			$objectCreator,
 		);
 
-		$factory = new States\StateFactory($processor);
+		$factory = new States\StateFactory(new Documents\Mapping\Mapper($processor));
 
 		return new Models\States\StatesRepository($redisClient, $factory);
 	}

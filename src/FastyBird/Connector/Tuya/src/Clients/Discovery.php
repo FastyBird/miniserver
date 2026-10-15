@@ -4,13 +4,14 @@ namespace FastyBird\Connector\Tuya\Clients;
 
 use FastyBird\Connector\Tuya;
 use FastyBird\Connector\Tuya\API;
-use FastyBird\Connector\Tuya\Documents;
+use FastyBird\Connector\Tuya\Documents as TuyaDocuments;
 use FastyBird\Connector\Tuya\Exceptions as TuyaExceptions;
 use FastyBird\Connector\Tuya\Helpers;
 use FastyBird\Connector\Tuya\Queue;
 use FastyBird\Connector\Tuya\Services;
 use FastyBird\Connector\Tuya\Types as TuyaTypes;
 use FastyBird\Connector\Tuya\ValueObjects;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types as ValuesTypes;
@@ -18,7 +19,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\Datagram;
 use React\EventLoop;
@@ -82,7 +82,7 @@ final class Discovery
 	private array $handlerTimer = [];
 
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
+		private readonly TuyaDocuments\Connectors\Connector $connector,
 		private readonly API\OpenApiFactory $openApiFactory,
 		private readonly API\LocalApiFactory $localApiFactory,
 		private readonly Services\DatagramFactory $datagramFactory,
@@ -91,7 +91,7 @@ final class Discovery
 		private readonly Queue\Queue $queue,
 		private readonly Tuya\Logger $logger,
 		private readonly EventLoop\LoopInterface $eventLoop,
-		private readonly ObjectMapper\Processing\Processor $objectMapper,
+		private readonly CoreDocuments\Mapping\Mapper $objectMapper,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
@@ -218,7 +218,7 @@ final class Discovery
 								return;
 							}
 
-							$this->discoveredLocalDevicesInfo[] = $this->objectMapper->process(
+							$this->discoveredLocalDevicesInfo[] = $this->objectMapper->map(
 								[
 									'id' => strval($deviceInfo->offsetGet('gwId')),
 									'ip_address' => strval($deviceInfo->offsetGet('ip')),

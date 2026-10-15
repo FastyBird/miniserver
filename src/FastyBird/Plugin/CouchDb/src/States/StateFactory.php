@@ -2,9 +2,9 @@
 
 namespace FastyBird\Plugin\CouchDb\States;
 
+use FastyBird\Core\Documents;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use InvalidArgumentException;
-use Orisai\ObjectMapper;
 use PHPOnCouch;
 use function class_exists;
 
@@ -14,9 +14,7 @@ use function class_exists;
 final readonly class StateFactory
 {
 
-	public function __construct(
-		private ObjectMapper\Processing\Processor $stateMapper,
-	)
+	public function __construct(private Documents\Mapping\Mapper $stateMapper)
 	{
 	}
 
@@ -44,16 +42,13 @@ final readonly class StateFactory
 		}
 
 		try {
-			$options = new ObjectMapper\Processing\Options();
-			$options->setAllowUnknownFields();
-
-			return $this->stateMapper->process($data, $class, $options);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
+			return $this->stateMapper->map(
+				$data,
+				$class,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: true),
 			);
-
-			throw new Exceptions\InvalidArgument('Could not map data to state: ' . $errorPrinter->printError($ex));
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			throw new Exceptions\InvalidArgument('Could not map data to state: ' . $ex->getMessage());
 		}
 	}
 
