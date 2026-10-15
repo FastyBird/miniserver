@@ -14,7 +14,6 @@ use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use ReflectionException;
@@ -127,9 +126,9 @@ final class System implements Common\EventSubscriber
 			);
 
 			if ($versionProperty !== null) {
-				$this->propertiesManager->update($versionProperty, Utils\ArrayHash::from([
+				$this->propertiesManager->update($versionProperty, [
 					'value' => intval(Utilities\Value::flattenValue($versionProperty->getValue())) + 1,
-				]));
+				]);
 			}
 
 			$this->updated[] = $connectorId;

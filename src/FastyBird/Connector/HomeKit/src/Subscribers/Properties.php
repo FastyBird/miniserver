@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use ReflectionException;
 use TypeError;
@@ -75,7 +74,7 @@ final readonly class Properties implements Common\EventSubscriber
 			$macAddressProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 			if ($macAddressProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'connector' => $entity,
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::MAC_ADDRESS->value,
@@ -83,7 +82,7 @@ final readonly class Properties implements Common\EventSubscriber
 					'unit' => null,
 					'format' => null,
 					'value' => Helpers\Protocol::generateMacAddress(),
-				]));
+				]);
 			}
 
 			$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
@@ -93,7 +92,7 @@ final readonly class Properties implements Common\EventSubscriber
 			$setupIdProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 			if ($setupIdProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'connector' => $entity,
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::SETUP_ID->value,
@@ -101,7 +100,7 @@ final readonly class Properties implements Common\EventSubscriber
 					'unit' => null,
 					'format' => null,
 					'value' => Helpers\Protocol::generateSetupId(),
-				]));
+				]);
 			}
 
 			$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
@@ -111,7 +110,7 @@ final readonly class Properties implements Common\EventSubscriber
 			$pinCodeProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 			if ($pinCodeProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'connector' => $entity,
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::PIN_CODE->value,
@@ -119,7 +118,7 @@ final readonly class Properties implements Common\EventSubscriber
 					'unit' => null,
 					'format' => null,
 					'value' => Helpers\Protocol::generatePinCode(),
-				]));
+				]);
 			}
 
 			$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
@@ -129,7 +128,7 @@ final readonly class Properties implements Common\EventSubscriber
 			$serverSecretProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 			if ($serverSecretProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'connector' => $entity,
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::SERVER_SECRET->value,
@@ -137,7 +136,7 @@ final readonly class Properties implements Common\EventSubscriber
 					'unit' => null,
 					'format' => null,
 					'value' => Helpers\Protocol::generateSignKey(),
-				]));
+				]);
 			}
 
 			$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
@@ -147,7 +146,7 @@ final readonly class Properties implements Common\EventSubscriber
 			$versionProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 			if ($versionProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'connector' => $entity,
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::CONFIG_VERSION->value,
@@ -155,7 +154,7 @@ final readonly class Properties implements Common\EventSubscriber
 					'unit' => null,
 					'format' => null,
 					'value' => 1,
-				]));
+				]);
 			}
 
 			$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
@@ -165,7 +164,7 @@ final readonly class Properties implements Common\EventSubscriber
 			$pairedProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 			if ($pairedProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'connector' => $entity,
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::PAIRED->value,
@@ -173,7 +172,7 @@ final readonly class Properties implements Common\EventSubscriber
 					'unit' => null,
 					'format' => null,
 					'value' => false,
-				]));
+				]);
 			}
 
 			$findConnectorPropertyQuery = new Queries\Entities\FindConnectorProperties();
@@ -189,7 +188,7 @@ final readonly class Properties implements Common\EventSubscriber
 					HomeKitTypes\AccessoryCategory::BRIDGE,
 				);
 
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'connector' => $entity,
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::XHM_URI->value,
@@ -197,7 +196,7 @@ final readonly class Properties implements Common\EventSubscriber
 					'unit' => null,
 					'format' => null,
 					'value' => $xhmUri,
-				]));
+				]);
 			}
 		} elseif ($entity instanceof HomeKitEntities\Devices\Device) {
 			$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
@@ -213,7 +212,7 @@ final readonly class Properties implements Common\EventSubscriber
 			}
 
 			if ($stateProperty !== null) {
-				$this->devicesPropertiesManager->update($stateProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($stateProperty, [
 					'dataType' => ValuesTypes\DataType::ENUM,
 					'unit' => null,
 					'format' => [
@@ -225,9 +224,9 @@ final readonly class Properties implements Common\EventSubscriber
 					],
 					'settable' => false,
 					'queryable' => false,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'device' => $entity,
 					'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::STATE->value,
@@ -242,7 +241,7 @@ final readonly class Properties implements Common\EventSubscriber
 					],
 					'settable' => false,
 					'queryable' => false,
-				]));
+				]);
 			}
 		}
 	}
@@ -285,7 +284,7 @@ final readonly class Properties implements Common\EventSubscriber
 				$xhmUriProperty = $this->connectorsPropertiesRepository->findOneBy($findConnectorPropertyQuery);
 
 				if ($xhmUriProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'connector' => $entity,
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::XHM_URI->value,
@@ -293,11 +292,11 @@ final readonly class Properties implements Common\EventSubscriber
 						'unit' => null,
 						'format' => null,
 						'value' => $xhmUri,
-					]));
+					]);
 				} else {
-					$this->connectorsPropertiesManager->update($entity, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($entity, [
 						'value' => $xhmUri,
-					]));
+					]);
 				}
 			}
 		}
