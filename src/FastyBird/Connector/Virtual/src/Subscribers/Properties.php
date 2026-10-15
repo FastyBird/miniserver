@@ -17,7 +17,6 @@ use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette\Utils;
 use Override;
 use ReflectionException;
 
@@ -77,7 +76,7 @@ final readonly class Properties implements Common\EventSubscriber
 		}
 
 		if ($stateProperty !== null) {
-			$this->propertiesManager->update($stateProperty, Utils\ArrayHash::from([
+			$this->propertiesManager->update($stateProperty, [
 				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
@@ -89,9 +88,9 @@ final readonly class Properties implements Common\EventSubscriber
 				],
 				'settable' => false,
 				'queryable' => false,
-			]));
+			]);
 		} else {
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'device' => $entity,
 				'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
 				'identifier' => VirtualTypes\DevicePropertyIdentifier::STATE->value,
@@ -106,7 +105,7 @@ final readonly class Properties implements Common\EventSubscriber
 				],
 				'settable' => false,
 				'queryable' => false,
-			]));
+			]);
 		}
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
@@ -125,7 +124,7 @@ final readonly class Properties implements Common\EventSubscriber
 		}
 
 		if ($manufacturerProperty === null) {
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'device' => $entity,
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => VirtualTypes\DevicePropertyIdentifier::MANUFACTURER->value,
@@ -133,7 +132,7 @@ final readonly class Properties implements Common\EventSubscriber
 				'unit' => null,
 				'format' => null,
 				'value' => self::MANUFACTURER,
-			]));
+			]);
 		}
 
 		$findDevicePropertyQuery = new Queries\Entities\FindDeviceProperties();
@@ -152,7 +151,7 @@ final readonly class Properties implements Common\EventSubscriber
 		}
 
 		if ($macAddressProperty === null) {
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'device' => $entity,
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => VirtualTypes\DevicePropertyIdentifier::MAC_ADDRESS->value,
@@ -160,7 +159,7 @@ final readonly class Properties implements Common\EventSubscriber
 				'unit' => null,
 				'format' => null,
 				'value' => Helpers\Drivers::generateMacAddress(),
-			]));
+			]);
 		}
 	}
 

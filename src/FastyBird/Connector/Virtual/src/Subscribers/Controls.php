@@ -12,7 +12,6 @@ use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette\Utils;
 use Override;
 use ReflectionException;
 
@@ -59,10 +58,10 @@ final readonly class Controls implements Common\EventSubscriber
 			$rebootControl = $this->controlsRepository->findOneBy($findConnectorControlQuery);
 
 			if ($rebootControl === null) {
-				$this->controlsManager->create(Utils\ArrayHash::from([
+				$this->controlsManager->create([
 					'name' => DevicesTypes\ControlName::REBOOT->value,
 					'connector' => $entity,
-				]));
+				]);
 			}
 		}
 	}

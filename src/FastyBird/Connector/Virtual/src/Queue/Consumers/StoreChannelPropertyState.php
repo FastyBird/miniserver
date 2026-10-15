@@ -15,7 +15,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
 use TypeError;
@@ -181,9 +180,9 @@ final readonly class StoreChannelPropertyState implements Queue\Consumer
 
 					$this->channelsPropertiesManager->update(
 						$property,
-						Utils\ArrayHash::from([
+						[
 							'value' => $message->getValue(),
-						]),
+						],
 					);
 				},
 			);
@@ -191,9 +190,8 @@ final readonly class StoreChannelPropertyState implements Queue\Consumer
 		} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 			await($this->channelPropertiesStatesManager->set(
 				$property,
-				Utils\ArrayHash::from([
-					DevicesStates\Property::ACTUAL_VALUE_FIELD => $message->getValue(),
-				]),
+				DevicesStates\PropertyUpdate::create()
+					->withActualValue($message->getValue()),
 				$message->getSource(),
 			));
 		} elseif ($property instanceof DevicesDocuments\Channels\Properties\Mapped) {
@@ -205,9 +203,8 @@ final readonly class StoreChannelPropertyState implements Queue\Consumer
 			if ($parent instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 				await($this->channelPropertiesStatesManager->write(
 					$property,
-					Utils\ArrayHash::from([
-						DevicesStates\Property::EXPECTED_VALUE_FIELD => $message->getValue(),
-					]),
+					DevicesStates\PropertyUpdate::create()
+						->withExpectedValue($message->getValue()),
 					$message->getSource(),
 				));
 			} elseif ($parent instanceof DevicesDocuments\Channels\Properties\Variable) {
@@ -221,9 +218,9 @@ final readonly class StoreChannelPropertyState implements Queue\Consumer
 						if ($toUpdate !== null) {
 							$this->channelsPropertiesManager->update(
 								$toUpdate,
-								Utils\ArrayHash::from([
+								[
 									'value' => $message->getValue(),
-								]),
+								],
 							);
 						} else {
 							$this->logger->error(

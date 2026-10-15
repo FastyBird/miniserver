@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use RuntimeException;
@@ -284,10 +283,9 @@ final readonly class WriteDevicePropertyState implements Queue\Consumer
 			function () use ($connector, $device, $property, $state, $message): void {
 				await($this->devicePropertiesStatesManager->set(
 					$property,
-					Utils\ArrayHash::from([
-						DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
-						DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-					]),
+					DevicesStates\PropertyUpdate::create()
+						->withActualValue($state->getExpectedValue())
+						->withExpectedValue(null),
 					Sources\Connector::VIRTUAL,
 				));
 
