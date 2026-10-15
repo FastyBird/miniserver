@@ -5,7 +5,6 @@ namespace FastyBird\Core\Documents;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use Psr\EventDispatcher;
 use function array_key_exists;
 use function assert;
@@ -22,7 +21,7 @@ final readonly class DocumentFactory
 
 	public function __construct(
 		private Documents\Mapping\ClassMetadataFactory $classMetadataFactory,
-		private ObjectMapper\Processing\Processor $documentMapper,
+		private Documents\Mapping\Mapper $documentMapper,
 		private EventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
@@ -110,26 +109,21 @@ final readonly class DocumentFactory
 		}
 
 		try {
-			$options = new ObjectMapper\Processing\Options();
-			$options->setAllowUnknownFields();
-
 			$preLoadEvent = new Events\PreLoad($data, $documentClass);
 			$this->dispatcher?->dispatch($preLoadEvent);
 
-			$document = $this->documentMapper->process($preLoadEvent->data, $documentClass, $options);
+			$document = $this->documentMapper->map(
+				$preLoadEvent->data,
+				$documentClass,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: true),
+			);
 
 			$postLoadEvent = new Events\PostLoad($document);
 			$this->dispatcher?->dispatch($postLoadEvent);
 
 			return $postLoadEvent->getDocument();
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
-			);
-
-			throw new CoreExceptions\InvalidArgument(
-				'Could not map data to document: ' . $errorPrinter->printError($ex),
-			);
+		} catch (Exceptions\MappingFailed $ex) {
+			throw new CoreExceptions\InvalidArgument('Could not map data to document: ' . $ex->getMessage());
 		}
 	}
 

@@ -61,6 +61,32 @@ final class DocumentTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
+	 * A refused document is an InvalidArgument whose message keeps its prefix and carries the printed failure after it
+	 *
+	 * @throws CoreExceptions\InvalidState
+	 * @throws DocumentsExceptions\MalformedInput
+	 * @throws CoreExceptions\Logic
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws Nette\Utils\JsonException
+	 */
+	public function testCreateDocumentInvalidMessage(): void
+	{
+		$factory = $this->container->getByType(Documents\DocumentFactory::class);
+
+		try {
+			$factory->create(
+				Tests\Fixtures\Dummy\DummyOneDocument::class,
+				Nette\Utils\Json::encode(['type' => 'one', 'id' => '', 'identifier' => 'dummy-document-one']),
+			);
+
+			self::fail('the factory accepted the data');
+		} catch (CoreExceptions\InvalidArgument $ex) {
+			self::assertStringStartsWith('Could not map data to document: ', $ex->getMessage());
+			self::assertNotSame('Could not map data to document: ', $ex->getMessage());
+		}
+	}
+
+	/**
 	 * @param array<mixed> $modify
 	 * @param class-string<Documents\Document> $class
 	 * @param array<string, mixed> $fixture
