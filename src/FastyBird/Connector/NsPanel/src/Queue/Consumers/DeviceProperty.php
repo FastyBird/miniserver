@@ -121,7 +121,7 @@ trait DeviceProperty
 
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Devices\Properties\Property => $this->devicesPropertiesManager->create(
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Devices\Properties\Variable::class,
 						'device' => $device,
 						'identifier' => $identifier->value,
@@ -129,7 +129,7 @@ trait DeviceProperty
 						'dataType' => $dataType,
 						'value' => $value,
 						'format' => $format,
-					]),
+					],
 				),
 			);
 
@@ -152,11 +152,11 @@ trait DeviceProperty
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Devices\Properties\Property => $this->devicesPropertiesManager->update(
 					$property,
-					Utils\ArrayHash::from([
+					[
 						'dataType' => $dataType,
 						'value' => $value,
 						'format' => $format,
-					]),
+					],
 				),
 			);
 

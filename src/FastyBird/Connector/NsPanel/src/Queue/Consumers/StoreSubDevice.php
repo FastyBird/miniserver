@@ -20,7 +20,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use function assert;
 use function in_array;
@@ -126,13 +125,13 @@ final readonly class StoreSubDevice implements Queue\Consumer
 
 			$device = $this->databaseHelper->transaction(
 				function () use ($message, $connector, $parent): NsPanelEntities\Devices\SubDevice {
-					$device = $this->devicesManager->create(Utils\ArrayHash::from([
+					$device = $this->devicesManager->create([
 						'entity' => NsPanelEntities\Devices\SubDevice::class,
 						'connector' => $connector,
 						'parent' => $parent,
 						'identifier' => $message->getIdentifier(),
 						'name' => $message->getName(),
-					]));
+					]);
 					assert($device instanceof NsPanelEntities\Devices\SubDevice);
 
 					return $device;
@@ -221,11 +220,11 @@ final readonly class StoreSubDevice implements Queue\Consumer
 						return false;
 					}
 
-					$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+					$channel = $this->channelsManager->create([
 						'entity' => $capabilityMetadata->getClass(),
 						'device' => $device,
 						'identifier' => $identifier,
-					]));
+					]);
 
 					$this->logger->debug(
 						'Device channel was created',
@@ -319,7 +318,7 @@ final readonly class StoreSubDevice implements Queue\Consumer
 					$property = $this->channelsPropertiesRepository->findOneBy($findPropertyQuery);
 
 					if ($property === null) {
-						$property = $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+						$property = $this->channelsPropertiesManager->create([
 							'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 							'channel' => $channel,
 							'identifier' => NsPanelHelpers\Name::convertAttributeToProperty($state->getAttribute()),
@@ -336,7 +335,7 @@ final readonly class StoreSubDevice implements Queue\Consumer
 								[NsPanelTypes\Permission::READ_WRITE, NsPanelTypes\Permission::READ],
 								true,
 							),
-						]));
+						]);
 
 						$this->logger->debug(
 							'Device channel property was created',
@@ -361,7 +360,7 @@ final readonly class StoreSubDevice implements Queue\Consumer
 							],
 						);
 					} else {
-						$property = $this->channelsPropertiesManager->update($property, Utils\ArrayHash::from([
+						$property = $this->channelsPropertiesManager->update($property, [
 							'dataType' => $attributeMetadata->getDataType(),
 							'format' => $format,
 							'invalid' => $attributeMetadata->getInvalidValue(),
@@ -375,7 +374,7 @@ final readonly class StoreSubDevice implements Queue\Consumer
 								[NsPanelTypes\Permission::READ_WRITE, NsPanelTypes\Permission::READ],
 								true,
 							),
-						]));
+						]);
 
 						$this->logger->debug(
 							'Device channel property was updated',

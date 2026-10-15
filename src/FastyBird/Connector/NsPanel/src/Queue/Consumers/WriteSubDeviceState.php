@@ -21,7 +21,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
@@ -394,10 +393,9 @@ final class WriteSubDeviceState implements Queue\Consumer
 				->then(function () use ($propertyToUpdate, $state, $message): void {
 					await($this->channelPropertiesStatesManager->set(
 						$propertyToUpdate,
-						Utils\ArrayHash::from([
-							DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
-							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-						]),
+						DevicesStates\PropertyUpdate::create()
+							->withActualValue($state->getExpectedValue())
+							->withExpectedValue(null),
 						Sources\Connector::NS_PANEL,
 					));
 
