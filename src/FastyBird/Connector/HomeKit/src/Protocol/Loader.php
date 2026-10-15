@@ -259,7 +259,7 @@ final class Loader
 						);
 						assert($device instanceof HomeKitEntities\Devices\Device);
 
-						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicesPropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'identifier' => HomeKitTypes\DevicePropertyIdentifier::AID->value,
 							'name' => DevicesUtilities\Name::createName(
@@ -268,7 +268,7 @@ final class Loader
 							'dataType' => ValuesTypes\DataType::UCHAR,
 							'value' => $accessory->aid,
 							'device' => $device,
-						]));
+						]);
 					},
 				);
 			}
@@ -525,7 +525,7 @@ final class Loader
 						);
 						assert($device instanceof HomeKitEntities\Devices\Device);
 
-						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicesPropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'identifier' => HomeKitTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value,
 							'name' => DevicesUtilities\Name::createName(
@@ -534,7 +534,7 @@ final class Loader
 							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => $serialNumber,
 							'device' => $device,
-						]));
+						]);
 					},
 				);
 			}
@@ -573,7 +573,7 @@ final class Loader
 						);
 						assert($device instanceof HomeKitEntities\Devices\Device);
 
-						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicesPropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'identifier' => HomeKitTypes\DevicePropertyIdentifier::VERSION->value,
 							'name' => DevicesUtilities\Name::createName(
@@ -582,7 +582,7 @@ final class Loader
 							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => strval($firmwareVersion),
 							'device' => $device,
-						]));
+						]);
 					},
 				);
 			}
@@ -621,7 +621,7 @@ final class Loader
 						);
 						assert($device instanceof HomeKitEntities\Devices\Device);
 
-						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicesPropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'identifier' => HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 							'name' => DevicesUtilities\Name::createName(
@@ -630,7 +630,7 @@ final class Loader
 							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => $manufacturer,
 							'device' => $device,
-						]));
+						]);
 					},
 				);
 			}
@@ -662,7 +662,7 @@ final class Loader
 						);
 						assert($device instanceof HomeKitEntities\Devices\Device);
 
-						$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicesPropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
 							'name' => DevicesUtilities\Name::createName(
@@ -671,7 +671,7 @@ final class Loader
 							'dataType' => ValuesTypes\DataType::STRING,
 							'value' => $model,
 							'device' => $device,
-						]));
+						]);
 					},
 				);
 			}

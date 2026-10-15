@@ -212,59 +212,59 @@ final readonly class Builder
 			$this->databaseHelper->beginTransaction();
 
 			if ($accessory === null) {
-				$accessory = $this->devicesManager->create(Utils\ArrayHash::from([
+				$accessory = $this->devicesManager->create([
 					'entity' => VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat::class,
 					'connector' => $homeKitConnector,
 					'identifier' => $identifier,
 					'parents' => [$thermostat],
 					'name' => $thermostat->getName(),
-				]));
+				]);
 				assert($accessory instanceof VirtualThermostatAddonHomeKitConnectorEntities\Devices\Thermostat);
 			}
 
 			if ($categoryProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => HomeKitTypes\AccessoryCategory::THERMOSTAT->value,
 					'device' => $accessory,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->update($categoryProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($categoryProperty, [
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => HomeKitTypes\AccessoryCategory::THERMOSTAT->value,
-				]));
+				]);
 			}
 
 			if ($modelProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => self::MODEL,
 					'device' => $accessory,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->update($modelProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($modelProperty, [
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => self::MODEL,
-				]));
+				]);
 			}
 
 			if ($manufacturerProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => self::MANUFACTURER,
 					'device' => $accessory,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->update($manufacturerProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($manufacturerProperty, [
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => self::MANUFACTURER,
-				]));
+				]);
 			}
 
 			$this->databaseHelper->commitTransaction();
@@ -356,14 +356,14 @@ final readonly class Builder
 			if ($service === null) {
 				$service = $this->databaseHelper->transaction(
 					function () use ($identifier, $accessory): VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat {
-						$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+						$channel = $this->channelsManager->create([
 							'entity' => VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat::class,
 							'identifier' => $identifier,
 							'device' => $accessory,
 							'name' => $this->translator->translate(
 								'//virtual-thermostat-addon-homekit-connector-bridge.base.misc.services.thermostat',
 							),
-						]));
+						]);
 						assert($channel instanceof VirtualThermostatAddonHomeKitConnectorEntities\Channels\Thermostat);
 
 						return $channel;
@@ -686,7 +686,7 @@ final readonly class Builder
 
 			if ($characteristic === null) {
 				$characteristic = $this->channelsPropertiesManager->create(
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'entity' => $entity,
 							'identifier' => $identifier,
@@ -712,7 +712,7 @@ final readonly class Builder
 								'default' => $default,
 							]
 							: [],
-					)),
+					),
 				);
 
 				$this->logger->debug(
@@ -738,7 +738,7 @@ final readonly class Builder
 			} else {
 				$this->channelsPropertiesManager->update(
 					$characteristic,
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'dataType' => $dataType,
 							'format' => $format,
@@ -761,7 +761,7 @@ final readonly class Builder
 								'default' => $default,
 							]
 							: [],
-					)),
+					),
 				);
 
 				$this->logger->debug(

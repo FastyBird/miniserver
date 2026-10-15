@@ -26,7 +26,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Fig\Http\Message\StatusCodeInterface;
 use InvalidArgumentException;
-use Nette\Utils;
 use Psr\Http\Message;
 use Ramsey\Uuid;
 use RuntimeException;
@@ -1131,15 +1130,15 @@ final class PairingController extends BaseController
 				$client = $this->clientsRepository->findOneBy($findClientQuery);
 
 				if ($client !== null) {
-					$this->clientsManager->update($client, Utils\ArrayHash::from([
+					$this->clientsManager->update($client, [
 						'publicKey' => pack('C*', ...$tlvEntry[HomeKitTypes\TlvCode::PUBLIC_KEY->value]),
-					]));
+					]);
 				} else {
-					$this->clientsManager->create(Utils\ArrayHash::from([
+					$this->clientsManager->create([
 						'uid' => $tlvEntry[HomeKitTypes\TlvCode::IDENTIFIER->value],
 						'publicKey' => pack('C*', ...$tlvEntry[HomeKitTypes\TlvCode::PUBLIC_KEY->value]),
 						'connector' => $connector,
-					]));
+					]);
 				}
 			},
 		);
@@ -1924,9 +1923,9 @@ final class PairingController extends BaseController
 				try {
 					$this->databaseHelper->transaction(
 						function () use ($client, $clientPermission): void {
-							$this->clientsManager->update($client, Utils\ArrayHash::from([
+							$this->clientsManager->update($client, [
 								'admin' => $clientPermission === HomeKitTypes\ClientPermission::ADMIN->value,
-							]));
+							]);
 						},
 					);
 				} catch (Throwable) {
@@ -1948,12 +1947,12 @@ final class PairingController extends BaseController
 						);
 						assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
-						$this->clientsManager->create(Utils\ArrayHash::from([
+						$this->clientsManager->create([
 							'uid' => $clientUid,
 							'publicKey' => pack('C*', ...$clientPublicKey),
 							'admin' => $clientPermission === HomeKitTypes\ClientPermission::ADMIN->value,
 							'connector' => $connector,
-						]));
+						]);
 					},
 				);
 			} catch (Throwable) {
@@ -2098,13 +2097,13 @@ final class PairingController extends BaseController
 						assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 						$this->propertiesManagers->create(
-							Utils\ArrayHash::from([
+							[
 								'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 								'identifier' => $type->value,
 								'dataType' => ValuesTypes\DataType::STRING,
 								'value' => $value,
 								'connector' => $connector,
-							]),
+							],
 						);
 					},
 				);
@@ -2116,9 +2115,9 @@ final class PairingController extends BaseController
 				function () use ($property, $value): void {
 					$this->propertiesManagers->update(
 						$property,
-						Utils\ArrayHash::from([
+						[
 							'value' => $value,
-						]),
+						],
 					);
 				},
 			);

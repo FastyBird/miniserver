@@ -30,13 +30,15 @@ final class ClientsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function create(Utils\ArrayHash $values): Entities\Clients\Client
+	public function create(array|Utils\ArrayHash $values): Entities\Clients\Client
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
 		assert($entity instanceof Entities\Clients\Client);
@@ -45,6 +47,8 @@ final class ClientsManager
 	}
 
 	/**
+	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -53,7 +57,7 @@ final class ClientsManager
 	 */
 	public function update(
 		Entities\Clients\Client $entity,
-		Utils\ArrayHash $values,
+		array|Utils\ArrayHash $values,
 	): Entities\Clients\Client
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);

@@ -219,20 +219,20 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => HomeKitEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
-			]));
+			]);
 			assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::PORT->value,
 				'dataType' => ValuesTypes\DataType::UCHAR,
 				'value' => $port,
 				'connector' => $connector,
-			]));
+			]);
 
 			$this->databaseHelper->commitTransaction();
 
@@ -353,24 +353,24 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof HomeKitEntities\Connectors\Connector);
 
 			if ($portProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => HomeKitTypes\ConnectorPropertyIdentifier::PORT->value,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $port,
 					'connector' => $connector,
-				]));
+				]);
 			} else {
-				$this->connectorsPropertiesManager->update($portProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($portProperty, [
 					'value' => $port,
-				]));
+				]);
 			}
 
 			$this->databaseHelper->commitTransaction();
@@ -644,21 +644,21 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->create(Utils\ArrayHash::from([
+			$device = $this->devicesManager->create([
 				'entity' => HomeKitEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof HomeKitEntities\Devices\Device);
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
 				'dataType' => ValuesTypes\DataType::UCHAR,
 				'value' => $category->value,
 				'device' => $device,
-			]));
+			]);
 
 			$this->databaseHelper->commitTransaction();
 
@@ -743,23 +743,23 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
+			$device = $this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof HomeKitEntities\Devices\Device);
 
 			if ($categoryProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $category->value,
 					'device' => $device,
-				]));
+				]);
 			} elseif ($categoryProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-				$this->devicesPropertiesManager->update($categoryProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($categoryProperty, [
 					'value' => $category->value,
-				]));
+				]);
 			}
 
 			$this->databaseHelper->commitTransaction();
@@ -1019,11 +1019,11 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+			$channel = $this->channelsManager->create([
 				'entity' => HomeKitEntities\Channels\Generic::class,
 				'identifier' => $identifier,
 				'device' => $device,
-			]));
+			]);
 			assert($channel instanceof HomeKitEntities\Channels\Generic);
 
 			$this->createCharacteristics($io, $channel, $requiredCharacteristics, true);
@@ -1571,7 +1571,7 @@ final class Install extends Console\Command\Command
 					];
 				}
 
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 					'parent' => $connectProperty,
 					'identifier' => strtolower(strval(preg_replace('/(?<!^)[A-Z]/', '_$0', $characteristic))),
@@ -1581,11 +1581,11 @@ final class Install extends Console\Command\Command
 					'settable' => $connectProperty?->isSettable(),
 					'queryable' => $connectProperty?->isQueryable(),
 					'default' => $default,
-				]));
+				]);
 			} else {
 				$value = $this->provideCharacteristicValue($io, $characteristic);
 
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => strtolower(strval(preg_replace('/(?<!^)[A-Z]/', '_$0', $characteristic))),
 					'channel' => $channel,
@@ -1593,7 +1593,7 @@ final class Install extends Console\Command\Command
 					'format' => $format,
 					'value' => $value,
 					'default' => $default,
-				]));
+				]);
 			}
 
 			$createdCharacteristics[] = $characteristic;
@@ -1772,14 +1772,14 @@ final class Install extends Console\Command\Command
 					$property instanceof DevicesEntities\Channels\Properties\Mapped
 					&& $connectProperty instanceof DevicesEntities\Channels\Properties\Dynamic
 				) {
-					$this->channelsPropertiesManager->update($property, Utils\ArrayHash::from([
+					$this->channelsPropertiesManager->update($property, [
 						'parent' => $connectProperty,
 						'format' => $format,
-					]));
+					]);
 				} else {
 					$this->channelsPropertiesManager->delete($property);
 
-					$property = $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+					$property = $this->channelsPropertiesManager->create([
 						'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 						'parent' => $connectProperty,
 						'identifier' => $property->getIdentifier(),
@@ -1789,7 +1789,7 @@ final class Install extends Console\Command\Command
 						'settable' => $connectProperty?->isSettable(),
 						'queryable' => $connectProperty?->isQueryable(),
 						'default' => $default,
-					]));
+					]);
 				}
 			} else {
 				$value = $this->provideCharacteristicValue(
@@ -1799,21 +1799,21 @@ final class Install extends Console\Command\Command
 				);
 
 				if ($property instanceof DevicesEntities\Channels\Properties\Variable) {
-					$this->channelsPropertiesManager->update($property, Utils\ArrayHash::from([
+					$this->channelsPropertiesManager->update($property, [
 						'value' => $value,
 						'format' => $format,
-					]));
+					]);
 				} else {
 					$this->channelsPropertiesManager->delete($property);
 
-					$property = $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+					$property = $this->channelsPropertiesManager->create([
 						'entity' => DevicesEntities\Channels\Properties\Variable::class,
 						'identifier' => $property->getIdentifier(),
 						'channel' => $channel,
 						'dataType' => $dataType,
 						'format' => $format,
 						'value' => $value,
-					]));
+					]);
 				}
 			}
 

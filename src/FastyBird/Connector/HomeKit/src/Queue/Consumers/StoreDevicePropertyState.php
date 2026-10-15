@@ -15,7 +15,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette\Utils;
 use Override;
 use TypeError;
 use ValueError;
@@ -131,9 +130,9 @@ final readonly class StoreDevicePropertyState implements Queue\Consumer
 
 					$this->devicesPropertiesManager->update(
 						$property,
-						Utils\ArrayHash::from([
+						[
 							'value' => $message->getValue(),
-						]),
+						],
 					);
 				},
 			);
@@ -141,9 +140,8 @@ final readonly class StoreDevicePropertyState implements Queue\Consumer
 		} elseif ($property instanceof DevicesDocuments\Devices\Properties\Dynamic) {
 			await($this->devicePropertiesStatesManager->set(
 				$property,
-				Utils\ArrayHash::from([
-					DevicesStates\Property::ACTUAL_VALUE_FIELD => $message->getValue(),
-				]),
+				DevicesStates\PropertyUpdate::create()
+					->withActualValue($message->getValue()),
 				Sources\Connector::HOMEKIT,
 			));
 			await($this->devicePropertiesStatesManager->setValidState(
@@ -160,9 +158,8 @@ final readonly class StoreDevicePropertyState implements Queue\Consumer
 			if ($parent instanceof DevicesDocuments\Devices\Properties\Dynamic) {
 				await($this->devicePropertiesStatesManager->write(
 					$property,
-					Utils\ArrayHash::from([
-						DevicesStates\Property::EXPECTED_VALUE_FIELD => $message->getValue(),
-					]),
+					DevicesStates\PropertyUpdate::create()
+						->withExpectedValue($message->getValue()),
 					Sources\Connector::HOMEKIT,
 				));
 			} elseif ($parent instanceof DevicesDocuments\Devices\Properties\Variable) {
@@ -175,9 +172,9 @@ final readonly class StoreDevicePropertyState implements Queue\Consumer
 					if ($toUpdate !== null) {
 						$this->devicesPropertiesManager->update(
 							$toUpdate,
-							Utils\ArrayHash::from([
+							[
 								'value' => $message->getValue(),
-							]),
+							],
 						);
 					} else {
 						$this->logger->error(
