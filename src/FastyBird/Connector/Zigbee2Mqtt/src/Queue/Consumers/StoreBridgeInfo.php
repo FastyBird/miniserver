@@ -16,7 +16,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 
 /**
@@ -77,9 +76,9 @@ final readonly class StoreBridgeInfo implements Queue\Consumer
 			function () use ($bridge, $message): void {
 				$this->devicesManager->update(
 					$bridge,
-					Utils\ArrayHash::from([
+					[
 						'identifier' => $message->getCoordinator()->getIeeeAddress(),
-					]),
+					],
 				);
 			},
 		);

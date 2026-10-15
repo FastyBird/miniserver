@@ -20,7 +20,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use RuntimeException;
@@ -284,10 +283,9 @@ final readonly class WriteV1ChannelPropertyState implements Queue\Consumer
 			->then(function () use ($connector, $device, $channel, $property, $state, $message): void {
 				await($this->channelPropertiesStatesManager->set(
 					$property,
-					Utils\ArrayHash::from([
-						DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
-						DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-					]),
+					DevicesStates\PropertyUpdate::create()
+						->withActualValue($state->getExpectedValue())
+						->withExpectedValue(null),
 					Sources\Connector::FB_MQTT,
 				));
 

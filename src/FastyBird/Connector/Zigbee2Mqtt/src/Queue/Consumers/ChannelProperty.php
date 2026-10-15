@@ -11,7 +11,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
-use Nette\Utils;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -119,7 +118,7 @@ trait ChannelProperty
 
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Channels\Properties\Property => $this->channelsPropertiesManager->create(
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'entity' => $type,
 							'channel' => $channel,
@@ -139,7 +138,7 @@ trait ChannelProperty
 								'settable' => $settable,
 								'queryable' => $queryable,
 							],
-					)),
+					),
 				),
 			);
 
@@ -162,7 +161,7 @@ trait ChannelProperty
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Channels\Properties\Property => $this->channelsPropertiesManager->update(
 					$property,
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'name' => $name,
 							'dataType' => $dataType,
@@ -179,7 +178,7 @@ trait ChannelProperty
 								'settable' => $settable,
 								'queryable' => $queryable,
 							],
-					)),
+					),
 				),
 			);
 

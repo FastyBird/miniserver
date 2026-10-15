@@ -16,7 +16,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
-use Nette\Utils;
 use Override;
 use ReflectionException;
 use function in_array;
@@ -117,15 +116,15 @@ final readonly class ChannelAttribute implements Queue\Consumer
 			}
 
 			if ($message->getAttribute() === Queue\Messages\Attribute::PROPERTIES && is_array($message->getValue())) {
-				$this->setChannelProperties($channel, Utils\ArrayHash::from($message->getValue()));
+				$this->setChannelProperties($channel, $message->getValue());
 			}
 
 			if ($message->getAttribute() === Queue\Messages\Attribute::CONTROLS && is_array($message->getValue())) {
-				$this->setChannelControls($channel, Utils\ArrayHash::from($message->getValue()));
+				$this->setChannelControls($channel, $message->getValue());
 			}
 
 			if ($toUpdate !== []) {
-				$this->channelsManager->update($channel, Utils\ArrayHash::from($toUpdate));
+				$this->channelsManager->update($channel, $toUpdate);
 			}
 		});
 
@@ -151,7 +150,7 @@ final readonly class ChannelAttribute implements Queue\Consumer
 	}
 
 	/**
-	 * @param Utils\ArrayHash<string> $properties
+	 * @param array<string> $properties
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
@@ -162,7 +161,7 @@ final readonly class ChannelAttribute implements Queue\Consumer
 	 */
 	private function setChannelProperties(
 		DevicesEntities\Channels\Channel $channel,
-		Utils\ArrayHash $properties,
+		array $properties,
 	): void
 	{
 		foreach ($properties as $propertyName) {
@@ -171,14 +170,14 @@ final readonly class ChannelAttribute implements Queue\Consumer
 			$findChannelPropertyQuery->byIdentifier($propertyName);
 
 			if ($this->channelPropertiesRepository->findOneBy($findChannelPropertyQuery) === null) {
-				$this->channelPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'channel' => $channel,
 					'identifier' => $propertyName,
 					'settable' => false,
 					'queryable' => false,
 					'dataType' => Types\DataType::UNKNOWN,
-				]));
+				]);
 			}
 		}
 
@@ -187,14 +186,14 @@ final readonly class ChannelAttribute implements Queue\Consumer
 
 		// Cleanup for unused properties
 		foreach ($this->channelPropertiesRepository->findAllBy($findChannelPropertiesQuery) as $property) {
-			if (!in_array($property->getIdentifier(), (array) $properties, true)) {
+			if (!in_array($property->getIdentifier(), $properties, true)) {
 				$this->channelPropertiesManager->delete($property);
 			}
 		}
 	}
 
 	/**
-	 * @param Utils\ArrayHash<string> $controls
+	 * @param array<string> $controls
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
@@ -205,7 +204,7 @@ final readonly class ChannelAttribute implements Queue\Consumer
 	 */
 	private function setChannelControls(
 		DevicesEntities\Channels\Channel $channel,
-		Utils\ArrayHash $controls,
+		array $controls,
 	): void
 	{
 		foreach ($controls as $controlName) {
@@ -214,10 +213,10 @@ final readonly class ChannelAttribute implements Queue\Consumer
 			$findChannelControlQuery->byName($controlName);
 
 			if ($this->channelControlsRepository->findOneBy($findChannelControlQuery) === null) {
-				$this->channelControlsManager->create(Utils\ArrayHash::from([
+				$this->channelControlsManager->create([
 					'channel' => $channel,
 					'name' => $controlName,
-				]));
+				]);
 			}
 		}
 
@@ -226,7 +225,7 @@ final readonly class ChannelAttribute implements Queue\Consumer
 
 		// Cleanup for unused control
 		foreach ($this->channelControlsRepository->findAllBy($findChannelControlQuery) as $control) {
-			if (!in_array($control->getName(), (array) $controls, true)) {
+			if (!in_array($control->getName(), $controls, true)) {
 				$this->channelControlsManager->delete($control);
 			}
 		}

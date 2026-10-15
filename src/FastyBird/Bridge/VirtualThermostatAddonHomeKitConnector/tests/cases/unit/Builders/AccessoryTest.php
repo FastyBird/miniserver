@@ -396,9 +396,10 @@ final class AccessoryTest extends Tests\Cases\Unit\DbTestCase
 		$findThermostatQuery = new DevicesQueries\Entities\FindDevices();
 		$findThermostatQuery->byIdentifier('thermostat-office');
 
+		// a new accessory takes the thermostat's identifier, so the lookup is by the thermostat's type as well
 		$thermostat = $this->getContainer()->getByType(
 			DevicesModels\Entities\Devices\DevicesRepository::class,
-		)->findOneBy($findThermostatQuery);
+		)->findOneBy($findThermostatQuery, VirtualThermostatEntities\Devices\Device::class);
 
 		self::assertInstanceOf(VirtualThermostatEntities\Devices\Device::class, $thermostat);
 

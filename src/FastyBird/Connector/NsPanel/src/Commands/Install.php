@@ -30,7 +30,6 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
@@ -228,14 +227,14 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => NsPanelEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
-			]));
+			]);
 			assert($connector instanceof NsPanelEntities\Connectors\Connector);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => NsPanelTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 				'dataType' => ValuesTypes\DataType::ENUM,
@@ -246,7 +245,7 @@ final class Install extends Console\Command\Command
 					NsPanelTypes\ClientMode::BOTH->value,
 				],
 				'connector' => $connector,
-			]));
+			]);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -384,10 +383,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof NsPanelEntities\Connectors\Connector);
 
 			if ($modeProperty === null) {
@@ -395,7 +394,7 @@ final class Install extends Console\Command\Command
 					$mode = $this->askConnectorMode($io);
 				}
 
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => NsPanelTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 					'dataType' => ValuesTypes\DataType::ENUM,
@@ -406,11 +405,11 @@ final class Install extends Console\Command\Command
 						NsPanelTypes\ClientMode::BOTH->value,
 					],
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($mode !== null) {
-				$this->connectorsPropertiesManager->update($modeProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($modeProperty, [
 					'value' => $mode->value,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -746,54 +745,54 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$gateway = $this->devicesManager->create(Utils\ArrayHash::from([
+			$gateway = $this->devicesManager->create([
 				'entity' => NsPanelEntities\Devices\Gateway::class,
 				'id' => $id,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($gateway instanceof NsPanelEntities\Devices\Gateway);
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => NsPanelTypes\DevicePropertyIdentifier::IP_ADDRESS->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $panelInfo->getData()->getIpAddress(),
 				'device' => $gateway,
-			]));
+			]);
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => NsPanelTypes\DevicePropertyIdentifier::DOMAIN->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $panelInfo->getData()->getDomain(),
 				'device' => $gateway,
-			]));
+			]);
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => NsPanelTypes\DevicePropertyIdentifier::MAC_ADDRESS->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $panelInfo->getData()->getMacAddress(),
 				'device' => $gateway,
-			]));
+			]);
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => NsPanelTypes\DevicePropertyIdentifier::FIRMWARE_VERSION->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $panelInfo->getData()->getFirmwareVersion(),
 				'device' => $gateway,
-			]));
+			]);
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => NsPanelTypes\DevicePropertyIdentifier::ACCESS_TOKEN->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $accessToken->getData()->getAccessToken(),
 				'device' => $gateway,
-			]));
+			]);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -991,80 +990,80 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$gateway = $this->devicesManager->update($gateway, Utils\ArrayHash::from([
+			$gateway = $this->devicesManager->update($gateway, [
 				'name' => $name,
-			]));
+			]);
 			assert($gateway instanceof NsPanelEntities\Devices\Gateway);
 
 			if ($ipAddressProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => NsPanelTypes\DevicePropertyIdentifier::IP_ADDRESS->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $panelInfo->getData()->getIpAddress(),
 					'device' => $gateway,
-				]));
+				]);
 			} elseif ($ipAddressProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-				$this->devicesPropertiesManager->update($ipAddressProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($ipAddressProperty, [
 					'value' => $panelInfo->getData()->getIpAddress(),
-				]));
+				]);
 			}
 
 			if ($domainProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => NsPanelTypes\DevicePropertyIdentifier::DOMAIN->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $panelInfo->getData()->getDomain(),
 					'device' => $gateway,
-				]));
+				]);
 			} elseif ($domainProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-				$this->devicesPropertiesManager->update($domainProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($domainProperty, [
 					'value' => $panelInfo->getData()->getDomain(),
-				]));
+				]);
 			}
 
 			if ($macAddressProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => NsPanelTypes\DevicePropertyIdentifier::MAC_ADDRESS->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $panelInfo->getData()->getMacAddress(),
 					'device' => $gateway,
-				]));
+				]);
 			} elseif ($macAddressProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-				$this->devicesPropertiesManager->update($macAddressProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($macAddressProperty, [
 					'value' => $panelInfo->getData()->getMacAddress(),
-				]));
+				]);
 			}
 
 			if ($firmwareVersionProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => NsPanelTypes\DevicePropertyIdentifier::FIRMWARE_VERSION->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $panelInfo->getData()->getFirmwareVersion(),
 					'device' => $gateway,
-				]));
+				]);
 			} elseif ($firmwareVersionProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-				$this->devicesPropertiesManager->update($firmwareVersionProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($firmwareVersionProperty, [
 					'value' => $panelInfo->getData()->getFirmwareVersion(),
-				]));
+				]);
 			}
 
 			if ($accessToken !== null) {
 				if ($accessTokenProperty === null) {
-					$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->create([
 						'entity' => DevicesEntities\Devices\Properties\Variable::class,
 						'identifier' => NsPanelTypes\DevicePropertyIdentifier::ACCESS_TOKEN->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $accessToken->getData()->getAccessToken(),
 						'device' => $gateway,
-					]));
+					]);
 				} elseif ($accessTokenProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-					$this->devicesPropertiesManager->update($accessTokenProperty, Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->update($accessTokenProperty, [
 						'value' => $accessToken->getData()->getAccessToken(),
-					]));
+					]);
 				}
 			}
 
@@ -1468,22 +1467,22 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->create(Utils\ArrayHash::from([
+			$device = $this->devicesManager->create([
 				'entity' => NsPanelEntities\Devices\ThirdPartyDevice::class,
 				'connector' => $connector,
 				'parent' => $gateway,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof NsPanelEntities\Devices\ThirdPartyDevice);
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => NsPanelTypes\DevicePropertyIdentifier::CATEGORY->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $category->value,
 				'device' => $device,
-			]));
+			]);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -1566,9 +1565,9 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
+			$device = $this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -1876,7 +1875,7 @@ final class Install extends Console\Command\Command
 
 			preg_match(NsPanelEntities\Channels\Channel::CHANNEL_IDENTIFIER, $identifier, $matches);
 
-			$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+			$channel = $this->channelsManager->create([
 				'entity' => $capabilityMetadata->getClass(),
 				'identifier' => $identifier,
 				'name' => $this->translator->translate(
@@ -1884,7 +1883,7 @@ final class Install extends Console\Command\Command
 				)
 					. (array_key_exists('name', $matches) ? ' ' . $matches['name'] : ''),
 				'device' => $device,
-			]));
+			]);
 			assert($channel instanceof NsPanelEntities\Channels\Channel);
 
 			do {
@@ -2282,14 +2281,14 @@ final class Install extends Console\Command\Command
 			}
 
 			if (!$device->hasParent($connectProperty->getChannel()->getDevice())) {
-				$this->devicesManager->update($device, Utils\ArrayHash::from([
+				$this->devicesManager->update($device, [
 					'parents' => array_merge($device->getParents(), [$connectProperty->getChannel()->getDevice()]),
-				]));
+				]);
 			}
 
 			$format = $this->askAttributeFormat($io, $attributeMetadata, $connectProperty);
 
-			return $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+			return $this->channelsPropertiesManager->create([
 				'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 				'parent' => $connectProperty,
 				'identifier' => NsPanelHelpers\Name::convertAttributeToProperty($attributeType),
@@ -2302,14 +2301,14 @@ final class Install extends Console\Command\Command
 				'invalid' => $attributeMetadata->getInvalidValue(),
 				'settable' => $connectProperty->isSettable(),
 				'queryable' => $connectProperty->isQueryable(),
-			]));
+			]);
 		}
 
 		$format = $this->askAttributeFormat($io, $attributeMetadata);
 
 		$value = $this->provideAttributeValue($io, $attributeMetadata);
 
-		return $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+		return $this->channelsPropertiesManager->create([
 			'entity' => DevicesEntities\Channels\Properties\Variable::class,
 			'identifier' => NsPanelHelpers\Name::convertAttributeToProperty($attributeType),
 			'name' => (string) $this->translator->translate(
@@ -2320,7 +2319,7 @@ final class Install extends Console\Command\Command
 			'format' => $format,
 			'value' => $value,
 			'invalid' => $attributeMetadata->getInvalidValue(),
-		]));
+		]);
 	}
 
 	/**
@@ -2408,44 +2407,42 @@ final class Install extends Console\Command\Command
 					$this->channelsPropertiesManager->delete($property);
 				} else {
 					if ($property instanceof DevicesEntities\Channels\Properties\Mapped) {
-						$this->channelsPropertiesManager->update($property, Utils\ArrayHash::from([
+						$this->channelsPropertiesManager->update($property, [
 							'parent' => $connectProperty,
 							'format' => $format,
 							'invalid' => $attributeMetadata->getInvalidValue(),
-						]));
+						]);
 					} else {
 						$this->channelsPropertiesManager->delete($property);
 
-						$property = $this->channelsPropertiesManager->create(Utils\ArrayHash::from(
-							array_merge(
-								[
-									'entity' => DevicesEntities\Channels\Properties\Mapped::class,
-									'parent' => $connectProperty,
-									'identifier' => $property->getIdentifier(),
-									'name' => (string) $this->translator->translate(
-										'//ns-panel-connector.cmd.base.attribute.' . $attributeType->value,
-									),
-									'channel' => $channel,
-									'dataType' => $attributeMetadata->getDataType(),
-									'format' => $format,
-									'invalid' => $attributeMetadata->getInvalidValue(),
-								],
-								$connectProperty instanceof DevicesEntities\Channels\Properties\Dynamic
+						$property = $this->channelsPropertiesManager->create(array_merge(
+							[
+								'entity' => DevicesEntities\Channels\Properties\Mapped::class,
+								'parent' => $connectProperty,
+								'identifier' => $property->getIdentifier(),
+								'name' => (string) $this->translator->translate(
+									'//ns-panel-connector.cmd.base.attribute.' . $attributeType->value,
+								),
+								'channel' => $channel,
+								'dataType' => $attributeMetadata->getDataType(),
+								'format' => $format,
+								'invalid' => $attributeMetadata->getInvalidValue(),
+							],
+							$connectProperty instanceof DevicesEntities\Channels\Properties\Dynamic
 									? [
 										'settable' => $connectProperty->isSettable(),
 										'queryable' => $connectProperty->isQueryable(),
 									] : [],
-							),
 						));
 					}
 
 					if (!$device->hasParent($connectProperty->getChannel()->getDevice())) {
-						$this->devicesManager->update($device, Utils\ArrayHash::from([
+						$this->devicesManager->update($device, [
 							'parents' => array_merge(
 								$device->getParents(),
 								[$connectProperty->getChannel()->getDevice()],
 							),
-						]));
+						]);
 					}
 				}
 			} else {
@@ -2461,22 +2458,20 @@ final class Install extends Console\Command\Command
 					$property instanceof DevicesEntities\Channels\Properties\Variable
 					|| $property instanceof DevicesEntities\Channels\Properties\Dynamic
 				) {
-					$this->channelsPropertiesManager->update($property, Utils\ArrayHash::from(
-						array_merge(
-							[
-								'format' => $format,
-								'invalid' => $attributeMetadata->getInvalidValue(),
-							],
-							$property instanceof DevicesEntities\Channels\Properties\Variable
+					$this->channelsPropertiesManager->update($property, array_merge(
+						[
+							'format' => $format,
+							'invalid' => $attributeMetadata->getInvalidValue(),
+						],
+						$property instanceof DevicesEntities\Channels\Properties\Variable
 								? [
 									'value' => $value,
 								] : [],
-						),
 					));
 				} else {
 					$this->channelsPropertiesManager->delete($property);
 
-					$property = $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+					$property = $this->channelsPropertiesManager->create([
 						'entity' => DevicesEntities\Channels\Properties\Variable::class,
 						'identifier' => $property->getIdentifier(),
 						'name' => (string) $this->translator->translate(
@@ -2487,7 +2482,7 @@ final class Install extends Console\Command\Command
 						'format' => $format,
 						'invalid' => $attributeMetadata->getInvalidValue(),
 						'value' => $value,
-					]));
+					]);
 				}
 			}
 

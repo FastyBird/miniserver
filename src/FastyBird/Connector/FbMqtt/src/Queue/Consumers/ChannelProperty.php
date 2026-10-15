@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette\Utils;
 use Override;
 use Throwable;
 use function assert;
@@ -162,17 +161,16 @@ final readonly class ChannelProperty implements Queue\Consumer
 
 					$this->channelsPropertiesManager->update(
 						$property,
-						Utils\ArrayHash::from([
+						[
 							'value' => $message->getValue(),
-						]),
+						],
 					);
 				});
 			} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 				await($this->channelPropertiesStatesManager->set(
 					$property,
-					Utils\ArrayHash::from([
-						DevicesStates\Property::ACTUAL_VALUE_FIELD => $message->getValue(),
-					]),
+					DevicesStates\PropertyUpdate::create()
+						->withActualValue($message->getValue()),
 					Sources\Connector::FB_MQTT,
 				));
 			}
@@ -184,7 +182,7 @@ final readonly class ChannelProperty implements Queue\Consumer
 
 					$toUpdate = $this->handlePropertyConfiguration($message);
 
-					$this->channelsPropertiesManager->update($property, Utils\ArrayHash::from($toUpdate));
+					$this->channelsPropertiesManager->update($property, $toUpdate);
 				});
 			}
 		}

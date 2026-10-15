@@ -14,7 +14,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
@@ -162,11 +161,11 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => Entities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
-			]));
+			]);
 			assert($connector instanceof Entities\Connectors\Connector);
 
 			// Commit all changes into database
@@ -261,10 +260,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof Entities\Connectors\Connector);
 
 			// Commit all changes into database

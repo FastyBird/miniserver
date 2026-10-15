@@ -20,7 +20,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use Throwable;
@@ -338,12 +337,11 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 
 			await($this->channelPropertiesStatesManager->set(
 				$propertyToUpdate,
-				Utils\ArrayHash::from([
-					DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue() ?? $state->getActualValue(),
-					DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-					DevicesStates\Property::PENDING_FIELD => false,
-					DevicesStates\Property::VALID_FIELD => true,
-				]),
+				DevicesStates\PropertyUpdate::create()
+					->withActualValue($state->getExpectedValue() ?? $state->getActualValue())
+					->withExpectedValue(null)
+					->withPending(false)
+					->withValid(true),
 				Sources\Connector::NS_PANEL,
 			));
 
@@ -404,10 +402,9 @@ final class WriteThirdPartyDeviceState implements Queue\Consumer
 					if ($state !== null && $propertyToUpdate instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 						await($this->channelPropertiesStatesManager->set(
 							$propertyToUpdate,
-							Utils\ArrayHash::from([
-								DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
-								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-							]),
+							DevicesStates\PropertyUpdate::create()
+								->withActualValue($state->getExpectedValue())
+								->withExpectedValue(null),
 							Sources\Connector::NS_PANEL,
 						));
 					}

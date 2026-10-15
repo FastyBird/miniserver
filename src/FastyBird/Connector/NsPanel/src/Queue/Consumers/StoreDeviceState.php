@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette\Utils;
 use Override;
 use TypeError;
 use ValueError;
@@ -146,9 +145,8 @@ final readonly class StoreDeviceState implements Queue\Consumer
 
 				await($this->channelPropertiesStatesManager->set(
 					$property,
-					Utils\ArrayHash::from([
-						DevicesStates\Property::ACTUAL_VALUE_FIELD => $item->getValue(),
-					]),
+					DevicesStates\PropertyUpdate::create()
+						->withActualValue($item->getValue()),
 					Sources\Connector::NS_PANEL,
 				));
 
@@ -233,9 +231,9 @@ final readonly class StoreDeviceState implements Queue\Consumer
 
 					$this->channelsPropertiesManager->update(
 						$property,
-						Utils\ArrayHash::from([
+						[
 							'value' => $value,
-						]),
+						],
 					);
 				},
 			);
@@ -243,18 +241,16 @@ final readonly class StoreDeviceState implements Queue\Consumer
 		} elseif ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 			await($this->channelPropertiesStatesManager->set(
 				$property,
-				Utils\ArrayHash::from([
-					DevicesStates\Property::ACTUAL_VALUE_FIELD => $value,
-				]),
+				DevicesStates\PropertyUpdate::create()
+					->withActualValue($value),
 				Sources\Connector::NS_PANEL,
 			));
 
 		} elseif ($property instanceof DevicesDocuments\Channels\Properties\Mapped) {
 			await($this->channelPropertiesStatesManager->set(
 				$property,
-				Utils\ArrayHash::from([
-					DevicesStates\Property::EXPECTED_VALUE_FIELD => $value,
-				]),
+				DevicesStates\PropertyUpdate::create()
+					->withExpectedValue($value),
 				Sources\Connector::NS_PANEL,
 			));
 		}

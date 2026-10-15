@@ -315,10 +315,9 @@ final readonly class WriteSubDeviceChannelPropertyState implements Queue\Consume
 					$updateCallbacks[] = function () use ($property, $state): void {
 						await($this->channelPropertiesStatesManager->set(
 							$property,
-							Utils\ArrayHash::from([
-								DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
-								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-							]),
+							DevicesStates\PropertyUpdate::create()
+								->withActualValue($state->getExpectedValue())
+								->withExpectedValue(null),
 							Sources\Connector::ZIGBEE2MQTT,
 						));
 					};
@@ -359,10 +358,9 @@ final readonly class WriteSubDeviceChannelPropertyState implements Queue\Consume
 					$updateCallbacks[] = function () use ($property, $state): void {
 						await($this->channelPropertiesStatesManager->set(
 							$property,
-							Utils\ArrayHash::from([
-								DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
-								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-							]),
+							DevicesStates\PropertyUpdate::create()
+								->withActualValue($state->getExpectedValue())
+								->withExpectedValue(null),
 							Sources\Connector::ZIGBEE2MQTT,
 						));
 					};
