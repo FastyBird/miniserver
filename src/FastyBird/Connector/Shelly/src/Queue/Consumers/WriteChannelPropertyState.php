@@ -22,7 +22,6 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use RuntimeException;
@@ -406,10 +405,9 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 			function () use ($message, $connector, $device, $channel, $property, $state): void {
 				await($this->channelPropertiesStatesManager->set(
 					$property,
-					Utils\ArrayHash::from([
-						DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getExpectedValue(),
-						DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-					]),
+					DevicesStates\PropertyUpdate::create()
+						->withActualValue($state->getExpectedValue())
+						->withExpectedValue(null),
 					Sources\Connector::SHELLY,
 				));
 
