@@ -106,9 +106,8 @@ final class StoreChannelPropertyState implements Queue\Consumer
 				try {
 					await($this->channelPropertiesStatesManager->set(
 						$property,
-						Utils\ArrayHash::from([
-							DevicesStates\Property::ACTUAL_VALUE_FIELD => $dataPoint->getValue(),
-						]),
+						DevicesStates\PropertyUpdate::create()
+							->withActualValue($dataPoint->getValue()),
 						Sources\Connector::TUYA,
 					));
 				} catch (CoreExceptions\InvalidArgument $ex) {
@@ -127,12 +126,12 @@ final class StoreChannelPropertyState implements Queue\Consumer
 								);
 								assert($property instanceof DevicesEntities\Channels\Properties\Dynamic);
 
-								$updated = $this->channelsPropertiesManager->update($property, Utils\ArrayHash::from([
+								$updated = $this->channelsPropertiesManager->update($property, [
 									'format' => array_merge(
 										$format->toArray(),
 										[Utils\Strings::lower(strval($dataPoint->getValue()))],
 									),
-								]));
+								]);
 								assert($updated instanceof DevicesEntities\Channels\Properties\Dynamic);
 
 								return $updated;
@@ -148,9 +147,8 @@ final class StoreChannelPropertyState implements Queue\Consumer
 
 					await($this->channelPropertiesStatesManager->set(
 						$property,
-						Utils\ArrayHash::from([
-							DevicesStates\Property::ACTUAL_VALUE_FIELD => $dataPoint->getValue(),
-						]),
+						DevicesStates\PropertyUpdate::create()
+							->withActualValue($dataPoint->getValue()),
 						Sources\Connector::TUYA,
 					));
 				}

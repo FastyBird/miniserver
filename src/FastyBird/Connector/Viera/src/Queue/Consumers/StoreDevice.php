@@ -17,7 +17,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use function array_map;
 use function array_merge;
@@ -74,12 +73,12 @@ final readonly class StoreDevice implements Queue\Consumer
 
 			$device = $this->databaseHelper->transaction(
 				function () use ($message, $connector): VieraEntities\Devices\Device {
-					$device = $this->devicesManager->create(Utils\ArrayHash::from([
+					$device = $this->devicesManager->create([
 						'entity' => VieraEntities\Devices\Device::class,
 						'connector' => $connector,
 						'identifier' => $message->getIdentifier(),
 						'name' => $message->getName(),
-					]));
+					]);
 					assert($device instanceof VieraEntities\Devices\Device);
 
 					return $device;
@@ -185,11 +184,11 @@ final readonly class StoreDevice implements Queue\Consumer
 			$channel = $this->channelsRepository->findOneBy($findChannelQuery, VieraEntities\Channels\Channel::class);
 
 			if ($channel === null) {
-				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+				$channel = $this->channelsManager->create([
 					'entity' => VieraEntities\Channels\Channel::class,
 					'device' => $device,
 					'identifier' => VieraTypes\ChannelType::TELEVISION->value,
-				]));
+				]);
 
 				$this->logger->debug(
 					'Device channel was created',

@@ -117,9 +117,8 @@ final readonly class StoreDeviceState implements Queue\Consumer
 					if ($property instanceof DevicesDocuments\Devices\Properties\Dynamic) {
 						await($this->devicePropertiesStatesManager->set(
 							$property,
-							Utils\ArrayHash::from([
-								DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getValue(),
-							]),
+							DevicesStates\PropertyUpdate::create()
+								->withActualValue($state->getValue()),
 							Sources\Connector::SHELLY,
 						));
 					} elseif ($property instanceof DevicesDocuments\Devices\Properties\Variable) {
@@ -133,9 +132,9 @@ final readonly class StoreDeviceState implements Queue\Consumer
 
 								$this->devicesPropertiesManager->update(
 									$property,
-									Utils\ArrayHash::from([
+									[
 										'value' => $state->getValue(),
-									]),
+									],
 								);
 							},
 						);
@@ -169,9 +168,8 @@ final readonly class StoreDeviceState implements Queue\Consumer
 							if ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 								await($this->channelPropertiesStatesManager->set(
 									$property,
-									Utils\ArrayHash::from([
-										DevicesStates\Property::ACTUAL_VALUE_FIELD => $state->getValue(),
-									]),
+									DevicesStates\PropertyUpdate::create()
+										->withActualValue($state->getValue()),
 									Sources\Connector::SHELLY,
 								));
 							} elseif ($property instanceof DevicesDocuments\Channels\Properties\Variable) {
@@ -185,9 +183,9 @@ final readonly class StoreDeviceState implements Queue\Consumer
 
 										$this->channelsPropertiesManager->update(
 											$property,
-											Utils\ArrayHash::from([
+											[
 												'value' => $state->getValue(),
-											]),
+											],
 										);
 									},
 								);
@@ -234,9 +232,8 @@ final readonly class StoreDeviceState implements Queue\Consumer
 						if ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 							await($this->channelPropertiesStatesManager->set(
 								$property,
-								Utils\ArrayHash::from([
-									DevicesStates\Property::ACTUAL_VALUE_FIELD => $sensor->getValue(),
-								]),
+								DevicesStates\PropertyUpdate::create()
+									->withActualValue($sensor->getValue()),
 								Sources\Connector::SHELLY,
 							));
 						} elseif ($property instanceof DevicesDocuments\Channels\Properties\Variable) {
@@ -250,9 +247,9 @@ final readonly class StoreDeviceState implements Queue\Consumer
 
 									$this->channelsPropertiesManager->update(
 										$property,
-										Utils\ArrayHash::from([
+										[
 											'value' => $sensor->getValue(),
-										]),
+										],
 									);
 								},
 							);

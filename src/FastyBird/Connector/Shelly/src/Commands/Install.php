@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\Console;
@@ -193,14 +192,14 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => ShellyEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
-			]));
+			]);
 			assert($connector instanceof ShellyEntities\Connectors\Connector);
 
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 				'dataType' => ValuesTypes\DataType::ENUM,
@@ -212,24 +211,24 @@ final class Install extends Console\Command\Command
 					ShellyTypes\ClientMode::INTEGRATOR->value,
 				],
 				'connector' => $connector,
-			]));
+			]);
 
 			if ($mode === ShellyTypes\ClientMode::CLOUD) {
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLOUD_AUTH_KEY->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $cloudAuthKey,
 					'connector' => $connector,
-				]));
+				]);
 
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLOUD_SERVER->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $cloudServer,
 					'connector' => $connector,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -399,10 +398,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof ShellyEntities\Connectors\Connector);
 
 			if ($modeProperty === null) {
@@ -410,7 +409,7 @@ final class Install extends Console\Command\Command
 					$mode = $this->askConnectorMode($io);
 				}
 
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 					'dataType' => ValuesTypes\DataType::ENUM,
@@ -422,11 +421,11 @@ final class Install extends Console\Command\Command
 						ShellyTypes\ClientMode::INTEGRATOR->value,
 					],
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($mode !== null) {
-				$this->propertiesManager->update($modeProperty, Utils\ArrayHash::from([
+				$this->propertiesManager->update($modeProperty, [
 					'value' => $mode->value,
-				]));
+				]);
 			}
 
 			if (
@@ -434,31 +433,31 @@ final class Install extends Console\Command\Command
 				|| $mode === ShellyTypes\ClientMode::CLOUD
 			) {
 				if ($cloudAuthKeyProperty !== null) {
-					$this->propertiesManager->update($cloudAuthKeyProperty, Utils\ArrayHash::from([
+					$this->propertiesManager->update($cloudAuthKeyProperty, [
 						'value' => $cloudAuthKey,
-					]));
+					]);
 				} else {
-					$this->propertiesManager->create(Utils\ArrayHash::from([
+					$this->propertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLOUD_AUTH_KEY->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $cloudAuthKey,
 						'connector' => $connector,
-					]));
+					]);
 				}
 
 				if ($cloudServerProperty !== null) {
-					$this->propertiesManager->update($cloudServerProperty, Utils\ArrayHash::from([
+					$this->propertiesManager->update($cloudServerProperty, [
 						'value' => $cloudServer,
-					]));
+					]);
 				} else {
-					$this->propertiesManager->create(Utils\ArrayHash::from([
+					$this->propertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => ShellyTypes\ConnectorPropertyIdentifier::CLOUD_SERVER->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $cloudServer,
 						'connector' => $connector,
-					]));
+					]);
 				}
 			}
 
@@ -657,9 +656,9 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
+			$device = $this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof ShellyEntities\Devices\Device);
 
 			// Commit all changes into database

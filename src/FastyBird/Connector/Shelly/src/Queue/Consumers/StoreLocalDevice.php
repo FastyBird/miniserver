@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use function assert;
 use function in_array;
@@ -81,11 +80,11 @@ final readonly class StoreLocalDevice implements Queue\Consumer
 
 			$device = $this->databaseHelper->transaction(
 				function () use ($message, $connector): ShellyEntities\Devices\Device {
-					$device = $this->devicesManager->create(Utils\ArrayHash::from([
+					$device = $this->devicesManager->create([
 						'entity' => ShellyEntities\Devices\Device::class,
 						'connector' => $connector,
 						'identifier' => $message->getIdentifier(),
-					]));
+					]);
 					assert($device instanceof ShellyEntities\Devices\Device);
 
 					return $device;
@@ -176,18 +175,18 @@ final readonly class StoreLocalDevice implements Queue\Consumer
 			$channel = $this->channelsRepository->findOneBy($findChannelQuery, ShellyEntities\Channels\Channel::class);
 
 			$channel = $channel === null ? $this->databaseHelper->transaction(
-				fn (): DevicesEntities\Channels\Channel => $this->channelsManager->create(Utils\ArrayHash::from([
+				fn (): DevicesEntities\Channels\Channel => $this->channelsManager->create([
 					'entity' => ShellyEntities\Channels\Channel::class,
 					'device' => $device,
 					'identifier' => $channelDescription->getIdentifier(),
 					'name' => $channelDescription->getName(),
-				])),
+				]),
 			) : $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Channels\Channel => $this->channelsManager->update(
 					$channel,
-					Utils\ArrayHash::from([
+					[
 						'name' => $channelDescription->getName(),
-					]),
+					],
 				),
 			);
 

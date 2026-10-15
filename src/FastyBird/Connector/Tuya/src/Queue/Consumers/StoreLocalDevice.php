@@ -16,7 +16,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use function array_merge;
 use function assert;
@@ -102,7 +101,7 @@ final readonly class StoreLocalDevice implements Queue\Consumer
 					}
 
 					$device = $this->devicesManager->create(
-						Utils\ArrayHash::from(array_merge(
+						array_merge(
 							[
 								'entity' => TuyaEntities\Devices\Device::class,
 								'connector' => $connector,
@@ -112,7 +111,7 @@ final readonly class StoreLocalDevice implements Queue\Consumer
 							$message->getGateway() !== null
 								? ['parents' => $parents]
 								: [],
-						)),
+						),
 					);
 					assert($device instanceof TuyaEntities\Devices\Device);
 
@@ -263,11 +262,11 @@ final readonly class StoreLocalDevice implements Queue\Consumer
 				);
 
 				if ($channel === null) {
-					$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+					$channel = $this->channelsManager->create([
 						'entity' => TuyaEntities\Channels\Channel::class,
 						'device' => $device,
 						'identifier' => TuyaTypes\DataPoint::LOCAL->value,
-					]));
+					]);
 
 					$this->logger->debug(
 						'Device channel was created',

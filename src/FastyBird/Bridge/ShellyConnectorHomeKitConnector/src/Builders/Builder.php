@@ -302,25 +302,25 @@ final readonly class Builder
 			$this->databaseHelper->beginTransaction();
 
 			if ($accessory === null) {
-				$accessory = $this->devicesManager->create(Utils\ArrayHash::from([
+				$accessory = $this->devicesManager->create([
 					'entity' => ShellyConnectorHomeKitConnectorEntities\Devices\Shelly::class,
 					'connector' => $homeKitConnector,
 					'identifier' => $identifier,
 					'parents' => [$shelly],
 					'name' => $shelly->getName(),
-				]));
+				]);
 				assert($accessory instanceof ShellyConnectorHomeKitConnectorEntities\Devices\Shelly);
 			}
 
 			if ($categoryProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
 					'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value),
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $category->value,
 					'device' => $accessory,
-				]));
+				]);
 			} else {
 				// If category is changed, whole accessory have to be redefined
 				if ($categoryProperty->getValue() !== $category->value) {
@@ -329,30 +329,30 @@ final readonly class Builder
 					}
 				}
 
-				$this->devicesPropertiesManager->update($categoryProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($categoryProperty, [
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $category->value,
-				]));
+				]);
 			}
 
 			if ($modelProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
 					'name' => DevicesUtilities\Name::createName(HomeKitTypes\DevicePropertyIdentifier::MODEL->value),
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $shellyModelProperty?->getValue() ?? self::MODEL,
 					'device' => $accessory,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->update($modelProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($modelProperty, [
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $shellyModelProperty?->getValue() ?? self::MODEL,
-				]));
+				]);
 			}
 
 			if ($manufacturerProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 					'name' => DevicesUtilities\Name::createName(
@@ -361,17 +361,17 @@ final readonly class Builder
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => self::MANUFACTURER,
 					'device' => $accessory,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->update($manufacturerProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($manufacturerProperty, [
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => self::MANUFACTURER,
-				]));
+				]);
 			}
 
 			if ($shellySerialNumberProperty !== null) {
 				if ($serialNumberProperty === null) {
-					$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->create([
 						'entity' => DevicesEntities\Devices\Properties\Variable::class,
 						'identifier' => HomeKitTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value,
 						'name' => DevicesUtilities\Name::createName(
@@ -380,12 +380,12 @@ final readonly class Builder
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $shellySerialNumberProperty->getValue(),
 						'device' => $accessory,
-					]));
+					]);
 				} else {
-					$this->devicesPropertiesManager->update($serialNumberProperty, Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->update($serialNumberProperty, [
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $shellySerialNumberProperty->getValue(),
-					]));
+					]);
 				}
 			}
 
@@ -527,7 +527,7 @@ final readonly class Builder
 							$serviceMapping,
 							$serviceIndex,
 						): ShellyConnectorHomeKitConnectorEntities\Channels\Shelly {
-							$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+							$channel = $this->channelsManager->create([
 								'entity' => $serviceMapping->getClass(),
 								'identifier' => $identifier,
 								'device' => $accessory,
@@ -536,7 +536,7 @@ final readonly class Builder
 										$serviceMapping->getType()->value,
 									),
 								) . ($serviceMapping->isMultiple() ? ' ' . $serviceIndex : ''),
-							]));
+							]);
 							assert($channel instanceof ShellyConnectorHomeKitConnectorEntities\Channels\Shelly);
 
 							return $channel;
@@ -907,7 +907,7 @@ final readonly class Builder
 
 			if ($characteristic === null) {
 				$characteristic = $this->channelsPropertiesManager->create(
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'entity' => $entity,
 							'identifier' => $identifier,
@@ -933,7 +933,7 @@ final readonly class Builder
 								'default' => $default,
 							]
 							: [],
-					)),
+					),
 				);
 
 				$this->logger->debug(
@@ -959,7 +959,7 @@ final readonly class Builder
 			} else {
 				$this->channelsPropertiesManager->update(
 					$characteristic,
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'dataType' => $dataType,
 							'format' => $format,
@@ -982,7 +982,7 @@ final readonly class Builder
 								'default' => $default,
 							]
 							: [],
-					)),
+					),
 				);
 
 				$this->logger->debug(

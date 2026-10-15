@@ -16,7 +16,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use function assert;
 
@@ -78,12 +77,12 @@ final readonly class StoreCloudDevice implements Queue\Consumer
 
 			$device = $this->databaseHelper->transaction(
 				function () use ($message, $connector): TuyaEntities\Devices\Device {
-					$device = $this->devicesManager->create(Utils\ArrayHash::from([
+					$device = $this->devicesManager->create([
 						'entity' => TuyaEntities\Devices\Device::class,
 						'connector' => $connector,
 						'identifier' => $message->getId(),
 						'name' => $message->getName(),
-					]));
+					]);
 					assert($device instanceof TuyaEntities\Devices\Device);
 
 					return $device;
@@ -195,11 +194,11 @@ final readonly class StoreCloudDevice implements Queue\Consumer
 			$channel = $this->channelsRepository->findOneBy($findChannelQuery, TuyaEntities\Channels\Channel::class);
 
 			if ($channel === null) {
-				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+				$channel = $this->channelsManager->create([
 					'entity' => TuyaEntities\Channels\Channel::class,
 					'device' => $device,
 					'identifier' => TuyaTypes\DataPoint::CLOUD->value,
-				]));
+				]);
 
 				$this->logger->debug(
 					'Device channel was created',

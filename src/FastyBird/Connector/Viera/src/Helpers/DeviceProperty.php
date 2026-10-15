@@ -121,7 +121,7 @@ final readonly class DeviceProperty
 
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Devices\Properties\Property => $this->devicesPropertiesManager->create(
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'entity' => $type,
 							'device' => $device,
@@ -138,7 +138,7 @@ final readonly class DeviceProperty
 								'settable' => $settable,
 								'queryable' => $queryable,
 							],
-					)),
+					),
 				),
 			);
 
@@ -161,7 +161,7 @@ final readonly class DeviceProperty
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Devices\Properties\Property => $this->devicesPropertiesManager->update(
 					$property,
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'dataType' => $dataType,
 							'format' => $format,
@@ -174,7 +174,7 @@ final readonly class DeviceProperty
 								'settable' => $settable,
 								'queryable' => $queryable,
 							],
-					)),
+					),
 				),
 			);
 

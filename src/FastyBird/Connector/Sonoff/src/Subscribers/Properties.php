@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use ReflectionException;
 
@@ -75,7 +74,7 @@ final readonly class Properties implements Common\EventSubscriber
 		}
 
 		if ($stateProperty !== null) {
-			$this->propertiesManager->update($stateProperty, Utils\ArrayHash::from([
+			$this->propertiesManager->update($stateProperty, [
 				'dataType' => ValuesTypes\DataType::ENUM,
 				'unit' => null,
 				'format' => [
@@ -86,9 +85,9 @@ final readonly class Properties implements Common\EventSubscriber
 				],
 				'settable' => false,
 				'queryable' => false,
-			]));
+			]);
 		} else {
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'device' => $entity,
 				'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
 				'identifier' => SonoffTypes\DevicePropertyIdentifier::STATE->value,
@@ -103,7 +102,7 @@ final readonly class Properties implements Common\EventSubscriber
 				],
 				'settable' => false,
 				'queryable' => false,
-			]));
+			]);
 		}
 	}
 

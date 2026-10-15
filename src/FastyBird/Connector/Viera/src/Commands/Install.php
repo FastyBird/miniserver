@@ -24,7 +24,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use RuntimeException;
@@ -204,11 +203,11 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => VieraEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
-			]));
+			]);
 			assert($connector instanceof VieraEntities\Connectors\Connector);
 
 			// Commit all changes into database
@@ -320,10 +319,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof VieraEntities\Connectors\Connector);
 
 			// Commit all changes into database
@@ -786,12 +785,12 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->create(Utils\ArrayHash::from([
+			$device = $this->devicesManager->create([
 				'entity' => VieraEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $specs->getSerialNumber(),
 				'name' => $specs->getFriendlyName() ?? $specs->getModelName(),
-			]));
+			]);
 			assert($device instanceof VieraEntities\Devices\Device);
 
 			$this->deviceProperty->create(
@@ -877,11 +876,11 @@ final class Install extends Console\Command\Command
 				);
 			}
 
-			$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+			$channel = $this->channelsManager->create([
 				'entity' => VieraEntities\Channels\Channel::class,
 				'device' => $device,
 				'identifier' => VieraTypes\ChannelType::TELEVISION->value,
-			]));
+			]);
 
 			$this->channelProperty->create(
 				DevicesEntities\Channels\Properties\Dynamic::class,
@@ -1412,9 +1411,9 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
+			$device = $this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof VieraEntities\Devices\Device);
 
 			$this->deviceProperty->create(
@@ -1491,11 +1490,11 @@ final class Install extends Console\Command\Command
 			);
 
 			if ($channel === null) {
-				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+				$channel = $this->channelsManager->create([
 					'entity' => VieraEntities\Channels\Channel::class,
 					'device' => $device,
 					'identifier' => VieraTypes\ChannelType::TELEVISION,
-				]));
+				]);
 			}
 
 			if ($hdmi !== null) {

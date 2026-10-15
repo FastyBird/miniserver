@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\Console;
@@ -197,39 +196,39 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => TuyaEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
-			]));
+			]);
 			assert($connector instanceof TuyaEntities\Connectors\Connector);
 
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => TuyaTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 				'dataType' => ValuesTypes\DataType::ENUM,
 				'value' => $mode->value,
 				'format' => [TuyaTypes\ClientMode::LOCAL->value, TuyaTypes\ClientMode::CLOUD->value],
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => TuyaTypes\ConnectorPropertyIdentifier::ACCESS_ID->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $accessId,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => TuyaTypes\ConnectorPropertyIdentifier::ACCESS_SECRET->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $accessSecret,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => TuyaTypes\ConnectorPropertyIdentifier::OPENAPI_ENDPOINT->value,
 				'dataType' => ValuesTypes\DataType::ENUM,
@@ -243,16 +242,16 @@ final class Install extends Console\Command\Command
 					TuyaTypes\OpenApiEndpoint::INDIA->value,
 				],
 				'connector' => $connector,
-			]));
+			]);
 
 			if ($mode === TuyaTypes\ClientMode::CLOUD) {
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => TuyaTypes\ConnectorPropertyIdentifier::UID->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $uid,
 					'connector' => $connector,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -447,10 +446,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof TuyaEntities\Connectors\Connector);
 
 			if ($modeProperty === null) {
@@ -458,18 +457,18 @@ final class Install extends Console\Command\Command
 					$mode = $this->askConnectorMode($io);
 				}
 
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => TuyaTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 					'dataType' => ValuesTypes\DataType::ENUM,
 					'value' => $mode->value,
 					'format' => [TuyaTypes\ClientMode::LOCAL->value, TuyaTypes\ClientMode::CLOUD->value],
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($mode !== null) {
-				$this->propertiesManager->update($modeProperty, Utils\ArrayHash::from([
+				$this->propertiesManager->update($modeProperty, [
 					'value' => $mode->value,
-				]));
+				]);
 			}
 
 			if ($accessIdProperty === null) {
@@ -477,17 +476,17 @@ final class Install extends Console\Command\Command
 					$accessId = $this->askConnectorAccessId($io, $connector);
 				}
 
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => TuyaTypes\ConnectorPropertyIdentifier::ACCESS_ID->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $accessId,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($accessId !== null) {
-				$this->propertiesManager->update($accessIdProperty, Utils\ArrayHash::from([
+				$this->propertiesManager->update($accessIdProperty, [
 					'value' => $accessId,
-				]));
+				]);
 			}
 
 			if ($accessSecretProperty === null) {
@@ -495,17 +494,17 @@ final class Install extends Console\Command\Command
 					$accessSecret = $this->askConnectorAccessSecret($io, $connector);
 				}
 
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => TuyaTypes\ConnectorPropertyIdentifier::ACCESS_SECRET->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $accessSecret,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($accessSecret !== null) {
-				$this->propertiesManager->update($accessSecretProperty, Utils\ArrayHash::from([
+				$this->propertiesManager->update($accessSecretProperty, [
 					'value' => $accessSecret,
-				]));
+				]);
 			}
 
 			if (
@@ -522,17 +521,17 @@ final class Install extends Console\Command\Command
 						$uid = $this->askConnectorUid($io, $connector);
 					}
 
-					$this->propertiesManager->create(Utils\ArrayHash::from([
+					$this->propertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => TuyaTypes\ConnectorPropertyIdentifier::UID->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $uid,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($uid !== null) {
-					$this->propertiesManager->update($uidProperty, Utils\ArrayHash::from([
+					$this->propertiesManager->update($uidProperty, [
 						'value' => $uid,
-					]));
+					]);
 				}
 			} else {
 				if ($uidProperty !== null) {
@@ -735,9 +734,9 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
+			$device = $this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof TuyaEntities\Devices\Device);
 
 			// Commit all changes into database
