@@ -267,74 +267,74 @@ final readonly class Builder
 			$this->databaseHelper->beginTransaction();
 
 			if ($accessory === null) {
-				$accessory = $this->devicesManager->create(Utils\ArrayHash::from([
+				$accessory = $this->devicesManager->create([
 					'entity' => VieraConnectorHomeKitConnectorEntities\Devices\Viera::class,
 					'connector' => $homeKitConnector,
 					'identifier' => $identifier,
 					'parents' => [$viera],
 					'name' => $viera->getName(),
-				]));
+				]);
 				assert($accessory instanceof VieraConnectorHomeKitConnectorEntities\Devices\Viera);
 			}
 
 			if ($categoryProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::CATEGORY->value,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => HomeKitTypes\AccessoryCategory::TELEVISION->value,
 					'device' => $accessory,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->update($categoryProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($categoryProperty, [
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => HomeKitTypes\AccessoryCategory::TELEVISION->value,
-				]));
+				]);
 			}
 
 			if ($modelProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MODEL->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $vieraModelProperty?->getValue() ?? self::MODEL,
 					'device' => $accessory,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->update($modelProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($modelProperty, [
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $vieraModelProperty?->getValue() ?? self::MODEL,
-				]));
+				]);
 			}
 
 			if ($manufacturerProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::MANUFACTURER->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => self::MANUFACTURER,
 					'device' => $accessory,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->update($manufacturerProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($manufacturerProperty, [
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => self::MANUFACTURER,
-				]));
+				]);
 			}
 
 			if ($serialNumberProperty === null && $vieraSerialNumberProperty !== null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => HomeKitTypes\DevicePropertyIdentifier::SERIAL_NUMBER->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $vieraSerialNumberProperty->getValue(),
 					'device' => $accessory,
-				]));
+				]);
 			} elseif ($serialNumberProperty !== null && $vieraSerialNumberProperty !== null) {
-				$this->devicesPropertiesManager->update($serialNumberProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($serialNumberProperty, [
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $vieraSerialNumberProperty->getValue(),
-				]));
+				]);
 			}
 
 			$this->databaseHelper->commitTransaction();
@@ -555,12 +555,12 @@ final readonly class Builder
 				if ($service === null) {
 					$service = $this->databaseHelper->transaction(
 						function () use ($identifier, $accessory, $serviceMapping, $name): VieraConnectorHomeKitConnectorEntities\Channels\Viera {
-							$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+							$channel = $this->channelsManager->create([
 								'entity' => $serviceMapping->getClass(),
 								'identifier' => $identifier,
 								'device' => $accessory,
 								'name' => $name,
-							]));
+							]);
 							assert($channel instanceof VieraConnectorHomeKitConnectorEntities\Channels\Viera);
 
 							return $channel;
@@ -717,13 +717,13 @@ final readonly class Builder
 
 				$this->channelsPropertiesManager->update(
 					$characteristic,
-					Utils\ArrayHash::from([
+					[
 						'format' => array_map(
 							static fn ($name, $value): array => [$name, $value, $value],
 							$inputSourcesNames,
 							$inputSourcesValues,
 						),
-					]),
+					],
 				);
 
 			} catch (Throwable $ex) {
@@ -946,9 +946,9 @@ final readonly class Builder
 
 				$this->channelsPropertiesManager->update(
 					$characteristic,
-					Utils\ArrayHash::from([
+					[
 						'format' => implode(',', $supportedRemoteKeys),
-					]),
+					],
 				);
 
 			} catch (Throwable $ex) {
@@ -1399,7 +1399,7 @@ final readonly class Builder
 
 			if ($characteristic === null) {
 				$characteristic = $this->channelsPropertiesManager->create(
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'entity' => $entity,
 							'identifier' => $identifier,
@@ -1425,7 +1425,7 @@ final readonly class Builder
 								'default' => $default,
 							]
 							: [],
-					)),
+					),
 				);
 
 				$this->logger->debug(
@@ -1451,7 +1451,7 @@ final readonly class Builder
 			} else {
 				$this->channelsPropertiesManager->update(
 					$characteristic,
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'dataType' => $dataType,
 							'format' => $format,
@@ -1474,7 +1474,7 @@ final readonly class Builder
 								'default' => $default,
 							]
 							: [],
-					)),
+					),
 				);
 
 				$this->logger->debug(
