@@ -22,7 +22,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use RuntimeException;
@@ -593,10 +592,9 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 					case VieraTypes\ChannelPropertyIdentifier::APPLICATION->value:
 						await($this->channelPropertiesStatesManager->set(
 							$property,
-							Utils\ArrayHash::from([
-								DevicesStates\Property::ACTUAL_VALUE_FIELD => $expectedValue,
-								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-							]),
+							DevicesStates\PropertyUpdate::create()
+								->withActualValue($expectedValue)
+								->withExpectedValue(null),
 							Sources\Connector::VIERA,
 						));
 
@@ -637,15 +635,15 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 
 					await($this->channelPropertiesStatesManager->set(
 						$applicationProperty,
-						Utils\ArrayHash::from([
-							DevicesStates\Property::ACTUAL_VALUE_FIELD =>
+						DevicesStates\PropertyUpdate::create()
+							->withActualValue(
 								intval(
 									Utilities\Value::toString($expectedValue, true),
 								) > Viera\Entities\Devices\Device::MIN_APPLICATION_CODE
 									? $expectedValue
 									: null,
-							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-						]),
+							)
+							->withExpectedValue(null),
 						Sources\Connector::VIERA,
 					));
 
@@ -661,15 +659,15 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 
 					await($this->channelPropertiesStatesManager->set(
 						$hdmiProperty,
-						Utils\ArrayHash::from([
-							DevicesStates\Property::ACTUAL_VALUE_FIELD =>
+						DevicesStates\PropertyUpdate::create()
+							->withActualValue(
 								intval(
 									Utilities\Value::toString($expectedValue, true),
 								) < Viera\Entities\Devices\Device::MAX_HDMI_CODE
 									? $expectedValue
 									: null,
-							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-						]),
+							)
+							->withExpectedValue(null),
 						Sources\Connector::VIERA,
 					));
 
@@ -689,10 +687,9 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 
 					await($this->channelPropertiesStatesManager->set(
 						$inputSourceProperty,
-						Utils\ArrayHash::from([
-							DevicesStates\Property::ACTUAL_VALUE_FIELD => $expectedValue,
-							DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-						]),
+						DevicesStates\PropertyUpdate::create()
+							->withActualValue($expectedValue)
+							->withExpectedValue(null),
 						Sources\Connector::VIERA,
 					));
 
@@ -719,20 +716,18 @@ final readonly class WriteChannelPropertyState implements Queue\Consumer
 					if ($property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::APPLICATION->value) {
 						await($this->channelPropertiesStatesManager->set(
 							$hdmiProperty,
-							Utils\ArrayHash::from([
-								DevicesStates\Property::ACTUAL_VALUE_FIELD => null,
-								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-							]),
+							DevicesStates\PropertyUpdate::create()
+								->withActualValue(null)
+								->withExpectedValue(null),
 							Sources\Connector::VIERA,
 						));
 
 					} elseif ($property->getIdentifier() === VieraTypes\ChannelPropertyIdentifier::HDMI->value) {
 						await($this->channelPropertiesStatesManager->set(
 							$applicationProperty,
-							Utils\ArrayHash::from([
-								DevicesStates\Property::ACTUAL_VALUE_FIELD => null,
-								DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-							]),
+							DevicesStates\PropertyUpdate::create()
+								->withActualValue(null)
+								->withExpectedValue(null),
 							Sources\Connector::VIERA,
 						));
 					}

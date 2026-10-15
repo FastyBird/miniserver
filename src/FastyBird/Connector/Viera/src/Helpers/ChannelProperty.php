@@ -117,7 +117,7 @@ final readonly class ChannelProperty
 
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Channels\Properties\Property => $this->channelsPropertiesManager->create(
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'entity' => $type,
 							'channel' => $channel,
@@ -134,7 +134,7 @@ final readonly class ChannelProperty
 								'settable' => $settable,
 								'queryable' => $queryable,
 							],
-					)),
+					),
 				),
 			);
 
@@ -157,7 +157,7 @@ final readonly class ChannelProperty
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Channels\Properties\Property => $this->channelsPropertiesManager->update(
 					$property,
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'dataType' => $dataType,
 							'format' => $format,
@@ -170,7 +170,7 @@ final readonly class ChannelProperty
 								'settable' => $settable,
 								'queryable' => $queryable,
 							],
-					)),
+					),
 				),
 			);
 
