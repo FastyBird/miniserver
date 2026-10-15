@@ -2,6 +2,7 @@
 
 namespace FastyBird\Module\Devices\Documents\Devices;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Persistence\Rules;
@@ -57,11 +58,13 @@ abstract class Device implements DevicesDocuments\Document, CoreDocuments\Owner,
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly string|null $name = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\StringValue(notEmpty: true),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly string|null $comment = null,
 		#[ObjectMapper\Rules\ArrayOf(
 			new Rules\UuidValue(),
@@ -87,18 +90,21 @@ abstract class Device implements DevicesDocuments\Document, CoreDocuments\Owner,
 			new Rules\UuidValue(),
 			new ObjectMapper\Rules\NullValue(castEmptyString: true),
 		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		protected readonly Uuid\UuidInterface|null $owner = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('created_at')]
+		#[Configurator\MapFromKey('created_at')]
 		protected readonly DateTimeInterface|null $createdAt = null,
 		#[ObjectMapper\Rules\AnyOf([
 			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
 			new ObjectMapper\Rules\NullValue(),
 		])]
 		#[ObjectMapper\Modifiers\FieldName('updated_at')]
+		#[Configurator\MapFromKey('updated_at')]
 		protected readonly DateTimeInterface|null $updatedAt = null,
 	)
 	{
