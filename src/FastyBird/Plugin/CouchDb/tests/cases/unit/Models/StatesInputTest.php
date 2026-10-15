@@ -3,6 +3,7 @@
 namespace FastyBird\Plugin\CouchDb\Tests\Cases\Unit\Models;
 
 use DateTimeImmutable;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Plugin\CouchDb\Connections;
@@ -174,7 +175,9 @@ final class StatesInputTest extends TestCase
 		$metaLoader = new ObjectMapper\Meta\MetaLoader($cache, $sourceManager, $resolverFactory);
 
 		return new States\StateFactory(
-			new ObjectMapper\Processing\DefaultProcessor($metaLoader, $ruleManager, $objectCreator),
+			new Documents\Mapping\Mapper(
+				new ObjectMapper\Processing\DefaultProcessor($metaLoader, $ruleManager, $objectCreator),
+			),
 		);
 	}
 

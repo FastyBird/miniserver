@@ -4,17 +4,17 @@ namespace FastyBird\Connector\Viera\Clients;
 
 use FastyBird\Connector\Viera;
 use FastyBird\Connector\Viera\API;
-use FastyBird\Connector\Viera\Documents;
+use FastyBird\Connector\Viera\Documents as VieraDocuments;
 use FastyBird\Connector\Viera\Entities;
 use FastyBird\Connector\Viera\Exceptions;
 use FastyBird\Connector\Viera\Helpers;
 use FastyBird\Connector\Viera\Queue;
 use FastyBird\Connector\Viera\Services;
 use FastyBird\Connector\Viera\ValueObjects;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Events as DevicesEvents;
-use Orisai\ObjectMapper;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use React\Datagram;
 use React\EventLoop;
@@ -61,14 +61,14 @@ final class Discovery
 	private Datagram\SocketInterface|null $sender = null;
 
 	public function __construct(
-		private readonly Documents\Connectors\Connector $connector,
+		private readonly VieraDocuments\Connectors\Connector $connector,
 		private readonly API\TelevisionApiFactory $televisionApiFactory,
 		private readonly Queue\Queue $queue,
 		private readonly Helpers\MessageBuilder $messageBuilder,
 		private readonly Viera\Logger $logger,
 		private readonly Services\MulticastFactory $multicastFactory,
 		private readonly EventLoop\LoopInterface $eventLoop,
-		private readonly ObjectMapper\Processing\Processor $objectMapper,
+		private readonly CoreDocuments\Mapping\Mapper $objectMapper,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{
@@ -113,7 +113,7 @@ final class Discovery
 					&& preg_match(self::MATCH_DEVICE_ID, $data, $matches) === 1
 				) {
 					try {
-						$searchResult = $this->objectMapper->process(
+						$searchResult = $this->objectMapper->map(
 							[
 								'id' => $matches['usn'],
 								'host' => $urlParts['host'],

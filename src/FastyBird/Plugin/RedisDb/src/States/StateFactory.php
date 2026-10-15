@@ -2,9 +2,9 @@
 
 namespace FastyBird\Plugin\RedisDb\States;
 
+use FastyBird\Core\Documents;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use function class_exists;
 use function is_array;
 
@@ -14,9 +14,7 @@ use function is_array;
 final readonly class StateFactory
 {
 
-	public function __construct(
-		private ObjectMapper\Processing\Processor $stateMapper,
-	)
+	public function __construct(private Documents\Mapping\Mapper $stateMapper)
 	{
 	}
 
@@ -47,16 +45,13 @@ final readonly class StateFactory
 		}
 
 		try {
-			$options = new ObjectMapper\Processing\Options();
-			$options->setAllowUnknownFields();
-
-			return $this->stateMapper->process($decoded, $class, $options);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
+			return $this->stateMapper->map(
+				$decoded,
+				$class,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: true),
 			);
-
-			throw new Exceptions\InvalidArgument('Could not map data to state: ' . $errorPrinter->printError($ex));
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			throw new Exceptions\InvalidArgument('Could not map data to state: ' . $ex->getMessage());
 		}
 	}
 

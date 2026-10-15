@@ -22,7 +22,6 @@ use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types;
 use Nette\Caching as NetteCaching;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Ramsey\Uuid;
@@ -52,7 +51,7 @@ final class ConnectorPropertiesManager extends PropertiesManager
 		private readonly CoreDocuments\DocumentFactory $documentFactory,
 		private readonly Publisher\MessagePublisher $publisher,
 		Devices\Logger $logger,
-		ObjectMapper\Processing\Processor $stateMapper,
+		CoreDocuments\Mapping\Mapper $stateMapper,
 		private readonly PsrEventDispatcher\EventDispatcherInterface|null $dispatcher = null,
 	)
 	{

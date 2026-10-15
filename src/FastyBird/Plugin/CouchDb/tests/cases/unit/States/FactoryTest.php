@@ -2,6 +2,7 @@
 
 namespace FastyBird\Plugin\CouchDb\Tests\Cases\Unit\States;
 
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use FastyBird\Plugin\CouchDb\States;
@@ -56,7 +57,7 @@ final class FactoryTest extends TestCase
 			$objectCreator,
 		);
 
-		$factory = new States\StateFactory($processor);
+		$factory = new States\StateFactory(new Documents\Mapping\Mapper($processor));
 
 		$entity = $factory->create($class, $document);
 
@@ -107,7 +108,7 @@ final class FactoryTest extends TestCase
 			$objectCreator,
 		);
 
-		$factory = new States\StateFactory($processor);
+		$factory = new States\StateFactory(new Documents\Mapping\Mapper($processor));
 
 		$factory->create($class, $document);
 	}

@@ -3,6 +3,7 @@
 namespace FastyBird\Plugin\RedisDb\Tests\Cases\Unit\Models;
 
 use DateTimeImmutable;
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions;
@@ -109,7 +110,7 @@ final class StatesManagerTest extends TestCase
 			$objectCreator,
 		);
 
-		$factory = new States\StateFactory($processor);
+		$factory = new States\StateFactory(new Documents\Mapping\Mapper($processor));
 
 		$original = $factory->create(Tests\Fixtures\Dummy\DummyState::class, Utils\Json::encode($originalData));
 
@@ -172,7 +173,7 @@ final class StatesManagerTest extends TestCase
 			$objectCreator,
 		);
 
-		$factory = new States\StateFactory($processor);
+		$factory = new States\StateFactory(new Documents\Mapping\Mapper($processor));
 
 		$systemClock = $this->createMock(ClockInterface::class);
 		$systemClock

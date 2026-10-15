@@ -2,6 +2,7 @@
 
 namespace FastyBird\Plugin\RedisDb\Tests\Cases\Unit\States;
 
+use FastyBird\Core\Documents;
 use FastyBird\Core\Persistence\Rules;
 use FastyBird\Plugin\RedisDb\Exceptions;
 use FastyBird\Plugin\RedisDb\States;
@@ -50,7 +51,7 @@ final class FactoryTest extends TestCase
 			$objectCreator,
 		);
 
-		$factory = new States\StateFactory($processor);
+		$factory = new States\StateFactory(new Documents\Mapping\Mapper($processor));
 
 		$entity = $factory->create($class, Utils\Json::encode($raw));
 
@@ -99,9 +100,42 @@ final class FactoryTest extends TestCase
 			$objectCreator,
 		);
 
-		$factory = new States\StateFactory($processor);
+		$factory = new States\StateFactory(new Documents\Mapping\Mapper($processor));
 
 		$factory->create($class, Utils\Json::encode($raw));
+	}
+
+	/**
+	 * @throws Exceptions\InvalidArgument
+	 * @throws Exceptions\InvalidState
+	 * @throws Utils\JsonException
+	 */
+	public function testCreateEntityIgnoresUnknownFields(): void
+	{
+		$id = Uuid\Uuid::uuid4()->toString();
+
+		$entity = $this->createFactory()->create(
+			States\State::class,
+			Utils\Json::encode(['id' => $id, 'extra' => 'x']),
+		);
+
+		self::assertSame($id, $entity->toArray()['id']);
+	}
+
+	/**
+	 * @throws Exceptions\InvalidState
+	 * @throws Utils\JsonException
+	 */
+	public function testCreateEntityFailMessage(): void
+	{
+		try {
+			$this->createFactory()->create(States\State::class, Utils\Json::encode(['id' => 'invalid-string']));
+
+			self::fail('the factory accepted the data');
+		} catch (Exceptions\InvalidArgument $ex) {
+			self::assertStringStartsWith('Could not map data to state: ', $ex->getMessage());
+			self::assertNotSame('Could not map data to state: ', $ex->getMessage());
+		}
 	}
 
 	/**
@@ -144,6 +178,25 @@ final class FactoryTest extends TestCase
 				Exceptions\InvalidArgument::class,
 			],
 		];
+	}
+
+	private function createFactory(): States\StateFactory
+	{
+		$sourceManager = new ObjectMapper\Meta\Source\DefaultMetaSourceManager();
+		$sourceManager->addSource(new ObjectMapper\Meta\Source\AttributesMetaSource());
+		$injectorManager = new ObjectMapper\Processing\DefaultDependencyInjectorManager();
+		$objectCreator = new ObjectMapper\Processing\ObjectCreator($injectorManager);
+		$ruleManager = new ObjectMapper\Rules\DefaultRuleManager();
+		$ruleManager->addRule(new Rules\UuidRule());
+		$resolverFactory = new ObjectMapper\Meta\MetaResolverFactory($ruleManager, $objectCreator);
+		$cache = new ObjectMapper\Meta\Cache\ArrayMetaCache();
+		$metaLoader = new ObjectMapper\Meta\MetaLoader($cache, $sourceManager, $resolverFactory);
+
+		return new States\StateFactory(
+			new Documents\Mapping\Mapper(
+				new ObjectMapper\Processing\DefaultProcessor($metaLoader, $ruleManager, $objectCreator),
+			),
+		);
 	}
 
 }

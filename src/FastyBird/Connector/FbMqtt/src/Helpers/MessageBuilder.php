@@ -4,7 +4,7 @@ namespace FastyBird\Connector\FbMqtt\Helpers;
 
 use FastyBird\Connector\FbMqtt\Exceptions;
 use FastyBird\Connector\FbMqtt\Queue;
-use Orisai\ObjectMapper;
+use FastyBird\Core\Documents;
 
 /**
  * Message builder
@@ -12,9 +12,7 @@ use Orisai\ObjectMapper;
 final readonly class MessageBuilder
 {
 
-	public function __construct(
-		private ObjectMapper\Processing\Processor $processor,
-	)
+	public function __construct(private Documents\Mapping\Mapper $mapper)
 	{
 	}
 
@@ -32,16 +30,13 @@ final readonly class MessageBuilder
 	): Queue\Messages\Message
 	{
 		try {
-			$options = new ObjectMapper\Processing\Options();
-			$options->setAllowUnknownFields();
-
-			return $this->processor->process($data, $message, $options);
-		} catch (ObjectMapper\Exception\InvalidData $ex) {
-			$errorPrinter = new ObjectMapper\Printers\ErrorVisualPrinter(
-				new ObjectMapper\Printers\TypeToStringConverter(),
+			return $this->mapper->map(
+				$data,
+				$message,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: true),
 			);
-
-			throw new Exceptions\Runtime('Could not map data to message: ' . $errorPrinter->printError($ex));
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			throw new Exceptions\Runtime('Could not map data to message: ' . $ex->getMessage());
 		}
 	}
 
