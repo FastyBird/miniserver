@@ -13,7 +13,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette\Utils;
 use Override;
 use TypeError;
 use ValueError;
@@ -156,9 +155,8 @@ final readonly class StoreChannelPropertyState implements Queue\Consumer
 
 		await($this->channelPropertiesStatesManager->set(
 			$property,
-			Utils\ArrayHash::from([
-				DevicesStates\Property::ACTUAL_VALUE_FIELD => $message->getValue(),
-			]),
+			DevicesStates\PropertyUpdate::create()
+				->withActualValue($message->getValue()),
 			Sources\Connector::MODBUS,
 		));
 

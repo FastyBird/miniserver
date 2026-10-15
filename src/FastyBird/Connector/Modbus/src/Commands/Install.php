@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use RuntimeException;
 use Symfony\Component\Console;
@@ -211,61 +210,61 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => ModbusEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($connector instanceof ModbusEntities\Connectors\Connector);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => ModbusTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $mode->value,
 				'connector' => $connector,
-			]));
+			]);
 
 			if ($mode === ModbusTypes\ClientMode::RTU) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_INTERFACE->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $interface,
 					'connector' => $connector,
-				]));
+				]);
 
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_BAUD_RATE->value,
 					'dataType' => ValuesTypes\DataType::UINT,
 					'value' => $baudRate?->value,
 					'connector' => $connector,
-				]));
+				]);
 
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_BYTE_SIZE->value,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $byteSize?->value,
 					'connector' => $connector,
-				]));
+				]);
 
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_PARITY->value,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $dataParity?->value,
 					'connector' => $connector,
-				]));
+				]);
 
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_STOP_BITS->value,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $stopBits?->value,
 					'connector' => $connector,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -445,10 +444,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof ModbusEntities\Connectors\Connector);
 
 			if ($modeProperty === null) {
@@ -456,7 +455,7 @@ final class Install extends Console\Command\Command
 					$mode = $this->askConnectorMode($io, $connector);
 				}
 
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => ModbusTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 					'dataType' => ValuesTypes\DataType::ENUM,
@@ -466,11 +465,11 @@ final class Install extends Console\Command\Command
 						ModbusTypes\ClientMode::TCP,
 					],
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($mode !== null) {
-				$this->connectorsPropertiesManager->update($modeProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($modeProperty, [
 					'value' => $mode->value,
-				]));
+				]);
 			}
 
 			if (
@@ -478,73 +477,73 @@ final class Install extends Console\Command\Command
 				|| $mode === ModbusTypes\ClientMode::RTU
 			) {
 				if ($interfaceProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_INTERFACE->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $interface,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($interfaceProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-					$this->connectorsPropertiesManager->update($interfaceProperty, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($interfaceProperty, [
 						'value' => $interface,
-					]));
+					]);
 				}
 
 				if ($baudRateProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_BAUD_RATE->value,
 						'dataType' => ValuesTypes\DataType::UINT,
 						'value' => $baudRate?->value,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($baudRateProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-					$this->connectorsPropertiesManager->update($baudRateProperty, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($baudRateProperty, [
 						'value' => $baudRate?->value,
-					]));
+					]);
 				}
 
 				if ($byteSizeProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_BYTE_SIZE->value,
 						'dataType' => ValuesTypes\DataType::UCHAR,
 						'value' => $byteSize?->value,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($byteSizeProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-					$this->connectorsPropertiesManager->update($byteSizeProperty, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($byteSizeProperty, [
 						'value' => $byteSize?->value,
-					]));
+					]);
 				}
 
 				if ($dataParityProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_PARITY->value,
 						'dataType' => ValuesTypes\DataType::UCHAR,
 						'value' => $dataParity?->value,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($dataParityProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-					$this->connectorsPropertiesManager->update($dataParityProperty, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($dataParityProperty, [
 						'value' => $dataParity?->value,
-					]));
+					]);
 				}
 
 				if ($stopBitsProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => ModbusTypes\ConnectorPropertyIdentifier::RTU_STOP_BITS->value,
 						'dataType' => ValuesTypes\DataType::UCHAR,
 						'value' => $stopBits?->value,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($stopBitsProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-					$this->connectorsPropertiesManager->update($stopBitsProperty, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($stopBitsProperty, [
 						'value' => $stopBits?->value,
-					]));
+					]);
 				}
 			} else {
 				if ($interfaceProperty !== null) {
@@ -852,57 +851,57 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->create(Utils\ArrayHash::from([
+			$device = $this->devicesManager->create([
 				'entity' => ModbusEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof ModbusEntities\Devices\Device);
 
 			if ($connector->getClientMode() === ModbusTypes\ClientMode::RTU) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => ModbusTypes\DevicePropertyIdentifier::ADDRESS->value,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $address,
 					'device' => $device,
-				]));
+				]);
 			}
 
 			if ($connector->getClientMode() === ModbusTypes\ClientMode::TCP) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => ModbusTypes\DevicePropertyIdentifier::IP_ADDRESS->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $ipAddress,
 					'device' => $device,
-				]));
+				]);
 
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => ModbusTypes\DevicePropertyIdentifier::PORT->value,
 					'dataType' => ValuesTypes\DataType::UINT,
 					'value' => $port,
 					'device' => $device,
-				]));
+				]);
 
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => ModbusTypes\DevicePropertyIdentifier::UNIT_ID->value,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $unitId,
 					'device' => $device,
-				]));
+				]);
 			}
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => ModbusTypes\DevicePropertyIdentifier::BYTE_ORDER->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $byteOrder->value,
 				'device' => $device,
-			]));
+			]);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -1041,24 +1040,24 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
+			$device = $this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof ModbusEntities\Devices\Device);
 
 			if ($connector->getClientMode() === ModbusTypes\ClientMode::RTU) {
 				if ($addressProperty === null) {
-					$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->create([
 						'entity' => DevicesEntities\Devices\Properties\Variable::class,
 						'identifier' => ModbusTypes\DevicePropertyIdentifier::ADDRESS->value,
 						'dataType' => ValuesTypes\DataType::UCHAR,
 						'value' => $address,
 						'device' => $device,
-					]));
+					]);
 				} elseif ($addressProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-					$this->devicesPropertiesManager->update($addressProperty, Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->update($addressProperty, [
 						'value' => $address,
-					]));
+					]);
 				}
 			} elseif ($addressProperty !== null) {
 				$this->devicesPropertiesManager->delete($addressProperty);
@@ -1066,45 +1065,45 @@ final class Install extends Console\Command\Command
 
 			if ($connector->getClientMode() === ModbusTypes\ClientMode::TCP) {
 				if ($ipAddressProperty === null) {
-					$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->create([
 						'entity' => DevicesEntities\Devices\Properties\Variable::class,
 						'identifier' => ModbusTypes\DevicePropertyIdentifier::IP_ADDRESS->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $ipAddress,
 						'device' => $device,
-					]));
+					]);
 				} elseif ($ipAddressProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-					$this->devicesPropertiesManager->update($ipAddressProperty, Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->update($ipAddressProperty, [
 						'value' => $ipAddress,
-					]));
+					]);
 				}
 
 				if ($portProperty === null) {
-					$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->create([
 						'entity' => DevicesEntities\Devices\Properties\Variable::class,
 						'identifier' => ModbusTypes\DevicePropertyIdentifier::PORT->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $port,
 						'device' => $device,
-					]));
+					]);
 				} elseif ($portProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-					$this->devicesPropertiesManager->update($portProperty, Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->update($portProperty, [
 						'value' => $port,
-					]));
+					]);
 				}
 
 				if ($unitIdProperty === null) {
-					$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->create([
 						'entity' => DevicesEntities\Devices\Properties\Variable::class,
 						'identifier' => ModbusTypes\DevicePropertyIdentifier::UNIT_ID->value,
 						'dataType' => ValuesTypes\DataType::UCHAR,
 						'value' => $unitId,
 						'device' => $device,
-					]));
+					]);
 				} elseif ($unitIdProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-					$this->devicesPropertiesManager->update($unitIdProperty, Utils\ArrayHash::from([
+					$this->devicesPropertiesManager->update($unitIdProperty, [
 						'value' => $unitId,
-					]));
+					]);
 				}
 			} else {
 				if ($ipAddressProperty !== null) {
@@ -1121,17 +1120,17 @@ final class Install extends Console\Command\Command
 			}
 
 			if ($byteOrderProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => ModbusTypes\DevicePropertyIdentifier::BYTE_ORDER->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $byteOrder->value,
 					'device' => $device,
-				]));
+				]);
 			} elseif ($byteOrderProperty instanceof DevicesEntities\Devices\Properties\Variable) {
-				$this->devicesPropertiesManager->update($byteOrderProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($byteOrderProperty, [
 					'value' => $byteOrder->value,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -1394,38 +1393,38 @@ final class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			foreach (range($addresses[0], $addresses[1]) as $address) {
-				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+				$channel = $this->channelsManager->create([
 					'entity' => ModbusEntities\Channels\Channel::class,
 					'identifier' => $type->value . '_' . $address,
 					'name' => $name,
 					'device' => $device,
-				]));
+				]);
 
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => ModbusTypes\ChannelPropertyIdentifier::ADDRESS,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $address,
 					'channel' => $channel,
-				]));
+				]);
 
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => ModbusTypes\ChannelPropertyIdentifier::TYPE,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $type->value,
 					'channel' => $channel,
-				]));
+				]);
 
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => ModbusTypes\ChannelPropertyIdentifier::READING_DELAY,
 					'dataType' => ValuesTypes\DataType::UINT,
 					'value' => $readingDelay,
 					'channel' => $channel,
-				]));
+				]);
 
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => ModbusTypes\ChannelPropertyIdentifier::VALUE,
 					'dataType' => $dataType,
@@ -1436,7 +1435,7 @@ final class Install extends Console\Command\Command
 					),
 					'queryable' => true,
 					'channel' => $channel,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -1582,50 +1581,50 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$channel = $this->channelsManager->update($channel, Utils\ArrayHash::from([
+			$channel = $this->channelsManager->update($channel, [
 				'name' => $name,
-			]));
+			]);
 
 			if ($addressProperty === null) {
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => ModbusTypes\ChannelPropertyIdentifier::ADDRESS,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $address,
 					'channel' => $channel,
-				]));
+				]);
 			} else {
-				$this->channelsPropertiesManager->update($addressProperty, Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->update($addressProperty, [
 					'value' => $address,
-				]));
+				]);
 			}
 
 			if ($typeProperty === null) {
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => ModbusTypes\ChannelPropertyIdentifier::TYPE,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $type->value,
 					'channel' => $channel,
-				]));
+				]);
 			}
 
 			if ($readingDelayProperty === null) {
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => ModbusTypes\ChannelPropertyIdentifier::READING_DELAY,
 					'dataType' => ValuesTypes\DataType::UCHAR,
 					'value' => $readingDelay,
 					'channel' => $channel,
-				]));
+				]);
 			} else {
-				$this->channelsPropertiesManager->update($readingDelayProperty, Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->update($readingDelayProperty, [
 					'value' => $readingDelay,
-				]));
+				]);
 			}
 
 			if ($valueProperty === null) {
-				$this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->create([
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => ModbusTypes\ChannelPropertyIdentifier::VALUE,
 					'dataType' => $dataType,
@@ -1636,16 +1635,16 @@ final class Install extends Console\Command\Command
 					),
 					'queryable' => true,
 					'channel' => $channel,
-				]));
+				]);
 			} else {
-				$this->channelsPropertiesManager->update($valueProperty, Utils\ArrayHash::from([
+				$this->channelsPropertiesManager->update($valueProperty, [
 					'dataType' => $dataType,
 					'format' => $format,
 					'settable' => (
 						$type === ModbusTypes\ChannelType::COIL
 						|| $type === ModbusTypes\ChannelType::HOLDING_REGISTER
 					),
-				]));
+				]);
 			}
 
 			// Commit all changes into database
