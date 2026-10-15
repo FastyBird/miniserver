@@ -29,7 +29,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use ReflectionException;
@@ -225,34 +224,34 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->create(Utils\ArrayHash::from([
+			$device = $this->devicesManager->create([
 				'entity' => VirtualThermostatEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof VirtualThermostatEntities\Devices\Device);
 
-			$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+			$this->devicesPropertiesManager->create([
 				'entity' => DevicesEntities\Devices\Properties\Variable::class,
 				'identifier' => VirtualTypes\DevicePropertyIdentifier::MODEL->value,
 				'device' => $device,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => VirtualThermostatEntities\Devices\Device::TYPE,
-			]));
+			]);
 
-			$configurationChannel = $this->channelsManager->create(Utils\ArrayHash::from([
+			$configurationChannel = $this->channelsManager->create([
 				'entity' => VirtualThermostatEntities\Channels\Configuration::class,
 				'device' => $device,
 				'identifier' => VirtualThermostatTypes\ChannelIdentifier::CONFIGURATION->value,
-			]));
+			]);
 			assert($configurationChannel instanceof VirtualThermostatEntities\Channels\Configuration);
 
-			$stateChannel = $this->channelsManager->create(Utils\ArrayHash::from([
+			$stateChannel = $this->channelsManager->create([
 				'entity' => VirtualThermostatEntities\Channels\State::class,
 				'device' => $device,
 				'identifier' => VirtualThermostatTypes\ChannelIdentifier::STATE->value,
-			]));
+			]);
 			assert($stateChannel instanceof VirtualThermostatEntities\Channels\State);
 
 			$modes = $this->askThermostatModes($io);
@@ -261,7 +260,7 @@ final class Install extends Console\Command\Command
 
 			$this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Variable::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::UNIT->value,
 					'channel' => $configurationChannel,
@@ -271,12 +270,12 @@ final class Install extends Console\Command\Command
 						VirtualThermostatTypes\Unit::FAHRENHEIT->value,
 					],
 					'value' => $unit->value,
-				]),
+				],
 			);
 
 			$hvacModeProperty = $this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Dynamic::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_MODE->value,
 					'channel' => $stateChannel,
@@ -292,12 +291,12 @@ final class Install extends Console\Command\Command
 					'settable' => true,
 					'queryable' => true,
 					'default' => VirtualThermostatTypes\HvacMode::OFF->value,
-				]),
+				],
 			);
 
 			$this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Dynamic::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_STATE->value,
 					'channel' => $stateChannel,
@@ -320,23 +319,23 @@ final class Install extends Console\Command\Command
 					'settable' => false,
 					'queryable' => true,
 					'default' => VirtualThermostatTypes\HvacState::OFF->value,
-				]),
+				],
 			);
 
 			$heaterActors = $coolerActors = $openingSensors = $roomTempSensors = $floorTempSensors = $roomHumSensors = [];
 
-			$actorsChannel = $this->channelsManager->create(Utils\ArrayHash::from([
+			$actorsChannel = $this->channelsManager->create([
 				'entity' => VirtualThermostatEntities\Channels\Actors::class,
 				'device' => $device,
 				'identifier' => VirtualThermostatTypes\ChannelIdentifier::ACTORS->value,
-			]));
+			]);
 			assert($actorsChannel instanceof VirtualThermostatEntities\Channels\Actors);
 
-			$sensorsChannel = $this->channelsManager->create(Utils\ArrayHash::from([
+			$sensorsChannel = $this->channelsManager->create([
 				'entity' => VirtualThermostatEntities\Channels\Sensors::class,
 				'device' => $device,
 				'identifier' => VirtualThermostatTypes\ChannelIdentifier::SENSORS->value,
-			]));
+			]);
 			assert($sensorsChannel instanceof VirtualThermostatEntities\Channels\Sensors);
 
 			if (in_array(VirtualThermostatTypes\HvacMode::HEAT, $modes, true)) {
@@ -364,7 +363,7 @@ final class Install extends Console\Command\Command
 
 						$this->createOrUpdateProperty(
 							DevicesEntities\Channels\Properties\Mapped::class,
-							Utils\ArrayHash::from([
+							[
 								'parent' => $heater,
 								'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 								'identifier' => $this->findChannelPropertyIdentifier(
@@ -380,7 +379,7 @@ final class Install extends Console\Command\Command
 								'step' => null,
 								'settable' => true,
 								'queryable' => $heater->isQueryable(),
-							]),
+							],
 						);
 
 						$question = new Console\Question\ConfirmationQuestion(
@@ -422,7 +421,7 @@ final class Install extends Console\Command\Command
 
 						$this->createOrUpdateProperty(
 							DevicesEntities\Channels\Properties\Mapped::class,
-							Utils\ArrayHash::from([
+							[
 								'parent' => $cooler,
 								'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 								'identifier' => $this->findChannelPropertyIdentifier(
@@ -438,7 +437,7 @@ final class Install extends Console\Command\Command
 								'step' => null,
 								'settable' => true,
 								'queryable' => $cooler->isQueryable(),
-							]),
+							],
 						);
 
 						$question = new Console\Question\ConfirmationQuestion(
@@ -482,7 +481,7 @@ final class Install extends Console\Command\Command
 
 						$this->createOrUpdateProperty(
 							DevicesEntities\Channels\Properties\Mapped::class,
-							Utils\ArrayHash::from([
+							[
 								'parent' => $opening,
 								'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 								'identifier' => $this->findChannelPropertyIdentifier(
@@ -498,7 +497,7 @@ final class Install extends Console\Command\Command
 								'step' => null,
 								'settable' => false,
 								'queryable' => $opening->isQueryable(),
-							]),
+							],
 						);
 
 						$question = new Console\Question\ConfirmationQuestion(
@@ -544,7 +543,7 @@ final class Install extends Console\Command\Command
 
 					$this->createOrUpdateProperty(
 						DevicesEntities\Channels\Properties\Mapped::class,
-						Utils\ArrayHash::from([
+						[
 							'parent' => $sensor,
 							'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 							'identifier' => $this->findChannelPropertyIdentifier(
@@ -560,7 +559,7 @@ final class Install extends Console\Command\Command
 							'step' => null,
 							'settable' => false,
 							'queryable' => $sensor->isQueryable(),
-						]),
+						],
 					);
 
 					$question = new Console\Question\ConfirmationQuestion(
@@ -609,7 +608,7 @@ final class Install extends Console\Command\Command
 
 						$this->createOrUpdateProperty(
 							DevicesEntities\Channels\Properties\Mapped::class,
-							Utils\ArrayHash::from([
+							[
 								'parent' => $sensor,
 								'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 								'identifier' => $this->findChannelPropertyIdentifier(
@@ -625,7 +624,7 @@ final class Install extends Console\Command\Command
 								'step' => null,
 								'settable' => false,
 								'queryable' => $sensor->isQueryable(),
-							]),
+							],
 						);
 
 						$question = new Console\Question\ConfirmationQuestion(
@@ -672,7 +671,7 @@ final class Install extends Console\Command\Command
 
 						$this->createOrUpdateProperty(
 							DevicesEntities\Channels\Properties\Mapped::class,
-							Utils\ArrayHash::from([
+							[
 								'parent' => $sensor,
 								'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 								'identifier' => $this->findChannelPropertyIdentifier(
@@ -688,7 +687,7 @@ final class Install extends Console\Command\Command
 								'step' => null,
 								'settable' => false,
 								'queryable' => $sensor->isQueryable(),
-							]),
+							],
 						);
 
 						$question = new Console\Question\ConfirmationQuestion(
@@ -707,7 +706,7 @@ final class Install extends Console\Command\Command
 
 			$this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Dynamic::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_TEMPERATURE->value,
 					'channel' => $stateChannel,
@@ -722,12 +721,12 @@ final class Install extends Console\Command\Command
 					'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 					'settable' => false,
 					'queryable' => true,
-				]),
+				],
 			);
 
 			$this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Variable::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::LOW_TARGET_TEMPERATURE_TOLERANCE->value,
 					'channel' => $configurationChannel,
@@ -739,12 +738,12 @@ final class Install extends Console\Command\Command
 					'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 					'value' => VirtualThermostatEntities\Devices\Device::COLD_TOLERANCE,
 					'default' => VirtualThermostatEntities\Devices\Device::COLD_TOLERANCE,
-				]),
+				],
 			);
 
 			$this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Variable::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Variable::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HIGH_TARGET_TEMPERATURE_TOLERANCE->value,
 					'channel' => $configurationChannel,
@@ -756,13 +755,13 @@ final class Install extends Console\Command\Command
 					'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 					'value' => VirtualThermostatEntities\Devices\Device::HOT_TOLERANCE,
 					'default' => VirtualThermostatEntities\Devices\Device::HOT_TOLERANCE,
-				]),
+				],
 			);
 
 			if ($useOpeningSensors) {
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Dynamic::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_OPENINGS_STATE->value,
 						'channel' => $stateChannel,
@@ -777,7 +776,7 @@ final class Install extends Console\Command\Command
 						'step' => null,
 						'settable' => false,
 						'queryable' => true,
-					]),
+					],
 				);
 			}
 
@@ -786,7 +785,7 @@ final class Install extends Console\Command\Command
 
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Variable::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Variable::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::MAXIMUM_FLOOR_TEMPERATURE->value,
 						'channel' => $configurationChannel,
@@ -801,12 +800,12 @@ final class Install extends Console\Command\Command
 						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'value' => $maxFloorTemp,
 						'default' => VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE,
-					]),
+					],
 				);
 
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Dynamic::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_FLOOR_TEMPERATURE->value,
 						'channel' => $stateChannel,
@@ -821,12 +820,12 @@ final class Install extends Console\Command\Command
 						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'settable' => false,
 						'queryable' => true,
-					]),
+					],
 				);
 
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Dynamic::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::FLOOR_OVERHEATING->value,
 						'channel' => $stateChannel,
@@ -838,14 +837,14 @@ final class Install extends Console\Command\Command
 						'step' => null,
 						'settable' => false,
 						'queryable' => true,
-					]),
+					],
 				);
 			}
 
 			if ($useRoomHumSensor) {
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Dynamic::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_HUMIDITY->value,
 						'channel' => $stateChannel,
@@ -860,7 +859,7 @@ final class Install extends Console\Command\Command
 						'step' => 1,
 						'settable' => false,
 						'queryable' => true,
-					]),
+					],
 				);
 			}
 
@@ -868,7 +867,7 @@ final class Install extends Console\Command\Command
 
 			$presetModeProperty = $this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Dynamic::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::PRESET_MODE->value,
 					'channel' => $stateChannel,
@@ -884,7 +883,7 @@ final class Install extends Console\Command\Command
 					'settable' => false,
 					'queryable' => true,
 					'default' => VirtualThermostatTypes\Preset::MANUAL->value,
-				]),
+				],
 			);
 
 			foreach ($presets as $preset) {
@@ -894,18 +893,18 @@ final class Install extends Console\Command\Command
 					),
 				);
 
-				$presetChannel = $this->channelsManager->create(Utils\ArrayHash::from([
+				$presetChannel = $this->channelsManager->create([
 					'entity' => VirtualThermostatEntities\Channels\Preset::class,
 					'device' => $device,
 					'identifier' => 'preset_' . $preset->value,
-				]));
+				]);
 				assert($presetChannel instanceof VirtualThermostatEntities\Channels\Preset);
 
 				$setPresets[$preset->value] = [
 					'value' => $this->askTargetTemperature($io, $preset, $unit),
 					'property' => $this->createOrUpdateProperty(
 						DevicesEntities\Channels\Properties\Dynamic::class,
-						Utils\ArrayHash::from([
+						[
 							'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 							'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::TARGET_ROOM_TEMPERATURE->value,
 							'channel' => $presetChannel,
@@ -921,7 +920,7 @@ final class Install extends Console\Command\Command
 							'settable' => true,
 							'queryable' => true,
 							'default' => VirtualThermostatEntities\Devices\Device::TARGET_TEMPERATURE,
-						]),
+						],
 					),
 				];
 
@@ -934,7 +933,7 @@ final class Install extends Console\Command\Command
 
 					$this->createOrUpdateProperty(
 						DevicesEntities\Channels\Properties\Variable::class,
-						Utils\ArrayHash::from([
+						[
 							'entity' => DevicesEntities\Channels\Properties\Variable::class,
 							'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HEATING_THRESHOLD_TEMPERATURE->value,
 							'channel' => $presetChannel,
@@ -949,7 +948,7 @@ final class Install extends Console\Command\Command
 							'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 							'default' => null,
 							'value' => $heatingThresholdTemp,
-						]),
+						],
 					);
 
 					$coolingThresholdTemp = $this->askCoolingThresholdTemperature(
@@ -960,7 +959,7 @@ final class Install extends Console\Command\Command
 
 					$this->createOrUpdateProperty(
 						DevicesEntities\Channels\Properties\Variable::class,
-						Utils\ArrayHash::from([
+						[
 							'entity' => DevicesEntities\Channels\Properties\Variable::class,
 							'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::COOLING_THRESHOLD_TEMPERATURE->value,
 							'channel' => $presetChannel,
@@ -975,7 +974,7 @@ final class Install extends Console\Command\Command
 							'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 							'default' => null,
 							'value' => $coolingThresholdTemp,
-						]),
+						],
 					);
 				}
 			}
@@ -1018,10 +1017,9 @@ final class Install extends Console\Command\Command
 
 		$this->channelPropertiesStatesManager->set(
 			$hvacModeState,
-			Utils\ArrayHash::from([
-				DevicesStates\Property::ACTUAL_VALUE_FIELD => VirtualThermostatTypes\HvacMode::OFF->value,
-				DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-			]),
+			DevicesStates\PropertyUpdate::create()
+				->withActualValue(VirtualThermostatTypes\HvacMode::OFF->value)
+				->withExpectedValue(null),
 			Sources\Addon::VIRTUAL_THERMOSTAT,
 		);
 
@@ -1033,10 +1031,9 @@ final class Install extends Console\Command\Command
 
 		$this->channelPropertiesStatesManager->set(
 			$presetModeState,
-			Utils\ArrayHash::from([
-				DevicesStates\Property::ACTUAL_VALUE_FIELD => VirtualThermostatTypes\Preset::MANUAL->value,
-				DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-			]),
+			DevicesStates\PropertyUpdate::create()
+				->withActualValue(VirtualThermostatTypes\Preset::MANUAL->value)
+				->withExpectedValue(null),
 			Sources\Addon::VIRTUAL_THERMOSTAT,
 		);
 
@@ -1049,10 +1046,9 @@ final class Install extends Console\Command\Command
 
 			$this->channelPropertiesStatesManager->set(
 				$presetConfiguration,
-				Utils\ArrayHash::from([
-					DevicesStates\Property::ACTUAL_VALUE_FIELD => $data['value'],
-					DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-				]),
+				DevicesStates\PropertyUpdate::create()
+					->withActualValue($data['value'])
+					->withExpectedValue(null),
 				Sources\Addon::VIRTUAL_THERMOSTAT,
 			);
 		}
@@ -1234,9 +1230,9 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
+			$device = $this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof VirtualThermostatEntities\Devices\Device);
 
 			if (
@@ -1249,15 +1245,15 @@ final class Install extends Console\Command\Command
 			}
 
 			if ($deviceModelProperty === null) {
-				$this->devicesPropertiesManager->create(Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->create([
 					'entity' => DevicesEntities\Devices\Properties\Variable::class,
 					'identifier' => VirtualTypes\DevicePropertyIdentifier::MODEL->value,
 					'device' => $device,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => VirtualThermostatEntities\Devices\Device::TYPE,
-				]));
+				]);
 			} else {
-				$this->devicesPropertiesManager->update($deviceModelProperty, Utils\ArrayHash::from([
+				$this->devicesPropertiesManager->update($deviceModelProperty, [
 					'dataType' => ValuesTypes\DataType::STRING,
 					'format' => null,
 					'unit' => null,
@@ -1266,30 +1262,30 @@ final class Install extends Console\Command\Command
 					'step' => null,
 					'default' => null,
 					'value' => VirtualThermostatEntities\Devices\Device::TYPE,
-				]));
+				]);
 			}
 
 			if ($configurationChannel === null) {
-				$configurationChannel = $this->channelsManager->create(Utils\ArrayHash::from([
+				$configurationChannel = $this->channelsManager->create([
 					'entity' => VirtualThermostatEntities\Channels\Configuration::class,
 					'device' => $device,
 					'identifier' => VirtualThermostatTypes\ChannelIdentifier::CONFIGURATION->value,
-				]));
+				]);
 				assert($configurationChannel instanceof VirtualThermostatEntities\Channels\Configuration);
 			}
 
 			if ($stateChannel === null) {
-				$stateChannel = $this->channelsManager->create(Utils\ArrayHash::from([
+				$stateChannel = $this->channelsManager->create([
 					'entity' => VirtualThermostatEntities\Channels\State::class,
 					'device' => $device,
 					'identifier' => VirtualThermostatTypes\ChannelIdentifier::STATE->value,
-				]));
+				]);
 				assert($stateChannel instanceof VirtualThermostatEntities\Channels\Configuration);
 			}
 
 			$hvacModeProperty = $this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Dynamic::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_MODE->value,
 					'channel' => $stateChannel,
@@ -1305,13 +1301,13 @@ final class Install extends Console\Command\Command
 					'settable' => true,
 					'queryable' => true,
 					'default' => VirtualThermostatTypes\HvacMode::OFF->value,
-				]),
+				],
 				$hvacModeProperty,
 			);
 
 			$this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Dynamic::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HVAC_STATE->value,
 					'channel' => $stateChannel,
@@ -1334,13 +1330,13 @@ final class Install extends Console\Command\Command
 					'settable' => false,
 					'queryable' => true,
 					'default' => VirtualThermostatTypes\HvacState::OFF->value,
-				]),
+				],
 				$hvacStateProperty,
 			);
 
 			$this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Dynamic::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_TEMPERATURE->value,
 					'channel' => $stateChannel,
@@ -1355,14 +1351,14 @@ final class Install extends Console\Command\Command
 					'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 					'settable' => false,
 					'queryable' => true,
-				]),
+				],
 				$currentRoomTempProperty,
 			);
 
 			if ($device->hasOpeningsSensors()) {
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Dynamic::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_OPENINGS_STATE->value,
 						'channel' => $stateChannel,
@@ -1377,7 +1373,7 @@ final class Install extends Console\Command\Command
 						'step' => null,
 						'settable' => false,
 						'queryable' => true,
-					]),
+					],
 					$currentOpeningsStateProperty,
 				);
 			} else {
@@ -1389,7 +1385,7 @@ final class Install extends Console\Command\Command
 			if ($device->hasFloorTemperatureSensors()) {
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Variable::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Variable::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::MAXIMUM_FLOOR_TEMPERATURE->value,
 						'channel' => $configurationChannel,
@@ -1404,13 +1400,13 @@ final class Install extends Console\Command\Command
 						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'value' => $maxFloorTemp,
 						'default' => VirtualThermostatEntities\Devices\Device::MAXIMUM_SET_FLOOR_TEMPERATURE,
-					]),
+					],
 					$maxFloorTempProperty,
 				);
 
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Dynamic::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_FLOOR_TEMPERATURE->value,
 						'channel' => $stateChannel,
@@ -1425,13 +1421,13 @@ final class Install extends Console\Command\Command
 						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'settable' => false,
 						'queryable' => true,
-					]),
+					],
 					$currentFloorTempProperty,
 				);
 
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Dynamic::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::FLOOR_OVERHEATING->value,
 						'channel' => $stateChannel,
@@ -1443,7 +1439,7 @@ final class Install extends Console\Command\Command
 						'step' => null,
 						'settable' => false,
 						'queryable' => true,
-					]),
+					],
 					$floorOverheatingProperty,
 				);
 			} else {
@@ -1463,7 +1459,7 @@ final class Install extends Console\Command\Command
 			if ($device->hasRoomHumiditySensors()) {
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Dynamic::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::CURRENT_ROOM_HUMIDITY->value,
 						'channel' => $stateChannel,
@@ -1478,7 +1474,7 @@ final class Install extends Console\Command\Command
 						'step' => 1,
 						'settable' => false,
 						'queryable' => true,
-					]),
+					],
 					$currentRoomHumProperty,
 				);
 			} else {
@@ -1489,7 +1485,7 @@ final class Install extends Console\Command\Command
 
 			$presetModeProperty = $this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Dynamic::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::PRESET_MODE->value,
 					'channel' => $stateChannel,
@@ -1505,7 +1501,7 @@ final class Install extends Console\Command\Command
 					'settable' => false,
 					'queryable' => true,
 					'default' => VirtualThermostatTypes\Preset::MANUAL->value,
-				]),
+				],
 				$presetModeProperty,
 			);
 
@@ -1523,11 +1519,11 @@ final class Install extends Console\Command\Command
 
 				if (in_array($preset, $presets, true)) {
 					if ($presetChannel === null) {
-						$presetChannel = $this->channelsManager->create(Utils\ArrayHash::from([
+						$presetChannel = $this->channelsManager->create([
 							'entity' => VirtualThermostatEntities\Channels\Preset::class,
 							'device' => $device,
 							'identifier' => 'preset_' . $preset->value,
-						]));
+						]);
 						assert($presetChannel instanceof VirtualThermostatEntities\Channels\Preset);
 
 						$setPresets[$preset->value] = [
@@ -1538,7 +1534,7 @@ final class Install extends Console\Command\Command
 							),
 							'property' => $this->createOrUpdateProperty(
 								DevicesEntities\Channels\Properties\Dynamic::class,
-								Utils\ArrayHash::from([
+								[
 									'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 									'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::TARGET_ROOM_TEMPERATURE->value,
 									'channel' => $presetChannel,
@@ -1554,7 +1550,7 @@ final class Install extends Console\Command\Command
 									'settable' => true,
 									'queryable' => true,
 									'default' => VirtualThermostatEntities\Devices\Device::TARGET_TEMPERATURE,
-								]),
+								],
 							),
 						];
 
@@ -1567,7 +1563,7 @@ final class Install extends Console\Command\Command
 
 							$this->createOrUpdateProperty(
 								DevicesEntities\Channels\Properties\Variable::class,
-								Utils\ArrayHash::from([
+								[
 									'entity' => DevicesEntities\Channels\Properties\Variable::class,
 									'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HEATING_THRESHOLD_TEMPERATURE->value,
 									'channel' => $presetChannel,
@@ -1582,7 +1578,7 @@ final class Install extends Console\Command\Command
 									'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 									'default' => null,
 									'value' => $heatingThresholdTemp,
-								]),
+								],
 							);
 
 							$coolingThresholdTemp = $this->askCoolingThresholdTemperature(
@@ -1593,7 +1589,7 @@ final class Install extends Console\Command\Command
 
 							$this->createOrUpdateProperty(
 								DevicesEntities\Channels\Properties\Variable::class,
-								Utils\ArrayHash::from([
+								[
 									'entity' => DevicesEntities\Channels\Properties\Variable::class,
 									'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::COOLING_THRESHOLD_TEMPERATURE->value,
 									'channel' => $presetChannel,
@@ -1608,7 +1604,7 @@ final class Install extends Console\Command\Command
 									'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 									'default' => null,
 									'value' => $coolingThresholdTemp,
-								]),
+								],
 							);
 						}
 					}
@@ -1657,10 +1653,9 @@ final class Install extends Console\Command\Command
 
 		$this->channelPropertiesStatesManager->set(
 			$hvacModeState,
-			Utils\ArrayHash::from([
-				DevicesStates\Property::ACTUAL_VALUE_FIELD => VirtualThermostatTypes\HvacMode::OFF->value,
-				DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-			]),
+			DevicesStates\PropertyUpdate::create()
+				->withActualValue(VirtualThermostatTypes\HvacMode::OFF->value)
+				->withExpectedValue(null),
 			Sources\Addon::VIRTUAL_THERMOSTAT,
 		);
 
@@ -1674,10 +1669,9 @@ final class Install extends Console\Command\Command
 
 		$this->channelPropertiesStatesManager->set(
 			$presetModeState,
-			Utils\ArrayHash::from([
-				DevicesStates\Property::ACTUAL_VALUE_FIELD => VirtualThermostatTypes\Preset::MANUAL->value,
-				DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-			]),
+			DevicesStates\PropertyUpdate::create()
+				->withActualValue(VirtualThermostatTypes\Preset::MANUAL->value)
+				->withExpectedValue(null),
 			Sources\Addon::VIRTUAL_THERMOSTAT,
 		);
 
@@ -1690,10 +1684,9 @@ final class Install extends Console\Command\Command
 
 			$this->channelPropertiesStatesManager->set(
 				$presetConfiguration,
-				Utils\ArrayHash::from([
-					DevicesStates\Property::ACTUAL_VALUE_FIELD => $data['value'],
-					DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-				]),
+				DevicesStates\PropertyUpdate::create()
+					->withActualValue($data['value'])
+					->withExpectedValue(null),
 				Sources\Addon::VIRTUAL_THERMOSTAT,
 			);
 		}
@@ -1912,7 +1905,7 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$property = $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+			$property = $this->channelsPropertiesManager->create([
 				'parent' => $heater,
 				'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 				'identifier' => $this->findChannelPropertyIdentifier(
@@ -1929,7 +1922,7 @@ final class Install extends Console\Command\Command
 				'step' => null,
 				'settable' => true,
 				'queryable' => $heater->isQueryable(),
-			]));
+			]);
 			assert($property instanceof DevicesEntities\Channels\Properties\Mapped);
 
 			$this->databaseHelper->commitTransaction();
@@ -2019,10 +2012,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$property = $this->channelsPropertiesManager->update($property, Utils\ArrayHash::from([
+			$property = $this->channelsPropertiesManager->update($property, [
 				'name' => $name,
 				'parent' => $parent,
-			]));
+			]);
 			assert($property instanceof DevicesEntities\Channels\Properties\Mapped);
 
 			$this->databaseHelper->commitTransaction();
@@ -2286,7 +2279,7 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$property = $this->channelsPropertiesManager->create(Utils\ArrayHash::from([
+			$property = $this->channelsPropertiesManager->create([
 				'parent' => $sensor,
 				'entity' => DevicesEntities\Channels\Properties\Mapped::class,
 				'identifier' => $this->findChannelPropertyIdentifier(
@@ -2303,7 +2296,7 @@ final class Install extends Console\Command\Command
 				'step' => null,
 				'settable' => false,
 				'queryable' => $sensor->isQueryable(),
-			]));
+			]);
 			assert($property instanceof DevicesEntities\Channels\Properties\Mapped);
 
 			$this->databaseHelper->commitTransaction();
@@ -2460,10 +2453,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$property = $this->channelsPropertiesManager->update($property, Utils\ArrayHash::from([
+			$property = $this->channelsPropertiesManager->update($property, [
 				'parent' => $parent,
 				'name' => $name,
-			]));
+			]);
 			assert($property instanceof DevicesEntities\Channels\Properties\Mapped);
 
 			$this->databaseHelper->commitTransaction();
@@ -2762,17 +2755,17 @@ final class Install extends Console\Command\Command
 			$this->databaseHelper->beginTransaction();
 
 			if ($channel === null) {
-				$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+				$channel = $this->channelsManager->create([
 					'entity' => VirtualThermostatEntities\Channels\Preset::class,
 					'device' => $device,
 					'identifier' => 'preset_' . $preset->value,
-				]));
+				]);
 				assert($channel instanceof VirtualThermostatEntities\Channels\Preset);
 			}
 
 			$targetTempProperty = $this->createOrUpdateProperty(
 				DevicesEntities\Channels\Properties\Dynamic::class,
-				Utils\ArrayHash::from([
+				[
 					'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
 					'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::TARGET_ROOM_TEMPERATURE->value,
 					'channel' => $channel,
@@ -2788,14 +2781,14 @@ final class Install extends Console\Command\Command
 					'settable' => true,
 					'queryable' => true,
 					'default' => VirtualThermostatEntities\Devices\Device::TARGET_TEMPERATURE,
-				]),
+				],
 				$targetTempProperty,
 			);
 
 			if (in_array(VirtualThermostatTypes\HvacMode::AUTO, $device->getHvacModes(), true)) {
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Variable::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Variable::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::HEATING_THRESHOLD_TEMPERATURE->value,
 						'channel' => $channel,
@@ -2810,13 +2803,13 @@ final class Install extends Console\Command\Command
 						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'default' => null,
 						'value' => $heatingThresholdTemp,
-					]),
+					],
 					$heatingThresholdTempProperty,
 				);
 
 				$this->createOrUpdateProperty(
 					DevicesEntities\Channels\Properties\Variable::class,
-					Utils\ArrayHash::from([
+					[
 						'entity' => DevicesEntities\Channels\Properties\Variable::class,
 						'identifier' => VirtualThermostatTypes\ChannelPropertyIdentifier::COOLING_THRESHOLD_TEMPERATURE->value,
 						'channel' => $channel,
@@ -2831,7 +2824,7 @@ final class Install extends Console\Command\Command
 						'step' => VirtualThermostatEntities\Devices\Device::PRECISION,
 						'default' => null,
 						'value' => $coolingThresholdTemp,
-					]),
+					],
 					$coolingThresholdTempProperty,
 				);
 			}
@@ -2874,10 +2867,9 @@ final class Install extends Console\Command\Command
 
 		$this->channelPropertiesStatesManager->set(
 			$targetTempConfiguration,
-			Utils\ArrayHash::from([
-				DevicesStates\Property::ACTUAL_VALUE_FIELD => $targetTemp,
-				DevicesStates\Property::EXPECTED_VALUE_FIELD => null,
-			]),
+			DevicesStates\PropertyUpdate::create()
+				->withActualValue($targetTemp)
+				->withExpectedValue(null),
 			Sources\Addon::VIRTUAL_THERMOSTAT,
 		);
 	}
@@ -5034,6 +5026,7 @@ final class Install extends Console\Command\Command
 	 * @template T as DevicesEntities\Channels\Properties\Dynamic|DevicesEntities\Channels\Properties\Variable|DevicesEntities\Channels\Properties\Mapped
 	 *
 	 * @param class-string<T> $propertyType
+	 * @param array<string, mixed> $data
 	 *
 	 * @return T
 	 *
@@ -5045,7 +5038,7 @@ final class Install extends Console\Command\Command
 	 */
 	private function createOrUpdateProperty(
 		string $propertyType,
-		Utils\ArrayHash $data,
+		array $data,
 		DevicesEntities\Channels\Properties\Property|null $property = null,
 	): DevicesEntities\Channels\Properties\Property
 	{
