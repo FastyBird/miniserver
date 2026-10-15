@@ -17,7 +17,7 @@ final class DummyRoutedDocument implements Documents\Document
 	public const string ROUTING_KEY = 'fb.core.test.dummy.routed';
 
 	/**
-	 * @param array<string> $tags
+	 * @param list<string> $tags
 	 */
 	public function __construct(
 		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
@@ -34,7 +34,7 @@ final class DummyRoutedDocument implements Documents\Document
 	}
 
 	/**
-	 * @return array<string>
+	 * @return list<string>
 	 */
 	public function getTags(): array
 	{
