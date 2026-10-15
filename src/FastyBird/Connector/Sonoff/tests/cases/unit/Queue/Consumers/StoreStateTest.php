@@ -4,16 +4,22 @@ namespace FastyBird\Connector\Sonoff\Tests\Cases\Unit\Queue\Consumers;
 
 use Closure;
 use Error;
+use FastyBird\Connector\Sonoff\Entities as SonoffEntities;
 use FastyBird\Connector\Sonoff\Exceptions as SonoffExceptions;
 use FastyBird\Connector\Sonoff\Helpers;
 use FastyBird\Connector\Sonoff\Queue;
 use FastyBird\Connector\Sonoff\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
+use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
+use Nette\Utils;
 use Override;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -137,6 +143,151 @@ final class StoreStateTest extends Tests\Cases\Unit\DbTestCase
 		);
 
 		self::assertSame([self::DEVICE_ABC], $devices);
+	}
+
+	/**
+	 * What storing the reported parameters hands the state managers for a dynamic property, and what it stores for a
+	 * variable one, on the device and on a channel
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws SonoffExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Throwable
+	 */
+	public function testParameterStatesFieldByField(): void
+	{
+		$set = [];
+
+		$record = static function (string $owner) use (&$set): Closure {
+			return static function (
+				DevicesDocuments\Property $property,
+				Utils\ArrayHash|DevicesStates\PropertyUpdate $data,
+				Sources\Source|null $source,
+			) use (
+				$owner,
+				&$set,
+): Promise\PromiseInterface {
+				// What the manager makes of it on its first line
+				$data = $data instanceof DevicesStates\PropertyUpdate ? $data->toArrayHash() : $data;
+
+				$set[] = [$owner, $property->getIdentifier(), (array) $data, $source?->value];
+
+				return Promise\resolve(true);
+			};
+		};
+
+		$this->mockContainerService(
+			DevicesModels\States\Async\DevicePropertiesManager::class,
+			$this->mockOf(
+				DevicesModels\States\Async\DevicePropertiesManager::class,
+				static function (MockObject $mock) use ($record): void {
+					$mock->method('set')->willReturnCallback($record('device'));
+				},
+			),
+		);
+		$this->mockContainerService(
+			DevicesModels\States\Async\ChannelPropertiesManager::class,
+			$this->mockOf(
+				DevicesModels\States\Async\ChannelPropertiesManager::class,
+				static function (MockObject $mock) use ($record): void {
+					$mock->method('set')->willReturnCallback($record('channel'));
+				},
+			),
+		);
+
+		$device = $this->getContainer()->getByType(DevicesModels\Entities\Devices\DevicesRepository::class)->find(
+			Uuid\Uuid::fromString(self::DEVICE_ABC),
+		);
+		self::assertNotNull($device);
+
+		$devicePropertiesManager = $this->getContainer()->getByType(
+			DevicesModels\Entities\Devices\Properties\PropertiesManager::class,
+		);
+		$devicePropertiesManager->create([
+			'entity' => DevicesEntities\Devices\Properties\Variable::class,
+			'device' => $device,
+			'identifier' => 'note',
+			'dataType' => ValuesTypes\DataType::STRING,
+			'value' => 'none',
+		]);
+
+		$channel = $this->getContainer()->getByType(DevicesModels\Entities\Channels\ChannelsManager::class)->create([
+			'entity' => SonoffEntities\Channels\Channel::class,
+			'device' => $device,
+			'identifier' => 'switch_0',
+		]);
+
+		$channelPropertiesManager = $this->getContainer()->getByType(
+			DevicesModels\Entities\Channels\Properties\PropertiesManager::class,
+		);
+		$channelPropertiesManager->create([
+			'entity' => DevicesEntities\Channels\Properties\Dynamic::class,
+			'channel' => $channel,
+			'identifier' => 'switch',
+			'dataType' => ValuesTypes\DataType::BOOLEAN,
+			'settable' => true,
+			'queryable' => true,
+		]);
+		$channelPropertiesManager->create([
+			'entity' => DevicesEntities\Channels\Properties\Variable::class,
+			'channel' => $channel,
+			'identifier' => 'label',
+			'dataType' => ValuesTypes\DataType::STRING,
+			'value' => 'none',
+		]);
+
+		$this->getEntityManager()->clear();
+
+		// Built directly from the parameter state classes, one device and one channel kind each
+		$consumed = $this->getContainer()->getByType(Queue\Consumers\StoreParametersStates::class)->consume(
+			new Queue\Messages\StoreParametersStates(
+				Uuid\Uuid::fromString(self::CONNECTOR_ID),
+				'abc',
+				[
+					new Queue\Messages\States\DeviceParameterState('rssi', -61),
+					new Queue\Messages\States\DeviceParameterState('note', 'stored'),
+					new Queue\Messages\States\ChannelParameterState('switch', true, 'switch_0'),
+					new Queue\Messages\States\ChannelParameterState('label', 'kitchen', 'switch_0'),
+				],
+			),
+		);
+
+		self::assertTrue($consumed);
+
+		self::assertSame(
+			[
+				['device', 'rssi', [DevicesStates\Property::ACTUAL_VALUE_FIELD => -61], 'com.fastybird.sonoff-connector'],
+				['channel', 'switch', [DevicesStates\Property::ACTUAL_VALUE_FIELD => true], 'com.fastybird.sonoff-connector'],
+			],
+			$set,
+		);
+
+		$this->getEntityManager()->clear();
+
+		$values = [];
+
+		$device = $this->getContainer()->getByType(DevicesModels\Entities\Devices\DevicesRepository::class)->find(
+			Uuid\Uuid::fromString(self::DEVICE_ABC),
+		);
+		self::assertNotNull($device);
+
+		foreach ($device->getProperties() as $property) {
+			if ($property instanceof DevicesEntities\Devices\Properties\Variable) {
+				$values['device'][$property->getIdentifier()] = $property->getValue();
+			}
+		}
+
+		foreach ($device->getChannels() as $deviceChannel) {
+			foreach ($deviceChannel->getProperties() as $property) {
+				if ($property instanceof DevicesEntities\Channels\Properties\Variable) {
+					$values['channel'][$property->getIdentifier()] = $property->getValue();
+				}
+			}
+		}
+
+		self::assertSame(['device' => ['note' => 'stored'], 'channel' => ['label' => 'kitchen']], $values);
 	}
 
 	/**

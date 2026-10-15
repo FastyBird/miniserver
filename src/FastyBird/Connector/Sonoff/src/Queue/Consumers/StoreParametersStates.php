@@ -16,7 +16,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette\Utils;
 use Override;
 use TypeError;
 use ValueError;
@@ -90,9 +89,8 @@ final readonly class StoreParametersStates implements Queue\Consumer
 				if ($property instanceof DevicesDocuments\Devices\Properties\Dynamic) {
 					await($this->devicePropertiesStatesManager->set(
 						$property,
-						Utils\ArrayHash::from([
-							DevicesStates\Property::ACTUAL_VALUE_FIELD => $parameter->getValue(),
-						]),
+						DevicesStates\PropertyUpdate::create()
+							->withActualValue($parameter->getValue()),
 						Sources\Connector::SONOFF,
 					));
 				} elseif ($property instanceof DevicesDocuments\Devices\Properties\Variable) {
@@ -106,9 +104,9 @@ final readonly class StoreParametersStates implements Queue\Consumer
 
 							$this->devicesPropertiesManager->update(
 								$property,
-								Utils\ArrayHash::from([
+								[
 									'value' => $parameter->getValue(),
-								]),
+								],
 							);
 						},
 					);
@@ -133,9 +131,8 @@ final readonly class StoreParametersStates implements Queue\Consumer
 					if ($property instanceof DevicesDocuments\Channels\Properties\Dynamic) {
 						await($this->channelPropertiesStatesManager->set(
 							$property,
-							Utils\ArrayHash::from([
-								DevicesStates\Property::ACTUAL_VALUE_FIELD => $parameter->getValue(),
-							]),
+							DevicesStates\PropertyUpdate::create()
+								->withActualValue($parameter->getValue()),
 							Sources\Connector::SONOFF,
 						));
 					} elseif ($property instanceof DevicesDocuments\Channels\Properties\Variable) {
@@ -149,9 +146,9 @@ final readonly class StoreParametersStates implements Queue\Consumer
 
 								$this->channelsPropertiesManager->update(
 									$property,
-									Utils\ArrayHash::from([
+									[
 										'value' => $parameter->getValue(),
-									]),
+									],
 								);
 							},
 						);

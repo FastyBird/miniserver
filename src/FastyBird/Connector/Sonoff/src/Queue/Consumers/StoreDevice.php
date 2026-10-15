@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use function assert;
 
@@ -78,13 +77,13 @@ final readonly class StoreDevice implements Queue\Consumer
 
 			$device = $this->databaseHelper->transaction(
 				function () use ($message, $connector): SonoffEntities\Devices\Device {
-					$device = $this->devicesManager->create(Utils\ArrayHash::from([
+					$device = $this->devicesManager->create([
 						'entity' => SonoffEntities\Devices\Device::class,
 						'connector' => $connector,
 						'identifier' => $message->getId(),
 						'name' => $message->getName(),
 						'description' => $message->getDescription(),
-					]));
+					]);
 					assert($device instanceof SonoffEntities\Devices\Device);
 
 					return $device;
@@ -214,7 +213,7 @@ final readonly class StoreDevice implements Queue\Consumer
 				if ($property === null) {
 					$property = $this->databaseHelper->transaction(
 						fn (): DevicesEntities\Devices\Properties\Property => $this->devicesPropertiesManager->create(
-							Utils\ArrayHash::from([
+							[
 								'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
 								'device' => $device,
 								'identifier' => SonoffHelpers\Transformer::deviceParameterToProperty(
@@ -226,7 +225,7 @@ final readonly class StoreDevice implements Queue\Consumer
 								'queryable' => $parameter->isQueryable(),
 								'format' => $parameter->getFormat(),
 								'scale' => $parameter->getScale(),
-							]),
+							],
 						),
 					);
 
@@ -252,14 +251,14 @@ final readonly class StoreDevice implements Queue\Consumer
 					$property = $this->databaseHelper->transaction(
 						fn (): DevicesEntities\Devices\Properties\Property => $this->devicesPropertiesManager->update(
 							$property,
-							Utils\ArrayHash::from([
+							[
 								'name' => $parameter->getName(),
 								'dataType' => $parameter->getDataType(),
 								'settable' => $parameter->isSettable(),
 								'queryable' => $parameter->isQueryable(),
 								'format' => $parameter->getFormat(),
 								'scale' => $parameter->getScale(),
-							]),
+							],
 						),
 					);
 
@@ -297,11 +296,11 @@ final readonly class StoreDevice implements Queue\Consumer
 					);
 
 					if ($channel === null) {
-						$channel = $this->channelsManager->create(Utils\ArrayHash::from([
+						$channel = $this->channelsManager->create([
 							'entity' => SonoffEntities\Channels\Channel::class,
 							'device' => $device,
 							'identifier' => $parameter->getGroup(),
-						]));
+						]);
 
 						$this->logger->debug(
 							'Device channel was created',

@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use Symfony\Component\Console;
@@ -193,39 +192,39 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => SonoffEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name === '' ? null : $name,
-			]));
+			]);
 			assert($connector instanceof SonoffEntities\Connectors\Connector);
 
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => SonoffTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 				'dataType' => ValuesTypes\DataType::ENUM,
 				'value' => $mode->value,
 				'format' => [SonoffTypes\ClientMode::LAN->value, SonoffTypes\ClientMode::CLOUD->value, SonoffTypes\ClientMode::AUTO->value],
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => SonoffTypes\ConnectorPropertyIdentifier::USERNAME->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $username,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => SonoffTypes\ConnectorPropertyIdentifier::PASSWORD->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $password,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->propertiesManager->create(Utils\ArrayHash::from([
+			$this->propertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => SonoffTypes\ConnectorPropertyIdentifier::REGION->value,
 				'dataType' => ValuesTypes\DataType::ENUM,
@@ -237,7 +236,7 @@ final class Install extends Console\Command\Command
 					SonoffTypes\CloudApiEndpoint::ASIA,
 				],
 				'connector' => $connector,
-			]));
+			]);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();
@@ -396,10 +395,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof SonoffEntities\Connectors\Connector);
 
 			if ($modeProperty === null) {
@@ -407,18 +406,18 @@ final class Install extends Console\Command\Command
 					$mode = $this->askConnectorMode($io);
 				}
 
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => SonoffTypes\ConnectorPropertyIdentifier::CLIENT_MODE->value,
 					'dataType' => ValuesTypes\DataType::ENUM,
 					'value' => $mode->value,
 					'format' => [SonoffTypes\ClientMode::LAN->value, SonoffTypes\ClientMode::CLOUD->value, SonoffTypes\ClientMode::AUTO->value],
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($mode !== null) {
-				$this->propertiesManager->update($modeProperty, Utils\ArrayHash::from([
+				$this->propertiesManager->update($modeProperty, [
 					'value' => $mode->value,
-				]));
+				]);
 			}
 
 			if ($usernameProperty === null) {
@@ -426,17 +425,17 @@ final class Install extends Console\Command\Command
 					$username = $this->askConnectorUsername($io);
 				}
 
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => SonoffTypes\ConnectorPropertyIdentifier::USERNAME->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $username,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($username !== null) {
-				$this->propertiesManager->update($usernameProperty, Utils\ArrayHash::from([
+				$this->propertiesManager->update($usernameProperty, [
 					'value' => $username,
-				]));
+				]);
 			}
 
 			if ($passwordProperty === null) {
@@ -444,17 +443,17 @@ final class Install extends Console\Command\Command
 					$password = $this->askConnectorPassword($io);
 				}
 
-				$this->propertiesManager->create(Utils\ArrayHash::from([
+				$this->propertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => SonoffTypes\ConnectorPropertyIdentifier::PASSWORD->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $password,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($password !== null) {
-				$this->propertiesManager->update($passwordProperty, Utils\ArrayHash::from([
+				$this->propertiesManager->update($passwordProperty, [
 					'value' => $password,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -652,9 +651,9 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
+			$device = $this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof SonoffEntities\Devices\Device);
 
 			// Commit all changes into database
