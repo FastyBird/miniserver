@@ -121,7 +121,7 @@ trait ChannelProperty
 
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Channels\Properties\Property => $this->channelsPropertiesManager->create(
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'entity' => $type,
 							'channel' => $channel,
@@ -142,7 +142,7 @@ trait ChannelProperty
 								'settable' => $settable,
 								'queryable' => $queryable,
 							],
-					)),
+					),
 				),
 			);
 
@@ -171,7 +171,7 @@ trait ChannelProperty
 			$property = $this->databaseHelper->transaction(
 				fn (): DevicesEntities\Channels\Properties\Property => $this->channelsPropertiesManager->update(
 					$property,
-					Utils\ArrayHash::from(array_merge(
+					array_merge(
 						[
 							'dataType' => $dataType,
 							'format' => $format,
@@ -188,7 +188,7 @@ trait ChannelProperty
 								'settable' => $settable,
 								'queryable' => $queryable,
 							],
-					)),
+					),
 				),
 			);
 
