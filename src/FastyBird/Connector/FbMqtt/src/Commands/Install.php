@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input;
@@ -180,63 +179,63 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->create(Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->create([
 				'entity' => FbMqttEntities\Connectors\Connector::class,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($connector instanceof FbMqttEntities\Connectors\Connector);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::PROTOCOL_VERSION->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $protocol->value,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::SERVER->value,
 				'dataType' => ValuesTypes\DataType::STRING,
 				'value' => $serverAddress,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::PORT->value,
 				'dataType' => ValuesTypes\DataType::UINT,
 				'value' => $serverPort,
 				'connector' => $connector,
-			]));
+			]);
 
-			$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+			$this->connectorsPropertiesManager->create([
 				'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 				'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::SECURED_PORT->value,
 				'dataType' => ValuesTypes\DataType::UINT,
 				'value' => $serverSecuredPort,
 				'connector' => $connector,
-			]));
+			]);
 
 			if ($username !== null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::USERNAME->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $username,
 					'connector' => $connector,
-				]));
+				]);
 			}
 
 			if ($password !== null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::PASSWORD->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $password,
 					'connector' => $connector,
-				]));
+				]);
 			}
 
 			// Commit all changes into database
@@ -409,10 +408,10 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$connector = $this->connectorsManager->update($connector, Utils\ArrayHash::from([
+			$connector = $this->connectorsManager->update($connector, [
 				'name' => $name === '' ? null : $name,
 				'enabled' => $enabled,
-			]));
+			]);
 			assert($connector instanceof FbMqttEntities\Connectors\Connector);
 
 			if ($protocolProperty === null) {
@@ -420,74 +419,74 @@ final class Install extends Console\Command\Command
 					$protocol = $this->askConnectorProtocol($io);
 				}
 
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::PROTOCOL_VERSION->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $protocol->value,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($protocol !== null) {
-				$this->connectorsPropertiesManager->update($protocolProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($protocolProperty, [
 					'value' => $protocol->value,
-				]));
+				]);
 			}
 
 			if ($serverAddressProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::SERVER->value,
 					'dataType' => ValuesTypes\DataType::STRING,
 					'value' => $serverAddress,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($serverAddressProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-				$this->connectorsPropertiesManager->update($serverAddressProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($serverAddressProperty, [
 					'value' => $serverAddress,
-				]));
+				]);
 			}
 
 			if ($serverPortProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::PORT->value,
 					'dataType' => ValuesTypes\DataType::UINT,
 					'value' => $serverPort,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($serverPortProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-				$this->connectorsPropertiesManager->update($serverPortProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($serverPortProperty, [
 					'value' => $serverPort,
-				]));
+				]);
 			}
 
 			if ($serverSecuredProperty === null) {
-				$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->create([
 					'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 					'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::SECURED_PORT->value,
 					'dataType' => ValuesTypes\DataType::UINT,
 					'value' => $serverSecuredPort,
 					'connector' => $connector,
-				]));
+				]);
 			} elseif ($serverSecuredProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-				$this->connectorsPropertiesManager->update($serverSecuredProperty, Utils\ArrayHash::from([
+				$this->connectorsPropertiesManager->update($serverSecuredProperty, [
 					'value' => $serverSecuredPort,
-				]));
+				]);
 			}
 
 			if ($username !== null) {
 				if ($usernameProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::USERNAME->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $username,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($usernameProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-					$this->connectorsPropertiesManager->update($usernameProperty, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($usernameProperty, [
 						'value' => $username,
-					]));
+					]);
 				}
 			} elseif ($usernameProperty !== null) {
 				$this->connectorsPropertiesManager->delete($usernameProperty);
@@ -495,17 +494,17 @@ final class Install extends Console\Command\Command
 
 			if ($password !== null) {
 				if ($passwordProperty === null) {
-					$this->connectorsPropertiesManager->create(Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->create([
 						'entity' => DevicesEntities\Connectors\Properties\Variable::class,
 						'identifier' => FbMqttTypes\ConnectorPropertyIdentifier::PASSWORD->value,
 						'dataType' => ValuesTypes\DataType::STRING,
 						'value' => $password,
 						'connector' => $connector,
-					]));
+					]);
 				} elseif ($passwordProperty instanceof DevicesEntities\Connectors\Properties\Variable) {
-					$this->connectorsPropertiesManager->update($passwordProperty, Utils\ArrayHash::from([
+					$this->connectorsPropertiesManager->update($passwordProperty, [
 						'value' => $password,
-					]));
+					]);
 				}
 			} elseif ($passwordProperty !== null) {
 				$this->connectorsPropertiesManager->delete($passwordProperty);
@@ -766,12 +765,12 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->create(Utils\ArrayHash::from([
+			$device = $this->devicesManager->create([
 				'entity' => FbMqttEntities\Devices\Device::class,
 				'connector' => $connector,
 				'identifier' => $identifier,
 				'name' => $name,
-			]));
+			]);
 			assert($device instanceof FbMqttEntities\Devices\Device);
 
 			// Commit all changes into database
@@ -833,9 +832,9 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$device = $this->devicesManager->update($device, Utils\ArrayHash::from([
+			$device = $this->devicesManager->update($device, [
 				'name' => $name,
-			]));
+			]);
 
 			// Commit all changes into database
 			$this->databaseHelper->commitTransaction();

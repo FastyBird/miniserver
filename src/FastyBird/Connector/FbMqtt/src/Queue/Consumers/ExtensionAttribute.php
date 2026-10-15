@@ -13,7 +13,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette\Utils;
 use Override;
 use function sprintf;
 
@@ -153,7 +152,7 @@ final readonly class ExtensionAttribute implements Queue\Consumer
 				'value' => $message->getValue(),
 			];
 
-			$this->propertiesManager->update($property, Utils\ArrayHash::from($toUpdate));
+			$this->propertiesManager->update($property, $toUpdate);
 		});
 
 		$this->logger->debug(

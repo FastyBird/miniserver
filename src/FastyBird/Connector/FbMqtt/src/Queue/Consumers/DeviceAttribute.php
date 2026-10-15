@@ -21,7 +21,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
-use Nette\Utils;
 use Override;
 use ReflectionException;
 use TypeError;
@@ -86,10 +85,10 @@ final readonly class DeviceAttribute implements Queue\Consumer
 
 			if (DevicesTypes\ConnectionState::tryFrom($message->getValue()) !== null) {
 				if ($device === null) {
-					$device = $this->devicesManager->create(Utils\ArrayHash::from([
+					$device = $this->devicesManager->create([
 						'entity' => FbMqttEntities\Devices\Device::class,
 						'identifier' => $message->getDevice(),
-					]));
+					]);
 				}
 
 				$this->deviceConnectionManager->setState(
@@ -111,38 +110,38 @@ final readonly class DeviceAttribute implements Queue\Consumer
 				if ($device === null) {
 					$toUpdate['identifier'] = $message->getDevice();
 
-					$device = $this->devicesManager->create(Utils\ArrayHash::from($toUpdate));
+					$device = $this->devicesManager->create($toUpdate);
 
 				} elseif ($toUpdate !== []) {
-					$this->devicesManager->update($device, Utils\ArrayHash::from($toUpdate));
+					$this->devicesManager->update($device, $toUpdate);
 				}
 
 				if (
 					$message->getAttribute() === Queue\Messages\Attribute::PROPERTIES
 					&& is_array($message->getValue())
 				) {
-					$this->setDeviceProperties($device, Utils\ArrayHash::from($message->getValue()));
+					$this->setDeviceProperties($device, $message->getValue());
 				}
 
 				if (
 					$message->getAttribute() === Queue\Messages\Attribute::EXTENSIONS
 					&& is_array($message->getValue())
 				) {
-					$this->setDeviceExtensions($device, Utils\ArrayHash::from($message->getValue()));
+					$this->setDeviceExtensions($device, $message->getValue());
 				}
 
 				if (
 					$message->getAttribute() === Queue\Messages\Attribute::CHANNELS
 					&& is_array($message->getValue())
 				) {
-					$this->setDeviceChannels($device, Utils\ArrayHash::from($message->getValue()));
+					$this->setDeviceChannels($device, $message->getValue());
 				}
 
 				if (
 					$message->getAttribute() === Queue\Messages\Attribute::CONTROLS
 					&& is_array($message->getValue())
 				) {
-					$this->setDeviceControls($device, Utils\ArrayHash::from($message->getValue()));
+					$this->setDeviceControls($device, $message->getValue());
 				}
 			});
 		}
@@ -166,7 +165,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 	}
 
 	/**
-	 * @param Utils\ArrayHash<string> $properties
+	 * @param array<string> $properties
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -186,7 +185,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 	 */
 	private function setDeviceProperties(
 		DevicesEntities\Devices\Device $device,
-		Utils\ArrayHash $properties,
+		array $properties,
 	): void
 	{
 		foreach ($properties as $propertyName) {
@@ -206,7 +205,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 						FbMqttTypes\DevicePropertyIdentifier::IP_ADDRESS->value,
 						FbMqttTypes\DevicePropertyIdentifier::STATUS_LED->value,
 					], true)) {
-						$this->devicePropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicePropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
 							'device' => $device,
 							'identifier' => $propertyName,
@@ -214,7 +213,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 							'settable' => false,
 							'queryable' => false,
 							'dataType' => ValuesTypes\DataType::STRING,
-						]));
+						]);
 
 					} elseif (in_array($propertyName, [
 						FbMqttTypes\DevicePropertyIdentifier::UPTIME->value,
@@ -223,7 +222,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 						FbMqttTypes\DevicePropertyIdentifier::VCC->value,
 						FbMqttTypes\DevicePropertyIdentifier::RSSI->value,
 					], true)) {
-						$this->devicePropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicePropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
 							'device' => $device,
 							'identifier' => $propertyName,
@@ -231,17 +230,17 @@ final readonly class DeviceAttribute implements Queue\Consumer
 							'settable' => false,
 							'queryable' => false,
 							'dataType' => ValuesTypes\DataType::UINT,
-						]));
+						]);
 
 					} else {
-						$this->devicePropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicePropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Dynamic::class,
 							'device' => $device,
 							'identifier' => $propertyName,
 							'settable' => false,
 							'queryable' => false,
 							'dataType' => ValuesTypes\DataType::UNKNOWN,
-						]));
+						]);
 					}
 				}
 			}
@@ -252,14 +251,14 @@ final readonly class DeviceAttribute implements Queue\Consumer
 
 		// Cleanup for unused properties
 		foreach ($this->devicePropertiesRepository->findAllBy($findDevicePropertiesQuery) as $property) {
-			if (!in_array($property->getIdentifier(), (array) $properties, true)) {
+			if (!in_array($property->getIdentifier(), $properties, true)) {
 				$this->devicePropertiesManager->delete($property);
 			}
 		}
 	}
 
 	/**
-	 * @param Utils\ArrayHash<string> $extensions
+	 * @param array<string> $extensions
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
@@ -270,7 +269,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 	 */
 	private function setDeviceExtensions(
 		DevicesEntities\Devices\Device $device,
-		Utils\ArrayHash $extensions,
+		array $extensions,
 	): void
 	{
 		foreach ($extensions as $extensionName) {
@@ -286,12 +285,12 @@ final readonly class DeviceAttribute implements Queue\Consumer
 					$findPropertyQuery->byIdentifier($propertyName);
 
 					if ($this->devicePropertiesRepository->findOneBy($findPropertyQuery) === null) {
-						$this->devicePropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicePropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'device' => $device,
 							'identifier' => $propertyName->value,
 							'dataType' => ValuesTypes\DataType::STRING,
-						]));
+						]);
 					}
 				}
 			} elseif ($extensionName === FbMqttTypes\ExtensionType::FASTYBIRD_FIRMWARE->value) {
@@ -305,12 +304,12 @@ final readonly class DeviceAttribute implements Queue\Consumer
 					$findPropertyQuery->byIdentifier($propertyName);
 
 					if ($this->devicePropertiesRepository->findOneBy($findPropertyQuery) === null) {
-						$this->devicePropertiesManager->create(Utils\ArrayHash::from([
+						$this->devicePropertiesManager->create([
 							'entity' => DevicesEntities\Devices\Properties\Variable::class,
 							'device' => $device,
 							'identifier' => $propertyName->value,
 							'dataType' => ValuesTypes\DataType::STRING,
-						]));
+						]);
 					}
 				}
 			}
@@ -318,7 +317,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 	}
 
 	/**
-	 * @param Utils\ArrayHash<string> $controls
+	 * @param array<string> $controls
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
@@ -329,7 +328,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 	 */
 	private function setDeviceControls(
 		DevicesEntities\Devices\Device $device,
-		Utils\ArrayHash $controls,
+		array $controls,
 	): void
 	{
 		foreach ($controls as $controlName) {
@@ -340,10 +339,10 @@ final readonly class DeviceAttribute implements Queue\Consumer
 			$control = $this->deviceControlsRepository->findOneBy($findDeviceControlQuery);
 
 			if ($control === null) {
-				$this->deviceControlsManager->create(Utils\ArrayHash::from([
+				$this->deviceControlsManager->create([
 					'device' => $device,
 					'name' => $controlName,
-				]));
+				]);
 			}
 		}
 
@@ -352,14 +351,14 @@ final readonly class DeviceAttribute implements Queue\Consumer
 
 		// Cleanup for unused control
 		foreach ($this->deviceControlsRepository->findAllBy($findDeviceControlsQuery) as $control) {
-			if (!in_array($control->getName(), (array) $controls, true)) {
+			if (!in_array($control->getName(), $controls, true)) {
 				$this->deviceControlsManager->delete($control);
 			}
 		}
 	}
 
 	/**
-	 * @param Utils\ArrayHash<string> $channels
+	 * @param array<string> $channels
 	 *
 	 * @throws DevicesExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
@@ -370,7 +369,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 	 */
 	private function setDeviceChannels(
 		DevicesEntities\Devices\Device $device,
-		Utils\ArrayHash $channels,
+		array $channels,
 	): void
 	{
 		foreach ($channels as $channelName) {
@@ -381,11 +380,11 @@ final readonly class DeviceAttribute implements Queue\Consumer
 			$channel = $this->channelsRepository->findOneBy($findChannelQuery, FbMqttEntities\Channels\Channel::class);
 
 			if ($channel === null) {
-				$this->channelsManager->create(Utils\ArrayHash::from([
+				$this->channelsManager->create([
 					'entity' => FbMqttEntities\Channels\Channel::class,
 					'device' => $device,
 					'identifier' => $channelName,
-				]));
+				]);
 			}
 		}
 
@@ -397,7 +396,7 @@ final readonly class DeviceAttribute implements Queue\Consumer
 			$findChannelsQuery,
 			FbMqttEntities\Channels\Channel::class,
 		) as $channel) {
-			if (!in_array($channel->getIdentifier(), (array) $channels, true)) {
+			if (!in_array($channel->getIdentifier(), $channels, true)) {
 				$this->channelsManager->delete($channel);
 			}
 		}
