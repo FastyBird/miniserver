@@ -118,7 +118,7 @@ final class IdentitiesV1 extends BaseV1
 
 				$this->validateAccountRelation($createData, $account);
 
-				$createData->offsetSet('account', $account);
+				$createData['account'] = $account;
 
 				// Store item into database
 				$identity = $this->identitiesManager->create($createData);

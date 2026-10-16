@@ -17,7 +17,6 @@ use FastyBird\Module\Accounts\Subscribers as AccountsSubscribers;
 use FastyBird\Module\Accounts\Tests;
 use FastyBird\Module\Accounts\Types;
 use Nette;
-use Nette\Utils;
 use Nettrine\ORM\Events;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -85,9 +84,9 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($account);
 
-		$manager->update($account, Utils\ArrayHash::from([
+		$manager->update($account, [
 			'state' => Types\AccountState::BLOCKED,
-		]));
+		]);
 
 		self::assertSame(
 			['created_at' => '2017-01-03 11:30:00', 'updated_at' => self::FROZEN_NOW],
@@ -119,9 +118,9 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($email);
 
-		$manager->update($email, Utils\ArrayHash::from([
+		$manager->update($email, [
 			'default' => true,
-		]));
+		]);
 
 		self::assertSame(
 			['created_at' => '2017-09-07 18:24:35', 'updated_at' => self::FROZEN_NOW],
@@ -161,9 +160,9 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($email);
 
-		$manager->update($email, Utils\ArrayHash::from([
+		$manager->update($email, [
 			'default' => true,
-		]));
+		]);
 
 		self::assertFalse($demoted->isDefault());
 
@@ -229,9 +228,9 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($email);
 
-		$manager->update($email, Utils\ArrayHash::from([
+		$manager->update($email, [
 			'default' => true,
-		]));
+		]);
 
 		self::assertSame([true, false], $recorder->changeSet['default'] ?? null);
 		self::assertTrue($recorder->scheduledForUpdate);
@@ -275,9 +274,9 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($email);
 
-		$manager->update($email, Utils\ArrayHash::from([
+		$manager->update($email, [
 			'default' => true,
-		]));
+		]);
 
 		$this->getEntityManager()->flush();
 
@@ -318,10 +317,10 @@ final class EntityTimestampsTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($account);
 
-		$email = $manager->create(Utils\ArrayHash::from([
+		$email = $manager->create([
 			'account' => $account,
 			'address' => 'john.doe@timestamps.test',
-		]));
+		]);
 
 		self::assertSame(
 			['created_at' => self::FROZEN_NOW, 'updated_at' => self::FROZEN_NOW],

@@ -14,7 +14,6 @@ use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\DI;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid;
 use Throwable;
@@ -23,6 +22,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 {
 
 	/**
+	 * @param array<string, bool|float|int|string|null> $data
+	 * @param array<string, bool|float|int|string|null> $expected
 	 * @param class-string<Throwable>|null $exception
 	 *
 	 * @throws CoreExceptions\InvalidArgument
@@ -39,8 +40,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
 		Documents\Channels\Properties\Dynamic|null $parent,
 		States\ChannelProperty|null $stored,
-		Utils\ArrayHash $data,
-		Utils\ArrayHash $expected,
+		array $data,
+		array $expected,
 		string|null $exception,
 	): void
 	{
@@ -77,8 +78,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 						return true;
 					},
 				),
-				self::callback(static function (Utils\ArrayHash $dataToStore) use ($expected): bool {
-					self::assertSame((array) $expected, (array) $dataToStore, 'Data create check');
+				self::callback(static function (array $dataToStore) use ($expected): bool {
+					self::assertSame($expected, $dataToStore, 'Data create check');
 
 					return true;
 				}),
@@ -103,8 +104,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 
 					return true;
 				}),
-				self::callback(static function (Utils\ArrayHash $dataToStore) use ($expected): bool {
-					self::assertSame((array) $expected, (array) $dataToStore, 'Data update check');
+				self::callback(static function (array $dataToStore) use ($expected): bool {
+					self::assertSame($expected, $dataToStore, 'Data update check');
 
 					return true;
 				}),
@@ -132,12 +133,14 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 
 		$channelPropertiesStatesManager->write(
 			$property,
-			$data,
+			self::update($data),
 			Sources\Module::DEVICES,
 		);
 	}
 
 	/**
+	 * @param array<string, bool|float|int|string|null> $data
+	 * @param array<string, bool|float|int|string|null> $expected
 	 * @param class-string<Throwable>|null $exception
 	 *
 	 * @throws CoreExceptions\InvalidArgument
@@ -154,8 +157,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 		Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped $property,
 		Documents\Channels\Properties\Dynamic|null $parent,
 		States\ChannelProperty|null $stored,
-		Utils\ArrayHash $data,
-		Utils\ArrayHash $expected,
+		array $data,
+		array $expected,
 		string|null $exception,
 	): void
 	{
@@ -192,8 +195,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 						return true;
 					},
 				),
-				self::callback(static function (Utils\ArrayHash $dataToStore) use ($expected): bool {
-					self::assertSame((array) $expected, (array) $dataToStore, 'Data create check');
+				self::callback(static function (array $dataToStore) use ($expected): bool {
+					self::assertSame($expected, $dataToStore, 'Data create check');
 
 					return true;
 				}),
@@ -218,8 +221,8 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 
 					return true;
 				}),
-				self::callback(static function (Utils\ArrayHash $dataToStore) use ($expected): bool {
-					self::assertSame((array) $expected, (array) $dataToStore, 'Data update check');
+				self::callback(static function (array $dataToStore) use ($expected): bool {
+					self::assertSame($expected, $dataToStore, 'Data update check');
 
 					return true;
 				}),
@@ -247,13 +250,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 
 		$channelPropertiesStatesManager->set(
 			$property,
-			$data,
+			self::update($data),
 			Sources\Module::DEVICES,
 		);
 	}
 
 	/**
-	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|Utils\ArrayHash|string|null>>
+	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|array<string, bool|float|int|string|null>|string|null>>
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function writeStates(): array
@@ -287,13 +290,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '255',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 255.0,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -319,13 +322,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '25.5',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 255.0,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -351,13 +354,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '25.5',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 255.0,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -383,13 +386,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '25.5',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 2_550.0,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -430,13 +433,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 127.0,
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 127.0,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -478,13 +481,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 5,
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 50,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -526,13 +529,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 47,
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 119,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -574,13 +577,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 4.7,
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 102,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -605,13 +608,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => null,
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => null,
 					States\Property::PENDING_FIELD => false,
-				]),
+				],
 				null,
 			],
 			/**
@@ -636,13 +639,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => null,
 					States\Property::PENDING_FIELD => false,
-				]),
+				],
 				null,
 			],
 			/**
@@ -667,20 +670,20 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::ACTUAL_VALUE_FIELD => 10,
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::ACTUAL_VALUE_FIELD => 10,
 					States\Property::PENDING_FIELD => false,
-				]),
+				],
 				DevicesExceptions\InvalidArgument::class,
 			],
 		];
 	}
 
 	/**
-	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|Utils\ArrayHash|string|null>>
+	 * @return array<string, array<Documents\Channels\Properties\Dynamic|Documents\Channels\Properties\Mapped|States\ChannelProperty|array<string, bool|float|int|string|null>|string|null>>
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	public static function setStates(): array
@@ -714,16 +717,16 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::ACTUAL_VALUE_FIELD => '100',
 					States\Property::EXPECTED_VALUE_FIELD => '255',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::ACTUAL_VALUE_FIELD => 100.0,
 					States\Property::EXPECTED_VALUE_FIELD => 255.0,
 					States\Property::VALID_FIELD => true,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -749,16 +752,16 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::ACTUAL_VALUE_FIELD => '100',
 					States\Property::EXPECTED_VALUE_FIELD => '255',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::ACTUAL_VALUE_FIELD => 100.0,
 					States\Property::EXPECTED_VALUE_FIELD => 255.0,
 					States\Property::VALID_FIELD => true,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -784,16 +787,16 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::ACTUAL_VALUE_FIELD => '100',
 					States\Property::EXPECTED_VALUE_FIELD => '255',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::ACTUAL_VALUE_FIELD => 100.0,
 					States\Property::EXPECTED_VALUE_FIELD => 255.0,
 					States\Property::VALID_FIELD => true,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -819,16 +822,16 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::ACTUAL_VALUE_FIELD => '100',
 					States\Property::EXPECTED_VALUE_FIELD => '255',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::ACTUAL_VALUE_FIELD => 100.0,
 					States\Property::EXPECTED_VALUE_FIELD => 255.0,
 					States\Property::VALID_FIELD => true,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -854,15 +857,15 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::ACTUAL_VALUE_FIELD => '1000',
 					States\Property::EXPECTED_VALUE_FIELD => '255',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => null,
 					States\Property::VALID_FIELD => false,
 					States\Property::PENDING_FIELD => false,
-				]),
+				],
 				null,
 			],
 			/**
@@ -888,15 +891,15 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::ACTUAL_VALUE_FIELD => '1000',
 					States\Property::EXPECTED_VALUE_FIELD => '55',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 55.0,
 					States\Property::VALID_FIELD => false,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -922,16 +925,16 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 				),
 				null,
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::ACTUAL_VALUE_FIELD => '999',
 					States\Property::EXPECTED_VALUE_FIELD => '55',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::ACTUAL_VALUE_FIELD => null,
 					States\Property::EXPECTED_VALUE_FIELD => 55.0,
 					States\Property::VALID_FIELD => false,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -972,13 +975,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '55',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 55.0,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -1020,13 +1023,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '55',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 55.0,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -1068,13 +1071,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '55',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 550.0,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -1116,13 +1119,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '98',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 249,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -1166,13 +1169,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '1',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 100,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -1213,13 +1216,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '1',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 10,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -1260,13 +1263,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => '50',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => 127,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 			/**
@@ -1307,13 +1310,13 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::ACTUAL_VALUE_FIELD => '50',
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::ACTUAL_VALUE_FIELD => 127,
 					States\Property::VALID_FIELD => true,
-				]),
+				],
 				DevicesExceptions\InvalidArgument::class,
 			],
 			'set_16' => [
@@ -1385,16 +1388,38 @@ final class ChannelPropertiesStatesWritingTest extends Tests\Cases\Unit\BaseTest
 					true,
 				),
 				null,
-				Utils\ArrayHash::from([
+				[
 					States\Property::EXPECTED_VALUE_FIELD => true,
-				]),
-				Utils\ArrayHash::from([
+				],
+				[
 					States\Property::EXPECTED_VALUE_FIELD => Payloads\Switcher::ON->value,
 					States\Property::PENDING_FIELD => true,
-				]),
+				],
 				null,
 			],
 		];
+	}
+
+	/**
+	 * The PropertyUpdate for a change given as the fields' array, field by field in the array's
+	 * order
+	 *
+	 * @param array<string, bool|float|int|string|null> $change
+	 */
+	private static function update(array $change): States\PropertyUpdate
+	{
+		$update = States\PropertyUpdate::create();
+
+		foreach ($change as $field => $value) {
+			$update = match ($field) {
+				States\Property::ACTUAL_VALUE_FIELD => $update->withActualValue($value),
+				States\Property::EXPECTED_VALUE_FIELD => $update->withExpectedValue($value),
+				States\Property::PENDING_FIELD => $update->withPending($value === true),
+				default => $update->withValid($value === true),
+			};
+		}
+
+		return $update;
 	}
 
 }

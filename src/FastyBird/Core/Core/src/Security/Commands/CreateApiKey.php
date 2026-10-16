@@ -9,7 +9,6 @@ use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Models;
 use FastyBird\Core\Security\Types;
 use FastyBird\Core\Values\Types\Sources;
-use Nette\Utils;
 use Override;
 use Psr\Clock\ClockInterface;
 use Psr\Log;
@@ -140,13 +139,13 @@ final class CreateApiKey extends Console\Command\Command
 		try {
 			$secret = Identity\ApiKeySecret::generate();
 
-			$apiKey = $this->manager->create(Utils\ArrayHash::from([
+			$apiKey = $this->manager->create([
 				'name' => $name,
 				'account' => Uuid\Uuid::fromString($account),
 				'hash' => Identity\ApiKeySecret::hash($secret),
 				'state' => Types\ApiKeyState::ACTIVE,
 				'expiresAt' => $expiresAt,
-			]));
+			]);
 		} catch (DBAL\Exception\UniqueConstraintViolationException) {
 			// The driver's message for a duplicate entry quotes the duplicated value, the hash,
 			// so none of it is logged

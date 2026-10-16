@@ -22,7 +22,7 @@ final class StatesManagerTest extends TestCase
 {
 
 	/**
-	 * @param array<Uuid\UuidInterface|array<string, mixed>> $data
+	 * @param array<string, mixed> $data
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $dbData
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $expected
 	 *
@@ -51,7 +51,7 @@ final class StatesManagerTest extends TestCase
 
 		$manager = $this->createManager($redisClient);
 
-		$state = $manager->create($id, Utils\ArrayHash::from($data));
+		$state = $manager->create($id, $data);
 
 		self::assertSame(Tests\Fixtures\Dummy\DummyState::class, $state::class);
 		self::assertEquals($expected, $state->toArray());
@@ -59,7 +59,7 @@ final class StatesManagerTest extends TestCase
 
 	/**
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $originalData
-	 * @param array<Uuid\UuidInterface|array<string, mixed>> $data
+	 * @param array<string, mixed> $data
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $dbData
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $expected
 	 *
@@ -114,7 +114,7 @@ final class StatesManagerTest extends TestCase
 
 		$original = $factory->create(Tests\Fixtures\Dummy\DummyState::class, Utils\Json::encode($originalData));
 
-		$state = $manager->update($original->getId(), Utils\ArrayHash::from($data));
+		$state = $manager->update($original->getId(), $data);
 
 		self::assertIsObject($state);
 		self::assertSame(Tests\Fixtures\Dummy\DummyState::class, $state::class);

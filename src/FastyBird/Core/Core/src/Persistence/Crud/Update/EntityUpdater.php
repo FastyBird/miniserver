@@ -10,7 +10,6 @@ use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\Mapping;
-use Nette\Utils;
 use ReflectionException;
 
 /**
@@ -35,10 +34,7 @@ final class EntityUpdater extends Crud\CrudManager
 	}
 
 	/**
-	 * The values go to Mapping\EntityMapper::fillEntity() as they are, and it turns a plain array
-	 * into the ArrayHash Utils\ArrayHash::from() makes of it
-	 *
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
@@ -47,7 +43,7 @@ final class EntityUpdater extends Crud\CrudManager
 	 * @throws ReflectionException
 	 */
 	public function update(
-		array|Utils\ArrayHash $values,
+		array $values,
 		Entities\CrudEntity|int|string $entity,
 	): Entities\CrudEntity
 	{

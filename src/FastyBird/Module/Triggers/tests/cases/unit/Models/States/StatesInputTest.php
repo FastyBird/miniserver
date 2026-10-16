@@ -12,15 +12,15 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use Throwable;
+use TypeError;
 
 /**
- * Triggers' action and condition state managers take a plain array as well as an ArrayHash, and
- * so do the ActionsWriter and ConditionsWriter interfaces they hand it to (#723).
+ * Triggers' action and condition state managers take a plain array, and so do the ActionsWriter
+ * and ConditionsWriter interfaces they hand it to (#723).
  *
  * The writers here stand for a state storage (the RedisDb bridge implements both interfaces) and
- * record what they are given. A manager hands its writer the values exactly as it gets them: the
- * array as the same array, an ArrayHash as the same object. Against the code before #723 the
- * plain array is a TypeError.
+ * record what they are given. A manager hands its writer the values exactly as it gets them. An
+ * ArrayHash is refused with a TypeError.
  */
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -61,19 +61,13 @@ final class StatesInputTest extends Tests\Cases\Unit\DbTestCase
 		$action = $this->find(Entities\Actions\Action::class, self::ACTION);
 		$state = $writer->state($action->getId());
 
-		$arrayHash = Utils\ArrayHash::from($values);
-
 		self::assertSame($state, $manager->create($action, $values));
-		self::assertSame($state, $manager->create($action, $arrayHash));
 		self::assertSame($state, $manager->update($action, $state, $values));
-		self::assertSame($state, $manager->update($action, $state, $arrayHash));
 
 		self::assertSame(
 			[
 				['create', self::ACTION, $values],
-				['create', self::ACTION, $arrayHash],
 				['update', self::ACTION, $values],
-				['update', self::ACTION, $arrayHash],
 			],
 			$writer->written,
 		);
@@ -96,22 +90,52 @@ final class StatesInputTest extends Tests\Cases\Unit\DbTestCase
 		$condition = $this->find(Entities\Conditions\Condition::class, self::CONDITION);
 		$state = $writer->state($condition->getId());
 
-		$arrayHash = Utils\ArrayHash::from($values);
-
 		self::assertSame($state, $manager->create($condition, $values));
-		self::assertSame($state, $manager->create($condition, $arrayHash));
 		self::assertSame($state, $manager->update($condition, $state, $values));
-		self::assertSame($state, $manager->update($condition, $state, $arrayHash));
 
 		self::assertSame(
 			[
 				['create', self::CONDITION, $values],
-				['create', self::CONDITION, $arrayHash],
 				['update', self::CONDITION, $values],
-				['update', self::CONDITION, $arrayHash],
 			],
 			$writer->written,
 		);
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testTheManagersRefuseAnArrayHash(): void
+	{
+		$writer = new Tests\Fixtures\Dummy\DummyActionsWriter();
+		$conditionsWriter = new Tests\Fixtures\Dummy\DummyConditionsWriter();
+		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
+		$actions = new Models\States\ActionsManager($factory, $writer);
+		$conditions = new Models\States\ConditionsManager($factory, $conditionsWriter);
+
+		$action = $this->find(Entities\Actions\Action::class, self::ACTION);
+		$condition = $this->find(Entities\Conditions\Condition::class, self::CONDITION);
+		$hash = Utils\ArrayHash::from(['triggered' => true]);
+		$actionState = $writer->state($action->getId());
+		$conditionState = $conditionsWriter->state($condition->getId());
+
+		foreach (
+			[
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $actions->create($action, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $actions->update($action, $actionState, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $conditions->create($condition, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $conditions->update($condition, $conditionState, $hash),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
+		}
+
+		self::assertSame([], $writer->written);
+		self::assertSame([], $conditionsWriter->written);
 	}
 
 	/**
@@ -129,6 +153,22 @@ final class StatesInputTest extends Tests\Cases\Unit\DbTestCase
 		self::assertInstanceOf($class, $entity);
 
 		return $entity;
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

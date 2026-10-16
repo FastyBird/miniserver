@@ -9,7 +9,6 @@ use FastyBird\Connector\NsPanel\Types;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use TypeError;
@@ -64,7 +63,7 @@ class SubDevice extends NsPanelEntities\Devices\Device
 	 * @throws NsPanelExceptions\InvalidState
 	 */
 	#[Override]
-	public function setParents(array|Utils\ArrayHash $parents): void
+	public function setParents(array $parents): void
 	{
 		if (count($parents) !== 1 || !$parents[0] instanceof Gateway) {
 			throw new NsPanelExceptions\InvalidState('Sub-device could have only one parent and it have to be gateway');

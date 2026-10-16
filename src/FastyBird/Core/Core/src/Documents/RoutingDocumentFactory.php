@@ -7,7 +7,6 @@ use Nette\Utils;
 use ReflectionClass;
 use function array_key_exists;
 use function assert;
-use function is_array;
 use function is_subclass_of;
 use function sprintf;
 
@@ -33,24 +32,28 @@ final class RoutingDocumentFactory
 	}
 
 	/**
-	 * A plain array is turned into the ArrayHash Utils\ArrayHash::from() makes of it.
-	 * DocumentFactory::create() serialises an object to JSON and back but reads an array as it
-	 * is, so passing the array on would map it differently: a value object such as a Uuid maps
-	 * only after the round trip (#723).
+	 * The data goes through JSON and back before it is mapped, because DocumentFactory::create()
+	 * reads an array as it is and a value object such as a Uuid maps only after the round trip.
 	 *
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $data
+	 * @param array<mixed> $data
 	 *
 	 * @throws CoreExceptions\InvalidState
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Exceptions\MalformedInput
 	 * @throws CoreExceptions\Logic
 	 */
-	public function create(array|Utils\ArrayHash $data, string $routingKey): Document
+	public function create(array $data, string $routingKey): Document
 	{
-		return $this->documentFactory->create(
-			$this->loadDocument($routingKey),
-			is_array($data) ? Utils\ArrayHash::from($data) : $data,
-		);
+		$documentClass = $this->loadDocument($routingKey);
+
+		try {
+			$encoded = Utils\Json::encode($data);
+
+		} catch (Utils\JsonException $ex) {
+			throw new Exceptions\MalformedInput('Failed to decode input data', 0, $ex);
+		}
+
+		return $this->documentFactory->create($documentClass, $encoded);
 	}
 
 	/**

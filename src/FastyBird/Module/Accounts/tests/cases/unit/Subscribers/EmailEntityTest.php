@@ -11,7 +11,6 @@ use FastyBird\Module\Accounts\Models;
 use FastyBird\Module\Accounts\Queries;
 use FastyBird\Module\Accounts\Tests;
 use Nette;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid\Exception\InvalidArgumentException;
@@ -50,9 +49,9 @@ final class EmailEntityTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($email);
 
-		$manager->update($email, Utils\ArrayHash::from([
+		$manager->update($email, [
 			'default' => true,
-		]));
+		]);
 
 		$defaultEmail = $repository->findOneByAddress('john.doe@fastybird.com');
 

@@ -14,6 +14,7 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use Throwable;
+use TypeError;
 use function array_key_exists;
 use function array_map;
 use function array_shift;
@@ -26,12 +27,13 @@ use function sprintf;
 use function str_replace;
 
 /**
- * Triggers' five entity managers take a plain array as well as an ArrayHash (#723).
+ * Triggers' five entity managers take a plain array (#723).
  *
- * Each test makes one change twice: once from ArrayHash values, which is rolled back, and once
- * from the equal plain array. It compares the two results: every mapped field and every
- * association of every entity reachable from the ones the change returns, as returned and again
- * as read back from the database. Against the code before #723 the plain array is a TypeError.
+ * Each test makes one change from plain arrays, inside a transaction it rolls back, and checks the
+ * result field by field: every mapped field and every association of the entities the change
+ * reaches, as the manager returns them and again as read back from the database. The same
+ * assertions passed against the code before #723, which built the same graph from an ArrayHash.
+ * An ArrayHash is refused with a TypeError.
  */
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -71,7 +73,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testATriggerCreatedFromAnArrayIsTheOneAnArrayHashCreates(): void
+	public function testATriggerCreatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Triggers\TriggersManager::class);
 
@@ -99,12 +101,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			],
 		];
 
-		$fromArrayHash = $this->change(
-			static fn (): array => [$manager->create(Utils\ArrayHash::from($values()))],
-		);
 		$fromArray = $this->change(static fn (): array => [$manager->create($values())]);
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$trigger = $fromArray['reloaded']['Triggers\Manual:' . self::NEW_TRIGGER];
 		self::assertSame('Reading Time', $trigger['name']);
@@ -116,7 +113,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testATriggerUpdatedFromAnArrayIsTheOneAnArrayHashUpdates(): void
+	public function testATriggerUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Triggers\TriggersManager::class);
 
@@ -127,18 +124,11 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'params' => ['scene' => ['brightness' => 10]],
 		];
 
-		$fromArrayHash = $this->change(function () use ($manager, $values): array {
-			$trigger = $this->find(Entities\Triggers\Trigger::class, self::MANUAL_TRIGGER);
-
-			return [$manager->update($trigger, Utils\ArrayHash::from($values()))];
-		});
 		$fromArray = $this->change(function () use ($manager, $values): array {
 			$trigger = $this->find(Entities\Triggers\Trigger::class, self::MANUAL_TRIGGER);
 
 			return [$manager->update($trigger, $values())];
 		});
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$trigger = $fromArray['reloaded']['Triggers\Manual:' . self::MANUAL_TRIGGER];
 		self::assertSame('Late Movie Night', $trigger['name']);
@@ -151,7 +141,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testAControlCreatedAndUpdatedFromAnArrayIsTheOneAnArrayHashMakes(): void
+	public function testAControlCreatedAndUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Triggers\Controls\ControlsManager::class);
 
@@ -160,16 +150,13 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'trigger' => $this->find(Entities\Triggers\Trigger::class, self::MANUAL_TRIGGER),
 		];
 
-		$change = static fn (bool $asArrayHash): callable => static function () use ($manager, $values, $asArrayHash): array {
-			$control = $manager->create(self::input($asArrayHash, $values()));
+		$change = static function () use ($manager, $values): array {
+			$control = $manager->create($values());
 
-			return [$manager->update($control, self::input($asArrayHash, ['name' => 'renamed']))];
+			return [$manager->update($control, ['name' => 'renamed'])];
 		};
 
-		$fromArrayHash = $this->change($change(true));
-		$fromArray = $this->change($change(false));
-
-		self::assertSame($fromArrayHash, $fromArray);
+		$fromArray = $this->change($change);
 
 		$control = $fromArray['reloaded']['Triggers\Controls\Control of ' . self::MANUAL_TRIGGER . '/reset'];
 		self::assertSame('reset', $control['name']);
@@ -179,7 +166,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testAnActionCreatedFromAnArrayIsTheOneAnArrayHashCreates(): void
+	public function testAnActionCreatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Actions\ActionsManager::class);
 
@@ -192,12 +179,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'enabled' => false,
 		];
 
-		$fromArrayHash = $this->change(
-			static fn (): array => [$manager->create(Utils\ArrayHash::from($values()))],
-		);
 		$fromArray = $this->change(static fn (): array => [$manager->create($values())]);
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$action = $fromArray['reloaded']['Dummy\DummyActionEntity:' . self::NEW_ACTION];
 		self::assertSame('off', $action['value']);
@@ -208,24 +190,17 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testAnActionUpdatedFromAnArrayIsTheOneAnArrayHashUpdates(): void
+	public function testAnActionUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Actions\ActionsManager::class);
 
 		$values = static fn (): array => ['value' => 'off', 'enabled' => false];
 
-		$fromArrayHash = $this->change(function () use ($manager, $values): array {
-			$action = $this->find(Entities\Actions\Action::class, self::ACTION);
-
-			return [$manager->update($action, Utils\ArrayHash::from($values()))];
-		});
 		$fromArray = $this->change(function () use ($manager, $values): array {
 			$action = $this->find(Entities\Actions\Action::class, self::ACTION);
 
 			return [$manager->update($action, $values())];
 		});
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$action = $fromArray['reloaded']['Dummy\DummyActionEntity:' . self::ACTION];
 		self::assertSame('off', $action['value']);
@@ -235,7 +210,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testAConditionCreatedFromAnArrayIsTheOneAnArrayHashCreates(): void
+	public function testAConditionCreatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Conditions\ConditionsManager::class);
 
@@ -248,12 +223,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'operand' => '21',
 		];
 
-		$fromArrayHash = $this->change(
-			static fn (): array => [$manager->create(Utils\ArrayHash::from($values()))],
-		);
 		$fromArray = $this->change(static fn (): array => [$manager->create($values())]);
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$condition = $fromArray['reloaded']['Dummy\DummyConditionEntity:' . self::NEW_CONDITION];
 		self::assertSame('21', $condition['operand']);
@@ -263,7 +233,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testAConditionUpdatedFromAnArrayIsTheOneAnArrayHashUpdates(): void
+	public function testAConditionUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Conditions\ConditionsManager::class);
 
@@ -273,18 +243,11 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'enabled' => false,
 		];
 
-		$fromArrayHash = $this->change(function () use ($manager, $values): array {
-			$condition = $this->find(Entities\Conditions\Condition::class, self::CONDITION);
-
-			return [$manager->update($condition, Utils\ArrayHash::from($values()))];
-		});
 		$fromArray = $this->change(function () use ($manager, $values): array {
 			$condition = $this->find(Entities\Conditions\Condition::class, self::CONDITION);
 
 			return [$manager->update($condition, $values())];
 		});
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$condition = $fromArray['reloaded']['Dummy\DummyConditionEntity:' . self::CONDITION];
 		self::assertSame('7', $condition['operand']);
@@ -294,7 +257,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testANotificationCreatedFromAnArrayIsTheOneAnArrayHashCreates(): void
+	public function testANotificationCreatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Notifications\NotificationsManager::class);
 
@@ -306,12 +269,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'enabled' => false,
 		];
 
-		$fromArrayHash = $this->change(
-			static fn (): array => [$manager->create(Utils\ArrayHash::from($values()))],
-		);
 		$fromArray = $this->change(static fn (): array => [$manager->create($values())]);
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$notification = $fromArray['reloaded']['Notifications\Email:' . self::NEW_NOTIFICATION];
 		self::assertSame('movies@fastybird.com', $notification['email']);
@@ -321,28 +279,55 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testANotificationUpdatedFromAnArrayIsTheOneAnArrayHashUpdates(): void
+	public function testANotificationUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Notifications\NotificationsManager::class);
 
 		$values = static fn (): array => ['email' => 'jane.doe@fastybird.com', 'enabled' => false];
 
-		$fromArrayHash = $this->change(function () use ($manager, $values): array {
-			$notification = $this->find(Entities\Notifications\Notification::class, self::NOTIFICATION);
-
-			return [$manager->update($notification, Utils\ArrayHash::from($values()))];
-		});
 		$fromArray = $this->change(function () use ($manager, $values): array {
 			$notification = $this->find(Entities\Notifications\Notification::class, self::NOTIFICATION);
 
 			return [$manager->update($notification, $values())];
 		});
 
-		self::assertSame($fromArrayHash, $fromArray);
-
 		$notification = $fromArray['reloaded']['Notifications\Email:' . self::NOTIFICATION];
 		self::assertSame('jane.doe@fastybird.com', $notification['email']);
 		self::assertFalse($notification['enabled']);
+	}
+
+	/**
+	 * The managers take an array only: an ArrayHash is refused with a TypeError before any entity
+	 * is touched (#723), on create() and on update()
+	 *
+	 * @throws Throwable
+	 */
+	public function testTheManagersRefuseAnArrayHash(): void
+	{
+		$container = $this->getContainer();
+		$hash = Utils\ArrayHash::from(['name' => 'Refused']);
+		$entity = $this->find(Entities\Triggers\Trigger::class, self::MANUAL_TRIGGER);
+		$triggers = $container->getByType(Models\Entities\Triggers\TriggersManager::class);
+		$actions = $container->getByType(Models\Entities\Actions\ActionsManager::class);
+		$conditions = $container->getByType(Models\Entities\Conditions\ConditionsManager::class);
+		$notifications = $container->getByType(Models\Entities\Notifications\NotificationsManager::class);
+
+		foreach (
+			[
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $triggers->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $triggers->update($entity, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $actions->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $conditions->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $notifications->create($hash),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
+		}
 	}
 
 	/**
@@ -488,24 +473,8 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		return sprintf('%s:%s', $class, $entity->getId()->toString());
 	}
 
-	/**
-	 * The values as an ArrayHash, as the callers built them before #723, or as the plain array
-	 *
-	 * @param array<string, mixed> $values
-	 *
-	 * @return array<string, mixed>|Utils\ArrayHash<mixed>
-	 */
-	private static function input(bool $asArrayHash, array $values): array|Utils\ArrayHash
-	{
-		return $asArrayHash ? Utils\ArrayHash::from($values) : $values;
-	}
-
 	private function normalize(mixed $value): mixed
 	{
-		if ($value instanceof Utils\ArrayHash) {
-			return ['ArrayHash' => $this->normalize((array) $value)];
-		}
-
 		if (is_array($value)) {
 			return array_map(fn (mixed $item): mixed => $this->normalize($item), $value);
 		}
@@ -527,6 +496,22 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

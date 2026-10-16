@@ -16,7 +16,6 @@ use FastyBird\Module\Ui\Entities as UiEntities;
 use FastyBird\Module\Ui\Models as UiModels;
 use FastyBird\Module\Ui\Queries as UiQueries;
 use Nette\DI;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
@@ -69,11 +68,11 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 
 		$dataSourcesManager = $this->getContainer()->getByType(UiModels\Entities\Widgets\DataSources\Manager::class);
 
-		$dataSource = $dataSourcesManager->create(Utils\ArrayHash::from([
+		$dataSource = $dataSourcesManager->create([
 			'entity' => DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class,
 			'property' => $property,
 			'widget' => $widget,
-		]));
+		]);
 
 		self::assertInstanceOf(DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class, $dataSource);
 		self::assertSame($property, $dataSource->getProperty());
@@ -157,12 +156,12 @@ final class ManagerTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($widget);
 
-		$dataSource = $dataSourcesManager->create(Utils\ArrayHash::from([
+		$dataSource = $dataSourcesManager->create([
 			'id' => Uuid\Uuid::fromString('764937a7-8565-472e-8e12-fe97cd55a377'),
 			'entity' => DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class,
 			'property' => $property,
 			'widget' => $widget,
-		]));
+		]);
 
 		self::assertInstanceOf(DevicesModuleUiModuleEntities\Widgets\DataSources\ChannelProperty::class, $dataSource);
 		self::assertSame($property, $dataSource->getProperty());

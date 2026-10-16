@@ -8,7 +8,6 @@ use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Events;
-use Nette\Utils;
 use Psr\EventDispatcher;
 use ReflectionException;
 use function assert;
@@ -33,7 +32,7 @@ final class DevicesManager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
@@ -41,7 +40,7 @@ final class DevicesManager
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function create(array|Utils\ArrayHash $values): Entities\Devices\Device
+	public function create(array $values): Entities\Devices\Device
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
 		assert($entity instanceof Entities\Devices\Device);
@@ -52,7 +51,7 @@ final class DevicesManager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
@@ -62,7 +61,7 @@ final class DevicesManager
 	 */
 	public function update(
 		Entities\Devices\Device $entity,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): Entities\Devices\Device
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);

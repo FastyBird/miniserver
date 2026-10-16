@@ -4,7 +4,6 @@ namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\States;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 
@@ -15,7 +14,7 @@ use Ramsey\Uuid;
 final class DummyConditionsWriter implements Models\States\ConditionsWriter
 {
 
-	/** @var list<array{string, string, array<string, mixed>|Utils\ArrayHash<mixed>}> */
+	/** @var list<array{string, string, array<string, mixed>}> */
 	public array $written = [];
 
 	/** @var array<string, DummyConditionState> */
@@ -27,10 +26,10 @@ final class DummyConditionsWriter implements Models\States\ConditionsWriter
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 */
 	#[Override]
-	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\Condition
+	public function create(Uuid\UuidInterface $id, array $values): States\Condition
 	{
 		$this->written[] = ['create', $id->toString(), $values];
 
@@ -38,10 +37,10 @@ final class DummyConditionsWriter implements Models\States\ConditionsWriter
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 */
 	#[Override]
-	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\Condition
+	public function update(Uuid\UuidInterface $id, array $values): States\Condition
 	{
 		$this->written[] = ['update', $id->toString(), $values];
 

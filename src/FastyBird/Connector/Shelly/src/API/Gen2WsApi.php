@@ -41,6 +41,7 @@ use function gethostbyname;
 use function hash;
 use function implode;
 use function intval;
+use function is_array;
 use function is_bool;
 use function md5;
 use function preg_match;
@@ -949,120 +950,108 @@ final class Gen2WsApi
 
 		foreach ($data as $key => $state) {
 			if (
-				$state instanceof Utils\ArrayHash
+				is_array($state)
 				&& preg_match(self::COMPONENT_KEY, $key, $componentMatches) === 1
 				&& Types\ComponentType::tryFrom($componentMatches['component']) !== null
 			) {
 				if ($componentMatches['component'] === Types\ComponentType::SWITCH->value) {
 					$switches[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'aenergy' => $state->offsetGet('aenergy') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('aenergy')
-								: $state->offsetGet('aenergy'),
-							'temperature' => $state->offsetGet('temperature') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('temperature')
-								: $state->offsetGet('temperature'),
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'aenergy' => $state['aenergy'],
+							'temperature' => $state['temperature'],
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::COVER->value) {
 					$covers[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'aenergy' => $state->offsetGet('aenergy') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('aenergy')
-								: $state->offsetGet('aenergy'),
-							'temperature' => $state->offsetGet('temperature') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('temperature')
-								: $state->offsetGet('temperature'),
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'aenergy' => $state['aenergy'],
+							'temperature' => $state['temperature'],
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::LIGHT->value) {
-					$lights[] = (array) $state;
+					$lights[] = $state;
 				} elseif ($componentMatches['component'] === Types\ComponentType::INPUT->value) {
 					$inputs[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::TEMPERATURE->value) {
 					$temperature[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::HUMIDITY->value) {
 					$humidity[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::DEVICE_POWER->value) {
 					$devicePower[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'battery' => $state->offsetGet('battery') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('battery')
-								: $state->offsetGet('battery'),
-							'external' => $state->offsetGet('external') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('external')
-								: $state->offsetGet('external'),
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'battery' => $state['battery'],
+							'external' => $state['external'],
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::SCRIPT->value) {
 					$scripts[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::SMOKE->value) {
 					$smoke[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::VOLTMETER->value) {
 					$voltmeters[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::ETHERNET->value) {
-					$ethernet = (array) $state;
+					$ethernet = $state;
 				} elseif ($componentMatches['component'] === Types\ComponentType::WIFI->value) {
-					$wifi = (array) $state;
+					$wifi = $state;
 				}
 			}
 		}
 
-		return $this->createMessage(Messages\Response\Gen2\GetDeviceState::class, Utils\ArrayHash::from([
+		return $this->createMessage(Messages\Response\Gen2\GetDeviceState::class, [
 			Types\ComponentType::SWITCH->value => $switches,
 			Types\ComponentType::COVER->value => $covers,
 			Types\ComponentType::INPUT->value => $inputs,
@@ -1075,7 +1064,7 @@ final class Gen2WsApi
 			Types\ComponentType::VOLTMETER->value => $voltmeters,
 			Types\ComponentType::ETHERNET->value => $ethernet,
 			Types\ComponentType::WIFI->value => $wifi,
-		]));
+		]);
 	}
 
 	/**
@@ -1089,29 +1078,21 @@ final class Gen2WsApi
 
 		$events = [];
 
-		foreach ((array) $data->offsetGet('events') as $event) {
-			if ($event instanceof Utils\ArrayHash) {
+		foreach ((array) $data['events'] as $event) {
+			if (is_array($event)) {
 				$events[] = [
-					'component' => $event->offsetGet('component'),
-					'id' => $event->offsetGet('id'),
-					'event' => $event->offsetGet('event'),
-					'data' => $event->offsetExists('data')
-						? (
-							$event->offsetGet('data') instanceof Utils\ArrayHash
-								? (array) $event->offsetGet('data')
-								: $event->offsetGet('data')
-						)
-						: null,
-					'timestamp' => $event->offsetGet('ts'),
+					'component' => $event['component'],
+					'id' => $event['id'],
+					'event' => $event['event'],
+					'data' => array_key_exists('data', $event) ? $event['data'] : null,
+					'timestamp' => $event['ts'],
 				];
 			}
 		}
 
 		return $this->createMessage(
 			Messages\Response\Gen2\DeviceEvent::class,
-			Utils\ArrayHash::from([
-				'events' => $events,
-			]),
+			['events' => $events],
 		);
 	}
 
@@ -1119,12 +1100,13 @@ final class Gen2WsApi
 	 * @template T of Messages\Message
 	 *
 	 * @param class-string<T> $message
+	 * @param array<mixed> $data
 	 *
 	 * @return T
 	 *
 	 * @throws ShellyExceptions\WsError
 	 */
-	protected function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
+	protected function createMessage(string $message, array $data): Messages\Message
 	{
 		try {
 			return $this->messageBuilder->create(
@@ -1139,7 +1121,7 @@ final class Gen2WsApi
 	}
 
 	/**
-	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
+	 * @return ($throw is true ? array<mixed> : array<mixed>|false)
 	 *
 	 * @throws ShellyExceptions\WsError
 	 */
@@ -1147,7 +1129,7 @@ final class Gen2WsApi
 		string $payload,
 		string $schemaFilename,
 		bool $throw = true,
-	): Utils\ArrayHash|bool
+	): array|bool
 	{
 		try {
 			return $this->schemaValidator->validate(

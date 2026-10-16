@@ -11,7 +11,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Tests;
 use Nette;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use ReflectionException;
@@ -56,12 +55,12 @@ final class DeviceNameCharsetTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertIsObject($parent);
 
-		$device = $manager->create(Utils\ArrayHash::from([
+		$device = $manager->create([
 			'entity' => Tests\Fixtures\Dummy\DummyDeviceEntity::class,
 			'identifier' => 'emoji-device',
 			'connector' => $parent->getConnector(),
 			'name' => $name,
-		]));
+		]);
 
 		$this->getEntityManager()->clear();
 

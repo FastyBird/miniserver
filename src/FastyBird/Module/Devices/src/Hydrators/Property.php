@@ -8,7 +8,6 @@ use FastyBird\Core\Api\Hydrators;
 use FastyBird\Core\Values\Types;
 use FastyBird\Module\Devices\Entities;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette\Utils;
 use TypeError;
 use ValueError;
 use function array_map;
@@ -126,18 +125,16 @@ abstract class Property extends Hydrators\Hydrator
 				|| $dataType === Types\DataType::COVER
 			) {
 				$plainFormat = implode(',', array_map(static function ($item): string {
-					if (is_array($item) || $item instanceof Utils\ArrayHash) {
+					if (is_array($item)) {
 						return implode(
 							':',
 							array_map(
-								static fn (string|array|int|float|bool|Utils\ArrayHash|null $part): string => is_array(
-									$part,
-								) || $part instanceof Utils\ArrayHash
-									? implode('|', (array) $part)
+								static fn (string|array|int|float|bool|null $part): string => is_array($part)
+									? implode('|', $part)
 									: ($part !== null ? strval(
 										$part,
 									) : ''),
-								(array) $item,
+								$item,
 							),
 						);
 					}
@@ -176,12 +173,12 @@ abstract class Property extends Hydrators\Hydrator
 				)
 			) {
 				$plainFormat = implode(':', array_map(static function ($item): string {
-					if (is_array($item) || $item instanceof Utils\ArrayHash) {
+					if (is_array($item)) {
 						return implode(
 							'|',
 							array_map(
 								static fn ($part): string|int|float => is_array($part) ? implode($part) : $part,
-								(array) $item,
+								$item,
 							),
 						);
 					}

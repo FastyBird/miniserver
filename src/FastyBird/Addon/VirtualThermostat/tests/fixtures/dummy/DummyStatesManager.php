@@ -3,7 +3,6 @@
 namespace FastyBird\Addon\VirtualThermostat\Tests\Fixtures\Dummy;
 
 use FastyBird\Module\Devices\States as DevicesStates;
-use Nette\Utils;
 use Ramsey\Uuid;
 use RuntimeException;
 
@@ -11,25 +10,31 @@ class DummyStatesManager
 {
 
 	/**
+	 * @param array<string, mixed> $values
+	 *
 	 * @throws RuntimeException
 	 */
-	public function create(Uuid\UuidInterface $id, Utils\ArrayHash $values): DevicesStates\Property
+	public function create(Uuid\UuidInterface $id, array $values): DevicesStates\Property
 	{
 		throw new RuntimeException('This is dummy service');
 	}
 
 	/**
+	 * @param array<string, mixed> $values
+	 *
 	 * @throws RuntimeException
 	 */
-	public function update(DevicesStates\Property $state, Utils\ArrayHash $values): DevicesStates\Property
+	public function update(DevicesStates\Property $state, array $values): DevicesStates\Property
 	{
 		throw new RuntimeException('This is dummy service');
 	}
 
 	/**
+	 * @param array<string, mixed> $values
+	 *
 	 * @throws RuntimeException
 	 */
-	public function updateState(DevicesStates\Property $state, Utils\ArrayHash $values): DevicesStates\Property
+	public function updateState(DevicesStates\Property $state, array $values): DevicesStates\Property
 	{
 		throw new RuntimeException('This is dummy service');
 	}

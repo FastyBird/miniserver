@@ -7,7 +7,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Module\Triggers\Entities;
-use Nette\Utils;
 use ReflectionException;
 use function assert;
 
@@ -30,7 +29,7 @@ final class NotificationsManager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
@@ -38,7 +37,7 @@ final class NotificationsManager
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function create(array|Utils\ArrayHash $values): Entities\Notifications\Notification
+	public function create(array $values): Entities\Notifications\Notification
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
 		assert($entity instanceof Entities\Notifications\Notification);
@@ -47,7 +46,7 @@ final class NotificationsManager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
@@ -57,7 +56,7 @@ final class NotificationsManager
 	 */
 	public function update(
 		Entities\Notifications\Notification $entity,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): Entities\Notifications\Notification
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);

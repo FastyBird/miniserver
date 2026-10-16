@@ -186,22 +186,24 @@ abstract class BaseV1
 	}
 
 	/**
+	 * @param array<string, mixed> $data
+	 *
 	 * @throws ApiExceptions\JsonApiError
 	 */
 	protected function validateAccountRelation(
-		Utils\ArrayHash $data,
+		array $data,
 		AccountsEntities\Accounts\Account $account,
 		bool $required = false,
 	): bool
 	{
 		if (
 			(
-				$required && !$data->offsetExists('account')
-				|| $data->offsetExists('account')
+				$required && !array_key_exists('account', $data)
+				|| array_key_exists('account', $data)
 			) && (
-				!$data->offsetGet('account') instanceof AccountsEntities\Accounts\Account
+				!$data['account'] instanceof AccountsEntities\Accounts\Account
 				|| !$account->getId()
-					->equals($data->offsetGet('account')
+					->equals($data['account']
 						->getId())
 			)
 		) {

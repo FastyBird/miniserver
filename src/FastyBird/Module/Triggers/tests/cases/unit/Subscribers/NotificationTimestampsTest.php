@@ -17,7 +17,6 @@ use FastyBird\Module\Triggers\Queries;
 use FastyBird\Module\Triggers\Subscribers as TriggersSubscribers;
 use FastyBird\Module\Triggers\Tests;
 use Nette;
-use Nette\Utils;
 use Nettrine\ORM\Events;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -89,11 +88,11 @@ final class NotificationTimestampsTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($trigger);
 
-		$notification = $manager->create(Utils\ArrayHash::from([
+		$notification = $manager->create([
 			'entity' => TriggersEntities\Notifications\Sms::class,
 			'phone' => PhoneEntities\Phone::fromNumber('+420778776777'),
 			'trigger' => $trigger,
-		]));
+		]);
 
 		self::assertSame(
 			[
@@ -131,9 +130,9 @@ final class NotificationTimestampsTest extends Tests\Cases\Unit\DbTestCase
 
 		$notification = $this->reloadSms(Uuid\Uuid::fromString(self::SMS_NOTIFICATION_ID));
 
-		$manager->update($notification, Utils\ArrayHash::from([
+		$manager->update($notification, [
 			'phone' => PhoneEntities\Phone::fromNumber('+420778776778'),
-		]));
+		]);
 
 		self::assertSame(
 			[

@@ -56,7 +56,6 @@ namespace Your\CoolApp\Actions;
 use FastyBird\Plugin\RedisDb\Models\States\StatesRepository;
 use FastyBird\Plugin\RedisDb\Models\States\StatesManager;
 use FastyBird\Plugin\RedisDb\States\State;
-use Nette\Utils\ArrayHash;
 use Ramsey\Uuid\Uuid;
 
 class SomeService
@@ -81,7 +80,7 @@ class SomeService
         assert($state instanceof State);
     }
 
-    public function writeStatus(Uuid $id, ArrayHash $data)
+    public function writeStatus(Uuid $id, array $data)
     {
         // Your interesting logic here...
 

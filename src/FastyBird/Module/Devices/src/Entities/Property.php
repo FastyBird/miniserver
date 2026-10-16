@@ -16,7 +16,6 @@ use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use TypeError;
@@ -237,7 +236,7 @@ abstract class Property implements Entity,
 	}
 
 	/**
-	 * @param string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|Utils\ArrayHash|null>|array<int, array<int, string|array<int, string|int|float|bool>|Utils\ArrayHash|null>>|null $format
+	 * @param string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
 	 *
 	 * @throws DevicesExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidArgument
@@ -282,12 +281,12 @@ abstract class Property implements Entity,
 				)
 			) {
 				$plainFormat = implode(':', array_map(static function ($item): string {
-					if (is_array($item) || $item instanceof Utils\ArrayHash) {
+					if (is_array($item)) {
 						return implode(
 							'|',
 							array_map(
 								static fn ($part): string|int|float => is_array($part) ? implode($part) : $part,
-								(array) $item,
+								$item,
 							),
 						);
 					}
@@ -315,18 +314,16 @@ abstract class Property implements Entity,
 				)
 			) {
 				$plainFormat = implode(',', array_map(static function ($item): string {
-					if (is_array($item) || $item instanceof Utils\ArrayHash) {
+					if (is_array($item)) {
 						return implode(
 							':',
 							array_map(
-								static fn (string|array|int|float|bool|Utils\ArrayHash|null $part): string => is_array(
-									$part,
-								) || $part instanceof Utils\ArrayHash
-									? implode('|', (array) $part)
+								static fn (string|array|int|float|bool|null $part): string => is_array($part)
+									? implode('|', $part)
 									: ($part !== null ? strval(
 										$part,
 									) : ''),
-								(array) $item,
+								$item,
 							),
 						);
 					}

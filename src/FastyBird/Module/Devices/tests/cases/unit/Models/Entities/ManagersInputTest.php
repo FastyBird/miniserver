@@ -21,6 +21,8 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use ReflectionException;
 use RuntimeException;
+use Throwable;
+use TypeError;
 use function array_key_exists;
 use function array_map;
 use function array_shift;
@@ -33,12 +35,12 @@ use function sprintf;
 use function str_replace;
 
 /**
- * Devices' nine entity managers take an array as well as an ArrayHash (#723). Each test fills the
- * same entity graph through the managers, once from ArrayHash values and once from the equal
- * plain arrays, and compares the graph with one pinned record: every mapped field and every
- * association of every entity reachable from the connector, read straight from the entities as
- * the managers return them and again after the entity manager is cleared and the graph is
- * reloaded. The ArrayHash tests pass unchanged against the code before #723.
+ * Devices' nine entity managers take an array (#723). Each test fills an entity graph through the
+ * managers from plain arrays and compares the graph with one pinned record: every mapped field
+ * and every association of every entity reachable from the connector, read straight from the
+ * entities as the managers return them and again after the entity manager is cleared and the
+ * graph is reloaded. The record is the one the managers produced from ArrayHash values before
+ * #723, so the array path builds the very same graph.
  */
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -88,9 +90,9 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Utils\JsonException
 	 */
-	public function testCreateFromAnArrayHashFillsTheWholeGraph(): void
+	public function testCreateFillsTheWholeGraph(): void
 	{
-		$this->create(static fn (array $values): Utils\ArrayHash => Utils\ArrayHash::from($values));
+		$this->create();
 
 		$this->assertGraph('created');
 	}
@@ -108,53 +110,57 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 * @throws Utils\JsonException
 	 */
-	public function testCreateFromAnArrayFillsTheSameGraph(): void
+	public function testUpdateChangesTheWholeGraph(): void
 	{
-		$this->create(static fn (array $values): array => $values);
-
-		$this->assertGraph('created');
-	}
-
-	/**
-	 * @throws CoreExceptions\InvalidArgument
-	 * @throws CoreExceptions\InvalidState
-	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DevicesExceptions\InvalidArgument
-	 * @throws Error
-	 * @throws Nette\DI\MissingServiceException
-	 * @throws PersistenceExceptions\EntityCreation
-	 * @throws ReflectionException
-	 * @throws RuntimeException
-	 * @throws Uuid\Exception\InvalidArgumentException
-	 * @throws Utils\JsonException
-	 */
-	public function testUpdateFromAnArrayHashChangesTheWholeGraph(): void
-	{
-		$this->create(static fn (array $values): Utils\ArrayHash => Utils\ArrayHash::from($values));
-		$this->update(static fn (array $values): Utils\ArrayHash => Utils\ArrayHash::from($values));
+		$this->create();
+		$this->update();
 
 		$this->assertGraph('updated');
 	}
 
 	/**
-	 * @throws CoreExceptions\InvalidArgument
-	 * @throws CoreExceptions\InvalidState
-	 * @throws DBAL\Exception\UniqueConstraintViolationException
-	 * @throws DevicesExceptions\InvalidArgument
-	 * @throws Error
-	 * @throws Nette\DI\MissingServiceException
-	 * @throws PersistenceExceptions\EntityCreation
-	 * @throws ReflectionException
-	 * @throws RuntimeException
-	 * @throws Uuid\Exception\InvalidArgumentException
-	 * @throws Utils\JsonException
+	 * Every manager takes an array only: an ArrayHash is refused with a TypeError before any entity
+	 * is touched (#723). The entity managers of every level are tried, create() and update().
+	 *
+	 * @throws Throwable
 	 */
-	public function testUpdateFromAnArrayChangesTheSameGraph(): void
+	public function testTheManagersRefuseAnArrayHash(): void
 	{
-		$this->create(static fn (array $values): Utils\ArrayHash => Utils\ArrayHash::from($values));
-		$this->update(static fn (array $values): array => $values);
+		$this->create();
 
-		$this->assertGraph('updated');
+		$container = $this->getContainer();
+		$hash = Utils\ArrayHash::from(['name' => 'Refused']);
+
+		$device = $container->getByType(Models\Entities\Devices\DevicesRepository::class)
+			->find(Uuid\Uuid::fromString(self::PARENT_DEVICE));
+		assert($device instanceof Entities\Devices\Device);
+
+		$m1 = $container->getByType(Models\Entities\Connectors\ConnectorsManager::class);
+		$m2 = $container->getByType(Models\Entities\Devices\DevicesManager::class);
+		$m3 = $container->getByType(Models\Entities\Channels\ChannelsManager::class);
+		$m4 = $container->getByType(Models\Entities\Channels\Controls\ControlsManager::class);
+		$m5 = $container->getByType(Models\Entities\Devices\Properties\PropertiesManager::class);
+
+		foreach (
+			[
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $m1->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $m2->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $m2->update($device, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $m3->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $m5->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $m4->create($hash),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
+		}
+
+		self::assertSame('Graph parent', $device->getName());
 	}
 
 	/**
@@ -162,8 +168,6 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * properties and the device's controls), list and nested-list formats, nested params and
 	 * device parents
 	 *
-	 * @param callable(array<string, mixed>): (array<string, mixed>|Utils\ArrayHash<mixed>) $input
-	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
@@ -175,21 +179,21 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
-	private function create(callable $input): void
+	private function create(): void
 	{
 		$container = $this->getContainer();
 
-		$connector = $container->getByType(Models\Entities\Connectors\ConnectorsManager::class)->create($input([
+		$connector = $container->getByType(Models\Entities\Connectors\ConnectorsManager::class)->create([
 			'entity' => Tests\Fixtures\Dummy\DummyConnectorEntity::class,
 			'id' => Uuid\Uuid::fromString(self::CONNECTOR),
 			'identifier' => 'graph-connector',
 			'name' => 'Graph connector',
 			'params' => ['transport' => ['host' => 'localhost', 'ports' => [80, 443]], 'retries' => 3],
-		]));
+		]);
 
 		$connectorProperties = $container->getByType(Models\Entities\Connectors\Properties\PropertiesManager::class);
 
-		$connectorProperties->create($input([
+		$connectorProperties->create([
 			'entity' => Entities\Connectors\Properties\Dynamic::class,
 			'id' => Uuid\Uuid::fromString(self::CONNECTOR_PROPERTY),
 			'connector' => $connector,
@@ -198,25 +202,25 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'format' => ['running', 'stopped', 'unknown'],
 			'settable' => false,
 			'queryable' => false,
-		]));
+		]);
 
-		$connectorProperties->create($input([
+		$connectorProperties->create([
 			'entity' => Entities\Connectors\Properties\Variable::class,
 			'id' => Uuid\Uuid::fromString(self::CONNECTOR_VARIABLE),
 			'connector' => $connector,
 			'identifier' => 'username',
 			'dataType' => ValuesTypes\DataType::STRING,
 			'value' => 'graph-user',
-		]));
+		]);
 
-		$container->getByType(Models\Entities\Connectors\Controls\ControlsManager::class)->create($input([
+		$container->getByType(Models\Entities\Connectors\Controls\ControlsManager::class)->create([
 			'name' => 'discover',
 			'connector' => $connector,
-		]));
+		]);
 
 		$devices = $container->getByType(Models\Entities\Devices\DevicesManager::class);
 
-		$parent = $devices->create($input([
+		$parent = $devices->create([
 			'entity' => Tests\Fixtures\Dummy\DummyDeviceEntity::class,
 			'id' => Uuid\Uuid::fromString(self::PARENT_DEVICE),
 			'identifier' => 'graph-parent',
@@ -246,26 +250,26 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'controls' => [
 				['name' => 'reboot'],
 			],
-		]));
+		]);
 
-		$otherParent = $devices->create($input([
+		$otherParent = $devices->create([
 			'entity' => Tests\Fixtures\Dummy\DummyDeviceEntity::class,
 			'id' => Uuid\Uuid::fromString(self::OTHER_PARENT_DEVICE),
 			'identifier' => 'graph-other-parent',
 			'connector' => $connector,
-		]));
+		]);
 
-		$devices->create($input([
+		$devices->create([
 			'entity' => Tests\Fixtures\Dummy\DummyDeviceEntity::class,
 			'id' => Uuid\Uuid::fromString(self::CHILD_DEVICE),
 			'identifier' => 'graph-child',
 			'connector' => $connector,
 			'parents' => [$parent],
-		]));
+		]);
 
 		$deviceProperties = $container->getByType(Models\Entities\Devices\Properties\PropertiesManager::class);
 
-		$deviceProperty = $deviceProperties->create($input([
+		$deviceProperty = $deviceProperties->create([
 			'entity' => Entities\Devices\Properties\Dynamic::class,
 			'id' => Uuid\Uuid::fromString(self::DEVICE_PROPERTY),
 			'device' => $parent,
@@ -276,9 +280,9 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'settable' => true,
 			'queryable' => true,
 			'params' => ['source' => ['register' => 12, 'mask' => [1, 2, 4]]],
-		]));
+		]);
 
-		$deviceProperties->create($input([
+		$deviceProperties->create([
 			'entity' => Entities\Devices\Properties\Mapped::class,
 			'id' => Uuid\Uuid::fromString(self::DEVICE_MAPPED),
 			'device' => $otherParent,
@@ -286,34 +290,34 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'identifier' => 'power-mirror',
 			'dataType' => ValuesTypes\DataType::ENUM,
 			'format' => [['on', '1', 'true'], ['off', '0', 'false']],
-		]));
+		]);
 
-		$deviceProperties->create($input([
+		$deviceProperties->create([
 			'entity' => Entities\Devices\Properties\Variable::class,
 			'id' => Uuid\Uuid::fromString(self::DEVICE_VARIABLE),
 			'device' => $parent,
 			'identifier' => 'hardware',
 			'dataType' => ValuesTypes\DataType::STRING,
 			'value' => 'rev-b',
-		]));
+		]);
 
-		$container->getByType(Models\Entities\Devices\Controls\ControlsManager::class)->create($input([
+		$container->getByType(Models\Entities\Devices\Controls\ControlsManager::class)->create([
 			'name' => 'identify',
 			'device' => $parent,
-		]));
+		]);
 
-		$channel = $container->getByType(Models\Entities\Channels\ChannelsManager::class)->create($input([
+		$channel = $container->getByType(Models\Entities\Channels\ChannelsManager::class)->create([
 			'entity' => Tests\Fixtures\Dummy\DummyChannelEntity::class,
 			'id' => Uuid\Uuid::fromString(self::CHANNEL),
 			'device' => $parent,
 			'identifier' => 'sensor',
 			'name' => 'Sensor',
 			'params' => ['calibration' => ['offset' => 1.5, 'points' => [0.0, 50.5]]],
-		]));
+		]);
 
 		$channelProperties = $container->getByType(Models\Entities\Channels\Properties\PropertiesManager::class);
 
-		$channelProperty = $channelProperties->create($input([
+		$channelProperty = $channelProperties->create([
 			'entity' => Entities\Channels\Properties\Dynamic::class,
 			'id' => Uuid\Uuid::fromString(self::CHANNEL_PROPERTY),
 			'channel' => $channel,
@@ -324,9 +328,9 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'scale' => 1,
 			'step' => 0.5,
 			'invalid' => '-1000',
-		]));
+		]);
 
-		$channelProperties->create($input([
+		$channelProperties->create([
 			'entity' => Entities\Channels\Properties\Mapped::class,
 			'id' => Uuid\Uuid::fromString(self::CHANNEL_MAPPED),
 			'channel' => $channel,
@@ -334,19 +338,17 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'identifier' => 'temperature-mirror',
 			'dataType' => ValuesTypes\DataType::FLOAT,
 			'format' => [-40, 125],
-		]));
+		]);
 
-		$container->getByType(Models\Entities\Channels\Controls\ControlsManager::class)->create($input([
+		$container->getByType(Models\Entities\Channels\Controls\ControlsManager::class)->create([
 			'name' => 'calibrate',
 			'channel' => $channel,
-		]));
+		]);
 	}
 
 	/**
 	 * Every manager's update(): scalar fields, merged nested params, a changed format and a
 	 * device's parents replaced
-	 *
-	 * @param callable(array<string, mixed>): (array<string, mixed>|Utils\ArrayHash<mixed>) $input
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
@@ -359,7 +361,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws RuntimeException
 	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
-	private function update(callable $input): void
+	private function update(): void
 	{
 		$container = $this->getContainer();
 
@@ -368,29 +370,29 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		);
 		assert($connector instanceof Entities\Connectors\Connector);
 
-		$container->getByType(Models\Entities\Connectors\ConnectorsManager::class)->update($connector, $input([
+		$container->getByType(Models\Entities\Connectors\ConnectorsManager::class)->update($connector, [
 			'name' => 'Graph connector renamed',
 			'comment' => 'Updated',
 			'enabled' => false,
 			'params' => ['transport' => ['host' => 'remote', 'ports' => [8_080]], 'timeout' => 5],
-		]));
+		]);
 
 		$connectorProperty = $this->find(Entities\Connectors\Properties\Property::class, self::CONNECTOR_PROPERTY);
 
 		$container->getByType(Models\Entities\Connectors\Properties\PropertiesManager::class)->update(
 			$connectorProperty,
-			$input([
+			[
 				'name' => 'State',
 				'format' => ['running', 'stopped'],
 				'queryable' => true,
-			]),
+			],
 		);
 
 		$connectorControl = $connector->getControls()[0];
 
 		$container->getByType(Models\Entities\Connectors\Controls\ControlsManager::class)->update(
 			$connectorControl,
-			$input(['name' => 'not-writable']),
+			['name' => 'not-writable'],
 		);
 
 		$devices = $container->getByType(Models\Entities\Devices\DevicesManager::class);
@@ -398,58 +400,58 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		$parent = $this->find(Entities\Devices\Device::class, self::PARENT_DEVICE);
 		$otherParent = $this->find(Entities\Devices\Device::class, self::OTHER_PARENT_DEVICE);
 
-		$devices->update($parent, $input([
+		$devices->update($parent, [
 			'name' => 'Graph parent renamed',
 			'comment' => null,
 			'params' => ['address' => ['ip' => '10.0.0.2'], 'zone' => ['floor' => [1, 2]]],
-		]));
+		]);
 
-		$devices->update($this->find(Entities\Devices\Device::class, self::CHILD_DEVICE), $input([
+		$devices->update($this->find(Entities\Devices\Device::class, self::CHILD_DEVICE), [
 			'name' => 'Graph child',
 			'parents' => [$otherParent],
-		]));
+		]);
 
 		$container->getByType(Models\Entities\Devices\Properties\PropertiesManager::class)->update(
 			$this->find(Entities\Devices\Properties\Property::class, self::DEVICE_PROPERTY),
-			$input([
+			[
 				'name' => 'Power state',
 				'format' => [['on', 'true', '1'], ['off', 'false', '0'], ['toggle', 'toggle', null]],
 				'params' => ['source' => ['register' => 13], 'extra' => ['flags' => [true, false]]],
-			]),
+			],
 		);
 
 		$deviceControl = $parent->getControls()[0];
 
 		$container->getByType(Models\Entities\Devices\Controls\ControlsManager::class)->update(
 			$deviceControl,
-			$input(['name' => 'not-writable']),
+			['name' => 'not-writable'],
 		);
 
 		$container->getByType(Models\Entities\Channels\ChannelsManager::class)->update(
 			$this->find(Entities\Channels\Channel::class, self::CHANNEL),
-			$input([
+			[
 				'name' => 'Sensor renamed',
 				'comment' => 'Calibrated',
 				'params' => ['calibration' => ['offset' => -0.5], 'history' => [['at' => 1, 'value' => 2.5]]],
-			]),
+			],
 		);
 
 		$container->getByType(Models\Entities\Channels\Properties\PropertiesManager::class)->update(
 			$this->find(Entities\Channels\Properties\Property::class, self::CHANNEL_PROPERTY),
-			$input([
+			[
 				'format' => [['f', -20], ['f', 80]],
 				'scale' => 2,
 				'step' => 0.1,
 				'invalid' => null,
 				'settable' => true,
-			]),
+			],
 		);
 
 		$channelControl = $this->find(Entities\Channels\Channel::class, self::CHANNEL)->getControls()[0];
 
 		$container->getByType(Models\Entities\Channels\Controls\ControlsManager::class)->update(
 			$channelControl,
-			$input(['name' => 'not-writable']),
+			['name' => 'not-writable'],
 		);
 	}
 
@@ -630,10 +632,6 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 
 	private function normalize(mixed $value): mixed
 	{
-		if ($value instanceof Utils\ArrayHash) {
-			return ['ArrayHash' => $this->normalize((array) $value)];
-		}
-
 		if (is_array($value)) {
 			return array_map(fn (mixed $item): mixed => $this->normalize($item), $value);
 		}
@@ -655,6 +653,22 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

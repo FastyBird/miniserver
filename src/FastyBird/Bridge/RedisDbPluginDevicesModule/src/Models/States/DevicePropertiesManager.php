@@ -6,7 +6,6 @@ use FastyBird\Bridge\RedisDbPluginDevicesModule\States;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 
@@ -33,25 +32,25 @@ final class DevicePropertiesManager implements DevicesModels\States\Devices\Writ
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\DeviceProperty
+	public function create(Uuid\UuidInterface $id, array $values): States\DeviceProperty
 	{
 		return $this->statesManager->create($id, $values, $this->database);
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\DeviceProperty|false
+	public function update(Uuid\UuidInterface $id, array $values): States\DeviceProperty|false
 	{
 		return $this->statesManager->update($id, $values, $this->database);
 	}

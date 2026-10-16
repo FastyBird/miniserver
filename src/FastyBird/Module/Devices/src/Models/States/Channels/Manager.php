@@ -6,7 +6,6 @@ use DateTimeInterface;
 use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\States;
-use Nette\Utils;
 use Ramsey\Uuid;
 use Throwable;
 
@@ -21,7 +20,7 @@ final readonly class Manager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws Exceptions\NotImplemented
 	 * @throws Exceptions\InvalidState
@@ -30,7 +29,7 @@ final readonly class Manager
 	 */
 	public function create(
 		Documents\Channels\Properties\Dynamic $property,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): States\ChannelProperty
 	{
 		if ($this->manager === null) {
@@ -45,7 +44,7 @@ final readonly class Manager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws Exceptions\NotImplemented
 	 * @throws Exceptions\InvalidState
@@ -55,7 +54,7 @@ final readonly class Manager
 	public function update(
 		Documents\Channels\Properties\Dynamic $property,
 		States\ChannelProperty $state,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): States\ChannelProperty|false
 	{
 		if ($this->manager === null) {

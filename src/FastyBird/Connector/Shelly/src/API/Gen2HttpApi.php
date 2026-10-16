@@ -14,6 +14,7 @@ use Throwable;
 use function array_key_exists;
 use function array_merge;
 use function intval;
+use function is_array;
 use function is_bool;
 use function preg_match;
 use function sprintf;
@@ -323,55 +324,55 @@ final class Gen2HttpApi extends HttpApi
 
 		foreach ($body as $key => $configuration) {
 			if (
-				$configuration instanceof Utils\ArrayHash
+				is_array($configuration)
 				&& preg_match(self::COMPONENT_KEY, $key, $componentMatches) === 1
 				&& Types\ComponentType::tryFrom($componentMatches['component']) !== null
 			) {
 				if ($componentMatches['component'] === Types\ComponentType::SWITCH->value) {
-					$switches[] = (array) $configuration;
+					$switches[] = $configuration;
 				} elseif ($componentMatches['component'] === Types\ComponentType::COVER->value) {
 					$covers[] = array_merge(
-						(array) $configuration,
+						$configuration,
 						[
-							'motor' => (array) $configuration->offsetGet('motor'),
-							'obstruction_detection' => (array) $configuration->offsetGet('obstruction_detection'),
-							'safety_switch' => (array) $configuration->offsetGet('safety_switch'),
+							'motor' => (array) $configuration['motor'],
+							'obstruction_detection' => (array) $configuration['obstruction_detection'],
+							'safety_switch' => (array) $configuration['safety_switch'],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::LIGHT->value) {
 					$lights[] = array_merge(
-						(array) $configuration,
+						$configuration,
 						[
-							'default' => (array) $configuration->offsetGet('default'),
-							'night_mode' => (array) $configuration->offsetGet('night_mode'),
-							'safety_switch' => (array) $configuration->offsetGet('safety_switch'),
+							'default' => (array) $configuration['default'],
+							'night_mode' => (array) $configuration['night_mode'],
+							'safety_switch' => (array) $configuration['safety_switch'],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::INPUT->value) {
-					$inputs[] = (array) $configuration;
+					$inputs[] = $configuration;
 				} elseif ($componentMatches['component'] === Types\ComponentType::TEMPERATURE->value) {
-					$temperature[] = (array) $configuration;
+					$temperature[] = $configuration;
 				} elseif ($componentMatches['component'] === Types\ComponentType::HUMIDITY->value) {
-					$humidity[] = (array) $configuration;
+					$humidity[] = $configuration;
 				} elseif ($componentMatches['component'] === Types\ComponentType::DEVICE_POWER->value) {
-					$devicePower[] = (array) $configuration;
+					$devicePower[] = $configuration;
 				} elseif ($componentMatches['component'] === Types\ComponentType::SCRIPT->value) {
-					$scripts[] = (array) $configuration;
+					$scripts[] = $configuration;
 				} elseif ($componentMatches['component'] === Types\ComponentType::SMOKE->value) {
-					$smoke[] = (array) $configuration;
+					$smoke[] = $configuration;
 				} elseif ($componentMatches['component'] === Types\ComponentType::VOLTMETER->value) {
-					$voltmeters[] = (array) $configuration;
+					$voltmeters[] = $configuration;
 					$voltmeters[] = array_merge(
-						(array) $configuration,
+						$configuration,
 						[
-							'xvoltage' => (array) $configuration->offsetGet('xvoltage'),
+							'xvoltage' => (array) $configuration['xvoltage'],
 						],
 					);
 				}
 			}
 		}
 
-		return $this->createMessage(Messages\Response\Gen2\GetDeviceConfiguration::class, Utils\ArrayHash::from([
+		return $this->createMessage(Messages\Response\Gen2\GetDeviceConfiguration::class, [
 			Types\ComponentType::SWITCH->value => $switches,
 			Types\ComponentType::COVER->value => $covers,
 			Types\ComponentType::INPUT->value => $inputs,
@@ -382,7 +383,7 @@ final class Gen2HttpApi extends HttpApi
 			Types\ComponentType::SCRIPT->value => $scripts,
 			Types\ComponentType::SMOKE->value => $smoke,
 			Types\ComponentType::VOLTMETER->value => $voltmeters,
-		]));
+		]);
 	}
 
 	/**
@@ -405,120 +406,108 @@ final class Gen2HttpApi extends HttpApi
 
 		foreach ($body as $key => $state) {
 			if (
-				$state instanceof Utils\ArrayHash
+				is_array($state)
 				&& preg_match(self::COMPONENT_KEY, $key, $componentMatches) === 1
 				&& Types\ComponentType::tryFrom($componentMatches['component']) !== null
 			) {
 				if ($componentMatches['component'] === Types\ComponentType::SWITCH->value) {
 					$switches[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'aenergy' => $state->offsetGet('aenergy') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('aenergy')
-								: $state->offsetGet('aenergy'),
-							'temperature' => $state->offsetGet('temperature') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('temperature')
-								: $state->offsetGet('temperature'),
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'aenergy' => $state['aenergy'],
+							'temperature' => $state['temperature'],
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::COVER->value) {
 					$covers[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'aenergy' => $state->offsetGet('aenergy') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('aenergy')
-								: $state->offsetGet('aenergy'),
-							'temperature' => $state->offsetGet('temperature') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('temperature')
-								: $state->offsetGet('temperature'),
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'aenergy' => $state['aenergy'],
+							'temperature' => $state['temperature'],
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::LIGHT->value) {
-					$lights[] = (array) $state;
+					$lights[] = $state;
 				} elseif ($componentMatches['component'] === Types\ComponentType::INPUT->value) {
 					$inputs[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::TEMPERATURE->value) {
 					$temperature[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::HUMIDITY->value) {
 					$humidity[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::DEVICE_POWER->value) {
 					$devicePower[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'battery' => $state->offsetGet('battery') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('battery')
-								: $state->offsetGet('battery'),
-							'external' => $state->offsetGet('external') instanceof Utils\ArrayHash
-								? (array) $state->offsetGet('external')
-								: $state->offsetGet('external'),
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'battery' => $state['battery'],
+							'external' => $state['external'],
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::SCRIPT->value) {
 					$scripts[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::SMOKE->value) {
 					$smoke[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::VOLTMETER->value) {
 					$voltmeters[] = array_merge(
-						(array) $state,
+						$state,
 						[
-							'errors' => $state->offsetExists('errors')
-								? (array) $state->offsetGet('errors')
+							'errors' => array_key_exists('errors', $state)
+								? (array) $state['errors']
 								: [],
 						],
 					);
 				} elseif ($componentMatches['component'] === Types\ComponentType::ETHERNET->value) {
-					$ethernet = (array) $state;
+					$ethernet = $state;
 				} elseif ($componentMatches['component'] === Types\ComponentType::WIFI->value) {
-					$wifi = (array) $state;
+					$wifi = $state;
 				}
 			}
 		}
 
-		return $this->createMessage(Messages\Response\Gen2\GetDeviceState::class, Utils\ArrayHash::from([
+		return $this->createMessage(Messages\Response\Gen2\GetDeviceState::class, [
 			Types\ComponentType::SWITCH->value => $switches,
 			Types\ComponentType::COVER->value => $covers,
 			Types\ComponentType::INPUT->value => $inputs,
@@ -531,7 +520,7 @@ final class Gen2HttpApi extends HttpApi
 			Types\ComponentType::VOLTMETER->value => $voltmeters,
 			Types\ComponentType::ETHERNET->value => $ethernet,
 			Types\ComponentType::WIFI->value => $wifi,
-		]));
+		]);
 	}
 
 	/**

@@ -33,6 +33,7 @@ use function count;
 use function hash_hmac;
 use function http_build_query;
 use function in_array;
+use function is_array;
 use function md5;
 use function sprintf;
 use function str_contains;
@@ -671,24 +672,24 @@ final class CloudApi
 
 		$data = $this->validateResponseBody($request, $response, self::USER_LOGIN_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $data->offsetGet('error');
+		$error = $data['error'];
 
-		$data = $data->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $data['data'];
+		assert(is_array($data));
 
 		if ($error === 10_004) {
 			if ($redirect) {
 				throw new SonoffExceptions\CloudApiCall('Could not login to user region', $request, $response);
 			}
 
-			$this->region = Types\Region::from(strval($data->offsetGet('region')));
+			$this->region = Types\Region::from(strval($data['region']));
 
 			return $this->login(true);
 		}
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\CloudApiCall(
-				sprintf('User authentication failed: %s', strval($data->offsetGet('msg'))),
+				sprintf('User authentication failed: %s', strval($data['msg'])),
 				$request,
 				$response,
 			);
@@ -734,14 +735,14 @@ final class CloudApi
 
 		$data = $this->validateResponseBody($request, $response, self::USER_REFRESH_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $data->offsetGet('error');
+		$error = $data['error'];
 
-		$data = $data->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $data['data'];
+		assert(is_array($data));
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\CloudApiCall(
-				sprintf('Refreshing user access token failed: %s', strval($data->offsetGet('msg'))),
+				sprintf('Refreshing user access token failed: %s', strval($data['msg'])),
 				$request,
 				$response,
 			);
@@ -764,18 +765,18 @@ final class CloudApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::GET_FAMILY_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\CloudApiCall(
-				sprintf('Load family detail failed: %s', strval($body->offsetGet('msg'))),
+				sprintf('Load family detail failed: %s', strval($body['msg'])),
 				$request,
 				$response,
 			);
 		}
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
 		return $this->createEntity(Messages\Response\Cloud\Family::class, $data);
 	}
@@ -791,42 +792,42 @@ final class CloudApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::GET_FAMILY_THINGS_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\CloudApiCall(
-				sprintf('Load family things failed: %s', strval($body->offsetGet('msg'))),
+				sprintf('Load family things failed: %s', strval($body['msg'])),
 				$request,
 				$response,
 			);
 		}
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
-		$thingList = $data->offsetGet('thingList');
-		assert($thingList instanceof Utils\ArrayHash);
+		$thingList = $data['thingList'];
+		assert(is_array($thingList));
 
 		$devices = [];
 		$groups = [];
 
 		foreach ($thingList as $item) {
-			assert($item instanceof Utils\ArrayHash);
+			assert(is_array($item));
 
-			$data = $item->offsetGet('itemData');
-			assert($data instanceof Utils\ArrayHash);
+			$data = $item['itemData'];
+			assert(is_array($data));
 
-			if (in_array($item->offsetGet('itemType'), [1, 2], true)) {
+			if (in_array($item['itemType'], [1, 2], true)) {
 				$devices[] = $data;
-			} elseif ($item->offsetGet('itemType') === 3) {
+			} elseif ($item['itemType'] === 3) {
 				$groups[] = $data;
 			}
 		}
 
-		return $this->createEntity(Messages\Response\Cloud\Things::class, Utils\ArrayHash::from([
+		return $this->createEntity(Messages\Response\Cloud\Things::class, [
 			'devices' => $devices,
 			'groups' => $groups,
-		]));
+		]);
 	}
 
 	/**
@@ -840,37 +841,37 @@ final class CloudApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::GET_FAMILY_THINGS_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\CloudApiCall(
-				sprintf('Load family specified thing failed: %s', strval($body->offsetGet('msg'))),
+				sprintf('Load family specified thing failed: %s', strval($body['msg'])),
 				$request,
 				$response,
 			);
 		}
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
-		$thingList = $data->offsetGet('thingList');
-		assert($thingList instanceof Utils\ArrayHash);
+		$thingList = $data['thingList'];
+		assert(is_array($thingList));
 
 		$devices = [];
 		$groups = [];
 
 		foreach ($thingList as $item) {
-			assert($item instanceof Utils\ArrayHash);
+			assert(is_array($item));
 
-			$data = $item->offsetGet('itemData');
-			assert($data instanceof Utils\ArrayHash);
+			$data = $item['itemData'];
+			assert(is_array($data));
 
-			if (in_array($item->offsetGet('itemType'), [1, 2], true)) {
+			if (in_array($item['itemType'], [1, 2], true)) {
 				$devices[] = $this->createEntity(
 					Messages\Response\Cloud\Device::class,
 					$data,
 				);
-			} elseif ($item->offsetGet('itemType') === 3) {
+			} elseif ($item['itemType'] === 3) {
 				$groups[] = $this->createEntity(
 					Messages\Response\Cloud\Group::class,
 					$data,
@@ -922,28 +923,28 @@ final class CloudApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::GET_THING_STATE_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\CloudApiCall(
-				sprintf('Load family specified thing state failed: %s', strval($body->offsetGet('msg'))),
+				sprintf('Load family specified thing state failed: %s', strval($body['msg'])),
 				$request,
 				$response,
 			);
 		}
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
-		$params = $data->offsetGet('params');
-		assert($params instanceof Utils\ArrayHash);
+		$params = $data['params'];
+		assert(is_array($params));
 
 		return $this->createEntity(
 			Messages\Response\Cloud\DeviceState::class,
-			Utils\ArrayHash::from([
+			[
 				'deviceId' => $id,
 				'params' => $params,
-			]),
+			],
 		);
 	}
 
@@ -958,11 +959,11 @@ final class CloudApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::SET_THING_STATE_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\CloudApiCall(
-				sprintf('Load family specified thing state failed: %s', strval($body->offsetGet('msg'))),
+				sprintf('Load family specified thing state failed: %s', strval($body['msg'])),
 				$request,
 				$response,
 			);
@@ -982,31 +983,31 @@ final class CloudApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::ADD_THIRD_PARTY_DEVICE_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\CloudApiCall(
-				sprintf('Add third party device failed: %s', strval($body->offsetGet('msg'))),
+				sprintf('Add third party device failed: %s', strval($body['msg'])),
 				$request,
 				$response,
 			);
 		}
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
-		$thingList = $data->offsetGet('thingList');
-		assert($thingList instanceof Utils\ArrayHash);
+		$thingList = $data['thingList'];
+		assert(is_array($thingList));
 
 		$devices = [];
 
 		foreach ($thingList as $item) {
-			assert($item instanceof Utils\ArrayHash);
+			assert(is_array($item));
 
-			$data = $item->offsetGet('itemData');
-			assert($data instanceof Utils\ArrayHash);
+			$data = $item['itemData'];
+			assert(is_array($data));
 
-			if (in_array($item->offsetGet('itemType'), [1, 2], true)) {
+			if (in_array($item['itemType'], [1, 2], true)) {
 				$devices[] = $this->createEntity(
 					Messages\Response\Cloud\ThirdPartyDevice::class,
 					$data,
@@ -1052,12 +1053,13 @@ final class CloudApi
 	 * @template T of Messages\Message
 	 *
 	 * @param class-string<T> $entity
+	 * @param array<mixed> $data
 	 *
 	 * @return T
 	 *
 	 * @throws SonoffExceptions\CloudApiError
 	 */
-	private function createEntity(string $entity, Utils\ArrayHash $data): Messages\Message
+	private function createEntity(string $entity, array $data): Messages\Message
 	{
 		try {
 			return $this->entityHelper->create(
@@ -1076,7 +1078,7 @@ final class CloudApi
 	}
 
 	/**
-	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
+	 * @return ($throw is true ? array<mixed> : array<mixed>|false)
 	 *
 	 * @throws SonoffExceptions\CloudApiCall
 	 * @throws SonoffExceptions\CloudApiError
@@ -1086,7 +1088,7 @@ final class CloudApi
 		Message\ResponseInterface $response,
 		string $schemaFilename,
 		bool $throw = true,
-	): Utils\ArrayHash|bool
+	): array|bool
 	{
 		$body = $this->getResponseBody($request, $response);
 
@@ -1203,11 +1205,11 @@ final class CloudApi
 							$error = $this->validateResponseBody($request, $response, self::API_ERROR, false);
 
 							if ($error !== false) {
-								$errorCode = $error->offsetGet('error');
+								$errorCode = $error['error'];
 
 								if ($errorCode !== 0) {
 									$deferred->reject(new SonoffExceptions\CloudApiCall(
-										sprintf('Calling api endpoint failed: %s', strval($error->offsetGet('msg'))),
+										sprintf('Calling api endpoint failed: %s', strval($error['msg'])),
 										$request,
 										$response,
 									));
@@ -1248,11 +1250,11 @@ final class CloudApi
 				$error = $this->validateResponseBody($request, $response, self::API_ERROR, false);
 
 				if ($error !== false) {
-					$errorCode = $error->offsetGet('error');
+					$errorCode = $error['error'];
 
 					if ($errorCode !== 0) {
 						throw new SonoffExceptions\CloudApiCall(
-							sprintf('Calling api endpoint failed: %s', strval($error->offsetGet('msg'))),
+							sprintf('Calling api endpoint failed: %s', strval($error['msg'])),
 							$request,
 							$response,
 						);

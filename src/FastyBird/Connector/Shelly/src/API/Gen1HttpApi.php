@@ -315,7 +315,7 @@ final class Gen1HttpApi extends HttpApi
 			'blocks' => [],
 		];
 
-		if (!$body->offsetExists('blk') || !$body->offsetExists('sen')) {
+		if (!array_key_exists('blk', $body) || !array_key_exists('sen', $body)) {
 			throw new Exceptions\HttpApiCall(
 				'Received response is not valid',
 				$request,
@@ -323,15 +323,15 @@ final class Gen1HttpApi extends HttpApi
 			);
 		}
 
-		$blocks = $body->offsetGet('blk');
-		$sensors = $body->offsetGet('sen');
+		$blocks = $body['blk'];
+		$sensors = $body['sen'];
 
-		if ($blocks instanceof Utils\ArrayHash && $sensors instanceof Utils\ArrayHash) {
+		if (is_array($blocks) && is_array($sensors)) {
 			foreach ($blocks as $block) {
 				if (
-					!$block instanceof Utils\ArrayHash
-					|| !$block->offsetExists('I')
-					|| !$block->offsetExists('D')
+					!is_array($block)
+					|| !array_key_exists('I', $block)
+					|| !array_key_exists('D', $block)
 				) {
 					$this->logger->debug(
 						'Received device block description is not in valid format',
@@ -346,18 +346,18 @@ final class Gen1HttpApi extends HttpApi
 				}
 
 				$blockDescription = [
-					'identifier' => intval($block->offsetGet('I')),
-					'description' => strval($block->offsetGet('D')),
+					'identifier' => intval($block['I']),
+					'description' => strval($block['D']),
 					'sensors' => [],
 				];
 
 				foreach ($sensors as $sensor) {
 					if (
-						!$sensor instanceof Utils\ArrayHash
-						|| !$sensor->offsetExists('I')
-						|| !$sensor->offsetExists('T')
-						|| !$sensor->offsetExists('D')
-						|| !$sensor->offsetExists('L')
+						!is_array($sensor)
+						|| !array_key_exists('I', $sensor)
+						|| !array_key_exists('T', $sensor)
+						|| !array_key_exists('D', $sensor)
+						|| !array_key_exists('L', $sensor)
 					) {
 						$this->logger->debug(
 							'Received block sensor description is not in valid format',
@@ -373,28 +373,27 @@ final class Gen1HttpApi extends HttpApi
 
 					if (
 						(
-							$sensor->offsetGet('L') instanceof Utils\ArrayHash
+							is_array($sensor['L'])
 							&& in_array(
-								$block->offsetGet('I'),
+								$block['I'],
 								array_map(
 									static fn ($item): int => intval($item),
-									(array) $sensor->offsetGet('L'),
+									$sensor['L'],
 								),
 								true,
 							)
 						)
-						|| intval($block->offsetGet('I')) === intval($sensor->offsetGet('L'))
+						|| intval($block['I']) === intval($sensor['L'])
 					) {
 						try {
 							$sensorRange = $this->parseSensorRange(
-								strval($block->offsetGet('D')),
-								strval($sensor->offsetGet('D')),
-								$sensor->offsetExists('R')
+								strval($block['D']),
+								strval($sensor['D']),
+								array_key_exists('R', $sensor)
 									? (
-										is_array($sensor->offsetGet('R'))
-										|| $sensor->offsetGet('R') instanceof Utils\ArrayHash
-											? (array) $sensor->offsetGet('R')
-											: strval($sensor->offsetGet('R'))
+										is_array($sensor['R'])
+											? $sensor['R']
+											: strval($sensor['R'])
 									)
 									: null,
 							);
@@ -409,17 +408,17 @@ final class Gen1HttpApi extends HttpApi
 						}
 
 						$blockDescription['sensors'][] = [
-							'identifier' => intval($sensor->offsetGet('I')),
-							'type' => $sensor->offsetGet('T'),
-							'description' => strval($sensor->offsetGet('D')),
+							'identifier' => intval($sensor['I']),
+							'type' => $sensor['T'],
+							'description' => strval($sensor['D']),
 							'data_type' => $sensorRange->getDataType()->value,
-							'unit' => array_key_exists(strval($sensor->offsetExists('U')), self::SENSORS_UNIT)
-								? self::SENSORS_UNIT[strval($sensor->offsetExists('U'))]
+							'unit' => array_key_exists(strval(array_key_exists('U', $sensor)), self::SENSORS_UNIT)
+								? self::SENSORS_UNIT[strval(array_key_exists('U', $sensor))]
 								: null,
 							'format' => $sensorRange->getFormat(),
 							'invalid' => $sensorRange->getInvalid(),
 							'queryable' => true,
-							'settable' => in_array($sensor->offsetGet('D'), self::WRITABLE_SENSORS, true),
+							'settable' => in_array($sensor['D'], self::WRITABLE_SENSORS, true),
 						];
 					}
 				}
@@ -428,7 +427,7 @@ final class Gen1HttpApi extends HttpApi
 			}
 		}
 
-		return $this->createMessage(Messages\Response\Gen1\GetDeviceDescription::class, Utils\ArrayHash::from($data));
+		return $this->createMessage(Messages\Response\Gen1\GetDeviceDescription::class, $data);
 	}
 
 	/**
@@ -448,110 +447,74 @@ final class Gen1HttpApi extends HttpApi
 
 		$relays = [];
 
-		if (
-			$body->offsetExists('relays')
-			&& (
-				is_array($body->offsetGet('relays'))
-				|| $body->offsetGet('relays') instanceof Utils\ArrayHash
-			)
-		) {
-			foreach ($body->offsetGet('relays') as $relayStatus) {
-				assert($relayStatus instanceof Utils\ArrayHash);
+		if (array_key_exists('relays', $body) && is_array($body['relays'])) {
+			foreach ($body['relays'] as $relayStatus) {
+				assert(is_array($relayStatus));
 
-				$relays[] = (array) $relayStatus;
+				$relays[] = $relayStatus;
 			}
 		}
 
 		$rollers = [];
 
-		if (
-			$body->offsetExists('rollers')
-			&& (
-				is_array($body->offsetGet('rollers'))
-				|| $body->offsetGet('rollers') instanceof Utils\ArrayHash
-			)
-		) {
-			foreach ($body->offsetGet('rollers') as $rollerStatus) {
-				assert($rollerStatus instanceof Utils\ArrayHash);
+		if (array_key_exists('rollers', $body) && is_array($body['rollers'])) {
+			foreach ($body['rollers'] as $rollerStatus) {
+				assert(is_array($rollerStatus));
 
-				$rollers[] = (array) $rollerStatus;
+				$rollers[] = $rollerStatus;
 			}
 		}
 
 		$inputs = [];
 
-		if (
-			$body->offsetExists('inputs')
-			&& (
-				is_array($body->offsetGet('inputs'))
-				|| $body->offsetGet('inputs') instanceof Utils\ArrayHash
-			)
-		) {
-			foreach ($body->offsetGet('inputs') as $inputStatus) {
-				assert($inputStatus instanceof Utils\ArrayHash);
+		if (array_key_exists('inputs', $body) && is_array($body['inputs'])) {
+			foreach ($body['inputs'] as $inputStatus) {
+				assert(is_array($inputStatus));
 
-				$inputs[] = (array) $inputStatus;
+				$inputs[] = $inputStatus;
 			}
 		}
 
 		$lights = [];
 
-		if (
-			$body->offsetExists('lights')
-			&& (
-				is_array($body->offsetGet('lights'))
-				|| $body->offsetGet('lights') instanceof Utils\ArrayHash
-			)
-		) {
-			foreach ($body->offsetGet('lights') as $lightStatus) {
-				assert($lightStatus instanceof Utils\ArrayHash);
+		if (array_key_exists('lights', $body) && is_array($body['lights'])) {
+			foreach ($body['lights'] as $lightStatus) {
+				assert(is_array($lightStatus));
 
-				$lights[] = (array) $lightStatus;
+				$lights[] = $lightStatus;
 			}
 		}
 
 		$meters = [];
 
-		if (
-			$body->offsetExists('meters')
-			&& (
-				is_array($body->offsetGet('meters'))
-				|| $body->offsetGet('meters') instanceof Utils\ArrayHash
-			)
-		) {
-			foreach ($body->offsetGet('meters') as $meterStatus) {
-				assert($meterStatus instanceof Utils\ArrayHash);
+		if (array_key_exists('meters', $body) && is_array($body['meters'])) {
+			foreach ($body['meters'] as $meterStatus) {
+				assert(is_array($meterStatus));
 
-				$meters[] = (array) $meterStatus;
+				$meters[] = $meterStatus;
 			}
 		}
 
 		$emeters = [];
 
-		if (
-			$body->offsetExists('emeters')
-			&& (
-				is_array($body->offsetGet('emeters'))
-				|| $body->offsetGet('emeters') instanceof Utils\ArrayHash
-			)
-		) {
-			foreach ($body->offsetGet('emeters') as $emeterStatus) {
-				assert($emeterStatus instanceof Utils\ArrayHash);
+		if (array_key_exists('emeters', $body) && is_array($body['emeters'])) {
+			foreach ($body['emeters'] as $emeterStatus) {
+				assert(is_array($emeterStatus));
 
-				$emeters[] = (array) $emeterStatus;
+				$emeters[] = $emeterStatus;
 			}
 		}
 
 		$wifi = null;
 
 		if (
-			$body->offsetExists('wifi_sta')
-			&& $body->offsetGet('wifi_sta') instanceof Utils\ArrayHash
+			array_key_exists('wifi_sta', $body)
+			&& is_array($body['wifi_sta'])
 		) {
-			$wifi = (array) $body->offsetGet('wifi_sta');
+			$wifi = $body['wifi_sta'];
 		}
 
-		return $this->createMessage(Messages\Response\Gen1\GetDeviceState::class, Utils\ArrayHash::from([
+		return $this->createMessage(Messages\Response\Gen1\GetDeviceState::class, [
 			'relays' => $relays,
 			'rollers' => $rollers,
 			'inputs' => $inputs,
@@ -559,7 +522,7 @@ final class Gen1HttpApi extends HttpApi
 			'meters' => $meters,
 			'emeters' => $emeters,
 			'wifi' => $wifi,
-		]));
+		]);
 	}
 
 	/**

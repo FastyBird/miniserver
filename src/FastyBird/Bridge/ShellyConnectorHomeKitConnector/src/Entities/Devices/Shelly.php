@@ -9,7 +9,6 @@ use FastyBird\Connector\Shelly\Entities as ShellyEntities;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use function sprintf;
@@ -22,14 +21,14 @@ class Shelly extends HomeKitEntities\Devices\Device
 	public const string TYPE = 'shelly-connector-homekit-connector-bridge';
 
 	/**
-	 * @param array<DevicesEntities\Devices\Device>|Utils\ArrayHash<DevicesEntities\Devices\Device> $parents
+	 * @param array<DevicesEntities\Devices\Device> $parents
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(
 		string $identifier,
 		HomeKitEntities\Connectors\Connector $connector,
-		array|Utils\ArrayHash $parents,
+		array $parents,
 		string|null $name = null,
 		Uuid\UuidInterface|null $id = null,
 	)

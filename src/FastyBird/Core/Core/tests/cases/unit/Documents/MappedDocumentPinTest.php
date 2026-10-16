@@ -133,12 +133,12 @@ final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 			],
 			'an object' => [
 				Dummy\DummyTwoDocument::class,
-				Utils\ArrayHash::from([
+				(object) [
 					'id' => self::ID,
 					'type' => Dummy\DummyTwoDocument::TYPE,
 					'identifier' => 'object',
 					'created_at' => '2020-04-01T12:00:00+00:00',
-				]),
+				],
 			],
 			'routed, with tags' => [
 				Dummy\DummyRoutedDocument::class,

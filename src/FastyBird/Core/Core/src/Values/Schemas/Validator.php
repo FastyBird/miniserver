@@ -22,11 +22,13 @@ final class Validator
 	private array $schemas = [];
 
 	/**
+	 * @return array<mixed>
+	 *
 	 * @throws ValuesExceptions\InvalidData
 	 * @throws CoreExceptions\Logic
 	 * @throws DocumentsExceptions\MalformedInput
 	 */
-	public function validate(string $data, string $schema): Utils\ArrayHash
+	public function validate(string $data, string $schema): array
 	{
 		try {
 			$jsonData = Utils\Json::decode($data);
@@ -52,9 +54,7 @@ final class Validator
 
 		if ($result->isValid()) {
 			try {
-				return Utils\ArrayHash::from(
-					(array) Utils\Json::decode(Utils\Json::encode($jsonData), forceArrays: true),
-				);
+				return (array) Utils\Json::decode(Utils\Json::encode($jsonData), forceArrays: true);
 			} catch (Utils\JsonException $ex) {
 				throw new CoreExceptions\Logic('Failed to encode input data', $ex->getCode(), $ex);
 			}

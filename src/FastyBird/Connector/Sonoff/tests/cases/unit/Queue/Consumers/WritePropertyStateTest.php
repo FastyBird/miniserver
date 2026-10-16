@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -190,13 +189,10 @@ final class WritePropertyStateTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$record = fn (string $owner): Closure => function (
 			DevicesDocuments\Property $property,
-			Utils\ArrayHash|DevicesStates\PropertyUpdate $data,
+			DevicesStates\PropertyUpdate $data,
 			Sources\Source|null $source,
 		) use ($owner): Promise\PromiseInterface {
-				// What the manager makes of it on its first line
-				$data = $data instanceof DevicesStates\PropertyUpdate ? $data->toArrayHash() : $data;
-
-				$this->set[] = [$owner, $property->getIdentifier(), (array) $data, $source?->value];
+				$this->set[] = [$owner, $property->getIdentifier(), $data->toArray(), $source?->value];
 
 				return Promise\resolve(true);
 		};

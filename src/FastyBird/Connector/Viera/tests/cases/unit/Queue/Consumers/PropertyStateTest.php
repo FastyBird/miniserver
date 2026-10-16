@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -228,13 +227,10 @@ final class PropertyStateTest extends Tests\Cases\Unit\DbTestCase
 						->willReturnCallback(
 							function (
 								DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped $property,
-								Utils\ArrayHash|DevicesStates\PropertyUpdate $data,
+								DevicesStates\PropertyUpdate $data,
 								Sources\Source|null $source,
 							): Promise\PromiseInterface {
-								// What the manager makes of it on its first line
-								$data = $data instanceof DevicesStates\PropertyUpdate ? $data->toArrayHash() : $data;
-
-								$this->set[] = [$property->getIdentifier(), (array) $data, $source?->value];
+								$this->set[] = [$property->getIdentifier(), $data->toArray(), $source?->value];
 
 								return Promise\resolve(true);
 							},

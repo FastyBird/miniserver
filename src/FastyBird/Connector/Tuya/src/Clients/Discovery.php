@@ -198,14 +198,12 @@ final class Discovery
 								return;
 							}
 
-							$deviceInfo = Utils\ArrayHash::from($decoded);
-
 							if (
-								!$deviceInfo->offsetExists('gwId')
-								|| !$deviceInfo->offsetExists('ip')
-								|| !$deviceInfo->offsetExists('productKey')
-								|| !$deviceInfo->offsetExists('encrypt')
-								|| !$deviceInfo->offsetExists('version')
+								!array_key_exists('gwId', $decoded)
+								|| !array_key_exists('ip', $decoded)
+								|| !array_key_exists('productKey', $decoded)
+								|| !array_key_exists('encrypt', $decoded)
+								|| !array_key_exists('version', $decoded)
 							) {
 								$this->logger->error(
 									'Decoded discovered local message has invalid format',
@@ -220,10 +218,10 @@ final class Discovery
 
 							$this->discoveredLocalDevicesInfo[] = $this->objectMapper->map(
 								[
-									'id' => strval($deviceInfo->offsetGet('gwId')),
-									'ip_address' => strval($deviceInfo->offsetGet('ip')),
-									'encrypted' => boolval($deviceInfo->offsetGet('encrypt')),
-									'version' => strval($deviceInfo->offsetGet('version')),
+									'id' => strval($decoded['gwId']),
+									'ip_address' => strval($decoded['ip']),
+									'encrypted' => boolval($decoded['encrypt']),
+									'version' => strval($decoded['version']),
 								],
 								ValueObjects\LocalDevice::class,
 							);
@@ -774,12 +772,10 @@ final class Discovery
 
 						try {
 							$dataPointSpecification = Utils\Json::decode($dataPointSpecification, forceArrays: true);
-							$dataPointSpecification = Utils\ArrayHash::from(
-								is_array($dataPointSpecification) ? $dataPointSpecification : [],
-							);
+							$dataPointSpecification = is_array($dataPointSpecification) ? $dataPointSpecification : [];
 
 						} catch (Utils\JsonException) {
-							$dataPointSpecification = Utils\ArrayHash::from([]);
+							$dataPointSpecification = [];
 						}
 
 						$dataPoints[] = [
@@ -788,30 +784,27 @@ final class Discovery
 							'code' => $dataPointCode,
 							'name' => $dataPointCode,
 							'data_type' => $dataPointDataType->value,
-							'unit' => $dataPointSpecification->offsetExists('unit')
-								? strval($dataPointSpecification->offsetGet('unit'))
+							'unit' => array_key_exists('unit', $dataPointSpecification)
+								? strval($dataPointSpecification['unit'])
 								: null,
-							'range' => $dataPointSpecification->offsetExists('range')
-							&& (
-								is_array($dataPointSpecification->offsetGet('range'))
-								|| $dataPointSpecification->offsetGet('range') instanceof Utils\ArrayHash
-							)
+							'range' => array_key_exists('range', $dataPointSpecification)
+							&& is_array($dataPointSpecification['range'])
 								? array_map(
 									static fn ($item): string => strval($item),
-									(array) $dataPointSpecification->offsetGet('range'),
+									$dataPointSpecification['range'],
 								)
 								: [],
-							'min' => $dataPointSpecification->offsetExists('min')
-								? floatval($dataPointSpecification->offsetGet('min'))
+							'min' => array_key_exists('min', $dataPointSpecification)
+								? floatval($dataPointSpecification['min'])
 								: null,
-							'max' => $dataPointSpecification->offsetExists('max')
-								? floatval($dataPointSpecification->offsetGet('max'))
+							'max' => array_key_exists('max', $dataPointSpecification)
+								? floatval($dataPointSpecification['max'])
 								: null,
-							'step' => $dataPointSpecification->offsetExists('step')
-								? floatval($dataPointSpecification->offsetGet('step'))
+							'step' => array_key_exists('step', $dataPointSpecification)
+								? floatval($dataPointSpecification['step'])
 								: null,
-							'scale' => $dataPointSpecification->offsetExists('scale')
-								? intval($dataPointSpecification->offsetGet('scale'))
+							'scale' => array_key_exists('scale', $dataPointSpecification)
+								? intval($dataPointSpecification['scale'])
 								: null,
 							'queryable' => $dataPointStatus !== null,
 							'settable' => $dataPointFunction !== null,

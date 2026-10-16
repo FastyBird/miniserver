@@ -1,0 +1,254 @@
+{
+ "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ActionsManager|FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ActionsManager, triggered": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ActionsManager|FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ActionsManager, unchanged": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ActionsManager|FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ActionsManager, unknown key": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ActionsManager|FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ActionsManager, no values": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ConditionsManager|FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ConditionsManager, triggered": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ConditionsManager|FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ConditionsManager, unchanged": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ConditionsManager|FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ConditionsManager, unknown key": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ConditionsManager|FastyBird\\Bridge\\RedisDbPluginTriggersModule\\Models\\States\\ConditionsManager, no values": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"validationResult\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "validation_result": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ }
+}

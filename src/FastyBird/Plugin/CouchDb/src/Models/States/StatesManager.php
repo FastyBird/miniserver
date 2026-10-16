@@ -10,7 +10,6 @@ use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Events;
 use FastyBird\Plugin\CouchDb\Exceptions;
 use FastyBird\Plugin\CouchDb\States;
-use Nette\Utils;
 use PHPOnCouch;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher;
@@ -18,13 +17,12 @@ use Psr\Log;
 use Ramsey\Uuid;
 use stdClass;
 use Throwable;
+use function array_key_exists;
 use function assert;
-use function is_array;
 use function is_numeric;
 use function is_object;
 use function is_string;
 use function method_exists;
-use function property_exists;
 use function serialize;
 use function sprintf;
 
@@ -56,20 +54,12 @@ final class StatesManager
 	}
 
 	/**
-	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
-	 * the callers built before; an ArrayHash is used as it is given (#723).
-	 *
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
-	public function create(
-		Uuid\UuidInterface $id,
-		array|Utils\ArrayHash $values,
-	): States\State
+	public function create(Uuid\UuidInterface $id, array $values): States\State
 	{
-		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
-
 		try {
 			$doc = $this->createDoc($id, $values, $this->entity::getCreateFields());
 
@@ -94,20 +84,12 @@ final class StatesManager
 	}
 
 	/**
-	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
-	 * the callers built before; an ArrayHash is used as it is given (#723).
-	 *
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
-	public function update(
-		States\State $state,
-		array|Utils\ArrayHash $values,
-	): States\State
+	public function update(States\State $state, array $values): States\State
 	{
-		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
-
 		try {
 			$doc = $this->updateDoc($state, $values, $state::getUpdateFields());
 
@@ -175,13 +157,14 @@ final class StatesManager
 	}
 
 	/**
+	 * @param array<string, mixed> $values
 	 * @param array<string>|array<string, int|string|bool|null> $fields
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	protected function createDoc(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array $values,
 		array $fields,
 	): PHPOnCouch\CouchDocument
 	{
@@ -189,7 +172,7 @@ final class StatesManager
 			// Initialize structure
 			$data = new stdClass();
 
-			$values->offsetSet('id', $id->toString());
+			$values['id'] = $id->toString();
 
 			foreach ($fields as $field => $default) {
 				$value = $default;
@@ -198,20 +181,18 @@ final class StatesManager
 					$field = $default;
 
 					// If default is not defined => field is required
-					if (!is_string($field) || !property_exists($values, $field)) {
+					if (!is_string($field) || !array_key_exists($field, $values)) {
 						throw new Exceptions\InvalidArgument(sprintf('Value for key "%s" is required', $field));
 					}
 
-					$value = $values->offsetGet($field);
+					$value = $values[$field];
 
-				} elseif (property_exists($values, $field)) {
-					if ($values->offsetGet($field) !== null) {
-						$value = $values->offsetGet($field);
+				} elseif (array_key_exists($field, $values)) {
+					if ($values[$field] !== null) {
+						$value = $values[$field];
 
 						if ($value instanceof DateTimeInterface) {
 							$value = $value->format(DateTimeInterface::ATOM);
-						} elseif ($value instanceof Utils\ArrayHash) {
-							$value = (array) $value;
 						} elseif ($value instanceof BackedEnum) {
 							$value = $value->value;
 						} elseif (is_object($value)) {
@@ -254,13 +235,14 @@ final class StatesManager
 	}
 
 	/**
+	 * @param array<string, mixed> $values
 	 * @param array<string> $fields
 	 *
 	 * @throws Exceptions\InvalidState
 	 */
 	protected function updateDoc(
 		States\State $state,
-		Utils\ArrayHash $values,
+		array $values,
 		array $fields,
 	): PHPOnCouch\CouchDocument
 	{
@@ -276,14 +258,11 @@ final class StatesManager
 			$isUpdated = false;
 
 			foreach ($fields as $field) {
-				if (property_exists($values, $field)) {
-					$value = $values->offsetGet($field);
+				if (array_key_exists($field, $values)) {
+					$value = $values[$field];
 
 					if ($value instanceof DateTimeInterface) {
 						$value = $value->format(DateTimeInterface::ATOM);
-
-					} elseif ($value instanceof Utils\ArrayHash) {
-						$value = (array) $value;
 
 					} elseif ($value instanceof BackedEnum) {
 						$value = $value->value;

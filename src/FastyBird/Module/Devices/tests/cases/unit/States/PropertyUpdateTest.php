@@ -8,10 +8,8 @@ use DateTimeInterface;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use function array_key_exists;
 use function array_keys;
 use function array_slice;
 use function is_string;
@@ -19,7 +17,7 @@ use function serialize;
 
 /**
  * A property state change tells a given field from an absent one by the field's key, not by a
- * marker value, and turns into exactly the ArrayHash its callers built before it existed (#723)
+ * marker value, and gives its fields as a plain array (#723)
  */
 final class PropertyUpdateTest extends TestCase
 {
@@ -28,28 +26,17 @@ final class PropertyUpdateTest extends TestCase
 	{
 		self::assertTrue(States\PropertyUpdate::create()->isEmpty());
 		self::assertSame([], States\PropertyUpdate::create()->toArray());
-		self::assertCount(0, States\PropertyUpdate::create()->toArrayHash());
 
 		$update = States\PropertyUpdate::create()->withExpectedValue(null);
 
 		self::assertFalse($update->isEmpty());
+		// null clears: the key is there, holding null. Absent keeps: no other key is there at all.
 		self::assertSame([States\Property::EXPECTED_VALUE_FIELD => null], $update->toArray());
-
-		$hash = $update->toArrayHash();
-
-		// null clears: the key is there, holding null
-		self::assertTrue(array_key_exists(States\Property::EXPECTED_VALUE_FIELD, (array) $hash));
-		self::assertNull($hash->offsetGet(States\Property::EXPECTED_VALUE_FIELD));
-
-		// absent keeps: the key is not there at all
-		self::assertFalse($hash->offsetExists(States\Property::ACTUAL_VALUE_FIELD));
-		self::assertFalse($hash->offsetExists(States\Property::PENDING_FIELD));
-		self::assertFalse($hash->offsetExists(States\Property::VALID_FIELD));
 	}
 
 	/**
 	 * 'N/A' is `Utilities\Value::NOT_SET`, the marker the action documents use for a value that
-	 * was not sent. Here it is an ordinary string and survives the way to the ArrayHash.
+	 * was not sent. Here it is an ordinary string.
 	 */
 	public function testTheNotSetMarkerIsAnOrdinaryValue(): void
 	{
@@ -63,7 +50,6 @@ final class PropertyUpdateTest extends TestCase
 		];
 
 		self::assertSame($expected, $update->toArray());
-		self::assertSame($expected, (array) $update->toArrayHash());
 	}
 
 	public function testFieldsKeepTheOrderTheyWereFirstGivenIn(): void
@@ -111,21 +97,17 @@ final class PropertyUpdateTest extends TestCase
 	}
 
 	/**
-	 * Every ArrayHash is a new one: writeState() changes the one it is given, and that must not
-	 * reach the change or the next ArrayHash made from it
+	 * The fields are handed out as an array: changing it reaches neither the change nor the next
+	 * array made from it
 	 */
-	public function testTheArrayHashIsANewOneEveryTime(): void
+	public function testTheFieldsAreACopyEveryTime(): void
 	{
 		$update = States\PropertyUpdate::create()->withActualValue('on');
 
-		$first = $update->toArrayHash();
-		$first->offsetSet(States\Property::VALID_FIELD, false);
-		$first->offsetUnset(States\Property::ACTUAL_VALUE_FIELD);
+		$first = $update->toArray();
+		$first[States\Property::VALID_FIELD] = false;
+		unset($first[States\Property::ACTUAL_VALUE_FIELD]);
 
-		$second = $update->toArrayHash();
-
-		self::assertNotSame($first, $second);
-		self::assertSame([States\Property::ACTUAL_VALUE_FIELD => 'on'], (array) $second);
 		self::assertSame([States\Property::ACTUAL_VALUE_FIELD => 'on'], $update->toArray());
 	}
 
@@ -163,18 +145,18 @@ final class PropertyUpdateTest extends TestCase
 	}
 
 	/**
-	 * For every subset of the four fields, in every order, the change gives the very ArrayHash
-	 * the old callers built with `ArrayHash::from()` of the same array: the same class, the same
-	 * keys present and absent, in the same order, with the same values (identical, objects
-	 * included), and the same serialized form. Recursion cannot differ: `from()` converts only
-	 * array values, and a field cannot hold one.
+	 * For every subset of the four fields, in every order, the change gives the very array the
+	 * old callers built by assigning the same fields one after another: the same keys present and
+	 * absent, in the same order, with the same values (identical, objects included), and the same
+	 * serialized form. The old callers wrapped that array in `ArrayHash::from()`, which converts
+	 * only array values, and a field cannot hold one.
 	 *
 	 * @param array<string, bool|float|int|string|DateTimeInterface|Payloads\Payload|null> $palette
 	 *
 	 * @throws DateMalformedStringException
 	 */
 	#[DataProvider('palettes')]
-	public function testTheArrayHashIsTheOneTheCallersBuilt(array $palette): void
+	public function testTheFieldsAreTheArrayTheCallersBuilt(array $palette): void
 	{
 		$orders = self::orders(array_keys($palette));
 
@@ -196,14 +178,11 @@ final class PropertyUpdateTest extends TestCase
 				};
 			}
 
-			$old = Utils\ArrayHash::from($array);
-			$new = $update->toArrayHash();
+			$new = $update->toArray();
 
-			self::assertSame(Utils\ArrayHash::class, $new::class);
-			self::assertSame((array) $old, (array) $new);
-			self::assertSame(array_keys((array) $old), array_keys((array) $new));
-			self::assertSame(serialize($old), serialize($new));
-			self::assertSame($array, $update->toArray());
+			self::assertSame($array, $new);
+			self::assertSame(array_keys($array), array_keys($new));
+			self::assertSame(serialize($array), serialize($new));
 			self::assertSame($array === [], $update->isEmpty());
 		}
 	}

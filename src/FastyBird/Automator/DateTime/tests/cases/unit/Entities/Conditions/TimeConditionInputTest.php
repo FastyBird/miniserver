@@ -15,14 +15,14 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use Throwable;
+use TypeError;
 
 /**
- * A time condition takes its days as a plain array as well as an ArrayHash (#723).
+ * A time condition takes its days as a plain array (#723).
  *
  * The constructor is reached through the Triggers conditions manager's entity creator, which hands
- * it the days as the ArrayHash Utils\ArrayHash::from() makes of the values, whether the manager was
- * given an array or an ArrayHash; the first test calls it directly with an array. Against the code
- * before #723 that array is a TypeError. The last test pins what happens without days, on both.
+ * it the days as the array it was given; the first test calls it directly. An ArrayHash of days is
+ * refused with a TypeError. The last test pins what happens without days.
  */
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -41,12 +41,6 @@ final class TimeConditionInputTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$trigger = $this->trigger();
 
-		$fromArrayHash = new DateTimeEntities\Conditions\TimeCondition(
-			new DateTimeImmutable('2020-01-01T07:30:00+00:00'),
-			Utils\ArrayHash::from([1, 3, 5]),
-			$trigger,
-			Uuid\Uuid::fromString(self::CONDITION),
-		);
 		$fromArray = new DateTimeEntities\Conditions\TimeCondition(
 			new DateTimeImmutable('2020-01-01T07:30:00+00:00'),
 			[1, 3, 5],
@@ -54,8 +48,23 @@ final class TimeConditionInputTest extends Tests\Cases\Unit\DbTestCase
 			Uuid\Uuid::fromString(self::CONDITION),
 		);
 
-		self::assertSame([1, 3, 5], (array) $fromArray->getDays());
-		self::assertSame($fromArrayHash->toArray(), $fromArray->toArray());
+		self::assertSame([1, 3, 5], $fromArray->getDays());
+		self::assertSame([1, 3, 5], $fromArray->toArray()['days']);
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testAnArrayHashOfDaysIsRefused(): void
+	{
+		$this->expectException(TypeError::class);
+
+		new DateTimeEntities\Conditions\TimeCondition(
+			new DateTimeImmutable('2020-01-01T07:30:00+00:00'),
+			// @phpstan-ignore argument.type (the call is the test: the days are an array)
+			Utils\ArrayHash::from([1, 3, 5]),
+			$this->trigger(),
+		);
 	}
 
 	/**
@@ -75,7 +84,7 @@ final class TimeConditionInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testATimeConditionCreatedFromAnArrayIsTheOneAnArrayHashCreates(): void
+	public function testATimeConditionCreatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(TriggersModels\Entities\Conditions\ConditionsManager::class);
 
@@ -88,14 +97,10 @@ final class TimeConditionInputTest extends Tests\Cases\Unit\DbTestCase
 			'enabled' => false,
 		];
 
-		$fromArrayHash = $this->created(
-			static fn (): TriggersEntities\Conditions\Condition => $manager->create(Utils\ArrayHash::from($values())),
-		);
 		$fromArray = $this->created(
 			static fn (): TriggersEntities\Conditions\Condition => $manager->create($values()),
 		);
 
-		self::assertSame($fromArrayHash, $fromArray);
 		self::assertSame([6, 7], $fromArray['returned']['days']);
 		self::assertSame([6, 7], $fromArray['reloaded']['days']);
 		self::assertFalse($fromArray['reloaded']['enabled']);
@@ -112,12 +117,12 @@ final class TimeConditionInputTest extends Tests\Cases\Unit\DbTestCase
 
 		$this->expectException(PersistenceExceptions\EntityCreation::class);
 
-		$manager->create(Utils\ArrayHash::from([
+		$manager->create([
 			'id' => Uuid\Uuid::fromString(self::CONDITION),
 			'entity' => DateTimeEntities\Conditions\TimeCondition::class,
 			'trigger' => $this->trigger(),
 			'time' => new DateTime('2020-01-01T21:15:00+00:00'),
-		]));
+		]);
 	}
 
 	/**

@@ -6,7 +6,6 @@ use FastyBird\Bridge\RedisDbPluginDevicesModule\States;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 
@@ -33,25 +32,25 @@ final class ConnectorPropertiesManager implements DevicesModels\States\Connector
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\ConnectorProperty
+	public function create(Uuid\UuidInterface $id, array $values): States\ConnectorProperty
 	{
 		return $this->statesManager->create($id, $values, $this->database);
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\ConnectorProperty|false
+	public function update(Uuid\UuidInterface $id, array $values): States\ConnectorProperty|false
 	{
 		return $this->statesManager->update($id, $values, $this->database);
 	}

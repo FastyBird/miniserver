@@ -522,16 +522,14 @@ final class Discovery
 
 								$gen2metadata = $this->loader->loadGen2Components();
 
-								if ($gen2metadata->offsetExists($component->getType()->value)) {
-									$componentMetadata = $gen2metadata->offsetGet(
-										$component->getType()->value,
-									);
-									assert($componentMetadata instanceof Utils\ArrayHash);
+								if (array_key_exists($component->getType()->value, $gen2metadata)) {
+									$componentMetadata = $gen2metadata[$component->getType()->value];
+									assert(is_array($componentMetadata));
 
 									if ($component instanceof API\Messages\Response\Gen2\DeviceInputConfiguration) {
 										$inputType = $component->getInputType()->value;
 
-										if ($componentMetadata->offsetExists($inputType)) {
+										if (array_key_exists($inputType, $componentMetadata)) {
 											$channel['properties'][] = array_merge(
 												[
 													'identifier' => (
@@ -542,23 +540,18 @@ final class Discovery
 														. $inputType
 													),
 												],
-												(array) Utils\Json::decode(
-													Utils\Json::encode(
-														(array) $componentMetadata->offsetGet($inputType),
-													),
-													forceArrays: true,
-												),
+												(array) $componentMetadata[$inputType],
 											);
 										}
 									} else {
 										foreach ($componentMetadata as $type => $configuration) {
 											assert(
-												$configuration instanceof Utils\ArrayHash
-												&& $configuration->offsetExists('optional')
-												&& is_bool($configuration->offsetGet('optional')),
+												is_array($configuration)
+												&& array_key_exists('optional', $configuration)
+												&& is_bool($configuration['optional']),
 											);
 
-											if (!$configuration->offsetGet('optional')) {
+											if (!$configuration['optional']) {
 												$channel['properties'][] = array_merge(
 													[
 														'identifier' => (
@@ -569,10 +562,7 @@ final class Discovery
 															. $type
 														),
 													],
-													(array) Utils\Json::decode(
-														Utils\Json::encode((array) $configuration),
-														forceArrays: true,
-													),
+													$configuration,
 												);
 											} else {
 												$status = $deviceStatus?->findComponent(
@@ -599,10 +589,7 @@ final class Discovery
 																. $type
 															),
 														],
-														(array) Utils\Json::decode(
-															Utils\Json::encode((array) $configuration),
-															forceArrays: true,
-														),
+														$configuration,
 													);
 												}
 											}

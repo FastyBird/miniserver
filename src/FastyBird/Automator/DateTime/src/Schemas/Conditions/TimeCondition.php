@@ -48,7 +48,7 @@ final class TimeCondition extends TriggersSchemas\Conditions\Condition
 	{
 		return array_merge((array) parent::getAttributes($resource, $context), [
 			'time' => $resource->getTime()->format(DateTimeInterface::ATOM),
-			'days' => (array) $resource->getDays(),
+			'days' => $resource->getDays(),
 		]);
 	}
 

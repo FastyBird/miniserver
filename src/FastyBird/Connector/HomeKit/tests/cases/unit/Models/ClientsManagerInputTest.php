@@ -18,13 +18,15 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use RuntimeException;
+use Throwable;
+use TypeError;
 use function str_repeat;
 
 /**
- * The clients manager takes a plain array as well as an ArrayHash (#723). A new client is created as not an admin, which
- * is not the column's default, so a value the array path dropped would show. Each case makes the same change from an
- * ArrayHash, which is rolled back, and from the equal array, and compares what is stored, as returned and as read
- * back.
+ * The clients manager takes a plain array (#723). A new client is created as not an admin, which is not the column's
+ * default, so a value the array path dropped would show. Each case makes a change from an array and compares what is
+ * stored, as returned and as read back, with the record the manager built from an ArrayHash before #723. An ArrayHash
+ * is refused with a TypeError.
  */
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -56,26 +58,18 @@ final class ClientsManagerInputTest extends Tests\Cases\Unit\DbTestCase
 			'admin' => false,
 		];
 
-		$fromArrayHash = $this->rolledBack(
-			fn (): array => $this->stored($this->manager()->create(Utils\ArrayHash::from($values()))),
-		);
+		$expected = [
+			'uid' => self::NEW_CLIENT_UID,
+			'publicKey' => str_repeat("\x01", 32),
+			'admin' => false,
+			'connector' => self::CONNECTOR_ID,
+		];
 
-		$fromArray = $this->stored($this->manager()->create($values()));
-
-		self::assertSame(
-			[
-				'uid' => self::NEW_CLIENT_UID,
-				'publicKey' => str_repeat("\x01", 32),
-				'admin' => false,
-				'connector' => self::CONNECTOR_ID,
-			],
-			$fromArrayHash,
-		);
-		self::assertSame($fromArrayHash, $fromArray);
+		self::assertSame($expected, $this->stored($this->manager()->create($values())));
 
 		$this->getEntityManager()->clear();
 
-		self::assertSame($fromArrayHash, $this->stored($this->client(self::NEW_CLIENT_UID)));
+		self::assertSame($expected, $this->stored($this->client(self::NEW_CLIENT_UID)));
 	}
 
 	/**
@@ -95,30 +89,40 @@ final class ClientsManagerInputTest extends Tests\Cases\Unit\DbTestCase
 			'admin' => false,
 		];
 
-		$fromArrayHash = $this->rolledBack(
-			fn (): array => $this->stored(
-				$this->manager()->update($this->client(self::CLIENT_UID), Utils\ArrayHash::from($values)),
-			),
-		);
+		$expected = [
+			'uid' => self::CLIENT_UID,
+			'publicKey' => str_repeat("\x02", 32),
+			'admin' => false,
+			'connector' => self::CONNECTOR_ID,
+		];
+
+		self::assertSame($expected, $this->stored($this->manager()->update($this->client(self::CLIENT_UID), $values)));
 
 		$this->getEntityManager()->clear();
 
-		$fromArray = $this->stored($this->manager()->update($this->client(self::CLIENT_UID), $values));
+		self::assertSame($expected, $this->stored($this->client(self::CLIENT_UID)));
+	}
 
-		self::assertSame(
+	/**
+	 * The manager takes an array only: an ArrayHash is refused with a TypeError (#723)
+	 *
+	 * @throws Throwable
+	 */
+	public function testTheManagerRefusesAnArrayHash(): void
+	{
+		$hash = Utils\ArrayHash::from(['admin' => true]);
+		$client = $this->client(self::CLIENT_UID);
+
+		foreach (
 			[
-				'uid' => self::CLIENT_UID,
-				'publicKey' => str_repeat("\x02", 32),
-				'admin' => false,
-				'connector' => self::CONNECTOR_ID,
-			],
-			$fromArrayHash,
-		);
-		self::assertSame($fromArrayHash, $fromArray);
-
-		$this->getEntityManager()->clear();
-
-		self::assertSame($fromArrayHash, $this->stored($this->client(self::CLIENT_UID)));
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				fn () => $this->manager()->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				fn () => $this->manager()->update($client, $hash),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
+		}
 	}
 
 	/**
@@ -132,34 +136,6 @@ final class ClientsManagerInputTest extends Tests\Cases\Unit\DbTestCase
 			'admin' => $client->isAdmin(),
 			'connector' => $client->getConnector()->getId()->toString(),
 		];
-	}
-
-	/**
-	 * @param callable(): array<string, mixed> $change
-	 *
-	 * @return array<string, mixed>
-	 *
-	 * @throws CoreExceptions\InvalidArgument
-	 * @throws DBAL\Exception
-	 * @throws HomeKitExceptions\InvalidArgument
-	 * @throws Nette\DI\MissingServiceException
-	 * @throws RuntimeException
-	 * @throws Error
-	 * @throws Exception
-	 */
-	private function rolledBack(callable $change): array
-	{
-		$connection = $this->getEntityManager()->getConnection();
-
-		$connection->beginTransaction();
-
-		try {
-			return $change();
-		} finally {
-			$connection->rollBack();
-
-			$this->getEntityManager()->clear();
-		}
 	}
 
 	/**
@@ -215,6 +191,22 @@ final class ClientsManagerInputTest extends Tests\Cases\Unit\DbTestCase
 		self::assertInstanceOf(Entities\Clients\Client::class, $client);
 
 		return $client;
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

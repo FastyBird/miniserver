@@ -328,7 +328,7 @@ final class DataSourcesV1Test extends Tests\Cases\Unit\DbTestCase
 				'label' => 'Room temperature',
 				'position' => 2,
 			],
-			(array) $dataSource->getParams(),
+			$dataSource->getParams(),
 		);
 	}
 

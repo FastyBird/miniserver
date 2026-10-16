@@ -29,14 +29,12 @@ use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Hashids;
 use Nette;
-use Nette\Utils;
 use Ramsey\Uuid;
 use TypeError;
 use ValueError;
 use z4kn4fein\SemVer;
-use function array_intersect;
+use function array_key_exists;
 use function array_map;
-use function array_values;
 use function assert;
 use function floatval;
 use function intval;
@@ -731,21 +729,21 @@ final class Loader
 	{
 		$metadata = $this->loader->loadServices();
 
-		if (!$metadata->offsetExists(strval($type->value))) {
+		if (!array_key_exists(strval($type->value), $metadata)) {
 			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$type->value,
 			));
 		}
 
-		$serviceMetadata = $metadata->offsetGet($type->value);
+		$serviceMetadata = $metadata[$type->value];
 
 		if (
-			!$serviceMetadata instanceof Utils\ArrayHash
-			|| !$serviceMetadata->offsetExists('UUID')
-			|| !is_string($serviceMetadata->offsetGet('UUID'))
-			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
-			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
+			!is_array($serviceMetadata)
+			|| !array_key_exists('UUID', $serviceMetadata)
+			|| !is_string($serviceMetadata['UUID'])
+			|| !array_key_exists('RequiredCharacteristics', $serviceMetadata)
+			|| !is_array($serviceMetadata['RequiredCharacteristics'])
 		) {
 			throw new HomeKitExceptions\InvalidState('Service definition is missing required attributes');
 		}
@@ -761,21 +759,19 @@ final class Loader
 				)
 			) {
 				return $serviceFactory->create(
-					HomeKitHelpers\Protocol::hapTypeToUuid(strval($serviceMetadata->offsetGet('UUID'))),
+					HomeKitHelpers\Protocol::hapTypeToUuid(strval($serviceMetadata['UUID'])),
 					$type,
 					$accessory,
 					$channel,
-					(array) $serviceMetadata->offsetGet('RequiredCharacteristics'),
-					$serviceMetadata->offsetExists('OptionalCharacteristics') && $serviceMetadata->offsetGet(
-						'OptionalCharacteristics',
-					) instanceof Utils\ArrayHash ? (array) $serviceMetadata->offsetGet(
-						'OptionalCharacteristics',
-					) : [],
-					$serviceMetadata->offsetExists('VirtualCharacteristics') && $serviceMetadata->offsetGet(
-						'VirtualCharacteristics',
-					) instanceof Utils\ArrayHash ? (array) $serviceMetadata->offsetGet(
-						'VirtualCharacteristics',
-					) : [],
+					$serviceMetadata['RequiredCharacteristics'],
+					array_key_exists('OptionalCharacteristics', $serviceMetadata)
+					&& is_array($serviceMetadata['OptionalCharacteristics'])
+						? $serviceMetadata['OptionalCharacteristics']
+						: [],
+					array_key_exists('VirtualCharacteristics', $serviceMetadata)
+					&& is_array($serviceMetadata['VirtualCharacteristics'])
+						? $serviceMetadata['VirtualCharacteristics']
+						: [],
 				);
 			}
 		}
@@ -811,71 +807,56 @@ final class Loader
 
 		$metadata = $this->loader->loadCharacteristics();
 
-		if (!$metadata->offsetExists($name)) {
+		if (!array_key_exists($name, $metadata)) {
 			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$name,
 			));
 		}
 
-		$characteristicMetadata = $metadata->offsetGet($name);
+		$characteristicMetadata = $metadata[$name];
 
 		if (
-			!$characteristicMetadata instanceof Utils\ArrayHash
-			|| !$characteristicMetadata->offsetExists('UUID')
-			|| !is_string($characteristicMetadata->offsetGet('UUID'))
-			|| !$characteristicMetadata->offsetExists('Format')
-			|| !is_string($characteristicMetadata->offsetGet('Format'))
-			|| HomeKitTypes\DataType::tryFrom($characteristicMetadata->offsetGet('Format')) === null
-			|| !$characteristicMetadata->offsetExists('Permissions')
-			|| !$characteristicMetadata->offsetGet('Permissions') instanceof Utils\ArrayHash
+			!is_array($characteristicMetadata)
+			|| !array_key_exists('UUID', $characteristicMetadata)
+			|| !is_string($characteristicMetadata['UUID'])
+			|| !array_key_exists('Format', $characteristicMetadata)
+			|| !is_string($characteristicMetadata['Format'])
+			|| HomeKitTypes\DataType::tryFrom($characteristicMetadata['Format']) === null
+			|| !array_key_exists('Permissions', $characteristicMetadata)
+			|| !is_array($characteristicMetadata['Permissions'])
 		) {
 			throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 		}
 
 		if (
 			$unit === null
-			&& $characteristicMetadata->offsetExists('Unit')
-			&& HomeKitTypes\CharacteristicUnit::tryFrom(strval($characteristicMetadata->offsetGet('Unit'))) !== null
+			&& array_key_exists('Unit', $characteristicMetadata)
+			&& HomeKitTypes\CharacteristicUnit::tryFrom(strval($characteristicMetadata['Unit'])) !== null
 		) {
-			$unit = HomeKitTypes\CharacteristicUnit::from(strval($characteristicMetadata->offsetGet('Unit')));
+			$unit = HomeKitTypes\CharacteristicUnit::from(strval($characteristicMetadata['Unit']));
 		}
 
-		if ($minValue === null && $characteristicMetadata->offsetExists('MinValue')) {
-			$minValue = floatval($characteristicMetadata->offsetGet('MinValue'));
+		if ($minValue === null && array_key_exists('MinValue', $characteristicMetadata)) {
+			$minValue = floatval($characteristicMetadata['MinValue']);
 		}
 
-		if ($maxValue === null && $characteristicMetadata->offsetExists('MaxValue')) {
-			$maxValue = floatval($characteristicMetadata->offsetGet('MaxValue'));
+		if ($maxValue === null && array_key_exists('MaxValue', $characteristicMetadata)) {
+			$maxValue = floatval($characteristicMetadata['MaxValue']);
 		}
 
-		if ($minStep === null && $characteristicMetadata->offsetExists('MinStep')) {
-			$minStep = floatval($characteristicMetadata->offsetGet('MinStep'));
+		if ($minStep === null && array_key_exists('MinStep', $characteristicMetadata)) {
+			$minStep = floatval($characteristicMetadata['MinStep']);
 		}
 
-		if ($maxLength === null && $characteristicMetadata->offsetExists('MaximumLength')) {
-			$maxLength = intval($characteristicMetadata->offsetGet('MaximumLength'));
+		if ($maxLength === null && array_key_exists('MaximumLength', $characteristicMetadata)) {
+			$maxLength = intval($characteristicMetadata['MaximumLength']);
 		}
 
-		if ($characteristicMetadata->offsetExists('ValidValues')) {
-			$defaultValidValues = is_array($characteristicMetadata->offsetGet('ValidValues'))
-				? array_values(
-					$characteristicMetadata->offsetGet('ValidValues'),
-				)
-				: null;
-
-			$validValues = $validValues !== null && $defaultValidValues !== null
-				? array_values(
-					array_intersect($validValues, $defaultValidValues),
-				)
-				: $defaultValidValues;
-
-			if (is_array($validValues)) {
-				$validValues = array_map(static fn ($item): int => intval($item), $validValues);
-			}
-		} else {
-			$validValues = null;
-		}
+		// The characteristics metadata lists valid values as a name => value map. Neither those nor the ones passed
+		// in were ever applied here: the metadata used to be read as a map object, which the list check on it
+		// rejected, so only the property's format below sets them
+		$validValues = null;
 
 		if ($property !== null) {
 			if (
@@ -907,8 +888,8 @@ final class Loader
 
 		$default = null;
 
-		if ($characteristicMetadata->offsetExists('Default')) {
-			$default = $characteristicMetadata->offsetGet('Default');
+		if (array_key_exists('Default', $characteristicMetadata)) {
+			$default = $characteristicMetadata['Default'];
 			assert(is_string($default) || is_numeric($default) || is_bool($default));
 		}
 
@@ -926,14 +907,14 @@ final class Loader
 				)
 			) {
 				return $characteristicFactory->create(
-					HomeKitHelpers\Protocol::hapTypeToUuid(strval($characteristicMetadata->offsetGet('UUID'))),
+					HomeKitHelpers\Protocol::hapTypeToUuid(strval($characteristicMetadata['UUID'])),
 					$name,
-					HomeKitTypes\DataType::from($characteristicMetadata->offsetGet('Format')),
+					HomeKitTypes\DataType::from($characteristicMetadata['Format']),
 					array_map(
 						static fn (string $permission): HomeKitTypes\CharacteristicPermission => HomeKitTypes\CharacteristicPermission::from(
 							$permission,
 						),
-						(array) $characteristicMetadata->offsetGet('Permissions'),
+						$characteristicMetadata['Permissions'],
 					),
 					$service,
 					$property,

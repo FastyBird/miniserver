@@ -3,11 +3,9 @@
 namespace FastyBird\Core\WebSockets\Controllers\Responses;
 
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Core\WebSockets\Exceptions as WebSocketsExceptions;
 use Nette;
 use Nette\Utils;
 use Override;
-use function is_array;
 use function sprintf;
 
 /**
@@ -16,29 +14,22 @@ use function sprintf;
 final class ErrorResponse implements ControllerResponse
 {
 
-	private Utils\ArrayHash $headers;
+	/** @var array<string, mixed> */
+	private array $headers = [];
 
 	private int $statusCode;
 
 	/**
+	 * @param array<string, mixed>|null $headers
+	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 */
-	public function __construct(int $statusCode, Utils\ArrayHash|array|null $headers = null)
+	public function __construct(int $statusCode, array|null $headers = null)
 	{
-		$this->headers = new Utils\ArrayHash();
-
 		$this->setStatus($statusCode);
 
-		if ($headers) {
-			if (is_array($headers)) {
-				$this->setHeaders($headers);
-
-			} elseif ($headers instanceof Utils\ArrayHash) {
-				$this->setHeaders((array) $headers);
-
-			} else {
-				throw new WebSocketsExceptions\BadResponse('Invalid headers argument received');
-			}
+		if ($headers !== null && $headers !== []) {
+			$this->setHeaders($headers);
 		}
 	}
 
@@ -54,9 +45,12 @@ final class ErrorResponse implements ControllerResponse
 		$this->statusCode = $statusCode;
 	}
 
+	/**
+	 * @param array<string, mixed> $headers
+	 */
 	public function setHeaders(array $headers): void
 	{
-		$this->headers = new Utils\ArrayHash();
+		$this->headers = [];
 
 		foreach ($headers as $key => $value) {
 			$this->addHeader($key, $value);
@@ -65,7 +59,7 @@ final class ErrorResponse implements ControllerResponse
 
 	public function addHeader(string $header, mixed $value): void
 	{
-		$this->headers->offsetSet($header, $value);
+		$this->headers[$header] = $value;
 	}
 
 	#[Override]

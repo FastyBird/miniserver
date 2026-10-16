@@ -14,7 +14,6 @@ use FastyBird\Core\Exchange\Publisher\Async;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Types;
-use Nette\Utils;
 use Override;
 use ReflectionClass;
 use function count;
@@ -225,10 +224,7 @@ final readonly class ModuleEntities implements Common\EventSubscriber
 			$this->getPublisher($this->eventLoopStatus->running)->publish(
 				Sources\Module::TRIGGERS,
 				$publishRoutingKey,
-				$this->documentFactory->create(
-					Utils\ArrayHash::from($entity->toArray()),
-					$publishRoutingKey,
-				),
+				$this->documentFactory->create($entity->toArray(), $publishRoutingKey),
 			);
 		}
 	}

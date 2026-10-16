@@ -25,9 +25,12 @@ trait HasEntityParams
 	#[ORM\Column(name: 'params', type: 'json', nullable: true)]
 	protected array|null $params = null;
 
-	public function getParams(): Utils\ArrayHash
+	/**
+	 * @return array<string, mixed>
+	 */
+	public function getParams(): array
 	{
-		return $this->params !== null ? Utils\ArrayHash::from($this->params) : Utils\ArrayHash::from([]);
+		return $this->params ?? [];
 	}
 
 	/**
@@ -90,7 +93,7 @@ trait HasEntityParams
 		$parts = explode('.', $key);
 
 		if (array_key_exists($parts[0], $this->params)) {
-			if (is_array($this->params[$parts[0]]) || $this->params[$parts[0]] instanceof Utils\ArrayHash) {
+			if (is_array($this->params[$parts[0]])) {
 				$val = null;
 
 				foreach ($parts as $part) {

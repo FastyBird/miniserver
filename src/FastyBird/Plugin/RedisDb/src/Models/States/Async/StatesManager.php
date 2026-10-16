@@ -17,16 +17,15 @@ use Ramsey\Uuid;
 use React\Promise;
 use stdClass;
 use Throwable;
+use function array_key_exists;
 use function array_keys;
 use function assert;
 use function get_object_vars;
 use function in_array;
-use function is_array;
 use function is_numeric;
 use function is_object;
 use function is_string;
 use function method_exists;
-use function property_exists;
 use function React\Async\async;
 use function React\Async\await;
 use function serialize;
@@ -54,10 +53,7 @@ final readonly class StatesManager
 	}
 
 	/**
-	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
-	 * the callers built before; an ArrayHash is used as it is given (#723).
-	 *
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @return Promise\PromiseInterface<T>
 	 *
@@ -65,12 +61,10 @@ final readonly class StatesManager
 	 */
 	public function create(
 		Uuid\UuidInterface $id,
-		array|Utils\ArrayHash $values,
+		array $values,
 		int $database = 0,
 	): Promise\PromiseInterface
 	{
-		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
-
 		$deferred = new Promise\Deferred();
 
 		$this->createKey($id, $values, $this->entity::getCreateFields(), $database)
@@ -124,10 +118,7 @@ final readonly class StatesManager
 	}
 
 	/**
-	 * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what
-	 * the callers built before; an ArrayHash is used as it is given (#723).
-	 *
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @return Promise\PromiseInterface<T|false>
 	 *
@@ -135,12 +126,10 @@ final readonly class StatesManager
 	 */
 	public function update(
 		Uuid\UuidInterface $id,
-		array|Utils\ArrayHash $values,
+		array $values,
 		int $database = 0,
 	): Promise\PromiseInterface
 	{
-		$values = is_array($values) ? Utils\ArrayHash::from($values) : $values;
-
 		$deferred = new Promise\Deferred();
 
 		$this->updateKey($id, $values, $this->entity::getUpdateFields(), $database)
@@ -258,6 +247,7 @@ final readonly class StatesManager
 	}
 
 	/**
+	 * @param array<string, mixed> $values
 	 * @param array<string>|array<string, int|string|bool|null> $fields
 	 *
 	 * @return Promise\PromiseInterface<string>
@@ -266,7 +256,7 @@ final readonly class StatesManager
 	 */
 	private function createKey(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array $values,
 		array $fields,
 		int $database,
 	): Promise\PromiseInterface
@@ -279,7 +269,7 @@ final readonly class StatesManager
 			// Initialize structure
 			$data = new stdClass();
 
-			$values->offsetSet(States\State::ID_FIELD, $id->toString());
+			$values[States\State::ID_FIELD] = $id->toString();
 
 			foreach ($fields as $field => $default) {
 				$value = $default;
@@ -288,22 +278,20 @@ final readonly class StatesManager
 					$field = $default;
 
 					// If default is not defined => field is required
-					if (!is_string($field) || !property_exists($values, $field)) {
+					if (!is_string($field) || !array_key_exists($field, $values)) {
 						return Promise\reject(
 							new Exceptions\InvalidArgument(sprintf('Value for key "%s" is required', $field)),
 						);
 					}
 
-					$value = $values->offsetGet($field);
+					$value = $values[$field];
 
-				} elseif (property_exists($values, $field)) {
-					if ($values->offsetGet($field) !== null) {
-						$value = $values->offsetGet($field);
+				} elseif (array_key_exists($field, $values)) {
+					if ($values[$field] !== null) {
+						$value = $values[$field];
 
 						if ($value instanceof DateTimeInterface) {
 							$value = $value->format(DateTimeInterface::ATOM);
-						} elseif ($value instanceof Utils\ArrayHash) {
-							$value = (array) $value;
 						} elseif ($value instanceof BackedEnum) {
 							$value = $value->value;
 						} elseif (is_object($value)) {
@@ -358,6 +346,7 @@ final readonly class StatesManager
 	}
 
 	/**
+	 * @param array<string, mixed> $values
 	 * @param array<string> $fields
 	 *
 	 * @return Promise\PromiseInterface<string>
@@ -366,7 +355,7 @@ final readonly class StatesManager
 	 */
 	private function updateKey(
 		Uuid\UuidInterface $id,
-		Utils\ArrayHash $values,
+		array $values,
 		array $fields,
 		int $database,
 	): Promise\PromiseInterface
@@ -392,14 +381,11 @@ final readonly class StatesManager
 					$isUpdated = false;
 
 					foreach ($fields as $field) {
-						if (property_exists($values, $field)) {
-							$value = $values->offsetGet($field);
+						if (array_key_exists($field, $values)) {
+							$value = $values[$field];
 
 							if ($value instanceof DateTimeInterface) {
 								$value = $value->format(DateTimeInterface::ATOM);
-
-							} elseif ($value instanceof Utils\ArrayHash) {
-								$value = (array) $value;
 
 							} elseif ($value instanceof BackedEnum) {
 								$value = $value->value;

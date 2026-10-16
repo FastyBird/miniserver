@@ -17,6 +17,8 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use ReflectionException;
 use RuntimeException;
+use Throwable;
+use TypeError;
 
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -78,7 +80,7 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 		self::assertIsObject($parent);
 		self::assertSame('first-device', $parent->getIdentifier());
 
-		$child = $manager->create(Utils\ArrayHash::from([
+		$child = $manager->create([
 			'entity' => Tests\Fixtures\Dummy\DummyDeviceEntity::class,
 			'identifier' => 'new-child-device',
 			'connector' => $parent->getConnector(),
@@ -86,7 +88,7 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 			'parents' => [
 				$parent,
 			],
-		]));
+		]);
 
 		self::assertSame('new-child-device', $child->getIdentifier());
 		self::assertCount(1, $child->getParents());
@@ -122,12 +124,12 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertIsObject($parent);
 
-		$device = $manager->create(Utils\ArrayHash::from([
+		$device = $manager->create([
 			'entity' => Tests\Fixtures\Dummy\DummyDeviceEntity::class,
 			'identifier' => 'timestamped-device',
 			'connector' => $parent->getConnector(),
 			'name' => 'Timestamped device',
-		]));
+		]);
 
 		self::assertInstanceOf(DateTimeInterface::class, $device->getCreatedAt());
 		self::assertSame('2020-04-01T12:00:00+00:00', $device->getCreatedAt()->format(DateTimeInterface::ATOM));
@@ -211,6 +213,48 @@ final class DeviceEntitiesTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertIsObject($parent);
 		self::assertSame('first-device', $parent->getIdentifier());
+	}
+
+	/**
+	 * The params of an entity are handed out as the plain array they were stored as, nested lists
+	 * included, and a device's parents are set from an array only (#723)
+	 *
+	 * @throws Throwable
+	 */
+	public function testParamsAreAPlainArrayAndParentsTakeAnArray(): void
+	{
+		$manager = $this->getContainer()->getByType(Models\Entities\Devices\DevicesManager::class);
+		$repository = $this->getContainer()->getByType(Models\Entities\Devices\DevicesRepository::class);
+
+		$findQuery = new Queries\Entities\FindDevices();
+		$findQuery->byIdentifier('first-device');
+
+		$parent = $repository->findOneBy($findQuery);
+
+		self::assertIsObject($parent);
+
+		$device = $manager->create([
+			'entity' => Tests\Fixtures\Dummy\DummyDeviceEntity::class,
+			'identifier' => 'params-device',
+			'connector' => $parent->getConnector(),
+			'name' => 'Params device',
+			'params' => ['transport' => ['host' => 'localhost', 'ports' => [80, 443]], 'retries' => 3],
+		]);
+
+		self::assertSame(
+			['transport' => ['host' => 'localhost', 'ports' => [80, 443]], 'retries' => 3],
+			$device->getParams(),
+		);
+		self::assertSame([80, 443], $device->getParam('transport.ports'));
+
+		$device->setParents([$parent]);
+
+		self::assertSame([$parent], $device->getParents());
+
+		$this->expectException(TypeError::class);
+
+		// @phpstan-ignore argument.type (the call is the test: the parents are an array)
+		$device->setParents(Utils\ArrayHash::from([$parent]));
 	}
 
 }

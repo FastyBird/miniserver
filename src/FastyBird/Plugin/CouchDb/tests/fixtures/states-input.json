@@ -1,0 +1,183 @@
+{
+ "string values": {
+  "create": {
+   "stored": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":\"camel\",\"created\":null,\"_id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\"}"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\CouchDb\\Exceptions\\InvalidState",
+    "State could not be created"
+   ]
+  },
+  "update": {
+   "stored": [
+    "{\"value\":\"keyValue\"}",
+    "{\"camelCased\":\"camel\"}"
+   ],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created": null,
+    "updated": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "null": {
+  "create": {
+   "stored": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":null,\"camelCased\":null,\"created\":null,\"_id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\"}"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\CouchDb\\Exceptions\\InvalidState",
+    "State could not be created"
+   ]
+  },
+  "update": {
+   "stored": [
+    "{\"value\":null}"
+   ],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created": null,
+    "updated": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "unchanged value": {
+  "create": {
+   "stored": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"stored\",\"camelCased\":null,\"created\":null,\"_id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\"}"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\CouchDb\\Exceptions\\InvalidState",
+    "State could not be created"
+   ]
+  },
+  "update": {
+   "stored": [],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created": null,
+    "updated": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "date": {
+  "create": {
+   "stored": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"date\":\"2021-02-03 04:05:06.000000\",\"timezone_type\":1,\"timezone\":\"+00:00\"},\"camelCased\":null,\"created\":null,\"_id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\"}"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\CouchDb\\Exceptions\\InvalidState",
+    "State could not be created"
+   ]
+  },
+  "update": {
+   "stored": [
+    "{\"value\":\"2021-02-03T04:05:06+00:00\"}"
+   ],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created": null,
+    "updated": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "backed enum": {
+  "create": {
+   "stored": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"com.fastybird.devices-module\",\"camelCased\":null,\"created\":null,\"_id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\"}"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\CouchDb\\Exceptions\\InvalidState",
+    "State could not be created"
+   ]
+  },
+  "update": {
+   "stored": [
+    "{\"value\":\"com.fastybird.devices-module\"}"
+   ],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created": null,
+    "updated": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "nested twice": {
+  "create": {
+   "stored": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"list\":[1,2],\"map\":{\"x\":true}},\"camelCased\":null,\"created\":null,\"_id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\"}"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\CouchDb\\Exceptions\\InvalidState",
+    "State could not be created"
+   ]
+  },
+  "update": {
+   "stored": [
+    "{\"value\":{\"list\":[1,2],\"map\":{\"x\":true}}}"
+   ],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created": null,
+    "updated": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "unknown key": {
+  "create": {
+   "stored": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created\":null,\"_id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\"}"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\CouchDb\\Exceptions\\InvalidState",
+    "State could not be created"
+   ]
+  },
+  "update": {
+   "stored": [
+    "{\"value\":\"keyValue\"}"
+   ],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created": null,
+    "updated": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "required value missing": {
+  "create": {
+   "stored": [],
+   "result": [
+    "FastyBird\\Plugin\\CouchDb\\Exceptions\\InvalidState",
+    "State could not be created"
+   ]
+  },
+  "update": {
+   "stored": [
+    "{\"camelCased\":\"camel\"}"
+   ],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created": null,
+    "updated": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ }
+}

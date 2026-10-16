@@ -18,7 +18,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -117,8 +116,7 @@ final class StoreDeviceStateTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * The state managers are replaced by recorders of what set() is handed. A PropertyUpdate is read the way the
-	 * managers read it on their first line, so the record is the same for it and for the ArrayHash it replaced.
+	 * The state managers are replaced by recorders of what set() is handed. A PropertyUpdate is recorded as the array of its fields.
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws ShellyExceptions\InvalidArgument
@@ -130,12 +128,10 @@ final class StoreDeviceStateTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$record = fn (string $owner): Closure => function (
 			DevicesDocuments\Property $property,
-			Utils\ArrayHash|DevicesStates\PropertyUpdate $data,
+			DevicesStates\PropertyUpdate $data,
 			Sources\Source|null $source,
 		) use ($owner): Promise\PromiseInterface {
-				$data = $data instanceof DevicesStates\PropertyUpdate ? $data->toArrayHash() : $data;
-
-				$this->set[] = [$owner, $property->getIdentifier(), (array) $data, $source?->value];
+				$this->set[] = [$owner, $property->getIdentifier(), $data->toArray(), $source?->value];
 
 				return Promise\resolve(true);
 		};

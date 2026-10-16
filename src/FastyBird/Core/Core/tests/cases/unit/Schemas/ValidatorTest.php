@@ -9,6 +9,7 @@ use FastyBird\Core\Values\Schemas;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use function file_get_contents;
 
 final class ValidatorTest extends TestCase
@@ -33,8 +34,38 @@ final class ValidatorTest extends TestCase
 		$result = $validator->validate($data, $schema);
 
 		foreach ($expected as $key => $value) {
-			self::assertSame($value, $result->offsetGet($key));
+			self::assertSame($value, $result[$key]);
 		}
+	}
+
+	/**
+	 * The validated data is a plain array, and its nested objects and lists are arrays too: a
+	 * list stays a list, and an empty object is an empty array
+	 *
+	 * @throws ValuesExceptions\InvalidData
+	 * @throws CoreExceptions\Logic
+	 * @throws DocumentsExceptions\MalformedInput
+	 * @throws Utils\JsonException
+	 */
+	public function testTheResultKeepsNestedStructuresAsArrays(): void
+	{
+		$result = (new Schemas\Validator())->validate(
+			Utils\Json::encode([
+				'list' => [1, 2],
+				'map' => ['a' => ['b' => true]],
+				'empty' => new stdClass(),
+			]),
+			'{"type": "object"}',
+		);
+
+		self::assertSame(
+			[
+				'list' => [1, 2],
+				'map' => ['a' => ['b' => true]],
+				'empty' => [],
+			],
+			$result,
+		);
 	}
 
 	/**

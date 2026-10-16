@@ -8,10 +8,8 @@ use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
-use Nette\Utils;
 use TypeError;
 use ValueError;
-use function assert;
 use function in_array;
 use function is_array;
 use function is_scalar;
@@ -119,19 +117,21 @@ trait HydratesAccount
 		}
 	}
 
+	/**
+	 * @return array{datetime: array{format: array<string, string>, week_start?: int, zone?: string}}
+	 */
 	protected function hydrateParamsAttribute(
 		Objects\StandardObject $attributes,
-	): Utils\ArrayHash
+	): array
 	{
-		$params = Utils\ArrayHash::from([
+		$params = [
 			'datetime' => [
 				'format' => [],
 			],
-		]);
-		assert($params['datetime'] instanceof Utils\ArrayHash);
+		];
 
 		if ($attributes->has('week_start') && is_scalar($attributes->get('week_start'))) {
-			$params['datetime']->offsetSet('week_start', (int) $attributes->get('week_start'));
+			$params['datetime']['week_start'] = (int) $attributes->get('week_start');
 		}
 
 		if (
@@ -141,17 +141,15 @@ trait HydratesAccount
 			$datetime = $attributes->get('datetime');
 
 			if ($datetime->has('timezone') && is_scalar($datetime->get('timezone'))) {
-				$params['datetime']->offsetSet('zone', (string) $datetime->get('timezone'));
+				$params['datetime']['zone'] = (string) $datetime->get('timezone');
 			}
 
 			if ($datetime->has('date_format') && is_scalar($datetime->get('date_format'))) {
-				assert($params['datetime']['format'] instanceof Utils\ArrayHash);
-				$params['datetime']['format']->offsetSet('date', (string) $datetime->get('date_format'));
+				$params['datetime']['format']['date'] = (string) $datetime->get('date_format');
 			}
 
 			if ($datetime->has('time_format') && is_scalar($datetime->get('time_format'))) {
-				assert($params['datetime']['format'] instanceof Utils\ArrayHash);
-				$params['datetime']['format']->offsetSet('time', (string) $datetime->get('time_format'));
+				$params['datetime']['format']['time'] = (string) $datetime->get('time_format');
 			}
 		}
 

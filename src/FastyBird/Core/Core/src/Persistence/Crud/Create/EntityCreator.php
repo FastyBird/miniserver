@@ -11,11 +11,10 @@ use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Persistence\Mapping;
-use Nette\Utils;
 use ReflectionClass;
 use ReflectionException;
+use function array_key_exists;
 use function class_exists;
-use function is_array;
 use function is_string;
 use function sprintf;
 
@@ -41,10 +40,7 @@ final class EntityCreator extends Crud\CrudManager
 	}
 
 	/**
-	 * A plain array is turned into the ArrayHash Utils\ArrayHash::from() makes of it, so it takes
-	 * the path an ArrayHash takes; see Mapping\EntityMapper::fillEntity()
-	 *
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
@@ -53,21 +49,17 @@ final class EntityCreator extends Crud\CrudManager
 	 * @throws ReflectionException
 	 */
 	public function create(
-		array|Utils\ArrayHash $values,
+		array $values,
 		Entities\CrudEntity|null $entity = null,
 	): Entities\CrudEntity
 	{
-		if (is_array($values)) {
-			$values = Utils\ArrayHash::from($values);
-		}
-
 		if (!$entity instanceof Entities\CrudEntity) {
 			try {
 				// Entity name is override
-				$entityClass = $values->offsetExists('entity')
-					&& is_string($values->offsetGet('entity'))
-					&& class_exists($values->offsetGet('entity'))
-						? $values->offsetGet('entity')
+				$entityClass = array_key_exists('entity', $values)
+					&& is_string($values['entity'])
+					&& class_exists($values['entity'])
+						? $values['entity']
 						: $this->entityName;
 
 				try {
@@ -90,7 +82,7 @@ final class EntityCreator extends Crud\CrudManager
 				$constructor = $rc->getConstructor();
 
 				$entity = $constructor !== null ? $rc->newInstanceArgs(
-					Helpers\ConstructorAutowiring::autowireArguments($constructor, (array) $values),
+					Helpers\ConstructorAutowiring::autowireArguments($constructor, $values),
 				) : $this->entityManager->getClassMetadata($this->entityName)
 					->newInstance();
 			} catch (ReflectionException) {
