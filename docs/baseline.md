@@ -205,12 +205,12 @@ client raises an argument-count error if executed, and a presenter returns an em
 where its parent declares a non-empty list. Both are suppressed with truthful comments at
 the call site and must be resolved before the affected features are relied upon.
 
-**Two dependencies are patched at install time.** The root `composer.json` declares both
-patches, and both apply from `tools/patches/`: `nette/utils` (`Bug: Offset check with null
-support`, which keeps `ArrayHash::offsetExists()` true for a key holding `null`; the explicit-null
-path of every Devices state manager relies on it) and `softcreatr/jsonpath`. `enable-patching` is
-an explicit `true`, and `composer-exit-on-patch-failure` is `true`, so a patch that fails to apply
-stops the install. No dependency declares a patch by URL any more, so the external
+**One dependency is patched at install time.** The root `composer.json` declares the patch, and
+it applies from `tools/patches/`: `softcreatr/jsonpath`. (A second one, `nette/utils`, `Bug:
+Offset check with null support`, kept `ArrayHash::offsetExists()` true for a key holding `null`;
+it went with the last `ArrayHash` in the packages, #723, because nothing that remains calls it.)
+`enable-patching` is an explicit `true`, and `composer-exit-on-patch-failure` is `true`, so a patch
+that fails to apply stops the install. No dependency declares a patch by URL any more, so the external
 `FastyBird/libraries-patches` repository is not needed: `grep -rl libraries-patches
 vendor/*/*/composer.json` returns nothing.
 

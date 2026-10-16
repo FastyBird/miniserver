@@ -25,6 +25,9 @@ parameters:
             missingCheckedExceptionInThrows: true
             tooWideThrowType: true
 
+    # An inline ignore must say why it is there: a bare `// @phpstan-ignore` is an error (#436)
+    reportIgnoresWithoutComments: true
+
     checkMissingCallableSignature: true
     checkTooWideReturnTypesInProtectedAndPublicMethods: true
     checkInternalClassCaseSensitivity: true
