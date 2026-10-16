@@ -13,7 +13,7 @@ use Override;
  * Property value document
  */
 #[Documents\Mapping\Document]
-final readonly class StateValues implements Documents\Document
+final readonly class StateValues implements Documents\Document, ObjectMapper\MappedObject
 {
 
 	public function __construct(

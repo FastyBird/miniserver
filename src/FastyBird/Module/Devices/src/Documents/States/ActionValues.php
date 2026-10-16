@@ -14,7 +14,7 @@ use function array_merge;
  * Property set action value document
  */
 #[Documents\Mapping\Document]
-final readonly class ActionValues implements Documents\Document
+final readonly class ActionValues implements Documents\Document, ObjectMapper\MappedObject
 {
 
 	public function __construct(

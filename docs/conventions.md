@@ -405,12 +405,70 @@ A plain array becomes an object of a mapped class in one place: `Documents\Mappi
 when it needs one, a `Documents\Mapping\MappingOptions`, and catches `Documents\Exceptions\MappingFailed`,
 whose message is the printed list of what was wrong. It rethrows that as its own exception where its
 callers expect one (a connector's `Helpers\MessageBuilder` throws `Exceptions\Runtime`, `Could not map data
-to message: ` followed by the text). Nothing outside `Mapper` injects or calls the mapping library's
+to message: ` followed by the text). Nothing outside `Mapper` injects or calls a mapping library's
 processor, builds its options or prints its errors (#724).
 
 Options are declared at the call as a `MappingOptions` argument, never set on a shared mapper: the
 only one today is `allowUnknownFields`, which every builder of input from outside the process
 (messages, documents, stored states) turns on and a value object built from local data leaves off.
+
+### Two libraries, one rule while classes move from one to the other
+
+`orisai/object-mapper` is being replaced by `cuyz/valinor` package by package (#724), so `Mapper` has two
+branches and a class chooses its branch by what it implements:
+
+- **A class that implements `Orisai\ObjectMapper\MappedObject` is mapped by orisai**, with the rules it
+  carries as attributes. This is every class that has not been migrated yet.
+- **Any other class is mapped by Valinor.** A class is migrated by dropping `MappedObject` (and, with it,
+  every `Orisai\ObjectMapper` attribute and import) and by giving Valinor what it reads: the native and
+  PHPDoc types, and the attributes below. `Documents\Document` does not extend `MappedObject`; each root
+  of a not yet migrated hierarchy declares it itself (`Devices\Documents\Document`, `Triggers\Documents\Triggers\Trigger`,
+  `Connector\...\Messages\Message`), and its migration removes that one declaration.
+- A migrated class does not contain an orisai-mapped one, and an orisai-mapped class does not contain a migrated
+  one: Valinor would build the nested object through its constructor without any of orisai's rules, and orisai
+  accepts only a `MappedObject` there. A migration therefore takes a class with every class it nests.
+
+`MappingFailed` carries one line per error on both branches: for orisai the text of its `ErrorVisualPrinter`,
+for Valinor `<path>: <message>` for each refused value, `*root*` being the whole input.
+
+What a migrated class declares, in place of what orisai had:
+
+| orisai | Valinor |
+|---|---|
+| `StringValue()`, `IntValue()`, `BoolValue()`, `ArrayOf`/`ListOf`, `MappedObjectValue` | the native type, `list<T>` / `array<K, T>` in the PHPDoc, the class itself |
+| `StringValue(notEmpty: true)` | `#[Documents\Mapping\RefuseBlank]`: it refuses what orisai refused, a string of ASCII white space only (orisai 0.3.0 tests `preg_match('/\S/')`, so a no-break space or a zero width space is a value, a form feed is blank); `MapperParityTest` holds both classes to the same answers. Valinor's `non-empty-string` accepts `" "` |
+| `AnyOf([StringValue(notEmpty: true), NullValue(castEmptyString: true)])` | `string\|null` with `#[Documents\Mapping\MapBlankToNull]` |
+| `FieldName('created_at')` | `#[CuyZ\Valinor\Mapper\Configurator\MapFromKey('created_at')]` |
+| `DateTimeValue(format: ATOM)` | `DateTimeInterface` (ATOM is the only date format the builder supports) |
+| `UuidValue()` | `Ramsey\Uuid\UuidInterface`; the builder reads the canonical form only, like the rule |
+| `AnyOf([FloatValue, IntValue])` | decide per field: `float` turns an int into a float, which is what orisai's rule did; `int\|float` keeps what it is given. Pin the choice in a test |
+
+Valinor casts no scalar unless told to: a number in a string is not a number for it, where `castNumericString`
+made it one for orisai. The per-property attributes `MapAsInt`, `MapAsFloat` and `MapAsBool`
+(`CuyZ\Valinor\Mapper\Configurator`) are the closest counterparts of `castNumericString` and `castBoolLike`, and
+read a little more than the rules did (`MapAsInt` also takes `5.0` and `"007"`), so each use is pinned in a test.
+
+Three rules keep Valinor's behaviour predictable:
+
+- **A converter is an attribute on the property, never registered on the builder.** A converter registered on
+  the builder runs on every node and stops Valinor choosing between the object types of a union by what the input
+  holds. `Mapper` registers no converter.
+- **Constructors are called.** Valinor builds a class through its constructor, orisai sets its properties without
+  calling it. A migrated class has no constructor that does more than assign what it is given, and no second
+  property with the name of a parameter.
+- **A constructor refuses a value only by throwing Valinor's error message** (`MessageBuilder::newError(...)->build()`),
+  which `Mapper` turns into `MappingFailed` like any other refusal. Any other exception from a constructor is a defect
+  and propagates as it is: wrapping it would hide a `TypeError` as bad input, and orisai, which never called
+  constructors, had no such case.
+- **An overlapping union is refused**: two array types in one union have to be collapsed to one type.
+
+**There is no file cache for Valinor.** Valinor can compile what it learns about a class into files, and
+`FileSystemCache` replaces a file with `rename()`. On a bind mount, which is what the development and the
+test containers have under `var/`, replacing a file that exists is not atomic: a reader that has seen the file
+fails to open it, and under the test runner the failure surfaces as a fatal error in PHPUnit's own classes
+(a stress test with three writers replacing one file and a reader: 2719 of 22442 reads failed on the mount, none on a container's own filesystem). Each `Mapper`
+keeps what it learns in memory, which is all a long-running server or console process needs. Wiring a cache
+needs a directory on a filesystem where `rename()` is atomic (#724).
 
 ## Docblocks
 

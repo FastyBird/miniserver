@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Tests\Fixtures\Dummy;
 
 use FastyBird\Core\Documents;
-use Orisai\ObjectMapper;
 use Override;
 
 /**
@@ -20,9 +19,8 @@ final class DummyRoutedDocument implements Documents\Document
 	 * @param list<string> $tags
 	 */
 	public function __construct(
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[Documents\Mapping\RefuseBlank]
 		private readonly string $id,
-		#[ObjectMapper\Rules\ListOf(item: new ObjectMapper\Rules\StringValue())]
 		private readonly array $tags = [],
 	)
 	{

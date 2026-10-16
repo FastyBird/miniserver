@@ -21,7 +21,7 @@ use Ramsey\Uuid;
 	Accounts\Types\RoutingKey::ROLE_DOCUMENT_UPDATED->value,
 	Accounts\Types\RoutingKey::ROLE_DOCUMENT_DELETED->value,
 ])]
-final readonly class Role implements Documents\Document
+final readonly class Role implements Documents\Document, ObjectMapper\MappedObject
 {
 
 	public function __construct(

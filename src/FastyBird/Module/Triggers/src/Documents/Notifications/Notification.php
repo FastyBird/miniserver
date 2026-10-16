@@ -23,7 +23,7 @@ use Ramsey\Uuid;
 	Triggers\Types\RoutingKey::NOTIFICATION_DOCUMENT_UPDATED->value,
 	Triggers\Types\RoutingKey::NOTIFICATION_DOCUMENT_DELETED->value,
 ])]
-abstract class Notification implements Documents\Document, Documents\Owner
+abstract class Notification implements Documents\Document, ObjectMapper\MappedObject, Documents\Owner
 {
 
 	use Documents\HasOwner;

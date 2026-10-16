@@ -8,7 +8,7 @@ use Orisai\ObjectMapper;
 // Routed so that the exchange handler tests can have the real routing document factory build it
 #[Documents\Mapping\Document]
 #[Documents\Mapping\RoutingMap(['fb.exchange.module.document.testing.routing.key'])]
-final readonly class DummyDocument implements Documents\Document
+final readonly class DummyDocument implements Documents\Document, ObjectMapper\MappedObject
 {
 
 	public function __construct(

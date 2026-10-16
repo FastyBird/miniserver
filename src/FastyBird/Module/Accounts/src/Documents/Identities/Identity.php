@@ -21,7 +21,7 @@ use Ramsey\Uuid;
 	Types\RoutingKey::IDENTITY_DOCUMENT_UPDATED->value,
 	Types\RoutingKey::IDENTITY_DOCUMENT_DELETED->value,
 ])]
-final readonly class Identity implements Documents\Document
+final readonly class Identity implements Documents\Document, ObjectMapper\MappedObject
 {
 
 	public function __construct(

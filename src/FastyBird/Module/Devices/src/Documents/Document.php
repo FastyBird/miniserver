@@ -4,13 +4,14 @@ namespace FastyBird\Module\Devices\Documents;
 
 use FastyBird\Core\Documents;
 use FastyBird\Core\Values\Types\Sources;
+use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
 /**
  * Base document interface
  */
-interface Document extends Documents\Document
+interface Document extends Documents\Document, ObjectMapper\MappedObject
 {
 
 	public function getId(): Uuid\UuidInterface;

@@ -2,8 +2,6 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Documents;
 
-use CuyZ\Valinor;
-use DateTimeInterface;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Tests;
@@ -19,12 +17,13 @@ use function is_string;
 use function serialize;
 
 /**
- * The Valinor spike (#724 PR0). Each input goes through DocumentFactory, which maps it with orisai, and through Valinor
- * configured as below; both documents must serialise to the same JSON, through the same encoder the exchange and the
- * WebSockets use, and hold the same state, compared with serialize() so that an int is not a float and an unset
- * property is not a null one. The fixtures carry orisai's attributes and the Valinor ones beside them.
+ * What the Core fixture documents map to, pinned. Each input goes through DocumentFactory, which hands it to the mapper,
+ * and the result must be what orisai made of the same input when the fixtures were still mapped by it (#724 PR2): the
+ * JSON the exchange and the WebSockets encode, with Nette's Json::encode(), and serialize() of the document, so that an
+ * int is not a float and an unset property is not a null one. tests/fixtures/Documents/pinned.json holds both strings
+ * per input, taken from the orisai mapping at 09000bcaa
  */
-final class ValinorEquivalenceTest extends Tests\Cases\Unit\BaseTestCase
+final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	private const string ID = '176984ad-7cf7-465d-9e53-71668a74a688';
@@ -36,13 +35,13 @@ final class ValinorEquivalenceTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Throwable
 	 */
 	#[DataProvider('documents')]
-	public function testValinorMapsTheSameDocument(string $class, array|string|object $data): void
+	public function testTheDocumentIsWhatOrisaiMade(string $name, string $class, array|string|object $data): void
 	{
-		$orisai = $this->container->getByType(Documents\DocumentFactory::class)->create($class, $data);
-		$valinor = self::valinor()->map($orisai::class, self::input($data));
+		$document = $this->container->getByType(Documents\DocumentFactory::class)->create($class, $data);
+		$pinned = self::pinned($name);
 
-		self::assertSame(Utils\Json::encode($orisai->toArray()), Utils\Json::encode($valinor->toArray()));
-		self::assertSame(serialize($orisai), serialize($valinor));
+		self::assertSame($pinned['json'], Utils\Json::encode($document->toArray()));
+		self::assertSame($pinned['serialized'], serialize($document));
 	}
 
 	/**
@@ -54,14 +53,14 @@ final class ValinorEquivalenceTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$data = self::input((string) file_get_contents(__DIR__ . '/../../../fixtures/Documents/dummy.two.json'));
 
-		$orisai = $this->container->getByType(Documents\DocumentFactory::class)->create(
+		$document = $this->container->getByType(Documents\DocumentFactory::class)->create(
 			Dummy\DummyTwoDocument::class,
-			$data,
+			array_merge($data, ['name' => 'Another name']),
 		);
-		$valinor = self::valinor()->map(Dummy\DummyTwoDocument::class, array_merge($data, ['name' => 'Another name']));
+		$pinned = self::pinned('two, as JSON');
 
-		self::assertNotSame(Utils\Json::encode($orisai->toArray()), Utils\Json::encode($valinor->toArray()));
-		self::assertNotSame(serialize($orisai), serialize($valinor));
+		self::assertNotSame($pinned['json'], Utils\Json::encode($document->toArray()));
+		self::assertNotSame($pinned['serialized'], serialize($document));
 	}
 
 	/**
@@ -71,33 +70,23 @@ final class ValinorEquivalenceTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Throwable
 	 */
 	#[DataProvider('invalid')]
-	public function testValinorRefusesWhatOrisaiRefuses(string $class, array $data): void
+	public function testTheDocumentIsRefusedWhatOrisaiRefused(string $class, array $data, string $message): void
 	{
-		$orisaiRefused = false;
-		$valinorRefused = false;
-
 		try {
 			$this->container->getByType(Documents\DocumentFactory::class)->create($class, $data);
-		} catch (CoreExceptions\InvalidArgument) {
-			$orisaiRefused = true;
-		}
 
-		try {
-			self::valinor()->map($class, $data);
-		} catch (Valinor\Mapper\MappingError) {
-			$valinorRefused = true;
+			self::fail('the document was accepted');
+		} catch (CoreExceptions\InvalidArgument $ex) {
+			self::assertStringContainsString($message, $ex->getMessage());
 		}
-
-		self::assertTrue($orisaiRefused);
-		self::assertTrue($valinorRefused);
 	}
 
 	/**
-	 * @return array<string, array{class-string<Documents\Document>, array<string, mixed>|string|object}>
+	 * @return array<string, array{string, class-string<Documents\Document>, array<string, mixed>|string|object}>
 	 */
 	public static function documents(): array
 	{
-		return [
+		$cases = [
 			'one, as JSON, through the root' => [
 				Dummy\DummyDocument::class,
 				(string) file_get_contents(__DIR__ . '/../../../fixtures/Documents/dummy.one.json'),
@@ -160,10 +149,16 @@ final class ValinorEquivalenceTest extends Tests\Cases\Unit\BaseTestCase
 				['id' => self::ID],
 			],
 		];
+
+		foreach ($cases as $name => $case) {
+			$cases[$name] = [$name, ...$case];
+		}
+
+		return $cases;
 	}
 
 	/**
-	 * @return array<string, array{class-string<Documents\Document>, array<string, mixed>}>
+	 * @return array<string, array{class-string<Documents\Document>, array<string, mixed>, string}>
 	 */
 	public static function invalid(): array
 	{
@@ -171,14 +166,37 @@ final class ValinorEquivalenceTest extends Tests\Cases\Unit\BaseTestCase
 			'no identifier' => [
 				Dummy\DummyOneDocument::class,
 				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE],
+				'identifier: Value *missing* is not a valid string',
 			],
 			'an identifier which is not a string' => [
 				Dummy\DummyOneDocument::class,
 				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => 42],
+				'identifier: Value 42 is not a valid string',
+			],
+			'a blank identifier' => [
+				Dummy\DummyOneDocument::class,
+				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => " \t "],
+				'must not be blank',
+			],
+			'an empty identifier' => [
+				Dummy\DummyOneDocument::class,
+				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => ''],
+				'identifier: Value \'\' must not be blank',
+			],
+			'a blank id' => [
+				Dummy\DummyOneDocument::class,
+				['id' => '  ', 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => 'x'],
+				'id: Value \'  \' must not be blank',
+			],
+			'an id which is not a string' => [
+				Dummy\DummyOneDocument::class,
+				['id' => 42, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => 'x'],
+				'id: Value 42 is not a valid string',
 			],
 			'a name which is not a string' => [
 				Dummy\DummyOneDocument::class,
 				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => 'x', 'name' => 42],
+				'name: Value 42',
 			],
 			'a date in another format' => [
 				Dummy\DummyOneDocument::class,
@@ -188,10 +206,42 @@ final class ValinorEquivalenceTest extends Tests\Cases\Unit\BaseTestCase
 					'identifier' => 'x',
 					'created_at' => '2020-04-01 12:00:00',
 				],
+				'created_at: Value',
+			],
+			'a date with fractions of a second' => [
+				Dummy\DummyOneDocument::class,
+				[
+					'id' => self::ID,
+					'type' => Dummy\DummyOneDocument::TYPE,
+					'identifier' => 'x',
+					'created_at' => '2020-04-01T12:00:00.123+00:00',
+				],
+				'created_at: Value',
+			],
+			'a timestamp' => [
+				Dummy\DummyOneDocument::class,
+				[
+					'id' => self::ID,
+					'type' => Dummy\DummyOneDocument::TYPE,
+					'identifier' => 'x',
+					'created_at' => 1_585_742_400,
+				],
+				'created_at: Value 1585742400',
+			],
+			'updated_at in another format' => [
+				Dummy\DummyOneDocument::class,
+				[
+					'id' => self::ID,
+					'type' => Dummy\DummyOneDocument::TYPE,
+					'identifier' => 'x',
+					'updated_at' => '2020-04-01 12:00:00',
+				],
+				'updated_at: Value',
 			],
 			'tags which are not a list' => [
 				Dummy\DummyRoutedDocument::class,
 				['id' => self::ID, 'tags' => ['first' => 'exchange']],
+				'tags.first: ',
 			],
 		];
 	}
@@ -218,12 +268,21 @@ final class ValinorEquivalenceTest extends Tests\Cases\Unit\BaseTestCase
 		return $data;
 	}
 
-	private static function valinor(): Valinor\Mapper\TreeMapper
+	/**
+	 * @return array{json: string, serialized: string}
+	 *
+	 * @throws Utils\JsonException
+	 */
+	private static function pinned(string $name): array
 	{
-		return (new Valinor\MapperBuilder())
-			->allowSuperfluousKeys()
-			->supportDateFormats(DateTimeInterface::ATOM)
-			->mapper();
+		$pinned = Utils\Json::decode(
+			(string) file_get_contents(__DIR__ . '/../../../fixtures/Documents/pinned.json'),
+			forceArrays: true,
+		);
+		assert(is_array($pinned) && isset($pinned[$name]) && is_array($pinned[$name]));
+		assert(is_string($pinned[$name]['json']) && is_string($pinned[$name]['serialized']));
+
+		return ['json' => $pinned[$name]['json'], 'serialized' => $pinned[$name]['serialized']];
 	}
 
 }
