@@ -436,7 +436,7 @@ What a migrated class declares, in place of what orisai had:
 | orisai | Valinor |
 |---|---|
 | `StringValue()`, `IntValue()`, `BoolValue()`, `ArrayOf`/`ListOf`, `MappedObjectValue` | the native type, `list<T>` / `array<K, T>` in the PHPDoc, the class itself |
-| `StringValue(notEmpty: true)` | `#[Documents\Mapping\RefuseBlank]`: it refuses what orisai refused, a string without a non-whitespace character. Valinor's `non-empty-string` accepts `" "` |
+| `StringValue(notEmpty: true)` | `#[Documents\Mapping\RefuseBlank]`: it refuses what orisai refused, a string of ASCII white space only (orisai 0.3.0 tests `preg_match('/\S/')`, so a no-break space or a zero width space is a value, a form feed is blank); `MapperParityTest` holds both classes to the same answers. Valinor's `non-empty-string` accepts `" "` |
 | `AnyOf([StringValue(notEmpty: true), NullValue(castEmptyString: true)])` | `string\|null` with `#[Documents\Mapping\MapBlankToNull]` |
 | `FieldName('created_at')` | `#[CuyZ\Valinor\Mapper\Configurator\MapFromKey('created_at')]` |
 | `DateTimeValue(format: ATOM)` | `DateTimeInterface` (ATOM is the only date format the builder supports) |
@@ -456,6 +456,10 @@ Three rules keep Valinor's behaviour predictable:
 - **Constructors are called.** Valinor builds a class through its constructor, orisai sets its properties without
   calling it. A migrated class has no constructor that does more than assign what it is given, and no second
   property with the name of a parameter.
+- **A constructor refuses a value only by throwing Valinor's error message** (`MessageBuilder::newError(...)->build()`),
+  which `Mapper` turns into `MappingFailed` like any other refusal. Any other exception from a constructor is a defect
+  and propagates as it is: wrapping it would hide a `TypeError` as bad input, and orisai, which never called
+  constructors, had no such case.
 - **An overlapping union is refused**: two array types in one union have to be collapsed to one type.
 
 **There is no file cache for Valinor.** Valinor can compile what it learns about a class into files, and

@@ -9,6 +9,7 @@ use FastyBird\Core\Tests\Fixtures\Dummy;
 use Orisai\ObjectMapper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid;
+use RuntimeException;
 use Throwable;
 use function strtoupper;
 
@@ -306,6 +307,36 @@ final class MapperTest extends Tests\Cases\Unit\BaseTestCase
 		} catch (Documents\Exceptions\MappingFailed $ex) {
 			self::assertStringStartsWith('uuid: ', $ex->getMessage());
 		}
+	}
+
+	/**
+	 * A constructor refuses a value by throwing Valinor's error message, which is a refusal like any other
+	 *
+	 * @throws Throwable
+	 */
+	public function testAConstructorMayRefuseAValue(): void
+	{
+		try {
+			$this->mapper()->map(['kind' => Dummy\DummyGuardedDocument::REFUSE], Dummy\DummyGuardedDocument::class);
+
+			self::fail('the mapper accepted the data');
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			self::assertSame('*root*: The kind is refused.', $ex->getMessage());
+		}
+	}
+
+	/**
+	 * Any other exception of a constructor is a defect and is not turned into a refusal: orisai never called
+	 * constructors, Valinor does, and a migrated class's constructor must not throw anything but the error message
+	 *
+	 * @throws Throwable
+	 */
+	public function testAConstructorWhichFailsIsNotAMappingFailure(): void
+	{
+		$this->expectException(RuntimeException::class);
+		$this->expectExceptionMessage('The constructor failed');
+
+		$this->mapper()->map(['kind' => Dummy\DummyGuardedDocument::FAIL], Dummy\DummyGuardedDocument::class);
 	}
 
 	/**

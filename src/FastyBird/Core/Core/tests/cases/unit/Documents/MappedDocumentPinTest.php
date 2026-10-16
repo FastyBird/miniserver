@@ -70,11 +70,15 @@ final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 	 * @throws Throwable
 	 */
 	#[DataProvider('invalid')]
-	public function testTheDocumentIsRefusedWhatOrisaiRefused(string $class, array $data): void
+	public function testTheDocumentIsRefusedWhatOrisaiRefused(string $class, array $data, string $message): void
 	{
-		$this->expectException(CoreExceptions\InvalidArgument::class);
+		try {
+			$this->container->getByType(Documents\DocumentFactory::class)->create($class, $data);
 
-		$this->container->getByType(Documents\DocumentFactory::class)->create($class, $data);
+			self::fail('the document was accepted');
+		} catch (CoreExceptions\InvalidArgument $ex) {
+			self::assertStringContainsString($message, $ex->getMessage());
+		}
 	}
 
 	/**
@@ -154,7 +158,7 @@ final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * @return array<string, array{class-string<Documents\Document>, array<string, mixed>}>
+	 * @return array<string, array{class-string<Documents\Document>, array<string, mixed>, string}>
 	 */
 	public static function invalid(): array
 	{
@@ -162,30 +166,37 @@ final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 			'no identifier' => [
 				Dummy\DummyOneDocument::class,
 				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE],
+				'identifier: Value *missing* is not a valid string',
 			],
 			'an identifier which is not a string' => [
 				Dummy\DummyOneDocument::class,
 				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => 42],
+				'identifier: Value 42 is not a valid string',
 			],
 			'a blank identifier' => [
 				Dummy\DummyOneDocument::class,
 				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => " \t "],
+				'must not be blank',
 			],
 			'an empty identifier' => [
 				Dummy\DummyOneDocument::class,
 				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => ''],
+				'identifier: Value \'\' must not be blank',
 			],
 			'a blank id' => [
 				Dummy\DummyOneDocument::class,
 				['id' => '  ', 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => 'x'],
+				'id: Value \'  \' must not be blank',
 			],
 			'an id which is not a string' => [
 				Dummy\DummyOneDocument::class,
 				['id' => 42, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => 'x'],
+				'id: Value 42 is not a valid string',
 			],
 			'a name which is not a string' => [
 				Dummy\DummyOneDocument::class,
 				['id' => self::ID, 'type' => Dummy\DummyOneDocument::TYPE, 'identifier' => 'x', 'name' => 42],
+				'name: Value 42',
 			],
 			'a date in another format' => [
 				Dummy\DummyOneDocument::class,
@@ -195,6 +206,7 @@ final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 					'identifier' => 'x',
 					'created_at' => '2020-04-01 12:00:00',
 				],
+				'created_at: Value',
 			],
 			'a date with fractions of a second' => [
 				Dummy\DummyOneDocument::class,
@@ -204,6 +216,7 @@ final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 					'identifier' => 'x',
 					'created_at' => '2020-04-01T12:00:00.123+00:00',
 				],
+				'created_at: Value',
 			],
 			'a timestamp' => [
 				Dummy\DummyOneDocument::class,
@@ -213,10 +226,22 @@ final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 					'identifier' => 'x',
 					'created_at' => 1_585_742_400,
 				],
+				'created_at: Value 1585742400',
+			],
+			'updated_at in another format' => [
+				Dummy\DummyOneDocument::class,
+				[
+					'id' => self::ID,
+					'type' => Dummy\DummyOneDocument::TYPE,
+					'identifier' => 'x',
+					'updated_at' => '2020-04-01 12:00:00',
+				],
+				'updated_at: Value',
 			],
 			'tags which are not a list' => [
 				Dummy\DummyRoutedDocument::class,
 				['id' => self::ID, 'tags' => ['first' => 'exchange']],
+				'tags.first: ',
 			],
 		];
 	}
