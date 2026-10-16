@@ -264,9 +264,6 @@
         "enable-patching": true,
         "composer-exit-on-patch-failure": true,
         "patches": {
-            "nette/utils": {
-                "Bug: Offset check with null support": "tools/patches/nette-utils-array-offsetcheck.diff"
-            },
             "softcreatr/jsonpath": {
                 "Feature: enable extended queries": "tools/patches/softcreatr-jsonpath-src-filters-querymatchfilter-php.patch"
             }

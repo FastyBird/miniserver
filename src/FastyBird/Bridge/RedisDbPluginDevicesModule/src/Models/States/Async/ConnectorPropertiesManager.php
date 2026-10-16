@@ -7,7 +7,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
 use InvalidArgumentException;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use React\Promise;
@@ -35,23 +34,23 @@ final class ConnectorPropertiesManager implements DevicesModels\States\Connector
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws InvalidArgumentException
 	 */
 	#[Override]
-	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): Promise\PromiseInterface
+	public function create(Uuid\UuidInterface $id, array $values): Promise\PromiseInterface
 	{
 		return $this->statesManager->create($id, $values, $this->database);
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws InvalidArgumentException
 	 */
 	#[Override]
-	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): Promise\PromiseInterface
+	public function update(Uuid\UuidInterface $id, array $values): Promise\PromiseInterface
 	{
 		return $this->statesManager->update($id, $values, $this->database);
 	}

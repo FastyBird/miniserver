@@ -24,7 +24,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Nette;
 use Nette\Localization;
-use Nette\Utils;
 use Throwable;
 use TypeError;
 use ValueError;
@@ -35,6 +34,7 @@ use function array_values;
 use function assert;
 use function floatval;
 use function in_array;
+use function is_array;
 use function is_string;
 use function preg_replace;
 use function sprintf;
@@ -312,21 +312,21 @@ final readonly class Builder
 	{
 		$metadata = $this->loader->loadServices();
 
-		if (!$metadata->offsetExists($type->value)) {
+		if (!array_key_exists($type->value, $metadata)) {
 			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$type->value,
 			));
 		}
 
-		$serviceMetadata = $metadata->offsetGet($type->value);
+		$serviceMetadata = $metadata[$type->value];
 
 		if (
-			!$serviceMetadata instanceof Utils\ArrayHash
-			|| !$serviceMetadata->offsetExists('UUID')
-			|| !is_string($serviceMetadata->offsetGet('UUID'))
-			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
-			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
+			!is_array($serviceMetadata)
+			|| !array_key_exists('UUID', $serviceMetadata)
+			|| !is_string($serviceMetadata['UUID'])
+			|| !array_key_exists('RequiredCharacteristics', $serviceMetadata)
+			|| !is_array($serviceMetadata['RequiredCharacteristics'])
 		) {
 			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
 				'Service definition is missing required attributes',
@@ -398,21 +398,21 @@ final readonly class Builder
 			);
 		}
 
-		$requiredCharacteristics = (array) $serviceMetadata->offsetGet('RequiredCharacteristics');
+		$requiredCharacteristics = $serviceMetadata['RequiredCharacteristics'];
 		$optionalCharacteristics = $virtualCharacteristics = [];
 
 		if (
-			$serviceMetadata->offsetExists('OptionalCharacteristics')
-			&& $serviceMetadata->offsetGet('OptionalCharacteristics') instanceof Utils\ArrayHash
+			array_key_exists('OptionalCharacteristics', $serviceMetadata)
+			&& is_array($serviceMetadata['OptionalCharacteristics'])
 		) {
-			$optionalCharacteristics = (array) $serviceMetadata->offsetGet('OptionalCharacteristics');
+			$optionalCharacteristics = $serviceMetadata['OptionalCharacteristics'];
 		}
 
 		if (
-			$serviceMetadata->offsetExists('VirtualCharacteristics')
-			&& $serviceMetadata->offsetGet('VirtualCharacteristics') instanceof Utils\ArrayHash
+			array_key_exists('VirtualCharacteristics', $serviceMetadata)
+			&& is_array($serviceMetadata['VirtualCharacteristics'])
 		) {
-			$virtualCharacteristics = (array) $serviceMetadata->offsetGet('VirtualCharacteristics');
+			$virtualCharacteristics = $serviceMetadata['VirtualCharacteristics'];
 		}
 
 		$mappedPropertiesTypes = [
@@ -528,23 +528,23 @@ final readonly class Builder
 
 		$metadata = $this->loader->loadCharacteristics();
 
-		if (!$metadata->offsetExists($characteristicType->value)) {
+		if (!array_key_exists($characteristicType->value, $metadata)) {
 			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$characteristicType->value,
 			));
 		}
 
-		$characteristicMetadata = $metadata->offsetGet($characteristicType->value);
+		$characteristicMetadata = $metadata[$characteristicType->value];
 
 		if (
-			!$characteristicMetadata instanceof Utils\ArrayHash
-			|| !$characteristicMetadata->offsetExists('Format')
-			|| !is_string($characteristicMetadata->offsetGet('Format'))
-			|| !$characteristicMetadata->offsetExists('DataType')
+			!is_array($characteristicMetadata)
+			|| !array_key_exists('Format', $characteristicMetadata)
+			|| !is_string($characteristicMetadata['Format'])
+			|| !array_key_exists('DataType', $characteristicMetadata)
 			|| (
-				!is_string($characteristicMetadata->offsetGet('DataType'))
-				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
+				!is_string($characteristicMetadata['DataType'])
+				&& !is_array($characteristicMetadata['DataType'])
 			)
 		) {
 			throw new VirtualThermostatAddonHomeKitConnectorExceptions\InvalidState(
@@ -563,10 +563,10 @@ final readonly class Builder
 			$format = $this->mapPropertyFormat($connectProperty, $characteristicType);
 			$default = $connectProperty->getDefault();
 
-			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
+			if (is_array($characteristicMetadata['DataType'])) {
 				$dataTypes = array_map(
 					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
-					(array) $characteristicMetadata->offsetGet('DataType'),
+					$characteristicMetadata['DataType'],
 				);
 
 				if ($dataTypes === []) {
@@ -575,7 +575,7 @@ final readonly class Builder
 					);
 				}
 			} else {
-				$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
+				$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata['DataType'])];
 			}
 
 			if (!in_array($connectProperty->getDataType(), $dataTypes, true)) {
@@ -600,47 +600,47 @@ final readonly class Builder
 			$format = null;
 			$default = null;
 
-			if ($characteristicMetadata->offsetExists('Default')) {
-				$default = $characteristicMetadata->offsetGet('Default');
+			if (array_key_exists('Default', $characteristicMetadata)) {
+				$default = $characteristicMetadata['Default'];
 			}
 
 			if (
-				$characteristicMetadata->offsetExists('Permissions')
-				&& $characteristicMetadata->offsetGet('Permissions') instanceof Utils\ArrayHash
+				array_key_exists('Permissions', $characteristicMetadata)
+				&& is_array($characteristicMetadata['Permissions'])
 			) {
-				$permissions = (array) $characteristicMetadata->offsetGet('Permissions');
+				$permissions = $characteristicMetadata['Permissions'];
 
 				$settable = in_array(HomeKitTypes\CharacteristicPermission::WRITE->value, $permissions, true);
 			}
 
 			if (
-				$characteristicMetadata->offsetExists('ValidValues')
-				&& $characteristicMetadata->offsetGet('ValidValues') instanceof Utils\ArrayHash
+				array_key_exists('ValidValues', $characteristicMetadata)
+				&& is_array($characteristicMetadata['ValidValues'])
 			) {
 				$format = new Formats\StringEnum(
-					array_values((array) $characteristicMetadata->offsetGet('ValidValues')),
+					array_values($characteristicMetadata['ValidValues']),
 				);
-				$default = array_values((array) $characteristicMetadata->offsetGet('ValidValues'))[0];
+				$default = array_values($characteristicMetadata['ValidValues'])[0];
 			}
 
 			if (
-				$characteristicMetadata->offsetExists('MinValue')
-				|| $characteristicMetadata->offsetExists('MaxValue')
+				array_key_exists('MinValue', $characteristicMetadata)
+				|| array_key_exists('MaxValue', $characteristicMetadata)
 			) {
 				$format = [
-					$characteristicMetadata->offsetExists('MinValue')
-						? floatval($characteristicMetadata->offsetGet('MinValue'))
+					array_key_exists('MinValue', $characteristicMetadata)
+						? floatval($characteristicMetadata['MinValue'])
 						: null,
-					$characteristicMetadata->offsetExists('MaxValue')
-						? floatval($characteristicMetadata->offsetGet('MaxValue'))
+					array_key_exists('MaxValue', $characteristicMetadata)
+						? floatval($characteristicMetadata['MaxValue'])
 						: null,
 				];
 			}
 
-			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
+			if (is_array($characteristicMetadata['DataType'])) {
 				$dataTypes = array_map(
 					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
-					(array) $characteristicMetadata->offsetGet('DataType'),
+					$characteristicMetadata['DataType'],
 				);
 
 				if ($dataTypes === []) {
@@ -651,7 +651,7 @@ final readonly class Builder
 
 				$dataType = $dataTypes[0];
 			} else {
-				$dataType = ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
+				$dataType = ValuesTypes\DataType::from($characteristicMetadata['DataType']);
 			}
 		}
 

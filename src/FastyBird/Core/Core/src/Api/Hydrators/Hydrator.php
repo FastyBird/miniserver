@@ -14,7 +14,6 @@ use FastyBird\Core\Api\Helpers;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use Fig\Http\Message\StatusCodeInterface;
 use Nette\Localization;
-use Nette\Utils;
 use phpDocumentor;
 use Ramsey\Uuid;
 use ReflectionAttribute;
@@ -136,6 +135,8 @@ abstract class Hydrator
 	/**
 	 * @param T|null $entity
 	 *
+	 * @return array<string, mixed>
+	 *
 	 * @throws ApiExceptions\JsonApi
 	 * @throws Throwable
 	 */
@@ -143,7 +144,7 @@ abstract class Hydrator
 		Encoding\Document $document,
 		object|null $entity = null,
 		bool $includeRelationShips = true,
-	): Utils\ArrayHash
+	): array
 	{
 		$entityMapping = $this->mapEntity($this->getEntityName());
 
@@ -183,13 +184,11 @@ abstract class Hydrator
 			throw $this->errors;
 		}
 
-		$result = Utils\ArrayHash::from(array_merge(
-			[
-				'entity' => $this->getEntityName(),
-			],
+		$result = array_merge(
+			['entity' => $this->getEntityName()],
 			$attributes,
 			$relationships,
-		));
+		);
 
 		if ($entity === null) {
 			$identifierKey = $this->entityIdentifier ?? self::IDENTIFIER_KEY;
@@ -789,7 +788,7 @@ abstract class Hydrator
 	 * @param array<Fields\Field> $entityMapping
 	 * @param T|null $entity
 	 *
-	 * @return array<mixed>
+	 * @return array<string, mixed>
 	 *
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ApiExceptions\JsonApiError
@@ -953,6 +952,7 @@ abstract class Hydrator
 			}
 		}
 
+		// @phpstan-ignore return.type (a constructor parameter addressed by its position, `(string) $num`, lands under an integer key)
 		return $data;
 	}
 
@@ -1058,7 +1058,7 @@ abstract class Hydrator
 	 * @param Objects\ResourceObjectCollection<Objects\ResourceObject>|null $included
 	 * @param T|null $entity
 	 *
-	 * @return  array<mixed>
+	 * @return  array<string, mixed>
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState

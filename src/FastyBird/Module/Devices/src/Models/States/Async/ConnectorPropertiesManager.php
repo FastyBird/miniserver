@@ -20,7 +20,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Types;
 use Nette\Caching as NetteCaching;
-use Nette\Utils;
 use Psr\Clock\ClockInterface;
 use Psr\EventDispatcher as PsrEventDispatcher;
 use Ramsey\Uuid;
@@ -28,6 +27,7 @@ use React\Promise;
 use Throwable;
 use TypeError;
 use ValueError;
+use function array_key_exists;
 use function array_map;
 use function array_merge;
 use function boolval;
@@ -133,12 +133,10 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 	 */
 	public function write(
 		DevicesDocuments\Connectors\Properties\Dynamic $property,
-		Utils\ArrayHash|States\PropertyUpdate $data,
+		States\PropertyUpdate $data,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
 	{
-		$data = $data instanceof States\PropertyUpdate ? $data->toArrayHash() : $data;
-
 		if ($this->useExchange) {
 			try {
 				return $this->publisher->publish(
@@ -158,7 +156,7 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 									static fn (bool|int|float|string|DateTimeInterface|Payloads\Payload|null $item): bool|int|float|string|null => Utilities\Value::flattenValue(
 										$item,
 									),
-									(array) $data,
+									$data->toArray(),
 								),
 							],
 						),
@@ -187,12 +185,10 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 	 */
 	public function set(
 		DevicesDocuments\Connectors\Properties\Dynamic $property,
-		Utils\ArrayHash|States\PropertyUpdate $data,
+		States\PropertyUpdate $data,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
 	{
-		$data = $data instanceof States\PropertyUpdate ? $data->toArrayHash() : $data;
-
 		if ($this->useExchange) {
 			try {
 				return $this->publisher->publish(
@@ -212,7 +208,7 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 									static fn (bool|int|float|string|DateTimeInterface|Payloads\Payload|null $item): bool|int|float|string|null => Utilities\Value::flattenValue(
 										$item,
 									),
-									(array) $data,
+									$data->toArray(),
 								),
 							],
 						),
@@ -518,13 +514,12 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 	 */
 	public function writeState(
 		DevicesDocuments\Connectors\Properties\Dynamic $property,
-		Utils\ArrayHash|States\PropertyUpdate $data,
+		States\PropertyUpdate $data,
 		bool $forWriting,
 		Sources\Source|null $source,
 	): Promise\PromiseInterface
 	{
-		// The internals still read the ArrayHash the callers built before PropertyUpdate (#723)
-		$data = $data instanceof States\PropertyUpdate ? $data->toArrayHash() : $data;
+		$values = $data->toArray();
 
 		$deferred = new Promise\Deferred();
 
@@ -534,7 +529,7 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 					States\ConnectorProperty|null $state,
 				) use (
 					$deferred,
-					$data,
+					$values,
 					$property,
 					$forWriting,
 					$source,
@@ -542,7 +537,7 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 					/**
 					 * IMPORTANT: ACTUAL VALUE field is meant to be used only by connectors for saving device actual value
 					 */
-					if ($data->offsetExists(States\Property::ACTUAL_VALUE_FIELD)) {
+					if (array_key_exists(States\Property::ACTUAL_VALUE_FIELD, $values)) {
 						if ($forWriting === true) {
 							$deferred->reject(new DevicesExceptions\InvalidArgument(
 								'Setting property actual value could be done only by "setValue" method',
@@ -556,40 +551,35 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 								$property->getInvalid() !== null
 								&& strval(
 									Utilities\Value::flattenValue(
-										// @phpstan-ignore-next-line
-										$data->offsetGet(States\Property::ACTUAL_VALUE_FIELD),
+										$values[States\Property::ACTUAL_VALUE_FIELD],
 									),
 								) === strval(
 									Utilities\Value::flattenValue($property->getInvalid()),
 								)
 							) {
-								$data->offsetSet(States\Property::ACTUAL_VALUE_FIELD, null);
-								$data->offsetSet(States\Property::VALID_FIELD, false);
+								$values[States\Property::ACTUAL_VALUE_FIELD] = null;
+								$values[States\Property::VALID_FIELD] = false;
 
 							} else {
 								$actualValue = $this->convertWriteActualValue(
-									// @phpstan-ignore-next-line
-									$data->offsetGet(States\Property::ACTUAL_VALUE_FIELD),
+									$values[States\Property::ACTUAL_VALUE_FIELD],
 									$property,
 								);
 
-								$data->offsetSet(
-									States\Property::ACTUAL_VALUE_FIELD,
-									Utilities\Value::flattenValue($actualValue),
+								$values[States\Property::ACTUAL_VALUE_FIELD] = Utilities\Value::flattenValue(
+									$actualValue,
 								);
 
-								if ($data->offsetExists(States\Property::VALID_FIELD)) {
-									$data->offsetSet(
-										States\Property::VALID_FIELD,
-										boolval($data->offsetGet(States\Property::VALID_FIELD)),
-									);
-								} else {
-									$data->offsetSet(States\Property::VALID_FIELD, true);
-								}
+								$values[States\Property::VALID_FIELD] = array_key_exists(
+									States\Property::VALID_FIELD,
+									$values,
+								) ? boolval(
+									$values[States\Property::VALID_FIELD],
+								) : true;
 							}
 						} catch (ValuesExceptions\InvalidValue $ex) {
-							$data->offsetUnset(States\Property::ACTUAL_VALUE_FIELD);
-							$data->offsetSet(States\Property::VALID_FIELD, false);
+							unset($values[States\Property::ACTUAL_VALUE_FIELD]);
+							$values[States\Property::VALID_FIELD] = false;
 
 							$this->logger->error(
 								'Provided property actual value is not valid',
@@ -606,15 +596,14 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 					 * IMPORTANT: EXPECTED VALUE field is meant to be used mainly by user interface for saving value which should
 					 * be then written into device
 					 */
-					if ($data->offsetExists(States\Property::EXPECTED_VALUE_FIELD)) {
+					if (array_key_exists(States\Property::EXPECTED_VALUE_FIELD, $values)) {
 						if (
-							$data->offsetGet(States\Property::EXPECTED_VALUE_FIELD) !== null
-							&& $data->offsetGet(States\Property::EXPECTED_VALUE_FIELD) !== ''
+							$values[States\Property::EXPECTED_VALUE_FIELD] !== null
+							&& $values[States\Property::EXPECTED_VALUE_FIELD] !== ''
 						) {
 							try {
 								$expectedValue = $this->convertWriteExpectedValue(
-									// @phpstan-ignore-next-line
-									$data->offsetGet(States\Property::EXPECTED_VALUE_FIELD),
+									$values[States\Property::EXPECTED_VALUE_FIELD],
 									$property,
 									null,
 									$forWriting,
@@ -631,17 +620,13 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 									return;
 								}
 
-								$data->offsetSet(
-									States\Property::EXPECTED_VALUE_FIELD,
-									Utilities\Value::flattenValue($expectedValue),
+								$values[States\Property::EXPECTED_VALUE_FIELD] = Utilities\Value::flattenValue(
+									$expectedValue,
 								);
-								$data->offsetSet(
-									States\Property::PENDING_FIELD,
-									$expectedValue !== null,
-								);
+								$values[States\Property::PENDING_FIELD] = $expectedValue !== null;
 							} catch (ValuesExceptions\InvalidValue $ex) {
-								$data->offsetSet(States\Property::EXPECTED_VALUE_FIELD, null);
-								$data->offsetSet(States\Property::PENDING_FIELD, false);
+								$values[States\Property::EXPECTED_VALUE_FIELD] = null;
+								$values[States\Property::PENDING_FIELD] = false;
 
 								$this->logger->error(
 									'Provided property expected value was not valid',
@@ -653,8 +638,8 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 								);
 							}
 						} else {
-							$data->offsetSet(States\Property::EXPECTED_VALUE_FIELD, null);
-							$data->offsetSet(States\Property::PENDING_FIELD, false);
+							$values[States\Property::EXPECTED_VALUE_FIELD] = null;
+							$values[States\Property::PENDING_FIELD] = false;
 						}
 					}
 
@@ -668,39 +653,39 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 							);
 
 							if (
-								$data->offsetExists(States\Property::EXPECTED_VALUE_FIELD)
-								&& $data->offsetGet(States\Property::EXPECTED_VALUE_FIELD) === $actualValue
+								array_key_exists(States\Property::EXPECTED_VALUE_FIELD, $values)
+								&& $values[States\Property::EXPECTED_VALUE_FIELD] === $actualValue
 							) {
 								// If the new expected value is same as actual value
 								// then the expected filed could be reset
 								if ($expectedValue !== null) {
 									// Expected value is set in the database
 									// so it have to be cleared
-									$data->offsetSet(States\Property::EXPECTED_VALUE_FIELD, null);
-									$data->offsetSet(States\Property::PENDING_FIELD, false);
+									$values[States\Property::EXPECTED_VALUE_FIELD] = null;
+									$values[States\Property::PENDING_FIELD] = false;
 								} else {
 									// Expected value is not present
 									// si it could be omitted
-									$data->offsetUnset(States\Property::EXPECTED_VALUE_FIELD);
-									$data->offsetUnset(States\Property::PENDING_FIELD);
+									unset($values[States\Property::EXPECTED_VALUE_FIELD]);
+									unset($values[States\Property::PENDING_FIELD]);
 								}
 							}
 
 							if (
-								$data->offsetExists(States\Property::ACTUAL_VALUE_FIELD)
-								&& $data->offsetGet(States\Property::ACTUAL_VALUE_FIELD) === $expectedValue
+								array_key_exists(States\Property::ACTUAL_VALUE_FIELD, $values)
+								&& $values[States\Property::ACTUAL_VALUE_FIELD] === $expectedValue
 							) {
 								// If the new actual value is same as expected value
 								// then the expected field could be reset
-								$data->offsetSet(States\Property::EXPECTED_VALUE_FIELD, null);
-								$data->offsetSet(States\Property::PENDING_FIELD, false);
+								$values[States\Property::EXPECTED_VALUE_FIELD] = null;
+								$values[States\Property::PENDING_FIELD] = false;
 							}
 						}
 					} catch (ValuesExceptions\InvalidValue) {
 						// Could be ignored
 					}
 
-					if ($data->count() === 0) {
+					if ($values === []) {
 						$deferred->resolve(true);
 
 						return;
@@ -710,14 +695,14 @@ final class ConnectorPropertiesManager extends Models\States\PropertiesManager
 						if ($state === null) {
 							$result = await($this->connectorPropertiesStatesManager->create(
 								$property,
-								$data,
+								$values,
 							));
 
 						} else {
 							$result = await($this->connectorPropertiesStatesManager->update(
 								$property,
 								$state,
-								$data,
+								$values,
 							));
 
 							if (is_bool($result)) {

@@ -281,18 +281,15 @@ final class Gen1Coap
 
 		$parsedMessage = $this->validatePayload($message, self::STATE_MESSAGE_SCHEMA_FILENAME);
 
-		if (
-			!$parsedMessage->offsetExists('G')
-			|| !$parsedMessage['G'] instanceof Utils\ArrayHash
-		) {
+		if (!array_key_exists('G', $parsedMessage) || !is_array($parsedMessage['G'])) {
 			throw new ShellyExceptions\CoapError('Provided message is not valid');
 		}
 
 		$statuses = [];
 
 		foreach ($parsedMessage['G'] as $status) {
-			if ((is_array($status) || $status instanceof Utils\ArrayHash) && count($status) === 3) {
-				[$blockIdentifier, $sensorIdentifier, $sensorValue] = (array) $status;
+			if (is_array($status) && count($status) === 3) {
+				[$blockIdentifier, $sensorIdentifier, $sensorValue] = $status;
 
 				$statuses[] = [
 					'block' => $blockIdentifier,
@@ -320,7 +317,7 @@ final class Gen1Coap
 	}
 
 	/**
-	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
+	 * @return ($throw is true ? array<mixed> : array<mixed>|false)
 	 *
 	 * @throws ShellyExceptions\CoapError
 	 * @throws ShellyExceptions\InvalidState
@@ -329,7 +326,7 @@ final class Gen1Coap
 		string $payload,
 		string $schemaFilename,
 		bool $throw = true,
-	): Utils\ArrayHash|bool
+	): array|bool
 	{
 		try {
 			return $this->schemaValidator->validate(

@@ -1,0 +1,948 @@
+{
+ "string values": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":\"camel\",\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": "camel",
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":\"camel\",\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": "camel",
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":\"camel\",\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": "camel",
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":\"camel\",\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": "camel",
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":\"camel\",\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": "camel",
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":\"camel\",\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": "camel",
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "null": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":null,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": null,
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":null,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": null,
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":null,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": null,
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":null,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": null,
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":null,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": null,
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":null,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": null,
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "unchanged value": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"stored\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"stored\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [],
+   "deletes": [],
+   "result": false
+  },
+  "update:async": {
+   "sets": [],
+   "deletes": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"stored\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"stored\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "stored",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "date": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"date\":\"2021-02-03 04:05:06.000000\",\"timezone_type\":1,\"timezone\":\"+00:00\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be created, stored data are not valid"
+   ]
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"date\":\"2021-02-03 04:05:06.000000\",\"timezone_type\":1,\"timezone\":\"+00:00\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be created, stored data are not valid"
+   ]
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"2021-02-03T04:05:06+00:00\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "2021-02-03T04:05:06+00:00",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"2021-02-03T04:05:06+00:00\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "2021-02-03T04:05:06+00:00",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"date\":\"2021-02-03 04:05:06.000000\",\"timezone_type\":1,\"timezone\":\"+00:00\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be loaded, stored data are not valid"
+   ]
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"date\":\"2021-02-03 04:05:06.000000\",\"timezone_type\":1,\"timezone\":\"+00:00\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be updated, stored data are not valid"
+   ]
+  }
+ },
+ "backed enum": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"com.fastybird.devices-module\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "com.fastybird.devices-module",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"com.fastybird.devices-module\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "com.fastybird.devices-module",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"com.fastybird.devices-module\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "com.fastybird.devices-module",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"com.fastybird.devices-module\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "com.fastybird.devices-module",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"com.fastybird.devices-module\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "com.fastybird.devices-module",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"com.fastybird.devices-module\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "com.fastybird.devices-module",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "stringable object": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "integer": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":10,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be created, stored data are not valid"
+   ]
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":10,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be created, stored data are not valid"
+   ]
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":10,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be loaded, stored data are not valid"
+   ]
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":10,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be updated, stored data are not valid"
+   ]
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":10,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be loaded, stored data are not valid"
+   ]
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":10,\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be updated, stored data are not valid"
+   ]
+  }
+ },
+ "nested once": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"a\":1,\"b\":\"two\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be created, stored data are not valid"
+   ]
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"a\":1,\"b\":\"two\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be created, stored data are not valid"
+   ]
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"a\":1,\"b\":\"two\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be loaded, stored data are not valid"
+   ]
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"a\":1,\"b\":\"two\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be updated, stored data are not valid"
+   ]
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"a\":1,\"b\":\"two\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be loaded, stored data are not valid"
+   ]
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"a\":1,\"b\":\"two\"},\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be updated, stored data are not valid"
+   ]
+  }
+ },
+ "nested twice": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"list\":[1,2],\"map\":{\"x\":true}},\"camelCased\":[[3],[]],\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be created, stored data are not valid"
+   ]
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"list\":[1,2],\"map\":{\"x\":true}},\"camelCased\":[[3],[]],\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be created, stored data are not valid"
+   ]
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"list\":[1,2],\"map\":{\"x\":true}},\"camelCased\":[[3],[]],\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be loaded, stored data are not valid"
+   ]
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"list\":[1,2],\"map\":{\"x\":true}},\"camelCased\":[[3],[]],\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be updated, stored data are not valid"
+   ]
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"list\":[1,2],\"map\":{\"x\":true}},\"camelCased\":[[3],[]],\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be loaded, stored data are not valid"
+   ]
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":{\"list\":[1,2],\"map\":{\"x\":true}},\"camelCased\":[[3],[]],\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [
+    "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   ],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidState",
+    "State could not be updated, stored data are not valid"
+   ]
+  }
+ },
+ "unknown key": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "own identifier": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "create:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"keyValue\",\"camelCased\":null,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "keyValue",
+    "camelCased": null,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null,
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  }
+ },
+ "required value missing": {
+  "create": {
+   "sets": [],
+   "deletes": [],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidArgument",
+    "Value for key \"value\" is required"
+   ]
+  },
+  "create:async": {
+   "sets": [],
+   "deletes": [],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidArgument",
+    "Value for key \"value\" is required"
+   ]
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"stored\",\"camelCased\":\"camel\",\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "stored",
+    "camelCased": "camel",
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update:async": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"value\":\"stored\",\"camelCased\":\"camel\",\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "deletes": [],
+   "result": {
+    "value": "stored",
+    "camelCased": "camel",
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00",
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1"
+   }
+  },
+  "update missing": {
+   "sets": [],
+   "deletes": [],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidArgument",
+    "Value for key \"value\" is required"
+   ]
+  },
+  "update missing:async": {
+   "sets": [],
+   "deletes": [],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidArgument",
+    "Value for key \"value\" is required"
+   ]
+  }
+ },
+ "no values": {
+  "create": {
+   "sets": [],
+   "deletes": [],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidArgument",
+    "Value for key \"value\" is required"
+   ]
+  },
+  "create:async": {
+   "sets": [],
+   "deletes": [],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidArgument",
+    "Value for key \"value\" is required"
+   ]
+  },
+  "update": {
+   "sets": [],
+   "deletes": [],
+   "result": false
+  },
+  "update:async": {
+   "sets": [],
+   "deletes": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [],
+   "deletes": [],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidArgument",
+    "Value for key \"value\" is required"
+   ]
+  },
+  "update missing:async": {
+   "sets": [],
+   "deletes": [],
+   "result": [
+    "FastyBird\\Plugin\\RedisDb\\Exceptions\\InvalidArgument",
+    "Value for key \"value\" is required"
+   ]
+  }
+ }
+}

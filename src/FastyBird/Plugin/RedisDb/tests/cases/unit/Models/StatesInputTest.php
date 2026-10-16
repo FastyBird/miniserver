@@ -12,6 +12,7 @@ use FastyBird\Plugin\RedisDb\Connections;
 use FastyBird\Plugin\RedisDb\Models;
 use FastyBird\Plugin\RedisDb\States;
 use FastyBird\Plugin\RedisDb\Tests;
+use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -21,16 +22,20 @@ use Ramsey\Uuid;
 use React\Promise;
 use ReflectionProperty;
 use Throwable;
+use TypeError;
 use function array_key_exists;
+use function assert;
+use function is_array;
 use function React\Async\await;
 
 /**
- * The states managers take the values to store as a plain array or as an ArrayHash (#723).
+ * The states managers take the values to store as a plain array (#723).
  *
- * An array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is
- * what the callers built before: the same JSON reaches Redis, the same state or error comes
- * back, and the same keys are deleted. An ArrayHash is used as it is given, so the caller's
- * object still receives the identifier the manager sets on it.
+ * What an array makes the manager do is recorded in fixtures/states-input.json, taken from the
+ * code before #723, which wrapped the array in the ArrayHash Utils\ArrayHash::from() makes of
+ * it: the JSON that reaches Redis, the state or the error that comes back, and the keys that are
+ * deleted. A value that is a nested list is the one difference, noted at its case. An ArrayHash
+ * is refused with a TypeError.
  */
 final class StatesInputTest extends TestCase
 {
@@ -70,45 +75,103 @@ final class StatesInputTest extends TestCase
 	 * @throws Throwable
 	 */
 	#[DataProvider('values')]
-	public function testAnArrayIsStoredAsTheArrayHashItStandsFor(array $values): void
+	public function testAnArrayIsStoredAsRecorded(array $values): void
 	{
+		$recorded = self::recorded((string) $this->dataName());
+
 		foreach (['create', 'update', 'update missing'] as $operation) {
 			foreach ([false, true] as $async) {
-				self::assertSame(
-					$this->store($operation, $async, Utils\ArrayHash::from($values)),
-					$this->store($operation, $async, $values),
-					$operation . ($async ? ', async' : ''),
-				);
+				$key = $operation . ($async ? ':async' : '');
+
+				self::assertSame($recorded[$key], self::normalised($this->store($operation, $async, $values)), $key);
 			}
 		}
 	}
 
 	/**
+	 * Both managers take an array only, on create() and update()
+	 *
 	 * @throws Throwable
 	 */
-	public function testAnArrayHashIsUsedAsItIsGiven(): void
+	public function testAnArrayHashIsRefused(): void
 	{
-		foreach ([false, true] as $async) {
-			$values = Utils\ArrayHash::from(['value' => 'keyValue']);
+		$hash = Utils\ArrayHash::from(['value' => 'keyValue']);
+		$id = Uuid\Uuid::fromString(self::ID);
 
-			$this->store('create', $async, $values);
+		$manager = new Models\States\StatesManager(
+			$this->createMock(Clients\Client::class),
+			$this->createStateFactory(),
+			$this->createClock(),
+			Tests\Fixtures\Dummy\DummyState::class,
+		);
+		$asyncManager = new Models\States\Async\StatesManager(
+			new Clients\Async\Client(new Connections\Configuration()),
+			$this->createStateFactory(),
+			$this->createClock(),
+			Tests\Fixtures\Dummy\DummyState::class,
+		);
 
-			self::assertTrue(isset($values['id']));
-			self::assertSame(self::ID, $values['id']);
+		foreach (
+			[
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $manager->create($id, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $manager->update($id, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $asyncManager->create($id, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $asyncManager->update($id, $hash),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
 		}
+	}
+
+	/**
+	 * @return array<mixed>
+	 *
+	 * @throws Nette\IOException
+	 * @throws Utils\JsonException
+	 */
+	private static function recorded(string $case): array
+	{
+		$fixture = Utils\Json::decode(
+			Utils\FileSystem::read(__DIR__ . '/../../../fixtures/states-input.json'),
+			forceArrays: true,
+		);
+		assert(is_array($fixture) && is_array($fixture[$case]));
+
+		return $fixture[$case];
+	}
+
+	/**
+	 * A record as JSON gives it back, which is how the fixture is written
+	 *
+	 * @param array<mixed> $record
+	 *
+	 * @return array<mixed>
+	 *
+	 * @throws Utils\JsonException
+	 */
+	private static function normalised(array $record): array
+	{
+		$decoded = Utils\Json::decode(Utils\Json::encode($record), forceArrays: true);
+		assert(is_array($decoded));
+
+		return $decoded;
 	}
 
 	/**
 	 * Runs one operation on a store that holds STORED (or nothing, for "update missing" and
 	 * "create") and records what reaches Redis and what comes back
 	 *
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @return array{sets: list<string>, deletes: list<string>, result: mixed}
 	 *
 	 * @throws Throwable
 	 */
-	private function store(string $operation, bool $async, array|Utils\ArrayHash $values): array
+	private function store(string $operation, bool $async, array $values): array
 	{
 		$data = $operation === 'update' ? [self::ID => self::STORED] : [];
 		$sets = [];
@@ -225,6 +288,22 @@ final class StatesInputTest extends TestCase
 			->willReturn(new DateTimeImmutable('2020-04-01T12:00:00+00:00'));
 
 		return $clock;
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -9,7 +9,6 @@ use FastyBird\Automator\DateTime\Exceptions;
 use FastyBird\Core\Persistence\Mapping as PersistenceMapping;
 use FastyBird\Core\Persistence\Mapping\Attribute;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -36,13 +35,13 @@ class TimeCondition extends TriggersEntities\Conditions\Condition
 	private array|null $days;
 
 	/**
-	 * @param array<int>|Utils\ArrayHash<int> $days
+	 * @param array<int> $days
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
 	public function __construct(
 		DateTimeInterface $time,
-		array|Utils\ArrayHash $days,
+		array $days,
 		TriggersEntities\Triggers\Automatic $trigger,
 		Uuid\UuidInterface|null $id = null,
 	)
@@ -59,7 +58,10 @@ class TimeCondition extends TriggersEntities\Conditions\Condition
 		return self::TYPE;
 	}
 
-	public function getDays(): Utils\ArrayHash
+	/**
+	 * @return array<int>
+	 */
+	public function getDays(): array
 	{
 		assert(is_array($this->days));
 
@@ -69,7 +71,7 @@ class TimeCondition extends TriggersEntities\Conditions\Condition
 			$days[] = intval($day);
 		}
 
-		return Utils\ArrayHash::from($days);
+		return $days;
 	}
 
 	/**
@@ -77,7 +79,7 @@ class TimeCondition extends TriggersEntities\Conditions\Condition
 	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	public function setDays(Utils\ArrayHash|array $days): void
+	public function setDays(array $days): void
 	{
 		foreach ($days as $day) {
 			if (!in_array($day, [1, 2, 3, 4, 5, 6, 7], true)) {
@@ -85,7 +87,7 @@ class TimeCondition extends TriggersEntities\Conditions\Condition
 			}
 		}
 
-		$this->days = (array) $days;
+		$this->days = $days;
 	}
 
 	public function getTime(): DateTimeInterface
@@ -106,7 +108,7 @@ class TimeCondition extends TriggersEntities\Conditions\Condition
 
 	public function validate(DateTimeInterface $date): bool
 	{
-		if (in_array((int) $date->format('N'), (array) $this->getDays(), true) === false) {
+		if (in_array((int) $date->format('N'), $this->getDays(), true) === false) {
 			return false;
 		}
 
@@ -121,7 +123,7 @@ class TimeCondition extends TriggersEntities\Conditions\Condition
 	{
 		return array_merge(parent::toArray(), [
 			'time' => $this->getTime()->format(DateTimeInterface::ATOM),
-			'days' => (array) $this->getDays(),
+			'days' => $this->getDays(),
 		]);
 	}
 

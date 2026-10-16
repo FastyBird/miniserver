@@ -7,7 +7,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Entities\Policies;
-use Nette\Utils;
 use ReflectionException;
 use function assert;
 
@@ -30,7 +29,7 @@ final class Manager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws PersistenceExceptions\EntityCreation
@@ -38,7 +37,7 @@ final class Manager
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
-	public function create(array|Utils\ArrayHash $values): Policies\Policy
+	public function create(array $values): Policies\Policy
 	{
 		$entity = $this->getEntityCrud()->getEntityCreator()->create($values);
 		assert($entity instanceof Policies\Policy);
@@ -47,7 +46,7 @@ final class Manager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws DBAL\Exception\UniqueConstraintViolationException
 	 * @throws CoreExceptions\InvalidArgument
@@ -57,7 +56,7 @@ final class Manager
 	 */
 	public function update(
 		Policies\Policy $entity,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): Policies\Policy
 	{
 		$entity = $this->getEntityCrud()->getEntityUpdater()->update($values, $entity);

@@ -273,10 +273,8 @@ final class SocketsBridgeCommandTest extends Tests\Cases\Unit\DbTestCase
 
 		$storage = $this->createMock(DevicesModels\States\Devices\Writer::class);
 		$storage->method('create')->willReturnCallback(
-			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use (&$states): DevicesStates\DeviceProperty {
-				$actual = $values->offsetExists(DevicesStates\Property::ACTUAL_VALUE_FIELD)
-					? $values->offsetGet(DevicesStates\Property::ACTUAL_VALUE_FIELD)
-					: null;
+			static function (Uuid\UuidInterface $id, array $values) use (&$states): DevicesStates\DeviceProperty {
+				$actual = $values[DevicesStates\Property::ACTUAL_VALUE_FIELD] ?? null;
 
 				$states[$id->toString()] = new Tests\Fixtures\Dummy\DevicePropertyState(
 					$id,
@@ -290,7 +288,7 @@ final class SocketsBridgeCommandTest extends Tests\Cases\Unit\DbTestCase
 			},
 		);
 		$storage->method('update')->willReturnCallback(
-			static fn (Uuid\UuidInterface $id, Utils\ArrayHash $values): DevicesStates\DeviceProperty|false => $states[$id->toString()] ?? false,
+			static fn (Uuid\UuidInterface $id, array $values): DevicesStates\DeviceProperty|false => $states[$id->toString()] ?? false,
 		);
 
 		$lookup = $this->createMock(DevicesModels\States\Devices\Reader::class);

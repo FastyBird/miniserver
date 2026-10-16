@@ -13,7 +13,6 @@ use FastyBird\Plugin\CouchDb\Models;
 use FastyBird\Plugin\CouchDb\States;
 use FastyBird\Plugin\CouchDb\Tests;
 use InvalidArgumentException;
-use Nette\Utils;
 use Orisai\ObjectMapper;
 use PHPOnCouch;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -27,7 +26,7 @@ final class StatesManagerTest extends TestCase
 {
 
 	/**
-	 * @param array<Uuid\UuidInterface|array<string, mixed>> $data
+	 * @param array<string, mixed> $data
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $dbData
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $expected
 	 *
@@ -79,7 +78,7 @@ final class StatesManagerTest extends TestCase
 
 		$manager = $this->createManager($couchDbConnection);
 
-		$state = $manager->create($id, Utils\ArrayHash::from($data));
+		$state = $manager->create($id, $data);
 
 		$expected['id'] = $id->toString();
 
@@ -89,7 +88,7 @@ final class StatesManagerTest extends TestCase
 
 	/**
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $originalData
-	 * @param array<Uuid\UuidInterface|array<string, mixed>> $data
+	 * @param array<string, mixed> $data
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $dbData
 	 * @param array<Uuid\UuidInterface|array<string, mixed>> $expected
 	 *
@@ -120,7 +119,7 @@ final class StatesManagerTest extends TestCase
 			->willReturnCallback(
 				static function (string $key, string|null $value = null) use ($data, &$originalData): void {
 					if ($data[$key] instanceof BackedEnum) {
-						self::assertEquals((string) $data[$key], $value);
+						self::assertEquals((string) $data[$key]->value, $value);
 
 					} else {
 						self::assertEquals($data[$key], $value);
@@ -174,7 +173,7 @@ final class StatesManagerTest extends TestCase
 
 		$original = $factory->create(Tests\Fixtures\CustomState::class, $document);
 
-		$state = $manager->update($original, Utils\ArrayHash::from($data));
+		$state = $manager->update($original, $data);
 
 		self::assertSame(Tests\Fixtures\CustomState::class, $state::class);
 		self::assertEquals($expected, $state->toArray());

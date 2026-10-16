@@ -233,9 +233,9 @@ abstract class Device implements DevicesEntities\Entity,
 	}
 
 	/**
-	 * @param array<Device>|Utils\ArrayHash<Device> $parents
+	 * @param array<Device> $parents
 	 */
-	public function setParents(array|Utils\ArrayHash $parents): void
+	public function setParents(array $parents): void
 	{
 		$this->parents = new Common\Collections\ArrayCollection();
 

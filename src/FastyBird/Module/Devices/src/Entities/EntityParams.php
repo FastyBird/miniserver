@@ -2,8 +2,6 @@
 
 namespace FastyBird\Module\Devices\Entities;
 
-use Nette\Utils;
-
 /**
  * Entity params field interface
  */
@@ -15,7 +13,10 @@ interface EntityParams
 	 */
 	public function setParams(array $params): void;
 
-	public function getParams(): Utils\ArrayHash;
+	/**
+	 * @return array<string, mixed>
+	 */
+	public function getParams(): array;
 
 	public function setParam(string $key, mixed $value = null): void;
 

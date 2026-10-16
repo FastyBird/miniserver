@@ -31,9 +31,8 @@ abstract class DataSource extends Hydrators\Hydrator
 	];
 
 	/**
-	 * The generic mapping resolves `params` to a mixed field: HasEntityParams types the property
-	 * `array|null` but getParams() returns Utils\ArrayHash. A mixed field hands the raw resource
-	 * object to setParams(array), which rejects it, so the object is converted here.
+	 * A JSON object arrives as a resource object, which setParams(array) rejects, so it is
+	 * converted here. A null `params` becomes an empty array.
 	 *
 	 * @return array<mixed>
 	 *

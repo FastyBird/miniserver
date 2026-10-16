@@ -11,7 +11,6 @@ use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types;
 use FastyBird\Module\Devices\Utilities;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
@@ -180,8 +179,8 @@ final class ConnectionStatePropertyTest extends Tests\Cases\Unit\DbTestCase
 
 		$connectorStorage = $this->createMock(Models\States\Connectors\Writer::class);
 		$connectorStorage->method('create')->willReturnCallback(
-			function (Uuid\UuidInterface $id, Utils\ArrayHash $values): States\ConnectorProperty {
-				$this->stored[] = (array) $values;
+			function (Uuid\UuidInterface $id, array $values): States\ConnectorProperty {
+				$this->stored[] = $values;
 
 				return new Tests\Fixtures\Dummy\ConnectorPropertyState($id, null, null, false, true);
 			},
@@ -201,8 +200,8 @@ final class ConnectionStatePropertyTest extends Tests\Cases\Unit\DbTestCase
 
 		$deviceStorage = $this->createMock(Models\States\Devices\Writer::class);
 		$deviceStorage->method('create')->willReturnCallback(
-			function (Uuid\UuidInterface $id, Utils\ArrayHash $values): States\DeviceProperty {
-				$this->stored[] = (array) $values;
+			function (Uuid\UuidInterface $id, array $values): States\DeviceProperty {
+				$this->stored[] = $values;
 
 				return new Tests\Fixtures\Dummy\DevicePropertyState($id, null, null, false, true);
 			},

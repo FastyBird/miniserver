@@ -65,12 +65,13 @@ abstract class HttpApi
 	 * @template T of Messages\Message
 	 *
 	 * @param class-string<T> $message
+	 * @param array<mixed> $data
 	 *
 	 * @return T
 	 *
 	 * @throws ShellyExceptions\HttpApiError
 	 */
-	protected function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
+	protected function createMessage(string $message, array $data): Messages\Message
 	{
 		try {
 			return $this->messageBuilder->create(
@@ -418,7 +419,7 @@ abstract class HttpApi
 	}
 
 	/**
-	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
+	 * @return ($throw is true ? array<mixed> : array<mixed>|false)
 	 *
 	 * @throws ShellyExceptions\HttpApiCall
 	 * @throws ShellyExceptions\HttpApiError
@@ -428,7 +429,7 @@ abstract class HttpApi
 		Message\ResponseInterface $response,
 		string $schemaFilename,
 		bool $throw = true,
-	): Utils\ArrayHash|bool
+	): array|bool
 	{
 		$body = $this->getResponseBody($request, $response);
 

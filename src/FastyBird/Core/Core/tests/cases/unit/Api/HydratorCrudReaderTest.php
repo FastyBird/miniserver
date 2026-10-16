@@ -54,10 +54,10 @@ final class HydratorCrudReaderTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$values = $this->autowiredHydrator()->hydrate($this->document(), new DummyCrudEntity());
 
-		self::assertTrue($values->offsetExists('label'));
-		self::assertSame('New label', $values->offsetGet('label'));
-		self::assertFalse($values->offsetExists('identifier'));
-		self::assertFalse($values->offsetExists('secret'));
+		self::assertArrayHasKey('label', $values);
+		self::assertSame('New label', $values['label']);
+		self::assertArrayNotHasKey('identifier', $values);
+		self::assertArrayNotHasKey('secret', $values);
 	}
 
 	/**
@@ -68,9 +68,9 @@ final class HydratorCrudReaderTest extends Tests\Cases\Unit\BaseTestCase
 	{
 		$values = $this->autowiredHydrator()->hydrate($this->document());
 
-		self::assertSame('new-identifier', $values->offsetGet('identifier'));
-		self::assertSame('New label', $values->offsetGet('label'));
-		self::assertFalse($values->offsetExists('secret'));
+		self::assertSame('new-identifier', $values['identifier']);
+		self::assertSame('New label', $values['label']);
+		self::assertArrayNotHasKey('secret', $values);
 	}
 
 	/**
@@ -108,9 +108,9 @@ final class HydratorCrudReaderTest extends Tests\Cases\Unit\BaseTestCase
 
 		$values = $hydrator->hydrate($this->document(), new DummyCrudEntity());
 
-		self::assertSame('new-identifier', $values->offsetGet('identifier'));
-		self::assertSame('New label', $values->offsetGet('label'));
-		self::assertSame('New secret', $values->offsetGet('secret'));
+		self::assertSame('new-identifier', $values['identifier']);
+		self::assertSame('New label', $values['label']);
+		self::assertSame('New secret', $values['secret']);
 	}
 
 	private function autowiredHydrator(): DummyCrudHydrator

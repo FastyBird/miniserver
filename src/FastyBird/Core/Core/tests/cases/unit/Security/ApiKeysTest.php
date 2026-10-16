@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 use FastyBird\Core\Logging;
+use FastyBird\Core\Persistence\Crud;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Security\Commands;
 use FastyBird\Core\Security\Exceptions as SecurityExceptions;
@@ -25,6 +26,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 use Throwable;
+use TypeError;
 use function array_column;
 use function array_diff;
 use function assert;
@@ -620,42 +622,72 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * The manager takes the plain array a caller builds as well as the ArrayHash it replaces
-	 * (#723, D3), and stores the same key from either
+	 * The manager takes the plain array a caller builds, and stores the key from it
 	 *
 	 * @throws Throwable
 	 */
-	public function testManagerStoresTheSameKeyFromAnArrayAsFromAnArrayHash(): void
+	public function testManagerStoresTheKeyFromAnArray(): void
 	{
 		$manager = $this->container->getByType(Models\ApiKeys\Manager::class);
 
-		$values = static fn (string $hash): array => [
+		$key = $manager->create([
 			'name' => 'Integration',
 			'account' => Uuid\Uuid::fromString(self::ADMINISTRATOR_ACCOUNT),
-			'hash' => $hash,
+			'hash' => str_repeat('b', 64),
 			'state' => Types\ApiKeyState::ACTIVE,
 			'expiresAt' => new DateTimeImmutable('2020-05-01T12:00:00+00:00'),
-		];
+		]);
 
-		$fromHash = $manager->create(Utils\ArrayHash::from($values(str_repeat('a', 64))));
-		$fromArray = $manager->create($values(str_repeat('b', 64)));
+		$manager->update($key, ['state' => Types\ApiKeyState::SUSPENDED]);
 
-		$manager->update($fromHash, Utils\ArrayHash::from(['state' => Types\ApiKeyState::SUSPENDED]));
-		$manager->update($fromArray, ['state' => Types\ApiKeyState::SUSPENDED]);
-
-		$row = fn (Uuid\UuidInterface $id): array|false => $this->db()->fetchAssociative(
+		$stored = $this->db()->fetchAssociative(
 			'SELECT LOWER(HEX(account_id)) AS account, key_name, key_state, expires_at FROM fb_security_api_keys WHERE key_id = ?',
-			[$id->getBytes()],
+			[$key->getId()->getBytes()],
 		);
-
-		$stored = $row($fromArray->getId());
 
 		self::assertIsArray($stored);
 		self::assertSame(str_replace('-', '', self::ADMINISTRATOR_ACCOUNT), $stored['account']);
 		self::assertSame('Integration', $stored['key_name']);
 		self::assertSame(Types\ApiKeyState::SUSPENDED->value, $stored['key_state']);
 		self::assertNotNull($stored['expires_at']);
-		self::assertSame($row($fromHash->getId()), $stored);
+	}
+
+	/**
+	 * The managers take an array only: an ArrayHash is refused with a TypeError (#723)
+	 *
+	 * @throws Throwable
+	 */
+	public function testTheManagersRefuseAnArrayHash(): void
+	{
+		$hash = Utils\ArrayHash::from(['state' => Types\ApiKeyState::SUSPENDED]);
+		$apiKeys = $this->container->getByType(Models\ApiKeys\Manager::class);
+		// The two other managers are not registered with API keys alone, but refuse the same way
+		$tokens = new Models\Tokens\Manager($this->container->getByType(Crud\CrudFactory::class));
+		$policies = new Models\Policies\Manager($this->container->getByType(Crud\CrudFactory::class));
+		$apiKey = $apiKeys->create([
+			'name' => 'Integration',
+			'account' => Uuid\Uuid::fromString(self::ADMINISTRATOR_ACCOUNT),
+			'hash' => str_repeat('c', 64),
+			'state' => Types\ApiKeyState::ACTIVE,
+			'expiresAt' => null,
+		]);
+
+		foreach (
+			[
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $apiKeys->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $apiKeys->update($apiKey, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $tokens->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $policies->create($hash),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
+		}
+
+		$this->assertState($apiKey->getId()->toString(), Types\ApiKeyState::ACTIVE);
 	}
 
 	/**
@@ -716,7 +748,7 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 
 		$this->container->getByType(Models\ApiKeys\Manager::class)->update(
 			$apiKey,
-			Utils\ArrayHash::from(['expiresAt' => $expiresAt]),
+			['expiresAt' => $expiresAt],
 		);
 
 		// Read the key back from the database, not from the identity map
@@ -852,6 +884,22 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 	private function db(): DBAL\Connection
 	{
 		return $this->container->getByType(DBAL\Connection::class);
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

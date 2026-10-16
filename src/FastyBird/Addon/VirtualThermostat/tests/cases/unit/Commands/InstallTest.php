@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -1371,9 +1370,7 @@ final class InstallTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * The state manager is replaced by a recorder of what set() is handed, and has no state to read. A PropertyUpdate
-	 * is read the way the manager reads it on its first line, so the record is the same for it and for the ArrayHash it
-	 * replaced.
+	 * The state manager is replaced by a recorder of what set() is handed, and has no state to read. A PropertyUpdate is recorded as the array of its fields.
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws VirtualThermostatExceptions\InvalidArgument
@@ -1398,14 +1395,12 @@ final class InstallTest extends Tests\Cases\Unit\DbTestCase
 						->method('set')
 						->willReturnCallback(function (
 							DevicesDocuments\Channels\Properties\Dynamic|DevicesDocuments\Channels\Properties\Mapped $property,
-							Utils\ArrayHash|DevicesStates\PropertyUpdate $data,
+							DevicesStates\PropertyUpdate $data,
 							Sources\Source|null $source,
 						): void {
-							$data = $data instanceof DevicesStates\PropertyUpdate ? $data->toArrayHash() : $data;
-
 							$this->set[] = [$this->channelIdentifier(
 								$property,
-							), $property->getIdentifier(), (array) $data, $source?->value];
+							), $property->getIdentifier(), $data->toArray(), $source?->value];
 						});
 					$mock->method('read')->willReturn(null);
 				},

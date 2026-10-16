@@ -112,7 +112,6 @@ final readonly class Handler
 		try {
 			$data = Utils\Json::decode($data, forceArrays: true);
 			assert(is_array($data));
-			$data = Utils\ArrayHash::from($data);
 
 			$entity = $this->documentFactory->create($data, $routingKey);
 

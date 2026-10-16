@@ -14,6 +14,7 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types as DevicesTypes;
+use Nette;
 use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
@@ -21,7 +22,10 @@ use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use React\Promise;
 use Throwable;
+use TypeError;
+use function assert;
 use function count;
+use function is_array;
 use function is_string;
 use function React\Async\await;
 
@@ -323,13 +327,14 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * A manager stores a PropertyUpdate exactly as it stores the ArrayHash its callers built
-	 * for the same change before PropertyUpdate existed
+	 * A manager stores a PropertyUpdate exactly as it stored the ArrayHash its callers built for
+	 * the same change before PropertyUpdate existed: what reaches the storage is recorded in
+	 * fixtures/Models/States/producers.json, taken from the code before #723
 	 *
 	 * @throws Throwable
 	 */
 	#[DataProvider('changes')]
-	public function testAChangeIsStoredAsTheArrayHashItStandsFor(
+	public function testAChangeIsStoredAsTheFieldsItStandsFor(
 		string $owner,
 		bool $async,
 		string $method,
@@ -356,18 +361,17 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 		}
 
 		foreach ($changes as $change) {
-			$this->call($owner, $async, $method, $property, Utils\ArrayHash::from($change), Sources\Module::DEVICES);
-		}
-
-		$fromArrayHashes = $this->stored;
-		$this->stored = [];
-
-		foreach ($changes as $change) {
 			$this->call($owner, $async, $method, $property, self::update($change), Sources\Module::DEVICES);
 		}
 
-		self::assertCount(count($changes), $fromArrayHashes);
-		self::assertSame($fromArrayHashes, $this->stored);
+		self::assertCount(count($changes), $this->stored);
+		self::assertSame(
+			self::golden(
+				'stored',
+				$owner . ($async ? '-async' : '-sync') . '-' . $method . ($stored ? '-stored' : '-fresh'),
+			),
+			self::normalised($this->stored),
+		);
 	}
 
 	/**
@@ -400,6 +404,51 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 			],
 			$this->stored,
 		);
+	}
+
+	/**
+	 * set(), write() and writeState() of the six managers take a PropertyUpdate and nothing else
+	 * (#723): neither an ArrayHash nor a plain array is accepted, and nothing is stored
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('managers')]
+	public function testOnlyAPropertyUpdateIsAccepted(string $owner, bool $async): void
+	{
+		$this->recordStates(null);
+
+		$property = $this->property($owner, self::PROPERTY);
+
+		foreach (
+			[
+				Utils\ArrayHash::from([States\Property::EXPECTED_VALUE_FIELD => 'off']),
+				[States\Property::EXPECTED_VALUE_FIELD => 'off'],
+			] as $change
+		) {
+			foreach (['set', 'write'] as $method) {
+				self::assertTrue(
+					self::refuses(
+						fn () => $this->call($owner, $async, $method, $property, $change, Sources\Module::DEVICES),
+					),
+				);
+			}
+
+			self::assertTrue(
+				self::refuses(
+					fn () => $this->call(
+						$owner,
+						$async,
+						'writeState',
+						$property,
+						$change,
+						false,
+						Sources\Module::DEVICES,
+					),
+				),
+			);
+		}
+
+		self::assertSame([], $this->stored);
 	}
 
 	/**
@@ -451,13 +500,14 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * With the exchange on, a manager publishes a PropertyUpdate exactly as it publishes the
-	 * ArrayHash its callers built for the same change
+	 * With the exchange on, a manager publishes a PropertyUpdate exactly as it published the
+	 * ArrayHash its callers built for the same change before #723, as recorded in
+	 * fixtures/Models/States/producers.json
 	 *
 	 * @throws Throwable
 	 */
 	#[DataProvider('managers')]
-	public function testAChangeIsPublishedAsTheArrayHashItStandsFor(string $owner, bool $async): void
+	public function testAChangeIsPublishedAsTheFieldsItStandsFor(string $owner, bool $async): void
 	{
 		$this->registerNeonConfigurationFile(__DIR__ . '/../../Controllers/exchange.neon');
 
@@ -509,28 +559,51 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 
 		foreach (['set', 'write'] as $method) {
 			foreach ($changes as $change) {
-				$this->call(
-					$owner,
-					$async,
-					$method,
-					$property,
-					Utils\ArrayHash::from($change),
-					Sources\Module::DEVICES,
-				);
-			}
-		}
-
-		$fromArrayHashes = $this->published;
-		$this->published = [];
-
-		foreach (['set', 'write'] as $method) {
-			foreach ($changes as $change) {
 				$this->call($owner, $async, $method, $property, self::update($change), Sources\Module::DEVICES);
 			}
 		}
 
-		self::assertCount(6, $fromArrayHashes);
-		self::assertSame($fromArrayHashes, $this->published);
+		self::assertCount(6, $this->published);
+		self::assertSame(
+			self::golden('published', $owner . ($async ? '-async' : '-sync')),
+			self::normalised($this->published),
+		);
+	}
+
+	/**
+	 * What the code before #723 handed to the storage and to the publisher, for one case
+	 *
+	 * @return array<mixed>
+	 *
+	 * @throws Nette\IOException
+	 * @throws Utils\JsonException
+	 */
+	private static function golden(string $kind, string $case): array
+	{
+		$fixture = Utils\Json::decode(
+			Utils\FileSystem::read(__DIR__ . '/../../../../fixtures/Models/States/producers.json'),
+			forceArrays: true,
+		);
+		assert(is_array($fixture) && is_array($fixture[$kind]) && is_array($fixture[$kind][$case]));
+
+		return $fixture[$kind][$case];
+	}
+
+	/**
+	 * A record as JSON gives it back, which is how the fixture is written
+	 *
+	 * @param array<mixed> $record
+	 *
+	 * @return array<mixed>
+	 *
+	 * @throws Utils\JsonException
+	 */
+	private static function normalised(array $record): array
+	{
+		$decoded = Utils\Json::decode(Utils\Json::encode($record), forceArrays: true);
+		assert(is_array($decoded));
+
+		return $decoded;
 	}
 
 	/**
@@ -697,20 +770,20 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 	{
 		$caching = $this->getContainer()->getByType(DevicesCaching\Container::class);
 
-		$record = function (string $owner, string $operation, Uuid\UuidInterface $id, Utils\ArrayHash $values): void {
-			$this->stored[] = [$owner, $operation, $id->toString(), (array) $values];
+		$record = function (string $owner, string $operation, Uuid\UuidInterface $id, array $values): void {
+			$this->stored[] = [$owner, $operation, $id->toString(), $values];
 		};
 
 		$connectorWriter = $this->createMock(Models\States\Connectors\Writer::class);
 		$connectorWriter->method('create')->willReturnCallback(
-			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use ($record): States\ConnectorProperty {
+			static function (Uuid\UuidInterface $id, array $values) use ($record): States\ConnectorProperty {
 				$record('connector', 'create', $id, $values);
 
 				return new Tests\Fixtures\Dummy\ConnectorPropertyState($id, null, null, false, true);
 			},
 		);
 		$connectorWriter->method('update')->willReturnCallback(
-			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use ($record): States\ConnectorProperty {
+			static function (Uuid\UuidInterface $id, array $values) use ($record): States\ConnectorProperty {
 				$record('connector', 'update', $id, $values);
 
 				return new Tests\Fixtures\Dummy\ConnectorPropertyState($id, 'updated', null, false, false);
@@ -740,14 +813,14 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 
 		$deviceWriter = $this->createMock(Models\States\Devices\Writer::class);
 		$deviceWriter->method('create')->willReturnCallback(
-			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use ($record): States\DeviceProperty {
+			static function (Uuid\UuidInterface $id, array $values) use ($record): States\DeviceProperty {
 				$record('device', 'create', $id, $values);
 
 				return new Tests\Fixtures\Dummy\DevicePropertyState($id, null, null, false, true);
 			},
 		);
 		$deviceWriter->method('update')->willReturnCallback(
-			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use ($record): States\DeviceProperty {
+			static function (Uuid\UuidInterface $id, array $values) use ($record): States\DeviceProperty {
 				$record('device', 'update', $id, $values);
 
 				return new Tests\Fixtures\Dummy\DevicePropertyState($id, 'updated', null, false, false);
@@ -777,14 +850,14 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 
 		$channelWriter = $this->createMock(Models\States\Channels\Writer::class);
 		$channelWriter->method('create')->willReturnCallback(
-			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use ($record): States\ChannelProperty {
+			static function (Uuid\UuidInterface $id, array $values) use ($record): States\ChannelProperty {
 				$record('channel', 'create', $id, $values);
 
 				return new Tests\Fixtures\Dummy\ChannelPropertyState($id, null, null, false, true);
 			},
 		);
 		$channelWriter->method('update')->willReturnCallback(
-			static function (Uuid\UuidInterface $id, Utils\ArrayHash $values) use ($record): States\ChannelProperty {
+			static function (Uuid\UuidInterface $id, array $values) use ($record): States\ChannelProperty {
 				$record('channel', 'update', $id, $values);
 
 				return new Tests\Fixtures\Dummy\ChannelPropertyState($id, 'updated', null, false, false);
@@ -838,6 +911,22 @@ final class StateProducersTest extends Tests\Cases\Unit\DbTestCase
 				);
 			}
 		}
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

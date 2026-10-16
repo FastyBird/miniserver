@@ -14,6 +14,7 @@ use Ramsey\Uuid;
 use ReflectionClass;
 use ReflectionProperty;
 use Throwable;
+use TypeError;
 use function assert;
 use function is_array;
 use function is_object;
@@ -21,20 +22,16 @@ use function ksort;
 use function spl_object_id;
 
 /**
- * The CRUD boundary takes a plain array as well as an ArrayHash (#723, D3): EntityCreator,
- * EntityUpdater and EntityMapper turn an array into the ArrayHash Utils\ArrayHash::from() makes
- * of it, once, at their entry, so both inputs take one path.
+ * The CRUD boundary takes a plain array: EntityCreator, EntityUpdater and EntityMapper read the
+ * nested values of a to-one relationship, of every item of a to-many relationship, and of a
+ * relationship nested inside such an item, as arrays. So each test fills the whole graph of
+ * tests/fixtures/Persistence -- a plain field, a JSON field with nested values, a to-one
+ * reference, a to-one relationship created from nested values, and a to-many relationship to an
+ * abstract entity whose items carry a to-one relationship of their own -- and compares it with
+ * the graph the mapper is known to build, as the creator or updater returns it and as read back
+ * from the database.
  *
- * That path relies on nested `instanceof Utils\ArrayHash` checks: the values of a to-one
- * relationship, of every item of a to-many relationship, and of a relationship nested inside
- * such an item. So each test fills the whole graph of tests/fixtures/Persistence -- a plain
- * field, a JSON field with nested values, a to-one reference, a to-one relationship created from
- * nested values, and a to-many relationship to an abstract entity whose items carry a to-one
- * relationship of their own -- once from each input, and compares the two graphs: as the
- * creator or updater returns them, and as read back from the database.
- *
- * The ArrayHash tests pin the graph itself. They pass unchanged against the code before #723,
- * which is the proof that an ArrayHash caller sees no change.
+ * An ArrayHash is refused with a TypeError (#723): the three entry points do not accept it.
  */
 final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 {
@@ -56,70 +53,29 @@ final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testCreateFromAnArrayHashFillsTheWholeGraph(): void
+	public function testCreateFillsTheWholeGraph(): void
 	{
 		$container = $this->databaseContainer();
 
-		$article = $this->creator($container)->create(Utils\ArrayHash::from($this->createValues($container)));
+		$article = $this->creator($container)->create($this->createValues($container));
 
 		self::assertSame($this->createdGraph(), $this->describe($article));
+		self::assertSame($this->createdGraph(), $this->describe($this->reload($container)));
 	}
 
 	/**
 	 * @throws Throwable
 	 */
-	public function testCreateFromAnArrayFillsTheSameGraph(): void
-	{
-		$hashContainer = $this->databaseContainer();
-		$arrayContainer = $this->databaseContainer();
-
-		$fromHash = $this->creator($hashContainer)->create(Utils\ArrayHash::from($this->createValues($hashContainer)));
-		$fromArray = $this->creator($arrayContainer)->create($this->createValues($arrayContainer));
-
-		self::assertSame($this->createdGraph(), $this->describe($fromArray));
-		self::assertSame($this->describe($fromHash), $this->describe($fromArray));
-		self::assertSame(
-			$this->describe($this->reload($hashContainer)),
-			$this->describe($this->reload($arrayContainer)),
-		);
-	}
-
-	/**
-	 * @throws Throwable
-	 */
-	public function testUpdateFromAnArrayHashChangesTheWholeGraph(): void
+	public function testUpdateChangesTheWholeGraph(): void
 	{
 		$container = $this->databaseContainer();
 
-		$article = $this->creator($container)->create(Utils\ArrayHash::from($this->createValues($container)));
+		$article = $this->creator($container)->create($this->createValues($container));
 
-		$article = $this->updater($container)->update(Utils\ArrayHash::from($this->updateValues()), $article);
+		$article = $this->updater($container)->update($this->updateValues(), $article);
 
 		self::assertSame($this->updatedGraph(), $this->describe($article));
-	}
-
-	/**
-	 * @throws Throwable
-	 */
-	public function testUpdateFromAnArrayChangesTheGraphTheSameWay(): void
-	{
-		$hashContainer = $this->databaseContainer();
-		$arrayContainer = $this->databaseContainer();
-
-		$fromHash = $this->creator($hashContainer)->create(Utils\ArrayHash::from($this->createValues($hashContainer)));
-		$fromArray = $this->creator($arrayContainer)->create(
-			Utils\ArrayHash::from($this->createValues($arrayContainer)),
-		);
-
-		$fromHash = $this->updater($hashContainer)->update(Utils\ArrayHash::from($this->updateValues()), $fromHash);
-		$fromArray = $this->updater($arrayContainer)->update($this->updateValues(), $fromArray);
-
-		self::assertSame($this->updatedGraph(), $this->describe($fromArray));
-		self::assertSame($this->describe($fromHash), $this->describe($fromArray));
-		self::assertSame(
-			$this->describe($this->reload($hashContainer)),
-			$this->describe($this->reload($arrayContainer)),
-		);
+		self::assertSame($this->updatedGraph(), $this->describe($this->reload($container)));
 	}
 
 	/**
@@ -127,7 +83,7 @@ final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testTheMapperFillsAnEntityFromAnArrayAsFromAnArrayHash(): void
+	public function testTheMapperFillsAnEntityFromAnArray(): void
 	{
 		$container = $this->databaseContainer();
 		// Not autowired: the creator and the updater are its only consumers in the container
@@ -138,16 +94,45 @@ final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 			->find(Persistence\Author::class, Uuid\Uuid::fromString(self::AUTHOR));
 		assert($author instanceof Persistence\Author);
 
-		$fromHash = new Persistence\Article('Draft', $author, Uuid\Uuid::fromString(self::ARTICLE));
-		$fromArray = new Persistence\Article('Draft', $author, Uuid\Uuid::fromString(self::ARTICLE));
+		$article = new Persistence\Article('Draft', $author, Uuid\Uuid::fromString(self::ARTICLE));
 
-		$mapper->fillEntity(Utils\ArrayHash::from($this->createValues($container)), $fromHash, true);
-		$mapper->fillEntity($this->createValues($container), $fromArray, true);
+		$mapper->fillEntity($this->createValues($container), $article, true);
 
-		self::assertSame($this->describe($fromHash), $this->describe($fromArray));
-		self::assertSame('Hydration', $fromArray->getTitle());
-		self::assertSame('Short', $fromArray->getSummary()?->getText());
-		self::assertCount(2, $fromArray->getComments());
+		self::assertSame($this->createdGraph(), $this->describe($article));
+		self::assertSame('Hydration', $article->getTitle());
+		self::assertSame('Short', $article->getSummary()?->getText());
+		self::assertCount(2, $article->getComments());
+	}
+
+	/**
+	 * The creator, the updater and the mapper take an array only, and the nested values are
+	 * read as arrays, so an ArrayHash is not a caller's way in any more
+	 *
+	 * @throws Throwable
+	 */
+	public function testTheCrudBoundaryRefusesAnArrayHash(): void
+	{
+		$container = $this->databaseContainer();
+		$mapper = $container->getService('fbCore.persistence.entity.mapper');
+		assert($mapper instanceof Mapping\EntityMapper);
+
+		$creator = $this->creator($container);
+		$updater = $this->updater($container);
+		$article = $creator->create($this->createValues($container));
+		$hash = Utils\ArrayHash::from($this->updateValues());
+
+		foreach (
+			[
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $creator->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $updater->update($hash, $article),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $mapper->fillEntity($hash, $article),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
+		}
 	}
 
 	/**
@@ -235,8 +220,7 @@ final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 
 	/**
 	 * What the mapper builds from createValues(). A nested array of a plain field, `params`
-	 * here, arrives as the ArrayHash Utils\ArrayHash::from() made of it: the mapper unwraps only
-	 * the outer level. That is today's behaviour, for both inputs, and is pinned as it is.
+	 * here, stays the array it was given
 	 *
 	 * @return array<string, mixed>
 	 */
@@ -271,8 +255,8 @@ final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 			],
 			'id' => 'uuid:' . self::ARTICLE,
 			'params' => [
-				'tags' => ['(ArrayHash)' => ['mapper', 'input']],
-				'layout' => ['(ArrayHash)' => ['columns' => 2]],
+				'tags' => ['mapper', 'input'],
+				'layout' => ['columns' => 2],
 			],
 			'summary' => [
 				'(class)' => Persistence\Summary::class,
@@ -318,7 +302,7 @@ final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 			],
 			'id' => 'uuid:' . self::ARTICLE,
 			'params' => [
-				'tags' => ['(ArrayHash)' => ['revised']],
+				'tags' => ['revised'],
 			],
 			'summary' => [
 				'(class)' => Persistence\Summary::class,
@@ -395,9 +379,9 @@ final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 
 	/**
 	 * The graph reachable from $value, as data: every object as its class and every property of
-	 * its class hierarchy, sorted by name, a collection as the list of its items, an ArrayHash
-	 * marked as one, and an object met a second time as a reference to the path it was first met
-	 * at, so a back-reference cannot recurse
+	 * its class hierarchy, sorted by name, a collection as the list of its items, and an object
+	 * met a second time as a reference to the path it was first met at, so a back-reference
+	 * cannot recurse
 	 *
 	 * @param array<int, string> $seen
 	 */
@@ -409,10 +393,6 @@ final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 
 		if ($value instanceof Common\Collections\Collection) {
 			$value = $value->toArray();
-		}
-
-		if ($value instanceof Utils\ArrayHash) {
-			return ['(ArrayHash)' => $this->describe((array) $value, $seen, $path)];
 		}
 
 		if (is_array($value)) {
@@ -457,6 +437,22 @@ final class EntityMapperInputTest extends Tests\Cases\Unit\BaseTestCase
 		}
 
 		return $described;
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

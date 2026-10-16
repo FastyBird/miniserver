@@ -36,6 +36,7 @@ use function assert;
 use function count;
 use function http_build_query;
 use function intval;
+use function is_array;
 use function md5;
 use function property_exists;
 use function React\Async\async;
@@ -443,14 +444,14 @@ final class CloudWs
 
 		$data = $this->validateData($this->getHttpResponseBody($response), self::LOGIN_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $data->offsetGet('error');
+		$error = $data['error'];
 
-		$data = $data->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $data['data'];
+		assert(is_array($data));
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\CloudWsCall(
-				sprintf('User authentication failed: %s', strval($data->offsetGet('msg'))),
+				sprintf('User authentication failed: %s', strval($data['msg'])),
 			);
 		}
 
@@ -740,12 +741,13 @@ final class CloudWs
 	 * @template T of Messages\Message
 	 *
 	 * @param class-string<T> $entity
+	 * @param array<mixed> $data
 	 *
 	 * @return T
 	 *
 	 * @throws SonoffExceptions\CloudWsError
 	 */
-	private function createEntity(string $entity, Utils\ArrayHash $data): Messages\Message
+	private function createEntity(string $entity, array $data): Messages\Message
 	{
 		try {
 			return $this->entityHelper->create(
@@ -764,7 +766,7 @@ final class CloudWs
 	}
 
 	/**
-	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
+	 * @return ($throw is true ? array<mixed> : array<mixed>|false)
 	 *
 	 * @throws SonoffExceptions\CloudWsCall
 	 * @throws SonoffExceptions\CloudWsError
@@ -773,7 +775,7 @@ final class CloudWs
 		string $payload,
 		string $schemaFilename,
 		bool $throw = true,
-	): Utils\ArrayHash|bool
+	): array|bool
 	{
 		try {
 			return $this->schemaValidator->validate(

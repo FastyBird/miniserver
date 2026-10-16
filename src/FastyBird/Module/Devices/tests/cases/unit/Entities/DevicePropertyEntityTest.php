@@ -12,7 +12,6 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Queries;
 use FastyBird\Module\Devices\Tests;
 use Nette;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use ReflectionException;
@@ -51,14 +50,14 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 		self::assertTrue($parent instanceof Entities\Devices\Properties\Variable);
 		self::assertSame('status_led', $parent->getIdentifier());
 
-		$child = $manager->create(Utils\ArrayHash::from([
+		$child = $manager->create([
 			'entity' => Entities\Devices\Properties\Mapped::class,
 			'identifier' => 'new-child-property',
 			'device' => $parent->getDevice(),
 			'parent' => $parent,
 			'dataType' => $parent->getDataType(),
 			'format' => $parent->getFormat(),
-		]));
+		]);
 
 		self::assertTrue($child instanceof Entities\Devices\Properties\Mapped);
 		self::assertSame('new-child-property', $child->getIdentifier());
@@ -92,14 +91,14 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 		self::assertTrue($parent instanceof Entities\Devices\Properties\Variable);
 		self::assertSame('status_led', $parent->getIdentifier());
 
-		$child = $manager->create(Utils\ArrayHash::from([
+		$child = $manager->create([
 			'entity' => Entities\Devices\Properties\Mapped::class,
 			'identifier' => 'new-child-property',
 			'device' => $parent->getDevice(),
 			'parent' => $parent,
 			'dataType' => $parent->getDataType(),
 			'format' => $parent->getFormat(),
-		]));
+		]);
 
 		self::assertTrue($child instanceof Entities\Devices\Properties\Mapped);
 		self::assertSame('new-child-property', $child->getIdentifier());
@@ -154,14 +153,14 @@ final class DevicePropertyEntityTest extends Tests\Cases\Unit\DbTestCase
 		self::assertTrue($parent instanceof Entities\Devices\Properties\Variable);
 		self::assertSame('status_led', $parent->getIdentifier());
 
-		$child = $manager->create(Utils\ArrayHash::from([
+		$child = $manager->create([
 			'entity' => Entities\Devices\Properties\Mapped::class,
 			'identifier' => 'new-child-property',
 			'device' => $parent->getDevice(),
 			'parent' => $parent,
 			'dataType' => $parent->getDataType(),
 			'format' => $parent->getFormat(),
-		]));
+		]);
 
 		self::assertTrue($child instanceof Entities\Devices\Properties\Mapped);
 		self::assertSame('new-child-property', $child->getIdentifier());

@@ -6,7 +6,6 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Security\Models;
 use FastyBird\Core\Security\Types;
 use FastyBird\Core\Values\Types\Sources;
-use Nette\Utils;
 use Override;
 use Psr\Log;
 use Ramsey\Uuid;
@@ -74,9 +73,7 @@ final class DeleteApiKey extends Console\Command\Command
 				return self::FAILURE;
 			}
 
-			$this->manager->update($apiKey, Utils\ArrayHash::from([
-				'state' => Types\ApiKeyState::DELETED,
-			]));
+			$this->manager->update($apiKey, ['state' => Types\ApiKeyState::DELETED]);
 		} catch (Throwable $ex) {
 			$this->logger->error('API key could not be deleted', [
 				'source' => Sources\Core::CORE->value,

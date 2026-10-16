@@ -13,7 +13,6 @@ use FastyBird\Module\Accounts\Tests;
 use FastyBird\Module\Accounts\Types;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -147,7 +146,7 @@ final class AccountTokensTest extends Tests\Cases\Unit\DbTestCase
 		self::assertNotNull($identity);
 
 		$this->getContainer()->getByType(Models\Entities\Identities\IdentitiesManager::class)
-			->update($identity, Utils\ArrayHash::from(['state' => $state]));
+			->update($identity, ['state' => $state]);
 
 		self::assertSame(0, $this->tokensOf(self::ACCOUNT));
 		self::assertSame(2, $this->tokensOf(self::USER_ACCOUNT));
@@ -198,7 +197,7 @@ final class AccountTokensTest extends Tests\Cases\Unit\DbTestCase
 	private function updateAccount(string $id, array $values): void
 	{
 		$this->getContainer()->getByType(Models\Entities\Accounts\AccountsManager::class)
-			->update($this->findAccount($id), Utils\ArrayHash::from($values));
+			->update($this->findAccount($id), $values);
 	}
 
 	/**

@@ -1,0 +1,1974 @@
+{
+  "stored": {
+    "channel-async-set-fresh": [
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected"
+        }
+      ]
+    ],
+    "channel-async-set-stored": [
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected",
+          "expected_value": null,
+          "pending": false
+        }
+      ]
+    ],
+    "channel-async-write-fresh": [
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "channel-async-write-stored": [
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "channel-sync-set-fresh": [
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected"
+        }
+      ]
+    ],
+    "channel-sync-set-stored": [
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected",
+          "expected_value": null,
+          "pending": false
+        }
+      ]
+    ],
+    "channel-sync-write-fresh": [
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "channel",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "channel-sync-write-stored": [
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "channel",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "connector-async-set-fresh": [
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected"
+        }
+      ]
+    ],
+    "connector-async-set-stored": [
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected",
+          "expected_value": null,
+          "pending": false
+        }
+      ]
+    ],
+    "connector-async-write-fresh": [
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "connector-async-write-stored": [
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "connector-sync-set-fresh": [
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected"
+        }
+      ]
+    ],
+    "connector-sync-set-stored": [
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected",
+          "expected_value": null,
+          "pending": false
+        }
+      ]
+    ],
+    "connector-sync-write-fresh": [
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "connector",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "connector-sync-write-stored": [
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "connector",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "device-async-set-fresh": [
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected"
+        }
+      ]
+    ],
+    "device-async-set-stored": [
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected",
+          "expected_value": null,
+          "pending": false
+        }
+      ]
+    ],
+    "device-async-write-fresh": [
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "device-async-write-stored": [
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "device-sync-set-fresh": [
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected"
+        }
+      ]
+    ],
+    "device-sync-set-stored": [
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "on",
+          "expected_value": null,
+          "valid": true,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "actual_value": "N/A",
+          "valid": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": true,
+          "actual_value": "expected",
+          "expected_value": null,
+          "pending": false
+        }
+      ]
+    ],
+    "device-sync-write-fresh": [
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "device",
+        "create",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ],
+    "device-sync-write-stored": [
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "off",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": "N/A",
+          "pending": true
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "expected_value": null,
+          "pending": false
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "pending": "2020-04-01T12:00:00+00:00"
+        }
+      ],
+      [
+        "device",
+        "update",
+        "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+        {
+          "valid": false
+        }
+      ]
+    ]
+  },
+  "published": {
+    "channel-async": [
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on"
+          }
+        }
+      ]
+    ],
+    "channel-sync": [
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.channel.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Channels\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "channel": "6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on"
+          }
+        }
+      ]
+    ],
+    "connector-async": [
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on"
+          }
+        }
+      ]
+    ],
+    "connector-sync": [
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.connector.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Connectors\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "connector": "17c59dfa-2edd-438e-8c49-faa4e38e5a5e",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on"
+          }
+        }
+      ]
+    ],
+    "device-async": [
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on"
+          }
+        }
+      ]
+    ],
+    "device-sync": [
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "set": {
+            "actual_value": "on"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on",
+            "expected_value": null
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "expected_value": "off"
+          }
+        }
+      ],
+      [
+        "com.fastybird.devices-module",
+        "fb.exchange.action.device.property",
+        "FastyBird\\Module\\Devices\\Documents\\States\\Devices\\Properties\\Actions\\Action",
+        {
+          "id": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "device": "69786d15-fd0c-4d9f-9378-33287c2009fa",
+          "property": "a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+          "action": "set",
+          "write": {
+            "actual_value": "on"
+          }
+        }
+      ]
+    ]
+  }
+}

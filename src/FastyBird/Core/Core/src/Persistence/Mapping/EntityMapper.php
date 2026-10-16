@@ -8,7 +8,6 @@ use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Entities;
 use FastyBird\Core\Persistence\Exceptions as PersistenceExceptions;
 use FastyBird\Core\Persistence\Helpers;
-use Nette\Utils;
 use phpDocumentor;
 use ReflectionAttribute;
 use ReflectionClass;
@@ -57,27 +56,21 @@ final readonly class EntityMapper
 
 	/**
 	 * The values are keyed by the entity's property names, so their shape is the entity's, read
-	 * by reflection, and not one fixed shape. A plain array is turned into the ArrayHash
-	 * Utils\ArrayHash::from() makes of it, nested arrays included, which is what an ArrayHash
-	 * caller builds: both then take the one path below, whose relationship branches test the
-	 * nested values for `instanceof Utils\ArrayHash` (#723).
+	 * by reflection, and not one fixed shape. A nested array is a relationship, or a value the
+	 * entity's setter takes as an array.
 	 *
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<mixed> $values
 	 *
 	 * @throws PersistenceExceptions\EntityCreation
 	 * @throws CoreExceptions\InvalidState
 	 * @throws ReflectionException
 	 */
 	public function fillEntity(
-		array|Utils\ArrayHash $values,
+		array $values,
 		Entities\CrudEntity $entity,
 		bool $isNew = false,
 	): Entities\CrudEntity
 	{
-		if (is_array($values)) {
-			$values = Utils\ArrayHash::from($values);
-		}
-
 		// This used to unwrap Doctrine\Common\Proxy\Proxy subclasses to reach the real entity class.
 		// That interface left with doctrine/common, and under ORM 3 with native lazy objects there
 		// is no proxy class at all: the entity IS its own class, merely uninitialised. Where a
@@ -142,7 +135,7 @@ final readonly class EntityMapper
 			$crud = $crudAttribute->newInstance();
 			assert($crud instanceof Attribute\Crud);
 
-			if ($isNew && $crud->isRequired() && !$values->offsetExists($fieldName)) {
+			if ($isNew && $crud->isRequired() && !array_key_exists($fieldName, $values)) {
 				throw new PersistenceExceptions\MissingRequiredField(
 					$entity,
 					$fieldName,
@@ -150,19 +143,13 @@ final readonly class EntityMapper
 				);
 			}
 
-			if (!array_key_exists($fieldName, (array) $values) || (!$isNew && !$crud->isWritable())) {
+			if (!array_key_exists($fieldName, $values) || (!$isNew && !$crud->isWritable())) {
 				continue;
 			}
 
-			$value = $values->offsetGet($fieldName);
+			$value = $values[$fieldName];
 
-			if (
-				(
-					$value instanceof Utils\ArrayHash
-					|| is_array($value)
-				)
-				&& $classMetadata->getPropertyAccessor($fieldName) !== null
-			) {
+			if (is_array($value) && $classMetadata->getPropertyAccessor($fieldName) !== null) {
 				if (!$classMetadata->getFieldValue($entity, $fieldName) instanceof Entities\CrudEntity) {
 					$propertyAttributes = $propertyReflection->getAttributes();
 
@@ -233,7 +220,7 @@ final readonly class EntityMapper
 							}
 
 							foreach ($value as $item) {
-								assert($item instanceof Utils\ArrayHash);
+								assert(is_array($item));
 								$subEntity = null;
 
 								$subClassName = $className;
@@ -251,12 +238,12 @@ final readonly class EntityMapper
 									$rc = new ReflectionClass($subClassName);
 								}
 
-								if ($subClassIdProperty !== null && $item->offsetExists($subClassIdProperty)) {
+								if ($subClassIdProperty !== null && array_key_exists($subClassIdProperty, $item)) {
 									$entityClassManager = $this->managerRegistry->getManagerForClass($subClassName);
 
 									$subEntity = $entityClassManager
 										?->getRepository($subClassName)
-										->find($item->offsetGet($subClassIdProperty));
+										->find($item[$subClassIdProperty]);
 
 									if ($subEntity !== null && $subEntity instanceof Entities\CrudEntity) {
 										$subEntity = $this->fillEntity($item, $subEntity);
@@ -269,17 +256,15 @@ final readonly class EntityMapper
 									$subEntity = $constructor !== null ? $rc->newInstanceArgs(
 										Helpers\ConstructorAutowiring::autowireArguments(
 											$constructor,
-											array_merge((array) $item, ['parent_entity' => $entity]),
+											array_merge($item, ['parent_entity' => $entity]),
 										),
 									) : new $subClassName();
 
 									if ($subEntity instanceof Entities\CrudEntity) {
 										$subEntity = $this->fillEntity(
-											Utils\ArrayHash::from(
-												array_merge(
-													(array) $item,
-													[$this->findAttributeName($entity, $subClassName) => $entity],
-												),
+											array_merge(
+												$item,
+												[$this->findAttributeName($entity, $subClassName) => $entity],
 											),
 											$subEntity,
 											true,
@@ -345,10 +330,7 @@ final readonly class EntityMapper
 								$classMetadata,
 								$entity,
 								$fieldName,
-								$this->fillEntity(
-									$value instanceof Utils\ArrayHash ? $value : Utils\ArrayHash::from($value),
-									$subEntityValue,
-								),
+								$this->fillEntity($value, $subEntityValue),
 							);
 
 						} elseif ($subEntityValue === null) {
@@ -358,7 +340,7 @@ final readonly class EntityMapper
 								$subEntity = $rc->newInstanceArgs(
 									Helpers\ConstructorAutowiring::autowireArguments(
 										$constructor,
-										array_merge((array) $value, ['parent_entity' => $entity]),
+										array_merge($value, ['parent_entity' => $entity]),
 									),
 								);
 
@@ -381,7 +363,7 @@ final readonly class EntityMapper
 						$classMetadata,
 						$entity,
 						$fieldName,
-						$this->fillEntity(Utils\ArrayHash::from((array) $value), $fieldValue, $isNew),
+						$this->fillEntity($value, $fieldValue, $isNew),
 					);
 				}
 			} else {
@@ -398,10 +380,7 @@ final readonly class EntityMapper
 				}
 
 				// Check if class is callable
-				if (
-					is_string($className)
-					&& ($value instanceof Utils\ArrayHash || is_array($value))
-				) {
+				if (is_string($className) && is_array($value)) {
 					if (class_exists($className)) {
 						$rc = new ReflectionClass($className);
 
@@ -416,7 +395,7 @@ final readonly class EntityMapper
 							$subEntity = $rc->newInstanceArgs(
 								Helpers\ConstructorAutowiring::autowireArguments(
 									$constructor,
-									array_merge((array) $value, ['parent_entity' => $entity]),
+									array_merge($value, ['parent_entity' => $entity]),
 								),
 							);
 
@@ -434,7 +413,7 @@ final readonly class EntityMapper
 						$subEntity = $constructor !== null ? $rc->newInstanceArgs(
 							Helpers\ConstructorAutowiring::autowireArguments(
 								$constructor,
-								array_merge((array) $value, ['parent_entity' => $entity]),
+								array_merge($value, ['parent_entity' => $entity]),
 							),
 						) : new $className();
 
@@ -444,11 +423,9 @@ final readonly class EntityMapper
 								$entity,
 								$fieldName,
 								$this->fillEntity(
-									Utils\ArrayHash::from(
-										array_merge(
-											(array) $value,
-											[$this->findAttributeName($entity, $className) => $entity],
-										),
+									array_merge(
+										$value,
+										[$this->findAttributeName($entity, $className) => $entity],
 									),
 									$subEntity,
 									true,
@@ -564,10 +541,6 @@ final readonly class EntityMapper
 	): void
 	{
 		$methodName = 'set' . ucfirst($field);
-
-		if ($value instanceof Utils\ArrayHash) {
-			$value = (array) $value;
-		}
 
 		try {
 			$propertyReflection = new ReflectionMethod($entity::class, $methodName);

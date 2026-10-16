@@ -470,6 +470,29 @@ fails to open it, and under the test runner the failure surfaces as a fatal erro
 keeps what it learns in memory, which is all a long-running server or console process needs. Wiring a cache
 needs a directory on a filesystem where `rename()` is atomic (#724).
 
+## Entry points take arrays
+
+Data enters a package as a plain `array`, never as a Nette `ArrayHash` (#723). The rule has two
+halves:
+
+- **An entry point takes an array.** The entity managers' `create()` and `update()`, the state
+  managers and writers, Core's `EntityCreator`, `EntityUpdater`, `EntityMapper` and
+  `RoutingDocumentFactory`, the security managers, a WebSockets `ErrorResponse`'s headers and the
+  array-valued arguments of an entity constructor or setter are typed `array`, with
+  `@param array<string, mixed>` where the keys are an entity's property names. The values come
+  back the same way: the JSON schema `Values\Schemas\Validator::validate()` and the API
+  `Hydrators\Hydrator::hydrate()` return arrays, and so do `getParams()` and a loader's metadata.
+  An `ArrayHash` is refused with a `TypeError`.
+- **A property state takes a `PropertyUpdate`.** `set()`, `write()` and `writeState()` of the
+  six property state managers take `Devices\States\PropertyUpdate`, whose fixed keys are
+  `actual_value`, `expected_value`, `pending` and `valid`. A field a caller does not give is absent,
+  a field it gives as `null` clears the stored value, and the manager reads the fields with
+  `toArray()`. A plain array is not accepted there, because its keys would be free text.
+
+Do not add `ArrayHash` back as a convenience wrapper. It reads every key as `mixed`, turns every
+nested array and list into an object, and needed a patch (`nette/utils`, removed with it) to tell
+a key holding `null` from a missing one.
+
 ## Docblocks
 
 **No file header.** The licence is in `LICENSE.md`, the author in `composer.json`, and the

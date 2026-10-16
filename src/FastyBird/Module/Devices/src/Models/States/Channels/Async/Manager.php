@@ -7,7 +7,6 @@ use FastyBird\Module\Devices\Documents;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\States;
-use Nette\Utils;
 use Ramsey\Uuid;
 use React\Promise;
 use Throwable;
@@ -26,7 +25,7 @@ final readonly class Manager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @return Promise\PromiseInterface<States\ChannelProperty>
 	 *
@@ -34,7 +33,7 @@ final readonly class Manager
 	 */
 	public function create(
 		Documents\Channels\Properties\Dynamic $property,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): Promise\PromiseInterface
 	{
 		if ($this->manager === null) {
@@ -53,7 +52,7 @@ final readonly class Manager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @return Promise\PromiseInterface<States\ChannelProperty|bool>
 	 *
@@ -62,7 +61,7 @@ final readonly class Manager
 	public function update(
 		Documents\Channels\Properties\Dynamic $property,
 		States\ChannelProperty $state,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): Promise\PromiseInterface
 	{
 		if ($this->manager === null) {

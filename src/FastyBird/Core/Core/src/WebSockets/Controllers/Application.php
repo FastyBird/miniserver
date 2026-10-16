@@ -140,6 +140,7 @@ abstract class Application
 	 * Close a connection with an HTTP response
 	 *
 	 * @param int $code HTTP status code
+	 * @param array<string, mixed> $additionalHeaders
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 */

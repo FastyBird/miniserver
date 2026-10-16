@@ -19,7 +19,6 @@ use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use FastyBird\Module\Devices\Utilities as DevicesUtilities;
 use Nette;
-use Nette\Utils;
 use Override;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -163,16 +162,13 @@ final class StoreStateTest extends Tests\Cases\Unit\DbTestCase
 		$record = static function (string $owner) use (&$set): Closure {
 			return static function (
 				DevicesDocuments\Property $property,
-				Utils\ArrayHash|DevicesStates\PropertyUpdate $data,
+				DevicesStates\PropertyUpdate $data,
 				Sources\Source|null $source,
 			) use (
 				$owner,
 				&$set,
 ): Promise\PromiseInterface {
-				// What the manager makes of it on its first line
-				$data = $data instanceof DevicesStates\PropertyUpdate ? $data->toArrayHash() : $data;
-
-				$set[] = [$owner, $property->getIdentifier(), (array) $data, $source?->value];
+				$set[] = [$owner, $property->getIdentifier(), $data->toArray(), $source?->value];
 
 				return Promise\resolve(true);
 			};

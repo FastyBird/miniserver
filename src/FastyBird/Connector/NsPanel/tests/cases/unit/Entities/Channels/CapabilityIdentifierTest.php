@@ -183,7 +183,7 @@ final class CapabilityIdentifierTest extends Tests\Cases\Unit\DbTestCase
 
 			$withIdentifier = !$withIdentifier;
 
-			$channel = $this->channelsManager()->create(Utils\ArrayHash::from($values));
+			$channel = $this->channelsManager()->create($values);
 
 			self::assertSame($capability, $this->storedIdentifier($channel), $entityClass);
 		}

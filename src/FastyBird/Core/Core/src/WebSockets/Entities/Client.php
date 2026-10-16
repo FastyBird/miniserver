@@ -7,8 +7,8 @@ use FastyBird\Core\Exceptions;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\WebSockets\Controllers\Responses;
 use FastyBird\Core\WebSockets\Handshake;
-use Nette\Utils;
 use React\Socket;
+use function array_key_exists;
 
 /**
  * Single client connection
@@ -39,13 +39,12 @@ class Client
 
 	private WebSocket $webSocket;
 
-	private Utils\ArrayHash $parameters;
+	/** @var array<string, mixed> */
+	private array $parameters = [];
 
 	public function __construct(private int $id, private Socket\ConnectionInterface $connection)
 	{
 		$this->remoteAddress = $connection->getRemoteAddress();
-
-		$this->parameters = new Utils\ArrayHash();
 	}
 
 	public function getId(): int
@@ -84,12 +83,12 @@ class Client
 
 	public function addParameter(string $key, $value): void
 	{
-		$this->parameters->offsetSet($key, $value);
+		$this->parameters[$key] = $value;
 	}
 
 	public function getParameter(string $key, mixed $default = null): mixed
 	{
-		return $this->parameters->offsetExists($key) ? $this->parameters->offsetGet($key) : $default;
+		return array_key_exists($key, $this->parameters) ? $this->parameters[$key] : $default;
 	}
 
 	public function close(int|null $code = null): void

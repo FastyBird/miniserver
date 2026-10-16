@@ -11,7 +11,6 @@ use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Entities;
 use FastyBird\Module\Triggers\Exceptions as TriggersExceptions;
 use FastyBird\Module\Triggers\States;
-use Nette\Utils;
 use function array_merge;
 
 /**
@@ -29,7 +28,7 @@ final readonly class ActionsManager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws TriggersExceptions\NotImplemented
 	 * @throws CoreExceptions\InvalidArgument
@@ -39,7 +38,7 @@ final readonly class ActionsManager
 	 */
 	public function create(
 		Entities\Actions\Action $action,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): States\Action
 	{
 		if ($this->manager === null) {
@@ -54,7 +53,7 @@ final readonly class ActionsManager
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws TriggersExceptions\NotImplemented
 	 * @throws CoreExceptions\InvalidArgument
@@ -65,7 +64,7 @@ final readonly class ActionsManager
 	public function update(
 		Entities\Actions\Action $action,
 		States\Action $state,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): States\Action
 	{
 		if ($this->manager === null) {

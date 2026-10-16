@@ -12,7 +12,6 @@ use FastyBird\Connector\HomeKit\Tests;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use Nette;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
@@ -49,11 +48,11 @@ final class ClientsManagerTest extends Tests\Cases\Unit\DbTestCase
 
 		$clientPublicKey = random_bytes(32);
 
-		$entity = $manager->create(Utils\ArrayHash::from([
+		$entity = $manager->create([
 			'connector' => $connector,
 			'uid' => '7e11f659-a130-4eb1-b550-dc96c1160c85',
 			'publicKey' => $clientPublicKey,
-		]));
+		]);
 
 		self::assertSame(Entities\Clients\Client::class, $entity::class);
 		self::assertSame($clientPublicKey, $entity->getPublicKey());
@@ -86,9 +85,9 @@ final class ClientsManagerTest extends Tests\Cases\Unit\DbTestCase
 
 		$clientPublicKey = random_bytes(32);
 
-		$manager->update($entity, Utils\ArrayHash::from([
+		$manager->update($entity, [
 			'publicKey' => $clientPublicKey,
-		]));
+		]);
 
 		self::assertSame($clientPublicKey, $entity->getPublicKey());
 	}

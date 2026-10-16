@@ -149,7 +149,7 @@ final class WebSocketEventsTest extends Tests\Cases\Unit\DbTestCase
 		self::assertNotNull($account);
 
 		$this->getContainer()->getByType(Models\Entities\Accounts\AccountsManager::class)
-			->update($account, Utils\ArrayHash::from(['state' => AccountsTypes\AccountState::BLOCKED]));
+			->update($account, ['state' => AccountsTypes\AccountState::BLOCKED]);
 
 		$this->advance();
 		$this->publish('second');

@@ -25,6 +25,7 @@ use function array_key_exists;
 use function assert;
 use function count;
 use function http_build_query;
+use function is_array;
 use function is_scalar;
 use function md5;
 use function sprintf;
@@ -180,7 +181,7 @@ final class LanApi
 
 		$message = $this->createMessage(
 			Messages\Request\SyncDevices::class,
-			Utils\ArrayHash::from([
+			[
 				'event' => [
 					'header' => [
 						'name' => NsPanel\Types\Header::DISCOVERY_REQUEST->value,
@@ -191,7 +192,7 @@ final class LanApi
 						'endpoints' => $devices,
 					],
 				],
-			]),
+			],
 		);
 
 		try {
@@ -267,7 +268,7 @@ final class LanApi
 
 		$message = $this->createMessage(
 			Messages\Request\ReportDeviceState::class,
-			Utils\ArrayHash::from([
+			[
 				'event' => [
 					'header' => [
 						'name' => NsPanel\Types\Header::DEVICE_STATES_CHANGE_REPORT->value,
@@ -281,7 +282,7 @@ final class LanApi
 						'state' => $state,
 					],
 				],
-			]),
+			],
 		);
 
 		try {
@@ -355,7 +356,7 @@ final class LanApi
 
 		$message = $this->createMessage(
 			Messages\Request\ReportDeviceOnline::class,
-			Utils\ArrayHash::from([
+			[
 				'event' => [
 					'header' => [
 						'name' => NsPanel\Types\Header::DEVICE_ONLINE_CHANGE_REPORT->value,
@@ -369,7 +370,7 @@ final class LanApi
 						'online' => $online,
 					],
 				],
-			]),
+			],
 		);
 
 		try {
@@ -537,9 +538,7 @@ final class LanApi
 
 		$message = $this->createMessage(
 			Messages\Request\SetSubDeviceState::class,
-			Utils\ArrayHash::from([
-				'state' => $state,
-			]),
+			['state' => $state],
 		);
 
 		try {
@@ -605,13 +604,13 @@ final class LanApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::GET_GATEWAY_INFO_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
 		if ($error !== 0) {
-			$message = $body->offsetGet('message');
+			$message = $body['message'];
 
 			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Getting gateway info failed: %s', is_scalar($message) ? strval($message) : 'unknown'),
@@ -638,13 +637,13 @@ final class LanApi
 			self::GET_GATEWAY_ACCESS_TOKEN_MESSAGE_SCHEMA_FILENAME,
 		);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
 		if ($error !== 0) {
-			$message = $body->offsetGet('message');
+			$message = $body['message'];
 
 			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Getting gateway access token failed: %s', is_scalar($message) ? strval($message) : 'unknown'),
@@ -748,13 +747,13 @@ final class LanApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::GET_SUB_DEVICES_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
 		if ($error !== 0) {
-			$message = $body->offsetGet('message');
+			$message = $body['message'];
 
 			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Get sub-devices list failed: %s', is_scalar($message) ? strval($message) : 'unknown'),
@@ -777,10 +776,10 @@ final class LanApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::SET_SUB_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 
 		if ($error !== 0) {
-			$message = $body->offsetGet('message');
+			$message = $body['message'];
 
 			throw new NsPanelExceptions\LanApiCall(
 				sprintf('Set sub-device state failed: %s', is_scalar($message) ? strval($message) : 'unknown'),
@@ -793,7 +792,7 @@ final class LanApi
 	}
 
 	/**
-	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
+	 * @return ($throw is true ? array<mixed> : array<mixed>|false)
 	 *
 	 * @throws NsPanelExceptions\LanApiCall
 	 * @throws NsPanelExceptions\LanApiError
@@ -803,7 +802,7 @@ final class LanApi
 		Message\ResponseInterface $response,
 		string $schemaFilename,
 		bool $throw = true,
-	): Utils\ArrayHash|bool
+	): array|bool
 	{
 		$body = $this->getResponseBody($request, $response);
 
@@ -854,12 +853,13 @@ final class LanApi
 	 * @template T of Messages\Message
 	 *
 	 * @param class-string<T> $message
+	 * @param array<mixed> $data
 	 *
 	 * @return T
 	 *
 	 * @throws NsPanelExceptions\LanApiError
 	 */
-	private function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
+	private function createMessage(string $message, array $data): Messages\Message
 	{
 		try {
 			return $this->messageBuilder->create(

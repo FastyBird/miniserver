@@ -26,7 +26,6 @@ use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\Queries as DevicesQueries;
 use Nette;
 use Nette\Localization;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 use Symfony\Component\Console;
@@ -979,40 +978,40 @@ final class Install extends Console\Command\Command
 
 		$metadata = $this->loader->loadServices();
 
-		if (!$metadata->offsetExists($type)) {
+		if (!array_key_exists($type, $metadata)) {
 			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$type,
 			));
 		}
 
-		$serviceMetadata = $metadata->offsetGet($type);
+		$serviceMetadata = $metadata[$type];
 
 		if (
-			!$serviceMetadata instanceof Utils\ArrayHash
-			|| !$serviceMetadata->offsetExists('UUID')
-			|| !is_string($serviceMetadata->offsetGet('UUID'))
-			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
-			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
+			!is_array($serviceMetadata)
+			|| !array_key_exists('UUID', $serviceMetadata)
+			|| !is_string($serviceMetadata['UUID'])
+			|| !array_key_exists('RequiredCharacteristics', $serviceMetadata)
+			|| !is_array($serviceMetadata['RequiredCharacteristics'])
 		) {
 			throw new HomeKitExceptions\InvalidState('Service definition is missing required attributes');
 		}
 
-		$requiredCharacteristics = (array) $serviceMetadata->offsetGet('RequiredCharacteristics');
+		$requiredCharacteristics = $serviceMetadata['RequiredCharacteristics'];
 		$optionalCharacteristics = $virtualCharacteristics = [];
 
 		if (
-			$serviceMetadata->offsetExists('OptionalCharacteristics')
-			&& $serviceMetadata->offsetGet('OptionalCharacteristics') instanceof Utils\ArrayHash
+			array_key_exists('OptionalCharacteristics', $serviceMetadata)
+			&& is_array($serviceMetadata['OptionalCharacteristics'])
 		) {
-			$optionalCharacteristics = (array) $serviceMetadata->offsetGet('OptionalCharacteristics');
+			$optionalCharacteristics = $serviceMetadata['OptionalCharacteristics'];
 		}
 
 		if (
-			$serviceMetadata->offsetExists('VirtualCharacteristics')
-			&& $serviceMetadata->offsetGet('VirtualCharacteristics') instanceof Utils\ArrayHash
+			array_key_exists('VirtualCharacteristics', $serviceMetadata)
+			&& is_array($serviceMetadata['VirtualCharacteristics'])
 		) {
-			$virtualCharacteristics = (array) $serviceMetadata->offsetGet('VirtualCharacteristics');
+			$virtualCharacteristics = $serviceMetadata['VirtualCharacteristics'];
 		}
 
 		try {
@@ -1125,40 +1124,40 @@ final class Install extends Console\Command\Command
 
 		$metadata = $this->loader->loadServices();
 
-		if (!$metadata->offsetExists($type->value)) {
+		if (!array_key_exists($type->value, $metadata)) {
 			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$type->value,
 			));
 		}
 
-		$serviceMetadata = $metadata->offsetGet($type->value);
+		$serviceMetadata = $metadata[$type->value];
 
 		if (
-			!$serviceMetadata instanceof Utils\ArrayHash
-			|| !$serviceMetadata->offsetExists('UUID')
-			|| !is_string($serviceMetadata->offsetGet('UUID'))
-			|| !$serviceMetadata->offsetExists('RequiredCharacteristics')
-			|| !$serviceMetadata->offsetGet('RequiredCharacteristics') instanceof Utils\ArrayHash
+			!is_array($serviceMetadata)
+			|| !array_key_exists('UUID', $serviceMetadata)
+			|| !is_string($serviceMetadata['UUID'])
+			|| !array_key_exists('RequiredCharacteristics', $serviceMetadata)
+			|| !is_array($serviceMetadata['RequiredCharacteristics'])
 		) {
 			throw new HomeKitExceptions\InvalidState('Service definition is missing required attributes');
 		}
 
-		$requiredCharacteristics = (array) $serviceMetadata->offsetGet('RequiredCharacteristics');
+		$requiredCharacteristics = $serviceMetadata['RequiredCharacteristics'];
 		$optionalCharacteristics = $virtualCharacteristics = [];
 
 		if (
-			$serviceMetadata->offsetExists('OptionalCharacteristics')
-			&& $serviceMetadata->offsetGet('OptionalCharacteristics') instanceof Utils\ArrayHash
+			array_key_exists('OptionalCharacteristics', $serviceMetadata)
+			&& is_array($serviceMetadata['OptionalCharacteristics'])
 		) {
-			$optionalCharacteristics = (array) $serviceMetadata->offsetGet('OptionalCharacteristics');
+			$optionalCharacteristics = $serviceMetadata['OptionalCharacteristics'];
 		}
 
 		if (
-			$serviceMetadata->offsetExists('VirtualCharacteristics')
-			&& $serviceMetadata->offsetGet('VirtualCharacteristics') instanceof Utils\ArrayHash
+			array_key_exists('VirtualCharacteristics', $serviceMetadata)
+			&& is_array($serviceMetadata['VirtualCharacteristics'])
 		) {
-			$virtualCharacteristics = (array) $serviceMetadata->offsetGet('VirtualCharacteristics');
+			$virtualCharacteristics = $serviceMetadata['VirtualCharacteristics'];
 		}
 
 		$missingRequired = [];
@@ -1461,35 +1460,35 @@ final class Install extends Console\Command\Command
 				break;
 			}
 
-			$characteristicMetadata = $metadata->offsetGet($characteristic);
+			$characteristicMetadata = $metadata[$characteristic];
 
 			if (
-				!$characteristicMetadata instanceof Utils\ArrayHash
-				|| !$characteristicMetadata->offsetExists('Format')
-				|| !is_string($characteristicMetadata->offsetGet('Format'))
-				|| !$characteristicMetadata->offsetExists('DataType')
+				!is_array($characteristicMetadata)
+				|| !array_key_exists('Format', $characteristicMetadata)
+				|| !is_string($characteristicMetadata['Format'])
+				|| !array_key_exists('DataType', $characteristicMetadata)
 				|| (
-					!is_string($characteristicMetadata->offsetGet('DataType'))
-					&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
+					!is_string($characteristicMetadata['DataType'])
+					&& !is_array($characteristicMetadata['DataType'])
 				)
-				|| !$characteristicMetadata->offsetExists('Permissions')
-				|| !$characteristicMetadata->offsetGet('Permissions') instanceof Utils\ArrayHash
+				|| !array_key_exists('Permissions', $characteristicMetadata)
+				|| !is_array($characteristicMetadata['Permissions'])
 			) {
 				throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 			}
 
-			$permissions = (array) $characteristicMetadata->offsetGet('Permissions');
+			$permissions = $characteristicMetadata['Permissions'];
 
 			$default = null;
 
-			if ($characteristicMetadata->offsetExists('Default')) {
-				$default = $characteristicMetadata->offsetGet('Default');
+			if (array_key_exists('Default', $characteristicMetadata)) {
+				$default = $characteristicMetadata['Default'];
 			}
 
-			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
+			if (is_array($characteristicMetadata['DataType'])) {
 				$dataTypes = array_map(
 					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
-					(array) $characteristicMetadata->offsetGet('DataType'),
+					$characteristicMetadata['DataType'],
 				);
 
 				if ($dataTypes === []) {
@@ -1500,7 +1499,7 @@ final class Install extends Console\Command\Command
 
 				$dataType = $dataTypes[0];
 			} else {
-				$dataType = ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
+				$dataType = ValuesTypes\DataType::from($characteristicMetadata['DataType']);
 			}
 
 			$format = $this->askFormat($io, $characteristic);
@@ -1642,26 +1641,26 @@ final class Install extends Console\Command\Command
 
 		$metadata = $this->loader->loadCharacteristics();
 
-		if (!$metadata->offsetExists($type)) {
+		if (!array_key_exists($type, $metadata)) {
 			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$type,
 			));
 		}
 
-		$characteristicMetadata = $metadata->offsetGet($type);
+		$characteristicMetadata = $metadata[$type];
 
 		if (
-			!$characteristicMetadata instanceof Utils\ArrayHash
-			|| !$characteristicMetadata->offsetExists('UUID')
-			|| !is_string($characteristicMetadata->offsetGet('UUID'))
-			|| !$characteristicMetadata->offsetExists('Format')
+			!is_array($characteristicMetadata)
+			|| !array_key_exists('UUID', $characteristicMetadata)
+			|| !is_string($characteristicMetadata['UUID'])
+			|| !array_key_exists('Format', $characteristicMetadata)
 			|| (
-				!is_string($characteristicMetadata->offsetGet('DataType'))
-				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
+				!is_string($characteristicMetadata['DataType'])
+				&& !is_array($characteristicMetadata['DataType'])
 			)
-			|| !$characteristicMetadata->offsetExists('Permissions')
-			|| !$characteristicMetadata->offsetGet('Permissions') instanceof Utils\ArrayHash
+			|| !array_key_exists('Permissions', $characteristicMetadata)
+			|| !is_array($characteristicMetadata['Permissions'])
 		) {
 			throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 		}
@@ -1670,12 +1669,12 @@ final class Install extends Console\Command\Command
 			// Start transaction connection to the database
 			$this->databaseHelper->beginTransaction();
 
-			$permissions = (array) $characteristicMetadata->offsetGet('Permissions');
+			$permissions = $characteristicMetadata['Permissions'];
 
-			if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
+			if (is_array($characteristicMetadata['DataType'])) {
 				$dataTypes = array_map(
 					static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
-					(array) $characteristicMetadata->offsetGet('DataType'),
+					$characteristicMetadata['DataType'],
 				);
 
 				if ($dataTypes === []) {
@@ -1686,7 +1685,7 @@ final class Install extends Console\Command\Command
 
 				$dataType = $dataTypes[0];
 			} else {
-				$dataType = ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'));
+				$dataType = ValuesTypes\DataType::from($characteristicMetadata['DataType']);
 			}
 
 			$format = $this->askFormat($io, $type);
@@ -1716,8 +1715,8 @@ final class Install extends Console\Command\Command
 
 				$default = null;
 
-				if ($characteristicMetadata->offsetExists('Default')) {
-					$default = $characteristicMetadata->offsetGet('Default');
+				if (array_key_exists('Default', $characteristicMetadata)) {
+					$default = $characteristicMetadata['Default'];
 				}
 
 				if (
@@ -1960,14 +1959,14 @@ final class Install extends Console\Command\Command
 
 			if (
 				$property->getDataType() === ValuesTypes\DataType::ENUM
-				&& $metadata->offsetExists($type)
-				&& $metadata->offsetGet($type) instanceof Utils\ArrayHash
-				&& $metadata->offsetGet($type)->offsetExists('ValidValues')
-				&& $metadata->offsetGet($type)->offsetGet('ValidValues') instanceof Utils\ArrayHash
+				&& array_key_exists($type, $metadata)
+				&& is_array($metadata[$type])
+				&& array_key_exists('ValidValues', $metadata[$type])
+				&& is_array($metadata[$type]['ValidValues'])
 			) {
 				$enumValue = array_search(
 					intval(Utilities\Value::flattenValue($value)),
-					(array) $metadata->offsetGet($type)->offsetGet('ValidValues'),
+					$metadata[$type]['ValidValues'],
 					true,
 				);
 
@@ -2545,32 +2544,30 @@ final class Install extends Console\Command\Command
 		if ($category->getValue() === HomeKitTypes\AccessoryCategory::OTHER->value) {
 			$metadata = $this->loader->loadServices();
 
-			$services = array_values(array_keys((array) $metadata));
+			$services = array_values(array_keys($metadata));
 		} else {
 			$metadata = $this->loader->loadAccessories();
 
-			if (!$metadata->offsetExists(Utilities\Value::toString($category->getValue(), true))) {
+			if (!array_key_exists(Utilities\Value::toString($category->getValue(), true), $metadata)) {
 				throw new HomeKitExceptions\InvalidArgument(sprintf(
 					'Definition for accessory category: %s was not found',
 					Utilities\Value::toString($category->getValue()),
 				));
 			}
 
-			$accessoryMetadata = $metadata->offsetGet(
-				Utilities\Value::toString($category->getValue(), true),
-			);
+			$accessoryMetadata = $metadata[Utilities\Value::toString($category->getValue(), true)];
 
 			if (
-				!$accessoryMetadata instanceof Utils\ArrayHash
-				|| !$accessoryMetadata->offsetExists('name')
-				|| !is_string($accessoryMetadata->offsetGet('name'))
-				|| !$accessoryMetadata->offsetExists('services')
-				|| !$accessoryMetadata->offsetGet('services') instanceof Utils\ArrayHash
+				!is_array($accessoryMetadata)
+				|| !array_key_exists('name', $accessoryMetadata)
+				|| !is_string($accessoryMetadata['name'])
+				|| !array_key_exists('services', $accessoryMetadata)
+				|| !is_array($accessoryMetadata['services'])
 			) {
 				throw new HomeKitExceptions\InvalidState('Accessory definition is missing required attributes');
 			}
 
-			$services = array_values((array) $accessoryMetadata->offsetGet('services'));
+			$services = array_values($accessoryMetadata['services']);
 		}
 
 		$question = new Console\Question\ChoiceQuestion(
@@ -2620,7 +2617,7 @@ final class Install extends Console\Command\Command
 	{
 		$metadata = $this->loader->loadServices();
 
-		if (!$metadata->offsetExists($service->value)) {
+		if (!array_key_exists($service->value, $metadata)) {
 			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for service: %s was not found',
 				$service->value,
@@ -3037,53 +3034,53 @@ final class Install extends Console\Command\Command
 	{
 		$metadata = $this->loader->loadCharacteristics();
 
-		if (!$metadata->offsetExists($characteristic)) {
+		if (!array_key_exists($characteristic, $metadata)) {
 			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$characteristic,
 			));
 		}
 
-		$characteristicMetadata = $metadata->offsetGet($characteristic);
+		$characteristicMetadata = $metadata[$characteristic];
 
 		if (
-			!$characteristicMetadata instanceof Utils\ArrayHash
-			|| !$characteristicMetadata->offsetExists('Format')
-			|| !is_string($characteristicMetadata->offsetGet('Format'))
-			|| !$characteristicMetadata->offsetExists('DataType')
+			!is_array($characteristicMetadata)
+			|| !array_key_exists('Format', $characteristicMetadata)
+			|| !is_string($characteristicMetadata['Format'])
+			|| !array_key_exists('DataType', $characteristicMetadata)
 			|| (
-				!is_string($characteristicMetadata->offsetGet('DataType'))
-				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
+				!is_string($characteristicMetadata['DataType'])
+				&& !is_array($characteristicMetadata['DataType'])
 			)
 		) {
 			throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 		}
 
-		if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
+		if (is_array($characteristicMetadata['DataType'])) {
 			$dataTypes = array_map(
 				static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
-				(array) $characteristicMetadata->offsetGet('DataType'),
+				$characteristicMetadata['DataType'],
 			);
 
 			if ($dataTypes === []) {
 				throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 			}
 		} else {
-			$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
+			$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata['DataType'])];
 		}
 
 		$format = null;
 
 		if (
-			$characteristicMetadata->offsetExists('MinValue')
-			|| $characteristicMetadata->offsetExists('MaxValue')
+			array_key_exists('MinValue', $characteristicMetadata)
+			|| array_key_exists('MaxValue', $characteristicMetadata)
 		) {
 			$format = new Formats\NumberRange([
-				$characteristicMetadata->offsetExists('MinValue')
-					? floatval($characteristicMetadata->offsetGet('MinValue'))
+				array_key_exists('MinValue', $characteristicMetadata)
+					? floatval($characteristicMetadata['MinValue'])
 					: null,
-				$characteristicMetadata->offsetExists('MaxValue')
-					? floatval($characteristicMetadata->offsetGet('MaxValue'))
+				array_key_exists('MaxValue', $characteristicMetadata)
+					? floatval($characteristicMetadata['MaxValue'])
 					: null,
 			]);
 		}
@@ -3094,11 +3091,11 @@ final class Install extends Console\Command\Command
 				|| in_array(ValuesTypes\DataType::SWITCH, $dataTypes, true)
 				|| in_array(ValuesTypes\DataType::BUTTON, $dataTypes, true)
 			)
-			&& $characteristicMetadata->offsetExists('ValidValues')
-			&& $characteristicMetadata->offsetGet('ValidValues') instanceof Utils\ArrayHash
+			&& array_key_exists('ValidValues', $characteristicMetadata)
+			&& is_array($characteristicMetadata['ValidValues'])
 		) {
 			$format = new Formats\StringEnum(
-				array_values((array) $characteristicMetadata->offsetGet('ValidValues')),
+				array_values($characteristicMetadata['ValidValues']),
 			);
 
 			if (
@@ -3114,7 +3111,7 @@ final class Install extends Console\Command\Command
 			) {
 				$mappedFormat = [];
 
-				foreach ($characteristicMetadata->offsetGet('ValidValues') as $name => $item) {
+				foreach ($characteristicMetadata['ValidValues'] as $name => $item) {
 					$options = $connectProperty->getFormat() instanceof Formats\StringEnum
 						? $connectProperty->getFormat()->toArray()
 						: array_map(
@@ -3233,46 +3230,46 @@ final class Install extends Console\Command\Command
 	{
 		$metadata = $this->loader->loadCharacteristics();
 
-		if (!$metadata->offsetExists($characteristic)) {
+		if (!array_key_exists($characteristic, $metadata)) {
 			throw new HomeKitExceptions\InvalidArgument(sprintf(
 				'Definition for characteristic: %s was not found',
 				$characteristic,
 			));
 		}
 
-		$characteristicMetadata = $metadata->offsetGet($characteristic);
+		$characteristicMetadata = $metadata[$characteristic];
 
 		if (
-			!$characteristicMetadata instanceof Utils\ArrayHash
-			|| !$characteristicMetadata->offsetExists('DataType')
+			!is_array($characteristicMetadata)
+			|| !array_key_exists('DataType', $characteristicMetadata)
 			|| (
-				!is_string($characteristicMetadata->offsetGet('DataType'))
-				&& !$characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash
+				!is_string($characteristicMetadata['DataType'])
+				&& !is_array($characteristicMetadata['DataType'])
 			)
 		) {
 			throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 		}
 
-		if ($characteristicMetadata->offsetGet('DataType') instanceof Utils\ArrayHash) {
+		if (is_array($characteristicMetadata['DataType'])) {
 			$dataTypes = array_map(
 				static fn (string $type): ValuesTypes\DataType => ValuesTypes\DataType::from($type),
-				(array) $characteristicMetadata->offsetGet('DataType'),
+				$characteristicMetadata['DataType'],
 			);
 
 			if ($dataTypes === []) {
 				throw new HomeKitExceptions\InvalidState('Characteristic definition is missing required attributes');
 			}
 		} else {
-			$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata->offsetGet('DataType'))];
+			$dataTypes = [ValuesTypes\DataType::from($characteristicMetadata['DataType'])];
 		}
 
 		if (
-			$characteristicMetadata->offsetExists('ValidValues')
-			&& $characteristicMetadata->offsetGet('ValidValues') instanceof Utils\ArrayHash
+			array_key_exists('ValidValues', $characteristicMetadata)
+			&& is_array($characteristicMetadata['ValidValues'])
 		) {
 			$options = array_combine(
-				array_values((array) $characteristicMetadata->offsetGet('ValidValues')),
-				array_keys((array) $characteristicMetadata->offsetGet('ValidValues')),
+				array_values($characteristicMetadata['ValidValues']),
+				array_keys($characteristicMetadata['ValidValues']),
 			);
 
 			$question = new Console\Question\ChoiceQuestion(
@@ -3358,20 +3355,14 @@ final class Install extends Console\Command\Command
 			return $value;
 		}
 
-		$minValue = $characteristicMetadata->offsetExists('MinValue')
-			? floatval(
-				$characteristicMetadata->offsetGet('MinValue'),
-			)
+		$minValue = array_key_exists('MinValue', $characteristicMetadata)
+			? floatval($characteristicMetadata['MinValue'])
 			: null;
-		$maxValue = $characteristicMetadata->offsetExists('MaxValue')
-			? floatval(
-				$characteristicMetadata->offsetGet('MaxValue'),
-			)
+		$maxValue = array_key_exists('MaxValue', $characteristicMetadata)
+			? floatval($characteristicMetadata['MaxValue'])
 			: null;
-		$step = $characteristicMetadata->offsetExists('MinStep')
-			? floatval(
-				$characteristicMetadata->offsetGet('MinStep'),
-			)
+		$step = array_key_exists('MinStep', $characteristicMetadata)
+			? floatval($characteristicMetadata['MinStep'])
 			: null;
 
 		$question = new Console\Question\Question(

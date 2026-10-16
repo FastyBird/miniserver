@@ -189,8 +189,8 @@ warnings and worse also go to Sentry.
 Helpers on top of Doctrine ORM 3:
 
 - **Entity CRUD.** `Persistence\Crud\CrudFactory::create($entityClass)` returns an `EntityCrud`,
-  whose creator, updater and deleter create, update and delete an entity from a Nette
-  `ArrayHash`. An entity implements `Persistence\Entities\CrudEntity`.
+  whose creator, updater and deleter create, update and delete an entity from a plain
+  array of values. An entity implements `Persistence\Entities\CrudEntity`.
 - **Queries.** `Persistence\Query\QueryObject` is the base of a reusable query, and `ResultSet` its
   paginated result.
 - **Timestamps.** A property with the `Persistence\Mapping\Annotation\Timestampable` attribute is

@@ -25,6 +25,7 @@ use Throwable;
 use function array_key_exists;
 use function array_keys;
 use function base64_decode;
+use function is_array;
 use function is_bool;
 use function is_numeric;
 use function is_string;
@@ -335,13 +336,13 @@ final class OpenPulsar
 			throw new TuyaExceptions\OpenPulsarError('Could not decode received Tuya WS message', $ex->getCode(), $ex);
 		}
 
-		if ($this->wsConnection !== null && $message->offsetExists('messageId')) {
+		if ($this->wsConnection !== null && array_key_exists('messageId', $message)) {
 			try {
 				/**
 				 * Confirm received message
 				 * Received message have to confirmed to be removed from queue on Tuya server side
 				 */
-				$this->wsConnection->send(Utils\Json::encode(['messageId' => $message->offsetGet('messageId')]));
+				$this->wsConnection->send(Utils\Json::encode(['messageId' => $message['messageId']]));
 
 			} catch (Utils\JsonException $ex) {
 				throw new TuyaExceptions\OpenPulsarError(
@@ -352,11 +353,11 @@ final class OpenPulsar
 			}
 		}
 
-		if (!$message->offsetExists('payload')) {
+		if (!array_key_exists('payload', $message)) {
 			throw new TuyaExceptions\OpenPulsarError('Received Tuya WS message is invalid');
 		}
 
-		$payload = base64_decode(strval($message->offsetGet('payload')), true);
+		$payload = base64_decode(strval($message['payload']), true);
 
 		if ($payload === false) {
 			throw new TuyaExceptions\OpenPulsarError('Received Tuya WS message payload could not be decoded');
@@ -395,11 +396,11 @@ final class OpenPulsar
 			);
 		}
 
-		if (!$payload->offsetExists('data')) {
+		if (!array_key_exists('data', $payload)) {
 			throw new TuyaExceptions\OpenPulsarError('Could not decode received Tuya WS message payload');
 		}
 
-		$data = base64_decode(strval($payload->offsetGet('data')), true);
+		$data = base64_decode(strval($payload['data']), true);
 
 		if ($data === false) {
 			throw new TuyaExceptions\OpenPulsarError('Received Tuya WS message payload data could not be decoded');
@@ -450,29 +451,29 @@ final class OpenPulsar
 		}
 
 		if (
-			$decryptedData->offsetExists('devId')
-			&& $decryptedData->offsetExists('status')
-			&& $decryptedData->offsetGet('status') instanceof Utils\ArrayHash
+			array_key_exists('devId', $decryptedData)
+			&& array_key_exists('status', $decryptedData)
+			&& is_array($decryptedData['status'])
 		) {
 			$dataPointsStatuses = [];
 
-			foreach ($decryptedData->status as $status) {
+			foreach ($decryptedData['status'] as $status) {
 				if (
-					!$status instanceof Utils\ArrayHash
-					|| !$status->offsetExists('code')
-					|| !$status->offsetExists('value')
+					!is_array($status)
+					|| !array_key_exists('code', $status)
+					|| !array_key_exists('value', $status)
 				) {
 					continue;
 				}
 
-				if (is_string($status->value) || is_bool($status->value) || is_numeric($status->value)) {
+				if (is_string($status['value']) || is_bool($status['value']) || is_numeric($status['value'])) {
 					$dataPointsStatus = [
-						'code' => $status->offsetGet('code'),
-						'value' => $status->offsetGet('value'),
-						'dps' => $status->offsetExists('dps') ? $status->offsetGet('dps') : null,
+						'code' => $status['code'],
+						'value' => $status['value'],
+						'dps' => array_key_exists('dps', $status) ? $status['dps'] : null,
 					];
 
-					foreach (array_keys((array) $status) as $key) {
+					foreach (array_keys($status) as $key) {
 						if (is_numeric($key)) {
 							$dataPointsStatus['dps'] = strval($key);
 						}
@@ -488,7 +489,7 @@ final class OpenPulsar
 					$this->messageBuilder->create(
 						Messages\Response\ReportDeviceState::class,
 						[
-							'identifier' => $decryptedData->devId,
+							'identifier' => $decryptedData['devId'],
 							'data_points' => $dataPointsStatuses,
 						],
 					),
@@ -505,10 +506,10 @@ final class OpenPulsar
 		}
 
 		if (
-			$decryptedData->offsetExists('bizCode')
+			array_key_exists('bizCode', $decryptedData)
 			&& (
-				$decryptedData->offsetGet('bizCode') === Types\OpenPulsarMessageType::ONLINE->value
-				|| $decryptedData->offsetGet('bizCode') === Types\OpenPulsarMessageType::OFFLINE->value
+				$decryptedData['bizCode'] === Types\OpenPulsarMessageType::ONLINE->value
+				|| $decryptedData['bizCode'] === Types\OpenPulsarMessageType::OFFLINE->value
 			)
 		) {
 			try {
@@ -517,10 +518,8 @@ final class OpenPulsar
 					$this->messageBuilder->create(
 						Messages\Response\ReportDeviceOnline::class,
 						[
-							'identifier' => $decryptedData->devId,
-							'online' => $decryptedData->offsetGet(
-								'bizCode',
-							) === Types\OpenPulsarMessageType::ONLINE->value,
+							'identifier' => $decryptedData['devId'],
+							'online' => $decryptedData['bizCode'] === Types\OpenPulsarMessageType::ONLINE->value,
 						],
 					),
 				);

@@ -3,7 +3,6 @@
 namespace FastyBird\Module\Devices\Tests\Fixtures\Dummy;
 
 use FastyBird\Module\Devices\States;
-use Nette\Utils;
 use Ramsey\Uuid;
 use RuntimeException;
 
@@ -11,25 +10,31 @@ class DummyStatesManager
 {
 
 	/**
+	 * @param array<string, mixed> $values
+	 *
 	 * @throws RuntimeException
 	 */
-	public function create(Uuid\UuidInterface $id, Utils\ArrayHash $values): States\Property
+	public function create(Uuid\UuidInterface $id, array $values): States\Property
 	{
 		throw new RuntimeException('This is dummy service');
 	}
 
 	/**
+	 * @param array<string, mixed> $values
+	 *
 	 * @throws RuntimeException
 	 */
-	public function update(States\Property $state, Utils\ArrayHash $values): States\Property
+	public function update(States\Property $state, array $values): States\Property
 	{
 		throw new RuntimeException('This is dummy service');
 	}
 
 	/**
+	 * @param array<string, mixed> $values
+	 *
 	 * @throws RuntimeException
 	 */
-	public function updateState(States\Property $state, Utils\ArrayHash $values): States\Property
+	public function updateState(States\Property $state, array $values): States\Property
 	{
 		throw new RuntimeException('This is dummy service');
 	}

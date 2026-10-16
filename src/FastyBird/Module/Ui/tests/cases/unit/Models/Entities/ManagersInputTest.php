@@ -13,6 +13,7 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use Throwable;
+use TypeError;
 use function array_key_exists;
 use function array_map;
 use function array_shift;
@@ -25,12 +26,13 @@ use function sprintf;
 use function str_replace;
 
 /**
- * Ui's six entity managers take a plain array as well as an ArrayHash (#723).
+ * Ui's six entity managers take a plain array (#723).
  *
- * Each test makes one change twice: once from ArrayHash values, which is rolled back, and once
- * from the equal plain array. It compares the two results: every mapped field and every
- * association of every entity reachable from the ones the change returns, as returned and again
- * as read back from the database. Against the code before #723 the plain array is a TypeError.
+ * Each test makes one change from plain arrays, inside a transaction it rolls back, and checks the
+ * result field by field: every mapped field and every association of the entities the change
+ * reaches, as the manager returns them and again as read back from the database. The same
+ * assertions passed against the code before #723, which built the same graph from an ArrayHash.
+ * An ArrayHash is refused with a TypeError.
  */
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -74,7 +76,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testADashboardCreatedFromAnArrayIsTheOneAnArrayHashCreates(): void
+	public function testADashboardCreatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Dashboards\Manager::class);
 
@@ -96,12 +98,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			],
 		];
 
-		$fromArrayHash = $this->change(
-			static fn (): array => [$manager->create(Utils\ArrayHash::from($values()))],
-		);
 		$fromArray = $this->change(static fn (): array => [$manager->create($values())]);
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$dashboard = $fromArray['reloaded']['Dashboards\Dashboard:' . self::NEW_DASHBOARD];
 		self::assertSame('garden', $dashboard['identifier']);
@@ -123,7 +120,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testADashboardUpdatedFromAnArrayIsTheOneAnArrayHashUpdates(): void
+	public function testADashboardUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Dashboards\Manager::class);
 
@@ -134,18 +131,11 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'params' => ['layout' => ['columns' => 2]],
 		];
 
-		$fromArrayHash = $this->change(function () use ($manager, $values): array {
-			$dashboard = $this->find(Entities\Dashboards\Dashboard::class, self::DASHBOARD);
-
-			return [$manager->update($dashboard, Utils\ArrayHash::from($values()))];
-		});
 		$fromArray = $this->change(function () use ($manager, $values): array {
 			$dashboard = $this->find(Entities\Dashboards\Dashboard::class, self::DASHBOARD);
 
 			return [$manager->update($dashboard, $values())];
 		});
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$dashboard = $fromArray['reloaded']['Dashboards\Dashboard:' . self::DASHBOARD];
 		self::assertSame('Renamed dashboard', $dashboard['name']);
@@ -158,33 +148,30 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testATabCreatedAndUpdatedFromAnArrayIsTheOneAnArrayHashMakes(): void
+	public function testATabCreatedAndUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Dashboards\Tabs\Manager::class);
 
-		$change = fn (bool $asArrayHash): callable => function () use ($manager, $asArrayHash): array {
-			$tab = $manager->create(self::input($asArrayHash, [
+		$change = function () use ($manager): array {
+			$tab = $manager->create([
 				'id' => Uuid\Uuid::fromString(self::NEW_TAB),
 				'dashboard' => $this->find(Entities\Dashboards\Dashboard::class, self::DASHBOARD),
 				'identifier' => 'kitchen',
 				'name' => 'Kitchen',
 				'widgets' => [$this->find(Entities\Widgets\Widget::class, self::WIDGET)],
-			]));
+			]);
 
-			return [$manager->update($tab, self::input($asArrayHash, [
+			return [$manager->update($tab, [
 				'name' => 'Kitchen and dining',
 				'priority' => 2,
 				'widgets' => [
 					$this->find(Entities\Widgets\Widget::class, self::WIDGET),
 					$this->find(Entities\Widgets\Widget::class, self::OTHER_WIDGET),
 				],
-			]))];
+			])];
 		};
 
-		$fromArrayHash = $this->change($change(true));
-		$fromArray = $this->change($change(false));
-
-		self::assertSame($fromArrayHash, $fromArray);
+		$fromArray = $this->change($change);
 
 		$tab = $fromArray['reloaded']['Dashboards\Tabs\Tab of ' . self::DASHBOARD . '/kitchen'];
 		self::assertSame('Kitchen and dining', $tab['name']);
@@ -199,36 +186,33 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testAGroupCreatedAndUpdatedFromAnArrayIsTheOneAnArrayHashMakes(): void
+	public function testAGroupCreatedAndUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Groups\Manager::class);
 
-		$change = fn (bool $asArrayHash): callable => function () use ($manager, $asArrayHash): array {
-			$group = $manager->create(self::input($asArrayHash, [
+		$change = function () use ($manager): array {
+			$group = $manager->create([
 				'id' => Uuid\Uuid::fromString(self::NEW_GROUP),
 				'identifier' => 'garage',
 				'name' => 'Garage',
 				'params' => ['icon' => ['name' => 'car']],
 				'widgets' => [$this->find(Entities\Widgets\Widget::class, self::OTHER_WIDGET)],
-			]));
+			]);
 
-			$updated = $manager->update($group, self::input($asArrayHash, [
+			$updated = $manager->update($group, [
 				'comment' => 'Cars',
 				'widgets' => [$this->find(Entities\Widgets\Widget::class, self::WIDGET)],
-			]));
+			]);
 
 			$existing = $this->find(Entities\Groups\Group::class, self::GROUP);
 
 			return [$updated, $manager->update(
 				$existing,
-				self::input($asArrayHash, ['name' => 'Heaters', 'priority' => 5]),
+				['name' => 'Heaters', 'priority' => 5],
 			)];
 		};
 
-		$fromArrayHash = $this->change($change(true));
-		$fromArray = $this->change($change(false));
-
-		self::assertSame($fromArrayHash, $fromArray);
+		$fromArray = $this->change($change);
 
 		$group = $fromArray['reloaded']['Groups\Group:' . self::NEW_GROUP];
 		self::assertSame('Cars', $group['comment']);
@@ -243,12 +227,12 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testAWidgetCreatedAndUpdatedFromAnArrayIsTheOneAnArrayHashMakes(): void
+	public function testAWidgetCreatedAndUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Widgets\Manager::class);
 
-		$change = fn (bool $asArrayHash): callable => function () use ($manager, $asArrayHash): array {
-			$widget = $manager->create(self::input($asArrayHash, [
+		$change = function () use ($manager): array {
+			$widget = $manager->create([
 				'id' => Uuid\Uuid::fromString(self::NEW_WIDGET),
 				'entity' => Entities\Widgets\AnalogActuator::class,
 				'identifier' => 'garden-light',
@@ -271,19 +255,16 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 				],
 				'tabs' => [$this->find(Entities\Dashboards\Tabs\Tab::class, self::TAB)],
 				'groups' => [$this->find(Entities\Groups\Group::class, self::GROUP)],
-			]));
+			]);
 
-			return [$manager->update($widget, self::input($asArrayHash, [
+			return [$manager->update($widget, [
 				'name' => 'Garden lights',
 				'params' => ['color' => ['hue' => 40]],
 				'groups' => [],
-			]))];
+			])];
 		};
 
-		$fromArrayHash = $this->change($change(true));
-		$fromArray = $this->change($change(false));
-
-		self::assertSame($fromArrayHash, $fromArray);
+		$fromArray = $this->change($change);
 
 		$widget = $fromArray['reloaded']['Widgets\AnalogActuator:' . self::NEW_WIDGET];
 		self::assertSame('Garden lights', $widget['name']);
@@ -297,30 +278,27 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testADataSourceCreatedAndUpdatedFromAnArrayIsTheOneAnArrayHashMakes(): void
+	public function testADataSourceCreatedAndUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Widgets\DataSources\Manager::class);
 
-		$change = fn (bool $asArrayHash): callable => function () use ($manager, $asArrayHash): array {
-			$created = $manager->create(self::input($asArrayHash, [
+		$change = function () use ($manager): array {
+			$created = $manager->create([
 				'id' => Uuid\Uuid::fromString(self::NEW_DATA_SOURCE),
 				'entity' => Entities\Widgets\DataSources\Generic::class,
 				'widget' => $this->find(Entities\Widgets\Widget::class, self::WIDGET),
 				'params' => ['device' => ['property' => 'temperature', 'scale' => [0, 40]]],
-			]));
+			]);
 
 			$existing = $this->find(Entities\Widgets\DataSources\DataSource::class, self::DATA_SOURCE);
 
 			return [$created, $manager->update(
 				$existing,
-				self::input($asArrayHash, ['params' => ['device' => ['scale' => [1]]]]),
+				['params' => ['device' => ['scale' => [1]]]],
 			)];
 		};
 
-		$fromArrayHash = $this->change($change(true));
-		$fromArray = $this->change($change(false));
-
-		self::assertSame($fromArrayHash, $fromArray);
+		$fromArray = $this->change($change);
 
 		$dataSource = $fromArray['reloaded']['Widgets\DataSources\Generic:' . self::NEW_DATA_SOURCE];
 		self::assertSame(['device' => ['property' => 'temperature', 'scale' => [0, 40]]], $dataSource['params']);
@@ -330,7 +308,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testADisplayUpdatedFromAnArrayIsTheOneAnArrayHashUpdates(): void
+	public function testADisplayUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Widgets\Displays\Manager::class);
 
@@ -341,24 +319,48 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'precision' => 2,
 		];
 
-		$fromArrayHash = $this->change(function () use ($manager, $values): array {
-			$display = $this->find(Entities\Widgets\Displays\Display::class, self::DISPLAY);
-
-			return [$manager->update($display, Utils\ArrayHash::from($values()))];
-		});
 		$fromArray = $this->change(function () use ($manager, $values): array {
 			$display = $this->find(Entities\Widgets\Displays\Display::class, self::DISPLAY);
 
 			return [$manager->update($display, $values())];
 		});
 
-		self::assertSame($fromArrayHash, $fromArray);
-
 		$display = $fromArray['reloaded']['Widgets\Displays\Slider:' . self::DISPLAY];
 		self::assertSame(
 			['precision' => 2, 'stepValue' => 0.5, 'maximumValue' => 30.0, 'minimumValue' => 10.0],
 			$display['params'],
 		);
+	}
+
+	/**
+	 * The managers take an array only: an ArrayHash is refused with a TypeError before any entity
+	 * is touched (#723), on create() and on update()
+	 *
+	 * @throws Throwable
+	 */
+	public function testTheManagersRefuseAnArrayHash(): void
+	{
+		$container = $this->getContainer();
+		$hash = Utils\ArrayHash::from(['name' => 'Refused']);
+		$entity = $this->find(Entities\Dashboards\Dashboard::class, self::DASHBOARD);
+		$dashboards = $container->getByType(Models\Entities\Dashboards\Manager::class);
+		$widgets = $container->getByType(Models\Entities\Widgets\Manager::class);
+		$groups = $container->getByType(Models\Entities\Groups\Manager::class);
+
+		foreach (
+			[
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $dashboards->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $dashboards->update($entity, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $widgets->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $groups->create($hash),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
+		}
 	}
 
 	/**
@@ -506,24 +508,8 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		return sprintf('%s:%s', $class, $entity->getId()->toString());
 	}
 
-	/**
-	 * The values as an ArrayHash, as the callers built them before #723, or as the plain array
-	 *
-	 * @param array<string, mixed> $values
-	 *
-	 * @return array<string, mixed>|Utils\ArrayHash<mixed>
-	 */
-	private static function input(bool $asArrayHash, array $values): array|Utils\ArrayHash
-	{
-		return $asArrayHash ? Utils\ArrayHash::from($values) : $values;
-	}
-
 	private function normalize(mixed $value): mixed
 	{
-		if ($value instanceof Utils\ArrayHash) {
-			return ['ArrayHash' => $this->normalize((array) $value)];
-		}
-
 		if (is_array($value)) {
 			return array_map(fn (mixed $item): mixed => $this->normalize($item), $value);
 		}
@@ -545,6 +531,22 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

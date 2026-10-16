@@ -1,0 +1,998 @@
+{
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ConnectorPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ConnectorPropertiesManager, values": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ConnectorPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ConnectorPropertiesManager, invalid": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ConnectorPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ConnectorPropertiesManager, pending": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ConnectorPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ConnectorPropertiesManager, unchanged": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\DevicePropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\DevicePropertiesManager, values": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\DevicePropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\DevicePropertiesManager, invalid": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\DevicePropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\DevicePropertiesManager, pending": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\DevicePropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\DevicePropertiesManager, unchanged": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ChannelPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ChannelPropertiesManager, values": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ChannelPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ChannelPropertiesManager, invalid": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ChannelPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ChannelPropertiesManager, pending": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ChannelPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\ChannelPropertiesManager, unchanged": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ConnectorPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ConnectorPropertiesManager, values": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ConnectorPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ConnectorPropertiesManager, invalid": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ConnectorPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ConnectorPropertiesManager, pending": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ConnectorPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ConnectorPropertiesManager, unchanged": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\DevicePropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\DevicePropertiesManager, values": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\DevicePropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\DevicePropertiesManager, invalid": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\DevicePropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\DevicePropertiesManager, pending": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\DevicePropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\DevicePropertiesManager, unchanged": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ChannelPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ChannelPropertiesManager, values": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":10,\"expected_value\":20,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": 10,
+    "expected_value": 20,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ChannelPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ChannelPropertiesManager, invalid": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ChannelPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ChannelPropertiesManager, pending": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2020-04-01T12:00:00+00:00\"}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": true,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": "2020-04-01T12:00:00+00:00"
+   }
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":\"2021-02-03T04:05:06+00:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": null,
+    "expected_value": "switch_on",
+    "pending": "2021-02-03T04:05:06+00:00",
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ },
+ "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ChannelPropertiesManager|FastyBird\\Bridge\\RedisDbPluginDevicesModule\\Models\\States\\Async\\ChannelPropertiesManager, unchanged": {
+  "create": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  },
+  "update": {
+   "sets": [],
+   "result": false
+  },
+  "update missing": {
+   "sets": [
+    "{\"id\":\"9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1\",\"actual_value\":\"stored\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}"
+   ],
+   "result": {
+    "id": "9b6f0a3e-6a63-4c55-9c2e-2b8c7bdfe2a1",
+    "actual_value": "stored",
+    "expected_value": null,
+    "pending": false,
+    "valid": false,
+    "created_at": "2020-04-01T12:00:00+00:00",
+    "updated_at": null
+   }
+  }
+ }
+}

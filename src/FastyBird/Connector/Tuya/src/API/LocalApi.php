@@ -1130,14 +1130,14 @@ final class LocalApi
 
 					return $this->createMessage(
 						Messages\Response\LocalDeviceMessage::class,
-						Utils\ArrayHash::from([
+						[
 							'identifier' => $this->identifier,
 							'command' => $command->value,
 							'sequence' => $sequenceNr,
 							'return_code' => $hasReturnCode ? $returnCode : null,
 							'data' => null,
 							'error' => Types\LocalDeviceError::DEVICE_TYPE->value,
-						]),
+						],
 					);
 				}
 			}
@@ -1151,14 +1151,14 @@ final class LocalApi
 			) {
 				return $this->createMessage(
 					Messages\Response\LocalDeviceMessage::class,
-					Utils\ArrayHash::from([
+					[
 						'identifier' => $this->identifier,
 						'command' => $command->value,
 						'sequence' => $sequenceNr,
 						'return_code' => $hasReturnCode ? $returnCode : null,
 						'data' => 'Data received from device are invalid',
 						'error' => Types\LocalDeviceError::PAYLOAD->value,
-					]),
+					],
 				);
 			}
 		} else {
@@ -1213,15 +1213,15 @@ final class LocalApi
 
 			// v3.4 stuffs it into {"data":{"dps":{"1":true}}, ...}
 			if (
-				!$parsedMessage->offsetExists('dps')
-				&& $parsedMessage->offsetExists('data')
-				&& $parsedMessage['data'] instanceof Utils\ArrayHash
-				&& $parsedMessage['data']->offsetExists('dps')
+				!array_key_exists('dps', $parsedMessage)
+				&& array_key_exists('data', $parsedMessage)
+				&& is_array($parsedMessage['data'])
+				&& array_key_exists('dps', $parsedMessage['data'])
 			) {
 				$parsedMessage['dps'] = $parsedMessage['data']['dps'];
 			}
 
-			foreach ((array) $parsedMessage->offsetGet('dps') as $key => $value) {
+			foreach ((array) $parsedMessage['dps'] as $key => $value) {
 				if (is_string($value) || is_numeric($value) || is_bool($value)) {
 					$messageData[] = [
 						'code' => (string) $key,
@@ -1239,7 +1239,7 @@ final class LocalApi
 				'identifier' => $this->identifier,
 				'ssids' => array_map(
 					static fn ($item): string => strval($item),
-					(array) $parsedMessage->offsetGet('ssid_list'),
+					(array) $parsedMessage['ssid_list'],
 				),
 			];
 		} else {
@@ -1248,13 +1248,13 @@ final class LocalApi
 
 		return $this->createMessage(
 			Messages\Response\LocalDeviceMessage::class,
-			Utils\ArrayHash::from([
+			[
 				'identifier' => $this->identifier,
 				'command' => $command->value,
 				'sequence' => $sequenceNr,
 				'return_code' => $hasReturnCode ? $returnCode : null,
 				'data' => $messageData,
-			]),
+			],
 		);
 	}
 
@@ -1448,10 +1448,10 @@ final class LocalApi
 		try {
 			return $this->createMessage(
 				Messages\Response\LocalMessagePayload::class,
-				Utils\ArrayHash::from([
+				[
 					'command' => $commandOverride->value,
 					'payload' => str_replace(' ', '', Utils\Json::encode($result)),
-				]),
+				],
 			);
 		} catch (Utils\JsonException $ex) {
 			throw new TuyaExceptions\LocalApiError('Message payload could not be build', $ex->getCode(), $ex);
@@ -1560,12 +1560,13 @@ final class LocalApi
 	 * @template T of Messages\Message
 	 *
 	 * @param class-string<T> $message
+	 * @param array<mixed> $data
 	 *
 	 * @return T
 	 *
 	 * @throws TuyaExceptions\LocalApiError
 	 */
-	private function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
+	private function createMessage(string $message, array $data): Messages\Message
 	{
 		try {
 			return $this->messageBuilder->create(
@@ -1584,7 +1585,7 @@ final class LocalApi
 	}
 
 	/**
-	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
+	 * @return ($throw is true ? array<mixed> : array<mixed>|false)
 	 *
 	 * @throws TuyaExceptions\LocalApiCall
 	 */
@@ -1592,7 +1593,7 @@ final class LocalApi
 		string $data,
 		string $schemaFilename,
 		bool $throw = true,
-	): Utils\ArrayHash|bool
+	): array|bool
 	{
 		try {
 			return $this->schemaValidator->validate(

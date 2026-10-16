@@ -17,7 +17,7 @@ interface Entity extends Entities\CrudEntity
 	public function getPlainId(): string;
 
 	/**
-	 * @return array<mixed>
+	 * @return array<string, mixed>
 	 */
 	public function toArray(): array;
 

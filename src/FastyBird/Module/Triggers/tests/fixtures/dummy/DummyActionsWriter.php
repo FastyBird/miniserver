@@ -4,7 +4,6 @@ namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
 use FastyBird\Module\Triggers\Models;
 use FastyBird\Module\Triggers\States;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 
@@ -15,7 +14,7 @@ use Ramsey\Uuid;
 final class DummyActionsWriter implements Models\States\ActionsWriter
 {
 
-	/** @var list<array{string, string, array<string, mixed>|Utils\ArrayHash<mixed>}> */
+	/** @var list<array{string, string, array<string, mixed>}> */
 	public array $written = [];
 
 	/** @var array<string, DummyActionState> */
@@ -27,10 +26,10 @@ final class DummyActionsWriter implements Models\States\ActionsWriter
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 */
 	#[Override]
-	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\Action
+	public function create(Uuid\UuidInterface $id, array $values): States\Action
 	{
 		$this->written[] = ['create', $id->toString(), $values];
 
@@ -38,10 +37,10 @@ final class DummyActionsWriter implements Models\States\ActionsWriter
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 */
 	#[Override]
-	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\Action
+	public function update(Uuid\UuidInterface $id, array $values): States\Action
 	{
 		$this->written[] = ['update', $id->toString(), $values];
 

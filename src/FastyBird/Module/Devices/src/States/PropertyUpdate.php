@@ -4,7 +4,6 @@ namespace FastyBird\Module\Devices\States;
 
 use DateTimeInterface;
 use FastyBird\Core\Values\Types\Payloads;
-use Nette\Utils;
 
 /**
  * A change to a property state, as the property state managers' set() and write() take it
@@ -71,19 +70,6 @@ final readonly class PropertyUpdate
 	public function toArray(): array
 	{
 		return $this->fields;
-	}
-
-	/**
-	 * The ArrayHash the managers' callers built before this class: the same keys in the same
-	 * order with the same values, made by the same recursive `ArrayHash::from()`. A new one on
-	 * every call, because writeState() changes the one it is given. Transitional, until the
-	 * managers read this class themselves (#723).
-	 *
-	 * @return Utils\ArrayHash<bool|float|int|string|DateTimeInterface|Payloads\Payload|null>
-	 */
-	public function toArrayHash(): Utils\ArrayHash
-	{
-		return Utils\ArrayHash::from($this->fields);
 	}
 
 	private function with(

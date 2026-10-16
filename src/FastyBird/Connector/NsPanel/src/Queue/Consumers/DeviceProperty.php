@@ -13,7 +13,6 @@ use FastyBird\Core\Values\Types;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
-use Nette\Utils;
 use Ramsey\Uuid;
 
 /**
@@ -29,7 +28,7 @@ trait DeviceProperty
 {
 
 	/**
-	 * @param string|array<int, string>|array<int, string|int|float|array<int, string|int|float>|Utils\ArrayHash|null>|array<int, array<int, string|array<int, string|int|float|bool>|Utils\ArrayHash|null>>|null $format
+	 * @param string|array<int, string>|array<int, string|int|float|array<int, string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
 	 *
 	 * @throws NsPanelExceptions\InvalidArgument
 	 * @throws DBAL\Exception

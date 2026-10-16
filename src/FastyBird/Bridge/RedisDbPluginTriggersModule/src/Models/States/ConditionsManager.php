@@ -6,7 +6,6 @@ use FastyBird\Bridge\RedisDbPluginTriggersModule\States;
 use FastyBird\Module\Triggers\Models as TriggersModels;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
 use FastyBird\Plugin\RedisDb\Models as RedisDbModels;
-use Nette\Utils;
 use Override;
 use Ramsey\Uuid;
 
@@ -33,25 +32,25 @@ final class ConditionsManager implements TriggersModels\States\ConditionsWriter
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function create(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\Condition
+	public function create(Uuid\UuidInterface $id, array $values): States\Condition
 	{
 		return $this->statesManager->create($id, $values, $this->database);
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @throws RedisDbExceptions\InvalidArgument
 	 * @throws RedisDbExceptions\InvalidState
 	 */
 	#[Override]
-	public function update(Uuid\UuidInterface $id, array|Utils\ArrayHash $values): States\Condition|false
+	public function update(Uuid\UuidInterface $id, array $values): States\Condition|false
 	{
 		return $this->statesManager->update($id, $values, $this->database);
 	}

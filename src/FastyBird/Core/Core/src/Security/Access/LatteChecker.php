@@ -7,6 +7,7 @@ use FastyBird\Core\Security\Identity;
 use Nette\Utils;
 use Override;
 use function array_filter;
+use function array_key_exists;
 use function assert;
 use function count;
 use function explode;
@@ -32,30 +33,26 @@ final readonly class LatteChecker implements Checker
 	public function isAllowed(mixed $element): bool
 	{
 		// Check annotations only if element have to be secured
-		if (is_array($element)) {
-			$element = Utils\ArrayHash::from($element);
-
-			return $this->checkUser($element)
+		return is_array($element) ? $this->checkUser($element)
 				&& $this->checkResourcesPrivileges($element)
 				&& $this->checkPermission($element)
-				&& $this->checkRoles($element);
-		} else {
-			return true;
-		}
+				&& $this->checkRoles($element) : true;
 	}
 
 	/**
+	 * @param array<mixed> $element
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 */
-	private function checkUser(Utils\ArrayHash $element): bool
+	private function checkUser(array $element): bool
 	{
 		// Check if element has user parameter
-		if (!$element->offsetExists('user')) {
+		if (!array_key_exists('user', $element)) {
 			return true;
 		}
 
 		// Get user parameter
-		$user = $element->offsetGet('user');
+		$user = $element['user'];
 
 		// Parameter is single string
 		if (!in_array($user, ['loggedIn', 'guest'], true)) {
@@ -76,20 +73,22 @@ final readonly class LatteChecker implements Checker
 	}
 
 	/**
+	 * @param array<mixed> $element
+	 *
 	 * @throws Exceptions\InvalidArgument
 	 * @throws Exceptions\InvalidState
 	 */
-	protected function checkResourcesPrivileges(Utils\ArrayHash $element): bool
+	protected function checkResourcesPrivileges(array $element): bool
 	{
 		// Get resources parameter
-		$resources = $element->offsetExists('resource') ? (array) $element->offsetGet('resource') : null;
+		$resources = array_key_exists('resource', $element) ? (array) $element['resource'] : null;
 
 		if ($resources !== null && count($resources) > 1) {
 			throw new Exceptions\InvalidArgument('Invalid resources count in @Security\Resource annotation!');
 		}
 
 		// Get privileges parameter
-		$privileges = $element->offsetExists('privilege') ? (array) $element->offsetGet('privilege') : null;
+		$privileges = array_key_exists('privilege', $element) ? (array) $element['privilege'] : null;
 
 		// Check if element has @Secured\Resource or @Secured\Privilege annotation
 		if ($resources === null && $privileges === null) {
@@ -97,7 +96,7 @@ final readonly class LatteChecker implements Checker
 		}
 
 		// Get domain parameter
-		$domain = $element->offsetExists('domain') ? $element->offsetGet('domain') : null;
+		$domain = array_key_exists('domain', $element) ? $element['domain'] : null;
 		assert(is_string($domain) || $domain === null);
 		$domains = $domain !== null ? [$domain] : [];
 
@@ -148,21 +147,23 @@ final readonly class LatteChecker implements Checker
 	}
 
 	/**
+	 * @param array<mixed> $element
+	 *
 	 * @throws Exceptions\InvalidState
 	 */
-	protected function checkPermission(Utils\ArrayHash $element): bool
+	protected function checkPermission(array $element): bool
 	{
 		// Check if element has permission parameter
-		if (!$element->offsetExists('permission')) {
+		if (!array_key_exists('permission', $element)) {
 			return true;
 		}
 
 		// Get domain parameter
-		$domain = $element->offsetExists('domain') ? $element->offsetGet('domain') : null;
+		$domain = array_key_exists('domain', $element) ? $element['domain'] : null;
 		assert(is_string($domain) || $domain === null);
 		$domains = $domain !== null ? [$domain] : [];
 
-		$permissions = (array) $element->offsetGet('permission');
+		$permissions = (array) $element['permission'];
 
 		foreach ($permissions as $permission) {
 			assert(is_string($permission));
@@ -188,13 +189,15 @@ final readonly class LatteChecker implements Checker
 	}
 
 	/**
+	 * @param array<mixed> $element
+	 *
 	 * @throws Exceptions\InvalidState
 	 */
-	protected function checkRoles(Utils\ArrayHash $element): bool
+	protected function checkRoles(array $element): bool
 	{
 		// Check if element has role parameter
-		if ($element->offsetExists('role')) {
-			$roles = (array) $element->offsetGet('role');
+		if (array_key_exists('role', $element)) {
+			$roles = (array) $element['role'];
 
 			foreach ($roles as $role) {
 				assert(is_string($role));

@@ -114,7 +114,7 @@ final class ValinorEquivalenceTest extends Tests\Cases\Unit\DbTestCase
 					$routingKey->value,
 				);
 
-				$this->assertSameMapping($routed, Utils\ArrayHash::from($data));
+				$this->assertSameMapping($routed, (object) $data);
 
 				$mapped++;
 			}

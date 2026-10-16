@@ -33,7 +33,7 @@ final class HydratorValidateAttributeTest extends Tests\Cases\Unit\BaseTestCase
 
 		$values = $hydrator->hydrate($this->document('New label'));
 
-		self::assertSame('New label', $values->offsetGet('label'));
+		self::assertSame('New label', $values['label']);
 		self::assertSame(['New label'], $hydrator->validated);
 	}
 
@@ -63,7 +63,7 @@ final class HydratorValidateAttributeTest extends Tests\Cases\Unit\BaseTestCase
 
 		$values = $hydrator->hydrate($this->document(null));
 
-		self::assertFalse($values->offsetExists('label'));
+		self::assertArrayNotHasKey('label', $values);
 		self::assertSame([], $hydrator->validated);
 	}
 

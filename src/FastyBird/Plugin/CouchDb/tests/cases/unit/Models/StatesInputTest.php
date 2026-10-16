@@ -10,6 +10,7 @@ use FastyBird\Plugin\CouchDb\Connections;
 use FastyBird\Plugin\CouchDb\Models;
 use FastyBird\Plugin\CouchDb\States;
 use FastyBird\Plugin\CouchDb\Tests;
+use Nette;
 use Nette\Utils;
 use Orisai\ObjectMapper;
 use PHPOnCouch;
@@ -20,13 +21,19 @@ use Ramsey\Uuid;
 use ReflectionProperty;
 use stdClass;
 use Throwable;
+use TypeError;
 use function array_keys;
+use function assert;
 use function get_object_vars;
+use function is_array;
 
 /**
- * The states manager takes the values to store as a plain array or as an ArrayHash (#723). An
- * array is stored exactly as the ArrayHash Utils\ArrayHash::from() makes of it, which is what the
- * callers built before: the same document reaches CouchDB and the same state or error comes back.
+ * The states manager takes the values to store as a plain array (#723).
+ *
+ * What an array makes the manager do is recorded in fixtures/states-input.json, taken from the
+ * code before #723, which wrapped the array in the ArrayHash Utils\ArrayHash::from() makes of it:
+ * the document that reaches CouchDB and the state or the error that comes back. A value that is a
+ * nested list is the one difference, noted at its case. An ArrayHash is refused with a TypeError.
  */
 final class StatesInputTest extends TestCase
 {
@@ -56,18 +63,84 @@ final class StatesInputTest extends TestCase
 	 * @throws Throwable
 	 */
 	#[DataProvider('values')]
-	public function testAnArrayIsStoredAsTheArrayHashItStandsFor(array $values): void
+	public function testAnArrayIsStoredAsRecorded(array $values): void
 	{
-		self::assertSame($this->create(Utils\ArrayHash::from($values)), $this->create($values), 'create');
-		self::assertSame($this->update(Utils\ArrayHash::from($values)), $this->update($values), 'update');
+		$recorded = self::recorded((string) $this->dataName());
+
+		self::assertSame($recorded['create'], self::normalised($this->create($values)), 'create');
+		self::assertSame($recorded['update'], self::normalised($this->update($values)), 'update');
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * The manager takes an array only, on create() and on update()
+	 *
+	 * @throws Throwable
+	 */
+	public function testAnArrayHashIsRefused(): void
+	{
+		$hash = Utils\ArrayHash::from(['value' => 'keyValue']);
+		$id = Uuid\Uuid::fromString(self::ID);
+		$manager = $this->createManager($this->createMock(PHPOnCouch\CouchClient::class));
+		$data = ['id' => self::ID, 'value' => 'stored', 'camelCased' => null, 'created' => null, 'updated' => null];
+
+		$original = $this->createStateFactory()->create(
+			Tests\Fixtures\CustomState::class,
+			$this->document($data),
+		);
+
+		foreach (
+			[
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $manager->create($id, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $manager->update($original, $hash),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
+		}
+	}
+
+	/**
+	 * @return array<mixed>
+	 *
+	 * @throws Nette\IOException
+	 * @throws Utils\JsonException
+	 */
+	private static function recorded(string $case): array
+	{
+		$fixture = Utils\Json::decode(
+			Utils\FileSystem::read(__DIR__ . '/../../../fixtures/states-input.json'),
+			forceArrays: true,
+		);
+		assert(is_array($fixture) && is_array($fixture[$case]));
+		assert(is_array($fixture[$case]['create']) && is_array($fixture[$case]['update']));
+
+		return ['create' => $fixture[$case]['create'], 'update' => $fixture[$case]['update']];
+	}
+
+	/**
+	 * A record as JSON gives it back, which is how the fixture is written
+	 *
+	 * @param array<mixed> $record
+	 *
+	 * @return array<mixed>
+	 *
+	 * @throws Utils\JsonException
+	 */
+	private static function normalised(array $record): array
+	{
+		$decoded = Utils\Json::decode(Utils\Json::encode($record), forceArrays: true);
+		assert(is_array($decoded));
+
+		return $decoded;
+	}
+
+	/**
+	 * @param array<string, mixed> $values
 	 *
 	 * @return array{stored: list<string>, result: mixed}
 	 */
-	private function create(array|Utils\ArrayHash $values): array
+	private function create(array $values): array
 	{
 		$stored = [];
 		$data = [];
@@ -94,11 +167,11 @@ final class StatesInputTest extends TestCase
 	}
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @return array{stored: list<string>, result: mixed}
 	 */
-	private function update(array|Utils\ArrayHash $values): array
+	private function update(array $values): array
 	{
 		$stored = [];
 		$data = ['id' => self::ID, 'value' => 'stored', 'camelCased' => null, 'created' => null, 'updated' => null];
@@ -179,6 +252,22 @@ final class StatesInputTest extends TestCase
 				new ObjectMapper\Processing\DefaultProcessor($metaLoader, $ruleManager, $objectCreator),
 			),
 		);
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

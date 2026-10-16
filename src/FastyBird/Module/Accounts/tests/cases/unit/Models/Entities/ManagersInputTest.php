@@ -14,6 +14,7 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use Throwable;
+use TypeError;
 use function array_map;
 use function assert;
 use function is_array;
@@ -24,12 +25,13 @@ use function sprintf;
 use function str_replace;
 
 /**
- * Accounts' three entity managers take a plain array as well as an ArrayHash (#723).
+ * Accounts' three entity managers take a plain array (#723).
  *
- * Each test makes one change twice: once from ArrayHash values, which is rolled back, and once
- * from the equal plain array. It compares the two results field by field: every mapped field and
- * every association of the entities the change reaches, as the manager returns them and again as
- * read back from the database. Against the code before #723 the plain array is a TypeError.
+ * Each test makes one change from plain arrays, inside a transaction it rolls back, and checks the
+ * result field by field: every mapped field and every association of the entities the change
+ * reaches, as the manager returns them and again as read back from the database. The same
+ * assertions passed against the code before #723, which built the same graph from an ArrayHash.
+ * An ArrayHash is refused with a TypeError.
  */
 #[PreserveGlobalState(false)]
 #[RunTestsInSeparateProcesses]
@@ -56,7 +58,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testAnAccountCreatedFromAnArrayIsTheOneAnArrayHashCreates(): void
+	public function testAnAccountCreatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Accounts\AccountsManager::class);
 
@@ -80,12 +82,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			],
 		];
 
-		$fromArrayHash = $this->change(
-			static fn (): array => [$manager->create(Utils\ArrayHash::from($values()))],
-		);
 		$fromArray = $this->change(static fn (): array => [$manager->create($values())]);
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$account = $fromArray['returned']['Accounts\Account:' . self::NEW_ACCOUNT];
 		self::assertSame('not_activated', $account['state']);
@@ -107,7 +104,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testAnAccountUpdatedFromAnArrayIsTheOneAnArrayHashUpdates(): void
+	public function testAnAccountUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Accounts\AccountsManager::class);
 
@@ -126,18 +123,11 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			],
 		];
 
-		$fromArrayHash = $this->change(function () use ($manager, $values): array {
-			$account = $this->find(Entities\Accounts\Account::class, self::ACCOUNT);
-
-			return [$manager->update($account, Utils\ArrayHash::from($values()))];
-		});
 		$fromArray = $this->change(function () use ($manager, $values): array {
 			$account = $this->find(Entities\Accounts\Account::class, self::ACCOUNT);
 
 			return [$manager->update($account, $values())];
 		});
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$account = $fromArray['reloaded']['Accounts\Account:' . self::ACCOUNT];
 		self::assertSame('blocked', $account['state']);
@@ -148,7 +138,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testAnEmailCreatedFromAnArrayIsTheOneAnArrayHashCreates(): void
+	public function testAnEmailCreatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Emails\EmailsManager::class);
 
@@ -160,12 +150,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'visibility' => Types\EmailVisibility::PRIVATE,
 		];
 
-		$fromArrayHash = $this->change(
-			static fn (): array => [$manager->create(Utils\ArrayHash::from($values()))],
-		);
 		$fromArray = $this->change(static fn (): array => [$manager->create($values())]);
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$email = $fromArray['reloaded']['Emails\Email:' . self::NEW_EMAIL];
 		self::assertSame('john.doe@fastybird.net', $email['address']);
@@ -177,7 +162,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testAnEmailUpdatedFromAnArrayIsTheOneAnArrayHashUpdates(): void
+	public function testAnEmailUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Emails\EmailsManager::class);
 
@@ -187,18 +172,11 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'visibility' => Types\EmailVisibility::PRIVATE,
 		];
 
-		$fromArrayHash = $this->change(function () use ($manager, $values): array {
-			$email = $this->find(Entities\Emails\Email::class, self::EMAIL);
-
-			return [$manager->update($email, Utils\ArrayHash::from($values()))];
-		});
 		$fromArray = $this->change(function () use ($manager, $values): array {
 			$email = $this->find(Entities\Emails\Email::class, self::EMAIL);
 
 			return [$manager->update($email, $values())];
 		});
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$email = $fromArray['reloaded']['Emails\Email:' . self::EMAIL];
 		self::assertFalse($email['verified']);
@@ -210,7 +188,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	 *
 	 * @throws Throwable
 	 */
-	public function testAnIdentityCreatedFromAnArrayIsTheOneAnArrayHashCreates(): void
+	public function testAnIdentityCreatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Identities\IdentitiesManager::class);
 
@@ -223,12 +201,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'state' => Types\IdentityState::INVALID,
 		];
 
-		$fromArrayHash = $this->change(
-			static fn (): array => [$manager->create(Utils\ArrayHash::from($values()))],
-		);
 		$fromArray = $this->change(static fn (): array => [$manager->create($values())]);
-
-		self::assertSame($fromArrayHash, $fromArray);
 
 		$identity = $fromArray['reloaded']['Identities\Identity:' . self::NEW_IDENTITY];
 		self::assertSame('john.doe@fastybird.net', $identity['uid']);
@@ -239,7 +212,7 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @throws Throwable
 	 */
-	public function testAnIdentityUpdatedFromAnArrayIsTheOneAnArrayHashUpdates(): void
+	public function testAnIdentityUpdatedFromAnArray(): void
 	{
 		$manager = $this->getContainer()->getByType(Models\Entities\Identities\IdentitiesManager::class);
 
@@ -248,22 +221,46 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 			'state' => Types\IdentityState::BLOCKED,
 		];
 
-		$fromArrayHash = $this->change(function () use ($manager, $values): array {
-			$identity = $this->find(Entities\Identities\Identity::class, self::IDENTITY);
-
-			return [$manager->update($identity, Utils\ArrayHash::from($values()))];
-		});
 		$fromArray = $this->change(function () use ($manager, $values): array {
 			$identity = $this->find(Entities\Identities\Identity::class, self::IDENTITY);
 
 			return [$manager->update($identity, $values())];
 		});
 
-		self::assertSame($fromArrayHash, $fromArray);
-
 		$identity = $fromArray['reloaded']['Identities\Identity:' . self::IDENTITY];
 		self::assertSame('blocked', $identity['state']);
 		self::assertTrue($identity['verifies the password']);
+	}
+
+	/**
+	 * The managers take an array only: an ArrayHash is refused with a TypeError before any entity
+	 * is touched (#723), on create() and on update()
+	 *
+	 * @throws Throwable
+	 */
+	public function testTheManagersRefuseAnArrayHash(): void
+	{
+		$container = $this->getContainer();
+		$hash = Utils\ArrayHash::from(['name' => 'Refused']);
+		$entity = $this->find(Entities\Accounts\Account::class, self::ACCOUNT);
+		$accounts = $container->getByType(Models\Entities\Accounts\AccountsManager::class);
+		$emails = $container->getByType(Models\Entities\Emails\EmailsManager::class);
+		$identities = $container->getByType(Models\Entities\Identities\IdentitiesManager::class);
+
+		foreach (
+			[
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $accounts->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $accounts->update($entity, $hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $emails->create($hash),
+				// @phpstan-ignore argument.type (the call is the test: the entry point takes an array only)
+				static fn () => $identities->create($hash),
+			] as $call
+		) {
+			self::assertTrue(self::refuses($call));
+		}
 	}
 
 	/**
@@ -410,10 +407,6 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 
 	private function normalize(mixed $value): mixed
 	{
-		if ($value instanceof Utils\ArrayHash) {
-			return ['ArrayHash' => $this->normalize((array) $value)];
-		}
-
 		if (is_array($value)) {
 			return array_map(fn (mixed $item): mixed => $this->normalize($item), $value);
 		}
@@ -439,6 +432,22 @@ final class ManagersInputTest extends Tests\Cases\Unit\DbTestCase
 		}
 
 		return $value;
+	}
+
+	/**
+	 * Whether a call is refused with a TypeError
+	 *
+	 * @param callable(): mixed $call
+	 */
+	private static function refuses(callable $call): bool
+	{
+		try {
+			$call();
+		} catch (TypeError) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

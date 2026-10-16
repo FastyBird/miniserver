@@ -10,14 +10,12 @@ use FastyBird\Module\Devices\States;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette\Caching as NetteCaching;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
 use React\Promise;
 use Throwable;
-use function is_array;
 use function React\Async\await;
 
 /**
@@ -294,9 +292,9 @@ final class StateRepairsTest extends Tests\Cases\Unit\BaseTestCase
 		$repaired = false;
 
 		$record = function (string $owner, Uuid\UuidInterface $id, mixed $values) use (&$repaired): void {
-			self::assertTrue($values instanceof Utils\ArrayHash || is_array($values));
+			self::assertIsArray($values);
 
-			$this->stored[] = [$owner, 'update', $id->toString(), (array) $values];
+			$this->stored[] = [$owner, 'update', $id->toString(), $values];
 
 			$repaired = true;
 		};

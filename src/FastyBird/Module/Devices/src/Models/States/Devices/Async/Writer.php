@@ -3,37 +3,33 @@
 namespace FastyBird\Module\Devices\Models\States\Devices\Async;
 
 use FastyBird\Module\Devices\States;
-use Nette\Utils;
 use Ramsey\Uuid;
 use React\Promise;
 
 /**
  * Asynchronous device properties manager interface
- *
- * The values to store come as a plain array or as an ArrayHash (#723). An implementation stores an
- * array exactly as the ArrayHash Utils\ArrayHash::from() makes of it.
  */
 interface Writer
 {
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @return Promise\PromiseInterface<States\DeviceProperty>
 	 */
 	public function create(
 		Uuid\UuidInterface $id,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): Promise\PromiseInterface;
 
 	/**
-	 * @param array<string, mixed>|Utils\ArrayHash<mixed> $values
+	 * @param array<string, mixed> $values
 	 *
 	 * @return Promise\PromiseInterface<States\DeviceProperty|false>
 	 */
 	public function update(
 		Uuid\UuidInterface $id,
-		array|Utils\ArrayHash $values,
+		array $values,
 	): Promise\PromiseInterface;
 
 	/**

@@ -361,7 +361,7 @@ final class LanApi
 
 				return $this->createEntity(
 					Messages\Response\Lan\DeviceEvent::class,
-					Utils\ArrayHash::from([
+					[
 						'id' => $deviceData['id'],
 						'ip_address' => $deviceIpAddress,
 						'domain' => $deviceDomain,
@@ -372,14 +372,14 @@ final class LanApi
 						'encrypt' => $dataEncrypted,
 						// The data is mapped together with the event, not before it: an entity made first would be
 						// encoded to JSON as an object without properties, and the event could never be mapped
-						'data' => Utils\ArrayHash::from($data),
-					]),
+						'data' => $data,
+					],
 				);
 			}
 
 			return $this->createEntity(
 				Messages\Response\Lan\DeviceEvent::class,
-				Utils\ArrayHash::from([
+				[
 					'id' => $deviceData['id'],
 					'ip_address' => $deviceIpAddress,
 					'domain' => $deviceDomain,
@@ -389,7 +389,7 @@ final class LanApi
 					'iv' => array_key_exists('iv', $deviceData) ? $deviceData['iv'] : null,
 					'encrypt' => true,
 					'data' => null,
-				]),
+				],
 			);
 		}
 
@@ -626,15 +626,15 @@ final class LanApi
 			$deviceKey,
 		);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 		assert(is_numeric($error));
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\LanApiCall(
-				sprintf('Reading device info failed: %s', strval($body->offsetGet('message'))),
+				sprintf('Reading device info failed: %s', strval($body['message'])),
 				$request,
 				$response,
 				intval($error),
@@ -663,15 +663,15 @@ final class LanApi
 			$deviceKey,
 		);
 
-		$error = $body->offsetGet('error');
+		$error = $body['error'];
 		assert(is_numeric($error));
 
-		$data = $body->offsetGet('data');
-		assert($data instanceof Utils\ArrayHash);
+		$data = $body['data'];
+		assert(is_array($data));
 
 		if ($error !== 0) {
 			throw new SonoffExceptions\LanApiCall(
-				sprintf('Setting device state failed: %s', strval($body->offsetGet('message'))),
+				sprintf('Setting device state failed: %s', strval($body['message'])),
 				$request,
 				$response,
 				intval($error),
@@ -698,12 +698,13 @@ final class LanApi
 	 * @template T of Messages\Message
 	 *
 	 * @param class-string<T> $entity
+	 * @param array<mixed> $data
 	 *
 	 * @return T
 	 *
 	 * @throws SonoffExceptions\LanApiError
 	 */
-	private function createEntity(string $entity, Utils\ArrayHash $data): Messages\Message
+	private function createEntity(string $entity, array $data): Messages\Message
 	{
 		try {
 			return $this->entityHelper->create(
@@ -722,7 +723,7 @@ final class LanApi
 	}
 
 	/**
-	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
+	 * @return ($throw is true ? array<mixed> : array<mixed>|false)
 	 *
 	 * @throws SonoffExceptions\LanApiCall
 	 * @throws SonoffExceptions\LanApiError
@@ -734,7 +735,7 @@ final class LanApi
 		string $deviceId,
 		string|null $deviceKey,
 		bool $throw = true,
-	): Utils\ArrayHash|bool
+	): array|bool
 	{
 		$body = $this->getResponseBody($request, $response);
 

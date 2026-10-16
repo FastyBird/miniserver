@@ -6,7 +6,6 @@ use FastyBird\Core\Logging;
 use FastyBird\Core\Security\Models;
 use FastyBird\Core\Security\Types;
 use FastyBird\Core\Values\Types\Sources;
-use Nette\Utils;
 use Override;
 use Psr\Log;
 use Ramsey\Uuid;
@@ -79,9 +78,7 @@ final class SuspendApiKey extends Console\Command\Command
 				return self::FAILURE;
 			}
 
-			$this->manager->update($apiKey, Utils\ArrayHash::from([
-				'state' => Types\ApiKeyState::SUSPENDED,
-			]));
+			$this->manager->update($apiKey, ['state' => Types\ApiKeyState::SUSPENDED]);
 		} catch (Throwable $ex) {
 			$this->logger->error('API key could not be suspended', [
 				'source' => Sources\Core::CORE->value,

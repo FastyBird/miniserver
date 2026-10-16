@@ -5,15 +5,14 @@ namespace FastyBird\Core\WebSockets\Server;
 use BadMethodCallException;
 use FastyBird\Core\WebSockets\Events;
 use InvalidArgumentException;
-use Nette\Utils;
 use Psr\EventDispatcher;
 use Psr\Log;
 use React;
 use React\EventLoop;
 use RuntimeException;
 use Throwable;
+use function array_key_exists;
 use function parse_url;
-use function property_exists;
 use function sprintf;
 
 /**
@@ -68,12 +67,9 @@ final class ServerRuntime
 				return;
 			}
 
-			$parsed = Utils\ArrayHash::from((array) parse_url($connection->getLocalAddress()));
+			$parsed = (array) parse_url($connection->getLocalAddress());
 
-			if (
-				property_exists($parsed, 'port')
-				&& $parsed->offsetGet('port') === $this->configuration->port
-			) {
+			if (array_key_exists('port', $parsed) && $parsed['port'] === $this->configuration->port) {
 				$this->handlers->handleConnect($connection);
 			}
 		});
@@ -101,12 +97,9 @@ final class ServerRuntime
 				return;
 			}
 
-			$parsed = Utils\ArrayHash::from((array) parse_url($connection->getLocalAddress()));
+			$parsed = (array) parse_url($connection->getLocalAddress());
 
-			if (
-				property_exists($parsed, 'port')
-				&& $parsed->offsetGet('port') === $flashPort
-			) {
+			if (array_key_exists('port', $parsed) && $parsed['port'] === $flashPort) {
 				$this->handlers->handleFlashConnect($connection);
 			}
 		});

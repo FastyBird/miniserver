@@ -842,22 +842,17 @@ final class OpenApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::GET_ACCESS_TOKEN_MESSAGE_SCHEMA_FILENAME);
 
-		$result = $body->offsetGet('result');
+		$result = $body['result'];
 
-		if (!$result instanceof Utils\ArrayHash) {
+		if (!is_array($result)) {
 			throw new TuyaExceptions\OpenApiCall('Received response is not valid', $request, $response);
 		}
 
-		$result->offsetSet(
-			'expire_time',
-			intval($body->offsetGet('t')) + ($result->offsetExists('expire') ? $result->offsetGet(
-				'expire',
-			) : $result->offsetGet(
-				'expire_time',
-			)) * 1_000,
-		);
+		$result['expire_time'] = intval($body['t']) + (
+			array_key_exists('expire', $result) ? $result['expire'] : $result['expire_time']
+		) * 1_000;
 
-		$body->offsetSet('result', $result);
+		$body['result'] = $result;
 
 		return $this->createMessage(Messages\Response\GetAccessToken::class, $body);
 	}
@@ -873,22 +868,17 @@ final class OpenApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::REFRESH_ACCESS_TOKEN_MESSAGE_SCHEMA_FILENAME);
 
-		$result = $body->offsetGet('result');
+		$result = $body['result'];
 
-		if (!$result instanceof Utils\ArrayHash) {
+		if (!is_array($result)) {
 			throw new TuyaExceptions\OpenApiCall('Received response is not valid', $request, $response);
 		}
 
-		$result->offsetSet(
-			'expire_time',
-			intval($body->offsetGet('t')) + ($result->offsetExists('expire') ? $result->offsetGet(
-				'expire',
-			) : $result->offsetGet(
-				'expire_time',
-			)) * 1_000,
-		);
+		$result['expire_time'] = intval($body['t']) + (
+			array_key_exists('expire', $result) ? $result['expire'] : $result['expire_time']
+		) * 1_000;
 
-		$body->offsetSet('result', $result);
+		$body['result'] = $result;
 
 		return $this->createMessage(Messages\Response\RefreshAccessToken::class, $body);
 	}
@@ -1078,19 +1068,20 @@ final class OpenApi
 	{
 		$body = $this->validateResponseBody($request, $response, self::SET_DEVICE_STATE_MESSAGE_SCHEMA_FILENAME);
 
-		return boolval($body->offsetGet('result'));
+		return boolval($body['result']);
 	}
 
 	/**
 	 * @template T of Messages\Message
 	 *
 	 * @param class-string<T> $message
+	 * @param array<mixed> $data
 	 *
 	 * @return T
 	 *
 	 * @throws TuyaExceptions\OpenApiError
 	 */
-	private function createMessage(string $message, Utils\ArrayHash $data): Messages\Message
+	private function createMessage(string $message, array $data): Messages\Message
 	{
 		try {
 			return $this->messageBuilder->create(
@@ -1354,11 +1345,11 @@ final class OpenApi
 			throw new TuyaExceptions\OpenApiCall('Received response body is not valid JSON', $request, $response);
 		}
 
-		$data = Utils\ArrayHash::from($decodedResponse);
+		$data = $decodedResponse;
 
 		if (
-			$data->offsetExists('code')
-			&& $data->offsetGet('code') === self::TUYA_ERROR_CODE_TOKEN_INVALID
+			array_key_exists('code', $data)
+			&& $data['code'] === self::TUYA_ERROR_CODE_TOKEN_INVALID
 		) {
 			$this->tokenInfo = null;
 
@@ -1375,11 +1366,11 @@ final class OpenApi
 		}
 
 		if (
-			$data->offsetExists('success')
-			&& boolval($data->offsetGet('success')) !== true
+			array_key_exists('success', $data)
+			&& boolval($data['success']) !== true
 		) {
-			if ($data->offsetExists('msg')) {
-				throw new TuyaExceptions\OpenApiCall(strval($data->offsetGet('msg')), $request, $response);
+			if (array_key_exists('msg', $data)) {
+				throw new TuyaExceptions\OpenApiCall(strval($data['msg']), $request, $response);
 			}
 
 			throw new TuyaExceptions\OpenApiCall('Received response is not success', $request, $response);
@@ -1389,7 +1380,7 @@ final class OpenApi
 	}
 
 	/**
-	 * @return ($throw is true ? Utils\ArrayHash : Utils\ArrayHash|false)
+	 * @return ($throw is true ? array<mixed> : array<mixed>|false)
 	 *
 	 * @throws TuyaExceptions\OpenApiCall
 	 * @throws TuyaExceptions\OpenApiError
@@ -1399,7 +1390,7 @@ final class OpenApi
 		Message\ResponseInterface $response,
 		string $schemaFilename,
 		bool $throw = true,
-	): Utils\ArrayHash|bool
+	): array|bool
 	{
 		$body = $this->getResponseBody($request, $response);
 
@@ -1565,18 +1556,18 @@ final class OpenApi
 				return Promise\reject($error);
 			}
 
-			$data = Utils\ArrayHash::from($decodedResponse);
+			$data = $decodedResponse;
 
 			if (
-				$data->offsetExists('success')
-				&& boolval($data->offsetGet('success')) !== true
+				array_key_exists('success', $data)
+				&& boolval($data['success']) !== true
 			) {
 				// TUYA api has something wrong and refreshing token is not allowed
 				// According to response, /v1.0/token/{refresh_token} is not allowed to access
 				// Workaround is to reconnect to obtain new tokens pair
 				if (
-					$data->offsetExists('code')
-					&& intval($data->offsetGet('code')) === self::TUYA_ERROR_CODE_API_ACCESS_NOT_ALLOWED
+					array_key_exists('code', $data)
+					&& intval($data['code']) === self::TUYA_ERROR_CODE_API_ACCESS_NOT_ALLOWED
 				) {
 					$this->tokenInfo = null;
 
@@ -1587,8 +1578,8 @@ final class OpenApi
 
 					return Promise\resolve(true);
 				} else {
-					if ($data->offsetExists('msg')) {
-						$error = new TuyaExceptions\OpenApiCall(strval($data->offsetGet('msg')), $request, $response);
+					if (array_key_exists('msg', $data)) {
+						$error = new TuyaExceptions\OpenApiCall(strval($data['msg']), $request, $response);
 
 						$this->refreshTokenPromise->reject($error);
 						$this->refreshTokenPromise = null;

@@ -17,7 +17,6 @@ use FastyBird\Module\Devices\Entities as DevicesEntities;
 use FastyBird\Module\Devices\Models as DevicesModels;
 use FastyBird\Module\Devices\States as DevicesStates;
 use Nette;
-use Nette\Utils;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -420,8 +419,7 @@ final class StoreSubDeviceTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * The state manager is replaced by a recorder of what set() is handed. A PropertyUpdate is read the way the manager
-	 * reads it on its first line, so the record is the same for it and for the ArrayHash it replaced.
+	 * The state manager is replaced by a recorder of what set() is handed. A PropertyUpdate is recorded as the array of its fields.
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Zigbee2MqttExceptions\InvalidArgument
@@ -440,12 +438,10 @@ final class StoreSubDeviceTest extends Tests\Cases\Unit\DbTestCase
 						->method('set')
 						->willReturnCallback(function (
 							DevicesDocuments\Channels\Properties\Property $property,
-							Utils\ArrayHash|DevicesStates\PropertyUpdate $data,
+							DevicesStates\PropertyUpdate $data,
 							Sources\Source|null $source,
 						): Promise\PromiseInterface {
-							$data = $data instanceof DevicesStates\PropertyUpdate ? $data->toArrayHash() : $data;
-
-							$this->set[] = [$property->getIdentifier(), (array) $data, $source?->value];
+							$this->set[] = [$property->getIdentifier(), $data->toArray(), $source?->value];
 
 							return Promise\resolve(true);
 						});

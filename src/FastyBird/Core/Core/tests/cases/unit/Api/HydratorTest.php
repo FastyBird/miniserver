@@ -12,8 +12,10 @@ use Nette;
 use Nette\Localization;
 use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Ramsey\Uuid;
 use stdClass;
 use Throwable;
+use function array_keys;
 use function str_contains;
 
 /**
@@ -79,6 +81,31 @@ final class HydratorTest extends Tests\Cases\Unit\BaseTestCase
 			self::assertFalse(str_contains($ex->getMessage(), '//api.'));
 			self::assertFalse(str_contains($ex->getDetail(), '//api.'));
 		}
+	}
+
+	/**
+	 * The hydrated data is a plain array: the entity class, and the identifier a new entity takes
+	 * from the resource
+	 *
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws Throwable
+	 */
+	public function testHydrateReturnsAnArrayOfTheEntityClassAndTheIdentifier(): void
+	{
+		$hydrator = $this->createHydrator();
+
+		$document = Encoding\Document::create(
+			'{"data":{"type":"test","id":"9c1f5a30-6d2e-4b8a-8f3c-1e0d7b4a2c11","attributes":{}}}',
+		);
+
+		$created = $hydrator->hydrate($document);
+
+		self::assertSame(['entity', 'id'], array_keys($created));
+		self::assertSame(stdClass::class, $created['entity']);
+		self::assertInstanceOf(Uuid\UuidInterface::class, $created['id']);
+		self::assertSame('9c1f5a30-6d2e-4b8a-8f3c-1e0d7b4a2c11', $created['id']->toString());
+
+		self::assertSame(['entity' => stdClass::class], $hydrator->hydrate($document, new stdClass()));
 	}
 
 	/**
