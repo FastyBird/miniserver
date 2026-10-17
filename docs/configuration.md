@@ -237,6 +237,57 @@ The clients driver must implement `FastyBird\Core\WebSockets\Clients\Drivers\Dri
 | `cors.allow.credentials` | bool | `true` | `Access-Control-Allow-Credentials`. |
 | `cors.allow.headers` | list of strings | `Content-Type`, `Authorization`, `X-Requested-With` | `Access-Control-Allow-Headers`. The application adds `X-Api-Key`. |
 
+## Devices module (`fbDevicesModule`)
+
+`config/common.neon` registers `FastyBird\Module\Devices\DI\DevicesExtension` and sets two of its keys from parameters.
+
+| Key | Type | Default | Meaning |
+|---|---|---|---|
+| `apiPrefix` | bool | `true` | Put the module's routes under `/devices-module`. The application sets it from `%api.prefixed.modules%`. |
+| `exchange` | bool | `true` | Publish the asynchronous state managers' get and set requests to the exchange, where `fb:devices-module:exchange` carries them out, instead of carrying them out in the process that asked. The application sets it from `%modules.exchange%`, which `config/defaults.neon` sets to `false`. |
+| `history.enabled` | bool | `false` | Record property value history. See [Property value history](#property-value-history). |
+| `history.flushInterval` | int, at least 1 | `10` | Seconds between two writes of the buffered samples, while an event loop runs. |
+| `history.minInterval` | int, at least 0 | `10` | Seconds. A change that follows the last stored sample of its property sooner waits, and a later change replaces it. `0` stores every change. |
+| `history.retention.samples` | int, at least 1 | `7` | Days to keep raw samples. |
+| `history.retention.fiveMinutes` | int, at least 1 | `30` | Days to keep 5-minute rollups. |
+| `history.retention.hours` | int, at least 1 | `365` | Days to keep 1-hour rollups. |
+
+### Property value history
+
+The module can keep a time series of every dynamic property of a connector, device or channel, for charts (#624). It is off by default:
+
+```neon
+fbDevicesModule:
+    history:
+        enabled: true
+        flushInterval: 10
+        minInterval: 10
+        retention:
+            samples: 7
+            fiveMinutes: 30
+            hours: 365
+```
+
+**It needs a state store.** The history is recorded from the property state events, and an event fires only after a state manager has stored the state. Property state has exactly one store today, the [Devices module state bridge](#devices-module-state-bridge) of the RedisDb plugin, and `config/common.neon` does not register it. Without a store the module logs `states manager is not configured` and dispatches no event, so there is nothing to record. The same holds for the live values of the UI's widgets: both need a registered state store, and enabling `history.enabled` on its own records nothing.
+
+**What is recorded**, by the process that writes the state (a connector, or `fb:devices-module:exchange` when `exchange` is on):
+
+- Properties of a numeric type (`char` through `uint`, and `float`), `bool` and `switch`. A boolean is stored as `0` or `1`, a switch as `1` for `switch_on` and `0` for `switch_off`. `switch_toggle` is a command, not a value, and `string`, `enum`, `date`, `time`, `datetime`, `color`, `button`, `cover` and `unknown` properties are not recorded.
+- Not a mapped property: its parent is recorded, and the mapped child would double it.
+- The value as the property reports it, after its scale and value transformer. When the state is not valid, a gap (`NULL`) is stored once, so a chart does not draw a line across it.
+- A change is skipped when it equals the last stored value, or when it is a numeric change smaller than the property's `step`. Within `minInterval` of the last stored sample, the newest change replaces the waiting one, so a spike shorter than `minInterval` is not kept. The last stored value is remembered in memory: the first change a process sees for a property is stored even when it repeats the last row of an earlier run.
+- The time of a sample is the state's `updated_at`, else the clock, in UTC epoch seconds.
+
+**How it is written.** A sample is buffered and written by one multi-row `INSERT ... ON DUPLICATE KEY UPDATE` inside a transaction, every `flushInterval` seconds while the event loop runs, and when the loop stops. A process whose loop does not run (php-fpm, a console command) writes each change at once. When a write fails, the rows stay for the next one, up to 10,000: past that the oldest are dropped, and the log says how many. Recording never fails the state write that raised it.
+
+**On an SD card**, raise `flushInterval` to `60`: one commit a minute instead of one every ten seconds, at the price of losing up to a minute of samples when a process is killed without stopping its loop.
+
+**Storage.** Two tables, `fb_devices_module_history_samples` (one row per stored change) and `fb_devices_module_history_rollups` (5-minute and 1-hour buckets), created by the migration `Version20261017072656`. Both keep the property id without a foreign key, so the rows of a deleted property age out with retention. They exist on every install, whether `history.enabled` is on or off. At 100 properties and one stored change per property per minute, the seven days of raw samples take about 68 MiB.
+
+**Retention is not applied yet.** The `retention` keys are validated and documented here, but the compactor that builds the rollups and deletes expired rows arrives in a later change. Until then recorded samples stay in the table.
+
+With `history.enabled` off the module registers neither the recorder nor its subscriber, so no listener, timer or buffer exists.
+
 ## Automators
 
 `config/common.neon` registers both automators, `fbDateTimeAutomator` (`FastyBird\Automator\DateTime\DI\DateTimeExtension`) and `fbDevicesModuleAutomator` (`FastyBird\Automator\DevicesModule\DI\DevicesModuleExtension`). Neither takes configuration. They add the triggers module's conditions and actions:
@@ -272,7 +323,7 @@ fbRedisDbPlugin:
 
 ### Devices module state bridge
 
-Registers `FastyBird\Bridge\RedisDbPluginDevicesModule\DI\RedisDbPluginDevicesModuleExtension` (service name `fbRedisDbPluginDevicesModuleBridge`), so device/channel/connector property state reads and writes go through Redis instead of the default in-memory/Doctrine store:
+Registers `FastyBird\Bridge\RedisDbPluginDevicesModule\DI\RedisDbPluginDevicesModuleExtension` (service name `fbRedisDbPluginDevicesModuleBridge`), so device/channel/connector property state reads and writes go through Redis. It is the only state store the repository ships, and no other store stands in for it: without it a property state is not stored, no state event is dispatched, and neither live widget values nor [property value history](#property-value-history) exist:
 
 ```neon
 extensions:
@@ -313,9 +364,9 @@ fbRedisDbCachePlugin:
         database: 0
 ```
 
-## CouchDB state storage (CouchDb plugin)
+## CouchDB states manager (CouchDb plugin)
 
-Registers `FastyBird\Plugin\CouchDb\DI\CouchDbExtension` (service name `fbCouchDbPlugin`):
+Registers `FastyBird\Plugin\CouchDb\DI\CouchDbExtension` (service name `fbCouchDbPlugin`), a CouchDB connection and a states manager and repository for its own state classes. No bridge connects it to the Devices module, so registering it does not make the module store property state in CouchDB: that is what the [Devices module state bridge](#devices-module-state-bridge) does for Redis.
 
 ```neon
 extensions:

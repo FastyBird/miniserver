@@ -71,6 +71,16 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 		return Schema\Expect::structure([
 			'apiPrefix' => Schema\Expect::bool(true),
 			'exchange' => Schema\Expect::bool(true),
+			'history' => Schema\Expect::structure([
+				'enabled' => Schema\Expect::bool(false),
+				'flushInterval' => Schema\Expect::int(10)->min(1),
+				'minInterval' => Schema\Expect::int(10)->min(0),
+				'retention' => Schema\Expect::structure([
+					'samples' => Schema\Expect::int(7)->min(1),
+					'fiveMinutes' => Schema\Expect::int(30)->min(1),
+					'hours' => Schema\Expect::int(365)->min(1),
+				])->castTo(Config\HistoryRetention::class),
+			])->castTo(Config\History::class),
 		])->castTo(Config::class);
 	}
 
@@ -512,6 +522,24 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 
 		$builder->addDefinition($this->prefix('subscribers.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Connector::class);
+
+		// With the history switched off nothing of it is registered: no subscriber listens, no timer starts
+		// and no buffer exists, so the module's runtime is what it was before the history
+		if ($configuration->history->enabled) {
+			$builder->addDefinition(
+				$this->prefix('models.history.recorder'),
+				new NetteDI\Definitions\ServiceDefinition(),
+			)
+				->setType(Models\History\Recorder::class)
+				->setArguments([
+					'minInterval' => $configuration->history->minInterval,
+					'logger' => $logger,
+				]);
+
+			$builder->addDefinition($this->prefix('subscribers.history'), new NetteDI\Definitions\ServiceDefinition())
+				->setType(Subscribers\StateHistory::class)
+				->setArguments(['flushInterval' => $configuration->history->flushInterval]);
+		}
 
 		// Enables the SocketsBridge once the WebSocket server is created: first of the three
 		// modules' bridges, in production's order (census T3, #658)

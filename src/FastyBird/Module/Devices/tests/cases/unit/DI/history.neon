@@ -1,0 +1,5 @@
+fbDevicesModule:
+	history:
+		enabled: true
+		flushInterval: 30
+		minInterval: 7

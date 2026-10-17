@@ -1,0 +1,182 @@
+<?php declare(strict_types = 1);
+
+namespace FastyBird\Module\Devices\Tests\Cases\Unit;
+
+use DateTimeImmutable;
+use Doctrine\DBAL;
+use Error;
+use FastyBird\Core\EventLoop;
+use FastyBird\Core\Exceptions as CoreExceptions;
+use FastyBird\Core\Persistence\Helpers;
+use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use FastyBird\Module\Devices\Entities;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
+use FastyBird\Module\Devices\Models;
+use FastyBird\Module\Devices\Tests;
+use FastyBird\Module\Devices\Types as DevicesTypes;
+use Nette;
+use Psr\Clock\ClockInterface;
+use Ramsey\Uuid;
+use RuntimeException;
+use function assert;
+use function is_numeric;
+use function sprintf;
+
+/**
+ * What the property value history tests share: a recorder over the test database, properties and
+ * states to feed it, and the rows it wrote
+ */
+abstract class HistoryTestCase extends DbTestCase
+{
+
+	// The container's frozen clock, 2020-04-01T12:00:00+00:00
+	protected const int NOW = 1_585_742_400;
+
+	protected const int T0 = self::NOW - 3_600;
+
+	protected const string CHANNEL = '6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a';
+
+	protected const string PROPERTY = 'a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d';
+
+	protected const string OTHER_PROPERTY = 'b4e2d3c5-6f7a-4b8c-9d0e-1f2a3b4c5d6e';
+
+	protected Tests\Support\RecordingLogger $logger;
+
+	protected EventLoop\Status $status;
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	protected function recorder(int $minInterval = 10, bool $running = false): Models\History\Recorder
+	{
+		$this->logger = new Tests\Support\RecordingLogger();
+		$this->status = new EventLoop\Status();
+		$this->status->running = $running;
+
+		return new Models\History\Recorder(
+			$this->getDb(),
+			$this->getContainer()->getByType(Helpers\Database::class),
+			$this->status,
+			$this->getContainer()->getByType(ClockInterface::class),
+			$minInterval,
+			$this->logger,
+		);
+	}
+
+	/**
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	protected function property(
+		ValuesTypes\DataType $dataType = ValuesTypes\DataType::FLOAT,
+		int|float|null $step = null,
+		string $id = self::PROPERTY,
+	): DevicesDocuments\Channels\Properties\Dynamic
+	{
+		return new DevicesDocuments\Channels\Properties\Dynamic(
+			Uuid\Uuid::fromString($id),
+			Uuid\Uuid::fromString(self::CHANNEL),
+			DevicesTypes\PropertyCategory::GENERIC,
+			'property',
+			null,
+			$dataType,
+			step: $step,
+		);
+	}
+
+	/**
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	protected function mappedProperty(
+		ValuesTypes\DataType $dataType = ValuesTypes\DataType::FLOAT,
+	): DevicesDocuments\Channels\Properties\Mapped
+	{
+		return new DevicesDocuments\Channels\Properties\Mapped(
+			Uuid\Uuid::fromString(self::OTHER_PROPERTY),
+			Uuid\Uuid::fromString(self::CHANNEL),
+			Uuid\Uuid::fromString(self::PROPERTY),
+			DevicesTypes\PropertyCategory::GENERIC,
+			'mapped',
+			null,
+			$dataType,
+		);
+	}
+
+	/**
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	protected function state(
+		bool|float|int|string|Payloads\Payload|null $value,
+		int|null $time = null,
+		bool $valid = true,
+		string $id = self::PROPERTY,
+	): Tests\Fixtures\Dummy\ChannelPropertyState
+	{
+		return new Tests\Fixtures\Dummy\ChannelPropertyState(
+			Uuid\Uuid::fromString($id),
+			actualValue: $value,
+			valid: $valid,
+			updatedAt: $time === null ? null : (new DateTimeImmutable())->setTimestamp($time),
+		);
+	}
+
+	/**
+	 * @return list<array{int, float|null}> the stored samples of a property, as [time, value]
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DBAL\Exception
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	protected function rows(string $id = self::PROPERTY): array
+	{
+		$rows = [];
+
+		foreach (
+			$this->getDb()->fetchAllAssociative(
+				sprintf(
+					'SELECT sampled_at, value FROM %s WHERE property_id = ? ORDER BY sampled_at',
+					Entities\History\Sample::TABLE,
+				),
+				[Uuid\Uuid::fromString($id)->getBytes()],
+				[DBAL\ParameterType::BINARY],
+			) as $row
+		) {
+			$time = $row['sampled_at'];
+			$value = $row['value'];
+
+			assert(is_numeric($time));
+			assert($value === null || is_numeric($value));
+
+			$rows[] = [(int) $time, $value === null ? null : (float) $value];
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DBAL\Exception
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	protected function countRows(): int
+	{
+		$count = $this->getDb()->fetchOne(sprintf('SELECT COUNT(*) FROM %s', Entities\History\Sample::TABLE));
+
+		assert(is_numeric($count));
+
+		return (int) $count;
+	}
+
+}
