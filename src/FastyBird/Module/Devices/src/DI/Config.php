@@ -12,6 +12,7 @@ final readonly class Config
 	public function __construct(
 		public readonly bool $apiPrefix,
 		public readonly bool $exchange,
+		public readonly Config\History $history,
 	)
 	{
 	}
