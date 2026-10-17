@@ -114,11 +114,12 @@ Long-running workers under supervisord: `fb:ws-server:start` (the WAMP v1 WebSoc
 
 ## Database schema
 
-Schema changes ship as Doctrine migrations in `migrations/`, the one directory `config/common.neon` registers. It holds three versions:
+Schema changes ship as Doctrine migrations in `migrations/`, the one directory `config/common.neon` registers. It holds four versions:
 
 - `Version20261011210849`: a baseline of the whole schema of the default registration (the extensions `config/common.neon` registered when it was generated), 34 tables plus Doctrine Migrations' own `doctrine_migrations`.
 - `Version20261012172407`: the two Automators' 14 nullable single-table-inheritance columns, 5 on `fb_triggers_module_actions` and 9 on `fb_triggers_module_conditions`. `config/common.neon` registers the Automators since this version (#745).
 - `Version20261012224409`: `fb_security_api_keys`, the table of Core's API keys (#730). It exists on every install, whether `fbCore.security.enable.apiKeys` is on or off.
+- `Version20261017072656`: `fb_devices_module_history_samples` and `fb_devices_module_history_rollups`, the two tables of the Devices module's property value history (#624). They exist on every install, whether `fbDevicesModule.history.enabled` is on or off. See [Property value history](./configuration.md#property-value-history).
 
 A schema change adds a new version on top of them, generated with `migrations:diff` after `rm -rf var/temp/cache`: outside debug mode the compiled container is never rebuilt, and a stale one can make `migrations:diff` report no changes.
 
