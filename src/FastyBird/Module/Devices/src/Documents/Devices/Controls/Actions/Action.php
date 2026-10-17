@@ -2,12 +2,11 @@
 
 namespace FastyBird\Module\Devices\Documents\Devices\Controls\Actions;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Types;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
@@ -21,21 +20,15 @@ use Ramsey\Uuid;
 final readonly class Action implements DevicesDocuments\Document
 {
 
+	/**
+	 * @param bool|float|string|null $expectedValue A number is a float, as it was for the rule orisai mapped this with, which tried FloatValue before IntValue
+	 */
 	public function __construct(
-		#[ObjectMapper\Rules\BackedEnumValue(class: Types\ControlAction::class)]
 		private Types\ControlAction $action,
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $device,
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $control,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('expected_value')]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('expected_value')]
 		private bool|float|int|string|null $expectedValue = null,
 	)
 	{
