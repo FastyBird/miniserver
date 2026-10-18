@@ -422,9 +422,11 @@ branches and a class chooses its branch by what it implements:
 - **Any other class is mapped by Valinor.** A class is migrated by dropping `MappedObject` (and, with it,
   every `Orisai\ObjectMapper` attribute and import) and by giving Valinor what it reads: the native and
   PHPDoc types, and the attributes below. `Documents\Document` does not extend `MappedObject`; each root
-  of a not yet migrated hierarchy declares it itself (`Devices\Documents\Channels\Channel`, `Connectors\Connector`
-  and `Devices\Device`, `Triggers\Documents\Triggers\Trigger`, `Connector\...\Messages\Message`), and its migration
-  removes that one declaration.
+  of a not yet migrated hierarchy declares it itself (`Devices\Documents\Channels\Channel`,
+  `Triggers\Documents\Triggers\Trigger`, `Connector\...\Messages\Message`), and its migration removes that one
+  declaration. A root flips every class beneath it, in every package: `Devices\Documents\Connectors\Connector` and
+  `Devices\Device` moved with their 31 documents of the connectors, the bridges and the addon, none of which declares a
+  constructor, an attribute or a property of its own.
 - A migrated class does not contain an orisai-mapped one, and an orisai-mapped class does not contain a migrated
   one: Valinor would build the nested object through its constructor without any of orisai's rules, and orisai
   accepts only a `MappedObject` there. A migration therefore takes a class with every class it nests.
