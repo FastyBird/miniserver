@@ -150,11 +150,11 @@ final class DocumentRootsPinTest extends TestCase
 			self::assertSame(array_keys($messages), $refused, $class);
 
 			foreach ($messages as $name => [$path, $kind]) {
-				$first = (string) preg_replace(
-					'/^Could not map data to document: /',
-					'',
-					(string) $actual[$class][$name]['message'],
-				);
+				$message = $actual[$class][$name]['message'] ?? null;
+
+				self::assertIsString($message, $name);
+
+				$first = (string) preg_replace('/^Could not map data to document: /', '', $message);
 
 				if (!str_starts_with($first, $path . ': ') || !str_contains($first, $kind)) {
 					$wrong[] = sprintf('%s: %s: "%s" is not "%s: ... %s"', $class, $name, $first, $path, $kind);
