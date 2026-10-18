@@ -2,16 +2,22 @@
 
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Documents;
 
+use ArrayObject;
 use DateTimeImmutable;
 use Error;
 use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types\Payloads;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Tests\Fixtures\Dummy;
+use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid;
+use function array_merge;
 use function array_slice;
 use function count;
 use function gettype;
@@ -105,6 +111,99 @@ final class ConverterParityTest extends Tests\Cases\Unit\BaseTestCase
 			self::assertNotNull(
 				self::map($mapper, Dummy\DummyParityValinorDocument::class, 'value', $object, $options),
 			);
+		}
+	}
+
+	/**
+	 * What else Valinor takes as an object where orisai took its scalar or array form (all refused by orisai at the base
+	 * commit): the enum case for the `action` of a control action and of a property action, a ready ActionValues for `set`
+	 * and `write`, and any ArrayObject for them. The document is the same as the one made from the plain form
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
+	 * @throws DevicesExceptions\InvalidState
+	 * @throws DocumentsExceptions\MalformedInput
+	 * @throws Error
+	 * @throws Nette\DI\MissingServiceException
+	 */
+	public function testValinorTakesTheOtherObjectsOrisaiRefused(): void
+	{
+		$factory = $this->getContainer()->getByType(CoreDocuments\DocumentFactory::class);
+		$id = '176984ad-7cf7-465d-9e53-71668a74a688';
+		$parent = '247fd6b5-8466-4323-81de-cec3e315015a';
+
+		foreach (
+			[
+				[
+					DevicesDocuments\Channels\Controls\Actions\Action::class,
+					['channel' => $parent, 'control' => $id],
+					'action',
+					DevicesTypes\ControlAction::SET,
+					DevicesTypes\ControlAction::SET->value,
+				],
+				[
+					DevicesDocuments\Devices\Controls\Actions\Action::class,
+					['device' => $parent, 'control' => $id],
+					'action',
+					DevicesTypes\ControlAction::SET,
+					DevicesTypes\ControlAction::SET->value,
+				],
+				[
+					DevicesDocuments\Connectors\Controls\Actions\Action::class,
+					['connector' => $parent, 'control' => $id],
+					'action',
+					DevicesTypes\ControlAction::SET,
+					DevicesTypes\ControlAction::SET->value,
+				],
+				[
+					DevicesDocuments\States\Channels\Properties\Actions\Action::class,
+					['channel' => $parent, 'property' => $id],
+					'action',
+					DevicesTypes\PropertyAction::GET,
+					DevicesTypes\PropertyAction::GET->value,
+				],
+				[
+					DevicesDocuments\States\Devices\Properties\Actions\Action::class,
+					['device' => $parent, 'property' => $id],
+					'action',
+					DevicesTypes\PropertyAction::GET,
+					DevicesTypes\PropertyAction::GET->value,
+				],
+				[
+					DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
+					['connector' => $parent, 'property' => $id],
+					'action',
+					DevicesTypes\PropertyAction::GET,
+					DevicesTypes\PropertyAction::GET->value,
+				],
+				[
+					DevicesDocuments\States\Channels\Properties\Actions\Action::class,
+					['action' => 'set', 'channel' => $parent, 'property' => $id],
+					'set',
+					new DevicesDocuments\States\ActionValues(1, 2),
+					['actual_value' => 1, 'expected_value' => 2],
+				],
+				[
+					DevicesDocuments\States\Channels\Properties\Actions\Action::class,
+					['action' => 'set', 'channel' => $parent, 'property' => $id],
+					'write',
+					new ArrayObject(['actual_value' => 1, 'expected_value' => 2]),
+					['actual_value' => 1, 'expected_value' => 2],
+				],
+				[
+					DevicesDocuments\States\Channels\Properties\Actions\Action::class,
+					['action' => 'set', 'channel' => $parent, 'property' => $id],
+					'set',
+					new ArrayObject(['actual_value' => 'switch_on']),
+					['actual_value' => 'switch_on'],
+				],
+			] as [$class, $base, $field, $object, $plain]
+		) {
+			$fromObject = $factory->create($class, array_merge($base, [$field => $object]));
+			$fromPlain = $factory->create($class, array_merge($base, [$field => $plain]));
+
+			self::assertSame($fromPlain->toArray(), $fromObject->toArray(), $class . ' ' . $field);
 		}
 	}
 

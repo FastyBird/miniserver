@@ -5,6 +5,7 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Documents;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use FastyBird\Module\Devices\States as DevicesStates;
 use FastyBird\Module\Devices\Tests;
 use Orisai\ObjectMapper;
 use Throwable;
@@ -203,6 +204,25 @@ final class MappedDocumentMessageTest extends Tests\Cases\Unit\BaseTestCase
 				DevicesDocuments\Connectors\Generic::class,
 				DevicesDocuments\Devices\Device::class,
 				DevicesDocuments\Devices\Generic::class,
+			] as $class
+		) {
+			self::assertContains(ObjectMapper\MappedObject::class, class_implements($class), $class);
+		}
+
+		// What the connectors, bridges and the addon extend is reached through these roots; the documents of those
+		// packages cannot be named here, so the test fixtures that extend the roots stand for them
+		foreach (
+			[
+				Tests\Fixtures\Dummy\DummyChannelDocument::class,
+				Tests\Fixtures\Dummy\DummyConnectorDocument::class,
+				Tests\Fixtures\Dummy\DummyDeviceDocument::class,
+				DevicesStates\Property::class,
+				DevicesStates\ChannelProperty::class,
+				DevicesStates\ConnectorProperty::class,
+				DevicesStates\DeviceProperty::class,
+				Tests\Fixtures\Dummy\ChannelPropertyState::class,
+				Tests\Fixtures\Dummy\ConnectorPropertyState::class,
+				Tests\Fixtures\Dummy\DevicePropertyState::class,
 			] as $class
 		) {
 			self::assertContains(ObjectMapper\MappedObject::class, class_implements($class), $class);

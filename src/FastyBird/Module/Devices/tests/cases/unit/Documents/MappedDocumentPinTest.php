@@ -25,7 +25,9 @@ use function serialize;
  * hands it to the mapper, and the result must be what orisai made of the same input when these classes were still
  * mapped by it (#724 PR3): the JSON the exchange, the API and the WebSockets encode, with Nette's Json::encode(), and
  * serialize() of the document, so that an int is not a float and an unset property is not a null one.
- * tests/fixtures/Documents/pinned.json holds both strings per input, taken from the orisai mapping at 2c227208e
+ * tests/fixtures/Documents/pinned.json holds both strings per input. They were written by running every input of documents()
+ * through DocumentFactory on 2c227208e, in the application image, with a throwaway test that wrote them out; the Devices
+ * documents are the same on 91dadd559 and on 93a014a34, where this test passes too
  */
 final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 {
@@ -806,6 +808,23 @@ final class MappedDocumentPinTest extends Tests\Cases\Unit\BaseTestCase
 			$cases['mapped of a ' . $parent . ', a blank value'] = [
 				$mapped,
 				array_merge(self::mapped($parent, $parentId), ['value' => '  ']),
+			];
+		}
+
+		foreach (
+			['name', 'unit', 'format', 'invalid', 'scale', 'step', 'default', 'value_transformer', 'owner', 'created_at', 'updated_at'] as $key
+		) {
+			$cases['variable of a channel, without ' . $key] = [
+				DevicesDocuments\Channels\Properties\Variable::class,
+				self::without(self::variable(), $key),
+			];
+			$cases['dynamic of a device, without ' . $key] = [
+				DevicesDocuments\Devices\Properties\Dynamic::class,
+				self::without(self::dynamic('device', self::DEVICE), $key),
+			];
+			$cases['mapped of a channel, without ' . $key] = [
+				DevicesDocuments\Channels\Properties\Mapped::class,
+				self::without(self::mapped(), $key),
 			];
 		}
 
