@@ -2,11 +2,18 @@
 
 namespace FastyBird\MiniServer\Tests\Cases\Application;
 
+use ArrayIterator;
+use ArrayObject;
 use Composer\Autoload\ClassLoader;
+use DateTime;
+use DateTimeImmutable;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exceptions\InvalidArgument;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
+use FastyBird\Module\Devices\Types\ChannelCategory;
 use FastyBird\Module\Devices\Types\ConnectorCategory;
 use FastyBird\Module\Devices\Types\DeviceCategory;
 use FilesystemIterator;
@@ -30,6 +37,7 @@ use function array_values;
 use function class_exists;
 use function dirname;
 use function getopt;
+use function in_array;
 use function is_array;
 use function is_dir;
 use function is_string;
@@ -68,6 +76,12 @@ final class DocumentRootsProbe
 
 	private const string OWNER = 'c5b8a0d2-0a77-4f4b-9d0a-9f1fe3b8e2aa';
 
+	private const array GENERIC = [
+		DevicesDocuments\Connectors\Generic::class,
+		DevicesDocuments\Devices\Generic::class,
+		DevicesDocuments\Channels\Generic::class,
+	];
+
 	/**
 	 * @throws JsonException
 	 * @throws UnexpectedValueException
@@ -75,7 +89,7 @@ final class DocumentRootsProbe
 	 */
 	public static function run(): int
 	{
-		$options = getopt('', ['messages', 'census']);
+		$options = getopt('', ['messages', 'census', 'objects']);
 		$withMessages = is_array($options) && array_key_exists('messages', $options);
 		$loader = ClassLoader::getRegisteredLoaders();
 		$loader = reset($loader);
@@ -107,6 +121,8 @@ final class DocumentRootsProbe
 			return 0;
 		}
 
+		$objectsOnly = is_array($options) && array_key_exists('objects', $options);
+
 		try {
 			$configurator = Boot\Bootstrap::boot();
 
@@ -118,12 +134,22 @@ final class DocumentRootsProbe
 			$container = $configurator->createContainer();
 			$factory = $container->getByType(CoreDocuments\DocumentFactory::class);
 
+			if ($objectsOnly) {
+				echo json_encode(
+					self::objects($factory),
+					JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT,
+				), PHP_EOL;
+
+				return 0;
+			}
+
 			$report = [];
 
 			foreach (
 				[
 					DevicesDocuments\Connectors\Connector::class => self::connectorCases(),
 					DevicesDocuments\Devices\Device::class => self::deviceCases(),
+					DevicesDocuments\Channels\Channel::class => self::channelCases(),
 				] as $root => $cases
 			) {
 				$classes = array_filter(
@@ -135,7 +161,7 @@ final class DocumentRootsProbe
 
 				foreach ($classes as $class) {
 					// Every input for the generic document of the module, a few for every document that extends the root
-					$wanted = $class === DevicesDocuments\Connectors\Generic::class || $class === DevicesDocuments\Devices\Generic::class
+					$wanted = in_array($class, self::GENERIC, true)
 						? array_keys($cases)
 						: [
 							'the fields of a stored one',
@@ -251,6 +277,169 @@ final class DocumentRootsProbe
 		}
 
 		return $data;
+	}
+
+	/**
+	 * What a document of each of the three roots makes of an object where its scalar or array form is expected, one
+	 * thing at a time: a date object for a date, an iterator or an ArrayObject for a list of UUIDs. orisai refused all of
+	 * these; Valinor takes the object of the type it was given or any traversable for a list. Nothing in the
+	 * application builds a document from such a value, the report documents what happens if something does
+	 *
+	 * @return array<string, array<string, array<string, string>>>
+	 *
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
+	 * @throws DocumentsExceptions\MalformedInput
+	 * @throws JsonException
+	 * @throws UuidExceptions\InvalidArgumentException
+	 */
+	private static function objects(CoreDocuments\DocumentFactory $factory): array
+	{
+		$report = [];
+
+		foreach (
+			[
+				DevicesDocuments\Connectors\Generic::class => [self::connectorCases(), ['properties', 'controls', 'devices']],
+				DevicesDocuments\Devices\Generic::class => [
+					self::deviceCases(),
+					['parents', 'children', 'properties', 'controls', 'channels'],
+				],
+				DevicesDocuments\Channels\Generic::class => [self::channelCases(), ['properties', 'controls']],
+			] as $class => [$cases, $lists]
+		) {
+			$stored = $cases['the fields of a stored one'];
+
+			if (!is_array($stored)) {
+				continue;
+			}
+
+			$inputs = [
+				'created_at as a DateTimeImmutable' => ['created_at' => new DateTimeImmutable(
+					'2020-04-01T12:00:00+00:00',
+				)],
+				'updated_at as a DateTime' => ['updated_at' => new DateTime('2021-11-30T23:59:59+02:00')],
+			];
+
+			foreach ($lists as $list) {
+				$inputs[$list . ' as an ArrayObject'] = [$list => new ArrayObject([self::CHILD])];
+				$inputs[$list . ' as an ArrayIterator'] = [$list => new ArrayIterator([self::CHILD, self::OWNER])];
+			}
+
+			foreach ($inputs as $name => $change) {
+				try {
+					$document = $factory->create($class, [...$stored, ...$change, 'type' => $class::getType()]);
+
+					$report[$class][$name] = ['json' => Utils\Json::encode($document->toArray())];
+				} catch (InvalidArgument $ex) {
+					$report[$class][$name] = ['refused' => (string) strtok($ex->getMessage(), "\n")];
+				}
+			}
+		}
+
+		return $report;
+	}
+
+	/**
+	 * @return array<string, array<string, mixed>|string|object>
+	 *
+	 * @throws Utils\JsonException
+	 * @throws UuidExceptions\InvalidArgumentException
+	 */
+	private static function channelCases(): array
+	{
+		$stored = [
+			'id' => self::ID,
+			'category' => 'generic',
+			'identifier' => 'channel-identifier',
+			'device' => self::CONNECTOR,
+			'name' => null,
+			'comment' => null,
+			'properties' => [],
+			'controls' => [],
+			'owner' => null,
+			'created_at' => null,
+			'updated_at' => null,
+		];
+		$full = array_merge($stored, [
+			'name' => 'A name',
+			'comment' => 'A comment',
+			'properties' => [self::CHILD, self::OWNER],
+			'controls' => [self::SIBLING],
+			'owner' => self::OWNER,
+			'created_at' => '2020-04-01T12:00:00+00:00',
+			'updated_at' => '2021-11-30T23:59:59+02:00',
+		]);
+
+		return [
+			'the required fields' => [
+				'id' => self::ID,
+				'category' => 'generic',
+				'identifier' => 'required',
+				'device' => self::CONNECTOR,
+			],
+			'the fields of a stored one' => $stored,
+			'every field' => $full,
+			'blank and null fields' => array_merge($stored, ['name' => '', 'comment' => " \t", 'owner' => ' ']),
+			'an empty owner' => array_merge($stored, ['owner' => '']),
+			'a name with spaces around and a no-break space' => array_merge(
+				$stored,
+				['name' => ' a ', 'comment' => "\u{00A0}"],
+			),
+			'unknown fields' => array_merge($stored, ['source' => 'x', 'x' => [1]]),
+			'as JSON' => Utils\Json::encode($full),
+			'as an object' => Utils\ArrayHash::from($full),
+			'a UUID and an enum as objects' => array_merge($stored, [
+				'id' => Uuid\Uuid::fromString(self::ID),
+				'category' => ChannelCategory::GENERIC,
+				'device' => Uuid\Uuid::fromString(self::CONNECTOR),
+				'owner' => Uuid\Uuid::fromString(self::OWNER),
+				'properties' => [Uuid\Uuid::fromString(self::CHILD)],
+			]),
+			'lists of UUIDs with keys' => array_merge(
+				$stored,
+				['properties' => [3 => self::CHILD], 'controls' => [7 => self::SIBLING, 2 => self::OWNER]],
+			),
+			'lists of UUIDs with words for keys' => array_merge(
+				$stored,
+				['properties' => ['a' => self::CHILD], 'controls' => ['b' => self::SIBLING]],
+			),
+			'a day which the month has not' => array_merge($stored, ['created_at' => '2020-02-31T12:00:00+00:00']),
+			'dates in Zulu and without a colon' => array_merge(
+				$stored,
+				['created_at' => '2020-04-01T12:00:00Z', 'updated_at' => '2020-04-01T12:00:00+0000'],
+			),
+			'a date with fractions of a second' => array_merge(
+				$stored,
+				['created_at' => '2020-04-01T12:00:00.123+00:00'],
+			),
+			'a date as a timestamp' => array_merge($stored, ['created_at' => 1_585_742_400]),
+			'an empty date' => array_merge($stored, ['updated_at' => '']),
+			'without name' => self::without($stored, 'name'),
+			'without comment' => self::without($stored, 'comment'),
+			'without properties and controls' => self::without($stored, 'properties', 'controls'),
+			'without owner and dates' => self::without($stored, 'owner', 'created_at', 'updated_at'),
+			'no id' => self::without($stored, 'id'),
+			'an id which is not a UUID' => array_merge($stored, ['id' => 'x']),
+			'an id of a UUID without dashes' => array_merge($stored, ['id' => '176984ad7cf7465d9e5371668a74a688']),
+			'no device' => self::without($stored, 'device'),
+			'a device which is not a UUID' => array_merge($stored, ['device' => 'x']),
+			'a device which is null' => array_merge($stored, ['device' => null]),
+			'no category' => self::without($stored, 'category'),
+			'an unknown category' => array_merge($stored, ['category' => 'special']),
+			'a category which is a number' => array_merge($stored, ['category' => 1]),
+			'no identifier' => self::without($stored, 'identifier'),
+			'a blank identifier' => array_merge($stored, ['identifier' => " \t"]),
+			'an empty identifier' => array_merge($stored, ['identifier' => '']),
+			'an identifier which is a number' => array_merge($stored, ['identifier' => 42]),
+			'a name which is a number' => array_merge($stored, ['name' => 42]),
+			'a comment which is a list' => array_merge($stored, ['comment' => ['x']]),
+			'an owner which is not a UUID' => array_merge($stored, ['owner' => 'somebody']),
+			'a property which is not a UUID' => array_merge($stored, ['properties' => ['x']]),
+			'properties which are a text' => array_merge($stored, ['properties' => self::CHILD]),
+			'a control which is a number' => array_merge($stored, ['controls' => [1]]),
+			'a control which is null' => array_merge($stored, ['controls' => [null]]),
+			'a date in another format' => array_merge($stored, ['created_at' => '2020-04-01 12:00:00']),
+		];
 	}
 
 	/**

@@ -155,12 +155,12 @@ final class MappedDocumentMessageTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * Which of the Devices documents orisai maps and which Valinor does (Mapper::map() chooses by MappedObject). The
-	 * root of the channels stays orisai's, with everything in the tree that extends it, until a pull request of its own
-	 * moves them together; the roots of the connectors and the devices, the documents of the connectors, the bridges and
-	 * the addon beneath them, and the documents that stay inside Devices are Valinor's
+	 * Which of the Devices documents orisai maps and which Valinor does (Mapper::map() chooses by MappedObject): the
+	 * documents of the three roots and the ones that stay inside Devices are Valinor's, and the states, which are held
+	 * by the state classes of the bridges, are orisai's until those move
+	 * (DocumentRootsPinTest holds the documents of the connectors, the bridges and the addon beneath the roots)
 	 */
-	public function testTheChannelRootIsMappedByOrisaiAndTheOtherDocumentsByValinor(): void
+	public function testTheDocumentsAreMappedByValinorAndTheStatesByOrisai(): void
 	{
 		foreach (
 			[
@@ -196,6 +196,9 @@ final class MappedDocumentMessageTest extends Tests\Cases\Unit\BaseTestCase
 				DevicesDocuments\Connectors\Generic::class,
 				DevicesDocuments\Devices\Device::class,
 				DevicesDocuments\Devices\Generic::class,
+				DevicesDocuments\Channels\Channel::class,
+				DevicesDocuments\Channels\Generic::class,
+				Tests\Fixtures\Dummy\DummyChannelDocument::class,
 				Tests\Fixtures\Dummy\DummyConnectorDocument::class,
 				Tests\Fixtures\Dummy\DummyDeviceDocument::class,
 			] as $class
@@ -205,18 +208,6 @@ final class MappedDocumentMessageTest extends Tests\Cases\Unit\BaseTestCase
 
 		foreach (
 			[
-				DevicesDocuments\Channels\Channel::class,
-				DevicesDocuments\Channels\Generic::class,
-			] as $class
-		) {
-			self::assertContains(ObjectMapper\MappedObject::class, class_implements($class), $class);
-		}
-
-		// What the connectors, bridges and the addon extend of the channel root is reached through it; the documents of
-		// those packages cannot be named here, so the test fixtures stand for them (DocumentRootsPinTest has the real ones)
-		foreach (
-			[
-				Tests\Fixtures\Dummy\DummyChannelDocument::class,
 				DevicesStates\Property::class,
 				DevicesStates\ChannelProperty::class,
 				DevicesStates\ConnectorProperty::class,
