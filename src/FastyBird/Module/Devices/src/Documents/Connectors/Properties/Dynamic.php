@@ -2,14 +2,15 @@
 
 namespace FastyBird\Module\Devices\Documents\Connectors\Properties;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
-use FastyBird\Core\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use TypeError;
@@ -19,33 +20,45 @@ use function array_merge;
 /**
  * Connector dynamic property document
  */
-#[Documents\Mapping\Document(entity: Entities\Connectors\Properties\Dynamic::class)]
+#[CoreDocuments\Mapping\Document(entity: Entities\Connectors\Properties\Dynamic::class)]
 final class Dynamic extends Property
 {
 
 	/**
-	 * @param string|array<int, string>|array<int, int>|array<int, float>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
+	 * @param string|array<int, array<int, array<int, bool|float|int|string|null>|bool|float|int|string|null>|bool|float|int|string|null>|null $format
 	 */
 	public function __construct(
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $connector,
 		DevicesTypes\PropertyCategory $category,
+		#[CoreDocuments\Mapping\RefuseBlank]
 		string $identifier,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		string|null $name,
+		#[Configurator\MapFromKey('data_type')]
 		ValuesTypes\DataType $dataType,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		string|null $unit = null,
+		#[DevicesDocuments\Mapping\MapFormat]
 		string|array|null $format = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		float|int|string|null $invalid = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		int|null $scale = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		int|float|null $step = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		bool|float|int|string|null $default = null,
+		#[DevicesDocuments\Mapping\MapValueTransformer]
+		#[Configurator\MapFromKey('value_transformer')]
 		Uuid\UuidInterface|string|null $valueTransformer = null,
-		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $settable = false,
-		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $queryable = false,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
+		#[Configurator\MapFromKey('created_at')]
 		DateTimeInterface|null $createdAt = null,
+		#[Configurator\MapFromKey('updated_at')]
 		DateTimeInterface|null $updatedAt = null,
 	)
 	{

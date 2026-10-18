@@ -3,11 +3,9 @@
 namespace FastyBird\Module\Devices\Documents\States\Devices\Properties\Actions;
 
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions;
 use FastyBird\Module\Devices\Types;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -20,25 +18,14 @@ use function sprintf;
 #[CoreDocuments\Mapping\RoutingMap([
 	Types\RoutingKey::DEVICE_PROPERTY_ACTION->value,
 ])]
-final readonly class Action implements CoreDocuments\Document, ObjectMapper\MappedObject
+final readonly class Action implements CoreDocuments\Document
 {
 
 	public function __construct(
-		#[ObjectMapper\Rules\BackedEnumValue(class: Types\PropertyAction::class)]
 		private Types\PropertyAction $action,
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $device,
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $property,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\MappedObjectValue(class: DevicesDocuments\States\ActionValues::class),
-			new ObjectMapper\Rules\NullValue(),
-		])]
 		private DevicesDocuments\States\ActionValues|null $set = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\MappedObjectValue(class: DevicesDocuments\States\ActionValues::class),
-			new ObjectMapper\Rules\NullValue(),
-		])]
 		private DevicesDocuments\States\ActionValues|null $write = null,
 	)
 	{

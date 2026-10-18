@@ -28,7 +28,12 @@ use function array_map;
 	Types\RoutingKey::DEVICE_DOCUMENT_UPDATED->value,
 	Types\RoutingKey::DEVICE_DOCUMENT_DELETED->value,
 ])]
-abstract class Device implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
+abstract class Device implements
+	DevicesDocuments\Document,
+	ObjectMapper\MappedObject,
+	CoreDocuments\Owner,
+	CoreDocuments\CreatedAt,
+	CoreDocuments\UpdatedAt
 {
 
 	use CoreDocuments\HasOwner;

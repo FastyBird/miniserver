@@ -28,7 +28,12 @@ use function array_map;
 	Types\RoutingKey::CHANNEL_DOCUMENT_UPDATED->value,
 	Types\RoutingKey::CHANNEL_DOCUMENT_DELETED->value,
 ])]
-abstract class Channel implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
+abstract class Channel implements
+	DevicesDocuments\Document,
+	ObjectMapper\MappedObject,
+	CoreDocuments\Owner,
+	CoreDocuments\CreatedAt,
+	CoreDocuments\UpdatedAt
 {
 
 	use CoreDocuments\HasOwner;

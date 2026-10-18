@@ -2,9 +2,9 @@
 
 namespace FastyBird\Module\Devices\Documents\States\Channels\Properties;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Override;
@@ -26,13 +26,14 @@ final class Property extends Devices\Documents\States\Property
 
 	public function __construct(
 		Uuid\UuidInterface $id,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $channel,
 		DevicesDocuments\States\StateValues $read,
 		DevicesDocuments\States\StateValues $get,
 		bool|DateTimeInterface $pending = false,
 		bool $valid = false,
+		#[Configurator\MapFromKey('created_at')]
 		DateTimeInterface|null $createdAt = null,
+		#[Configurator\MapFromKey('updated_at')]
 		DateTimeInterface|null $updatedAt = null,
 	)
 	{
