@@ -89,6 +89,14 @@ cmd:
         messages:
             error: "Something went wrong, an unhandled error occur. Error was logged."
 
+    history:
+        title: "Devices module - property value history"
+        subtitle: "This action will roll the property value history up and delete what has expired"
+
+        messages:
+            done: "Properties: %d. Rollups written: %d of 5 minutes, %d of 1 hour. Expired: %d samples, %d rollups of 5 minutes, %d of 1 hour."
+            failed: "The history of %d properties could not be compacted. Errors were logged."
+
     connector:
         title: "Devices module - connector"
         subtitle: "This action will run module connector service"

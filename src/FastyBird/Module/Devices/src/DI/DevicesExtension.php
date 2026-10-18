@@ -72,7 +72,7 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 			'apiPrefix' => Schema\Expect::bool(true),
 			'exchange' => Schema\Expect::bool(true),
 			'history' => Schema\Expect::structure([
-				'enabled' => Schema\Expect::bool(false),
+				'enabled' => Schema\Expect::bool(true),
 				'flushInterval' => Schema\Expect::int(10)->min(1),
 				'minInterval' => Schema\Expect::int(10)->min(0),
 				'retention' => Schema\Expect::structure([
@@ -523,8 +523,35 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 		$builder->addDefinition($this->prefix('subscribers.connector'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Subscribers\Connector::class);
 
-		// With the history switched off nothing of it is registered: no subscriber listens, no timer starts
-		// and no buffer exists, so the module's runtime is what it was before the history
+		// What reads and expires the history is there whether it is recorded or not: the data outlives the switch,
+		// and `fb:devices-module:history:compact` expires it. Nothing here costs anything until it is used
+		$builder->addDefinition(
+			$this->prefix('models.history.compactor'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(Models\History\Compactor::class)
+			->setArguments([
+				// A bucket is complete once no process can still hold an unflushed sample for it
+				'settle' => $configuration->history->flushInterval + 60,
+				'samplesDays' => $configuration->history->retention->samples,
+				'fiveMinutesDays' => $configuration->history->retention->fiveMinutes,
+				'hoursDays' => $configuration->history->retention->hours,
+				'logger' => $logger,
+			]);
+
+		$builder->addDefinition(
+			$this->prefix('models.history.repository'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(Models\History\Repository::class)
+			->setArguments([
+				'samplesDays' => $configuration->history->retention->samples,
+				'fiveMinutesDays' => $configuration->history->retention->fiveMinutes,
+				'hoursDays' => $configuration->history->retention->hours,
+			]);
+
+		// With the history switched off nothing that listens or runs a timer is registered: no subscriber, no
+		// timer and no buffer, so the module's runtime is what it was before the history
 		if ($configuration->history->enabled) {
 			$builder->addDefinition(
 				$this->prefix('models.history.recorder'),
@@ -539,16 +566,14 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 			$builder->addDefinition($this->prefix('subscribers.history'), new NetteDI\Definitions\ServiceDefinition())
 				->setType(Subscribers\StateHistory::class)
 				->setArguments(['flushInterval' => $configuration->history->flushInterval]);
-		}
 
-		// Enables the SocketsBridge once the WebSocket server is created: first of the three
-		// modules' bridges, in production's order (census T3, #658)
-		$builder->addDefinition(
-			$this->prefix('subscribers.enableSocketsBridge'),
-			new NetteDI\Definitions\ServiceDefinition(),
-		)
-			->setType(Subscribers\EnableSocketsBridge::class)
-			->addTag(WebSocketsDI\WebSocketsExtension::SERVER_CREATED_LISTENER_TAG, -10);
+			// The exchange process compacts, every 5 minutes
+			$builder->addDefinition(
+				$this->prefix('subscribers.historyCompaction'),
+				new NetteDI\Definitions\ServiceDefinition(),
+			)
+				->setType(Subscribers\HistoryCompaction::class);
+		}
 
 		/**
 		 * API CONTROLLERS
@@ -924,6 +949,9 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 
 		$builder->addDefinition($this->prefix('commands.diagnostics'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Commands\Diagnostics::class);
+
+		$builder->addDefinition($this->prefix('commands.compactHistory'), new NetteDI\Definitions\ServiceDefinition())
+			->setType(Commands\CompactHistory::class);
 
 		/**
 		 * COMMUNICATION EXCHANGE

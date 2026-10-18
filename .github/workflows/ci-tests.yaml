@@ -525,6 +525,31 @@ jobs:
       - name: "Run bin/fb-console.php list inside the container"
         run: "docker exec miniserver php bin/fb-console.php list"
 
+      # The property value history is on by default, so the production container wires the recorder, its flush
+      # timer and the compactor, and the exchange program runs the compactor every 5 minutes. A sample is seeded
+      # one hour back, the console command is run in the container, and the 5-minute rollups it must have built
+      # are counted: that goes through the migrated tables, the production wiring and the command in one run.
+      - name: "The property value history compacts inside the container"
+        run: |
+          docker exec -i miniserver php <<'PHP'
+          <?php
+          $pdo = new PDO('mysql:host=127.0.0.1;port=3306;dbname=miniserver;charset=utf8mb4', 'miniserver', 'miniserver');
+          $pdo->exec('DELETE FROM fb_devices_module_history_rollups');
+          $pdo->exec('DELETE FROM fb_devices_module_history_samples');
+          $pdo->exec("INSERT INTO fb_devices_module_history_samples (property_id, sampled_at, value) VALUES (UNHEX(REPLACE(UUID(), '-', '')), UNIX_TIMESTAMP() - 3600, 21.5)");
+          PHP
+          docker exec miniserver php bin/fb-console.php fb:devices-module:history:compact --no-interaction
+          rollups=$(docker exec -i miniserver php <<'PHP'
+          <?php
+          $pdo = new PDO('mysql:host=127.0.0.1;port=3306;dbname=miniserver;charset=utf8mb4', 'miniserver', 'miniserver');
+          echo $pdo->query('SELECT COUNT(*) FROM fb_devices_module_history_rollups WHERE resolution = 300')->fetchColumn();
+          PHP
+          )
+          echo "5-minute rollups: $rollups"
+          [ "$rollups" -ge 5 ] || { echo "The compactor built no 5-minute rollups"; exit 1; }
+          docker exec miniserver php bin/fb-console.php list | grep -q "fb:devices-module:history:compact" \
+            || { echo "fb:devices-module:history:compact is not registered"; exit 1; }
+
       - name: "All five supervisor programs are RUNNING"
         run: |
           status=$(docker exec miniserver supervisorctl -c /etc/supervisor/supervisord.conf status)

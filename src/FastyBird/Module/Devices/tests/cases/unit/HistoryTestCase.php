@@ -179,4 +179,168 @@ abstract class HistoryTestCase extends DbTestCase
 		return (int) $count;
 	}
 
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	protected function compactor(
+		int $settle = 90,
+		int $samplesDays = 7,
+		int $fiveMinutesDays = 30,
+		int $hoursDays = 365,
+	): Models\History\Compactor
+	{
+		$this->logger = new Tests\Support\RecordingLogger();
+
+		return new Models\History\Compactor(
+			$this->getDb(),
+			$this->getContainer()->getByType(Helpers\Database::class),
+			$this->getContainer()->getByType(ClockInterface::class),
+			$settle,
+			$samplesDays,
+			$fiveMinutesDays,
+			$hoursDays,
+			$this->logger,
+		);
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	protected function repository(
+		int $samplesDays = 7,
+		int $fiveMinutesDays = 30,
+		int $hoursDays = 365,
+	): Models\History\Repository
+	{
+		return new Models\History\Repository(
+			$this->getDb(),
+			$this->getContainer()->getByType(Helpers\Database::class),
+			$this->getContainer()->getByType(ClockInterface::class),
+			$samplesDays,
+			$fiveMinutesDays,
+			$hoursDays,
+		);
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DBAL\Exception
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	protected function insertSample(int $time, float|null $value, string $id = self::PROPERTY): void
+	{
+		$this->getDb()->executeStatement(
+			sprintf('INSERT INTO %s (property_id, sampled_at, value) VALUES (?, ?, ?)', Entities\History\Sample::TABLE),
+			[Uuid\Uuid::fromString($id)->getBytes(), $time, $value],
+			[DBAL\ParameterType::BINARY, DBAL\ParameterType::INTEGER, $value === null ? DBAL\ParameterType::NULL : DBAL\ParameterType::STRING],
+		);
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DBAL\Exception
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	protected function insertRollup(
+		DevicesTypes\HistoryResolution $resolution,
+		int $time,
+		float|null $min,
+		float|null $max,
+		float|null $avg,
+		float|null $last,
+		int $samples = 1,
+		string $id = self::PROPERTY,
+	): void
+	{
+		$this->getDb()->executeStatement(
+			sprintf(
+				'INSERT INTO %s (property_id, resolution, bucket_start, value_min, value_max, value_avg, value_last, samples)'
+				. ' VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+				Entities\History\Rollup::TABLE,
+			),
+			[Uuid\Uuid::fromString($id)->getBytes(), $resolution->value, $time, $min, $max, $avg, $last, $samples],
+		);
+	}
+
+	/**
+	 * @return list<array{int, float|null, float|null, float|null, float|null, int}> [time, min, max, avg, last, samples]
+	 *
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DBAL\Exception
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 * @throws Uuid\Exception\InvalidArgumentException
+	 */
+	protected function rollups(DevicesTypes\HistoryResolution $resolution, string $id = self::PROPERTY): array
+	{
+		$rows = [];
+
+		foreach (
+			$this->getDb()->fetchAllAssociative(
+				sprintf(
+					'SELECT bucket_start, value_min, value_max, value_avg, value_last, samples FROM %s'
+					. ' WHERE property_id = ? AND resolution = ? ORDER BY bucket_start',
+					Entities\History\Rollup::TABLE,
+				),
+				[Uuid\Uuid::fromString($id)->getBytes(), $resolution->value],
+				[DBAL\ParameterType::BINARY, DBAL\ParameterType::INTEGER],
+			) as $row
+		) {
+			assert(is_numeric($row['bucket_start']) && is_numeric($row['samples']));
+
+			$rows[] = [
+				(int) $row['bucket_start'],
+				self::nullableFloat($row['value_min']),
+				self::nullableFloat($row['value_max']),
+				self::nullableFloat($row['value_avg']),
+				self::nullableFloat($row['value_last']),
+				(int) $row['samples'],
+			];
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * @throws CoreExceptions\InvalidArgument
+	 * @throws DevicesExceptions\InvalidArgument
+	 * @throws DBAL\Exception
+	 * @throws Nette\DI\MissingServiceException
+	 * @throws RuntimeException
+	 * @throws Error
+	 */
+	protected function countRollups(): int
+	{
+		$count = $this->getDb()->fetchOne(sprintf('SELECT COUNT(*) FROM %s', Entities\History\Rollup::TABLE));
+
+		assert(is_numeric($count));
+
+		return (int) $count;
+	}
+
+	private static function nullableFloat(mixed $value): float|null
+	{
+		assert($value === null || is_numeric($value));
+
+		return $value === null ? null : (float) $value;
+	}
+
 }
