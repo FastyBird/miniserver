@@ -575,6 +575,15 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 				->setType(Subscribers\HistoryCompaction::class);
 		}
 
+		// Enables the SocketsBridge once the WebSocket server is created: first of the three
+		// modules' bridges, in production's order (census T3, #658)
+		$builder->addDefinition(
+			$this->prefix('subscribers.enableSocketsBridge'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(Subscribers\EnableSocketsBridge::class)
+			->addTag(WebSocketsDI\WebSocketsExtension::SERVER_CREATED_LISTENER_TAG, -10);
+
 		/**
 		 * API CONTROLLERS
 		 */
