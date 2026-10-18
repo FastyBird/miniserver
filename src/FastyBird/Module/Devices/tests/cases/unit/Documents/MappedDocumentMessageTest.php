@@ -156,10 +156,11 @@ final class MappedDocumentMessageTest extends Tests\Cases\Unit\BaseTestCase
 
 	/**
 	 * Which of the Devices documents orisai maps and which Valinor does (Mapper::map() chooses by MappedObject). The
-	 * roots of the connectors, devices and channels stay orisai's until a pull request of their own moves them with
-	 * everything in the tree that extends them, the documents that stay inside Devices are Valinor's
+	 * root of the channels stays orisai's, with everything in the tree that extends it, until a pull request of its own
+	 * moves them together; the roots of the connectors and the devices, the documents of the connectors, the bridges and
+	 * the addon beneath them, and the documents that stay inside Devices are Valinor's
 	 */
-	public function testTheDocumentsThatStayInsideDevicesAreMappedByValinor(): void
+	public function testTheChannelRootIsMappedByOrisaiAndTheOtherDocumentsByValinor(): void
 	{
 		foreach (
 			[
@@ -191,6 +192,12 @@ final class MappedDocumentMessageTest extends Tests\Cases\Unit\BaseTestCase
 				DevicesDocuments\States\Connectors\Properties\Actions\Action::class,
 				DevicesDocuments\States\Devices\Properties\Actions\Action::class,
 				DevicesDocuments\Document::class,
+				DevicesDocuments\Connectors\Connector::class,
+				DevicesDocuments\Connectors\Generic::class,
+				DevicesDocuments\Devices\Device::class,
+				DevicesDocuments\Devices\Generic::class,
+				Tests\Fixtures\Dummy\DummyConnectorDocument::class,
+				Tests\Fixtures\Dummy\DummyDeviceDocument::class,
 			] as $class
 		) {
 			self::assertNotContains(ObjectMapper\MappedObject::class, class_implements($class), $class);
@@ -200,22 +207,16 @@ final class MappedDocumentMessageTest extends Tests\Cases\Unit\BaseTestCase
 			[
 				DevicesDocuments\Channels\Channel::class,
 				DevicesDocuments\Channels\Generic::class,
-				DevicesDocuments\Connectors\Connector::class,
-				DevicesDocuments\Connectors\Generic::class,
-				DevicesDocuments\Devices\Device::class,
-				DevicesDocuments\Devices\Generic::class,
 			] as $class
 		) {
 			self::assertContains(ObjectMapper\MappedObject::class, class_implements($class), $class);
 		}
 
-		// What the connectors, bridges and the addon extend is reached through these roots; the documents of those
-		// packages cannot be named here, so the test fixtures that extend the roots stand for them
+		// What the connectors, bridges and the addon extend of the channel root is reached through it; the documents of
+		// those packages cannot be named here, so the test fixtures stand for them (DocumentRootsPinTest has the real ones)
 		foreach (
 			[
 				Tests\Fixtures\Dummy\DummyChannelDocument::class,
-				Tests\Fixtures\Dummy\DummyConnectorDocument::class,
-				Tests\Fixtures\Dummy\DummyDeviceDocument::class,
 				DevicesStates\Property::class,
 				DevicesStates\ChannelProperty::class,
 				DevicesStates\ConnectorProperty::class,

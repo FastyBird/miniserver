@@ -5,12 +5,10 @@ namespace FastyBird\Module\Devices\Documents\Devices;
 use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Types;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_map;
@@ -30,7 +28,6 @@ use function array_map;
 ])]
 abstract class Device implements
 	DevicesDocuments\Document,
-	ObjectMapper\MappedObject,
 	CoreDocuments\Owner,
 	CoreDocuments\CreatedAt,
 	CoreDocuments\UpdatedAt
@@ -48,67 +45,24 @@ abstract class Device implements
 	 * @param array<Uuid\UuidInterface> $channels
 	 */
 	public function __construct(
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BackedEnumValue(class: Types\DeviceCategory::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: Types\DeviceCategory::class),
-		])]
 		private readonly Types\DeviceCategory $category,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[CoreDocuments\Mapping\RefuseBlank]
 		private readonly string $identifier,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $connector,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly string|null $name = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly string|null $comment = null,
-		#[ObjectMapper\Rules\ArrayOf(
-			new Rules\UuidValue(),
-		)]
 		private readonly array $parents = [],
-		#[ObjectMapper\Rules\ArrayOf(
-			new Rules\UuidValue(),
-		)]
 		private readonly array $children = [],
-		#[ObjectMapper\Rules\ArrayOf(
-			new Rules\UuidValue(),
-		)]
 		private readonly array $properties = [],
-		#[ObjectMapper\Rules\ArrayOf(
-			new Rules\UuidValue(),
-		)]
 		private readonly array $controls = [],
-		#[ObjectMapper\Rules\ArrayOf(
-			new Rules\UuidValue(),
-		)]
 		private readonly array $channels = [],
-		#[ObjectMapper\Rules\AnyOf([
-			new Rules\UuidValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		#[CoreDocuments\Mapping\MapBlankToNull]
 		protected readonly Uuid\UuidInterface|null $owner = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('created_at')]
 		#[Configurator\MapFromKey('created_at')]
 		protected readonly DateTimeInterface|null $createdAt = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('updated_at')]
 		#[Configurator\MapFromKey('updated_at')]
 		protected readonly DateTimeInterface|null $updatedAt = null,
 	)
