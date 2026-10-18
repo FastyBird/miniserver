@@ -15,6 +15,8 @@ use Ramsey\Uuid;
 use Throwable;
 use function array_map;
 use function sprintf;
+use function str_starts_with;
+use function substr_count;
 use const INF;
 use const NAN;
 
@@ -377,7 +379,8 @@ final class RecorderTest extends Tests\Cases\Unit\HistoryTestCase
 
 	/**
 	 * The window of a waiting change opens at the last stored sample and does not slide with each change, so a
-	 * value that changes every few seconds still gets a sample every minInterval
+	 * value that changes every few seconds is written once a window. That bounds the writes, not the spacing
+	 * of the samples: the waiting change keeps its own time, and the samples here are 8 and 4 seconds apart
 	 *
 	 * @throws Throwable
 	 */
@@ -589,11 +592,11 @@ final class RecorderTest extends Tests\Cases\Unit\HistoryTestCase
 	}
 
 	/**
-	 * More rows than one statement takes: the batch is split, and every row arrives
+	 * More rows than one statement takes: the batch is split into statements of 500 rows, and every row arrives
 	 *
 	 * @throws Throwable
 	 */
-	public function testRowsBeyondOneStatementAreAllWritten(): void
+	public function testRowsBeyondOneStatementAreSplitBy500AndAllWritten(): void
 	{
 		$recorder = $this->recorder(0, true);
 		$property = $this->property();
@@ -606,6 +609,90 @@ final class RecorderTest extends Tests\Cases\Unit\HistoryTestCase
 
 		self::assertSame(0, $recorder->getBufferedCount());
 		self::assertSame(1_201, $this->countRows());
+
+		$connection = $this->getDb();
+		self::assertInstanceOf(Tests\Support\ConnectionWrapper::class, $connection);
+
+		$inserts = [];
+
+		foreach ($connection->statements as $statement) {
+			if (str_starts_with($statement, 'INSERT INTO ' . Entities\History\Sample::TABLE)) {
+				$inserts[] = substr_count($statement, '(?, ?, ?)');
+			}
+		}
+
+		self::assertSame([500, 500, 201], $inserts);
+	}
+
+	/**
+	 * A repeat of the waiting value is the same change, so the time it first had stays
+	 *
+	 * @throws Throwable
+	 */
+	public function testRepeatOfTheWaitingValueKeepsTheEarlierTime(): void
+	{
+		$recorder = $this->recorder(10, true);
+		$property = $this->property();
+
+		$recorder->record($property, $this->state(1.0, self::T0));
+		$recorder->record($property, $this->state(2.0, self::T0 + 3));
+		$recorder->record($property, $this->state(2.0, self::T0 + 6));
+
+		self::assertSame(1, $recorder->getWaitingCount());
+
+		$recorder->drain();
+
+		self::assertSame([[self::T0, 1.0], [self::T0 + 3, 2.0]], $this->rows());
+	}
+
+	/**
+	 * A repeat of the waiting value that arrives after its window is over finds it stored, and is a repeat of
+	 * the stored value
+	 *
+	 * @throws Throwable
+	 */
+	public function testRepeatOfTheWaitingValueAfterItsWindowIsNotStoredAgain(): void
+	{
+		$recorder = $this->recorder(10, true);
+		$property = $this->property();
+
+		$recorder->record($property, $this->state(1.0, self::T0));
+		$recorder->record($property, $this->state(2.0, self::T0 + 3));
+		$recorder->record($property, $this->state(2.0, self::T0 + 12));
+
+		self::assertSame(0, $recorder->getWaitingCount());
+
+		$recorder->drain();
+
+		self::assertSame([[self::T0, 1.0], [self::T0 + 3, 2.0]], $this->rows());
+	}
+
+	/**
+	 * Database::transaction() nested in a transaction of the caller would roll the caller's back when the
+	 * INSERT failed, so the recorder writes nothing while one is active and writes at the next flush
+	 *
+	 * @throws Throwable
+	 */
+	public function testNothingIsWrittenInsideATransactionOfTheCaller(): void
+	{
+		$recorder = $this->recorder(10, false);
+		$connection = $this->getDb();
+
+		$connection->beginTransaction();
+
+		$recorder->record($this->property(), $this->state(1.0, self::T0));
+
+		self::assertSame(1, $recorder->getBufferedCount());
+		self::assertSame([], $this->rows());
+		self::assertSame([], $this->logger->at('error'));
+		self::assertFalse($connection->isRollbackOnly());
+
+		$connection->commit();
+
+		$recorder->flush();
+
+		self::assertSame(0, $recorder->getBufferedCount());
+		self::assertSame([[self::T0, 1.0]], $this->rows());
 	}
 
 	/**
