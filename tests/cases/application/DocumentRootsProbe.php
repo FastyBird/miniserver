@@ -9,6 +9,8 @@ use DateTime;
 use DateTimeImmutable;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Documents as CoreDocuments;
+use FastyBird\Core\Documents\Exceptions as DocumentsExceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Exceptions\InvalidArgument;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Types\ChannelCategory;
@@ -285,6 +287,9 @@ final class DocumentRootsProbe
 	 *
 	 * @return array<string, array<string, array<string, string>>>
 	 *
+	 * @throws CoreExceptions\InvalidState
+	 * @throws CoreExceptions\Logic
+	 * @throws DocumentsExceptions\MalformedInput
 	 * @throws JsonException
 	 * @throws UuidExceptions\InvalidArgumentException
 	 */
