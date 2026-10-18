@@ -142,6 +142,16 @@ final class AggregatorTest extends TestCase
 	/**
 	 * @throws DivisionByZeroError
 	 */
+	public function testRowsFarBeforeTheStartAllBelongToTheFirstBucket(): void
+	{
+		$rows = [new Bucket(100, 1.0, 1.0, 1.0, 1.0, 1), new Bucket(400, 3.0, 3.0, 3.0, 3.0, 1)];
+
+		self::assertEquals([new Bucket(1_000, 1.0, 3.0, 2.0, 3.0, 2)], Aggregator::combine(1_000, 600, $rows));
+	}
+
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testBucketsAreCountedFromTheStart(): void
 	{
 		$rows = [new Bucket(1_000, 1.0, 1.0, 1.0, 1.0, 1), new Bucket(1_700, 2.0, 2.0, 2.0, 2.0, 1)];

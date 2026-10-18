@@ -275,7 +275,7 @@ final class CompactorTest extends Tests\Cases\Unit\HistoryTestCase
 	{
 		$this->insertSample(self::NOW - 100 * self::DAY, 6.0);
 
-		$this->compactor()->compact();
+		$compaction = $this->compactor()->compact();
 
 		$rollups = $this->rollups(Types\HistoryResolution::FIVE_MINUTES);
 
@@ -284,6 +284,8 @@ final class CompactorTest extends Tests\Cases\Unit\HistoryTestCase
 		self::assertSame(self::NOW - 600, $rollups[count($rollups) - 1][0]);
 		// 30 days of 5-minute buckets, less the newest, which is not complete
 		self::assertCount(30 * 288 - 1, $rollups);
+		// And no bucket was written only to be expired in the same run
+		self::assertSame(30 * 288 - 1, $compaction->fiveMinutes);
 	}
 
 	/**
