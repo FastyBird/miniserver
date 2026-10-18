@@ -32,6 +32,7 @@ use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Types\ConnectorCategory;
 use FastyBird\Module\Devices\Types\DeviceCategory;
 use Nette\Utils;
+use Orisai\ObjectMapper\MappedObject;
 use Ramsey\Uuid;
 
 const ID = '176984ad-7cf7-465d-9e53-71668a74a688';
@@ -301,6 +302,29 @@ function deviceCases(): array
 }
 
 $withMessages = in_array('--messages', $argv, true);
+
+// With --census: no container, only which side of Mapper::map()'s dispatch every document of the three roots is on
+if (in_array('--census', $argv, true)) {
+	$census = [];
+
+	foreach (findDocuments($loader, dirname(__DIR__, 3)) as $class) {
+		foreach (
+			[
+				'connector' => DevicesDocuments\Connectors\Connector::class,
+				'device' => DevicesDocuments\Devices\Device::class,
+				'channel' => DevicesDocuments\Channels\Channel::class,
+			] as $family => $root
+		) {
+			if ($class === $root || is_subclass_of($class, $root)) {
+				$census[$family][$class] = is_subclass_of($class, MappedObject::class);
+			}
+		}
+	}
+
+	echo json_encode($census, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES), PHP_EOL;
+
+	exit(0);
+}
 
 try {
 	$configurator = Boot\Bootstrap::boot();

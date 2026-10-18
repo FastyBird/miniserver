@@ -12,9 +12,12 @@ use function file_get_contents;
 use function is_array;
 use function is_string;
 use function json_decode;
+use function preg_replace;
 use function shell_exec;
 use function sort;
 use function sprintf;
+use function str_contains;
+use function str_starts_with;
 use const JSON_THROW_ON_ERROR;
 use const PHP_BINARY;
 
@@ -29,6 +32,64 @@ use const PHP_BINARY;
  */
 final class DocumentRootsPinTest extends TestCase
 {
+
+	private const string CONNECTOR_GENERIC = 'FastyBird\\Module\\Devices\\Documents\\Connectors\\Generic';
+
+	private const string DEVICE_GENERIC = 'FastyBird\\Module\\Devices\\Documents\\Devices\\Generic';
+
+	/**
+	 * What the generic document of each root says when it refuses an input (Valinor writes one line per refused value,
+	 * the path of the value and what was wrong with it): the path and a part of the message
+	 */
+	private const array MESSAGES = [
+		self::CONNECTOR_GENERIC => [
+			'a date with fractions of a second' => ['created_at', 'does not match any of the following formats'],
+			'a date without a time' => ['updated_at', 'does not match any of the following formats'],
+			'a date as a timestamp' => ['created_at', 'does not match any of the following formats'],
+			'an empty date' => ['created_at', 'does not match'],
+			'enabled as an int' => ['enabled', 'is not a valid boolean'],
+			'enabled as a text' => ['enabled', 'is not a valid boolean'],
+			'enabled as null' => ['enabled', 'is not a valid boolean'],
+			'no id' => ['id', 'Cannot be empty and must be filled'],
+			'an id which is not a UUID' => ['id', 'is not a valid UUID'],
+			'an id of a UUID without dashes' => ['id', 'is not a valid UUID'],
+			'no category' => ['category', 'Cannot be empty and must be filled'],
+			'an unknown category' => ['category', 'does not match'],
+			'a category which is a number' => ['category', 'does not match'],
+			'no identifier' => ['identifier', 'is not a valid string'],
+			'a blank identifier' => ['identifier', 'must not be blank'],
+			'an empty identifier' => ['identifier', 'must not be blank'],
+			'an identifier which is a number' => ['identifier', 'is not a valid string'],
+			'a name which is a number' => ['name', 'does not match'],
+			'a comment which is a list' => ['comment', 'does not match'],
+			'an owner which is not a UUID' => ['owner', 'is not a valid UUID'],
+			'a property which is not a UUID' => ['properties.0', 'is not a valid UUID'],
+			'properties which are a text' => ['properties', 'does not match'],
+			'a control which is a number' => ['controls.0', 'is not a valid string'],
+			'a device which is null' => ['devices.0', 'is not a valid string'],
+		],
+		self::DEVICE_GENERIC => [
+			'a date with fractions of a second' => ['created_at', 'does not match any of the following formats'],
+			'a date as a timestamp' => ['created_at', 'does not match any of the following formats'],
+			'an empty date' => ['updated_at', 'does not match'],
+			'no id' => ['id', 'Cannot be empty and must be filled'],
+			'an id which is not a UUID' => ['id', 'is not a valid UUID'],
+			'no connector' => ['connector', 'Cannot be empty and must be filled'],
+			'a connector which is not a UUID' => ['connector', 'is not a valid UUID'],
+			'a connector which is null' => ['connector', 'is not a valid string'],
+			'no category' => ['category', 'Cannot be empty and must be filled'],
+			'an unknown category' => ['category', 'does not match'],
+			'no identifier' => ['identifier', 'is not a valid string'],
+			'a blank identifier' => ['identifier', 'must not be blank'],
+			'an identifier which is a number' => ['identifier', 'is not a valid string'],
+			'a name which is a number' => ['name', 'does not match'],
+			'an owner which is not a UUID' => ['owner', 'is not a valid UUID'],
+			'a parent which is not a UUID' => ['parents.0', 'is not a valid UUID'],
+			'children which are a text' => ['children', 'does not match'],
+			'a channel which is a number' => ['channels.0', 'is not a valid string'],
+			'a date in another format' => ['created_at', 'does not match any of the following formats'],
+		],
+	];
 
 	/**
 	 * @throws JsonException
@@ -69,6 +130,66 @@ final class DocumentRootsPinTest extends TestCase
 	}
 
 	/**
+	 * @throws JsonException
+	 * @throws RuntimeException
+	 */
+	public function testARefusalNamesTheValueAndWhatWasWrongWithIt(): void
+	{
+		$actual = self::decode(self::execute(true));
+		$wrong = [];
+
+		foreach (self::MESSAGES as $class => $messages) {
+			$refused = [];
+
+			foreach ($actual[$class] as $name => $result) {
+				if (isset($result['refused'])) {
+					$refused[] = $name;
+				}
+			}
+
+			self::assertSame(array_keys($messages), $refused, $class);
+
+			foreach ($messages as $name => [$path, $kind]) {
+				$first = (string) preg_replace(
+					'/^Could not map data to document: /',
+					'',
+					(string) $actual[$class][$name]['message'],
+				);
+
+				if (!str_starts_with($first, $path . ': ') || !str_contains($first, $kind)) {
+					$wrong[] = sprintf('%s: %s: "%s" is not "%s: ... %s"', $class, $name, $first, $path, $kind);
+				}
+			}
+		}
+
+		self::assertSame([], $wrong);
+	}
+
+	/**
+	 * Which side of Mapper::map() each tree is on: the Connector and Device roots, and every document beneath them in
+	 * every package, are Valinor's, the Channel root and every document beneath it stay orisai's until its own pull
+	 * request. A tree that is split between the two would map its documents with rules that are not theirs
+	 *
+	 * @throws JsonException
+	 * @throws RuntimeException
+	 */
+	public function testEveryTreeIsOnTheSideOfItsRoot(): void
+	{
+		$census = json_decode(self::execute(false, '--census'), true, 512, JSON_THROW_ON_ERROR);
+
+		self::assertIsArray($census);
+
+		foreach (['connector' => [11, false], 'device' => [20, false], 'channel' => [54, true]] as $family => [$count, $orisai]) {
+			self::assertIsArray($census[$family] ?? null, $family);
+			self::assertGreaterThanOrEqual($count, count($census[$family]), $family);
+
+			foreach ($census[$family] as $class => $mapped) {
+				self::assertSame($orisai, $mapped, sprintf('%s (%s)', $class, $family));
+			}
+		}
+	}
+
+	/**
 	 * @return array<string, array<string, array<string, mixed>>>
 	 *
 	 * @throws JsonException
@@ -89,15 +210,16 @@ final class DocumentRootsPinTest extends TestCase
 	/**
 	 * @throws RuntimeException
 	 */
-	private static function execute(bool $withMessages): string
+	private static function execute(bool $withMessages, string $option = ''): string
 	{
 		$command = sprintf(
-			'FB_APP_DIR=%s FB_APP_PARAMETER__SECURITY_SIGNATURE=%s %s %s%s 2>&1',
+			'FB_APP_DIR=%s FB_APP_PARAMETER__SECURITY_SIGNATURE=%s %s %s%s%s 2>&1',
 			escapeshellarg(__DIR__ . '/../../..'),
 			escapeshellarg('document-roots-test-not-a-real-signature'),
 			escapeshellarg(PHP_BINARY),
 			escapeshellarg(__DIR__ . '/bootstrap-document-roots.php'),
 			$withMessages ? ' --messages' : '',
+			$option !== '' ? ' ' . $option : '',
 		);
 
 		$output = shell_exec($command);
