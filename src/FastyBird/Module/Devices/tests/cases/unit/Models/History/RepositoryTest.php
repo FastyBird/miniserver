@@ -50,6 +50,11 @@ final class RepositoryTest extends Tests\Cases\Unit\HistoryTestCase
 			'a week in 5-minute points' => [7 * self::DAY, 0, 2_016, Types\HistoryTier::FIVE_MINUTES],
 			'a week in a few points' => [7 * self::DAY, 0, 100, Types\HistoryTier::HOURS],
 			'one point' => [3_600, 0, 1, Types\HistoryTier::HOURS],
+			// A tier holds the start of a period that is exactly as old as its retention, and not one a second older
+			'exactly the sample retention back' => [7 * self::DAY, 0, 604_800, Types\HistoryTier::SAMPLES],
+			'a second beyond the sample retention' => [7 * self::DAY + 1, 0, 604_801, Types\HistoryTier::FIVE_MINUTES],
+			'exactly the 5-minute retention back' => [30 * self::DAY, 0, 8_640, Types\HistoryTier::FIVE_MINUTES],
+			'a second beyond the 5-minute retention' => [30 * self::DAY + 1, 0, 8_641, Types\HistoryTier::HOURS],
 		];
 	}
 
@@ -288,6 +293,62 @@ final class RepositoryTest extends Tests\Cases\Unit\HistoryTestCase
 		self::assertSame(array_column($rollups, 2), $series->max);
 		self::assertSame(array_column($rollups, 3), $series->avg);
 		self::assertSame(array_column($rollups, 4), $series->last);
+	}
+
+	/**
+	 * A rollup that begins before the period and ends inside it is the first point's, whatever its width
+	 *
+	 * @throws Throwable
+	 */
+	public function testRollupThatBeginsBeforeThePeriodIsIncluded(): void
+	{
+		$five = Types\HistoryResolution::FIVE_MINUTES;
+		$start = self::NOW - 3 * self::DAY;
+
+		// The period starts 100 seconds into the first rollup
+		$this->insertRollup($five, $start, 0.5, 9.0, 4.0, 8.0);
+		$this->insertRollup($five, $start + 300, 2.0, 3.0, 2.5, 3.0);
+
+		$series = $this->repository()->find(
+			Uuid\Uuid::fromString(self::PROPERTY),
+			$this->at($start + 100),
+			$this->at(self::NOW),
+			500,
+		);
+
+		self::assertSame(Types\HistoryTier::FIVE_MINUTES, $series->tier);
+		self::assertSame([$start + 100], $series->time);
+		self::assertSame([0.5], $series->min);
+		self::assertSame([9.0], $series->max);
+	}
+
+	/**
+	 * A rollup that starts at the end of the period is not in it, so there are never more points than asked for
+	 *
+	 * @throws Throwable
+	 */
+	public function testRollupAtTheEndOfThePeriodIsNotIncluded(): void
+	{
+		$five = Types\HistoryResolution::FIVE_MINUTES;
+		$start = self::NOW - 3 * self::DAY;
+
+		for ($i = 0; $i < 12; $i++) {
+			$this->insertRollup($five, $start + $i * 300, (float) $i, (float) $i, (float) $i, (float) $i);
+		}
+
+		// Starts exactly when the period ends
+		$this->insertRollup($five, $start + 3_600, 99.0, 99.0, 99.0, 99.0);
+
+		$series = $this->repository()->find(
+			Uuid\Uuid::fromString(self::PROPERTY),
+			$this->at($start),
+			$this->at($start + 3_600),
+			12,
+		);
+
+		self::assertSame(Types\HistoryTier::FIVE_MINUTES, $series->tier);
+		self::assertCount(12, $series->time);
+		self::assertSame(11.0, $series->last[11]);
 	}
 
 	private function at(int $time): DateTimeImmutable

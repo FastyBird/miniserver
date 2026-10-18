@@ -39,6 +39,7 @@ final class CompactHistoryTest extends Tests\Cases\Unit\HistoryTestCase
 			'Properties: 1. Rollups written: 5 of 5 minutes, 0 of 1 hour.',
 			$tester->getDisplay(),
 		);
+		self::assertStringContainsString('Purged, of properties that no longer exist: 0.', $tester->getDisplay());
 	}
 
 	/**

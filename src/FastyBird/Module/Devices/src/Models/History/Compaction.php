@@ -3,7 +3,7 @@
 namespace FastyBird\Module\Devices\Models\History;
 
 /**
- * What one run of the compactor did
+ * What one run of the compactor did. `purged` counts the rows of properties that no longer exist
  */
 final readonly class Compaction
 {
@@ -16,6 +16,7 @@ final readonly class Compaction
 		public int $expiredSamples,
 		public int $expiredFiveMinutes,
 		public int $expiredHours,
+		public int $purged,
 	)
 	{
 	}

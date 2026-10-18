@@ -696,6 +696,45 @@ final class RecorderTest extends Tests\Cases\Unit\HistoryTestCase
 	}
 
 	/**
+	 * What a transaction of the caller held back is written when the caller says it is over, and the rows that wait
+	 * for minInterval are left alone
+	 *
+	 * @throws Throwable
+	 */
+	public function testRowsHeldBackByATransactionAreWrittenOnRetry(): void
+	{
+		$recorder = $this->recorder(10, true);
+		$connection = $this->getDb();
+		$property = $this->property();
+
+		$recorder->record($property, $this->state(1.0, self::T0));
+
+		$connection->beginTransaction();
+
+		// Nothing is written inside it, and the timer's flush does not either
+		$recorder->flush();
+		$recorder->record($property, $this->state(2.0, self::T0 + 3));
+
+		$connection->commit();
+
+		self::assertSame([], $this->rows());
+		self::assertSame(1, $recorder->getBufferedCount());
+		self::assertSame(1, $recorder->getWaitingCount());
+
+		$recorder->retryDeferred();
+
+		self::assertSame([[self::T0, 1.0]], $this->rows());
+		self::assertSame(0, $recorder->getBufferedCount());
+		// The change that waits for minInterval waits still
+		self::assertSame(1, $recorder->getWaitingCount());
+
+		// Nothing is held back now, and a retry writes nothing
+		$recorder->retryDeferred();
+
+		self::assertSame([[self::T0, 1.0]], $this->rows());
+	}
+
+	/**
 	 * A failed write keeps the rows, up to the bound: past it the oldest go, and the log says so
 	 *
 	 * @throws Throwable

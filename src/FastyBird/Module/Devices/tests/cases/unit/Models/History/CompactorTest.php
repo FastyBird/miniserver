@@ -2,11 +2,13 @@
 
 namespace FastyBird\Module\Devices\Tests\Cases\Unit\Models\History;
 
+use Doctrine\DBAL;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
+use Ramsey\Uuid;
 use Throwable;
 use function array_column;
 use function count;
@@ -357,6 +359,301 @@ final class CompactorTest extends Tests\Cases\Unit\HistoryTestCase
 		// The failed property's transaction was rolled back
 		self::assertSame([], $this->rollups(Types\HistoryResolution::FIVE_MINUTES));
 		self::assertNotSame([], $this->rollups(Types\HistoryResolution::FIVE_MINUTES, self::OTHER_PROPERTY));
+	}
+
+	/**
+	 * What the history of a property that was deleted does once the property is gone: its newest sample, which is
+	 * never expired, would otherwise keep it alive and keep producing a rollup for every new bucket
+	 *
+	 * @throws Throwable
+	 */
+	public function testHistoryOfADeletedPropertyIsPurgedAndDoesNotGrowBack(): void
+	{
+		$five = Types\HistoryResolution::FIVE_MINUTES;
+		$hour = Types\HistoryResolution::HOUR;
+
+		// A property that last changed 100 days ago, rolled up while it exists
+		$this->insertSample(self::NOW - 100 * self::DAY, 6.0);
+		$this->insertSample(self::NOW - 100 * self::DAY, 7.0, self::OTHER_PROPERTY);
+
+		$this->compactor()->compact();
+
+		self::assertNotSame(0, $this->countRollups());
+
+		// The first one is deleted. The history of the second goes on
+		$this->getDb()->executeStatement(
+			'DELETE FROM fb_devices_module_channels_properties WHERE property_id = ?',
+			[Uuid\Uuid::fromString(self::PROPERTY)->getBytes()],
+			[DBAL\ParameterType::BINARY],
+		);
+
+		foreach ([0, 30, 60, 400] as $days) {
+			$compaction = $this->compactor(now: self::NOW + $days * self::DAY)->compact();
+
+			self::assertSame([], $this->rows(), sprintf('day +%d', $days));
+			self::assertSame([], $this->rollups($five), sprintf('day +%d', $days));
+			self::assertSame([], $this->rollups($hour), sprintf('day +%d', $days));
+			self::assertSame(0, $compaction->failed);
+			// The first run purges what the dead one had, and the later ones find nothing of it: the one property
+			// they list is the living one, whose history goes on
+			self::assertSame($days === 0, $compaction->purged > 0, sprintf('day +%d', $days));
+			self::assertSame($days === 0 ? 2 : 1, $compaction->properties, sprintf('day +%d', $days));
+			self::assertNotSame([], $this->rows(self::OTHER_PROPERTY), sprintf('day +%d', $days));
+		}
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testHistoryOfAPropertyThatNeverExistedIsPurged(): void
+	{
+		$five = Types\HistoryResolution::FIVE_MINUTES;
+
+		$this->insertSample(self::NOW - 1_800, 1.0, self::DEAD_PROPERTY);
+		$this->insertSample(self::NOW - 900, 2.0, self::DEAD_PROPERTY);
+		$this->insertRollup($five, self::NOW - 1_800, 1.0, 1.0, 1.0, 1.0, id: self::DEAD_PROPERTY);
+		$this->insertRollup(
+			Types\HistoryResolution::HOUR,
+			self::NOW - 7_200,
+			1.0,
+			1.0,
+			1.0,
+			1.0,
+			id: self::DEAD_PROPERTY,
+		);
+		$this->insertSample(self::NOW - 1_800, 9.0);
+
+		$compaction = $this->compactor()->compact();
+
+		self::assertSame(4, $compaction->purged);
+		self::assertSame([], $this->rows(self::DEAD_PROPERTY));
+		self::assertSame([], $this->rollups($five, self::DEAD_PROPERTY));
+		self::assertSame([], $this->rollups(Types\HistoryResolution::HOUR, self::DEAD_PROPERTY));
+		// The living one is compacted as ever
+		self::assertCount(1, $this->rows());
+		self::assertNotSame([], $this->rollups($five));
+	}
+
+	/**
+	 * A property of the connector and of the device tables exists as well as one of the channel table
+	 *
+	 * @throws Throwable
+	 */
+	public function testPropertiesOfTheOtherTablesAreAlive(): void
+	{
+		$connector = '3d2b8a1c-9e4f-4c61-b7a3-5f0e2d8c6b41';
+		$device = '7e9c1f40-2a5b-4d83-9c16-8b3d4e5f6a72';
+
+		$this->getDb()->executeStatement(
+			'INSERT INTO fb_devices_module_connectors_properties (property_id, connector_id, property_type, property_identifier, property_name, property_settable, property_queryable, property_data_type, created_at, updated_at)'
+			. ' SELECT ?, connector_id, \'dynamic\', \'probe\', NULL, 0, 0, \'float\', NOW(), NOW() FROM fb_devices_module_connectors LIMIT 1',
+			[Uuid\Uuid::fromString($connector)->getBytes()],
+			[DBAL\ParameterType::BINARY],
+		);
+		$this->getDb()->executeStatement(
+			'INSERT INTO fb_devices_module_devices_properties (property_id, device_id, property_type, property_identifier, property_name, property_settable, property_queryable, property_data_type, created_at, updated_at)'
+			. ' SELECT ?, device_id, \'dynamic\', \'probe\', NULL, 0, 0, \'float\', NOW(), NOW() FROM fb_devices_module_devices LIMIT 1',
+			[Uuid\Uuid::fromString($device)->getBytes()],
+			[DBAL\ParameterType::BINARY],
+		);
+
+		$this->insertSample(self::NOW - 1_800, 1.0, $connector);
+		$this->insertSample(self::NOW - 1_800, 2.0, $device);
+
+		$compaction = $this->compactor()->compact();
+
+		self::assertSame(0, $compaction->purged);
+		self::assertSame(2, $compaction->properties);
+		self::assertCount(1, $this->rows($connector));
+		self::assertCount(1, $this->rows($device));
+		self::assertNotSame([], $this->rollups(Types\HistoryResolution::FIVE_MINUTES, $connector));
+		self::assertNotSame([], $this->rollups(Types\HistoryResolution::FIVE_MINUTES, $device));
+	}
+
+	/**
+	 * The history of a dead property is deleted in batches, until none is left
+	 *
+	 * @throws Throwable
+	 */
+	public function testPurgeRunsUntilTheHistoryIsGone(): void
+	{
+		$this->getDb()->executeStatement(
+			sprintf(
+				'INSERT INTO %s (property_id, sampled_at, value) SELECT ?, seq, 1 FROM seq_1_to_10001',
+				Entities\History\Sample::TABLE,
+			),
+			[Uuid\Uuid::fromString(self::DEAD_PROPERTY)->getBytes()],
+			[DBAL\ParameterType::BINARY],
+		);
+
+		$compaction = $this->compactor()->compact();
+
+		self::assertSame(10_001, $compaction->purged);
+		self::assertSame([], $this->rows(self::DEAD_PROPERTY));
+	}
+
+	/**
+	 * A property that exists but has been silent for longer than the sample retention is still rolled up: its
+	 * value is its value, and a chart over a month shows it. Its rows are bounded, as every property's are, by the
+	 * retention of the rollups
+	 *
+	 * @throws Throwable
+	 */
+	public function testSilentPropertyIsStillRolledUp(): void
+	{
+		$this->insertSample(self::NOW - 10 * self::DAY, 6.0);
+
+		$this->compactor()->compact();
+
+		$rollups = $this->rollups(Types\HistoryResolution::FIVE_MINUTES);
+
+		self::assertSame(self::NOW - 600, $rollups[count($rollups) - 1][0]);
+		self::assertSame([[self::NOW - 10 * self::DAY, 6.0]], $this->rows());
+	}
+
+	/**
+	 * A bucket may still be waited for by a process that holds a change for minInterval, flushes it on its timer
+	 * and commits it, so the settle time is what the caller wires; the compactor honours it to the second
+	 *
+	 * @throws Throwable
+	 */
+	public function testSettleTimeLongerThanAMinuteIsHonoured(): void
+	{
+		$this->insertSample(self::NOW - 1_800, 1.0);
+
+		// 700 seconds: the newest complete bucket starts at NOW - 1,200
+		$this->compactor(settle: 700)->compact();
+
+		$times = array_column($this->rollups(Types\HistoryResolution::FIVE_MINUTES), 0);
+
+		self::assertSame(self::NOW - 1_200, $times[count($times) - 1]);
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	public function testAverageOfValuesNearTheLargestDoubleIsFinite(): void
+	{
+		$start = self::NOW - 1_800;
+
+		$this->insertSample($start, 1.7e308);
+		$this->insertSample($start + 100, 1.7e308);
+		$this->insertSample($start + 200, -1.7e308);
+
+		$compaction = $this->compactor()->compact();
+
+		self::assertSame(0, $compaction->failed);
+		self::assertSame([], $this->logger->at('error'));
+
+		$rollups = $this->rollups(Types\HistoryResolution::FIVE_MINUTES);
+
+		self::assertSame(-1.7e308, $rollups[0][1]);
+		self::assertSame(1.7e308, $rollups[0][2]);
+		// 1.7e308 for 200 seconds, then -1.7e308 for 100: a third of it
+		self::assertEqualsWithDelta(1.7e308 / 3, $rollups[0][3] ?? 0.0, 1.7e308 * 1e-12);
+		// The same bucket is carried on as -1.7e308
+		self::assertSame(-1.7e308, $rollups[1][3]);
+	}
+
+	/**
+	 * A first bucket whose start is before the cutoff of the retention would be written and expired in one run, so
+	 * with a time that is not aligned to a bucket the first one is the first at or after the cutoff
+	 *
+	 * @throws Throwable
+	 */
+	public function testNoBucketIsWrittenOnlyToBeExpiredWhenTheTimeIsNotAligned(): void
+	{
+		$this->insertSample(self::NOW - 100 * self::DAY, 6.0);
+
+		$compaction = $this->compactor(hoursDays: 2, now: self::NOW + 137)->compact();
+
+		self::assertSame(0, $compaction->expiredFiveMinutes);
+		self::assertSame(0, $compaction->expiredHours);
+		self::assertCount($compaction->fiveMinutes, $this->rollups(Types\HistoryResolution::FIVE_MINUTES));
+
+		$first = $this->rollups(Types\HistoryResolution::FIVE_MINUTES)[0][0];
+
+		self::assertGreaterThanOrEqual(self::NOW + 137 - 30 * self::DAY, $first);
+		self::assertSame(0, $first % 300);
+		self::assertLessThan(300, $first - (self::NOW + 137 - 30 * self::DAY));
+
+		$hours = $this->rollups(Types\HistoryResolution::HOUR);
+
+		self::assertGreaterThanOrEqual(self::NOW + 137 - 2 * self::DAY, $hours[0][0]);
+		self::assertSame(0, $hours[0][0] % 3_600);
+		self::assertLessThan(3_600, $hours[0][0] - (self::NOW + 137 - 2 * self::DAY));
+	}
+
+	/**
+	 * A sample exactly as old as the retention is kept, and one a second older goes
+	 *
+	 * @throws Throwable
+	 */
+	public function testSampleAtExactlyTheRetentionIsKept(): void
+	{
+		$this->insertSample(self::NOW - 7 * self::DAY - 1, 1.0);
+		$this->insertSample(self::NOW - 7 * self::DAY, 2.0);
+		$this->insertSample(self::NOW - 1_000, 3.0);
+
+		$this->compactor()->compact();
+
+		self::assertSame([[self::NOW - 7 * self::DAY, 2.0], [self::NOW - 1_000, 3.0]], $this->rows());
+	}
+
+	/**
+	 * Likewise a rollup exactly as old as its retention
+	 *
+	 * @throws Throwable
+	 */
+	public function testRollupAtExactlyTheRetentionIsKept(): void
+	{
+		$five = Types\HistoryResolution::FIVE_MINUTES;
+		$hour = Types\HistoryResolution::HOUR;
+
+		$this->insertRollup($five, self::NOW - 30 * self::DAY - 300, 1.0, 1.0, 1.0, 1.0);
+		$this->insertRollup($five, self::NOW - 30 * self::DAY, 2.0, 2.0, 2.0, 2.0);
+		$this->insertRollup($hour, self::NOW - 365 * self::DAY - 3_600, 3.0, 3.0, 3.0, 3.0);
+		$this->insertRollup($hour, self::NOW - 365 * self::DAY, 4.0, 4.0, 4.0, 4.0);
+
+		$this->compactor()->compact();
+
+		self::assertSame([self::NOW - 30 * self::DAY], array_column($this->rollups($five), 0));
+		self::assertSame(self::NOW - 365 * self::DAY, $this->rollups($hour)[0][0]);
+		self::assertSame(4.0, $this->rollups($hour)[0][1]);
+	}
+
+	/**
+	 * The first hour starts on the hour, whatever the first 5-minute bucket is
+	 *
+	 * @throws Throwable
+	 */
+	public function testFirstHourStartsOnTheHour(): void
+	{
+		// The first bucket is at 10:35, NOW being 12:00
+		$this->insertSample(self::NOW - 5_100, 8.0);
+
+		$this->compactor()->compact();
+
+		$hours = $this->rollups(Types\HistoryResolution::HOUR);
+
+		self::assertCount(1, $hours);
+		self::assertSame(self::NOW - 7_200, $hours[0][0]);
+		self::assertSame(8.0, $hours[0][1]);
+	}
+
+	/**
+	 * Hours older than their retention are not built from 5-minute rows that are older still
+	 *
+	 * @throws Throwable
+	 */
+	public function testNoHourIsBuiltOnlyToBeExpired(): void
+	{
+		$this->insertRollup(Types\HistoryResolution::FIVE_MINUTES, self::NOW - 10 * self::DAY, 1.0, 1.0, 1.0, 1.0);
+
+		$compaction = $this->compactor(hoursDays: 1)->compact();
+
+		self::assertSame(0, $compaction->hours);
+		self::assertSame([], $this->rollups(Types\HistoryResolution::HOUR));
 	}
 
 }

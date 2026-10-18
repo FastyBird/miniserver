@@ -72,6 +72,7 @@ final class CompactHistory extends Console\Command\Command
 					$compaction->expiredSamples,
 					$compaction->expiredFiveMinutes,
 					$compaction->expiredHours,
+					$compaction->purged,
 				),
 			);
 		}

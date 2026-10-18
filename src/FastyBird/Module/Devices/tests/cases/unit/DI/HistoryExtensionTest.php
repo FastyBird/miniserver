@@ -38,7 +38,7 @@ final class HistoryExtensionTest extends Tests\Cases\Unit\DbTestCase
 
 	private const string CHANNEL = '6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a';
 
-	private const string PROPERTY = 'a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d';
+	private const string PROPERTY = '24c436f4-a2e4-4d2b-b910-1a3ff785b784';
 
 	/**
 	 * The history is on by default, and registers what records it, what flushes it and what compacts it
@@ -128,8 +128,8 @@ final class HistoryExtensionTest extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * `history.flushInterval` plus a minute is how long the compactor waits for a bucket: with 250 seconds, a
-	 * bucket that ended 310 seconds ago is not complete yet, where the default of 10 seconds would have it complete
+	 * `history.flushInterval` is part of how long the compactor waits for a bucket: with 250 seconds, a bucket that
+	 * ended 317 seconds ago is not complete yet, where the default of 10 seconds would have it complete
 	 *
 	 * @throws Throwable
 	 */
@@ -141,7 +141,29 @@ final class HistoryExtensionTest extends Tests\Cases\Unit\DbTestCase
 
 		$this->getContainer()->getByType(Models\History\Compactor::class)->compact();
 
-		// The settle time is 310 seconds: the newest complete bucket starts at NOW - 900, where 70 would make it NOW - 600
+		// The settle time is 317 seconds: the newest complete bucket starts at NOW - 900, where 77 would make it NOW - 600
+		self::assertSame(
+			self::NOW - 900,
+			$this->scalar(sprintf('SELECT MAX(bucket_start) FROM %s', Entities\History\Rollup::TABLE)),
+		);
+	}
+
+	/**
+	 * A change waits for `minInterval`, then for the flush, before its sample is written, so a bucket is complete a
+	 * minute after the flush interval and the minInterval: with 250 seconds of minInterval and the default flush of
+	 * 10, a bucket that ended 320 seconds ago is not complete yet, where it would be with the flush interval alone
+	 *
+	 * @throws Throwable
+	 */
+	public function testMinIntervalReachesTheCompactorAsPartOfTheSettleTime(): void
+	{
+		$this->registerNeonConfigurationFile(__DIR__ . '/history.minInterval.neon');
+
+		$this->insertSample(self::NOW - 1_800, 1.0);
+
+		$this->getContainer()->getByType(Models\History\Compactor::class)->compact();
+
+		// The settle time is 320 seconds: the newest complete bucket starts at NOW - 900, where 70 would make it NOW - 600
 		self::assertSame(
 			self::NOW - 900,
 			$this->scalar(sprintf('SELECT MAX(bucket_start) FROM %s', Entities\History\Rollup::TABLE)),

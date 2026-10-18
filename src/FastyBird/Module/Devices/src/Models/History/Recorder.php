@@ -56,8 +56,11 @@ use function var_export;
  *
  * It does not write inside a transaction of the caller. Database::transaction() nested in one marks the outer
  * transaction rollback-only when its INSERT fails, which would fail the caller for a history error. State
- * writes do not run inside a transaction today; if one ever does, the rows stay buffered and the next flush
- * outside it writes them.
+ * writes do not run inside a transaction today; if one ever does, the rows stay buffered, and are written by the
+ * next flush, or by retryDeferred() when the caller's transaction ends through Database::transaction(), which
+ * dispatches DbTransactionFinished. The one gap: a process whose loop does not run, whose transaction was
+ * opened on the connection itself (no event) and which ends before anything flushes again, loses the rows it
+ * deferred. Nothing does that today.
  */
 final class Recorder
 {
@@ -80,6 +83,8 @@ final class Recorder
 	private array $buffer = [];
 
 	private int $dropped = 0;
+
+	private bool $deferred = false;
 
 	public function __construct(
 		private readonly DBAL\Connection $connection,
@@ -159,6 +164,21 @@ final class Recorder
 		}
 
 		$this->waiting = [];
+
+		$this->write();
+	}
+
+	/**
+	 * Writes the rows a transaction of the caller held back, once it is over. It leaves what waits for minInterval
+	 * alone
+	 */
+	public function retryDeferred(): void
+	{
+		if (!$this->deferred) {
+			return;
+		}
+
+		$this->deferred = false;
 
 		$this->write();
 	}
@@ -245,6 +265,8 @@ final class Recorder
 		}
 
 		if ($this->connection->isTransactionActive()) {
+			$this->deferred = true;
+
 			$this->logger->debug(
 				'History samples are kept for a later flush, a transaction is active',
 				[

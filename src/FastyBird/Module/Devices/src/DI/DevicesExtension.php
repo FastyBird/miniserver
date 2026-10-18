@@ -531,8 +531,9 @@ final class DevicesExtension extends NetteDI\CompilerExtension implements Transl
 		)
 			->setType(Models\History\Compactor::class)
 			->setArguments([
-				// A bucket is complete once no process can still hold an unflushed sample for it
-				'settle' => $configuration->history->flushInterval + 60,
+				// A bucket is complete once no process can still hold a sample for it: one that waits for
+				// minInterval, and then for the flush, and a minute for the clocks and the commit
+				'settle' => $configuration->history->flushInterval + $configuration->history->minInterval + 60,
 				'samplesDays' => $configuration->history->retention->samples,
 				'fiveMinutesDays' => $configuration->history->retention->fiveMinutes,
 				'hoursDays' => $configuration->history->retention->hours,

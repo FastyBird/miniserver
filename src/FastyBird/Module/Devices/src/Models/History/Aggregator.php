@@ -3,8 +3,10 @@
 namespace FastyBird\Module\Devices\Models\History;
 
 use DivisionByZeroError;
+use function array_sum;
 use function count;
 use function intdiv;
+use function is_finite;
 use function max;
 use function min;
 
@@ -42,7 +44,7 @@ final class Aggregator
 			$bucketEnd = min($bucketStart + $width, $end);
 			$cursor = $bucketStart;
 			$count = 0;
-			$weighed = ['sum' => 0.0, 'time' => 0, 'min' => null, 'max' => null];
+			$weighed = ['sum' => 0.0, 'time' => 0, 'min' => null, 'max' => null, 'segments' => []];
 
 			while ($next < $total && $samples[$next][0] < $bucketEnd) {
 				[$time, $value] = $samples[$next];
@@ -69,7 +71,7 @@ final class Aggregator
 				$bucketStart,
 				$weighed['min'],
 				$weighed['max'],
-				$weighed['time'] > 0 ? $weighed['sum'] / $weighed['time'] : null,
+				self::average($weighed),
 				$held[0],
 				$count,
 			);
@@ -104,8 +106,7 @@ final class Aggregator
 		foreach ($groups as $index => $group) {
 			$min = null;
 			$max = null;
-			$sum = 0.0;
-			$averaged = 0;
+			$averages = [];
 			$samples = 0;
 
 			foreach ($group as $row) {
@@ -120,8 +121,7 @@ final class Aggregator
 				}
 
 				if ($row->avg !== null) {
-					$sum += $row->avg;
-					$averaged++;
+					$averages[] = $row->avg;
 				}
 			}
 
@@ -129,7 +129,7 @@ final class Aggregator
 				$start + $index * $width,
 				$min,
 				$max,
-				$averaged > 0 ? $sum / $averaged : null,
+				self::mean($averages),
 				$group[count($group) - 1]->last,
 				$samples,
 			);
@@ -139,7 +139,7 @@ final class Aggregator
 	}
 
 	/**
-	 * @param array{sum: float, time: int, min: float|null, max: float|null} $weighed
+	 * @param array{sum: float, time: int, min: float|null, max: float|null, segments: list<array{float, int}>} $weighed
 	 */
 	private static function weigh(array &$weighed, float|null $value, int $duration): void
 	{
@@ -149,8 +149,69 @@ final class Aggregator
 
 		$weighed['sum'] += $value * $duration;
 		$weighed['time'] += $duration;
+		$weighed['segments'][] = [$value, $duration];
 		$weighed['min'] = $weighed['min'] === null ? $value : min($weighed['min'], $value);
 		$weighed['max'] = $weighed['max'] === null ? $value : max($weighed['max'], $value);
+	}
+
+	/**
+	 * The time-weighted average. The sum of the products is the plain way, and the one whose floating point result
+	 * a reader expects (10 for a third, 20 for a third and 30 for a third is exactly 20). Values near the largest
+	 * double make it overflow to infinity, which a double column refuses, so then each value is weighed by its
+	 * share of the time instead: a convex combination, which cannot leave the range of the values.
+	 *
+	 * @param array{sum: float, time: int, min: float|null, max: float|null, segments: list<array{float, int}>} $weighed
+	 */
+	private static function average(array $weighed): float|null
+	{
+		if ($weighed['time'] === 0) {
+			return null;
+		}
+
+		$average = $weighed['sum'] / $weighed['time'];
+
+		if (is_finite($average)) {
+			return $average;
+		}
+
+		$mean = 0.0;
+		$time = 0;
+
+		foreach ($weighed['segments'] as [$value, $duration]) {
+			$time += $duration;
+			$share = $duration / $time;
+			$mean = $mean * (1 - $share) + $value * $share;
+		}
+
+		return $mean;
+	}
+
+	/**
+	 * The mean, with the same care as average() for values near the largest double
+	 *
+	 * @param list<float> $values
+	 */
+	private static function mean(array $values): float|null
+	{
+		if ($values === []) {
+			return null;
+		}
+
+		$count = count($values);
+		$mean = array_sum($values) / $count;
+
+		if (is_finite($mean)) {
+			return $mean;
+		}
+
+		$mean = 0.0;
+
+		foreach ($values as $index => $value) {
+			$share = 1 / ($index + 1);
+			$mean = $mean * (1 - $share) + $value * $share;
+		}
+
+		return $mean;
 	}
 
 }

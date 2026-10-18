@@ -37,8 +37,11 @@ use function var_export;
  * - **1-hour rollups**, built the same way from the 5-minute ones.
  * - **Retention.** Samples, 5-minute rollups and 1-hour rollups older than their retention are deleted, with
  *   one exception: a property's newest sample stays. A value that has not changed for longer than the retention
- *   of the samples is still the value of the property, and the next rollup needs it to know that. The price is
- *   one row for a property that no longer exists.
+ *   of the samples is still the value of the property, and the next rollup needs it to know that. A property
+ *   keeps getting rollups while it exists, one row for each bucket, and they age out with their retention.
+ * - **Dead properties.** The history of a property that no longer exists in the connector, device or channel
+ *   property tables, samples and rollups alike, is deleted, in batches. That is what lets the newest sample of a
+ *   deleted property go, and with it the rollups it would otherwise keep producing.
  *
  * Every property is one transaction, so a failure leaves the others done and is the next run's to repeat. The
  * time is the clock's, in UTC epoch seconds, and the buckets are aligned to UTC.
@@ -55,6 +58,16 @@ final class Compactor
 	private const int ROWS_PER_STATEMENT = 400;
 
 	private const int DAY = 86_400;
+
+	// Rows one DELETE removes when the history of a dead property is purged
+	private const int PURGE_BATCH = 10_000;
+
+	// The tables a property id can live in
+	private const array PROPERTY_TABLES = [
+		'fb_devices_module_connectors_properties',
+		'fb_devices_module_devices_properties',
+		'fb_devices_module_channels_properties',
+	];
 
 	public function __construct(
 		private readonly DBAL\Connection $connection,
@@ -88,12 +101,12 @@ final class Compactor
 				],
 			);
 
-			return new Compaction(0, 1, 0, 0, 0, 0, 0);
+			return new Compaction(0, 1, 0, 0, 0, 0, 0, 0);
 		}
 
 		$done = 0;
 		$failed = 0;
-		$totals = [0, 0, 0, 0, 0];
+		$totals = [0, 0, 0, 0, 0, 0];
 
 		foreach ($properties as $property) {
 			try {
@@ -121,7 +134,7 @@ final class Compactor
 			}
 		}
 
-		return new Compaction($done, $failed, $totals[0], $totals[1], $totals[2], $totals[3], $totals[4]);
+		return new Compaction($done, $failed, $totals[0], $totals[1], $totals[2], $totals[3], $totals[4], $totals[5]);
 	}
 
 	/**
@@ -152,8 +165,8 @@ final class Compactor
 	}
 
 	/**
-	 * @return array{int, int, int, int, int} 5-minute and 1-hour rollups written, samples, 5-minute and 1-hour
-	 *                                        rollups expired
+	 * @return array{int, int, int, int, int, int} 5-minute and 1-hour rollups written, samples, 5-minute and 1-hour
+	 *                                             rollups expired, rows purged
 	 *
 	 * @throws DBAL\Exception
 	 * @throws DivisionByZeroError
@@ -162,14 +175,61 @@ final class Compactor
 	{
 		$id = $property->getBytes();
 
+		if (!$this->exists($id)) {
+			return [0, 0, 0, 0, 0, $this->purge($id)];
+		}
+
 		$fiveMinutes = $this->fiveMinutes($id, $now);
 		$hours = $this->hours($id, $now);
 
-		return [$fiveMinutes, $hours, ...$this->expire($id, $now)];
+		return [$fiveMinutes, $hours, ...$this->expire($id, $now), 0];
 	}
 
 	/**
 	 * @throws DBAL\Exception
+	 */
+	private function exists(string $id): bool
+	{
+		$selects = [];
+
+		foreach (self::PROPERTY_TABLES as $table) {
+			$selects[] = sprintf('SELECT 1 FROM %s WHERE property_id = ?', $table);
+		}
+
+		return $this->connection->fetchOne(
+			implode(' UNION ALL ', $selects) . ' LIMIT 1',
+			[$id, $id, $id],
+			[DBAL\ParameterType::BINARY, DBAL\ParameterType::BINARY, DBAL\ParameterType::BINARY],
+		) !== false;
+	}
+
+	/**
+	 * Deletes everything recorded for a property that does not exist, in batches
+	 *
+	 * @throws DBAL\Exception
+	 */
+	private function purge(string $id): int
+	{
+		$purged = 0;
+
+		foreach ([Entities\History\Sample::TABLE, Entities\History\Rollup::TABLE] as $table) {
+			do {
+				$deleted = (int) $this->connection->executeStatement(
+					sprintf('DELETE FROM %s WHERE property_id = ? LIMIT %d', $table, self::PURGE_BATCH),
+					[$id],
+					[DBAL\ParameterType::BINARY],
+				);
+
+				$purged += $deleted;
+			} while ($deleted === self::PURGE_BATCH);
+		}
+
+		return $purged;
+	}
+
+	/**
+	 * @throws DBAL\Exception
+	 * @throws DivisionByZeroError
 	 */
 	private function fiveMinutes(string $id, int $now): int
 	{
@@ -198,8 +258,9 @@ final class Compactor
 			$last = intdiv($first, $width) * $width;
 		}
 
-		// A bucket that would be expired as soon as it was written is not written
-		$start = max($last, intdiv($now - $this->fiveMinutesDays * self::DAY, $width) * $width);
+		// A bucket that would be expired as soon as it was written is not written: the first one is the first whose
+		// start is not before the retention's cutoff
+		$start = max($last, self::roundUp($now - $this->fiveMinutesDays * self::DAY, $width));
 		$written = 0;
 
 		while ($start < $horizon) {
@@ -285,7 +346,7 @@ final class Compactor
 			$last = intdiv($first, $width) * $width;
 		}
 
-		$start = max($last, intdiv($now - $this->hoursDays * self::DAY, $width) * $width);
+		$start = max($last, self::roundUp($now - $this->hoursDays * self::DAY, $width));
 		$written = 0;
 
 		while ($start < $horizon) {
@@ -432,6 +493,16 @@ final class Compactor
 		);
 
 		return is_numeric($value) ? (int) $value : null;
+	}
+
+	/**
+	 * The first multiple of $width at or after $time
+	 *
+	 * @throws DivisionByZeroError
+	 */
+	private static function roundUp(int $time, int $width): int
+	{
+		return intdiv($time + $width - 1, $width) * $width;
 	}
 
 	private static function number(mixed $value): float|null

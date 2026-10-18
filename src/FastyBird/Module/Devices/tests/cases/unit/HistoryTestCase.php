@@ -5,6 +5,7 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit;
 use DateTimeImmutable;
 use Doctrine\DBAL;
 use Error;
+use FastyBird\Core\Clock\FrozenClock;
 use FastyBird\Core\EventLoop;
 use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Persistence\Helpers;
@@ -17,6 +18,7 @@ use FastyBird\Module\Devices\Models;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types as DevicesTypes;
 use Nette;
+use Override;
 use Psr\Clock\ClockInterface;
 use Ramsey\Uuid;
 use RuntimeException;
@@ -38,13 +40,27 @@ abstract class HistoryTestCase extends DbTestCase
 
 	protected const string CHANNEL = '6821f8e9-ae69-4d5c-9b7c-d2b213f1ae0a';
 
-	protected const string PROPERTY = 'a3f1c2d4-5e6f-4a7b-8c9d-0e1f2a3b4c5d';
+	// Two dynamic channel properties that exist: humidity of tests/sql/dummy.data.sql, whose id no other property
+	// table shares, and one that tests/sql/history.properties.sql adds. The compactor deletes the history of an id
+	// that is in none of the property tables
+	protected const string PROPERTY = '24c436f4-a2e4-4d2b-b910-1a3ff785b784';
 
 	protected const string OTHER_PROPERTY = 'b4e2d3c5-6f7a-4b8c-9d0e-1f2a3b4c5d6e';
+
+	// Not in any property table
+	protected const string DEAD_PROPERTY = 'd0d0d0d0-5e6f-4a7b-8c9d-0e1f2a3b4c5d';
 
 	protected Tests\Support\RecordingLogger $logger;
 
 	protected EventLoop\Status $status;
+
+	#[Override]
+	public function setUp(): void
+	{
+		$this->registerDatabaseSchemaFile(__DIR__ . '/../../sql/history.properties.sql');
+
+		parent::setUp();
+	}
 
 	/**
 	 * @throws CoreExceptions\InvalidArgument
@@ -191,6 +207,7 @@ abstract class HistoryTestCase extends DbTestCase
 		int $samplesDays = 7,
 		int $fiveMinutesDays = 30,
 		int $hoursDays = 365,
+		int $now = self::NOW,
 	): Models\History\Compactor
 	{
 		$this->logger = new Tests\Support\RecordingLogger();
@@ -198,7 +215,7 @@ abstract class HistoryTestCase extends DbTestCase
 		return new Models\History\Compactor(
 			$this->getDb(),
 			$this->getContainer()->getByType(Helpers\Database::class),
-			$this->getContainer()->getByType(ClockInterface::class),
+			new FrozenClock($now),
 			$settle,
 			$samplesDays,
 			$fiveMinutesDays,

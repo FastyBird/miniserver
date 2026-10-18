@@ -1,0 +1,2 @@
+INSERT INTO `fb_devices_module_channels_properties` (`property_id`, `channel_id`, `property_type`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_value`, `created_at`, `updated_at`) VALUES
+(_binary 0xB4E2D3C56F7A4B8C9D0E1F2A3B4C5D6E, _binary 0x6821F8E9AE694D5C9B7CD2B213F1AE0A, 'dynamic', 'history-other', 'history-other', 0, 1, 'float', NULL, NULL, NULL, NULL, NULL, '2020-01-01 00:00:00', '2020-01-01 00:00:00');

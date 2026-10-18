@@ -6,6 +6,7 @@ use DivisionByZeroError;
 use FastyBird\Module\Devices\Models\History\Aggregator;
 use FastyBird\Module\Devices\Models\History\Bucket;
 use PHPUnit\Framework\TestCase;
+use function is_finite;
 
 /**
  * The arithmetic of the property value history, without a database (#624)
@@ -160,6 +161,46 @@ final class AggregatorTest extends TestCase
 			[new Bucket(1_000, 1.0, 1.0, 1.0, 1.0, 1), new Bucket(1_600, 2.0, 2.0, 2.0, 2.0, 1)],
 			Aggregator::combine(1_000, 600, $rows),
 		);
+	}
+
+	public function testAverageNearTheLargestDoubleStaysFinite(): void
+	{
+		// The plain sum of value times seconds is infinite here
+		$held = Aggregator::samples(0, 300, 300, null, [[0, 1.7e308], [100, 1.7e308]]);
+
+		self::assertCount(1, $held);
+		self::assertSame(1.7e308, $held[0]->min);
+		self::assertSame(1.7e308, $held[0]->max);
+		self::assertNotNull($held[0]->avg);
+		self::assertEqualsWithDelta(1.7e308, $held[0]->avg, 1.7e308 * 1e-12);
+
+		$swing = Aggregator::samples(0, 300, 300, null, [[0, 1.7e308], [200, -1.7e308]]);
+
+		self::assertCount(1, $swing);
+		self::assertSame(-1.7e308, $swing[0]->min);
+		self::assertSame(1.7e308, $swing[0]->max);
+		self::assertNotNull($swing[0]->avg);
+		self::assertTrue(is_finite($swing[0]->avg));
+		self::assertEqualsWithDelta(1.7e308 / 3, $swing[0]->avg, 1.7e308 * 1e-12);
+	}
+
+	/**
+	 * @throws DivisionByZeroError
+	 */
+	public function testMeanOfAveragesNearTheLargestDoubleStaysFinite(): void
+	{
+		$rows = [
+			new Bucket(0, 1.7e308, 1.7e308, 1.7e308, 1.7e308, 1),
+			new Bucket(300, 1.7e308, 1.7e308, 1.7e308, 1.7e308, 1),
+			new Bucket(600, 1.7e308, 1.7e308, 1.7e308, 1.7e308, 1),
+		];
+
+		$combined = Aggregator::combine(0, 3_600, $rows);
+
+		self::assertCount(1, $combined);
+		self::assertNotNull($combined[0]->avg);
+		self::assertEqualsWithDelta(1.7e308, $combined[0]->avg, 1.7e308 * 1e-12);
+		self::assertSame(3, $combined[0]->samples);
 	}
 
 }
