@@ -4,8 +4,6 @@ namespace FastyBird\Module\Devices\Documents\States;
 
 use DateTimeInterface;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Rules;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function is_bool;
@@ -14,37 +12,19 @@ use function is_bool;
  * Channel property state document
  */
 #[Documents\Mapping\MappedSuperclass]
-abstract class Property implements Documents\Document, ObjectMapper\MappedObject, Documents\CreatedAt, Documents\UpdatedAt
+abstract class Property implements Documents\Document, Documents\CreatedAt, Documents\UpdatedAt
 {
 
 	use Documents\HasCreatedAt;
 	use Documents\HasUpdatedAt;
 
 	public function __construct(
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\MappedObjectValue(class: StateValues::class)]
 		private readonly StateValues $read,
-		#[ObjectMapper\Rules\MappedObjectValue(class: StateValues::class)]
 		private readonly StateValues $get,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-		])]
 		private readonly bool|DateTimeInterface $pending = false,
-		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $valid = false,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('created_at')]
 		protected readonly DateTimeInterface|null $createdAt = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('updated_at')]
 		protected readonly DateTimeInterface|null $updatedAt = null,
 	)
 	{

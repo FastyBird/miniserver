@@ -5,7 +5,6 @@ namespace FastyBird\Module\Devices\Documents;
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Formats;
 use FastyBird\Core\Values\Transformers;
@@ -17,7 +16,6 @@ use FastyBird\Module\Devices;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use TypeError;
@@ -41,144 +39,23 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 	use CoreDocuments\HasUpdatedAt;
 
 	/**
-	 * @param string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
+	 * @param string|array<int, array<int, array<int, bool|float|int|string|null>|bool|float|int|string|null>|bool|float|int|string|null>|null $format
 	 */
 	public function __construct(
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BackedEnumValue(class: DevicesTypes\PropertyCategory::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: DevicesTypes\PropertyCategory::class),
-		])]
 		private readonly DevicesTypes\PropertyCategory $category,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
 		private readonly string $identifier,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		private readonly string|null $name,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BackedEnumValue(class: ValuesTypes\DataType::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: ValuesTypes\DataType::class),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('data_type')]
 		private readonly ValuesTypes\DataType $dataType,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		private readonly string|null $unit = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\ArrayOf(
-				item: new ObjectMapper\Rules\StringValue(notEmpty: true),
-				key: new ObjectMapper\Rules\IntValue(unsigned: true),
-			),
-			new ObjectMapper\Rules\ArrayOf(
-				item: new ObjectMapper\Rules\ArrayOf(
-					item: new ObjectMapper\Rules\AnyOf([
-						new ObjectMapper\Rules\IntValue(),
-						new ObjectMapper\Rules\FloatValue(),
-						new ObjectMapper\Rules\StringValue(notEmpty: true),
-						new ObjectMapper\Rules\ArrayOf(
-							item: new ObjectMapper\Rules\AnyOf([
-								new ObjectMapper\Rules\ArrayEnumValue(
-									// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-									cases: [ValuesTypes\DataTypeShort::CHAR->value, ValuesTypes\DataTypeShort::UCHAR->value, ValuesTypes\DataTypeShort::SHORT->value, ValuesTypes\DataTypeShort::USHORT->value, ValuesTypes\DataTypeShort::INT->value, ValuesTypes\DataTypeShort::UINT->value, ValuesTypes\DataTypeShort::FLOAT->value, ValuesTypes\DataTypeShort::BOOLEAN->value, ValuesTypes\DataTypeShort::STRING->value, ValuesTypes\DataTypeShort::BUTTON->value, ValuesTypes\DataTypeShort::SWITCH->value, ValuesTypes\DataTypeShort::COVER->value],
-								),
-								new ObjectMapper\Rules\StringValue(notEmpty: true),
-								new ObjectMapper\Rules\IntValue(),
-								new ObjectMapper\Rules\FloatValue(),
-								new ObjectMapper\Rules\BoolValue(),
-							]),
-							key: new ObjectMapper\Rules\IntValue(unsigned: true),
-							minItems: 2,
-							maxItems: 2,
-						),
-						new ObjectMapper\Rules\NullValue(castEmptyString: true),
-					]),
-					key: new ObjectMapper\Rules\IntValue(unsigned: true),
-					minItems: 3,
-					maxItems: 3,
-				),
-				key: new ObjectMapper\Rules\IntValue(unsigned: true),
-			),
-			new ObjectMapper\Rules\ArrayOf(
-				item: new ObjectMapper\Rules\AnyOf([
-					new ObjectMapper\Rules\IntValue(),
-					new ObjectMapper\Rules\FloatValue(),
-					new ObjectMapper\Rules\ArrayOf(
-						item: new ObjectMapper\Rules\AnyOf([
-							new ObjectMapper\Rules\ArrayEnumValue(
-								// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-								cases: [ValuesTypes\DataTypeShort::CHAR->value, ValuesTypes\DataTypeShort::UCHAR->value, ValuesTypes\DataTypeShort::SHORT->value, ValuesTypes\DataTypeShort::USHORT->value, ValuesTypes\DataTypeShort::INT->value, ValuesTypes\DataTypeShort::UINT->value, ValuesTypes\DataTypeShort::FLOAT->value],
-							),
-							new ObjectMapper\Rules\IntValue(),
-							new ObjectMapper\Rules\FloatValue(),
-						]),
-						key: new ObjectMapper\Rules\IntValue(unsigned: true),
-						minItems: 2,
-						maxItems: 2,
-					),
-					new ObjectMapper\Rules\NullValue(castEmptyString: true),
-				]),
-				key: new ObjectMapper\Rules\IntValue(unsigned: true),
-				minItems: 2,
-				maxItems: 2,
-			),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		private readonly string|array|null $format = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		private readonly float|int|string|null $invalid = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		private readonly int|null $scale = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		private readonly int|float|null $step = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		private readonly bool|float|int|string|null $default = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new Rules\UuidValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('value_transformer')]
 		private readonly Uuid\UuidInterface|string|null $valueTransformer = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new Rules\UuidValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
 		protected readonly Uuid\UuidInterface|null $owner = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('created_at')]
 		protected readonly DateTimeInterface|null $createdAt = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('updated_at')]
 		protected readonly DateTimeInterface|null $updatedAt = null,
 	)
 	{
@@ -338,7 +215,7 @@ abstract class Property implements DevicesDocuments\Document, CoreDocuments\Owne
 	}
 
 	/**
-	 * @param string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
+	 * @param string|array<int, array<int, array<int, bool|float|int|string|null>|bool|float|int|string|null>|bool|float|int|string|null>|null $format
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws TypeError

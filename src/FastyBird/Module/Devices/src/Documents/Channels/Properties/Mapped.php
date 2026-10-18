@@ -2,18 +2,18 @@
 
 namespace FastyBird\Module\Devices\Documents\Channels\Properties;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
-use FastyBird\Core\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Exceptions as ValuesExceptions;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Exceptions as DevicesExceptions;
 use FastyBird\Module\Devices\Types as DevicesTypes;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use TypeError;
@@ -23,49 +23,48 @@ use function array_merge;
 /**
  * Channel mapped property document
  */
-#[Documents\Mapping\Document(entity: Entities\Channels\Properties\Mapped::class)]
+#[CoreDocuments\Mapping\Document(entity: Entities\Channels\Properties\Mapped::class)]
 final class Mapped extends Property
 {
 
 	/**
-	 * @param string|array<int, string>|array<int, int>|array<int, float>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
+	 * @param string|array<int, array<int, array<int, bool|float|int|string|null>|bool|float|int|string|null>|bool|float|int|string|null>|null $format
 	 */
 	public function __construct(
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $channel,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $parent,
 		DevicesTypes\PropertyCategory $category,
+		#[CoreDocuments\Mapping\RefuseBlank]
 		string $identifier,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		string|null $name,
+		#[Configurator\MapFromKey('data_type')]
 		ValuesTypes\DataType $dataType,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		string|null $unit = null,
+		#[DevicesDocuments\Mapping\MapFormat]
 		string|array|null $format = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		float|int|string|null $invalid = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		int|null $scale = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		int|float|null $step = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		bool|float|int|string|null $default = null,
+		#[DevicesDocuments\Mapping\MapValueTransformer]
+		#[Configurator\MapFromKey('value_transformer')]
 		Uuid\UuidInterface|string|null $valueTransformer = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\NullValue(),
-		])]
 		private readonly bool|null $settable = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\NullValue(),
-		])]
 		private readonly bool|null $queryable = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly bool|float|int|string|null $value = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
+		#[Configurator\MapFromKey('created_at')]
 		DateTimeInterface|null $createdAt = null,
+		#[Configurator\MapFromKey('updated_at')]
 		DateTimeInterface|null $updatedAt = null,
 	)
 	{

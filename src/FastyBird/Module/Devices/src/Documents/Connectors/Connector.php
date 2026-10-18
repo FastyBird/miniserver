@@ -28,7 +28,12 @@ use function array_map;
 	Types\RoutingKey::CONNECTOR_DOCUMENT_UPDATED->value,
 	Types\RoutingKey::CONNECTOR_DOCUMENT_DELETED->value,
 ])]
-abstract class Connector implements DevicesDocuments\Document, CoreDocuments\Owner, CoreDocuments\CreatedAt, CoreDocuments\UpdatedAt
+abstract class Connector implements
+	DevicesDocuments\Document,
+	ObjectMapper\MappedObject,
+	CoreDocuments\Owner,
+	CoreDocuments\CreatedAt,
+	CoreDocuments\UpdatedAt
 {
 
 	use CoreDocuments\HasOwner;

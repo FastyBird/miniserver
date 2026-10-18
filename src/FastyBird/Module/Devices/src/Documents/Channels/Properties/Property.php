@@ -5,7 +5,6 @@ namespace FastyBird\Module\Devices\Documents\Channels\Properties;
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions as CoreExceptions;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Devices\Entities;
@@ -39,11 +38,10 @@ abstract class Property extends DevicesDocuments\Property
 {
 
 	/**
-	 * @param string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
+	 * @param string|array<int, array<int, array<int, bool|float|int|string|null>|bool|float|int|string|null>|bool|float|int|string|null>|null $format
 	 */
 	public function __construct(
 		Uuid\UuidInterface $id,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $channel,
 		DevicesTypes\PropertyCategory $category,
 		string $identifier,

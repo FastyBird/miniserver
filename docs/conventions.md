@@ -422,8 +422,9 @@ branches and a class chooses its branch by what it implements:
 - **Any other class is mapped by Valinor.** A class is migrated by dropping `MappedObject` (and, with it,
   every `Orisai\ObjectMapper` attribute and import) and by giving Valinor what it reads: the native and
   PHPDoc types, and the attributes below. `Documents\Document` does not extend `MappedObject`; each root
-  of a not yet migrated hierarchy declares it itself (`Devices\Documents\Document`, `Triggers\Documents\Triggers\Trigger`,
-  `Connector\...\Messages\Message`), and its migration removes that one declaration.
+  of a not yet migrated hierarchy declares it itself (`Devices\Documents\Channels\Channel`, `Connectors\Connector`
+  and `Devices\Device`, `Triggers\Documents\Triggers\Trigger`, `Connector\...\Messages\Message`), and its migration
+  removes that one declaration.
 - A migrated class does not contain an orisai-mapped one, and an orisai-mapped class does not contain a migrated
   one: Valinor would build the nested object through its constructor without any of orisai's rules, and orisai
   accepts only a `MappedObject` there. A migration therefore takes a class with every class it nests.
@@ -442,13 +443,16 @@ What a migrated class declares, in place of what orisai had:
 | `DateTimeValue(format: ATOM)` | `DateTimeInterface` (ATOM is the only date format the builder supports) |
 | `UuidValue()` | `Ramsey\Uuid\UuidInterface`; the builder reads the canonical form only, like the rule |
 | `AnyOf([FloatValue, IntValue])` | decide per field: `float` turns an int into a float, which is what orisai's rule did; `int\|float` keeps what it is given. Pin the choice in a test |
+| a union of several array shapes, the format of a property | `#[Devices\Documents\Mapping\MapFormat]`: Valinor refuses a union of two array types, so the one converter reads the shapes the rule listed, in its order, and the type is one nested array of scalars |
+| `AnyOf([UuidValue, StringValue(notEmpty), NullValue(castEmptyString)])` | `#[Devices\Documents\Mapping\MapValueTransformer]`: a union of a string and a UUID keeps a UUID as the text it came in, where the rule read it as a UUID first |
+| `AnyOf([DateTimeValue(ATOM), BackedEnumValue(…), BoolValue, IntValue, FloatValue, StringValue(notEmpty), NullValue(castEmptyString)])`, the value of a state | `#[Devices\Documents\Mapping\MapStateValue]`: a text is a date, then a button, switch or cover payload, before it is a text, as in the rule; Valinor would keep every text as text |
 
 Valinor casts no scalar unless told to: a number in a string is not a number for it, where `castNumericString`
 made it one for orisai. The per-property attributes `MapAsInt`, `MapAsFloat` and `MapAsBool`
 (`CuyZ\Valinor\Mapper\Configurator`) are the closest counterparts of `castNumericString` and `castBoolLike`, and
 read a little more than the rules did (`MapAsInt` also takes `5.0` and `"007"`), so each use is pinned in a test.
 
-Three rules keep Valinor's behaviour predictable:
+These rules keep Valinor's behaviour predictable:
 
 - **A converter is an attribute on the property, never registered on the builder.** A converter registered on
   the builder runs on every node and stops Valinor choosing between the object types of a union by what the input
@@ -461,6 +465,15 @@ Three rules keep Valinor's behaviour predictable:
   and propagates as it is: wrapping it would hide a `TypeError` as bad input, and orisai, which never called
   constructors, had no such case.
 - **An overlapping union is refused**: two array types in one union have to be collapsed to one type.
+- **A converter says what it returns.** Valinor applies a converter to a node only if the converter's PHPDoc return
+  type fits the type of the node. `@template T`, `@param callable(mixed): T $next` and `@return T`, as `RefuseBlank`
+  has them, fit every node, a union included; a return type of `mixed` fits a `mixed` node and nothing else, so the
+  converter is silently skipped. What a converter returns is then checked against the declared type, so the type has to
+  admit it, and it may not be `mixed`, which strict mode refuses (the format of a property is one nested array of scalars
+  for that reason).
+- **A subclass carries its own attributes.** Valinor calls the constructor of the class it maps. A subclass that declares
+  a constructor, and passes its arguments on to the parent's, has the attributes on its own parameters: those on the
+  parent's are not read (every concrete Devices property document repeats them).
 
 **There is no file cache for Valinor.** Valinor can compile what it learns about a class into files, and
 `FileSystemCache` replaces a file with `rename()`. On a bind mount, which is what the development and the

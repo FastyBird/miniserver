@@ -2,46 +2,27 @@
 
 namespace FastyBird\Module\Devices\Documents\States;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
-use FastyBird\Core\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
-use Orisai\ObjectMapper;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Override;
 
 /**
  * Property value document
  */
-#[Documents\Mapping\Document]
-final readonly class StateValues implements Documents\Document, ObjectMapper\MappedObject
+#[CoreDocuments\Mapping\Document]
+final readonly class StateValues implements CoreDocuments\Document
 {
 
 	public function __construct(
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('actual_value')]
+		#[DevicesDocuments\Mapping\MapStateValue]
+		#[Configurator\MapFromKey('actual_value')]
 		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('expected_value')]
+		#[DevicesDocuments\Mapping\MapStateValue]
+		#[Configurator\MapFromKey('expected_value')]
 		private bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue,
 	)
 	{
