@@ -2,7 +2,7 @@
 
 namespace FastyBird\Module\Devices\Models\History;
 
-use DivisionByZeroError;
+use ArithmeticError;
 use Doctrine\DBAL;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Persistence\Helpers;
@@ -169,7 +169,7 @@ final class Compactor
 	 *                                             rollups expired, rows purged
 	 *
 	 * @throws DBAL\Exception
-	 * @throws DivisionByZeroError
+	 * @throws ArithmeticError
 	 */
 	private function compactProperty(Uuid\UuidInterface $property, int $now): array
 	{
@@ -229,7 +229,7 @@ final class Compactor
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws DivisionByZeroError
+	 * @throws ArithmeticError
 	 */
 	private function fiveMinutes(string $id, int $now): int
 	{
@@ -311,7 +311,7 @@ final class Compactor
 
 	/**
 	 * @throws DBAL\Exception
-	 * @throws DivisionByZeroError
+	 * @throws ArithmeticError
 	 */
 	private function hours(string $id, int $now): int
 	{
@@ -498,7 +498,7 @@ final class Compactor
 	/**
 	 * The first multiple of $width at or after $time
 	 *
-	 * @throws DivisionByZeroError
+	 * @throws ArithmeticError
 	 */
 	private static function roundUp(int $time, int $width): int
 	{

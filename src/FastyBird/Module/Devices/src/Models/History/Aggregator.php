@@ -32,6 +32,8 @@ final class Aggregator
 	 * @param list<array{int, float|null}> $samples [time, value] in time order, from $start up to, not including, $end
 	 *
 	 * @return list<Bucket>
+	 *
+	 * @throws DivisionByZeroError
 	 */
 	public static function samples(int $start, int $end, int $width, array|null $carry, array $samples): array
 	{
@@ -161,6 +163,8 @@ final class Aggregator
 	 * share of the time instead: a convex combination, which cannot leave the range of the values.
 	 *
 	 * @param array{sum: float, time: int, min: float|null, max: float|null, segments: list<array{float, int}>} $weighed
+	 *
+	 * @throws DivisionByZeroError
 	 */
 	private static function average(array $weighed): float|null
 	{
@@ -190,6 +194,8 @@ final class Aggregator
 	 * The mean, with the same care as average() for values near the largest double
 	 *
 	 * @param list<float> $values
+	 *
+	 * @throws DivisionByZeroError
 	 */
 	private static function mean(array $values): float|null
 	{

@@ -445,14 +445,20 @@ final class CompactorTest extends Tests\Cases\Unit\HistoryTestCase
 		$device = '7e9c1f40-2a5b-4d83-9c16-8b3d4e5f6a72';
 
 		$this->getDb()->executeStatement(
-			'INSERT INTO fb_devices_module_connectors_properties (property_id, connector_id, property_type, property_identifier, property_name, property_settable, property_queryable, property_data_type, created_at, updated_at)'
-			. ' SELECT ?, connector_id, \'dynamic\', \'probe\', NULL, 0, 0, \'float\', NOW(), NOW() FROM fb_devices_module_connectors LIMIT 1',
+			'INSERT INTO fb_devices_module_connectors_properties (property_id, connector_id, property_type,'
+			. ' property_identifier, property_name, property_settable, property_queryable, property_data_type,'
+			. ' created_at, updated_at)'
+			. ' SELECT ?, connector_id, \'dynamic\', \'probe\', NULL, 0, 0, \'float\', NOW(), NOW()'
+			. ' FROM fb_devices_module_connectors LIMIT 1',
 			[Uuid\Uuid::fromString($connector)->getBytes()],
 			[DBAL\ParameterType::BINARY],
 		);
 		$this->getDb()->executeStatement(
-			'INSERT INTO fb_devices_module_devices_properties (property_id, device_id, property_type, property_identifier, property_name, property_settable, property_queryable, property_data_type, created_at, updated_at)'
-			. ' SELECT ?, device_id, \'dynamic\', \'probe\', NULL, 0, 0, \'float\', NOW(), NOW() FROM fb_devices_module_devices LIMIT 1',
+			'INSERT INTO fb_devices_module_devices_properties (property_id, device_id, property_type,'
+			. ' property_identifier, property_name, property_settable, property_queryable, property_data_type,'
+			. ' created_at, updated_at)'
+			. ' SELECT ?, device_id, \'dynamic\', \'probe\', NULL, 0, 0, \'float\', NOW(), NOW()'
+			. ' FROM fb_devices_module_devices LIMIT 1',
 			[Uuid\Uuid::fromString($device)->getBytes()],
 			[DBAL\ParameterType::BINARY],
 		);

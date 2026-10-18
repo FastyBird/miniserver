@@ -2,6 +2,8 @@
 
 namespace FastyBird\Module\Devices\Tests\Cases\Unit;
 
+use DateInvalidTimeZoneException;
+use DateMalformedStringException;
 use DateTimeImmutable;
 use Doctrine\DBAL;
 use Error;
@@ -201,6 +203,8 @@ abstract class HistoryTestCase extends DbTestCase
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
+	 * @throws DateInvalidTimeZoneException
+	 * @throws DateMalformedStringException
 	 */
 	protected function compactor(
 		int $settle = 90,

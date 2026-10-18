@@ -151,6 +151,7 @@ final class Repository
 	 * @return list<Bucket>
 	 *
 	 * @throws DBAL\Exception
+	 * @throws DivisionByZeroError
 	 */
 	private function fromSamples(Uuid\UuidInterface $property, int $start, int $end, int $bucket): array
 	{

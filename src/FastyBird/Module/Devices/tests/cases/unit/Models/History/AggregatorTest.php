@@ -14,6 +14,9 @@ use function is_finite;
 final class AggregatorTest extends TestCase
 {
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testEachValueIsWeighedByHowLongItHeld(): void
 	{
 		// 10 for 100 seconds, 20 for 100, 30 for 100
@@ -22,6 +25,9 @@ final class AggregatorTest extends TestCase
 		self::assertEquals([new Bucket(1_000, 10.0, 30.0, 20.0, 30.0, 3)], $buckets);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testUnevenWeightsMoveTheAverage(): void
 	{
 		// 10 for 200 seconds and 40 for 100: (2000 + 4000) / 300
@@ -30,6 +36,9 @@ final class AggregatorTest extends TestCase
 		self::assertEquals([new Bucket(0, 10.0, 40.0, 20.0, 40.0, 2)], $buckets);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testTheValueThatHeldWhenTheBucketOpenedCountsFromItsFirstSecond(): void
 	{
 		// 10 carried in for 100 seconds, then 40 for 200
@@ -38,6 +47,9 @@ final class AggregatorTest extends TestCase
 		self::assertEquals([new Bucket(300, 10.0, 40.0, 30.0, 40.0, 1)], $buckets);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testBucketWithoutASampleKeepsTheCarriedValue(): void
 	{
 		$buckets = Aggregator::samples(0, 900, 300, [7.0], [[10, 8.0]]);
@@ -52,6 +64,9 @@ final class AggregatorTest extends TestCase
 		);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testGapWeighsNothingAndEndsTheBucketWithNoValue(): void
 	{
 		// 30 for 100 seconds, then a gap for 200
@@ -60,6 +75,9 @@ final class AggregatorTest extends TestCase
 		self::assertEquals([new Bucket(0, 30.0, 30.0, 30.0, null, 2)], $buckets);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testBucketOfNothingButAGapHasNoValues(): void
 	{
 		$buckets = Aggregator::samples(0, 600, 300, [null], []);
@@ -70,6 +88,9 @@ final class AggregatorTest extends TestCase
 		);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testNothingIsKnownBeforeTheFirstSample(): void
 	{
 		// The first 150 seconds have no value and no weight, and the bucket before the first sample is not there
@@ -78,6 +99,9 @@ final class AggregatorTest extends TestCase
 		self::assertEquals([new Bucket(300, 5.0, 5.0, 5.0, 5.0, 1)], $buckets);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testPartOfABucketBeforeTheFirstSampleIsNotWeighed(): void
 	{
 		$buckets = Aggregator::samples(0, 300, 300, null, [[150, 5.0]]);
@@ -85,6 +109,9 @@ final class AggregatorTest extends TestCase
 		self::assertEquals([new Bucket(0, 5.0, 5.0, 5.0, 5.0, 1)], $buckets);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testLastBucketIsCutAtTheEnd(): void
 	{
 		// The period ends 100 seconds into the second bucket
@@ -93,6 +120,9 @@ final class AggregatorTest extends TestCase
 		self::assertEquals([new Bucket(0, 1.0, 1.0, 1.0, 1.0, 0), new Bucket(300, 3.0, 3.0, 3.0, 3.0, 1)], $buckets);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testNothingBuildsNothing(): void
 	{
 		self::assertSame([], Aggregator::samples(0, 600, 300, null, []));
@@ -163,6 +193,9 @@ final class AggregatorTest extends TestCase
 		);
 	}
 
+	/**
+	 * @throws DivisionByZeroError
+	 */
 	public function testAverageNearTheLargestDoubleStaysFinite(): void
 	{
 		// The plain sum of value times seconds is infinite here

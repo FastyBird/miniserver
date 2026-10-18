@@ -187,7 +187,7 @@ final class StateHistoryTest extends Tests\Cases\Unit\HistoryTestCase
 
 		$this->getContainer()->getByType(Helpers\Database::class)->transaction(
 			function () use ($subscriber, $event, $recorder, $id): void {
-				$subscriber->stateUpdated($event);
+				$this->dispatch($subscriber, $event);
 
 				// Held back: nothing is written, and nothing is lost
 				self::assertSame(1, $recorder->getBufferedCount());
