@@ -245,21 +245,21 @@ The clients driver must implement `FastyBird\Core\WebSockets\Clients\Drivers\Dri
 |---|---|---|---|
 | `apiPrefix` | bool | `true` | Put the module's routes under `/devices-module`. The application sets it from `%api.prefixed.modules%`. |
 | `exchange` | bool | `true` | Publish the asynchronous state managers' get and set requests to the exchange, where `fb:devices-module:exchange` carries them out, instead of carrying them out in the process that asked. The application sets it from `%modules.exchange%`, which `config/defaults.neon` sets to `false`. |
-| `history.enabled` | bool | `false` | Record property value history. See [Property value history](#property-value-history). |
-| `history.flushInterval` | int, at least 1 | `10` | Seconds between two writes of the buffered samples, while an event loop runs. |
-| `history.minInterval` | int, at least 0 | `10` | Seconds. A change that follows the last stored sample of its property sooner waits, and a later change replaces it. `0` stores every change. |
+| `history.enabled` | bool | `true` | Record property value history, and compact it from the exchange process. See [Property value history](#property-value-history). |
+| `history.flushInterval` | int, at least 1 | `10` | Seconds between two writes of the buffered samples, while an event loop runs. The compactor leaves a bucket alone until this, `minInterval` and a minute more have passed since its end. |
+| `history.minInterval` | int, at least 0 | `10` | Seconds. A change that follows the last stored sample of its property sooner than this waits, and a later change replaces it. It bounds how often a property is written, not the spacing of the samples: a waiting change keeps its own time. `0` stores every change. |
 | `history.retention.samples` | int, at least 1 | `7` | Days to keep raw samples. |
 | `history.retention.fiveMinutes` | int, at least 1 | `30` | Days to keep 5-minute rollups. |
 | `history.retention.hours` | int, at least 1 | `365` | Days to keep 1-hour rollups. |
 
 ### Property value history
 
-The module can keep a time series of every dynamic property of a connector, device or channel, for charts (#624). It is off by default:
+The module can keep a time series of every dynamic property of a connector, device or channel, for charts (#624). It is on by default, and records nothing until a state store is registered (below):
 
 ```neon
 fbDevicesModule:
     history:
-        enabled: true
+        enabled: true          # the default
         flushInterval: 10
         minInterval: 10
         retention:
@@ -275,7 +275,7 @@ fbDevicesModule:
 - Properties of a numeric type (`char` through `uint`, and `float`), `bool` and `switch`. A boolean is stored as `0` or `1`, a switch as `1` for `switch_on` and `0` for `switch_off`. `switch_toggle` is a command, not a value, and `string`, `enum`, `date`, `time`, `datetime`, `color`, `button`, `cover` and `unknown` properties are not recorded.
 - Not a mapped property: its parent is recorded, and the mapped child would double it.
 - The value as the property reports it, after its scale and value transformer. When the state is not valid, a gap (`NULL`) is stored once, so a chart does not draw a line across it.
-- A change is skipped when it equals the last stored value, or when it is a numeric change smaller than the property's `step`. Within `minInterval` of the last stored sample, the newest change replaces the waiting one, so a spike shorter than `minInterval` is not kept. The last stored value is remembered in memory: the first change a process sees for a property is stored even when it repeats the last row of an earlier run.
+- A change is skipped when it equals the last stored value, or when it is a numeric change smaller than the property's `step`. Within `minInterval` of the last stored sample, the newest change replaces the waiting one (a repeat of the waiting value changes nothing, and the waiting change keeps its own time), so a spike shorter than `minInterval` is not kept. That bounds the writes of a property, not the distance between two samples. The last stored value is remembered in memory: the first change a process sees for a property is stored even when it repeats the last row of an earlier run.
 - The time of a sample is the state's `updated_at`, else the clock, in UTC epoch seconds.
 
 **How it is written.** A sample is buffered and written by one multi-row `INSERT ... ON DUPLICATE KEY UPDATE` inside a transaction, every `flushInterval` seconds while the event loop runs, and when the loop stops. A process whose loop does not run (php-fpm, a console command) writes each change at once. When a write fails, the rows stay for the next one, up to 10,000: past that the oldest are dropped, and the log says how many. Recording never fails the state write that raised it.
@@ -284,9 +284,25 @@ fbDevicesModule:
 
 **Storage.** Two tables, `fb_devices_module_history_samples` (one row per stored change) and `fb_devices_module_history_rollups` (5-minute and 1-hour buckets), created by the migration `Version20261017072656`. Both keep the property id without a foreign key, so the rows of a deleted property age out with retention. They exist on every install, whether `history.enabled` is on or off. At 100 properties and one stored change per property per minute, the seven days of raw samples take about 68 MiB.
 
-**Retention is not applied yet.** The `retention` keys are validated and documented here, but the compactor that builds the rollups and deletes expired rows arrives in a later change. Until then recorded samples stay in the table.
+**Compaction and retention.** `fb:devices-module:exchange` runs the compactor once, 30 seconds after it starts, and then every 5 minutes. A run does this for each property that has history, one transaction each, and can be repeated or overlap another run:
 
-With `history.enabled` off the module registers neither the recorder nor its subscriber, so no listener, timer or buffer exists.
+- It builds the 5-minute rollups, from the last one stored (or the property's first sample) up to the newest complete bucket, and then the 1-hour rollups from the 5-minute ones. A bucket is complete once `flushInterval` plus `minInterval` plus 60 seconds have passed since its end: a change waits for `minInterval`, is flushed on the next timer and committed, so by then no process still holds a sample for the bucket. The last bucket stored is built again, which picks up a late sample.
+- Each rollup keeps the minimum, the maximum, the time-weighted average, the last value and the number of samples of its bucket. Samples are on-change data, so each value weighs how long it held, and the value that held when the bucket opened counts from its first second. A bucket with no sample in it still has a row, holding the carried value, and a gap weighs nothing. A 1-hour rollup takes the extremes of its 5-minute rows, the mean of their averages (each row weighs the same, however much of it was a gap) and the last of their last values. So a rollup and a series read from the samples for the same period give the same numbers only for a 5-minute rollup, and for an hour only while there are no gaps in it.
+- It deletes samples, 5-minute rollups and 1-hour rollups older than `history.retention.samples`, `fiveMinutes` and `hours` days. The one exception is the newest sample of a property: a value that has not changed for longer than the retention is still the property's value, and the rollups need it. A property that exists keeps getting one rollup row for each bucket, whether it changes or not, so the rows of a property are bounded by the retention of the rollups: about 17,000 rows at the defaults (8,640 of 5 minutes and 8,760 of an hour).
+- It deletes the whole history of a property that no longer exists in the connector, device or channel property tables, samples and rollups, in batches of 10,000 rows. That is what lets the newest sample of a deleted property go, and a deleted property's history stops at once instead of growing a row for every bucket for ever.
+- Buckets are aligned to UTC.
+
+Without an exchange process (no `fb:devices-module:exchange` running), nothing is compacted or expired. Run the same work from cron:
+
+```sh
+php bin/fb-console.php fb:devices-module:history:compact
+```
+
+It exits with 1 when the history of a property could not be compacted (the log says which). With `history.enabled: false` the exchange process starts no timer, and the command is the only way to compact and expire what was recorded before.
+
+**Reading.** `Devices\Models\History\Repository::find()` returns a `Series` for a property and a period: the columns `time`, `min`, `max`, `avg` and `last`, one index a point. The period is divided into the number of points asked for, and the tier that answers is the widest one that is not wider than a point and still holds the start of the period: the samples (kept 7 days), the 5-minute rollups (30) or the 1-hour rollups (365); when none fits, the narrowest that holds the start, and when none does, the hours. A rollup tier lacks the newest hour, or 5 minutes, which the compactor has not reached.
+
+With `history.enabled` off the module registers neither the recorder nor the subscribers, so no listener, flush timer, compaction timer or buffer exists. The compactor, the repository and the command stay registered, because the data outlives the switch.
 
 ## Automators
 

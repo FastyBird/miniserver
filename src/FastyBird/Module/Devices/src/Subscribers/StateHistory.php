@@ -5,6 +5,7 @@ namespace FastyBird\Module\Devices\Subscribers;
 use FastyBird\Core\EventLoop\Events\EventLoopStarted;
 use FastyBird\Core\EventLoop\Events\EventLoopStopped;
 use FastyBird\Core\EventLoop\Events\EventLoopStopping;
+use FastyBird\Core\Persistence\Events\DbTransactionFinished;
 use FastyBird\Module\Devices\Events;
 use FastyBird\Module\Devices\Models;
 use Override;
@@ -45,6 +46,7 @@ final class StateHistory implements EventDispatcher\EventSubscriberInterface
 			EventLoopStarted::class => 'loopStarted',
 			EventLoopStopping::class => 'loopStopped',
 			EventLoopStopped::class => 'loopStopped',
+			DbTransactionFinished::class => 'transactionFinished',
 		];
 	}
 
@@ -60,6 +62,14 @@ final class StateHistory implements EventDispatcher\EventSubscriberInterface
 	): void
 	{
 		$this->recorder->record($event->getProperty(), $event->getRead());
+	}
+
+	/**
+	 * A transaction that Database::transaction() ran is over: what the recorder held back inside one is written
+	 */
+	public function transactionFinished(): void
+	{
+		$this->recorder->retryDeferred();
 	}
 
 	public function loopStarted(): void
