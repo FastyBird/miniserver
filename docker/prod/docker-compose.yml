@@ -56,7 +56,7 @@ services:
       retries: 3
 
   database:
-    image: mariadb:10.11@sha256:07c0aaff7396b74cb7975cba78257178d188e30f531a5db2b617c48beef13c41
+    image: mariadb:13.0@sha256:0e4bb0f339feba125d1154fbacd36c16ec8518f52e44e1f82ecec7d6771caf39
     container_name: miniserver-database
     restart: unless-stopped
     environment:
