@@ -206,13 +206,7 @@ final class StateRootsProbe
 	{
 		$report = [];
 
-		$objects = [
-			'a DateTimeImmutable' => new DateTimeImmutable(self::DATE),
-			'a DateTime' => new DateTime(self::OTHER_DATE),
-			'a stdClass' => new stdClass(),
-			'an ArrayObject' => new ArrayObject([1]),
-			'a Generator' => self::generator(),
-		];
+		$objects = ['a DateTimeImmutable', 'a DateTime', 'a stdClass', 'an ArrayObject', 'a Generator'];
 
 		foreach (
 			[
@@ -228,8 +222,14 @@ final class StateRootsProbe
 			};
 
 			foreach ($fields as $field) {
-				foreach ($objects as $name => $object) {
-					$report[$class][$field . ' as ' . $name] = self::tryObject($mapper, $class, $field, $object);
+				foreach ($objects as $name) {
+					// a fresh one each time, a generator can be traversed once
+					$report[$class][$field . ' as ' . $name] = self::tryObject(
+						$mapper,
+						$class,
+						$field,
+						self::object($name),
+					);
 				}
 			}
 		}
@@ -282,6 +282,17 @@ final class StateRootsProbe
 			// orisai let any object through and the state's property then refused it, with an error
 			return ['error' => 'TypeError'];
 		}
+	}
+
+	private static function object(string $name): object
+	{
+		return match ($name) {
+			'a DateTimeImmutable' => new DateTimeImmutable(self::DATE),
+			'a DateTime' => new DateTime(self::OTHER_DATE),
+			'a stdClass' => new stdClass(),
+			'an ArrayObject' => new ArrayObject([1]),
+			default => self::generator(),
+		};
 	}
 
 	private static function generator(): Generator

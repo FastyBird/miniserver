@@ -28,10 +28,8 @@ class Property extends RedisDbStates\State implements DevicesStates\Property
 		#[CoreDocuments\Mapping\MapBlankToNull]
 		#[Configurator\MapFromKey(self::EXPECTED_VALUE_FIELD)]
 		private readonly bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue = null,
-		#[Configurator\MapFromKey(self::PENDING_FIELD)]
 		private readonly bool|DateTimeInterface $pending = false,
 		#[CoreDocuments\Mapping\MapBoolLike]
-		#[Configurator\MapFromKey(self::VALID_FIELD)]
 		private readonly bool $valid = false,
 		#[CoreDocuments\Mapping\MapBlankToNull]
 		#[Configurator\MapFromKey(self::CREATED_AT_FIELD)]
