@@ -735,6 +735,44 @@ final class RecorderTest extends Tests\Cases\Unit\HistoryTestCase
 	}
 
 	/**
+	 * A retry writes what a transaction held back, once. What is buffered afterwards, with no transaction in the
+	 * way, is the timer's to write and not the next transaction's end
+	 *
+	 * @throws Throwable
+	 */
+	public function testRetryWritesOnlyWhatATransactionHeldBack(): void
+	{
+		$recorder = $this->recorder(0, true);
+		$connection = $this->getDb();
+		$property = $this->property();
+
+		$connection->beginTransaction();
+
+		$recorder->record($property, $this->state(1.0, self::T0));
+		$recorder->flush();
+		$connection->commit();
+
+		$recorder->retryDeferred();
+
+		self::assertSame([[self::T0, 1.0]], $this->rows());
+
+		// Buffered with the loop running, nothing in the way: not deferred
+		$recorder->record($property, $this->state(2.0, self::T0 + 60));
+
+		self::assertSame(1, $recorder->getBufferedCount());
+
+		// Another transaction ends, and the retry finds nothing held back
+		$recorder->retryDeferred();
+
+		self::assertSame(1, $recorder->getBufferedCount());
+		self::assertSame([[self::T0, 1.0]], $this->rows());
+
+		$recorder->flush();
+
+		self::assertSame([[self::T0, 1.0], [self::T0 + 60, 2.0]], $this->rows());
+	}
+
+	/**
 	 * A failed write keeps the rows, up to the bound: past it the oldest go, and the log says so
 	 *
 	 * @throws Throwable
