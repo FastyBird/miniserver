@@ -1,5 +1,9 @@
 fbDevicesModule:
 	history:
 		enabled: true
-		flushInterval: 30
+		flushInterval: 250
 		minInterval: 7
+		retention:
+			samples: 2
+			fiveMinutes: 3
+			hours: 4

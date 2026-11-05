@@ -1,0 +1,4 @@
+fbDevicesModule:
+	history:
+		enabled: true
+		minInterval: 250
