@@ -525,6 +525,65 @@ jobs:
       - name: "Run bin/fb-console.php list inside the container"
         run: "docker exec miniserver php bin/fb-console.php list"
 
+      # The property value history is on by default, so the production container wires the recorder, its flush
+      # timer and the compactor, and the exchange program runs the compactor every 5 minutes. This step goes
+      # through the migrated tables, the production wiring and the console command in one run. It creates a
+      # connector with a property, which the compactor recognises as alive, and gives that property a sample
+      # one hour back. A second sample belongs to an id that is in no property table. After the command, the
+      # living property must have 5-minute rollups and keep its sample, and everything of the orphan must be
+      # gone (the compactor purges the history of a property that does not exist). The rows are removed again.
+      - name: "The property value history compacts inside the container"
+        run: |
+          docker exec -i miniserver php <<'PHP'
+          <?php
+          $env = static fn (string $name, string $default): string => getenv($name) !== false ? (string) getenv($name) : $default;
+          $pdo = new PDO(
+              sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4', $env('FB_APP_PARAMETER__DATABASE_HOST', '127.0.0.1'), $env('FB_APP_PARAMETER__DATABASE_PORT', '3306'), $env('FB_APP_PARAMETER__DATABASE_DBNAME', 'miniserver')),
+              $env('FB_APP_PARAMETER__DATABASE_USERNAME', 'miniserver'),
+              $env('FB_APP_PARAMETER__DATABASE_PASSWORD', 'miniserver'),
+              [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION],
+          );
+          $connector = random_bytes(16);
+          $property = random_bytes(16);
+          $orphan = random_bytes(16);
+          $count = static function (string $table, string $id, string $where = '1 = 1') use ($pdo): int {
+              $statement = $pdo->prepare(sprintf('SELECT COUNT(*) FROM %s WHERE property_id = ? AND %s', $table, $where));
+              $statement->execute([$id]);
+              return (int) $statement->fetchColumn();
+          };
+          $fail = static function (string $message): void {
+              fwrite(STDERR, $message . PHP_EOL);
+              exit(1);
+          };
+
+          $pdo->prepare("INSERT INTO fb_devices_module_connectors (connector_id, connector_identifier, connector_name, connector_enabled, connector_type, created_at, updated_at) VALUES (?, 'ci-history', NULL, 1, 'ci-history', NOW(), NOW())")->execute([$connector]);
+          $pdo->prepare("INSERT INTO fb_devices_module_connectors_properties (property_id, connector_id, property_type, property_identifier, property_name, property_settable, property_queryable, property_data_type, created_at, updated_at) VALUES (?, ?, 'dynamic', 'ci-history', NULL, 0, 0, 'float', NOW(), NOW())")->execute([$property, $connector]);
+          $sample = $pdo->prepare('INSERT INTO fb_devices_module_history_samples (property_id, sampled_at, value) VALUES (?, UNIX_TIMESTAMP() - 3600, ?)');
+          $sample->execute([$property, 21.5]);
+          $sample->execute([$orphan, 9.5]);
+
+          passthru('php bin/fb-console.php fb:devices-module:history:compact --no-interaction', $status);
+
+          $rollups = $count('fb_devices_module_history_rollups', $property, 'resolution = 300');
+          echo sprintf('property: %d 5-minute rollups, %d sample; orphan: %d rollups, %d samples', $rollups, $count('fb_devices_module_history_samples', $property), $count('fb_devices_module_history_rollups', $orphan), $count('fb_devices_module_history_samples', $orphan)) . PHP_EOL;
+
+          $problems = [];
+          if ($status !== 0) { $problems[] = 'the command exited with ' . $status; }
+          if ($rollups < 5) { $problems[] = 'the compactor built fewer than 5 rollups of 5 minutes for a property that exists'; }
+          if ($count('fb_devices_module_history_samples', $property) !== 1) { $problems[] = 'the sample of the property that exists is gone'; }
+          if ($count('fb_devices_module_history_samples', $orphan) !== 0 || $count('fb_devices_module_history_rollups', $orphan) !== 0) { $problems[] = 'the history of a property that does not exist was not purged'; }
+
+          foreach (['fb_devices_module_history_rollups', 'fb_devices_module_history_samples'] as $table) {
+              $pdo->prepare(sprintf('DELETE FROM %s WHERE property_id IN (?, ?)', $table))->execute([$property, $orphan]);
+          }
+          $pdo->prepare('DELETE FROM fb_devices_module_connectors_properties WHERE property_id = ?')->execute([$property]);
+          $pdo->prepare('DELETE FROM fb_devices_module_connectors WHERE connector_id = ?')->execute([$connector]);
+
+          if ($problems !== []) { $fail(implode('; ', $problems)); }
+          PHP
+          docker exec miniserver php bin/fb-console.php list | grep -q "fb:devices-module:history:compact" \
+            || { echo "fb:devices-module:history:compact is not registered"; exit 1; }
+
       - name: "All five supervisor programs are RUNNING"
         run: |
           status=$(docker exec miniserver supervisorctl -c /etc/supervisor/supervisord.conf status)

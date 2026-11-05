@@ -5,6 +5,8 @@ namespace FastyBird\Module\Devices\Tests\Cases\Unit\Subscribers;
 use Closure;
 use DateTimeImmutable;
 use FastyBird\Core\EventLoop\Events as EventLoopEvents;
+use FastyBird\Core\Persistence\Events as PersistenceEvents;
+use FastyBird\Core\Persistence\Helpers;
 use FastyBird\Core\Values\Types as ValuesTypes;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
@@ -61,6 +63,7 @@ final class StateHistoryTest extends Tests\Cases\Unit\HistoryTestCase
 				EventLoopEvents\EventLoopStarted::class => 'loopStarted',
 				EventLoopEvents\EventLoopStopping::class => 'loopStopped',
 				EventLoopEvents\EventLoopStopped::class => 'loopStopped',
+				PersistenceEvents\DbTransactionFinished::class => 'transactionFinished',
 			],
 			Subscribers\StateHistory::getSubscribedEvents(),
 		);
@@ -158,6 +161,43 @@ final class StateHistoryTest extends Tests\Cases\Unit\HistoryTestCase
 		$subscriber->loopStopped();
 
 		self::assertSame(2, $this->countRows());
+	}
+
+	/**
+	 * A state written inside a transaction that Database::transaction() runs is held back by the recorder, and the
+	 * subscriber has it written when the transaction is over
+	 *
+	 * @throws Throwable
+	 */
+	public function testStateWrittenInsideATransactionIsWrittenWhenItIsOver(): void
+	{
+		$recorder = $this->recorder(10, false);
+
+		$subscriber = new Subscribers\StateHistory(
+			$recorder,
+			$this->createMock(EventLoop\LoopInterface::class),
+			30,
+		);
+
+		$dispatcher = $this->getContainer()->getByType(ComponentEventDispatcher\EventDispatcher::class);
+		$dispatcher->addSubscriber($subscriber);
+
+		$id = Uuid\Uuid::uuid4()->toString();
+		$event = $this->event(DevicesEvents\ChannelPropertyStateEntityUpdated::class, 'channel', $id);
+
+		$this->getContainer()->getByType(Helpers\Database::class)->transaction(
+			function () use ($subscriber, $event, $recorder, $id): void {
+				$this->dispatch($subscriber, $event);
+
+				// Held back: nothing is written, and nothing is lost
+				self::assertSame(1, $recorder->getBufferedCount());
+				self::assertSame([], $this->rows($id));
+			},
+		);
+
+		// Database::transaction() dispatched DbTransactionFinished, which the subscriber answered
+		self::assertSame(0, $recorder->getBufferedCount());
+		self::assertSame([[self::T0, 21.5]], $this->rows($id));
 	}
 
 	/**

@@ -18,6 +18,13 @@ use function sprintf;
 class ConnectionWrapper extends DBAL\Connection
 {
 
+	/**
+	 * Every statement the connection executed, in order, for a test that counts them
+	 *
+	 * @var list<string>
+	 */
+	public array $statements = [];
+
 	private string $dbName;
 
 	/**
@@ -45,6 +52,20 @@ class ConnectionWrapper extends DBAL\Connection
 		unset($params['dbname']);
 
 		parent::__construct($params, $driver, $config, $eventManager);
+	}
+
+	/**
+	 * @param array<mixed> $params
+	 * @param array<mixed> $types
+	 *
+	 * @throws DBAL\Exception
+	 */
+	#[Override]
+	public function executeStatement(string $sql, array $params = [], array $types = []): int|string
+	{
+		$this->statements[] = $sql;
+
+		return parent::executeStatement($sql, $params, $types);
 	}
 
 	/**

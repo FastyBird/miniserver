@@ -40,9 +40,12 @@ use function var_export;
  * - a value equal to the last one stored is not stored, a gap after a gap neither, and a numeric change
  *   smaller than the property's step is not stored either. The last one stored is remembered in memory, so
  *   the first change a process sees for a property is stored even when it repeats the row of an earlier run;
- * - a change within minInterval seconds of the last one stored waits, and a later change replaces it, so
- *   at most one sample per property and minInterval seconds is written and a spike shorter than that is
- *   not kept. A change that comes back to the last stored value drops the waiting one;
+ * - a change within minInterval seconds of the last one stored waits, and a later change replaces it, with
+ *   its own value and time. That bounds how often a property is written, at most one write per property in
+ *   each window of minInterval seconds, and a spike shorter than that is not kept. It does not space the
+ *   samples: the waiting change keeps its own time, so two stored samples can be closer than minInterval
+ *   seconds. A change that comes back to the last stored value drops the waiting one, and a repeat of the
+ *   waiting value leaves it as it is, with the earlier time;
  * - the time of a sample is the `updated_at` of the state, else the clock, in UTC epoch seconds.
  *
  * Samples are collected in a buffer and written by flush() in one multi-row INSERT inside a transaction.
@@ -50,6 +53,14 @@ use function var_export;
  * nothing would flush later, so a sample is written at once. A failed write keeps the rows for the next
  * flush, up to MAX_BUFFERED_ROWS: past that the oldest are dropped, and the log says so. Recording never
  * throws, because a state that was just written must not fail on its history.
+ *
+ * It does not write inside a transaction of the caller. Database::transaction() nested in one marks the outer
+ * transaction rollback-only when its INSERT fails, which would fail the caller for a history error. State
+ * writes do not run inside a transaction today; if one ever does, the rows stay buffered, and are written by the
+ * next flush, or by retryDeferred() when the caller's transaction ends through Database::transaction(), which
+ * dispatches DbTransactionFinished. The one gap: a process whose loop does not run, whose transaction was
+ * opened on the connection itself (no event) and which ends before anything flushes again, loses the rows it
+ * deferred. Nothing does that today.
  */
 final class Recorder
 {
@@ -72,6 +83,8 @@ final class Recorder
 	private array $buffer = [];
 
 	private int $dropped = 0;
+
+	private bool $deferred = false;
 
 	public function __construct(
 		private readonly DBAL\Connection $connection,
@@ -155,6 +168,21 @@ final class Recorder
 		$this->write();
 	}
 
+	/**
+	 * Writes the rows a transaction of the caller held back, once it is over. It leaves what waits for minInterval
+	 * alone
+	 */
+	public function retryDeferred(): void
+	{
+		if (!$this->deferred) {
+			return;
+		}
+
+		$this->deferred = false;
+
+		$this->write();
+	}
+
 	public function getBufferedCount(): int
 	{
 		return count($this->buffer);
@@ -179,6 +207,11 @@ final class Recorder
 			unset($this->waiting[$key]);
 
 			$waiting = null;
+		}
+
+		// A repeat of the waiting value is the same change: it keeps the time it first had
+		if ($waiting !== null && $waiting['value'] === $value) {
+			return;
 		}
 
 		$last = $this->stored[$key] ?? null;
@@ -228,6 +261,21 @@ final class Recorder
 	private function write(): void
 	{
 		if ($this->buffer === []) {
+			return;
+		}
+
+		if ($this->connection->isTransactionActive()) {
+			$this->deferred = true;
+
+			$this->logger->debug(
+				'History samples are kept for a later flush, a transaction is active',
+				[
+					'source' => Sources\Module::DEVICES->value,
+					'type' => 'history-recorder',
+					'buffered' => count($this->buffer),
+				],
+			);
+
 			return;
 		}
 
