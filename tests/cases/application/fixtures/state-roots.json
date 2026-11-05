@@ -1,0 +1,827 @@
+{
+    "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ChannelProperty": {
+        "the fields of a stored one": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:66:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ChannelProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "every field": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"on\",\"expected_value\":5.5,\"pending\":\"2020-04-01T12:00:00+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\"}",
+            "serialized": "O:66:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ChannelProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:2:\"on\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";d:5.5;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "blank and null fields": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:66:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ChannelProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "the valid flag as 1": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:66:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ChannelProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "the valid flag as a text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:66:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ChannelProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "objects": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"switch_on\",\"expected_value\":\"2020-04-01T12:00:00+00:00\",\"pending\":\"2021-11-30T23:59:59+02:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\"}",
+            "serialized": "O:66:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ChannelProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";E:48:\"FastyBird\\Core\\Values\\Types\\Payloads\\Switcher:ON\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "no id": {
+            "refused": true
+        }
+    },
+    "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ConnectorProperty": {
+        "the fields of a stored one": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:68:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ConnectorProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "every field": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"on\",\"expected_value\":5.5,\"pending\":\"2020-04-01T12:00:00+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\"}",
+            "serialized": "O:68:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ConnectorProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:2:\"on\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";d:5.5;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "blank and null fields": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:68:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ConnectorProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "the valid flag as 1": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:68:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ConnectorProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "the valid flag as a text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:68:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ConnectorProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "objects": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"switch_on\",\"expected_value\":\"2020-04-01T12:00:00+00:00\",\"pending\":\"2021-11-30T23:59:59+02:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\"}",
+            "serialized": "O:68:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\ConnectorProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";E:48:\"FastyBird\\Core\\Values\\Types\\Payloads\\Switcher:ON\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "no id": {
+            "refused": true
+        }
+    },
+    "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\DeviceProperty": {
+        "the fields of a stored one": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:65:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\DeviceProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "every field": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"on\",\"expected_value\":5.5,\"pending\":\"2020-04-01T12:00:00+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\"}",
+            "serialized": "O:65:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\DeviceProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:2:\"on\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";d:5.5;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "blank and null fields": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:65:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\DeviceProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "the valid flag as 1": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:65:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\DeviceProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "the valid flag as a text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:65:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\DeviceProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "objects": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"switch_on\",\"expected_value\":\"2020-04-01T12:00:00+00:00\",\"pending\":\"2021-11-30T23:59:59+02:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\"}",
+            "serialized": "O:65:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\DeviceProperty\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";E:48:\"FastyBird\\Core\\Values\\Types\\Payloads\\Switcher:ON\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "no id": {
+            "refused": true
+        }
+    },
+    "FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property": {
+        "the fields of a stored one": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "the required field": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "every field": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"on\",\"expected_value\":5.5,\"pending\":\"2020-04-01T12:00:00+00:00\",\"valid\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\"}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:2:\"on\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";d:5.5;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "blank and null fields": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "unknown fields": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":3,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";i:3;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "a no-break space as a value": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"\u00a0\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:2:\"\u00a0\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "the dates as objects, the payloads as cases": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"switch_on\",\"expected_value\":\"2020-04-01T12:00:00+00:00\",\"pending\":\"2021-11-30T23:59:59+02:00\",\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\"}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";E:48:\"FastyBird\\Core\\Values\\Types\\Payloads\\Switcher:ON\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:8:\"DateTime\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "the values as objects of the other types": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"btn_pressed\",\"expected_value\":\"cover_open\",\"pending\":\"2020-04-01T12:00:00+00:00\",\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";E:51:\"FastyBird\\Core\\Values\\Types\\Payloads\\Button:PRESSED\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";E:47:\"FastyBird\\Core\\Values\\Types\\Payloads\\Cover:OPEN\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "a UUID object": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "no id": {
+            "refused": true
+        },
+        "an id which is not a UUID": {
+            "refused": true
+        },
+        "an id of a UUID without dashes": {
+            "refused": true
+        },
+        "an id which is a number": {
+            "refused": true
+        },
+        "actual_value is true": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":true,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";b:1;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is false": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":false,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";b:0;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is 0": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":0,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";i:0;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is 5": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":5,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";i:5;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is -50": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":-50,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";i:-50;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is 5.0": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":5.0,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";d:5;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is 5.5": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":5.5,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";d:5.5;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \"text\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"text\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:4:\"text\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \"5\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"5\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:1:\"5\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \"true\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"true\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:4:\"true\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \" padded \"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\" padded \",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:8:\" padded \";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \"switch_on\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"switch_on\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:9:\"switch_on\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \"btn_pressed\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"btn_pressed\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:11:\"btn_pressed\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \"cover_open\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"cover_open\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:10:\"cover_open\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is a date text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"2020-04-01T12:00:00+00:00\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:25:\"2020-04-01T12:00:00+00:00\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is a date text with an offset": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"2021-11-30T23:59:59+02:00\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:25:\"2021-11-30T23:59:59+02:00\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is a date text in another format": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"2020-04-01 12:00:00\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:19:\"2020-04-01 12:00:00\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \"N/A\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":\"N/A\",\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";s:3:\"N/A\";s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is null": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \"\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \" \"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is \"\\f\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "actual_value is a list": {
+            "refused": true
+        },
+        "actual_value is an empty list": {
+            "refused": true
+        },
+        "actual_value is a map": {
+            "refused": true
+        },
+        "expected_value is true": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":true,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";b:1;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is false": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":false,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";b:0;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is 0": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":0,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";i:0;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is 5": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":5,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";i:5;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is -50": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":-50,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";i:-50;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is 5.0": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":5.0,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";d:5;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is 5.5": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":5.5,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";d:5.5;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \"text\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"text\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:4:\"text\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \"5\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"5\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:1:\"5\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \"true\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"true\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:4:\"true\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \" padded \"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\" padded \",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:8:\" padded \";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \"switch_on\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"switch_on\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:9:\"switch_on\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \"btn_pressed\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"btn_pressed\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:11:\"btn_pressed\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \"cover_open\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"cover_open\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:10:\"cover_open\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is a date text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"2020-04-01T12:00:00+00:00\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:25:\"2020-04-01T12:00:00+00:00\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is a date text with an offset": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"2021-11-30T23:59:59+02:00\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:25:\"2021-11-30T23:59:59+02:00\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is a date text in another format": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"2020-04-01 12:00:00\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:19:\"2020-04-01 12:00:00\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \"N/A\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":\"N/A\",\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";s:3:\"N/A\";s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is null": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \"\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \" \"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is \"\\f\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "expected_value is a list": {
+            "refused": true
+        },
+        "expected_value is an empty list": {
+            "refused": true
+        },
+        "expected_value is a map": {
+            "refused": true
+        },
+        "pending is false": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "pending is true": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":true,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:1;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "pending is a date text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":\"2020-04-01T12:00:00+00:00\",\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "pending is a date text with an offset": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":\"2021-11-30T23:59:59+02:00\",\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "pending is a date text in another format": {
+            "refused": true
+        },
+        "pending is an empty text": {
+            "refused": true
+        },
+        "pending is a text": {
+            "refused": true
+        },
+        "pending is 1": {
+            "refused": true
+        },
+        "pending is 0": {
+            "refused": true
+        },
+        "pending is null": {
+            "refused": true
+        },
+        "pending is a list": {
+            "refused": true
+        },
+        "pending is a timestamp": {
+            "refused": true
+        },
+        "valid as true": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as false": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as 1": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as 0": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as \"1\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as \"0\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as \"true\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as \"false\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as \"TRUE\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":true,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:1;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as \"False\"": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "valid as \"yes\"": {
+            "refused": true
+        },
+        "valid as \"no\"": {
+            "refused": true
+        },
+        "valid as \"on\"": {
+            "refused": true
+        },
+        "valid as \"off\"": {
+            "refused": true
+        },
+        "valid as \"01\"": {
+            "refused": true
+        },
+        "valid as \" 1\"": {
+            "refused": true
+        },
+        "valid as \"1 \"": {
+            "refused": true
+        },
+        "valid as \"-1\"": {
+            "refused": true
+        },
+        "valid as \"2\"": {
+            "refused": true
+        },
+        "valid as 2": {
+            "refused": true
+        },
+        "valid as -1": {
+            "refused": true
+        },
+        "valid as 1.0": {
+            "refused": true
+        },
+        "valid as 0.0": {
+            "refused": true
+        },
+        "valid as \"\"": {
+            "refused": true
+        },
+        "valid as null": {
+            "refused": true
+        },
+        "valid as a list": {
+            "refused": true
+        },
+        "created_at is null": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "updated_at is null": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "created_at is an empty text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "updated_at is an empty text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "created_at is a blank text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "updated_at is a blank text": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "created_at is a date": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "updated_at is a date": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":\"2020-04-01T12:00:00+00:00\"}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}}"
+        },
+        "created_at is a date with an offset": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2021-11-30T23:59:59+02:00\",\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "updated_at is a date with an offset": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":\"2021-11-30T23:59:59+02:00\"}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "created_at is a day which the month has not": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-03-02T12:00:00+00:00\",\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-03-02 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "updated_at is a day which the month has not": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":\"2020-03-02T12:00:00+00:00\"}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-03-02 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}}"
+        },
+        "created_at is Zulu": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:2;s:8:\"timezone\";s:1:\"Z\";}s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";N;}"
+        },
+        "updated_at is Zulu": {
+            "json": "{\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\",\"actual_value\":null,\"expected_value\":null,\"pending\":false,\"valid\":false,\"created_at\":null,\"updated_at\":\"2020-04-01T12:00:00+00:00\"}",
+            "serialized": "O:59:\"FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\":7:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000actualValue\";N;s:74:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000expectedValue\";N;s:68:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000pending\";b:0;s:66:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000valid\";b:0;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000createdAt\";N;s:70:\"\u0000FastyBird\\Bridge\\RedisDbPluginDevicesModule\\States\\Property\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:2;s:8:\"timezone\";s:1:\"Z\";}}"
+        },
+        "created_at is fractions of a second": {
+            "refused": true
+        },
+        "updated_at is fractions of a second": {
+            "refused": true
+        },
+        "created_at is another format": {
+            "refused": true
+        },
+        "updated_at is another format": {
+            "refused": true
+        },
+        "created_at is a date without a time": {
+            "refused": true
+        },
+        "updated_at is a date without a time": {
+            "refused": true
+        },
+        "created_at is a timestamp": {
+            "refused": true
+        },
+        "updated_at is a timestamp": {
+            "refused": true
+        },
+        "created_at is false": {
+            "refused": true
+        },
+        "updated_at is false": {
+            "refused": true
+        },
+        "created_at is a list": {
+            "refused": true
+        },
+        "updated_at is a list": {
+            "refused": true
+        }
+    },
+    "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action": {
+        "the fields of a stored one": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "the required field": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "every field": {
+            "json": "{\"validation_result\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\",\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:1;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "blank dates": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "unknown fields": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "the dates as objects": {
+            "refused": true
+        },
+        "no id": {
+            "refused": true
+        },
+        "an id which is not a UUID": {
+            "refused": true
+        },
+        "validation_result as true": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:1;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as false": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as 1": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:1;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as 0": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"1\"": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:1;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"0\"": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"true\"": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:1;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"false\"": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"TRUE\"": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:1;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"False\"": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"yes\"": {
+            "refused": true
+        },
+        "validation_result as \"01\"": {
+            "refused": true
+        },
+        "validation_result as \"2\"": {
+            "refused": true
+        },
+        "validation_result as 2": {
+            "refused": true
+        },
+        "validation_result as 1.0": {
+            "refused": true
+        },
+        "validation_result as \"\"": {
+            "refused": true
+        },
+        "validation_result as null": {
+            "refused": true
+        },
+        "validation_result as a list": {
+            "refused": true
+        },
+        "created_at is an empty text": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "created_at is a date": {
+            "json": "{\"validation_result\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "created_at is a day which the month has not": {
+            "json": "{\"validation_result\":false,\"created_at\":\"2020-03-02T12:00:00+00:00\",\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-03-02 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "created_at is another format": {
+            "refused": true
+        },
+        "created_at is a timestamp": {
+            "refused": true
+        },
+        "created_at is a list": {
+            "refused": true
+        },
+        "updated_at is an empty text": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
+        },
+        "updated_at is a date": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":\"2020-04-01T12:00:00+00:00\",\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}}"
+        },
+        "updated_at is a day which the month has not": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":\"2020-03-02T12:00:00+00:00\",\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-03-02 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}}"
+        },
+        "updated_at is another format": {
+            "refused": true
+        },
+        "updated_at is a timestamp": {
+            "refused": true
+        },
+        "updated_at is a list": {
+            "refused": true
+        }
+    },
+    "FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition": {
+        "the fields of a stored one": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "the required field": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "every field": {
+            "json": "{\"validation_result\":true,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":\"2021-11-30T23:59:59+02:00\",\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:1;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2021-11-30 23:59:59.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+02:00\";}}"
+        },
+        "blank dates": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "unknown fields": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "the dates as objects": {
+            "refused": true
+        },
+        "no id": {
+            "refused": true
+        },
+        "an id which is not a UUID": {
+            "refused": true
+        },
+        "validation_result as true": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:1;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as false": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as 1": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:1;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as 0": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"1\"": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:1;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"0\"": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"true\"": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:1;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"false\"": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"TRUE\"": {
+            "json": "{\"validation_result\":true,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:1;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"False\"": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "validation_result as \"yes\"": {
+            "refused": true
+        },
+        "validation_result as \"01\"": {
+            "refused": true
+        },
+        "validation_result as \"2\"": {
+            "refused": true
+        },
+        "validation_result as 2": {
+            "refused": true
+        },
+        "validation_result as 1.0": {
+            "refused": true
+        },
+        "validation_result as \"\"": {
+            "refused": true
+        },
+        "validation_result as null": {
+            "refused": true
+        },
+        "validation_result as a list": {
+            "refused": true
+        },
+        "created_at is an empty text": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "created_at is a date": {
+            "json": "{\"validation_result\":false,\"created_at\":\"2020-04-01T12:00:00+00:00\",\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "created_at is a day which the month has not": {
+            "json": "{\"validation_result\":false,\"created_at\":\"2020-03-02T12:00:00+00:00\",\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-03-02 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "created_at is another format": {
+            "refused": true
+        },
+        "created_at is a timestamp": {
+            "refused": true
+        },
+        "created_at is a list": {
+            "refused": true
+        },
+        "updated_at is an empty text": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
+        },
+        "updated_at is a date": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":\"2020-04-01T12:00:00+00:00\",\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-04-01 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}}"
+        },
+        "updated_at is a day which the month has not": {
+            "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":\"2020-03-02T12:00:00+00:00\",\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
+            "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";O:17:\"DateTimeImmutable\":3:{s:4:\"date\";s:26:\"2020-03-02 12:00:00.000000\";s:13:\"timezone_type\";i:1;s:8:\"timezone\";s:6:\"+00:00\";}}"
+        },
+        "updated_at is another format": {
+            "refused": true
+        },
+        "updated_at is a timestamp": {
+            "refused": true
+        },
+        "updated_at is a list": {
+            "refused": true
+        }
+    }
+}

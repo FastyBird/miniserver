@@ -27,6 +27,7 @@ use SplFileInfo;
 use Ramsey\Uuid\Uuid;
 use stdClass;
 use Throwable;
+use TypeError;
 use UnexpectedValueException;
 use function array_key_exists;
 use function array_keys;
@@ -222,6 +223,9 @@ final class StateRootsProbe
 						$report[$class][$field . ' as ' . $name] = ['json' => Utils\Json::encode($state->toArray())];
 					} catch (CoreDocuments\Exceptions\MappingFailed $ex) {
 						$report[$class][$field . ' as ' . $name] = ['refused' => (string) strtok($ex->getMessage(), "\n")];
+					} catch (TypeError) {
+						// orisai let any object through and the state's property then refused it, with an error
+						$report[$class][$field . ' as ' . $name] = ['error' => 'TypeError'];
 					}
 				}
 			}
