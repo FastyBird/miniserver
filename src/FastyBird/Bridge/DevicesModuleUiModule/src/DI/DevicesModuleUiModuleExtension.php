@@ -5,6 +5,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\DI;
 use FastyBird\Bridge\DevicesModuleUiModule;
 use FastyBird\Bridge\DevicesModuleUiModule\Consumers;
 use FastyBird\Bridge\DevicesModuleUiModule\Hydrators;
+use FastyBird\Bridge\DevicesModuleUiModule\Models;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Core\Boot;
@@ -66,6 +67,17 @@ final class DevicesModuleUiModuleExtension extends NetteDI\CompilerExtension
 		$logger = $builder->addDefinition($this->prefix('logger'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(DevicesModuleUiModule\Logger::class)
 			->setAutowired(false);
+
+		/**
+		 * MODELS
+		 */
+
+		// What the Ui module's history endpoint reads a data source's history through
+		$builder->addDefinition(
+			$this->prefix('models.history.propertyReader'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(Models\History\PropertyReader::class);
 
 		/**
 		 * SUBSCRIBERS

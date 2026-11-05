@@ -66,6 +66,7 @@ final class UiExtensionTest extends Tests\Cases\Unit\DbTestCase
 
 		self::assertNotNull($this->getContainer()->getByType(Controllers\DashboardsV1::class, false));
 		self::assertNotNull($this->getContainer()->getByType(Controllers\DataSourcesV1::class, false));
+		self::assertNotNull($this->getContainer()->getByType(Controllers\DataSourceHistoryV1::class, false));
 		self::assertNotNull($this->getContainer()->getByType(Controllers\DisplayV1::class, false));
 		self::assertNotNull($this->getContainer()->getByType(Controllers\GroupsV1::class, false));
 		self::assertNotNull($this->getContainer()->getByType(Controllers\TabsV1::class, false));
@@ -86,6 +87,7 @@ final class UiExtensionTest extends Tests\Cases\Unit\DbTestCase
 		self::assertNotNull($this->getContainer()->getByType(Schemas\Widgets\Display\GroupedButton::class, false));
 		self::assertNotNull($this->getContainer()->getByType(Schemas\Widgets\Display\Slider::class, false));
 		self::assertNotNull($this->getContainer()->getByType(Schemas\Widgets\DataSources\Generic::class, false));
+		self::assertNotNull($this->getContainer()->getByType(Schemas\Widgets\DataSources\History::class, false));
 
 		self::assertNotNull($this->getContainer()->getByType(Hydrators\Dashboards\Dashboard::class, false));
 		self::assertNotNull($this->getContainer()->getByType(Hydrators\Dashboards\Tabs\Tab::class, false));

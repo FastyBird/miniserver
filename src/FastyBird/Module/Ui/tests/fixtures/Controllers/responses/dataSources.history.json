@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "author": "FastyBird team",
+    "copyright": "FastyBird s.r.o"
+  },
+  "jsonapi": {
+    "version": "1.1"
+  },
+  "links": {
+    "self": "/api/ui-module/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources/764937a7-8565-472e-8e12-fe97cd55a377/history?filter%5Bpoints%5D=10"
+  },
+  "data": {
+    "type": "com.fastybird.ui-module/data-source/history",
+    "id": "764937a7-8565-472e-8e12-fe97cd55a377",
+    "attributes": {
+      "from": "2020-03-31T12:00:00+00:00",
+      "to": "2020-04-01T12:00:00+00:00",
+      "resolution": 10,
+      "tier": "samples",
+      "unit": "°C",
+      "data_type": "float",
+      "time": [
+        1585656000,
+        1585742400
+      ],
+      "min": [
+        1.5,
+        null
+      ],
+      "max": [
+        2.5,
+        null
+      ],
+      "avg": [
+        2,
+        null
+      ],
+      "last": [
+        2.5,
+        null
+      ]
+    },
+    "relationships": {
+      "data_source": {
+        "links": {
+          "related": "/api/ui-module/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources/764937a7-8565-472e-8e12-fe97cd55a377"
+        },
+        "data": {
+          "type": "com.fastybird.ui-module/data-source/generic",
+          "id": "764937a7-8565-472e-8e12-fe97cd55a377"
+        }
+      }
+    },
+    "links": {
+      "self": "/api/ui-module/v1/widgets/15553443-4564-454d-af04-0dfeef08aa96/data-sources/764937a7-8565-472e-8e12-fe97cd55a377/history"
+    }
+  }
+}

@@ -314,6 +314,14 @@ final class UiExtension extends NetteDI\CompilerExtension implements Translation
 			->addSetup('setLogger', [$logger])
 			->addTag('nette.inject');
 
+		$builder->addDefinition(
+			$this->prefix('controllers.dataSourceHistory'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(UiControllers\DataSourceHistoryV1::class)
+			->addSetup('setLogger', [$logger])
+			->addTag('nette.inject');
+
 		$builder->addDefinition($this->prefix('controllers.display'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(UiControllers\DisplayV1::class)
 			->addSetup('setLogger', [$logger])
@@ -399,6 +407,12 @@ final class UiExtension extends NetteDI\CompilerExtension implements Translation
 
 		$builder->addDefinition($this->prefix('schemas.display.slider'), new NetteDI\Definitions\ServiceDefinition())
 			->setType(Schemas\Widgets\Display\Slider::class);
+
+		$builder->addDefinition(
+			$this->prefix('schemas.dataSource.history'),
+			new NetteDI\Definitions\ServiceDefinition(),
+		)
+			->setType(Schemas\Widgets\DataSources\History::class);
 
 		$builder->addDefinition(
 			$this->prefix('schemas.dataSource.generic'),

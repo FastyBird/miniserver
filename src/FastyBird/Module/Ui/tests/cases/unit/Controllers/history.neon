@@ -1,0 +1,3 @@
+services:
+	-
+		factory: FastyBird\Module\Ui\Tests\Fixtures\Dummy\DummyHistoryReader
