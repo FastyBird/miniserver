@@ -201,46 +201,35 @@ final class StateRootsProbe
 	 * @return array<string, array<string, array<string, string>>>
 	 *
 	 * @throws JsonException
-	 * @throws CoreDocuments\Exceptions\MappingFailed
 	 */
 	private static function objects(CoreDocuments\Mapping\Mapper $mapper): array
 	{
 		$report = [];
-		$options = new CoreDocuments\Mapping\MappingOptions(allowUnknownFields: true);
-		$stored = ['id' => self::ID];
+
+		$objects = [
+			'a DateTimeImmutable' => new DateTimeImmutable(self::DATE),
+			'a DateTime' => new DateTime(self::OTHER_DATE),
+			'a stdClass' => new stdClass(),
+			'an ArrayObject' => new ArrayObject([1]),
+			'a Generator' => self::generator(),
+		];
 
 		foreach (
 			[
-				RedisDbPluginDevicesModuleStates\Property::class => ['actual_value', 'expected_value', 'pending', 'created_at', 'updated_at'],
-				RedisDbPluginTriggersModuleStates\Action::class => ['created_at', 'updated_at'],
-				RedisDbPluginTriggersModuleStates\Condition::class => ['created_at', 'updated_at'],
-			] as $class => $fields
+				['actual_value', 'expected_value', 'pending', 'created_at', 'updated_at'],
+				['created_at', 'updated_at'],
+				['created_at', 'updated_at'],
+			] as $index => $fields
 		) {
-			foreach ($fields as $field) {
-				foreach (
-					[
-						'a DateTimeImmutable' => new DateTimeImmutable(self::DATE),
-						'a DateTime' => new DateTime(self::OTHER_DATE),
-						'a stdClass' => new stdClass(),
-						'an ArrayObject' => new ArrayObject([1]),
-						'a Generator' => (static function (): Generator {
-							yield 1;
-						})(),
-					] as $name => $object
-				) {
-					try {
-						$state = $mapper->map([...$stored, $field => $object], $class, $options);
+			$class = match ($index) {
+				0 => RedisDbPluginDevicesModuleStates\Property::class,
+				1 => RedisDbPluginTriggersModuleStates\Action::class,
+				default => RedisDbPluginTriggersModuleStates\Condition::class,
+			};
 
-						$report[$class][$field . ' as ' . $name] = ['json' => Utils\Json::encode($state->toArray())];
-					} catch (CoreDocuments\Exceptions\MappingFailed $ex) {
-						$report[$class][$field . ' as ' . $name] = ['refused' => (string) strtok(
-							$ex->getMessage(),
-							"\n",
-						)];
-					} catch (TypeError) {
-						// orisai let any object through and the state's property then refused it, with an error
-						$report[$class][$field . ' as ' . $name] = ['error' => 'TypeError'];
-					}
+			foreach ($fields as $field) {
+				foreach ($objects as $name => $object) {
+					$report[$class][$field . ' as ' . $name] = self::tryObject($mapper, $class, $field, $object);
 				}
 			}
 		}
@@ -253,19 +242,71 @@ final class StateRootsProbe
 					'a Cover' => Payloads\Cover::STOP,
 				] as $name => $payload
 			) {
-				$state = $mapper->map(
-					[...$stored, $field => $payload],
+				$report[RedisDbPluginDevicesModuleStates\Property::class][$field . ' as ' . $name] = self::tryObject(
+					$mapper,
 					RedisDbPluginDevicesModuleStates\Property::class,
-					$options,
+					$field,
+					$payload,
 				);
-
-				$report[RedisDbPluginDevicesModuleStates\Property::class][$field . ' as ' . $name] = [
-					'json' => Utils\Json::encode($state->toArray()),
-				];
 			}
 		}
 
 		return $report;
+	}
+
+	/**
+	 * @param class-string<RedisDbStates\State> $class
+	 *
+	 * @return array<string, string>
+	 *
+	 * @throws JsonException
+	 */
+	private static function tryObject(
+		CoreDocuments\Mapping\Mapper $mapper,
+		string $class,
+		string $field,
+		object $object,
+	): array
+	{
+		try {
+			$state = $mapper->map(
+				['id' => self::ID, $field => $object],
+				$class,
+				new CoreDocuments\Mapping\MappingOptions(allowUnknownFields: true),
+			);
+
+			return ['json' => Utils\Json::encode($state->toArray())];
+		} catch (CoreDocuments\Exceptions\MappingFailed $ex) {
+			return ['refused' => (string) strtok($ex->getMessage(), "\n")];
+		} catch (TypeError) {
+			// orisai let any object through and the state's property then refused it, with an error
+			return ['error' => 'TypeError'];
+		}
+	}
+
+	private static function generator(): Generator
+	{
+		yield 1;
+	}
+
+	/**
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array{string, array<string, mixed>}
+	 */
+	private static function json(array $data): array
+	{
+		return ['json', $data];
+	}
+
+	/**
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array{string, array<string, mixed>}
+	 */
+	private static function array(array $data): array
+	{
+		return ['array', $data];
 	}
 
 	/**
@@ -320,54 +361,42 @@ final class StateRootsProbe
 		];
 
 		$cases = [
-			'the fields of a stored one' => ['json', $stored],
-			'the required field' => ['json', ['id' => self::ID]],
-			'every field' => [
-				'json',
-				array_merge($stored, [
-					'actual_value' => 'on',
-					'expected_value' => 5.5,
-					'pending' => self::DATE,
-					'valid' => true,
-					'created_at' => self::DATE,
-					'updated_at' => self::OTHER_DATE,
-				]),
-			],
-			'blank and null fields' => [
-				'json',
-				array_merge(
-					$stored,
-					['actual_value' => '', 'expected_value' => " \t", 'created_at' => '', 'updated_at' => ' '],
-				),
-			],
-			'unknown fields' => ['json', array_merge($stored, ['source' => 'x', 'x' => [1], 'actual_value' => 3])],
-			'a no-break space as a value' => ['json', array_merge($stored, ['actual_value' => "\u{00A0}"])],
-			'the dates as objects, the payloads as cases' => [
-				'array',
-				array_merge($stored, [
-					'actual_value' => Payloads\Switcher::ON,
-					'expected_value' => new DateTimeImmutable(self::DATE),
-					'pending' => new DateTime(self::OTHER_DATE),
-					'created_at' => new DateTime(self::DATE),
-					'updated_at' => new DateTimeImmutable(self::OTHER_DATE),
-				]),
-			],
-			'the values as objects of the other types' => [
-				'array',
-				array_merge($stored, [
-					'actual_value' => Payloads\Button::PRESSED,
-					'expected_value' => Payloads\Cover::OPEN,
-					'pending' => new DateTimeImmutable(self::DATE),
-				]),
-			],
-			'a UUID object' => ['array', array_merge($stored, ['id' => Uuid::fromString(self::ID)])],
-			'no id' => ['json', ['actual_value' => 1]],
-			'an id which is not a UUID' => ['json', array_merge($stored, ['id' => 'x'])],
-			'an id of a UUID without dashes' => ['json', array_merge(
+			'the fields of a stored one' => self::json($stored),
+			'the required field' => self::json(['id' => self::ID]),
+			'every field' => self::json(array_merge($stored, [
+				'actual_value' => 'on',
+				'expected_value' => 5.5,
+				'pending' => self::DATE,
+				'valid' => true,
+				'created_at' => self::DATE,
+				'updated_at' => self::OTHER_DATE,
+			])),
+			'blank and null fields' => self::json(array_merge(
+				$stored,
+				['actual_value' => '', 'expected_value' => " \t", 'created_at' => '', 'updated_at' => ' '],
+			)),
+			'unknown fields' => self::json(array_merge($stored, ['source' => 'x', 'x' => [1], 'actual_value' => 3])),
+			'a no-break space as a value' => self::json(array_merge($stored, ['actual_value' => "\u{00A0}"])),
+			'the dates as objects, the payloads as cases' => self::array(array_merge($stored, [
+				'actual_value' => Payloads\Switcher::ON,
+				'expected_value' => new DateTimeImmutable(self::DATE),
+				'pending' => new DateTime(self::OTHER_DATE),
+				'created_at' => new DateTime(self::DATE),
+				'updated_at' => new DateTimeImmutable(self::OTHER_DATE),
+			])),
+			'the values as objects of the other types' => self::array(array_merge($stored, [
+				'actual_value' => Payloads\Button::PRESSED,
+				'expected_value' => Payloads\Cover::OPEN,
+				'pending' => new DateTimeImmutable(self::DATE),
+			])),
+			'a UUID object' => self::array(array_merge($stored, ['id' => Uuid::fromString(self::ID)])),
+			'no id' => self::json(['actual_value' => 1]),
+			'an id which is not a UUID' => self::json(array_merge($stored, ['id' => 'x'])),
+			'an id of a UUID without dashes' => self::json(array_merge(
 				$stored,
 				['id' => '176984ad7cf7465d9e5371668a74a688'],
-			)],
-			'an id which is a number' => ['json', array_merge($stored, ['id' => 5])],
+			)),
+			'an id which is a number' => self::json(array_merge($stored, ['id' => 5])),
 		];
 
 		$values = [
@@ -400,7 +429,7 @@ final class StateRootsProbe
 
 		foreach (['actual_value', 'expected_value'] as $field) {
 			foreach ($values as $name => $value) {
-				$cases[$field . ' is ' . $name] = ['json', array_merge($stored, [$field => $value])];
+				$cases[$field . ' is ' . $name] = self::json(array_merge($stored, [$field => $value]));
 			}
 		}
 
@@ -420,7 +449,7 @@ final class StateRootsProbe
 				'a timestamp' => 1_585_742_400,
 			] as $name => $value
 		) {
-			$cases['pending is ' . $name] = ['json', array_merge($stored, ['pending' => $value])];
+			$cases['pending is ' . $name] = self::json(array_merge($stored, ['pending' => $value]));
 		}
 
 		// castBoolLike: what BoolValue(castBoolLike: true) took for a bool, and what it did not
@@ -454,7 +483,7 @@ final class StateRootsProbe
 				'a list' => [1],
 			] as $name => $value
 		) {
-			$cases['valid as ' . $name] = ['json', array_merge($stored, ['valid' => $value])];
+			$cases['valid as ' . $name] = self::json(array_merge($stored, ['valid' => $value]));
 		}
 
 		foreach (
@@ -474,8 +503,8 @@ final class StateRootsProbe
 				'a list' => [1],
 			] as $name => $value
 		) {
-			$cases['created_at is ' . $name] = ['json', array_merge($stored, ['created_at' => $value])];
-			$cases['updated_at is ' . $name] = ['json', array_merge($stored, ['updated_at' => $value])];
+			$cases['created_at is ' . $name] = self::json(array_merge($stored, ['created_at' => $value]));
+			$cases['updated_at is ' . $name] = self::json(array_merge($stored, ['updated_at' => $value]));
 		}
 
 		return $cases;
@@ -489,16 +518,15 @@ final class StateRootsProbe
 		$stored = ['id' => self::ID, 'validation_result' => false, 'created_at' => null, 'updated_at' => null];
 
 		$cases = [
-			'the fields of a stored one' => ['json', $stored],
-			'the required field' => ['json', ['id' => self::ID]],
-			'every field' => [
-				'json',
+			'the fields of a stored one' => self::json($stored),
+			'the required field' => self::json(['id' => self::ID]),
+			'every field' => self::json(
 				['id' => self::ID, 'validation_result' => true, 'created_at' => self::DATE, 'updated_at' => self::OTHER_DATE],
-			],
-			'blank dates' => ['json', array_merge($stored, ['created_at' => '', 'updated_at' => ' '])],
-			'unknown fields' => ['json', array_merge($stored, ['source' => 'x', 'validationResult' => true])],
-			'no id' => ['json', ['validation_result' => true]],
-			'an id which is not a UUID' => ['json', array_merge($stored, ['id' => 'x'])],
+			),
+			'blank dates' => self::json(array_merge($stored, ['created_at' => '', 'updated_at' => ' '])),
+			'unknown fields' => self::json(array_merge($stored, ['source' => 'x', 'validationResult' => true])),
+			'no id' => self::json(['validation_result' => true]),
+			'an id which is not a UUID' => self::json(array_merge($stored, ['id' => 'x'])),
 		];
 
 		foreach (
@@ -523,7 +551,7 @@ final class StateRootsProbe
 				'a list' => [1],
 			] as $name => $value
 		) {
-			$cases['validation_result as ' . $name] = ['json', array_merge($stored, ['validation_result' => $value])];
+			$cases['validation_result as ' . $name] = self::json(array_merge($stored, ['validation_result' => $value]));
 		}
 
 		foreach (['created_at', 'updated_at'] as $field) {
@@ -537,7 +565,7 @@ final class StateRootsProbe
 					'a list' => [1],
 				] as $name => $value
 			) {
-				$cases[$field . ' is ' . $name] = ['json', array_merge($stored, [$field => $value])];
+				$cases[$field . ' is ' . $name] = self::json(array_merge($stored, [$field => $value]));
 			}
 		}
 
