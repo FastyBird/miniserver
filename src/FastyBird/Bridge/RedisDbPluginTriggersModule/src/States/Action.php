@@ -2,9 +2,9 @@
 
 namespace FastyBird\Bridge\RedisDbPluginTriggersModule\States;
 
-use FastyBird\Core\Documents as CoreDocuments;
 use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Triggers\States as TriggersStates;
 use FastyBird\Plugin\RedisDb\States as RedisDbStates;
 use Override;

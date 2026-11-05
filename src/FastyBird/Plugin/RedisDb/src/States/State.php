@@ -16,9 +16,7 @@ class State
 
 	public const string UPDATED_AT_FIELD = 'updated_at';
 
-	public function __construct(
-		private readonly Uuid\UuidInterface $id,
-	)
+	public function __construct(private readonly Uuid\UuidInterface $id)
 	{
 	}
 

@@ -6,8 +6,8 @@ use ArrayObject;
 use Composer\Autoload\ClassLoader;
 use DateTime;
 use DateTimeImmutable;
-use FastyBird\Bridge\RedisDbPluginDevicesModule\States as DevicesBridgeStates;
-use FastyBird\Bridge\RedisDbPluginTriggersModule\States as TriggersBridgeStates;
+use FastyBird\Bridge\RedisDbPluginDevicesModule\States as RedisDbPluginDevicesModuleStates;
+use FastyBird\Bridge\RedisDbPluginTriggersModule\States as RedisDbPluginTriggersModuleStates;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Values\Types\Payloads;
@@ -20,6 +20,7 @@ use Generator;
 use JsonException;
 use Nette\Utils;
 use Orisai\ObjectMapper\MappedObject;
+use Ramsey\Uuid\Exception as UuidExceptions;
 use Ramsey\Uuid\Uuid;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -167,6 +168,7 @@ final class StateRootsProbe
 	 * @return array<string, mixed>
 	 *
 	 * @throws JsonException
+	 * @throws RedisDbExceptions\InvalidState
 	 */
 	private static function map(
 		RedisDbStates\StateFactory $factory,
@@ -199,6 +201,7 @@ final class StateRootsProbe
 	 * @return array<string, array<string, array<string, string>>>
 	 *
 	 * @throws JsonException
+	 * @throws CoreDocuments\Exceptions\MappingFailed
 	 */
 	private static function objects(CoreDocuments\Mapping\Mapper $mapper): array
 	{
@@ -208,9 +211,9 @@ final class StateRootsProbe
 
 		foreach (
 			[
-				DevicesBridgeStates\Property::class => ['actual_value', 'expected_value', 'pending', 'created_at', 'updated_at'],
-				TriggersBridgeStates\Action::class => ['created_at', 'updated_at'],
-				TriggersBridgeStates\Condition::class => ['created_at', 'updated_at'],
+				RedisDbPluginDevicesModuleStates\Property::class => ['actual_value', 'expected_value', 'pending', 'created_at', 'updated_at'],
+				RedisDbPluginTriggersModuleStates\Action::class => ['created_at', 'updated_at'],
+				RedisDbPluginTriggersModuleStates\Condition::class => ['created_at', 'updated_at'],
 			] as $class => $fields
 		) {
 			foreach ($fields as $field) {
@@ -250,9 +253,13 @@ final class StateRootsProbe
 					'a Cover' => Payloads\Cover::STOP,
 				] as $name => $payload
 			) {
-				$state = $mapper->map([...$stored, $field => $payload], DevicesBridgeStates\Property::class, $options);
+				$state = $mapper->map(
+					[...$stored, $field => $payload],
+					RedisDbPluginDevicesModuleStates\Property::class,
+					$options,
+				);
 
-				$report[DevicesBridgeStates\Property::class][$field . ' as ' . $name] = [
+				$report[RedisDbPluginDevicesModuleStates\Property::class][$field . ' as ' . $name] = [
 					'json' => Utils\Json::encode($state->toArray()),
 				];
 			}
@@ -265,14 +272,19 @@ final class StateRootsProbe
 	 * @param class-string<RedisDbStates\State> $class
 	 *
 	 * @return array<string, array{string, array<string, mixed>}>
+	 *
+	 * @throws UuidExceptions\InvalidArgumentException
 	 */
 	private static function cases(string $class): array
 	{
-		if ($class === DevicesBridgeStates\Property::class) {
+		if ($class === RedisDbPluginDevicesModuleStates\Property::class) {
 			return self::propertyCases();
 		}
 
-		if ($class === TriggersBridgeStates\Action::class || $class === TriggersBridgeStates\Condition::class) {
+		if (
+			$class === RedisDbPluginTriggersModuleStates\Action::class
+			|| $class === RedisDbPluginTriggersModuleStates\Condition::class
+		) {
 			return self::triggerCases();
 		}
 
@@ -292,6 +304,8 @@ final class StateRootsProbe
 
 	/**
 	 * @return array<string, array{string, array<string, mixed>}>
+	 *
+	 * @throws UuidExceptions\InvalidArgumentException
 	 */
 	private static function propertyCases(): array
 	{

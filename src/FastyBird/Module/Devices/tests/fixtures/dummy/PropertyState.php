@@ -2,9 +2,9 @@
 
 namespace FastyBird\Module\Devices\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Documents as CoreDocuments;
 use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States;

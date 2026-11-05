@@ -37,6 +37,8 @@ final class StateRootsPinTest extends TestCase
 
 	private const string ACTION = 'FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action';
 
+	private const string CONDITION = 'FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition';
+
 	/**
 	 * What the property state and the trigger action say when they refuse an input (Valinor writes one line per refused
 	 * value, the path of the value and what was wrong with it): the path and a part of the message
@@ -200,10 +202,12 @@ final class StateRootsPinTest extends TestCase
 		self::assertIsArray($census);
 
 		foreach (['redisdb' => 7, 'devices' => 8, 'couchdb' => 1] as $family => $count) {
-			self::assertIsArray($census[$family] ?? null, $family);
-			self::assertCount($count, $census[$family], $family);
+			$classes = $census[$family] ?? null;
 
-			foreach ($census[$family] as $class => $mapped) {
+			self::assertIsArray($classes, $family);
+			self::assertCount($count, $classes, $family);
+
+			foreach ($classes as $class => $mapped) {
 				self::assertFalse($mapped, sprintf('%s (%s) is mapped by orisai', $class, $family));
 			}
 		}
@@ -224,11 +228,13 @@ final class StateRootsPinTest extends TestCase
 
 		self::assertIsArray($report);
 
-		foreach ([self::PROPERTY => 31, self::ACTION => 10] as $class => $count) {
-			self::assertIsArray($report[$class] ?? null, $class);
-			self::assertCount($count, $report[$class], $class);
+		foreach ([self::PROPERTY => 31, self::ACTION => 10, self::CONDITION => 10] as $class => $count) {
+			$entries = $report[$class] ?? null;
 
-			foreach ($report[$class] as $name => $result) {
+			self::assertIsArray($entries, $class);
+			self::assertCount($count, $entries, $class);
+
+			foreach ($entries as $name => $result) {
 				self::assertIsArray($result);
 				self::assertArrayNotHasKey('error', $result, sprintf('%s: %s', $class, $name));
 				self::assertSame(
@@ -244,8 +250,6 @@ final class StateRootsPinTest extends TestCase
 				);
 			}
 		}
-
-		self::assertCount(10, $report['FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition']);
 	}
 
 	/**

@@ -2,9 +2,9 @@
 
 namespace FastyBird\Bridge\RedisDbPluginDevicesModule\States;
 
-use FastyBird\Core\Documents as CoreDocuments;
 use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;

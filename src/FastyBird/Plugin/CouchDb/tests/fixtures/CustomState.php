@@ -2,8 +2,8 @@
 
 namespace FastyBird\Plugin\CouchDb\Tests\Fixtures;
 
-use FastyBird\Core\Documents as CoreDocuments;
 use DateTimeInterface;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Plugin\CouchDb\States;
 use Ramsey\Uuid;
 use function array_merge;

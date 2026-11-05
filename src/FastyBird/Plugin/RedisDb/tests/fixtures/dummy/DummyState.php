@@ -2,9 +2,9 @@
 
 namespace FastyBird\Plugin\RedisDb\Tests\Fixtures\Dummy;
 
-use FastyBird\Core\Documents as CoreDocuments;
 use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Plugin\RedisDb\States;
 use Ramsey\Uuid;
 use function array_merge;
