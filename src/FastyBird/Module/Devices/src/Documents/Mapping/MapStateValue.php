@@ -10,6 +10,7 @@ use FastyBird\Core\Values\Types\Payloads;
 use Throwable;
 use function is_string;
 use function preg_match;
+use function str_contains;
 
 /**
  * Valinor converter for the value of a state: a text is the first of a date, a button, a switch and a cover payload it
@@ -37,7 +38,13 @@ final readonly class MapStateValue
 			return $next($value);
 		}
 
-		$date = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $value);
+		// A string with a NUL byte is no date: createFromFormat() throws a ValueError for it, and the text is a value
+		$date = str_contains($value, "\0")
+			? false
+			: DateTimeImmutable::createFromFormat(
+				DateTimeInterface::ATOM,
+				$value,
+			);
 
 		if ($date !== false) {
 			return $date;

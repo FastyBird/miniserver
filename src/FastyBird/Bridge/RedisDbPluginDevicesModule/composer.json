@@ -29,12 +29,12 @@
   },
   "require": {
     "php": ">=8.4.0",
+    "cuyz/valinor": "^2.6",
     "cweagans/composer-patches": "^1.7",
     "fastybird/miniserver-core": "@dev",
     "fastybird/devices-module": "@dev",
     "fastybird/redisdb-plugin": "@dev",
     "nette/di": "^3.2",
-    "orisai/object-mapper": "^0.3",
     "psr/log": "^3.0"
   },
   "require-dev": {
