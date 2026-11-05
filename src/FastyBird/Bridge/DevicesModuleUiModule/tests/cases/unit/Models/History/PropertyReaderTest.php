@@ -46,6 +46,8 @@ final class PropertyReaderTest extends Tests\Cases\Unit\DbTestCase
 	// A device data source: the rssi property, whose id is the temperature's, an integer with no unit
 	private const string DEVICE_DATA_SOURCE = 'b1c2d3e4-f5a6-4b7c-8d9e-0f1a2b3c4d5e';
 
+	private const string MAPPED_DEVICE_DATA_SOURCE = 'a2b3c4d5-e6f7-4a8b-9c0d-1e2f3a4b5c6d';
+
 	private const string GENERIC_DATA_SOURCE = '0a1b2c3d-4e5f-4a6b-8c7d-9e0f1a2b3c4d';
 
 	// The temperature, the connector's `mode`, and the parent of the mapped property
@@ -134,6 +136,25 @@ final class PropertyReaderTest extends Tests\Cases\Unit\DbTestCase
 		self::assertSame(self::MAPPED_DATA_SOURCE, $series->id);
 		self::assertSame('°C', $series->unit);
 		self::assertSame(20.0, $series->avg[0]);
+	}
+
+	/**
+	 * The same for a mapped device property: the parent is a device property too, and the unit and the data type
+	 * are the parent's (rssi, an integer), not the mapped property's own (dBm, also an integer)
+	 *
+	 * @throws Throwable
+	 */
+	public function testMappedDevicePropertyShowsTheHistoryOfItsParent(): void
+	{
+		$this->sample(self::TEMPERATURE, self::NOW - 1_000, 7.0);
+
+		$series = $this->read(self::MAPPED_DEVICE_DATA_SOURCE, 1_000, 10);
+
+		self::assertNotNull($series);
+		self::assertSame(self::MAPPED_DEVICE_DATA_SOURCE, $series->id);
+		self::assertNull($series->unit);
+		self::assertSame('int', $series->dataType);
+		self::assertSame(7.0, $series->avg[0]);
 	}
 
 	/**

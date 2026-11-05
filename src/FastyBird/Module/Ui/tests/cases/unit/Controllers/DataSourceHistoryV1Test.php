@@ -7,10 +7,11 @@ use DateTimeInterface;
 use DateTimeZone;
 use Doctrine\DBAL;
 use Error;
-use FastyBird\Core\Exceptions;
+use FastyBird\Core\Exceptions as CoreExceptions;
 use FastyBird\Core\Http;
 use FastyBird\Core\Http\Routing;
 use FastyBird\Module\Ui;
+use FastyBird\Module\Ui\Exceptions as UiExceptions;
 use FastyBird\Module\Ui\Tests;
 use Fig\Http\Message\RequestMethodInterface;
 use Fig\Http\Message\StatusCodeInterface;
@@ -52,7 +53,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	private const string WITHOUT_HISTORY = Tests\Fixtures\Dummy\DummyHistoryReader::WITHOUT_HISTORY;
 
 	/**
-	 * @return array<string, array{array<string, string|array<string>>, int, int, int}> the query, and what the
+	 * @return array<string, array{array<string, mixed>, int, int, int}> the query, and what the
 	 *                                                                                   reader is asked for: the start, the end and the points
 	 */
 	public static function periods(): array
@@ -104,9 +105,9 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @param array<string, string|array<string>> $query
+	 * @param array<string, mixed> $query
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -136,7 +137,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -169,7 +170,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * The chart display of the widget sets the period when the query does not
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -200,7 +201,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * A period the display holds outside the bounds the API takes, put there by hand, is the default
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -224,7 +225,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @return array<string, array{array<string, string|array<string>>, string}> the query, and the parameter the
+	 * @return array<string, array{array<string, mixed>, string}> the query, and the parameter the
 	 *                                                                           error points at
 	 */
 	public static function invalid(): array
@@ -273,9 +274,9 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @param array<string, string|array<string>> $query
+	 * @param array<string, mixed> $query
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -313,7 +314,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -346,7 +347,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * With no module that knows the property of a data source, nothing has a history
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -384,7 +385,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -414,7 +415,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * Any signed-in user may read it, as any may read the data source itself
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -433,7 +434,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * It is a read: the other methods are not routes
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -469,11 +470,12 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * The route has its own name, and a link built from it is the one that answers
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
 	 * @throws Error
-	 * @throws Exceptions\Runtime
+	 * @throws CoreExceptions\Runtime
+	 * @throws UiExceptions\InvalidArgument
 	 */
 	public function testRouteName(): void
 	{
@@ -494,7 +496,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * The data source of the response is the entity of the relationship, whatever its type
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException
@@ -515,7 +517,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	}
 
 	/**
-	 * @param array<string, string|array<string>> $query
+	 * @param array<string, mixed> $query
 	 */
 	private function url(string $widget, string $dataSource, array $query = []): string
 	{
@@ -531,7 +533,7 @@ final class DataSourceHistoryV1Test extends Tests\Cases\Unit\DbTestCase
 	/**
 	 * @return array{int, array<mixed>}
 	 *
-	 * @throws Exceptions\InvalidArgument
+	 * @throws CoreExceptions\InvalidArgument
 	 * @throws InvalidArgumentException
 	 * @throws Nette\DI\MissingServiceException
 	 * @throws RuntimeException

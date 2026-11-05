@@ -23,3 +23,12 @@ INSERT INTO `fb_devices_module_ui_module_bridge_devices_data_sources` (`data_sou
 
 INSERT INTO `fb_ui_module_widgets_generic_data_sources` (`data_source_id`) VALUES
 (_binary 0x0A1B2C3D4E5F4A6B8C7D9E0F1A2B3C4D);
+
+INSERT INTO `fb_devices_module_devices_properties` (`property_id`, `device_id`, `parent_id`, `property_type`, `property_identifier`, `property_name`, `property_settable`, `property_queryable`, `property_data_type`, `property_unit`, `property_format`, `property_invalid`, `property_scale`, `property_value`, `created_at`, `updated_at`) VALUES
+(_binary 0x9C3E1F2A4B5D4C6E8F7A0B1C2D3E4F50, _binary 0x69786D15FD0C4D9F937833287C2009FA, _binary 0x28BC0D382F7C4A71AA7427B102F8DF4C, 'mapped', 'mapped-rssi', 'Mapped rssi', 0, 1, 'int', 'dBm', NULL, NULL, NULL, NULL, '2020-03-20 09:18:20', '2020-03-20 09:18:20');
+
+INSERT INTO `fb_ui_module_widgets_data_sources` (`data_source_id`, `widget_id`, `params`, `created_at`, `updated_at`, `data_source_type`) VALUES
+(_binary 0xA2B3C4D5E6F74A8B9C0D1E2F3A4B5C6D, _binary 0x1D60090154E743EE8F5DA9E22663DDD7, '[]', '2020-05-28 12:29:32', '2020-05-28 12:29:32', 'device-property');
+
+INSERT INTO `fb_devices_module_ui_module_bridge_devices_data_sources` (`data_source_id`, `data_source_property`) VALUES
+(_binary 0xA2B3C4D5E6F74A8B9C0D1E2F3A4B5C6D, _binary 0x9C3E1F2A4B5D4C6E8F7A0B1C2D3E4F50);
