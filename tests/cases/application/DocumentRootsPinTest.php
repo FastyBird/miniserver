@@ -22,13 +22,13 @@ use const JSON_THROW_ON_ERROR;
 use const PHP_BINARY;
 
 /**
- * What the documents that extend the Devices module's Connector and Device documents map to, pinned (#724 PR4). The
- * production container is booted in a child process (bootstrap-document-roots.php) and every concrete document of
- * every package that extends one of the two roots is given the same inputs through DocumentFactory. What each made, the
- * JSON the exchange and the API encode and serialize() of the document, or that it was refused, has to be what
- * fixtures/document-roots.json holds: the output of the same script on 45787d7b4, where orisai still mapped all of them.
- * The documents of the connectors, the bridges and the addon have no mapping of their own, so they are held to the pins
- * of the root they extend, one by one
+ * What the documents that extend the Devices module's Connector, Device and Channel documents map to, pinned (#724 PR4
+ * and PR4c). The production container is booted in a child process (bootstrap-document-roots.php) and every concrete
+ * document of every package that extends one of the three roots is given the same inputs through DocumentFactory. What
+ * each made, the JSON the exchange and the API encode and serialize() of the document, or that it was refused, has to be
+ * what fixtures/document-roots.json holds: the output of the same script when orisai mapped them, on 45787d7b4 for the
+ * Connector and Device documents and on c3ef86214 for the Channel ones. The documents of the connectors, the bridges and
+ * the addon have no mapping of their own, so they are held to the pins of the root they extend, one by one
  */
 final class DocumentRootsPinTest extends TestCase
 {
@@ -36,6 +36,8 @@ final class DocumentRootsPinTest extends TestCase
 	private const string CONNECTOR_GENERIC = 'FastyBird\\Module\\Devices\\Documents\\Connectors\\Generic';
 
 	private const string DEVICE_GENERIC = 'FastyBird\\Module\\Devices\\Documents\\Devices\\Generic';
+
+	private const string CHANNEL_GENERIC = 'FastyBird\\Module\\Devices\\Documents\\Channels\\Generic';
 
 	/**
 	 * What the generic document of each root says when it refuses an input (Valinor writes one line per refused value,
@@ -67,6 +69,32 @@ final class DocumentRootsPinTest extends TestCase
 			'properties which are a text' => ['properties', 'does not match'],
 			'a control which is a number' => ['controls.0', 'is not a valid string'],
 			'a device which is null' => ['devices.0', 'is not a valid string'],
+		],
+		self::CHANNEL_GENERIC => [
+			'a date with fractions of a second' => ['created_at', 'does not match any of the following formats'],
+			'a date as a timestamp' => ['created_at', 'does not match any of the following formats'],
+			'an empty date' => ['updated_at', 'does not match'],
+			'no id' => ['id', 'Cannot be empty and must be filled'],
+			'an id which is not a UUID' => ['id', 'is not a valid UUID'],
+			'an id of a UUID without dashes' => ['id', 'is not a valid UUID'],
+			'no device' => ['device', 'Cannot be empty and must be filled'],
+			'a device which is not a UUID' => ['device', 'is not a valid UUID'],
+			'a device which is null' => ['device', 'is not a valid string'],
+			'no category' => ['category', 'Cannot be empty and must be filled'],
+			'an unknown category' => ['category', 'does not match'],
+			'a category which is a number' => ['category', 'does not match'],
+			'no identifier' => ['identifier', 'is not a valid string'],
+			'a blank identifier' => ['identifier', 'must not be blank'],
+			'an empty identifier' => ['identifier', 'must not be blank'],
+			'an identifier which is a number' => ['identifier', 'is not a valid string'],
+			'a name which is a number' => ['name', 'does not match'],
+			'a comment which is a list' => ['comment', 'does not match'],
+			'an owner which is not a UUID' => ['owner', 'is not a valid UUID'],
+			'a property which is not a UUID' => ['properties.0', 'is not a valid UUID'],
+			'properties which are a text' => ['properties', 'does not match'],
+			'a control which is a number' => ['controls.0', 'is not a valid string'],
+			'a control which is null' => ['controls.0', 'is not a valid string'],
+			'a date in another format' => ['created_at', 'does not match any of the following formats'],
 		],
 		self::DEVICE_GENERIC => [
 			'a date with fractions of a second' => ['created_at', 'does not match any of the following formats'],
@@ -166,25 +194,51 @@ final class DocumentRootsPinTest extends TestCase
 	}
 
 	/**
-	 * Which side of Mapper::map() each tree is on: the Connector and Device roots, and every document beneath them in
-	 * every package, are Valinor's, the Channel root and every document beneath it stay orisai's until its own pull
-	 * request. A tree that is split between the two would map its documents with rules that are not theirs
+	 * The side of Mapper::map() each tree is on, now that the last root moved: no document of the Connector, Device or
+	 * Channel trees, in any package, is mapped by orisai. The counts are of every class of a tree, the abstract ones and
+	 * the root included; a document added to a tree changes them, and the author says so here
 	 *
 	 * @throws JsonException
 	 * @throws RuntimeException
 	 */
-	public function testEveryTreeIsOnTheSideOfItsRoot(): void
+	public function testNoDocumentOfTheThreeTreesReachesMappedObject(): void
 	{
 		$census = json_decode(self::execute(false, '--census'), true, 512, JSON_THROW_ON_ERROR);
 
 		self::assertIsArray($census);
 
-		foreach (['connector' => [11, false], 'device' => [20, false], 'channel' => [54, true]] as $family => [$count, $orisai]) {
+		foreach (['connector' => 12, 'device' => 21, 'channel' => 55] as $family => $count) {
 			self::assertIsArray($census[$family] ?? null, $family);
-			self::assertGreaterThanOrEqual($count, count($census[$family]), $family);
+			self::assertCount($count, $census[$family], $family);
 
 			foreach ($census[$family] as $class => $mapped) {
-				self::assertSame($orisai, $mapped, sprintf('%s (%s)', $class, $family));
+				self::assertFalse($mapped, sprintf('%s (%s) is mapped by orisai', $class, $family));
+			}
+		}
+	}
+
+	/**
+	 * What the documents make of an object where their scalar or array form is expected. orisai refused all of these and
+	 * Valinor takes them: a date object for `created_at` and `updated_at`, and any traversable for a list of UUIDs.
+	 * Nothing in the application builds a document from such a value; this documents what happens if something does
+	 *
+	 * @throws JsonException
+	 * @throws RuntimeException
+	 */
+	public function testAnObjectIsTakenWhereOrisaiRefusedIt(): void
+	{
+		$report = json_decode(self::execute(false, '--objects'), true, 512, JSON_THROW_ON_ERROR);
+
+		self::assertIsArray($report);
+
+		// Per generic document: the 2 dates and the 2 objects for each of its lists of UUIDs
+		foreach ([self::CONNECTOR_GENERIC => 8, self::DEVICE_GENERIC => 12, self::CHANNEL_GENERIC => 6] as $class => $count) {
+			self::assertIsArray($report[$class] ?? null, $class);
+			self::assertCount($count, $report[$class], $class);
+
+			foreach ($report[$class] as $name => $result) {
+				self::assertIsArray($result);
+				self::assertArrayHasKey('json', $result, sprintf('%s: %s', $class, $name));
 			}
 		}
 	}

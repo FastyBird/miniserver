@@ -42,16 +42,23 @@ final class ConverterParityTest extends Tests\Cases\Unit\BaseTestCase
 {
 
 	/**
-	 * @param array<string, mixed> $inputs
+	 * The inputs are made here and not given by the provider: PHPUnit keeps and prints what a provider gives, and 25,000
+	 * inputs held by the runner and exported for its reports weighed more than the rest of the suite's worker together
 	 *
 	 * @throws CoreExceptions\InvalidArgument
 	 * @throws CoreExceptions\InvalidState
 	 * @throws Error
 	 * @throws Nette\DI\MissingServiceException
+	 * @throws Uuid\Exception\InvalidArgumentException
 	 */
 	#[DataProvider('fields')]
-	public function testBothMapAnInputAsOne(string $field, array $inputs): void
+	public function testBothMapAnInputAsOne(string $field): void
 	{
+		$inputs = match ($field) {
+			'format' => self::formats(),
+			'value_transformer' => self::transformers(),
+			default => self::values(),
+		};
 		$mapper = $this->getContainer()->getByType(CoreDocuments\Mapping\Mapper::class);
 		$options = new CoreDocuments\Mapping\MappingOptions(allowUnknownFields: true);
 
@@ -208,16 +215,14 @@ final class ConverterParityTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * @return array<string, array{string, array<string, mixed>}>
-	 *
-	 * @throws Uuid\Exception\InvalidArgumentException
+	 * @return array<string, array{string}>
 	 */
 	public static function fields(): array
 	{
 		return [
-			'format' => ['format', self::formats()],
-			'value transformer' => ['value_transformer', self::transformers()],
-			'value' => ['value', self::values()],
+			'format' => ['format'],
+			'value transformer' => ['value_transformer'],
+			'value' => ['value'],
 		];
 	}
 
