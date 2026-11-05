@@ -428,6 +428,8 @@ branches and a class chooses its branch by what it implements:
   their 85 documents of the connectors, the bridges and the addon, none of which declares a constructor, an attribute or a
   property of its own. Valinor also takes a date object for a date and any traversable for a list where orisai refused
   them; nothing builds a document from such a value, and `DocumentRootsPinTest` documents it.
+  The state roots moved the same way: the RedisDb and CouchDb `State`, the Devices `States\Property` and, with them, the
+  states of the RedisDb bridges (`StateRootsPinTest` holds every one to what orisai made of the same input).
 - A migrated class does not contain an orisai-mapped one, and an orisai-mapped class does not contain a migrated
   one: Valinor would build the nested object through its constructor without any of orisai's rules, and orisai
   accepts only a `MappedObject` there. A migration therefore takes a class with every class it nests.
@@ -442,8 +444,10 @@ What a migrated class declares, in place of what orisai had:
 | `StringValue()`, `IntValue()`, `BoolValue()`, `ArrayOf`/`ListOf`, `MappedObjectValue` | the native type, `list<T>` / `array<K, T>` in the PHPDoc, the class itself |
 | `StringValue(notEmpty: true)` | `#[Documents\Mapping\RefuseBlank]`: it refuses what orisai refused, a string of ASCII white space only (orisai 0.3.0 tests `preg_match('/\S/')`, so a no-break space or a zero width space is a value, a form feed is blank); `MapperParityTest` holds both classes to the same answers. Valinor's `non-empty-string` accepts `" "` |
 | `AnyOf([StringValue(notEmpty: true), NullValue(castEmptyString: true)])` | `string\|null` with `#[Documents\Mapping\MapBlankToNull]` |
+| `BoolValue(castBoolLike: true)` | `#[Documents\Mapping\MapBoolLike]`: the same answers as the rule, which lower-cases a text and reads `true`, `false`, `1` and `0` (Valinor's `MapAsBool` is case sensitive); `MapBoolLikeParityTest` holds both to a grid of values |
+| `AnyOf([BoolValue, IntValue, FloatValue, StringValue(notEmpty), DateTimeValue, ObjectValue, NullValue(castEmptyString)])`, the value of a property state | the native union `bool\|float\|int\|string\|DateTimeInterface\|Payloads\Payload\|null` with `#[Documents\Mapping\MapBlankToNull]`; a text stays a text, as the rule had it. `ObjectValue` took any object and failed later with a `TypeError`, Valinor refuses an object that is not a date or a payload; `StateRootsPinTest` documents it |
 | `FieldName('created_at')` | `#[CuyZ\Valinor\Mapper\Configurator\MapFromKey('created_at')]` |
-| `DateTimeValue(format: ATOM)` | `DateTimeInterface` (ATOM is the only date format the builder supports) |
+| `DateTimeValue(format: ATOM)` | `DateTimeInterface` (ATOM is the only date format the builder supports). `Mapper` registers the date constructor itself, to refuse a string with a NUL byte as an error message of the value: `createFromFormat()` throws a `ValueError` for it, which no union recovers from, and the value of a state, a text or a date, is the text then |
 | `UuidValue()` | `Ramsey\Uuid\UuidInterface`; the builder reads the canonical form only, like the rule |
 | `AnyOf([FloatValue, IntValue])` | decide per field: `float` turns an int into a float, which is what orisai's rule did; `int\|float` keeps what it is given. Pin the choice in a test |
 | a union of several array shapes, the format of a property | `#[Devices\Documents\Mapping\MapFormat]`: Valinor refuses a union of two array types, so the one converter reads the shapes the rule listed, in its order, and the type is one nested array of scalars |

@@ -17,6 +17,7 @@ use FastyBird\Module\Devices\Types\ChannelCategory;
 use FastyBird\Module\Devices\Types\ConnectorCategory;
 use FastyBird\Module\Devices\Types\DeviceCategory;
 use FilesystemIterator;
+use Generator;
 use JsonException;
 use Nette\Utils;
 use Orisai\ObjectMapper\MappedObject;
@@ -317,12 +318,19 @@ final class DocumentRootsProbe
 				'created_at as a DateTimeImmutable' => ['created_at' => new DateTimeImmutable(
 					'2020-04-01T12:00:00+00:00',
 				)],
+				'created_at as a DateTime' => ['created_at' => new DateTime('2020-04-01T12:00:00+00:00')],
+				'updated_at as a DateTimeImmutable' => ['updated_at' => new DateTimeImmutable(
+					'2021-11-30T23:59:59+02:00',
+				)],
 				'updated_at as a DateTime' => ['updated_at' => new DateTime('2021-11-30T23:59:59+02:00')],
 			];
 
 			foreach ($lists as $list) {
 				$inputs[$list . ' as an ArrayObject'] = [$list => new ArrayObject([self::CHILD])];
 				$inputs[$list . ' as an ArrayIterator'] = [$list => new ArrayIterator([self::CHILD, self::OWNER])];
+				$inputs[$list . ' as a Generator'] = [$list => (static function (): Generator {
+					yield self::CHILD;
+				})()];
 			}
 
 			foreach ($inputs as $name => $change) {
