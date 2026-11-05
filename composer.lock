@@ -3405,15 +3405,15 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/RedisDbPluginDevicesModule",
-                "reference": "2559d345c9c77c5aaafd1035c0e2886bf7d7c5ea"
+                "reference": "a30798bfecdd37111af5e09971f8f63f3242aaa3"
             },
             "require": {
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/devices-module": "@dev",
                 "fastybird/miniserver-core": "@dev",
                 "fastybird/redisdb-plugin": "@dev",
                 "nette/di": "^3.2",
-                "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
                 "psr/log": "^3.0"
             },
@@ -3471,15 +3471,15 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/RedisDbPluginTriggersModule",
-                "reference": "e8a9413a3cadddeacf1f8678def2edc5dedb6c6f"
+                "reference": "6a896c973b5c71bdaa6ab14815443eb492d58e06"
             },
             "require": {
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/miniserver-core": "@dev",
                 "fastybird/redisdb-plugin": "@dev",
                 "fastybird/triggers-module": "@dev",
                 "nette/di": "^3.2",
-                "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
                 "psr/log": "^3.0"
             },
