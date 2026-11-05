@@ -24,14 +24,20 @@ final class Logger
 {
 
 	/**
+	 * @param string|null $directory where the blue screen is written, the logs directory by default
+	 *
 	 * @return array<array<string, string|int>>
 	 */
-	public static function buildException(Throwable $ex, bool $render = true): array
+	public static function buildException(Throwable $ex, bool $render = true, string|null $directory = null): array
 	{
 		if ($render) {
 			try {
 				// Hides the request's credentials, and writes no markdown report (SensitiveData)
-				SensitiveData::renderBlueScreen(new Tracy\BlueScreen(), $ex, self::getExceptionFile($ex));
+				SensitiveData::renderBlueScreen(
+					new Tracy\BlueScreen(),
+					$ex,
+					self::getExceptionFile($ex, $directory ?? FB_LOGS_DIR),
+				);
 			} catch (Throwable) {
 				// Blue scree could not be saved
 			}
@@ -63,7 +69,7 @@ final class Logger
 	 * @throws UnexpectedValueException
 	 * @throws RuntimeException
 	 */
-	private static function getExceptionFile(Throwable $ex): string
+	private static function getExceptionFile(Throwable $ex, string $logsDirectory): string
 	{
 		$data = [];
 
@@ -79,9 +85,9 @@ final class Logger
 		}
 
 		$hash = substr(md5(serialize($data)), 0, 10);
-		$dir = strtr(FB_LOGS_DIR . '/', '\\/', DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR);
+		$dir = strtr($logsDirectory . '/', '\\/', DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR);
 
-		foreach (new DirectoryIterator(FB_LOGS_DIR) as $file) {
+		foreach (new DirectoryIterator($logsDirectory) as $file) {
 			if (str_contains($file->getBasename(), $hash)) {
 				return $dir . $file;
 			}
