@@ -9,6 +9,7 @@ use DateTimeInterface;
 use FastyBird\Core\Documents\Exceptions;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
+use Throwable;
 use function implode;
 use function is_subclass_of;
 use function sprintf;
@@ -45,9 +46,34 @@ final readonly class Mapper
 				// ValueError for it, which no union can recover from, and a union of a date and a string (the value
 				// of a state) has to take the string, as orisai did, which tried the string before the date
 				/** @param non-empty-string|int|float $value */
-				static fn (string|int|float $value): DateTimeImmutable => self::date(DateTimeImmutable::class, $value),
+				static function (string|int|float $value): DateTimeImmutable {
+					$text = (string) $value;
+					$date = str_contains($text, "\0")
+						? false
+						: DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $text);
+
+					if ($date === false) {
+						throw self::notADate();
+					}
+
+					return $date;
+				},
 				/** @param non-empty-string|int|float $value */
-				static fn (string|int|float $value): DateTime => self::date(DateTime::class, $value),
+				static function (string|int|float $value): DateTime {
+					$text = (string) $value;
+					$date = str_contains($text, "\0")
+						? false
+						: DateTime::createFromFormat(
+							DateTimeInterface::ATOM,
+							$text,
+						);
+
+					if ($date === false) {
+						throw self::notADate();
+					}
+
+					return $date;
+				},
 				static function (string $value): Uuid\UuidInterface {
 					// What orisai's UuidRule takes, which is what isValid() says: fromString() alone also reads a UUID
 					// written without dashes
@@ -115,27 +141,18 @@ final readonly class Mapper
 	}
 
 	/**
-	 * @template T of DateTime|DateTimeImmutable
+	 * What Valinor says of a date that none of its formats reads
 	 *
-	 * @param class-string<T> $class
-	 *
-	 * @return T
+	 * @phpstan-pure
 	 */
-	private static function date(string $class, string|int|float $value): DateTime|DateTimeImmutable
+	private static function notADate(): Throwable
 	{
-		$text = (string) $value;
-		$date = str_contains($text, "\0") ? false : $class::createFromFormat(DateTimeInterface::ATOM, $text);
-
-		if ($date === false) {
-			throw Valinor\Mapper\Tree\Message\MessageBuilder::newError(
-				'Value {source_value} does not match any of the following formats: {formats}.',
-			)
-				->withCode('cannot_parse_datetime_format')
-				->withParameter('formats', '`' . DateTimeInterface::ATOM . '`')
-				->build();
-		}
-
-		return $date;
+		return Valinor\Mapper\Tree\Message\MessageBuilder::newError(
+			'Value {source_value} does not match any of the following formats: {formats}.',
+		)
+			->withCode('cannot_parse_datetime_format')
+			->withParameter('formats', '`' . DateTimeInterface::ATOM . '`')
+			->build();
 	}
 
 	/**

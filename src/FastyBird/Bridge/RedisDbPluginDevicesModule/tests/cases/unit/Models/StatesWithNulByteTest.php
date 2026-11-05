@@ -4,7 +4,7 @@ namespace FastyBird\Bridge\RedisDbPluginDevicesModule\Tests\Cases\Unit\Models;
 
 use Exception;
 use FastyBird\Bridge\RedisDbPluginDevicesModule\Models;
-use FastyBird\Bridge\RedisDbPluginDevicesModule\States;
+use FastyBird\Bridge\RedisDbPluginDevicesModule\States as RedisDbPluginDevicesModuleStates;
 use FastyBird\Bridge\RedisDbPluginDevicesModule\Tests;
 use FastyBird\Plugin\RedisDb\Clients;
 use FastyBird\Plugin\RedisDb\Exceptions as RedisDbExceptions;
@@ -50,7 +50,7 @@ final class StatesWithNulByteTest extends Tests\Cases\Unit\BaseTestCase
 
 		$state = $this->container->getByType(Models\States\ChannelPropertiesRepository::class)->find($id);
 
-		self::assertInstanceOf(States\ChannelProperty::class, $state);
+		self::assertInstanceOf(RedisDbPluginDevicesModuleStates\ChannelProperty::class, $state);
 		self::assertSame($text, $field === 'actual_value' ? $state->getActualValue() : $state->getExpectedValue());
 	}
 
@@ -64,7 +64,7 @@ final class StatesWithNulByteTest extends Tests\Cases\Unit\BaseTestCase
 	public function testTheFactoryMapsTheStoredJson(string $field, string $text): void
 	{
 		$state = $this->container->getByType(RedisDbStates\StateFactory::class)->create(
-			States\ChannelProperty::class,
+			RedisDbPluginDevicesModuleStates\ChannelProperty::class,
 			Utils\Json::encode(['id' => Uuid\Uuid::uuid4()->toString(), $field => $text]),
 		);
 
