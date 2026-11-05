@@ -4,7 +4,6 @@ namespace FastyBird\Module\Ui\Controllers;
 
 use DateTimeImmutable;
 use DateTimeInterface;
-use DateTimeZone;
 use Exception;
 use FastyBird\Core\Api\Exceptions as ApiExceptions;
 use FastyBird\Module\Ui\Documents;
@@ -182,7 +181,7 @@ final class DataSourceHistoryV1 extends BaseV1
 		$values = [];
 
 		foreach ($filter as $name => $value) {
-			if (!is_string($value) || $value === '') {
+			if (!is_string($value)) {
 				throw $this->invalidParameter('filter[' . $name . ']');
 			}
 
@@ -293,7 +292,7 @@ final class DataSourceHistoryV1 extends BaseV1
 			throw $this->invalidParameter('filter[' . $name . ']');
 		}
 
-		return $date->setTimezone(new DateTimeZone('UTC'));
+		return $date;
 	}
 
 	private function attribute(Message\ServerRequestInterface $request, string $name): string
