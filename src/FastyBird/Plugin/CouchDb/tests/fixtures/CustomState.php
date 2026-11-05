@@ -2,9 +2,9 @@
 
 namespace FastyBird\Plugin\CouchDb\Tests\Fixtures;
 
+use FastyBird\Core\Documents as CoreDocuments;
 use DateTimeInterface;
 use FastyBird\Plugin\CouchDb\States;
-use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -13,25 +13,13 @@ class CustomState extends States\State
 
 	public function __construct(
 		Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly string|null $value = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly string|null $camelCased = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly DateTimeInterface|null $created = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly DateTimeInterface|null $updated = null,
 	)
 	{

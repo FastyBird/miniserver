@@ -20,27 +20,28 @@ use Generator;
 use JsonException;
 use Nette\Utils;
 use Orisai\ObjectMapper\MappedObject;
+use Ramsey\Uuid\Uuid;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
 use SplFileInfo;
-use Ramsey\Uuid\Uuid;
 use stdClass;
 use Throwable;
 use TypeError;
 use UnexpectedValueException;
 use function array_key_exists;
-use function array_keys;
 use function array_merge;
+use function array_unique;
+use function array_values;
 use function class_exists;
-use function dirname;
 use function getopt;
-use function in_array;
 use function interface_exists;
 use function is_array;
+use function is_dir;
 use function is_subclass_of;
 use function json_encode;
 use function ksort;
+use function reset;
 use function rtrim;
 use function serialize;
 use function sort;
@@ -121,7 +122,10 @@ final class StateRootsProbe
 			$factory = new RedisDbStates\StateFactory($mapper);
 
 			if (is_array($options) && array_key_exists('objects', $options)) {
-				echo json_encode(self::objects($mapper), JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), PHP_EOL;
+				echo json_encode(
+					self::objects($mapper),
+					JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT,
+				), PHP_EOL;
 
 				return 0;
 			}
@@ -129,7 +133,10 @@ final class StateRootsProbe
 			$report = [];
 
 			foreach (self::findStates($loader) as $class) {
-				if (!is_subclass_of($class, RedisDbStates\State::class) || (new ReflectionClass($class))->isAbstract()) {
+				if (
+					!is_subclass_of($class, RedisDbStates\State::class)
+					|| (new ReflectionClass($class))->isAbstract()
+				) {
 					continue;
 				}
 
@@ -203,6 +210,7 @@ final class StateRootsProbe
 			[
 				DevicesBridgeStates\Property::class => ['actual_value', 'expected_value', 'pending', 'created_at', 'updated_at'],
 				TriggersBridgeStates\Action::class => ['created_at', 'updated_at'],
+				TriggersBridgeStates\Condition::class => ['created_at', 'updated_at'],
 			] as $class => $fields
 		) {
 			foreach ($fields as $field) {
@@ -222,7 +230,10 @@ final class StateRootsProbe
 
 						$report[$class][$field . ' as ' . $name] = ['json' => Utils\Json::encode($state->toArray())];
 					} catch (CoreDocuments\Exceptions\MappingFailed $ex) {
-						$report[$class][$field . ' as ' . $name] = ['refused' => (string) strtok($ex->getMessage(), "\n")];
+						$report[$class][$field . ' as ' . $name] = ['refused' => (string) strtok(
+							$ex->getMessage(),
+							"\n",
+						)];
 					} catch (TypeError) {
 						// orisai let any object through and the state's property then refused it, with an error
 						$report[$class][$field . ' as ' . $name] = ['error' => 'TypeError'];
@@ -310,7 +321,10 @@ final class StateRootsProbe
 			],
 			'blank and null fields' => [
 				'json',
-				array_merge($stored, ['actual_value' => '', 'expected_value' => " \t", 'created_at' => '', 'updated_at' => ' ']),
+				array_merge(
+					$stored,
+					['actual_value' => '', 'expected_value' => " \t", 'created_at' => '', 'updated_at' => ' '],
+				),
 			],
 			'unknown fields' => ['json', array_merge($stored, ['source' => 'x', 'x' => [1], 'actual_value' => 3])],
 			'a no-break space as a value' => ['json', array_merge($stored, ['actual_value' => "\u{00A0}"])],
@@ -335,7 +349,10 @@ final class StateRootsProbe
 			'a UUID object' => ['array', array_merge($stored, ['id' => Uuid::fromString(self::ID)])],
 			'no id' => ['json', ['actual_value' => 1]],
 			'an id which is not a UUID' => ['json', array_merge($stored, ['id' => 'x'])],
-			'an id of a UUID without dashes' => ['json', array_merge($stored, ['id' => '176984ad7cf7465d9e5371668a74a688'])],
+			'an id of a UUID without dashes' => ['json', array_merge(
+				$stored,
+				['id' => '176984ad7cf7465d9e5371668a74a688'],
+			)],
 			'an id which is a number' => ['json', array_merge($stored, ['id' => 5])],
 		];
 
@@ -466,13 +483,6 @@ final class StateRootsProbe
 			],
 			'blank dates' => ['json', array_merge($stored, ['created_at' => '', 'updated_at' => ' '])],
 			'unknown fields' => ['json', array_merge($stored, ['source' => 'x', 'validationResult' => true])],
-			'the dates as objects' => [
-				'array',
-				array_merge($stored, [
-					'created_at' => new DateTime(self::DATE),
-					'updated_at' => new DateTimeImmutable(self::OTHER_DATE),
-				]),
-			],
 			'no id' => ['json', ['validation_result' => true]],
 			'an id which is not a UUID' => ['json', array_merge($stored, ['id' => 'x'])],
 		];

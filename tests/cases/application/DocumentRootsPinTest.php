@@ -231,8 +231,8 @@ final class DocumentRootsPinTest extends TestCase
 
 		self::assertIsArray($report);
 
-		// Per generic document: the 2 dates and the 2 objects for each of its lists of UUIDs
-		foreach ([self::CONNECTOR_GENERIC => 8, self::DEVICE_GENERIC => 12, self::CHANNEL_GENERIC => 6] as $class => $count) {
+		// Per generic document: both dates as an immutable and as a mutable object, and 3 traversables for each list of UUIDs
+		foreach ([self::CONNECTOR_GENERIC => 13, self::DEVICE_GENERIC => 19, self::CHANNEL_GENERIC => 10] as $class => $count) {
 			self::assertIsArray($report[$class] ?? null, $class);
 			self::assertCount($count, $report[$class], $class);
 

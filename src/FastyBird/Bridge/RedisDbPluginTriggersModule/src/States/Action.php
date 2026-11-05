@@ -2,10 +2,11 @@
 
 namespace FastyBird\Bridge\RedisDbPluginTriggersModule\States;
 
+use FastyBird\Core\Documents as CoreDocuments;
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Module\Triggers\States as TriggersStates;
 use FastyBird\Plugin\RedisDb\States as RedisDbStates;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -18,20 +19,14 @@ final class Action extends RedisDbStates\State implements TriggersStates\Action
 
 	public function __construct(
 		Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
-		#[ObjectMapper\Modifiers\FieldName('validation_result')]
+		#[CoreDocuments\Mapping\MapBoolLike]
+		#[Configurator\MapFromKey('validation_result')]
 		private readonly bool $validationResult = false,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('created_at')]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('created_at')]
 		private readonly DateTimeInterface|null $createdAt = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('updated_at')]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('updated_at')]
 		private readonly DateTimeInterface|null $updatedAt = null,
 	)
 	{

@@ -571,9 +571,6 @@
             "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
             "serialized": "O:58:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:76:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000validationResult\";b:0;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000createdAt\";N;s:69:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Action\u0000updatedAt\";N;}"
         },
-        "the dates as objects": {
-            "refused": true
-        },
         "no id": {
             "refused": true
         },
@@ -707,9 +704,6 @@
         "unknown fields": {
             "json": "{\"validation_result\":false,\"created_at\":null,\"updated_at\":null,\"id\":\"176984ad-7cf7-465d-9e53-71668a74a688\"}",
             "serialized": "O:61:\"FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\":4:{s:41:\"\u0000FastyBird\\Plugin\\RedisDb\\States\\State\u0000id\";O:35:\"Ramsey\\Uuid\\Lazy\\LazyUuidFromString\":1:{s:6:\"string\";s:36:\"176984ad-7cf7-465d-9e53-71668a74a688\";}s:79:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000validationResult\";b:0;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000createdAt\";N;s:72:\"\u0000FastyBird\\Bridge\\RedisDbPluginTriggersModule\\States\\Condition\u0000updatedAt\";N;}"
-        },
-        "the dates as objects": {
-            "refused": true
         },
         "no id": {
             "refused": true

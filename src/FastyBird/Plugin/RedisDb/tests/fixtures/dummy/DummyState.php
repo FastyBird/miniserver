@@ -2,9 +2,10 @@
 
 namespace FastyBird\Plugin\RedisDb\Tests\Fixtures\Dummy;
 
+use FastyBird\Core\Documents as CoreDocuments;
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Plugin\RedisDb\States;
-use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -13,27 +14,15 @@ class DummyState extends States\State
 
 	public function __construct(
 		Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly string|null $value = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private readonly string|null $camelCased = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName(self::CREATED_AT_FIELD)]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey(self::CREATED_AT_FIELD)]
 		private readonly DateTimeInterface|null $createdAt = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName(self::UPDATED_AT_FIELD)]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey(self::UPDATED_AT_FIELD)]
 		private readonly DateTimeInterface|null $updatedAt = null,
 	)
 	{

@@ -2,14 +2,12 @@
 
 namespace FastyBird\Plugin\CouchDb\States;
 
-use FastyBird\Core\Persistence\Rules;
-use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 
 /**
  * Base state
  */
-class State implements ObjectMapper\MappedObject
+class State
 {
 
 	public const string CREATED_AT_FIELD = 'createdAt';
@@ -17,7 +15,6 @@ class State implements ObjectMapper\MappedObject
 	public const string UPDATED_AT_FIELD = 'updatedAt';
 
 	public function __construct(
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
 	)
 	{

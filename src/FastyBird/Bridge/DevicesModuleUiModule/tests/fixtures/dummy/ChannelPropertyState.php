@@ -2,12 +2,12 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Tests\Fixtures\Dummy;
 
+use FastyBird\Core\Documents as CoreDocuments;
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
 use FastyBird\Module\Devices\States as DevicesStates;
-use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function is_bool;
 
@@ -19,61 +19,25 @@ class ChannelPropertyState implements DevicesStates\ChannelProperty
 	public const string UPDATED_AT_FIELD = 'updatedAt';
 
 	public function __construct(
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
-			new ObjectMapper\Rules\ObjectValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName(self::ACTUAL_VALUE_FIELD)]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey(self::ACTUAL_VALUE_FIELD)]
 		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 		private readonly bool|float|int|string|DateTimeInterface|Payloads\Payload|null $actualValue = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
-			new ObjectMapper\Rules\ObjectValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName(self::EXPECTED_VALUE_FIELD)]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey(self::EXPECTED_VALUE_FIELD)]
 		// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
 		private readonly bool|float|int|string|DateTimeInterface|Payloads\Payload|null $expectedValue = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\ObjectValue(),
-			new ObjectMapper\Rules\BoolValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName(self::PENDING_FIELD)]
+		#[Configurator\MapFromKey(self::PENDING_FIELD)]
 		private readonly bool|DateTimeInterface $pending = false,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
-		#[ObjectMapper\Modifiers\FieldName(self::VALID_FIELD)]
+		#[CoreDocuments\Mapping\MapBoolLike]
+		#[Configurator\MapFromKey(self::VALID_FIELD)]
 		private readonly bool $valid = false,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\ObjectValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName(self::CREATED_AT_FIELD)]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey(self::CREATED_AT_FIELD)]
 		private readonly DateTimeInterface|null $createdAt = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\ObjectValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName(self::UPDATED_AT_FIELD)]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey(self::UPDATED_AT_FIELD)]
 		private readonly DateTimeInterface|null $updatedAt = null,
 	)
 	{
