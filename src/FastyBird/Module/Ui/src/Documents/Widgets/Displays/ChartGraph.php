@@ -48,14 +48,14 @@ final class ChartGraph extends UiDocuments\Widgets\Displays\Display
 		])]
 		#[ObjectMapper\Modifiers\FieldName('enable_min_max')]
 		private readonly bool $enableMinMax = false,
+		Uuid\UuidInterface|null $owner = null,
+		DateTimeInterface|null $createdAt = null,
+		DateTimeInterface|null $updatedAt = null,
 		#[ObjectMapper\Rules\IntValue(
 			min: Entities\Widgets\Displays\ChartGraph::MIN_PERIOD,
 			max: Entities\Widgets\Displays\ChartGraph::MAX_PERIOD,
 		)]
 		private readonly int $period = Entities\Widgets\Displays\ChartGraph::DEFAULT_PERIOD,
-		Uuid\UuidInterface|null $owner = null,
-		DateTimeInterface|null $createdAt = null,
-		DateTimeInterface|null $updatedAt = null,
 	)
 	{
 		parent::__construct($id, $widget, $owner, $createdAt, $updatedAt);
