@@ -3,7 +3,6 @@
 namespace FastyBird\Core\Documents\Mapping;
 
 use CuyZ\Valinor;
-use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Core\Documents\Exceptions;
@@ -41,7 +40,7 @@ final readonly class Mapper
 		$builder = $builder
 			->supportDateFormats(DateTimeInterface::ATOM)
 			->registerConstructor(
-				// The date constructors of Valinor itself, as they were, but a string that does not parse is an error
+				// The date constructor of Valinor itself, as it was, but a string that does not parse is an error
 				// message for every string, a NUL byte included: DateTimeImmutable::createFromFormat() throws a
 				// ValueError for it, which no union can recover from, and a union of a date and a string (the value
 				// of a state) has to take the string, as orisai did, which tried the string before the date
@@ -51,22 +50,6 @@ final readonly class Mapper
 					$date = str_contains($text, "\0")
 						? false
 						: DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $text);
-
-					if ($date === false) {
-						throw self::notADate();
-					}
-
-					return $date;
-				},
-				/** @param non-empty-string|int|float $value */
-				static function (string|int|float $value): DateTime {
-					$text = (string) $value;
-					$date = str_contains($text, "\0")
-						? false
-						: DateTime::createFromFormat(
-							DateTimeInterface::ATOM,
-							$text,
-						);
 
 					if ($date === false) {
 						throw self::notADate();
