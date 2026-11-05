@@ -9,6 +9,7 @@ use FastyBird\Core\Documents\Exceptions;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use Throwable;
+use ValueError;
 use function implode;
 use function is_subclass_of;
 use function sprintf;
@@ -24,6 +25,8 @@ use function str_contains;
  */
 final readonly class Mapper
 {
+
+	private const string UNPRINTABLE = '*root*: A key or a value is not valid UTF-8.';
 
 	private Valinor\Mapper\TreeMapper $strict;
 
@@ -94,6 +97,10 @@ final readonly class Mapper
 			return ($options->allowUnknownFields ? $this->lenient : $this->strict)->map($class, $data);
 		} catch (Valinor\Mapper\MappingError $ex) {
 			throw new Exceptions\MappingFailed(self::print($ex), 0, $ex);
+
+			// @phpstan-ignore catch.neverThrown (TreeMapper::map() declares only MappingError, but formatting a message of its own with a key or a value that is not valid UTF-8 throws this)
+		} catch (Valinor\Utility\String\StringFormatterError $ex) {
+			throw new Exceptions\MappingFailed(self::UNPRINTABLE, 0, $ex);
 		}
 	}
 
@@ -120,6 +127,10 @@ final readonly class Mapper
 			);
 
 			throw new Exceptions\MappingFailed($errorPrinter->printError($ex), 0, $ex);
+
+			// @phpstan-ignore catch.neverThrown (Processor::process() declares only InvalidData, but orisai reads a date with DateTimeImmutable::createFromFormat(), which throws this for a string with a NUL byte)
+		} catch (ValueError $ex) {
+			throw new Exceptions\MappingFailed('*root*: ' . $ex->getMessage(), 0, $ex);
 		}
 	}
 
@@ -141,13 +152,23 @@ final readonly class Mapper
 	/**
 	 * One line for every error, in the order Valinor found them: the path of the value that was refused, a colon and
 	 * what was wrong with it. The path of the whole input is Valinor's "*root*"
+	 *
+	 * Valinor prints a key or a value into the text of its message, and fails doing it when that is not valid UTF-8 (an
+	 * unknown key, a list key, a UUID that is refused), with a StringFormatterError from here or from the mapping itself.
+	 * The input is refused, not the printing
+	 *
+	 * @throws Exceptions\MappingFailed
 	 */
 	private static function print(Valinor\Mapper\MappingError $error): string
 	{
 		$lines = [];
 
-		foreach ($error->messages()->errors() as $message) {
-			$lines[] = sprintf('%s: %s', $message->path(), $message->toString());
+		try {
+			foreach ($error->messages()->errors() as $message) {
+				$lines[] = sprintf('%s: %s', $message->path(), $message->toString());
+			}
+		} catch (Valinor\Utility\String\StringFormatterError $ex) {
+			throw new Exceptions\MappingFailed(self::UNPRINTABLE, 0, $ex);
 		}
 
 		return implode("\n", $lines);
