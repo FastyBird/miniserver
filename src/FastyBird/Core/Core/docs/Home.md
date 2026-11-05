@@ -180,7 +180,7 @@ The API stack, PSR-7 and PSR-15, with a FastRoute-based router.
 
 The Monolog handlers `fbCore.logging` configures: a daily rotating file in `FB_LOGS_DIR`, stdout,
 and Symfony's console handler, whose level a subscriber sets when a console command starts.
-`Logging\Logger::buildException()` builds the log context of an exception. With a DSN in
+`Logging\Logger::buildException()` builds the log context of an exception, and writes its blue screen to `FB_LOGS_DIR`, or to the directory it is given. With a DSN in
 `fbCore.logging.sentry.dsn`, or in the environment variable `FB_APP_PARAMETER__SENTRY_DSN`,
 warnings and worse also go to Sentry.
 

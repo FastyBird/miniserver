@@ -9,6 +9,8 @@ use FastyBird\Core\Clock;
 use FastyBird\Core\Logging;
 use FastyBird\Core\Security\Identity;
 use FastyBird\Core\Security\Models;
+use Nette;
+use Nette\Utils;
 use Override;
 use PHPUnit\Framework\TestCase;
 use React\Http\Message\Response;
@@ -16,25 +18,18 @@ use React\Http\Message\ServerRequest;
 use RuntimeException;
 use Throwable;
 use Tracy;
-use function array_diff;
-use function array_map;
 use function assert;
-use function basename;
 use function count;
 use function file_get_contents;
 use function glob;
 use function hash;
 use function implode;
-use function is_dir;
 use function is_string;
-use function mkdir;
 use function str_contains;
-use function str_starts_with;
 use function strlen;
 use function substr_count;
 use function sys_get_temp_dir;
 use function uniqid;
-use function unlink;
 use const GLOB_BRACE;
 
 /**
@@ -80,6 +75,9 @@ final class SensitiveDataTest extends TestCase
 	/** @var array<mixed> */
 	private array $cookie = [];
 
+	/** @var list<string> */
+	private array $directories = [];
+
 	#[Override]
 	protected function setUp(): void
 	{
@@ -95,17 +93,20 @@ final class SensitiveDataTest extends TestCase
 		$_SERVER['HTTP_COOKIE'] = self::COOKIES;
 		$_COOKIE['token'] = self::COOKIE_TOKEN;
 		$_COOKIE['refresh_token'] = self::COOKIE_REFRESH_TOKEN;
-
-		if (!is_dir(FB_LOGS_DIR)) {
-			mkdir(FB_LOGS_DIR, 0777, true);
-		}
 	}
 
+	/**
+	 * @throws Nette\IOException
+	 */
 	#[Override]
 	protected function tearDown(): void
 	{
 		$_SERVER = $this->server;
 		$_COOKIE = $this->cookie;
+
+		foreach ($this->directories as $directory) {
+			Utils\FileSystem::delete($directory);
+		}
 
 		parent::tearDown();
 	}
@@ -136,7 +137,7 @@ final class SensitiveDataTest extends TestCase
 
 			self::fail('The lookup did not fail');
 		} catch (RuntimeException $ex) {
-			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
+			$this->assertLoggedWithoutCredentials($ex);
 		}
 	}
 
@@ -161,7 +162,7 @@ final class SensitiveDataTest extends TestCase
 
 			self::fail('The token was accepted');
 		} catch (Throwable $ex) {
-			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
+			$this->assertLoggedWithoutCredentials($ex);
 		}
 	}
 
@@ -188,7 +189,7 @@ final class SensitiveDataTest extends TestCase
 
 			self::fail('The lookup did not fail');
 		} catch (RuntimeException $ex) {
-			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
+			$this->assertLoggedWithoutCredentials($ex);
 		}
 	}
 
@@ -207,7 +208,7 @@ final class SensitiveDataTest extends TestCase
 				self::COOKIE_REFRESH_TOKEN,
 			]);
 		} catch (RuntimeException $ex) {
-			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
+			$this->assertLoggedWithoutCredentials($ex);
 		}
 	}
 
@@ -241,7 +242,7 @@ final class SensitiveDataTest extends TestCase
 		try {
 			$this->handleBody($request, $response, (string) $request->getBody(), $form);
 		} catch (RuntimeException $ex) {
-			$this->assertLoggedWithoutCredentials($ex, __FUNCTION__);
+			$this->assertLoggedWithoutCredentials($ex);
 		}
 	}
 
@@ -295,8 +296,7 @@ final class SensitiveDataTest extends TestCase
 			self::assertContains($key, $blueScreen->keysToHide);
 		}
 
-		$directory = sys_get_temp_dir() . '/' . uniqid('fb-sensitive-data-', true);
-		mkdir($directory);
+		$directory = $this->logDirectory();
 
 		$logger = new Logging\TracyLogger($directory);
 		$logger->log(new RuntimeException('Logged by Tracy ' . uniqid()), Tracy\ILogger::EXCEPTION);
@@ -310,15 +310,20 @@ final class SensitiveDataTest extends TestCase
 	}
 
 	/**
+	 * The blue screen is written to a directory of the test's own: the tests of the other classes that log exceptions run
+	 * in other processes at the same time and clean up after themselves, and a directory they share would show one test
+	 * the files another is deleting
+	 *
 	 * @throws Throwable
 	 */
-	private function assertLoggedWithoutCredentials(Throwable $ex, string $testMethod): void
+	private function assertLoggedWithoutCredentials(Throwable $ex): void
 	{
-		$before = $this->logFiles();
+		$directory = $this->logDirectory();
 
-		Logging\Logger::buildException($ex);
+		Logging\Logger::buildException($ex, true, $directory);
 
-		$written = $this->blueScreensOf($before, $testMethod);
+		$written = glob($directory . '/*');
+		assert($written !== false);
 
 		// The HTML blue screen, and no markdown report beside it
 		self::assertCount(1, $written, implode(', ', $written));
@@ -330,36 +335,22 @@ final class SensitiveDataTest extends TestCase
 		$content = file_get_contents($written[0]);
 		assert(is_string($content));
 		self::assertTrue(str_contains($content, 'ServerRequest'), 'The request is not in the stack');
-
-		array_map(unlink(...), $written);
 	}
 
 	/**
-	 * The blue screens and reports written since $before for this test's exception: the test's
-	 * own method is in its stack. The log directory is shared by the tests running in parallel,
-	 * so files of other tests' errors may appear meanwhile
+	 * A new directory, removed when the test ends
 	 *
-	 * @param list<string> $before
-	 *
-	 * @return list<string>
+	 * @throws Nette\IOException
 	 */
-	private function blueScreensOf(array $before, string $testMethod): array
+	private function logDirectory(): string
 	{
-		$mine = [];
+		$directory = sys_get_temp_dir() . '/' . uniqid('fb-sensitive-data-', true);
 
-		foreach (array_diff($this->logFiles(), $before) as $file) {
-			if (!str_starts_with(basename($file), 'exception')) {
-				continue;
-			}
+		Utils\FileSystem::createDir($directory);
 
-			$content = file_get_contents($file);
+		$this->directories[] = $directory;
 
-			if (is_string($content) && str_contains($content, $testMethod)) {
-				$mine[] = $file;
-			}
-		}
-
-		return $mine;
+		return $directory;
 	}
 
 	/**
@@ -400,16 +391,6 @@ final class SensitiveDataTest extends TestCase
 			'Body could not be decoded: ' . $request->getMethod() . ' ' . $response->getStatusCode() . ' '
 			. strlen($body) . ' ' . $form->getMethod(),
 		);
-	}
-
-	/**
-	 * @return list<string>
-	 */
-	private function logFiles(): array
-	{
-		$files = glob(FB_LOGS_DIR . '/*');
-
-		return $files === false ? [] : $files;
 	}
 
 	private function assertNoCredentials(string $file): void
