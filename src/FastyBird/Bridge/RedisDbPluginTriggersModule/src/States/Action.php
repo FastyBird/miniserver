@@ -20,6 +20,7 @@ final class Action extends RedisDbStates\State implements TriggersStates\Action
 	public function __construct(
 		Uuid\UuidInterface $id,
 		#[CoreDocuments\Mapping\MapBoolLike]
+		#[Configurator\MapFromKey('validation_result')]
 		private readonly bool $validationResult = false,
 		#[CoreDocuments\Mapping\MapBlankToNull]
 		#[Configurator\MapFromKey('created_at')]
