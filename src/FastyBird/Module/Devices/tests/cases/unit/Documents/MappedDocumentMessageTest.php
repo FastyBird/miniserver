@@ -155,12 +155,12 @@ final class MappedDocumentMessageTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
-	 * Which of the Devices documents orisai maps and which Valinor does (Mapper::map() chooses by MappedObject): the
-	 * documents of the three roots and the ones that stay inside Devices are Valinor's, and the states, which are held
-	 * by the state classes of the bridges, are orisai's until those move
-	 * (DocumentRootsPinTest holds the documents of the connectors, the bridges and the addon beneath the roots)
+	 * Mapper::map() chooses by MappedObject, and no document and no property state of the Devices module is one: the
+	 * documents of the three roots, the ones that stay inside Devices, the interfaces of the property states and the
+	 * fixtures that implement them are Valinor's (DocumentRootsPinTest and StateRootsPinTest hold the documents and the
+	 * states of the connectors, the bridges and the addon beneath the roots)
 	 */
-	public function testTheDocumentsAreMappedByValinorAndTheStatesByOrisai(): void
+	public function testNoDocumentAndNoStateIsMappedByOrisai(): void
 	{
 		foreach (
 			[
@@ -201,23 +201,17 @@ final class MappedDocumentMessageTest extends Tests\Cases\Unit\BaseTestCase
 				Tests\Fixtures\Dummy\DummyChannelDocument::class,
 				Tests\Fixtures\Dummy\DummyConnectorDocument::class,
 				Tests\Fixtures\Dummy\DummyDeviceDocument::class,
-			] as $class
-		) {
-			self::assertNotContains(ObjectMapper\MappedObject::class, class_implements($class), $class);
-		}
-
-		foreach (
-			[
 				DevicesStates\Property::class,
 				DevicesStates\ChannelProperty::class,
 				DevicesStates\ConnectorProperty::class,
 				DevicesStates\DeviceProperty::class,
+				Tests\Fixtures\Dummy\PropertyState::class,
 				Tests\Fixtures\Dummy\ChannelPropertyState::class,
 				Tests\Fixtures\Dummy\ConnectorPropertyState::class,
 				Tests\Fixtures\Dummy\DevicePropertyState::class,
 			] as $class
 		) {
-			self::assertContains(ObjectMapper\MappedObject::class, class_implements($class), $class);
+			self::assertNotContains(ObjectMapper\MappedObject::class, class_implements($class), $class);
 		}
 	}
 

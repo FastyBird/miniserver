@@ -4,13 +4,12 @@ namespace FastyBird\Module\Devices\States;
 
 use DateTimeInterface;
 use FastyBird\Core\Values\Types\Payloads;
-use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 
 /**
  * Property interface
  */
-interface Property extends ObjectMapper\MappedObject
+interface Property
 {
 
 	public const string ACTUAL_VALUE_FIELD = 'actual_value';

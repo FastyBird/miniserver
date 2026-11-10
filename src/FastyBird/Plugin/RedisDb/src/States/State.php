@@ -2,14 +2,12 @@
 
 namespace FastyBird\Plugin\RedisDb\States;
 
-use FastyBird\Core\Persistence\Rules;
-use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 
 /**
  * Base state
  */
-class State implements ObjectMapper\MappedObject
+class State
 {
 
 	public const string ID_FIELD = 'id';
@@ -18,10 +16,7 @@ class State implements ObjectMapper\MappedObject
 
 	public const string UPDATED_AT_FIELD = 'updated_at';
 
-	public function __construct(
-		#[Rules\UuidValue()]
-		private readonly Uuid\UuidInterface $id,
-	)
+	public function __construct(private readonly Uuid\UuidInterface $id)
 	{
 	}
 

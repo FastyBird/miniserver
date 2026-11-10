@@ -3,13 +3,16 @@
 namespace FastyBird\Core\Documents\Mapping;
 
 use CuyZ\Valinor;
+use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Core\Documents\Exceptions;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
+use Throwable;
 use function implode;
 use function is_subclass_of;
 use function sprintf;
+use function str_contains;
 
 /**
  * The one place a plain array becomes an object of a mapped class
@@ -37,6 +40,23 @@ final readonly class Mapper
 		$builder = $builder
 			->supportDateFormats(DateTimeInterface::ATOM)
 			->registerConstructor(
+				// The date constructor of Valinor itself, as it was, but a string that does not parse is an error
+				// message for every string, a NUL byte included: DateTimeImmutable::createFromFormat() throws a
+				// ValueError for it, which no union can recover from, and a union of a date and a string (the value
+				// of a state) has to take the string, as orisai did, which tried the string before the date
+				/** @param non-empty-string|int|float $value */
+				static function (string|int|float $value): DateTimeImmutable {
+					$text = (string) $value;
+					$date = str_contains($text, "\0")
+						? false
+						: DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $text);
+
+					if ($date === false) {
+						throw self::notADate();
+					}
+
+					return $date;
+				},
 				static function (string $value): Uuid\UuidInterface {
 					// What orisai's UuidRule takes, which is what isValid() says: fromString() alone also reads a UUID
 					// written without dashes
@@ -101,6 +121,21 @@ final readonly class Mapper
 
 			throw new Exceptions\MappingFailed($errorPrinter->printError($ex), 0, $ex);
 		}
+	}
+
+	/**
+	 * What Valinor says of a date that none of its formats reads
+	 *
+	 * @phpstan-pure
+	 */
+	private static function notADate(): Throwable
+	{
+		return Valinor\Mapper\Tree\Message\MessageBuilder::newError(
+			'Value {source_value} does not match any of the following formats: {formats}.',
+		)
+			->withCode('cannot_parse_datetime_format')
+			->withParameter('formats', '`' . DateTimeInterface::ATOM . '`')
+			->build();
 	}
 
 	/**
