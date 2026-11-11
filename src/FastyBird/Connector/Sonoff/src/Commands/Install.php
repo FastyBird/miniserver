@@ -230,10 +230,10 @@ final class Install extends Console\Command\Command
 				'dataType' => ValuesTypes\DataType::ENUM,
 				'value' => $dataCentre->value,
 				'format' => [
-					SonoffTypes\CloudApiEndpoint::CHINA,
-					SonoffTypes\CloudApiEndpoint::AMERICA,
-					SonoffTypes\CloudApiEndpoint::EUROPE,
-					SonoffTypes\CloudApiEndpoint::ASIA,
+					SonoffTypes\CloudApiEndpoint::CHINA->value,
+					SonoffTypes\CloudApiEndpoint::AMERICA->value,
+					SonoffTypes\CloudApiEndpoint::EUROPE->value,
+					SonoffTypes\CloudApiEndpoint::ASIA->value,
 				],
 				'connector' => $connector,
 			]);
