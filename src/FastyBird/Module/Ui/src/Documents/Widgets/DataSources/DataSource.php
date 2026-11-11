@@ -2,14 +2,13 @@
 
 namespace FastyBird\Module\Ui\Documents\Widgets\DataSources;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
@@ -34,26 +33,13 @@ abstract class DataSource implements UiDocuments\Document, CoreDocuments\Owner, 
 	use CoreDocuments\HasUpdatedAt;
 
 	public function __construct(
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $widget,
-		#[ObjectMapper\Rules\AnyOf([
-			new Rules\UuidValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		protected readonly Uuid\UuidInterface|null $owner = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('created_at')]
+		#[Configurator\MapFromKey('created_at')]
 		protected readonly DateTimeInterface|null $createdAt = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('updated_at')]
+		#[Configurator\MapFromKey('updated_at')]
 		protected readonly DateTimeInterface|null $updatedAt = null,
 	)
 	{

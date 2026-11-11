@@ -20,14 +20,13 @@ use ValueError;
 use function array_diff;
 use function array_key_exists;
 use function array_keys;
-use function filter_var;
+use function intval;
 use function is_array;
 use function is_string;
 use function preg_match;
 use function str_ends_with;
 use function strval;
 use function substr;
-use const FILTER_VALIDATE_INT;
 
 /**
  * API data source history controller
@@ -202,9 +201,9 @@ final class DataSourceHistoryV1 extends BaseV1
 			return self::DEFAULT_POINTS;
 		}
 
-		$points = filter_var($filter['points'], FILTER_VALIDATE_INT);
+		$points = $this->integer($filter['points']);
 
-		if ($points === false || $points < 1 || $points > self::MAX_POINTS) {
+		if ($points === null || $points < 1 || $points > self::MAX_POINTS) {
 			throw $this->invalidParameter('filter[points]');
 		}
 
@@ -229,10 +228,10 @@ final class DataSourceHistoryV1 extends BaseV1
 		}
 
 		if (array_key_exists('period', $filter)) {
-			$period = filter_var($filter['period'], FILTER_VALIDATE_INT);
+			$period = $this->integer($filter['period']);
 
 			if (
-				$period === false
+				$period === null
 				|| $period < Entities\Widgets\Displays\ChartGraph::MIN_PERIOD
 				|| $period > Entities\Widgets\Displays\ChartGraph::MAX_PERIOD
 			) {
@@ -243,6 +242,14 @@ final class DataSourceHistoryV1 extends BaseV1
 		}
 
 		return $to->setTimestamp($to->getTimestamp() - $period);
+	}
+
+	/**
+	 * A whole number written with digits only: no sign, no space and no other notation, whatever its leading zeros
+	 */
+	private function integer(string $value): int|null
+	{
+		return preg_match('/^[0-9]+$/D', $value) === 1 ? intval($value) : null;
 	}
 
 	/**

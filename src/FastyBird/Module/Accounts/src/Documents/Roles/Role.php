@@ -3,11 +3,9 @@
 namespace FastyBird\Module\Accounts\Documents\Roles;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
@@ -21,29 +19,22 @@ use Ramsey\Uuid;
 	Accounts\Types\RoutingKey::ROLE_DOCUMENT_UPDATED->value,
 	Accounts\Types\RoutingKey::ROLE_DOCUMENT_DELETED->value,
 ])]
-final readonly class Role implements Documents\Document, ObjectMapper\MappedObject
+final readonly class Role implements Documents\Document
 {
 
 	public function __construct(
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[Documents\Mapping\RefuseBlank]
 		private string $name,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private string|null $comment = null,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
+		#[Documents\Mapping\MapBoolLike]
 		private bool $anonymous = false,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
+		#[Documents\Mapping\MapBoolLike]
 		private bool $authenticated = false,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
+		#[Documents\Mapping\MapBoolLike]
 		private bool $administrator = false,
-		#[ObjectMapper\Rules\AnyOf([
-			new Rules\UuidValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private Uuid\UuidInterface|null $parent = null,
 	)
 	{

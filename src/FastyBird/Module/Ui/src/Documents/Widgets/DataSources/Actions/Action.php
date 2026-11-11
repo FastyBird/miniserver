@@ -2,12 +2,11 @@
 
 namespace FastyBird\Module\Ui\Documents\Widgets\DataSources\Actions;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Types;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
@@ -22,21 +21,14 @@ final readonly class Action implements UiDocuments\Document
 {
 
 	public function __construct(
-		#[ObjectMapper\Rules\BackedEnumValue(class: Types\DataSourceAction::class)]
 		private readonly Types\DataSourceAction $action,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $widget,
-		#[Rules\UuidValue()]
-		#[ObjectMapper\Modifiers\FieldName('data_source')]
+		#[Configurator\MapFromKey('data_source')]
 		private readonly Uuid\UuidInterface $dataSource,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('expected_value')]
+		// The rule tried a float before an int, so an int that is mapped is a float, and one that is passed to the constructor is not
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[CoreDocuments\Mapping\MapIntToFloat]
+		#[Configurator\MapFromKey('expected_value')]
 		private readonly bool|float|int|string|null $expectedValue = null,
 	)
 	{

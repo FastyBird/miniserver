@@ -43,6 +43,8 @@ use function is_string;
 final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 {
 
+	private const string DATA_SOURCE_REFUSED = 'Could not map data to document: data_source: ';
+
 	private const string TOPIC = '/ui-module/v1/exchange';
 
 	private const string RPC_ID = 'call-1';
@@ -226,7 +228,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 						'expected_value' => 21.5,
 					],
 				],
-				'Could not map data to document: data_source: uuid',
+				self::DATA_SOURCE_REFUSED . 'Cannot be empty and must be filled with a value matching `string|array{value: string}`.',
 			],
 		];
 	}

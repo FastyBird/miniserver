@@ -50,6 +50,7 @@
     "lodash.defaultsdeep": "^4.6",
     "lodash.get": "^4.4",
     "lodash.isequal": "^4.5",
+    "uplot": "1.6.32",
     "uuid": "^14.0"
   },
   "peerDependencies": {

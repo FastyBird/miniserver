@@ -181,6 +181,7 @@ final class TriggerRootsPinTest extends TestCase
 					'value: one',
 					'value: true',
 					'value: a list',
+					'value: null',
 					'value: missing',
 				] as $name
 			) {

@@ -48,7 +48,15 @@ const jsonApiFormatter = new Jsona({
 	jsonPropertiesMapper: new JsonApiJsonPropertiesMapper(),
 });
 
-const DISPLAY_PARAMETERS: (keyof IWidgetDisplayParameters)[] = ['minimumValue', 'maximumValue', 'stepValue', 'precision', 'enableMinMax', 'icon'];
+const DISPLAY_PARAMETERS: (keyof IWidgetDisplayParameters)[] = [
+	'minimumValue',
+	'maximumValue',
+	'stepValue',
+	'precision',
+	'enableMinMax',
+	'period',
+	'icon',
+];
 
 // The display is a to-one resource of its widget: there is no display identifier in the URL
 const displayApiUrl = (widgetId: IWidget['id']): string => `/${ModulePrefix.UI}/v1/widgets/${widgetId}/display`;
@@ -65,6 +73,7 @@ const documentParameters = (document: WidgetDisplayDocument): IWidgetDisplayPara
 		stepValue: get(document, 'step_value', null),
 		precision: get(document, 'precision', null),
 		enableMinMax: get(document, 'enable_min_max', null),
+		period: get(document, 'period', null),
 		icon: get(document, 'icon', null),
 	};
 };
@@ -139,6 +148,7 @@ const storeRecordFactory = async (data: IWidgetDisplayRecordFactoryPayload): Pro
 		stepValue: get(data, 'stepValue', null),
 		precision: get(data, 'precision', null),
 		enableMinMax: get(data, 'enableMinMax', null),
+		period: get(data, 'period', null),
 		icon: get(data, 'icon', null),
 
 		// Relations
@@ -165,6 +175,7 @@ const databaseRecordFactory = (record: IWidgetDisplay): IWidgetDisplayDatabaseRe
 		stepValue: record.stepValue,
 		precision: record.precision,
 		enableMinMax: record.enableMinMax,
+		period: record.period,
 		icon: record.icon,
 
 		relationshipNames: record.relationshipNames.map((name) => name),

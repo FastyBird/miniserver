@@ -189,13 +189,17 @@ final class MapperRefusalTest extends Tests\Cases\Unit\BaseTestCase
 	#[DataProvider('options')]
 	public function testAUuidWhichIsNotValidUtf8IsRefused(bool $lenient): void
 	{
-		$this->expectException(Documents\Exceptions\MappingFailed::class);
+		try {
+			$this->mapper()->map(
+				['uuid' => "\xC3\x28", 'ratio' => 1.5, 'count' => 1, 'reading' => 1],
+				Dummy\DummyTypedDocument::class,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: $lenient),
+			);
 
-		$this->mapper()->map(
-			['uuid' => "\xC3\x28", 'ratio' => 1.5, 'count' => 1, 'reading' => 1],
-			Dummy\DummyTypedDocument::class,
-			new Documents\Mapping\MappingOptions(allowUnknownFields: $lenient),
-		);
+			self::fail('the mapper accepted the data');
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			self::assertSame(self::UTF8_MESSAGE, $ex->getMessage());
+		}
 	}
 
 	/**
@@ -211,6 +215,56 @@ final class MapperRefusalTest extends Tests\Cases\Unit\BaseTestCase
 		$document = $this->mapper()->map(['id' => self::ID, 'name' => "\xC3\x28"], $class);
 
 		self::assertSame("\xC3\x28", $document->toArray()['name']);
+	}
+
+	/**
+	 * Valinor throws the same exception when it cannot print a message whose body does not parse, which is a defect of the
+	 * constructor that wrote it and not a fault of the input: the refusal says what the exception says, and not that the
+	 * input is not valid UTF-8.
+	 *
+	 * The exception is internal to Valinor and the catch of Mapper names it: this and testValinorRefusesWhatItCannotPrint...
+	 * hold `previous` to its class, and assertInstanceOf() with a class that no longer exists is an error, so a release
+	 * that renames it fails these tests, not the callers
+	 *
+	 * @throws Throwable
+	 */
+	public function testABrokenMessageIsNotBlamedOnTheInput(): void
+	{
+		try {
+			$this->mapper()->map(
+				['kind' => Dummy\DummyGuardedDocument::BROKEN_MESSAGE],
+				Dummy\DummyGuardedDocument::class,
+			);
+
+			self::fail('the mapper accepted the data');
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			self::assertStringStartsWith(
+				'*root*: Message formatter error using `The kind is {broken`',
+				$ex->getMessage(),
+			);
+			self::assertNotSame(self::UTF8_MESSAGE, $ex->getMessage());
+			self::assertInstanceOf(Valinor\Utility\String\StringFormatterError::class, $ex->getPrevious());
+		}
+	}
+
+	/**
+	 * The input is blamed when it holds what is not valid UTF-8, wherever it is in it
+	 *
+	 * @throws Throwable
+	 */
+	public function testABrokenMessageOfAnInputWhichIsNotValidUtf8IsBlamedOnTheInput(): void
+	{
+		try {
+			$this->mapper()->map(
+				['kind' => Dummy\DummyGuardedDocument::BROKEN_MESSAGE, 'extra' => ['a' => ["\xC3\x28" => 'x']]],
+				Dummy\DummyGuardedDocument::class,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: true),
+			);
+
+			self::fail('the mapper accepted the data');
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			self::assertSame(self::UTF8_MESSAGE, $ex->getMessage());
+		}
 	}
 
 	/**

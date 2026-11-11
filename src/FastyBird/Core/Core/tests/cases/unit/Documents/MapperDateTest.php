@@ -2,6 +2,7 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Documents;
 
+use DateTime;
 use DateTimeInterface;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Tests;
@@ -68,6 +69,58 @@ final class MapperDateTest extends Tests\Cases\Unit\BaseTestCase
 		$document = $this->mapper()->map(['date' => self::DATE, 'value' => $text], Dummy\DummyDateDocument::class);
 
 		self::assertSame($text, $document->toArray()['value']);
+	}
+
+	/**
+	 * The mutable DateTime is read by the same constructor, so that a NUL byte is an error message of the value for it too,
+	 * and a union of it and a text takes the text
+	 *
+	 * @throws Throwable
+	 */
+	public function testAMutableDateIsReadAsAMutableDate(): void
+	{
+		$document = $this->mapper()->map(
+			['date' => self::DATE, 'value' => self::DATE],
+			Dummy\DummyMutableDateDocument::class,
+		);
+
+		self::assertSame(DateTime::class, $document->getDate()::class);
+		// A union with a text takes the text, Valinor tries no date for it: the converter of a state value does
+		self::assertSame(self::DATE, $document->getValue());
+		self::assertSame(self::DATE, $document->getDate()->format(DateTimeInterface::ATOM));
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	#[DataProvider('texts')]
+	public function testAMutableDateWithANulByteIsRefusedWithTheFormat(string $text): void
+	{
+		try {
+			$this->mapper()->map(['date' => $text], Dummy\DummyMutableDateDocument::class);
+
+			self::fail('the mapper accepted the data');
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			self::assertStringStartsWith('date: Value ', $ex->getMessage());
+			self::assertStringEndsWith(
+				' does not match any of the following formats: `' . DateTimeInterface::ATOM . '`.',
+				$ex->getMessage(),
+			);
+		}
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	#[DataProvider('texts')]
+	public function testAUnionOfAMutableDateAndATextTakesATextWithANulByte(string $text): void
+	{
+		$document = $this->mapper()->map(
+			['date' => self::DATE, 'value' => $text],
+			Dummy\DummyMutableDateDocument::class,
+		);
+
+		self::assertSame($text, $document->getValue());
 	}
 
 	/**
