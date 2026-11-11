@@ -28,24 +28,20 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Throwable;
 use TypeError;
 use function array_column;
-use function array_diff;
 use function assert;
-use function basename;
 use function file_get_contents;
 use function glob;
 use function hash;
-use function is_dir;
 use function is_string;
 use function json_encode;
-use function mkdir;
 use function preg_match;
 use function str_contains;
 use function str_repeat;
 use function str_replace;
-use function str_starts_with;
 use function substr_count;
+use function sys_get_temp_dir;
 use function trim;
-use function unlink;
+use function uniqid;
 use function var_export;
 
 /**
@@ -260,29 +256,34 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 		$this->db()->executeStatement('DROP TABLE fb_security_api_keys');
 		$this->container->getByType(ORM\EntityManagerInterface::class)->clear();
 
-		if (!is_dir(FB_LOGS_DIR)) {
-			mkdir(FB_LOGS_DIR, 0777, true);
-		}
-
-		$before = $this->logFiles();
+		// A directory of the test's own: the other tests that log an exception run in other processes at the same time
+		// and delete the files they write, which a shared directory would show to this one
+		$directory = sys_get_temp_dir() . '/' . uniqid('fb-api-keys-', true);
+		Utils\FileSystem::createDir($directory);
 
 		try {
-			$this->auth()->login($this->request($secret));
+			try {
+				$this->auth()->login($this->request($secret));
 
-			self::fail('The lookup did not fail');
-		} catch (PersistenceExceptions\Query $ex) {
-			Logging\Logger::buildException($ex);
+				self::fail('The lookup did not fail');
+			} catch (PersistenceExceptions\Query $ex) {
+				Logging\Logger::buildException($ex, true, $directory);
+			}
+
+			$written = glob($directory . '/*');
+			assert($written !== false);
+
+			// The file goes with the directory, so it is read here
+			$content = $written === [] ? false : file_get_contents($written[0]);
+		} finally {
+			Utils\FileSystem::delete($directory);
 		}
-
-		$written = $this->blueScreensOf($before, __FUNCTION__);
 
 		// The HTML blue screen, and no markdown report beside it
 		self::assertCount(1, $written);
 		self::assertStringEndsWith('.html', $written[0]);
 
-		$content = file_get_contents($written[0]);
 		assert(is_string($content));
-		unlink($written[0]);
 
 		self::assertTrue(str_contains($content, 'FindApiKeys'), 'The query is not in the stack');
 		self::assertSame(0, substr_count($content, $secret), 'the API key');
@@ -817,44 +818,6 @@ final class ApiKeysTest extends Tests\Cases\Unit\BaseTestCase
 	private function token(string $account): string
 	{
 		return $this->container->getByType(Identity\TokenBuilder::class)->build($account, [])->toString();
-	}
-
-	/**
-	 * The blue screens and reports written since $before for this test's exception: the test's
-	 * own method is in its stack. The log directory is shared by the tests running in parallel,
-	 * so files of other tests' errors may appear meanwhile
-	 *
-	 * @param list<string> $before
-	 *
-	 * @return list<string>
-	 */
-	private function blueScreensOf(array $before, string $testMethod): array
-	{
-		$mine = [];
-
-		foreach (array_diff($this->logFiles(), $before) as $file) {
-			if (!str_starts_with(basename($file), 'exception')) {
-				continue;
-			}
-
-			$content = file_get_contents($file);
-
-			if (is_string($content) && str_contains($content, $testMethod)) {
-				$mine[] = $file;
-			}
-		}
-
-		return $mine;
-	}
-
-	/**
-	 * @return list<string>
-	 */
-	private function logFiles(): array
-	{
-		$files = glob(FB_LOGS_DIR . '/*');
-
-		return $files === false ? [] : $files;
 	}
 
 	private function signedInAs(Identity\User $user): string|null
