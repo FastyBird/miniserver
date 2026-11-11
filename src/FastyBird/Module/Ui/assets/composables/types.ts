@@ -1,6 +1,8 @@
-import { ComputedRef } from 'vue';
+import { ComputedRef, MaybeRefOrGetter, Ref } from 'vue';
 
 import { AxiosResponse } from 'axios';
+
+import { HistoryErrorKind, IHistoryColumns, IHistorySeries } from '../utilities/history';
 
 export interface UseUuid {
 	generate: () => string;
@@ -18,4 +20,30 @@ export interface UseFlashMessage {
 export interface UseBreakpoints {
 	isXSDevice: ComputedRef<boolean>;
 	isSMDevice: ComputedRef<boolean>;
+}
+
+export interface UseDataSourceHistoryOptions {
+	widgetId: MaybeRefOrGetter<string | null | undefined>;
+	dataSourceId: MaybeRefOrGetter<string | null | undefined>;
+	// Seconds, the display's period. Anything the endpoint would refuse falls back to the default.
+	period?: MaybeRefOrGetter<number | null | undefined>;
+	// Points to ask for, up to the endpoint's limit
+	points?: number;
+}
+
+export interface UseDataSourceHistoryError {
+	kind: HistoryErrorKind;
+	cause: unknown;
+}
+
+export interface UseDataSourceHistory {
+	series: Ref<IHistorySeries | null>;
+	columns: ComputedRef<IHistoryColumns | null>;
+	// The period in effect, in seconds
+	period: ComputedRef<number>;
+	loading: Ref<boolean>;
+	error: Ref<UseDataSourceHistoryError | null>;
+	// Answered, and nothing to draw in it
+	empty: ComputedRef<boolean>;
+	refresh: () => Promise<void>;
 }
