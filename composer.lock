@@ -2296,12 +2296,13 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Accounts",
-                "reference": "ec46013d83fb5dffb13cd0f0e3a67b4144a174bd"
+                "reference": "f59a70be35429e92de70c04d2b80b14aea890606"
             },
             "require": {
                 "contributte/console": "^0.9",
                 "contributte/monolog": "^0.6",
                 "contributte/translation": "^2.0",
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "ext-pcntl": "*",
                 "fastybird/miniserver-core": "@dev",
@@ -2443,16 +2444,16 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Automator/DateTime",
-                "reference": "40898882802653bba7e6e64994317beba6fcde90"
+                "reference": "dfaf594603f46d877cfb0bb184297c8dafe5689c"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "ext-pcntl": "*",
                 "fastybird/miniserver-core": "@dev",
                 "fastybird/triggers-module": "@dev",
                 "nette/di": "^3.2",
-                "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
                 "psr/log": "^3.0",
                 "ramsey/uuid": "^4.7",
@@ -2600,17 +2601,17 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Automator/DevicesModule",
-                "reference": "b490fcdb2635938ba856b1842b70237c214ca1d4"
+                "reference": "c8e72cb3b9aabb4a2c6646697868c0442d6954d0"
             },
             "require": {
                 "binsoul/net-mqtt": "^0.8",
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "ext-pcntl": "*",
                 "fastybird/devices-module": "@dev",
                 "fastybird/miniserver-core": "@dev",
                 "fastybird/triggers-module": "@dev",
                 "nette/di": "^3.2",
-                "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
                 "psr/log": "^3.0",
                 "ramsey/uuid": "^4.7",
@@ -3772,12 +3773,13 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Triggers",
-                "reference": "880f8d5a5d014a15d338863dad00c5d61f5a5993"
+                "reference": "143a010043971d97de3867bd4a5afa0e407c7f7e"
             },
             "require": {
                 "contributte/console": "^0.9",
                 "contributte/monolog": "^0.6",
                 "contributte/translation": "^2.0",
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/miniserver-core": "@dev",
                 "nettrine/dbal": "^0.10",
@@ -3937,12 +3939,13 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Ui",
-                "reference": "a61fa16c51f43a7b05d24a8d3b5bd2ed868df49f"
+                "reference": "06e9785f38f32fd6bf66aa51e36c7606050dc6b9"
             },
             "require": {
                 "contributte/console": "^0.9",
                 "contributte/monolog": "^0.6",
                 "contributte/translation": "^2.0",
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
                 "ext-pcntl": "*",

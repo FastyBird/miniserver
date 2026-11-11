@@ -43,7 +43,7 @@ final readonly class Account implements Documents\Document
 		#[Configurator\MapFromKey('middle_name')]
 		private string|null $middleName = null,
 		#[Documents\Mapping\MapBlankToNull]
-		#[Documents\Mapping\RequirePattern('/^[\w\-\.]+@[\w\-\.]+\.+[\w-]{2,63}$/')]
+		#[Documents\Mapping\RequirePattern('/^[\w\-\.]+@[\w\-\.]+\.[\w-]{2,63}$/')]
 		private string|null $email = null,
 		#[Documents\Mapping\MapBlankToNull]
 		private DateTimeInterface|null $registered = null,

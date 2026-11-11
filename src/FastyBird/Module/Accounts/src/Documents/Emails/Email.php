@@ -25,7 +25,7 @@ final readonly class Email implements Documents\Document
 	public function __construct(
 		private Uuid\UuidInterface $id,
 		private Uuid\UuidInterface $account,
-		#[Documents\Mapping\RequirePattern('/^[\w\-\.]+@[\w\-\.]+\.+[\w-]{2,63}$/')]
+		#[Documents\Mapping\RequirePattern('/^[\w\-\.]+@[\w\-\.]+\.[\w-]{2,63}$/')]
 		private string $address,
 		#[Documents\Mapping\MapBoolLike]
 		private bool $default = false,

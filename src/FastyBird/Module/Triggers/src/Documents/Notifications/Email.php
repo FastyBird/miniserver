@@ -22,7 +22,7 @@ final class Email extends Notification
 		#[Documents\Mapping\RefuseBlank]
 		string $type,
 		bool $enabled,
-		#[Documents\Mapping\RequirePattern('/^[\w\-\.]+@[\w\-\.]+\.+[\w-]{2,63}$/')]
+		#[Documents\Mapping\RequirePattern('/^[\w\-\.]+@[\w\-\.]+\.[\w-]{2,63}$/')]
 		private readonly string $email,
 		#[Documents\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,

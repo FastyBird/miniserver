@@ -54,7 +54,8 @@ final class AccountsUiRootsPinTest extends TestCase
 	 * The inputs whose answer is not the one orisai gave, both of them a defect of orisai's:
 	 *
 	 * - a text with a NUL byte as the value of a data source: the date rule of the union threw a ValueError from
-	 *   createFromFormat() and nothing caught it; the text is a text, as for the state of a property
+	 *   createFromFormat(), which Mapper turned into a refusal of the whole document (#836); the text is a text, as for the
+	 *   state of a property
 	 * - `enable_min_max: null` for a chart: the rule took null and the property is a bool, so the setter raised a TypeError;
 	 *   the input is refused
 	 */
@@ -164,7 +165,7 @@ final class AccountsUiRootsPinTest extends TestCase
 		$pinned = self::decode((string) file_get_contents(__DIR__ . '/fixtures/accounts-ui-roots.json'));
 		$actual = self::decode(self::execute(false));
 
-		self::assertSame(['error' => 'ValueError'], $pinned[self::CHANNEL]['value: a date with a NUL byte']);
+		self::assertSame(['refused' => true], $pinned[self::CHANNEL]['value: a date with a NUL byte']);
 		self::assertSame(['error' => 'TypeError'], $pinned[self::CHART]['enable_min_max: null']);
 
 		$text = $actual[self::CHANNEL]['value: a date with a NUL byte']['json'] ?? null;

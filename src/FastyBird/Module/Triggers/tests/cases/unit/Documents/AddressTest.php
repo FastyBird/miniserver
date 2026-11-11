@@ -7,6 +7,7 @@ use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use Orisai\ObjectMapper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use function microtime;
 use function str_repeat;
 
 /**
@@ -40,6 +41,35 @@ final class AddressTest extends TestCase
 			self::assertFalse($accepted, $top);
 			self::assertStringStartsWith('email: Value ', $ex->getMessage());
 		}
+	}
+
+	/**
+	 * A name of many dots is refused at once: the pattern took quadratic time for it, a second and more for a few hundred
+	 * thousand dots, where the refusal is a millisecond
+	 */
+	public function testAFloodOfDotsIsRefusedAtOnce(): void
+	{
+		$mapper = new CoreDocuments\Mapping\Mapper($this->createMock(ObjectMapper\Processing\Processor::class));
+		$start = microtime(true);
+
+		try {
+			$mapper->map(
+				[
+					'id' => '176984ad-7cf7-465d-9e53-71668a74a688',
+					'trigger' => 'f42a8b4c-d5c8-4242-8ff0-6e5f867dcfb1',
+					'type' => 'email',
+					'enabled' => true,
+					'email' => 'a@' . str_repeat('.', 200_000) . '!',
+				],
+				TriggersDocuments\Notifications\Email::class,
+			);
+
+			self::fail('the mapper accepted the data');
+		} catch (CoreDocuments\Exceptions\MappingFailed $ex) {
+			self::assertStringStartsWith('email: ', $ex->getMessage());
+		}
+
+		self::assertLessThan(1.0, microtime(true) - $start);
 	}
 
 	/**

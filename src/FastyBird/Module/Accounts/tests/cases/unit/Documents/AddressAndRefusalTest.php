@@ -7,7 +7,10 @@ use FastyBird\Module\Accounts\Documents as AccountsDocuments;
 use Orisai\ObjectMapper;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use function microtime;
+use function str_ends_with;
 use function str_repeat;
+use function str_replace;
 
 /**
  * The pattern of an e-mail address is written out on the address of an Email and on the e-mail of an Account (and on the
@@ -47,6 +50,69 @@ final class AddressAndRefusalTest extends TestCase
 			self::assertStringStartsWith($field . ': Value ', $ex->getMessage());
 			self::assertStringEndsWith('does not match the pattern.', $ex->getMessage());
 		}
+	}
+
+	/**
+	 * A NUL byte in a date is a refusal of the field, with the formats it is read in: createFromFormat() throws a ValueError
+	 * for it, which orisai let through (#836 turned it into a refusal of the whole document) and Valinor's date constructor
+	 * of Mapper refuses at the field
+	 */
+	#[DataProvider('dates')]
+	public function testANulByteInADateIsRefusedAtTheField(string $field): void
+	{
+		try {
+			$this->mapper()->map(
+				[
+					'id' => self::ID,
+					'first_name' => 'Jane',
+					'last_name' => 'Doe',
+					'language' => 'en',
+					'state' => 'active',
+					$field => "2020-04-01T12:00:00+00:00\0",
+				],
+				AccountsDocuments\Accounts\Account::class,
+			);
+
+			self::fail('the mapper accepted the data');
+		} catch (CoreDocuments\Exceptions\MappingFailed $ex) {
+			self::assertStringStartsWith($field . ': Value ', $ex->getMessage());
+			self::assertStringEndsWith(
+				'does not match any of the following formats: `Y-m-d\TH:i:sP`.',
+				$ex->getMessage(),
+			);
+		}
+	}
+
+	/**
+	 * @return array<string, array{string}>
+	 */
+	public static function dates(): array
+	{
+		return ['registered' => ['registered'], 'last_visit' => ['last_visit']];
+	}
+
+	/**
+	 * A name of many dots is refused at once: the pattern took quadratic time for it, a second and more for a few hundred
+	 * thousand dots, where the refusal is a millisecond
+	 *
+	 * @param class-string<CoreDocuments\Document> $class
+	 * @param array<string, mixed> $data
+	 */
+	#[DataProvider('floods')]
+	public function testAFloodOfDotsIsRefusedAtOnce(string $class, array $data, string $field): void
+	{
+		$data[$field] = 'a@' . str_repeat('.', 200_000) . '!';
+		$start = microtime(true);
+
+		try {
+			$this->mapper()->map($data, $class);
+
+			self::fail('the mapper accepted the data');
+		} catch (CoreDocuments\Exceptions\MappingFailed $ex) {
+			self::assertStringStartsWith($field . ': ', $ex->getMessage());
+		}
+
+		self::assertLessThan(1.0, microtime(true) - $start);
 	}
 
 	/**
@@ -94,6 +160,22 @@ final class AddressAndRefusalTest extends TestCase
 			$cases[$name . ', 1 letter'] = [$class, $data, $field, 'c', false];
 			$cases[$name . ', 63 letters'] = [$class, $data, $field, str_repeat('x', 63), true];
 			$cases[$name . ', 64 letters'] = [$class, $data, $field, str_repeat('x', 64), false];
+		}
+
+		return $cases;
+	}
+
+	/**
+	 * @return array<string, array{class-string<CoreDocuments\Document>, array<string, mixed>, string}>
+	 */
+	public static function floods(): array
+	{
+		$cases = [];
+
+		foreach (self::addresses() as $name => [$class, $data, $field]) {
+			if (str_ends_with($name, ', 2 letters')) {
+				$cases[str_replace(', 2 letters', '', $name)] = [$class, $data, $field];
+			}
 		}
 
 		return $cases;
