@@ -26,7 +26,6 @@ final class ChartGraph extends UiDocuments\Widgets\Displays\Display
 		private readonly float|null $minimumValue,
 		#[Configurator\MapFromKey('maximum_value')]
 		private readonly float|null $maximumValue,
-		#[Configurator\MapFromKey('step_value')]
 		private readonly float|null $stepValue,
 		private readonly int|null $precision,
 		#[CoreDocuments\Mapping\MapBoolLike]

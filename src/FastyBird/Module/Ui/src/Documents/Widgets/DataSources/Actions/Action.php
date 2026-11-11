@@ -29,7 +29,7 @@ final readonly class Action implements UiDocuments\Document
 		#[CoreDocuments\Mapping\MapBlankToNull]
 		#[CoreDocuments\Mapping\MapIntToFloat]
 		#[Configurator\MapFromKey('expected_value')]
-		private readonly bool|float|string|null $expectedValue = null,
+		private readonly bool|float|int|string|null $expectedValue = null,
 	)
 	{
 	}
