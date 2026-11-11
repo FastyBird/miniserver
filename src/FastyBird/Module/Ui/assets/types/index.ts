@@ -103,6 +103,7 @@ export interface WidgetDisplayDocument {
 	step_value?: number | null;
 	precision?: number | null;
 	enable_min_max?: boolean | null;
+	period?: number | null;
 	icon?: string | null;
 	owner: string | null;
 	created_at: string | null;

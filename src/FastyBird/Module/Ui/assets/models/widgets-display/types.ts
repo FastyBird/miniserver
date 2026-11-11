@@ -66,6 +66,7 @@ export interface IWidgetDisplayParameters {
 	stepValue: number | null;
 	precision: number | null;
 	enableMinMax: boolean | null;
+	period: number | null;
 	icon: string | null;
 }
 

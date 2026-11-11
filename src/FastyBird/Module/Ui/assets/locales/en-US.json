@@ -1,1 +1,29 @@
-{}
+{
+	"chart": {
+		"label": "Property value history",
+		"loading": "Loading history...",
+		"empty": "No values were recorded in this period.",
+		"retry": "Try again",
+		"error": {
+			"invalid": "The history request was refused. Check the period of the display.",
+			"notFound": "The history of this data source is not available.",
+			"unavailable": "The history could not be loaded.",
+			"malformed": "The history came back in a form the chart cannot read."
+		},
+		"period": {
+			"label": "Period",
+			"minutes": "{count} min",
+			"hours": "{count} h",
+			"days": "{count} d",
+			"years": "{count} y"
+		},
+		"series": {
+			"value": "Value",
+			"min": "Minimum",
+			"max": "Maximum"
+		}
+	},
+	"messages": {
+		"widgetLoadFailed": "The widget could not be loaded."
+	}
+}
