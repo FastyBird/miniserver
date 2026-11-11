@@ -30,7 +30,7 @@ use const PHP_BINARY;
  * container is booted in a child process (bootstrap-accounts-ui-roots.php) and every concrete document is given the
  * same inputs through DocumentFactory: each of its fields in every wrong form there is, next to the whole document.
  * What each made, the JSON the exchange and the API encode and serialize() of the document, or that it was refused, has
- * to be what fixtures/accounts-ui-roots.json holds: the output of the same script when orisai mapped them, on debfca438.
+ * to be what fixtures/accounts-ui-roots.json holds: the output of the same script when orisai mapped them, on d7e28415c.
  * The differences there are, and only these are, the ones CHANGED names
  */
 final class AccountsUiRootsPinTest extends TestCase

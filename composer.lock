@@ -2516,12 +2516,13 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Module/Devices",
-                "reference": "e3e99e945dd1aba4590de0aa85bf59e7140e0ffd"
+                "reference": "a6f76396eb797af68c4b6557c5792970f62eefa7"
             },
             "require": {
                 "contributte/console": "^0.9",
                 "contributte/monolog": "^0.6",
                 "contributte/translation": "^2.0",
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "ext-bcmath": "*",
                 "ext-pcntl": "*",
@@ -3325,10 +3326,11 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Plugin/RedisDb",
-                "reference": "84ab3991de3069bff7d671bf3cc9edae2339d6e1"
+                "reference": "ec5dded2cd195e45d39656d81b2a5255ab21a0ef"
             },
             "require": {
                 "clue/redis-react": "3.0.0",
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/miniserver-core": "@dev",
                 "nette/di": "^3.2",
@@ -3691,13 +3693,14 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Connector/Sonoff",
-                "reference": "0702fc983bcd1eb6d071e18d766741440a9dc98b"
+                "reference": "42ccd44d0932d6714511e0825e3fd78da7c5889e"
             },
             "require": {
                 "clue/multicast-react": "^1.1",
                 "contributte/console": "^0.9",
                 "contributte/monolog": "^0.6",
                 "contributte/translation": "^2.0",
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "ext-pcntl": "*",
                 "fastybird/devices-module": "@dev",

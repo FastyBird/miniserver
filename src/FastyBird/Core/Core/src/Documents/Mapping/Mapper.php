@@ -7,14 +7,17 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Core\Documents\Exceptions;
+use Generator;
 use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use Throwable;
+use Traversable;
 use ValueError;
 use function implode;
 use function is_array;
 use function is_string;
 use function is_subclass_of;
+use function iterator_to_array;
 use function mb_check_encoding;
 use function sprintf;
 use function str_contains;
@@ -229,9 +232,32 @@ final readonly class Mapper
 			if (is_array($value) && self::hasInvalidUtf8($value)) {
 				return true;
 			}
+
+			// An ArrayObject or another traversable that Valinor reads as a list; a generator is not walked, which would
+			// consume it before Valinor reads it
+			if (
+				$value instanceof Traversable
+				&& !$value instanceof Generator
+				&& self::hasInvalidUtf8Traversable($value)
+			) {
+				return true;
+			}
 		}
 
 		return false;
+	}
+
+	/**
+	 * @param Traversable<mixed, mixed> $value
+	 */
+	private static function hasInvalidUtf8Traversable(Traversable $value): bool
+	{
+		try {
+			return self::hasInvalidUtf8(iterator_to_array($value));
+		} catch (Throwable) {
+			// Keys which are no keys of an array, or an iterator which cannot be rewound: nothing to tell about it
+			return false;
+		}
 	}
 
 }

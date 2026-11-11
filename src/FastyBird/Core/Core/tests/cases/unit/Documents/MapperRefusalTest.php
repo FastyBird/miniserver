@@ -2,14 +2,19 @@
 
 namespace FastyBird\Core\Tests\Cases\Unit\Documents;
 
+use ArrayIterator;
+use ArrayObject;
 use CuyZ\Valinor;
 use FastyBird\Core\Documents;
 use FastyBird\Core\Tests;
 use FastyBird\Core\Tests\Fixtures\Dummy;
+use Generator;
 use Nette;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Throwable;
 use ValueError;
+use function array_merge;
+use function mb_check_encoding;
 
 /**
  * What Mapper::map() does with an input the libraries cannot take apart: a string with a NUL byte where a date is read
@@ -203,6 +208,84 @@ final class MapperRefusalTest extends Tests\Cases\Unit\BaseTestCase
 	}
 
 	/**
+	 * A text which is not valid UTF-8 as the value of an int is refused, and the line that says so is made when the errors
+	 * are printed, not when the data is mapped: it is the catch of print() that turns the failure into a refusal
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('options')]
+	public function testAValueWhichIsNotAnIntAndNotValidUtf8IsRefusedWhenItIsPrinted(bool $lenient): void
+	{
+		try {
+			$this->mapper()->map(
+				['uuid' => self::ID, 'ratio' => 1.5, 'count' => "\xC3", 'reading' => 1],
+				Dummy\DummyTypedDocument::class,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: $lenient),
+			);
+
+			self::fail('the mapper accepted the data');
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			self::assertSame(self::UTF8_MESSAGE, $ex->getMessage());
+			self::assertInstanceOf(Valinor\Utility\String\StringFormatterError::class, $ex->getPrevious());
+		}
+	}
+
+	/**
+	 * The input is searched for what is not valid UTF-8 inside an ArrayObject or another traversable as well, so that the
+	 * message of the refusal does not carry the bytes; a generator is not walked, which would consume it
+	 *
+	 * @param array<string, mixed> $extra
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('traversables')]
+	public function testInvalidUtf8InATraversableIsBlamedOnTheInput(array $extra, bool $blamed): void
+	{
+		try {
+			$this->mapper()->map(
+				array_merge(['uuid' => self::ID, 'ratio' => 1.5, 'count' => new ArrayObject(), 'reading' => 1], $extra),
+				Dummy\DummyTypedDocument::class,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: true),
+			);
+
+			self::fail('the mapper accepted the data');
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			if ($blamed) {
+				self::assertSame(self::UTF8_MESSAGE, $ex->getMessage());
+			} else {
+				self::assertNotSame(self::UTF8_MESSAGE, $ex->getMessage());
+			}
+
+			self::assertTrue(mb_check_encoding($ex->getMessage(), 'UTF-8'), 'the message holds bytes of the input');
+		}
+	}
+
+	/**
+	 * The search for what is not valid UTF-8 does not walk a generator: that would consume it before Valinor reads it
+	 *
+	 * @throws Throwable
+	 */
+	public function testTheSearchForInvalidUtf8DoesNotConsumeAGenerator(): void
+	{
+		$generator = self::generator();
+
+		try {
+			$this->mapper()->map(
+				['uuid' => self::ID, 'ratio' => 1.5, 'reading' => $generator, 'count' => "\xC3"],
+				Dummy\DummyTypedDocument::class,
+				new Documents\Mapping\MappingOptions(allowUnknownFields: true),
+			);
+
+			self::fail('the mapper accepted the data');
+		} catch (Documents\Exceptions\MappingFailed $ex) {
+			self::assertSame(self::UTF8_MESSAGE, $ex->getMessage());
+		}
+
+		self::assertTrue($generator->valid());
+		self::assertSame("\xFF", $generator->current());
+	}
+
+	/**
 	 * What is not valid UTF-8 and is not printed is a value like any other
 	 *
 	 * @param class-string<Documents\Document> $class
@@ -265,6 +348,30 @@ final class MapperRefusalTest extends Tests\Cases\Unit\BaseTestCase
 		} catch (Documents\Exceptions\MappingFailed $ex) {
 			self::assertSame(self::UTF8_MESSAGE, $ex->getMessage());
 		}
+	}
+
+	/**
+	 * @return array<string, array{array<string, mixed>, bool}>
+	 */
+	public static function traversables(): array
+	{
+		return [
+			'a key of an ArrayObject' => [['count' => new ArrayObject(["\xFF" => 1])], true],
+			'a value of an ArrayObject' => [['count' => new ArrayObject(['a' => "\xFF"])], true],
+			'a key of an ArrayObject in a list, which Valinor does not print' => [['count' => [new ArrayObject(
+				["\xFF" => 1],
+			)]], false],
+			'a key of an ArrayIterator' => [['count' => new ArrayIterator(["\xFF" => 1])], true],
+			'an ArrayObject of valid texts' => [['count' => new ArrayObject(['a' => 'b'])], false],
+		];
+	}
+
+	/**
+	 * @return Generator<int, string>
+	 */
+	private static function generator(): Generator
+	{
+		yield "\xFF";
 	}
 
 	/**

@@ -20,7 +20,7 @@ use FastyBird\MiniServer\Tests\Cases\Application\AccountsUiRootsProbe;
  * hold; with --census which side of Mapper::map()'s dispatch each document is on, and with --objects what a few objects
  * of other classes make.
  *
- * The pins are what orisai made of these inputs: the file was written with this command on debfca438, the last commit on
+ * The pins are what orisai made of these inputs: the file was written with this command on d7e28415c, the last commit on
  * which the roots and everything extending them were still mapped by orisai (#724 PR4f). The inputs and the report
  * are in AccountsUiRootsProbe, which the script runs.
  */

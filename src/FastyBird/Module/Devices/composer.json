@@ -43,6 +43,7 @@
     "contributte/console": "^0.9",
     "contributte/monolog": "^0.6",
     "contributte/translation": "^2.0",
+    "cuyz/valinor": "^2.6",
     "cweagans/composer-patches": "^1.7",
     "nettrine/dbal": "^0.10",
     "nettrine/orm": "^0.10",
