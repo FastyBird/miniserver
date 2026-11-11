@@ -3618,12 +3618,13 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/ShellyConnectorHomeKitConnector",
-                "reference": "3b04267b8d82cda03c7f8ee26bae4d5b7a3fd750"
+                "reference": "faef61d21d1302cc2a569a95b29bbaec7ddc386d"
             },
             "require": {
                 "contributte/console": "^0.9",
                 "contributte/monolog": "^0.6",
                 "contributte/translation": "^2.0",
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/devices-module": "@dev",
                 "fastybird/homekit-connector": "@dev",
