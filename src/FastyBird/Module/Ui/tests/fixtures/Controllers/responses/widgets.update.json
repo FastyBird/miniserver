@@ -86,7 +86,8 @@
         "maximum_value": 40,
         "step_value": 0.1,
         "enable_min_max": false,
-        "precision": 0
+        "precision": 0,
+        "period": 86400
       },
       "relationships": {
         "widget": {

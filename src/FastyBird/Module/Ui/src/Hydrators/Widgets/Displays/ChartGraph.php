@@ -7,6 +7,7 @@ use FastyBird\Core\Api\Exceptions;
 use FastyBird\Module\Ui\Entities;
 use Fig\Http\Message\StatusCodeInterface;
 use Override;
+use function is_int;
 use function is_scalar;
 use function strval;
 
@@ -25,6 +26,7 @@ final class ChartGraph extends Display
 		'precision' => 'precision',
 		'step_value' => 'stepValue',
 		'enable_min_max' => 'enableMinMax',
+		'period' => 'period',
 	];
 
 	#[Override]
@@ -53,6 +55,38 @@ final class ChartGraph extends Display
 		}
 
 		return (bool) $attributes->get('enable_min_max');
+	}
+
+	/**
+	 * The period of history the chart shows, in seconds: a whole number the history can be asked for, or null for
+	 * the default
+	 *
+	 * @throws Exceptions\JsonApiError
+	 */
+	protected function hydratePeriodAttribute(Objects\StandardObject $attributes): int|null
+	{
+		$value = $attributes->get('period');
+
+		if ($value === null) {
+			return null;
+		}
+
+		if (
+			!is_int($value)
+			|| $value < Entities\Widgets\Displays\ChartGraph::MIN_PERIOD
+			|| $value > Entities\Widgets\Displays\ChartGraph::MAX_PERIOD
+		) {
+			throw new Exceptions\JsonApiError(
+				StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
+				strval($this->translator->translate('//ui-module.base.messages.invalidAttribute.heading')),
+				strval($this->translator->translate('//ui-module.base.messages.invalidAttribute.message')),
+				[
+					'pointer' => '/data/attributes/period',
+				],
+			);
+		}
+
+		return $value;
 	}
 
 }

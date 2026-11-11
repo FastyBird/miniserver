@@ -134,6 +134,7 @@ final class ModuleEntitiesDocumentTest extends Tests\Cases\Unit\DbTestCase
 						'step_value' => 0.1,
 						'enable_min_max' => false,
 						'precision' => 0,
+						'period' => 86_400,
 					],
 				],
 			],

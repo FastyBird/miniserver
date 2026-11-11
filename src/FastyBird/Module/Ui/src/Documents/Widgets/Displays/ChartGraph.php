@@ -51,6 +51,11 @@ final class ChartGraph extends UiDocuments\Widgets\Displays\Display
 		Uuid\UuidInterface|null $owner = null,
 		DateTimeInterface|null $createdAt = null,
 		DateTimeInterface|null $updatedAt = null,
+		#[ObjectMapper\Rules\IntValue(
+			min: Entities\Widgets\Displays\ChartGraph::MIN_PERIOD,
+			max: Entities\Widgets\Displays\ChartGraph::MAX_PERIOD,
+		)]
+		private readonly int $period = Entities\Widgets\Displays\ChartGraph::DEFAULT_PERIOD,
 	)
 	{
 		parent::__construct($id, $widget, $owner, $createdAt, $updatedAt);
@@ -87,6 +92,11 @@ final class ChartGraph extends UiDocuments\Widgets\Displays\Display
 		return $this->enableMinMax;
 	}
 
+	public function getPeriod(): int
+	{
+		return $this->period;
+	}
+
 	#[Override]
 	public function toArray(): array
 	{
@@ -96,6 +106,7 @@ final class ChartGraph extends UiDocuments\Widgets\Displays\Display
 			'step_value' => $this->getStepValue(),
 			'enable_min_max' => $this->isEnabledMinMax(),
 			'precision' => $this->getPrecision(),
+			'period' => $this->getPeriod(),
 		]);
 	}
 

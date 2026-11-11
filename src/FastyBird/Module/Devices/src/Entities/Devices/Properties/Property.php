@@ -17,7 +17,7 @@ use function array_merge;
 
 #[ORM\Entity]
 #[ORM\Table(
-	name: 'fb_devices_module_devices_properties',
+	name: self::TABLE,
 	options: [
 		'comment' => 'Devices properties',
 	],
@@ -36,6 +36,8 @@ use function array_merge;
 #[ORM\MappedSuperclass]
 abstract class Property extends Entities\Property
 {
+
+	public const string TABLE = 'fb_devices_module_devices_properties';
 
 	#[Attribute\Crud(required: true)]
 	#[ORM\ManyToOne(

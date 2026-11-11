@@ -56,6 +56,8 @@ final readonly class ApiRoutes
 
 	public const string ROUTE_NAME_WIDGET_DATA_SOURCE_RELATIONSHIP = 'widget.widget.data-source.relationship';
 
+	public const string ROUTE_NAME_WIDGET_DATA_SOURCE_HISTORY = 'widget.widget.data-source.history';
+
 	public function __construct(
 		private bool $usePrefix,
 		private Controllers\DashboardsV1 $dashboardsV1Controller,
@@ -64,6 +66,7 @@ final readonly class ApiRoutes
 		private Controllers\WidgetsV1 $widgetsV1Controller,
 		private Controllers\DisplayV1 $displayV1Controller,
 		private Controllers\DataSourcesV1 $dataSourceV1Controller,
+		private Controllers\DataSourceHistoryV1 $dataSourceHistoryV1Controller,
 		private UiMiddleware\Access $uiAccessControlMiddleware,
 		private SecurityMiddleware\Authorization $authorizationMiddleware,
 		private SecurityMiddleware\User $userMiddleware,
@@ -241,6 +244,15 @@ final readonly class ApiRoutes
 							],
 						);
 						$route->setName(self::ROUTE_NAME_WIDGET_DATA_SOURCE_RELATIONSHIP);
+
+						$route = $group->get(
+							'/{' . self::URL_ITEM_ID . '}/history',
+							[
+								$this->dataSourceHistoryV1Controller,
+								'read',
+							],
+						);
+						$route->setName(self::ROUTE_NAME_WIDGET_DATA_SOURCE_HISTORY);
 					});
 				},
 			);
