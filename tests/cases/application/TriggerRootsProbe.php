@@ -148,7 +148,7 @@ final class TriggerRootsProbe
 			foreach (self::concrete($loader) as $class) {
 				$spec = $specs[$class] ?? null;
 
-				if ($spec === null) {
+				if ($spec === null || !is_subclass_of($class, CoreDocuments\Document::class)) {
 					throw new UnexpectedValueException('No inputs for ' . $class);
 				}
 
@@ -410,6 +410,7 @@ final class TriggerRootsProbe
 	 * @return array<string, array<string, mixed>|string|object>
 	 *
 	 * @throws JsonException
+	 * @throws UuidExceptions\InvalidArgumentException
 	 */
 	private static function cases(array $spec): array
 	{
