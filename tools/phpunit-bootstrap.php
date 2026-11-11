@@ -33,4 +33,11 @@ if (@!include __DIR__ . '/../vendor/autoload.php') {
 	exit(1);
 }
 
+// PHPUnit's own classes are not rewritten (#811). BypassFinals strips `final` and `readonly` from every file loaded after
+// enable(), and PHPUnit has loaded part of itself by now: a class of its own that is loaded later, TestStatus\Warning,
+// then stands without `readonly` over a parent that kept it, and PHP 8.5 refuses that with a fatal error ("Readonly class
+// ... cannot extend non-readonly class") that kills the worker the first time a test raises a warning. The mocks of the
+// tests are of the packages' own classes, which the rule leaves alone: it is the one dg/bypass-finals' PHPUnit extension
+// applies by default.
+DG\BypassFinals::denyPaths(['*/vendor/phpunit/*']);
 DG\BypassFinals::enable();

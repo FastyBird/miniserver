@@ -89,6 +89,12 @@ Substitute your own image name; it is derived from the directory name. Do not "f
 by pointing the tests at compose hostnames, which is what the environment variables
 suggest and what does not work.
 
+On a macOS bind mount add `--tmpfs /app/var/tools/PHPUnit:rw,exec` to that `docker run`: the
+virtiofs/`fakeowner` mounts do not honour `flock`, so Nette's `ContainerLoader` (which compiles a
+container under an exclusive lock, through a fixed `.tmp` file) races between paratest workers and
+fails a test at random with `Unable to create file '.../var/tools/PHPUnit/tmp/.../Container_*.php'. No such file or directory`.
+A container's own filesystem, which a tmpfs is, has no such race; CI on Linux does not need it.
+
 `make tests` needs no extra PHP ini. `tools/php.d/tests.ini` used to hide PHP 8.4's
 implicit-nullable deprecations from vendor files, which broke every
 `@runTestsInSeparateProcesses` test (see [deprecations.md](./deprecations.md)); it was removed in
