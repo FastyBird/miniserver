@@ -5,7 +5,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Accessories;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Types as ShellyConnectorHomeKitConnectorTypes;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use Orisai\ObjectMapper;
+use FastyBird\Core\Documents;
 use Override;
 use TypeError;
 use ValueError;
@@ -17,31 +17,16 @@ final readonly class SwitchAccessory extends Accessory
 {
 
 	/**
-	 * @param array<string> $models
-	 * @param array<HomeKitTypes\AccessoryCategory> $categories
-	 * @param array<Mapping\Services\Service> $services
+	 * @param 'switch' $type
+	 * @param array<int<0, max>, non-empty-string> $models
+	 * @param array<int<0, max>, HomeKitTypes\AccessoryCategory> $categories
+	 * @param array<int<0, max>, Mapping\Services\OutletService|Mapping\Services\SwitchService|Mapping\Services\ValveService> $services
 	 */
 	public function __construct(
-		#[ObjectMapper\Rules\ArrayEnumValue(cases: [ShellyConnectorHomeKitConnectorTypes\DeviceType::SWITCH->value])]
 		private string $type,
-		#[ObjectMapper\Rules\ArrayOf(
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\IntValue(unsigned: true),
-		)]
+		#[Documents\Mapping\RefuseBlankItems]
 		private array $models,
-		#[ObjectMapper\Rules\ArrayOf(
-			new ObjectMapper\Rules\BackedEnumValue(class: HomeKitTypes\AccessoryCategory::class),
-			new ObjectMapper\Rules\IntValue(unsigned: true),
-		)]
 		private array $categories,
-		#[ObjectMapper\Rules\ArrayOf(
-			new ObjectMapper\Rules\AnyOf([
-				new ObjectMapper\Rules\MappedObjectValue(class: Mapping\Services\OutletService::class),
-				new ObjectMapper\Rules\MappedObjectValue(class: Mapping\Services\SwitchService::class),
-				new ObjectMapper\Rules\MappedObjectValue(class: Mapping\Services\ValveService::class),
-			]),
-			new ObjectMapper\Rules\IntValue(unsigned: true),
-		)]
 		private array $services,
 	)
 	{

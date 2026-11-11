@@ -4,7 +4,7 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping\Services;
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use Orisai\ObjectMapper;
+use FastyBird\Core\Documents;
 use Override;
 use TypeError;
 use ValueError;
@@ -18,28 +18,20 @@ final readonly class InputSource implements Service
 {
 
 	/**
-	 * @param array<Mapping\Characteristics\BasicCharacteristic> $characteristics
+	 * @param 'InputSource' $type
+	 * @param array<int<0, max>, Mapping\Characteristics\BasicCharacteristic> $characteristics
 	 */
 	public function __construct(
-		#[ObjectMapper\Rules\ArrayEnumValue(cases: [HomeKitTypes\ServiceType::INPUT_SOURCE->value])]
 		private string $type,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[Documents\Mapping\RefuseBlank]
 		private string $class,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private string|null $channel = null,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
+		#[Documents\Mapping\MapBoolLike]
 		private bool $multiple = false,
-		#[ObjectMapper\Rules\ArrayOf(
-			new ObjectMapper\Rules\MappedObjectValue(class: Mapping\Characteristics\BasicCharacteristic::class),
-			new ObjectMapper\Rules\IntValue(unsigned: true),
-		)]
 		private array $characteristics = [],
 	)
 	{
-		assert(class_exists($this->class));
 	}
 
 	/**

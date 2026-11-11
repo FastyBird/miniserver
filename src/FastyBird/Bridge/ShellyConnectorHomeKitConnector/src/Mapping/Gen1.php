@@ -5,7 +5,6 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Exceptions;
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use Nette\Utils;
-use Orisai\ObjectMapper;
 use function array_map;
 use function in_array;
 use function sprintf;
@@ -17,19 +16,9 @@ final readonly class Gen1 implements Mapping\Mapping
 {
 
 	/**
-	 * @param array<Mapping\Accessories\Accessory> $accessories
+	 * @param array<int<0, max>, Mapping\Accessories\LightAccessory|Mapping\Accessories\RollerAccessory|Mapping\Accessories\SwitchAccessory> $accessories
 	 */
-	public function __construct(
-		#[ObjectMapper\Rules\ArrayOf(
-			new ObjectMapper\Rules\AnyOf([
-				new ObjectMapper\Rules\MappedObjectValue(class: Mapping\Accessories\LightAccessory::class),
-				new ObjectMapper\Rules\MappedObjectValue(class: Mapping\Accessories\RollerAccessory::class),
-				new ObjectMapper\Rules\MappedObjectValue(class: Mapping\Accessories\SwitchAccessory::class),
-			]),
-			new ObjectMapper\Rules\IntValue(unsigned: true),
-		)]
-		private array $accessories,
-	)
+	public function __construct(private array $accessories)
 	{
 	}
 

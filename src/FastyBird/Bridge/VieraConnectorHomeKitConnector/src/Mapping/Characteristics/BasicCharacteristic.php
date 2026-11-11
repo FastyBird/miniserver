@@ -4,8 +4,8 @@ namespace FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping\Characteristic
 
 use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use FastyBird\Core\Values\Types as ValuesTypes;
-use Orisai\ObjectMapper;
+use FastyBird\Core\Documents;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
 /**
  * Basic characteristic mapping configuration
@@ -14,97 +14,21 @@ final readonly class BasicCharacteristic implements Mapping\Mapping
 {
 
 	/**
-	 * @param array<HomeKitTypes\CharacteristicType> $require
-	 * @param string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null $format
+	 * @param array<int<0, max>, HomeKitTypes\CharacteristicType> $require
+	 * @param string|array<int, array<int, array<int, bool|float|int|string|null>|bool|float|int|string|null>|bool|float|int|string|null>|null $format
 	 */
 	public function __construct(
-		#[ObjectMapper\Rules\BackedEnumValue(class: HomeKitTypes\CharacteristicType::class)]
 		private HomeKitTypes\CharacteristicType $type,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private string|null $channel = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private string|null $property = null,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
+		#[Documents\Mapping\MapBoolLike]
 		private bool $nullable = false,
-		#[ObjectMapper\Rules\ArrayOf(
-			new ObjectMapper\Rules\BackedEnumValue(class: HomeKitTypes\CharacteristicType::class),
-			new ObjectMapper\Rules\IntValue(unsigned: true),
-		)]
 		private array $require = [],
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\ArrayOf(
-				item: new ObjectMapper\Rules\StringValue(notEmpty: true),
-				key: new ObjectMapper\Rules\IntValue(unsigned: true),
-			),
-			new ObjectMapper\Rules\ArrayOf(
-				item: new ObjectMapper\Rules\ArrayOf(
-					item: new ObjectMapper\Rules\AnyOf([
-						new ObjectMapper\Rules\IntValue(),
-						new ObjectMapper\Rules\FloatValue(),
-						new ObjectMapper\Rules\StringValue(notEmpty: true),
-						new ObjectMapper\Rules\ArrayOf(
-							item: new ObjectMapper\Rules\AnyOf([
-								new ObjectMapper\Rules\ArrayEnumValue(
-									// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-									cases: [ValuesTypes\DataTypeShort::CHAR->value, ValuesTypes\DataTypeShort::UCHAR->value, ValuesTypes\DataTypeShort::SHORT->value, ValuesTypes\DataTypeShort::USHORT->value, ValuesTypes\DataTypeShort::INT->value, ValuesTypes\DataTypeShort::UINT->value, ValuesTypes\DataTypeShort::FLOAT->value, ValuesTypes\DataTypeShort::BOOLEAN->value, ValuesTypes\DataTypeShort::STRING->value, ValuesTypes\DataTypeShort::BUTTON->value, ValuesTypes\DataTypeShort::SWITCH->value, ValuesTypes\DataTypeShort::COVER->value],
-								),
-								new ObjectMapper\Rules\StringValue(notEmpty: true),
-								new ObjectMapper\Rules\IntValue(),
-								new ObjectMapper\Rules\FloatValue(),
-								new ObjectMapper\Rules\BoolValue(),
-							]),
-							key: new ObjectMapper\Rules\IntValue(unsigned: true),
-							minItems: 2,
-							maxItems: 2,
-						),
-						new ObjectMapper\Rules\NullValue(castEmptyString: true),
-					]),
-					key: new ObjectMapper\Rules\IntValue(unsigned: true),
-					minItems: 3,
-					maxItems: 3,
-				),
-				key: new ObjectMapper\Rules\IntValue(unsigned: true),
-			),
-			new ObjectMapper\Rules\ArrayOf(
-				item: new ObjectMapper\Rules\AnyOf([
-					new ObjectMapper\Rules\IntValue(),
-					new ObjectMapper\Rules\FloatValue(),
-					new ObjectMapper\Rules\ArrayOf(
-						item: new ObjectMapper\Rules\AnyOf([
-							new ObjectMapper\Rules\ArrayEnumValue(
-								// phpcs:ignore SlevomatCodingStandard.Files.LineLength.LineTooLong
-								cases: [ValuesTypes\DataTypeShort::CHAR->value, ValuesTypes\DataTypeShort::UCHAR->value, ValuesTypes\DataTypeShort::SHORT->value, ValuesTypes\DataTypeShort::USHORT->value, ValuesTypes\DataTypeShort::INT->value, ValuesTypes\DataTypeShort::UINT->value, ValuesTypes\DataTypeShort::FLOAT->value],
-							),
-							new ObjectMapper\Rules\IntValue(),
-							new ObjectMapper\Rules\FloatValue(),
-						]),
-						key: new ObjectMapper\Rules\IntValue(unsigned: true),
-						minItems: 2,
-						maxItems: 2,
-					),
-					new ObjectMapper\Rules\NullValue(castEmptyString: true),
-				]),
-				key: new ObjectMapper\Rules\IntValue(unsigned: true),
-				minItems: 2,
-				maxItems: 2,
-			),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[DevicesDocuments\Mapping\MapFormat]
 		private string|array|null $format = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private bool|float|int|string|null $value = null,
 	)
 	{
@@ -139,7 +63,7 @@ final readonly class BasicCharacteristic implements Mapping\Mapping
 	}
 
 	/**
-	 * @return string|array<int, string>|array<int, bool|string|int|float|array<int, bool|string|int|float>|null>|array<int, array<int, string|array<int, string|int|float|bool>|null>>|null
+	 * @return string|array<int, array<int, array<int, bool|float|int|string|null>|bool|float|int|string|null>|bool|float|int|string|null>|null
 	 */
 	public function getFormat(): string|array|null
 	{
