@@ -2,9 +2,9 @@
 
 namespace FastyBird\Module\Triggers\Documents\Triggers;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use FastyBird\Core\Documents;
 use FastyBird\Module\Triggers\Entities;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -19,17 +19,20 @@ final class Automatic extends Trigger
 
 	public function __construct(
 		Uuid\UuidInterface $id,
+		#[Documents\Mapping\RefuseBlank]
 		string $type,
+		#[Documents\Mapping\RefuseBlank]
 		string $name,
+		#[Documents\Mapping\MapBlankToNull]
 		string|null $comment = null,
 		bool $enabled = false,
+		#[Documents\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('is_triggered')]
 		bool|null $isTriggered = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('is_fulfilled')]
+		#[Documents\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('is_fulfilled')]
 		private readonly bool|null $isFulfilled = null,
+		#[Documents\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
 	)
 	{

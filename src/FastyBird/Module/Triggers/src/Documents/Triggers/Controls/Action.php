@@ -2,10 +2,9 @@
 
 namespace FastyBird\Module\Triggers\Documents\Triggers\Controls;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Types;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
@@ -16,25 +15,17 @@ use Ramsey\Uuid;
 #[Documents\Mapping\RoutingMap([
 	Types\RoutingKey::TRIGGER_CONTROL_ACTION->value,
 ])]
-final readonly class Action implements Documents\Document, ObjectMapper\MappedObject
+final readonly class Action implements Documents\Document
 {
 
 	public function __construct(
-		#[ObjectMapper\Rules\BackedEnumValue(class: Types\TriggerAction::class)]
 		private Types\TriggerAction $action,
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $trigger,
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $control,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('expected_value')]
-		private bool|float|int|string|null $expectedValue = null,
+		#[Documents\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('expected_value')]
+		// No int in the union: the rule tried a float before an int, so an int was always a float
+		private bool|float|string|null $expectedValue = null,
 	)
 	{
 	}
