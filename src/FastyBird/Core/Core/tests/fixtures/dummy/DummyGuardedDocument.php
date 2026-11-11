@@ -21,6 +21,8 @@ final readonly class DummyGuardedDocument implements Documents\Document
 
 	public const string FAIL_VALUE = 'fail-value';
 
+	public const string BROKEN_MESSAGE = 'broken-message';
+
 	/**
 	 * @throws RuntimeException
 	 * @throws ValueError
@@ -33,6 +35,12 @@ final readonly class DummyGuardedDocument implements Documents\Document
 
 		if ($kind === self::FAIL) {
 			throw new RuntimeException('The constructor failed');
+		}
+
+		if ($kind === self::BROKEN_MESSAGE) {
+			// An ICU body that does not parse: Valinor fails printing it, with the exception it also throws for an input that
+			// is not valid UTF-8
+			throw MessageBuilder::newError('The kind is {broken')->build();
 		}
 
 		if ($kind === self::FAIL_VALUE) {
