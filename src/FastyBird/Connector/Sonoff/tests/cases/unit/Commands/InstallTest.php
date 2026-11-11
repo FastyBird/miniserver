@@ -51,21 +51,53 @@ final class InstallTest extends Tests\Cases\Unit\DbTestCase
 	 * @throws Error
 	 * @throws Throwable
 	 */
-	public function testCreateConnector(): void
+	public function testCreateConnectorStoresItsRegionAsAnEnumOfTheCloudEndpoints(): void
 	{
 		// create a connector, LAN mode, identifier, name, username, password, Europe, then nothing
 		$this->install(['0', '1', 'sonoff-pin', 'Pinned connector', 'user@pin.com', 'secret-pin', '0', '5']);
 
-		// A defect older than this test: the installer hands the region property the CloudApiEndpoint cases, not their
-		// values, as its format, the property cannot be created, and the whole connector is rolled back
-		$findConnectorQuery = new Queries\Entities\FindConnectors();
-		$findConnectorQuery->byIdentifier('sonoff-pin');
+		$property = static fn (string $identifier, string $dataType, array|null $format, string $value): array => [
+			'type' => 'variable',
+			'category' => 'generic',
+			'identifier' => $identifier,
+			'name' => null,
+			'data_type' => $dataType,
+			'unit' => null,
+			'format' => $format,
+			'invalid' => null,
+			'scale' => null,
+			'step' => null,
+			'default' => null,
+			'value_transformer' => null,
+			'value' => $value,
+		];
 
-		self::assertNull(
-			$this->getContainer()->getByType(DevicesModels\Entities\Connectors\ConnectorsRepository::class)->findOneBy(
-				$findConnectorQuery,
-				Entities\Connectors\Connector::class,
-			),
+		self::assertSame(
+			[
+				'type' => 'sonoff-connector',
+				'identifier' => 'sonoff-pin',
+				'name' => 'Pinned connector',
+				'comment' => null,
+				'enabled' => true,
+				'properties' => [
+					'mode' => $property('mode', 'enum', ['lan', 'cloud', 'auto'], 'lan'),
+					'password' => $property('password', 'string', null, 'secret-pin'),
+					'region' => $property(
+						'region',
+						'enum',
+						[
+							'https://cn-apia.coolkit.cn',
+							'https://us-apia.coolkit.cc',
+							'https://eu-apia.coolkit.cc',
+							'https://as-apia.coolkit.cc',
+						],
+						'https://eu-apia.coolkit.cc',
+					),
+					'username' => $property('username', 'string', null, 'user@pin.com'),
+				],
+				'controls' => ['discover', 'reboot'],
+			],
+			Tests\Support\StoredEntities::connector($this->connector('sonoff-pin')),
 		);
 	}
 
