@@ -5,15 +5,15 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Documents\Widgets\DataSources;
 use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
-use FastyBird\Core\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
 
-#[Documents\Mapping\Document(entity: Entities\Widgets\DataSources\ChannelProperty::class)]
-#[Documents\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\ChannelProperty::TYPE)]
+#[CoreDocuments\Mapping\Document(entity: Entities\Widgets\DataSources\ChannelProperty::class)]
+#[CoreDocuments\Mapping\DiscriminatorEntry(name: Entities\Widgets\DataSources\ChannelProperty::TYPE)]
 final class ChannelProperty extends Property
 {
 
@@ -24,7 +24,7 @@ final class ChannelProperty extends Property
 		Uuid\UuidInterface $property,
 		#[DevicesDocuments\Mapping\MapStateValue]
 		bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value = null,
-		#[Documents\Mapping\MapBlankToNull]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
 		#[Configurator\MapFromKey('created_at')]
 		DateTimeInterface|null $createdAt = null,
