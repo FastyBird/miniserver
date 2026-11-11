@@ -25,7 +25,9 @@ final readonly class Action implements UiDocuments\Document
 		private readonly Uuid\UuidInterface $widget,
 		#[Configurator\MapFromKey('data_source')]
 		private readonly Uuid\UuidInterface $dataSource,
+		// The rule tried a float before an int, so an int that is mapped is a float, and one that is passed to the constructor is not
 		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[CoreDocuments\Mapping\MapIntToFloat]
 		#[Configurator\MapFromKey('expected_value')]
 		private readonly bool|float|string|null $expectedValue = null,
 	)
@@ -53,7 +55,7 @@ final readonly class Action implements UiDocuments\Document
 		return $this->dataSource;
 	}
 
-	public function getExpectedValue(): float|bool|string|null
+	public function getExpectedValue(): float|bool|int|string|null
 	{
 		return $this->expectedValue;
 	}

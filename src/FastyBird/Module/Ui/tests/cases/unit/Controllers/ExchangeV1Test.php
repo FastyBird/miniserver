@@ -226,7 +226,7 @@ final class ExchangeV1Test extends Tests\Cases\Unit\DbTestCase
 						'expected_value' => 21.5,
 					],
 				],
-				'Could not map data to document: data_source: uuid',
+				'Could not map data to document: data_source: Cannot be empty and must be filled with a value matching `string|array{value: string}`.',
 			],
 		];
 	}
