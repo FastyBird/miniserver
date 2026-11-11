@@ -3,8 +3,8 @@
 namespace FastyBird\MiniServer\Tests\Cases\Application;
 
 use Composer\Autoload\ClassLoader;
-use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping as ShellyMapping;
-use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping as VieraMapping;
+use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping as ShellyConnectorHomeKitConnectorMapping;
+use FastyBird\Bridge\VieraConnectorHomeKitConnector\Mapping as VieraConnectorHomeKitConnectorMapping;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Documents as CoreDocuments;
 use FilesystemIterator;
@@ -65,8 +65,8 @@ final class BridgeMappingProbe
 {
 
 	private const array ROOTS = [
-		'shelly' => ShellyMapping\Mapping::class,
-		'viera' => VieraMapping\Mapping::class,
+		'shelly' => ShellyConnectorHomeKitConnectorMapping\Mapping::class,
+		'viera' => VieraConnectorHomeKitConnectorMapping\Mapping::class,
 	];
 
 	/**
@@ -133,7 +133,7 @@ final class BridgeMappingProbe
 	}
 
 	/**
-	 * @param class-string $class
+	 * @param class-string<object> $class
 	 * @param array<mixed> $data
 	 *
 	 * @return array<string, mixed>
@@ -146,7 +146,6 @@ final class BridgeMappingProbe
 	): array
 	{
 		try {
-			/** @phpstan-ignore argument.type */
 			$mapping = $mapper->map($data, $class, new CoreDocuments\Mapping\MappingOptions(allowUnknownFields: true));
 
 			return ['serialized' => serialize($mapping)];
@@ -236,6 +235,7 @@ final class BridgeMappingProbe
 	 * @return array<class-string, array{sample: array<string, mixed>, kinds: array<string, string>, others?: array<string, mixed>, light?: bool}>
 	 *
 	 * @throws JsonException
+	 * @throws UnexpectedValueException
 	 */
 	private static function specs(): array
 	{
@@ -247,42 +247,13 @@ final class BridgeMappingProbe
 		/** @var array{services: list<array<string, mixed>>} $viera */
 		$viera = $files['viera'];
 
-		$accessory = static function (array $list, string $type): array {
-			foreach ($list as $item) {
-				if ($item['type'] === $type) {
-					return $item;
-				}
-			}
-
-			throw new UnexpectedValueException('No accessory of the type ' . $type);
-		};
-		$service = static function (array $list, string $type): array {
-			foreach ($list as $accessoryItem) {
-				foreach ($accessoryItem['services'] as $serviceItem) {
-					if ($serviceItem['type'] === $type) {
-						return $serviceItem;
-					}
-				}
-			}
-
-			throw new UnexpectedValueException('No service of the type ' . $type);
-		};
-		$characteristic = static function (array $services, callable $match): array {
-			foreach ($services as $serviceItem) {
-				foreach ($serviceItem['characteristics'] as $item) {
-					if ($match($item)) {
-						return $item;
-					}
-				}
-			}
-
-			throw new UnexpectedValueException('No characteristic');
-		};
-
 		$shellyServices = [];
 
 		foreach ($gen2 as $item) {
-			foreach ($item['services'] as $serviceItem) {
+			/** @var list<array<string, mixed>> $services */
+			$services = $item['services'];
+
+			foreach ($services as $serviceItem) {
 				$shellyServices[] = $serviceItem;
 			}
 		}
@@ -319,70 +290,90 @@ final class BridgeMappingProbe
 			'value' => 'scalar',
 		];
 
-		$shellyCharacteristic = $characteristic(
+		$shellyCharacteristic = self::characteristicWith(
 			$shellyServices,
 			static fn (array $item): bool => array_key_exists('format', $item) && array_key_exists('value', $item),
 		);
-		$vieraCharacteristic = $characteristic(
+		$vieraCharacteristic = self::characteristicWith(
 			$viera['services'],
 			static fn (array $item): bool => ($item['property'] ?? null) !== null,
 		);
 
 		$specs = [
-			ShellyMapping\Gen1::class => ['sample' => ['accessories' => $gen1], 'kinds' => ['accessories' => 'objects list'], 'light' => true],
-			ShellyMapping\Gen2::class => ['sample' => ['accessories' => $gen2], 'kinds' => ['accessories' => 'objects list'], 'light' => true],
-			ShellyMapping\Accessories\LightAccessory::class => [
-				'sample' => $accessory($gen2, 'light'),
-				'kinds' => $accessoryKinds,
-				'others' => ['services' => $service($gen2, 'Switch')],
+			ShellyConnectorHomeKitConnectorMapping\Gen1::class => [
+				'sample' => ['accessories' => $gen1],
+				'kinds' => ['accessories' => 'objects list'],
+				'light' => true,
 			],
-			ShellyMapping\Accessories\RollerAccessory::class => [
-				'sample' => $accessory($gen2, 'roller'),
+			ShellyConnectorHomeKitConnectorMapping\Gen2::class => [
+				'sample' => ['accessories' => $gen2],
+				'kinds' => ['accessories' => 'objects list'],
+				'light' => true,
+			],
+			ShellyConnectorHomeKitConnectorMapping\Accessories\LightAccessory::class => [
+				'sample' => self::accessoryOf($gen2, 'light'),
+				'kinds' => $accessoryKinds,
+				'others' => ['services' => self::serviceOf($gen2, 'Switch')],
+			],
+			ShellyConnectorHomeKitConnectorMapping\Accessories\RollerAccessory::class => [
+				'sample' => self::accessoryOf($gen2, 'roller'),
 				'kinds' => $accessoryKinds,
 			],
-			ShellyMapping\Accessories\SwitchAccessory::class => [
-				'sample' => $accessory($gen2, 'switch'),
+			ShellyConnectorHomeKitConnectorMapping\Accessories\SwitchAccessory::class => [
+				'sample' => self::accessoryOf($gen2, 'switch'),
 				'kinds' => $accessoryKinds,
 			],
-			ShellyMapping\Accessories\InputAccessory::class => [
-				'sample' => $accessory($gen2, 'input'),
+			ShellyConnectorHomeKitConnectorMapping\Accessories\InputAccessory::class => [
+				'sample' => self::accessoryOf($gen2, 'input'),
 				'kinds' => $accessoryKinds,
 			],
-			ShellyMapping\Services\LightbulbService::class => ['sample' => $service($gen2, 'Lightbulb'), 'kinds' => $serviceKinds],
-			ShellyMapping\Services\OutletService::class => ['sample' => $service($gen2, 'Outlet'), 'kinds' => $serviceKinds, 'light' => true],
-			ShellyMapping\Services\StatelessProgrammableSwitch::class => [
-				'sample' => $service($gen2, 'StatelessProgrammableSwitch'),
+			ShellyConnectorHomeKitConnectorMapping\Services\LightbulbService::class => ['sample' => self::serviceOf(
+				$gen2,
+				'Lightbulb',
+			), 'kinds' => $serviceKinds],
+			ShellyConnectorHomeKitConnectorMapping\Services\OutletService::class => ['sample' => self::serviceOf(
+				$gen2,
+				'Outlet',
+			), 'kinds' => $serviceKinds, 'light' => true],
+			ShellyConnectorHomeKitConnectorMapping\Services\StatelessProgrammableSwitch::class => [
+				'sample' => self::serviceOf($gen2, 'StatelessProgrammableSwitch'),
 				'kinds' => $serviceKinds,
 				'light' => true,
 			],
-			ShellyMapping\Services\SwitchService::class => ['sample' => $service($gen2, 'Switch'), 'kinds' => $serviceKinds, 'light' => true],
-			ShellyMapping\Services\ValveService::class => ['sample' => $service($gen2, 'Valve'), 'kinds' => $serviceKinds, 'light' => true],
-			ShellyMapping\Services\WindowCoveringService::class => [
-				'sample' => $service($gen2, 'WindowCovering'),
+			ShellyConnectorHomeKitConnectorMapping\Services\SwitchService::class => ['sample' => self::serviceOf(
+				$gen2,
+				'Switch',
+			), 'kinds' => $serviceKinds, 'light' => true],
+			ShellyConnectorHomeKitConnectorMapping\Services\ValveService::class => ['sample' => self::serviceOf(
+				$gen2,
+				'Valve',
+			), 'kinds' => $serviceKinds, 'light' => true],
+			ShellyConnectorHomeKitConnectorMapping\Services\WindowCoveringService::class => [
+				'sample' => self::serviceOf($gen2, 'WindowCovering'),
 				'kinds' => $serviceKinds,
 				'light' => true,
 			],
-			ShellyMapping\Characteristics\BasicCharacteristic::class => [
+			ShellyConnectorHomeKitConnectorMapping\Characteristics\BasicCharacteristic::class => [
 				'sample' => $shellyCharacteristic,
 				'kinds' => $characteristicKinds,
 			],
-			VieraMapping\Services::class => ['sample' => $viera, 'kinds' => ['services' => 'objects list'], 'light' => true],
+			VieraConnectorHomeKitConnectorMapping\Services::class => ['sample' => $viera, 'kinds' => ['services' => 'objects list'], 'light' => true],
 		];
 
 		foreach (
 			[
-				VieraMapping\Services\Television::class => 'Television',
-				VieraMapping\Services\TelevisionSpeaker::class => 'TelevisionSpeaker',
-				VieraMapping\Services\InputSource::class => 'InputSource',
+				VieraConnectorHomeKitConnectorMapping\Services\Television::class => 'Television',
+				VieraConnectorHomeKitConnectorMapping\Services\TelevisionSpeaker::class => 'TelevisionSpeaker',
+				VieraConnectorHomeKitConnectorMapping\Services\InputSource::class => 'InputSource',
 			] as $class => $type
 		) {
 			$specs[$class] = [
-				'sample' => $service([['services' => $viera['services']]], $type),
+				'sample' => self::serviceOf([['services' => $viera['services']]], $type),
 				'kinds' => $vieraServiceKinds,
 			];
 		}
 
-		$specs[VieraMapping\Characteristics\BasicCharacteristic::class] = [
+		$specs[VieraConnectorHomeKitConnectorMapping\Characteristics\BasicCharacteristic::class] = [
 			'sample' => $vieraCharacteristic,
 			'kinds' => [
 				'type' => 'enum',
@@ -396,6 +387,71 @@ final class BridgeMappingProbe
 		];
 
 		return $specs;
+	}
+
+	/**
+	 * @param list<array<string, mixed>> $list
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @throws UnexpectedValueException
+	 */
+	private static function accessoryOf(array $list, string $type): array
+	{
+		foreach ($list as $item) {
+			if ($item['type'] === $type) {
+				return $item;
+			}
+		}
+
+		throw new UnexpectedValueException('No accessory of the type ' . $type);
+	}
+
+	/**
+	 * @param list<array<string, mixed>> $list
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @throws UnexpectedValueException
+	 */
+	private static function serviceOf(array $list, string $type): array
+	{
+		foreach ($list as $accessoryItem) {
+			/** @var list<array<string, mixed>> $services */
+			$services = $accessoryItem['services'];
+
+			foreach ($services as $serviceItem) {
+				if ($serviceItem['type'] === $type) {
+					return $serviceItem;
+				}
+			}
+		}
+
+		throw new UnexpectedValueException('No service of the type ' . $type);
+	}
+
+	/**
+	 * @param list<array<string, mixed>> $services
+	 * @param callable(array<string, mixed>): bool $match
+	 *
+	 * @return array<string, mixed>
+	 *
+	 * @throws UnexpectedValueException
+	 */
+	private static function characteristicWith(array $services, callable $match): array
+	{
+		foreach ($services as $serviceItem) {
+			/** @var list<array<string, mixed>> $characteristics */
+			$characteristics = $serviceItem['characteristics'];
+
+			foreach ($characteristics as $item) {
+				if ($match($item)) {
+					return $item;
+				}
+			}
+		}
+
+		throw new UnexpectedValueException('No characteristic');
 	}
 
 	/**

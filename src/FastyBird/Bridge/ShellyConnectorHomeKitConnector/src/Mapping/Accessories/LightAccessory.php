@@ -17,7 +17,7 @@ final readonly class LightAccessory extends Accessory
 {
 
 	/**
-	 * @param 'light' $type
+	 * @param 'lightX' $type
 	 * @param array<int<0, max>, non-empty-string> $models
 	 * @param array<int<0, max>, HomeKitTypes\AccessoryCategory> $categories
 	 * @param array<int<0, max>, Mapping\Services\LightbulbService> $services

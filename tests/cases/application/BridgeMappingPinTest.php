@@ -161,11 +161,8 @@ final class BridgeMappingPinTest extends TestCase
 
 		foreach ([self::GEN1 => 'nothing', self::GEN2 => 'nothing', self::SERVICES => 'nothing'] as $class => $name) {
 			self::assertSame(['refused' => true], $pinned[$class][$name], $class);
-			self::assertArrayHasKey('serialized', $actual[$class][$name], $class);
-			self::assertStringContainsString(':0:{}', (string) $actual[$class][$name]['serialized']);
+			self::assertStringContainsString(':0:{}', self::serializedOf($actual, $class, $name));
 		}
-
-		$index = static fn (array $results, string $name): string => (string) ($results[self::LIGHTBULB][$name]['serialized'] ?? 'refused');
 
 		// orisai: a TypeError of the property for each of the floats
 		foreach (
@@ -175,16 +172,19 @@ final class BridgeMappingPinTest extends TestCase
 			self::assertSame(['refused' => true], $actual[self::LIGHTBULB][$name], $name);
 		}
 
-		self::assertStringContainsString('indexStart";i:2;', $index($actual, 'index_start: a float with no decimals'));
+		self::assertStringContainsString(
+			'indexStart";i:2;',
+			self::serializedOf($actual, self::LIGHTBULB, 'index_start: a float with no decimals'),
+		);
 		self::assertStringContainsString(
 			'indexStart";i:1;',
-			$index($actual, 'index_start: a numeric text with spaces'),
+			self::serializedOf($actual, self::LIGHTBULB, 'index_start: a numeric text with spaces'),
 		);
 		self::assertSame(['refused' => true], $actual[self::LIGHTBULB]['index_start: a text of a big number']);
 		self::assertSame(['refused' => true], $pinned[self::LIGHTBULB]['index_start: a numeric text with spaces']);
 		self::assertStringContainsString(
 			'indexStart";i:9223372036854775807;',
-			$index($pinned, 'index_start: a text of a big number'),
+			self::serializedOf($pinned, self::LIGHTBULB, 'index_start: a text of a big number'),
 		);
 	}
 
@@ -256,6 +256,16 @@ final class BridgeMappingPinTest extends TestCase
 				self::assertFalse($mapped, sprintf('%s (%s) is mapped by orisai', $class, $family));
 			}
 		}
+	}
+
+	/**
+	 * @param array<string, array<string, array<string, mixed>>> $results
+	 */
+	private static function serializedOf(array $results, string $class, string $name): string
+	{
+		$serialized = $results[$class][$name]['serialized'] ?? 'refused';
+
+		return is_string($serialized) ? $serialized : 'refused';
 	}
 
 	/**

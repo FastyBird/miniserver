@@ -4,7 +4,7 @@ namespace FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping\Characteristi
 
 use FastyBird\Bridge\ShellyConnectorHomeKitConnector\Mapping;
 use FastyBird\Connector\HomeKit\Types as HomeKitTypes;
-use FastyBird\Core\Documents;
+use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Devices\Documents as DevicesDocuments;
 
 /**
@@ -20,17 +20,17 @@ final readonly class BasicCharacteristic implements Mapping\Mapping
 	 */
 	public function __construct(
 		private HomeKitTypes\CharacteristicType $type,
-		#[Documents\Mapping\MapBlankToNull]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private string|null $channel = null,
-		#[Documents\Mapping\MapBlankToNull]
-		#[Documents\Mapping\RefuseBlankItems]
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[CoreDocuments\Mapping\RefuseBlankItems]
 		private string|array|null $property = null,
-		#[Documents\Mapping\MapBoolLike]
+		#[CoreDocuments\Mapping\MapBoolLike]
 		private bool $nullable = false,
 		private array $require = [],
 		#[DevicesDocuments\Mapping\MapFormat]
 		private string|array|null $format = null,
-		#[Documents\Mapping\MapBlankToNull]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private bool|float|int|string|null $value = null,
 	)
 	{
