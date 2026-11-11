@@ -2672,15 +2672,15 @@
             "dist": {
                 "type": "path",
                 "url": "src/FastyBird/Bridge/DevicesModuleUiModule",
-                "reference": "28065a6120d7911e25eb8d3ed1857dc7046712b3"
+                "reference": "034a3bbd9a3ecc85082619c893027054aff5f1ab"
             },
             "require": {
+                "cuyz/valinor": "^2.6",
                 "cweagans/composer-patches": "^1.7",
                 "fastybird/devices-module": "@dev",
                 "fastybird/miniserver-core": "@dev",
                 "fastybird/ui-module": "@dev",
                 "nette/di": "^3.2",
-                "orisai/object-mapper": "^0.3",
                 "php": ">=8.4.0",
                 "psr/log": "^3.0"
             },
