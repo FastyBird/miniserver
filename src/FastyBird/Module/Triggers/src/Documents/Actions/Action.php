@@ -2,11 +2,10 @@
 
 namespace FastyBird\Module\Triggers\Documents\Actions;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
@@ -23,28 +22,19 @@ use Ramsey\Uuid;
 	Triggers\Types\RoutingKey::ACTION_DOCUMENT_UPDATED->value,
 	Triggers\Types\RoutingKey::ACTION_DOCUMENT_DELETED->value,
 ])]
-abstract class Action implements Documents\Document, ObjectMapper\MappedObject, Documents\Owner
+abstract class Action implements Documents\Document, Documents\Owner
 {
 
 	use Documents\HasOwner;
 
 	public function __construct(
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $trigger,
-		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $enabled,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('is_triggered')]
+		#[Documents\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('is_triggered')]
 		private readonly bool|null $isTriggered = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new Rules\UuidValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		protected readonly Uuid\UuidInterface|null $owner = null,
 	)
 	{

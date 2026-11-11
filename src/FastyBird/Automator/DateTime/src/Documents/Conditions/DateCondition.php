@@ -2,11 +2,11 @@
 
 namespace FastyBird\Automator\DateTime\Documents\Conditions;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Automator\DateTime\Entities;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -23,9 +23,11 @@ final class DateCondition extends TriggersDocuments\Conditions\Condition
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $trigger,
 		bool $enabled,
-		#[ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM)]
 		private readonly DateTimeInterface $date,
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('is_fulfilled')]
 		bool|null $isFulfilled = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
 	)
 	{

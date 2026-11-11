@@ -2,12 +2,11 @@
 
 namespace FastyBird\Automator\DevicesModule\Documents\Conditions;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Types as TriggersTypes;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -24,20 +23,16 @@ final class ChannelPropertyCondition extends TriggersDocuments\Conditions\Condit
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $trigger,
 		bool $enabled,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $device,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $channel,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $property,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[CoreDocuments\Mapping\RefuseBlank]
 		private readonly string $operand,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BackedEnumValue(class: TriggersTypes\ConditionOperator::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: TriggersTypes\ConditionOperator::class),
-		])]
 		private readonly TriggersTypes\ConditionOperator $operator,
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('is_fulfilled')]
 		bool|null $isFulfilled = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
 	)
 	{

@@ -422,7 +422,7 @@ branches and a class chooses its branch by what it implements:
 - **Any other class is mapped by Valinor.** A class is migrated by dropping `MappedObject` (and, with it,
   every `Orisai\ObjectMapper` attribute and import) and by giving Valinor what it reads: the native and
   PHPDoc types, and the attributes below. `Documents\Document` does not extend `MappedObject`; each root
-  of a not yet migrated hierarchy declares it itself (`Triggers\Documents\Triggers\Trigger`,
+  of a not yet migrated hierarchy declares it itself (`Accounts` and `Ui` documents,
   `Connector\...\Messages\Message`), and its migration removes that one declaration. A root flips every class beneath
   it, in every package: `Devices\Documents\Connectors\Connector`, `Devices\Device` and `Channels\Channel` moved with
   their 85 documents of the connectors, the bridges and the addon, none of which declares a constructor, an attribute or a
@@ -448,6 +448,7 @@ What a migrated class declares, in place of what orisai had:
 | `AnyOf([BoolValue, IntValue, FloatValue, StringValue(notEmpty), DateTimeValue, ObjectValue, NullValue(castEmptyString)])`, the value of a property state | the native union `bool\|float\|int\|string\|DateTimeInterface\|Payloads\Payload\|null` with `#[Documents\Mapping\MapBlankToNull]`; a text stays a text, as the rule had it. `ObjectValue` took any object and failed later with a `TypeError`, Valinor refuses an object that is not a date or a payload; `StateRootsPinTest` documents it |
 | `FieldName('created_at')` | `#[CuyZ\Valinor\Mapper\Configurator\MapFromKey('created_at')]` |
 | `DateTimeValue(format: ATOM)` | `DateTimeInterface` (ATOM is the only date format the builder supports). `Mapper` registers the date constructor itself, to refuse a string with a NUL byte as an error message of the value: `createFromFormat()` throws a `ValueError` for it, which no union recovers from, and the value of a state, a text or a date, is the text then |
+| `StringValue(pattern: ..., notEmpty: true)` | `#[Documents\Mapping\RequirePattern('/.../')]`: a blank string and a string the pattern does not match, tested with `preg_match()` as the rule did, are refused; `RequirePatternParityTest` holds both to a grid of addresses |
 | `UuidValue()` | `Ramsey\Uuid\UuidInterface`; the builder reads the canonical form only, like the rule |
 | `AnyOf([FloatValue, IntValue])` | decide per field: `float` turns an int into a float, which is what orisai's rule did; `int\|float` keeps what it is given. Pin the choice in a test |
 | a union of several array shapes, the format of a property | `#[Devices\Documents\Mapping\MapFormat]`: Valinor refuses a union of two array types, so the one converter reads the shapes the rule listed, in its order, and the type is one nested array of scalars |
