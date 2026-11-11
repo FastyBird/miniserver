@@ -2,12 +2,12 @@
 
 namespace FastyBird\Module\Ui\Documents\Widgets\Displays;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
 use FastyBird\Module\Ui\Types;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -20,14 +20,12 @@ final class Button extends UiDocuments\Widgets\Displays\Display
 	public function __construct(
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $widget,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BackedEnumValue(class: Types\WidgetIcon::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: Types\WidgetIcon::class),
-			new ObjectMapper\Rules\NullValue(),
-		])]
 		private readonly Types\WidgetIcon|null $icon,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
+		#[Configurator\MapFromKey('created_at')]
 		DateTimeInterface|null $createdAt = null,
+		#[Configurator\MapFromKey('updated_at')]
 		DateTimeInterface|null $updatedAt = null,
 	)
 	{

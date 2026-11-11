@@ -3,11 +3,9 @@
 namespace FastyBird\Module\Accounts\Documents\Emails;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts;
 use FastyBird\Module\Accounts\Entities;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
@@ -21,23 +19,21 @@ use Ramsey\Uuid;
 	Accounts\Types\RoutingKey::EMAIL_DOCUMENT_UPDATED->value,
 	Accounts\Types\RoutingKey::EMAIL_DOCUMENT_DELETED->value,
 ])]
-final readonly class Email implements Documents\Document, ObjectMapper\MappedObject
+final readonly class Email implements Documents\Document
 {
 
 	public function __construct(
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $id,
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $account,
-		#[ObjectMapper\Rules\StringValue(pattern: '/^[\w\-\.]+@[\w\-\.]+\.+[\w-]{2,63}$/', notEmpty: true)]
+		#[Documents\Mapping\RequirePattern('/^[\w\-\.]+@[\w\-\.]+\.+[\w-]{2,63}$/')]
 		private string $address,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
+		#[Documents\Mapping\MapBoolLike]
 		private bool $default = false,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
+		#[Documents\Mapping\MapBoolLike]
 		private bool $verified = false,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
+		#[Documents\Mapping\MapBoolLike]
 		private bool $private = false,
-		#[ObjectMapper\Rules\BoolValue(castBoolLike: true)]
+		#[Documents\Mapping\MapBoolLike]
 		private bool $public = false,
 	)
 	{

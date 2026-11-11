@@ -2,14 +2,14 @@
 
 namespace FastyBird\Bridge\DevicesModuleUiModule\Documents\Widgets\DataSources;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Bridge\DevicesModuleUiModule\Entities;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Payloads;
 use FastyBird\Core\Values\Utilities;
+use FastyBird\Module\Devices\Documents as DevicesDocuments;
 use FastyBird\Module\Ui\Documents as UiDocuments;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -21,22 +21,14 @@ abstract class Property extends UiDocuments\Widgets\DataSources\DataSource
 	public function __construct(
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $widget,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $property,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Button::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Switcher::class),
-			new ObjectMapper\Rules\BackedEnumValue(class: Payloads\Cover::class),
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\IntValue(),
-			new ObjectMapper\Rules\FloatValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[DevicesDocuments\Mapping\MapStateValue]
 		private readonly bool|float|int|string|DateTimeInterface|Payloads\Payload|null $value = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
+		#[Configurator\MapFromKey('created_at')]
 		DateTimeInterface|null $createdAt = null,
+		#[Configurator\MapFromKey('updated_at')]
 		DateTimeInterface|null $updatedAt = null,
 	)
 	{

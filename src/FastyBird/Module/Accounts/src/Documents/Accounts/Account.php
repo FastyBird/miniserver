@@ -2,13 +2,12 @@
 
 namespace FastyBird\Module\Accounts\Documents\Accounts;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Accounts\Entities;
 use FastyBird\Module\Accounts\Types;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_map;
@@ -23,58 +22,36 @@ use function array_map;
 	Types\RoutingKey::ACCOUNT_DOCUMENT_UPDATED->value,
 	Types\RoutingKey::ACCOUNT_DOCUMENT_DELETED->value,
 ])]
-final readonly class Account implements Documents\Document, ObjectMapper\MappedObject
+final readonly class Account implements Documents\Document
 {
 
 	/**
-	 * @param array<int, Uuid\UuidInterface> $children
+	 * @param array<Uuid\UuidInterface> $children
 	 */
 	public function __construct(
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
-		#[ObjectMapper\Modifiers\FieldName('first_name')]
+		#[Documents\Mapping\RefuseBlank]
+		#[Configurator\MapFromKey('first_name')]
 		private string $firstName,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
-		#[ObjectMapper\Modifiers\FieldName('last_name')]
+		#[Documents\Mapping\RefuseBlank]
+		#[Configurator\MapFromKey('last_name')]
 		private string $lastName,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[Documents\Mapping\RefuseBlank]
 		private string $language,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BackedEnumValue(class: Types\AccountState::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: Types\AccountState::class),
-		])]
 		private Types\AccountState $state,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('middle_name')]
+		#[Documents\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('middle_name')]
 		private string|null $middleName = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(pattern: '/^[\w\-\.]+@[\w\-\.]+\.+[\w-]{2,63}$/', notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
+		#[Documents\Mapping\RequirePattern('/^[\w\-\.]+@[\w\-\.]+\.+[\w-]{2,63}$/')]
 		private string|null $email = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private DateTimeInterface|null $registered = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('last_visit')]
+		#[Documents\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('last_visit')]
 		private DateTimeInterface|null $lastVisit = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new Rules\UuidValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		private Uuid\UuidInterface|null $parent = null,
-		#[ObjectMapper\Rules\ArrayOf(
-			new Rules\UuidValue(),
-		)]
 		private array $children = [],
 	)
 	{
