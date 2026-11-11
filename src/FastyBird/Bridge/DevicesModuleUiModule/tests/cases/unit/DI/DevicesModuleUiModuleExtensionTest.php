@@ -5,6 +5,7 @@ namespace FastyBird\Bridge\DevicesModuleUiModule\Tests\Cases\Unit\DI;
 use Error;
 use FastyBird\Bridge\DevicesModuleUiModule\Exceptions as DevicesModuleUiModuleExceptions;
 use FastyBird\Bridge\DevicesModuleUiModule\Hydrators;
+use FastyBird\Bridge\DevicesModuleUiModule\Models;
 use FastyBird\Bridge\DevicesModuleUiModule\Schemas;
 use FastyBird\Bridge\DevicesModuleUiModule\Subscribers;
 use FastyBird\Bridge\DevicesModuleUiModule\Tests;
@@ -32,6 +33,7 @@ final class DevicesModuleUiModuleExtensionTest extends Tests\Cases\Unit\DbTestCa
 		self::assertNotNull($this->getContainer()->getByType(Subscribers\StateEntities::class, false));
 		self::assertNotNull($this->getContainer()->getByType(Subscribers\DocumentsMapper::class, false));
 		self::assertNotNull($this->getContainer()->getByType(Subscribers\ActionCommand::class, false));
+		self::assertNotNull($this->getContainer()->getByType(Models\History\PropertyReader::class, false));
 
 		self::assertNotNull(
 			$this->getContainer()->getByType(Schemas\Widgets\DataSources\ConnectorProperty::class, false),

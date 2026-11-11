@@ -53,6 +53,7 @@ final class ChartGraph extends Display
 			'step_value' => $resource->getStepValue(),
 			'enable_min_max' => $resource->isEnabledMinMax(),
 			'precision' => $resource->getPrecision(),
+			'period' => $resource->getPeriod(),
 		]);
 	}
 

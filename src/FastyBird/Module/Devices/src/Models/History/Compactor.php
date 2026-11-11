@@ -62,11 +62,11 @@ final class Compactor
 	// Rows one DELETE removes when the history of a dead property is purged
 	private const int PURGE_BATCH = 10_000;
 
-	// The tables a property id can live in
+	// The tables a property id can live in, as the entities that map them name them
 	private const array PROPERTY_TABLES = [
-		'fb_devices_module_connectors_properties',
-		'fb_devices_module_devices_properties',
-		'fb_devices_module_channels_properties',
+		Entities\Connectors\Properties\Property::TABLE,
+		Entities\Devices\Properties\Property::TABLE,
+		Entities\Channels\Properties\Property::TABLE,
 	];
 
 	public function __construct(
@@ -198,8 +198,8 @@ final class Compactor
 
 		return $this->connection->fetchOne(
 			implode(' UNION ALL ', $selects) . ' LIMIT 1',
-			[$id, $id, $id],
-			[DBAL\ParameterType::BINARY, DBAL\ParameterType::BINARY, DBAL\ParameterType::BINARY],
+			array_fill(0, count($selects), $id),
+			array_fill(0, count($selects), DBAL\ParameterType::BINARY),
 		) !== false;
 	}
 

@@ -291,6 +291,7 @@ fbDevicesModule:
 - It deletes samples, 5-minute rollups and 1-hour rollups older than `history.retention.samples`, `fiveMinutes` and `hours` days. The one exception is the newest sample of a property: a value that has not changed for longer than the retention is still the property's value, and the rollups need it. A property that exists keeps getting one rollup row for each bucket, whether it changes or not, so the rows of a property are bounded by the retention of the rollups: about 17,000 rows at the defaults (8,640 of 5 minutes and 8,760 of an hour).
 - It deletes the whole history of a property that no longer exists in the connector, device or channel property tables, samples and rollups, in batches of 10,000 rows. That is what lets the newest sample of a deleted property go, and a deleted property's history stops at once instead of growing a row for every bucket for ever.
 - Buckets are aligned to UTC.
+- The purge of a large dead history runs in the exchange process like the rest of a run, one property in one transaction: about 5 seconds for a million rows, once, while the exchange does nothing else.
 
 Without an exchange process (no `fb:devices-module:exchange` running), nothing is compacted or expired. Run the same work from cron:
 
@@ -301,6 +302,17 @@ php bin/fb-console.php fb:devices-module:history:compact
 It exits with 1 when the history of a property could not be compacted (the log says which). With `history.enabled: false` the exchange process starts no timer, and the command is the only way to compact and expire what was recorded before.
 
 **Reading.** `Devices\Models\History\Repository::find()` returns a `Series` for a property and a period: the columns `time`, `min`, `max`, `avg` and `last`, one index a point. The period is divided into the number of points asked for, and the tier that answers is the widest one that is not wider than a point and still holds the start of the period: the samples (kept 7 days), the 5-minute rollups (30) or the 1-hour rollups (365); when none fits, the narrowest that holds the start, and when none does, the hours. A rollup tier lacks the newest hour, or 5 minutes, which the compactor has not reached.
+
+**Reading over HTTP.** The Ui module serves it for a chart: `GET /api/ui-module/v1/widgets/{widget}/data-sources/{id}/history`, for any signed-in user, as one JSON:API resource of the type `com.fastybird.ui-module/data-source/history` whose id is the data source's. The attributes are `from` and `to` (UTC, ISO 8601), `resolution` (seconds a point), `tier` (`samples`, `five_minutes` or `hours`), `unit`, `data_type` and the columns `time` (UTC epoch seconds), `min`, `max`, `avg` and `last`; a gap in a column is `null`. The relationship `data_source` names the data source, and `?include=data_source` includes it. The query takes, all optional:
+
+| Parameter | Meaning |
+|---|---|
+| `filter[to]` | End of the period, ISO 8601 with an offset or `Z`. Default: now. |
+| `filter[from]` | Start of the period, the same form. Default: `to` less the period. |
+| `filter[period]` | Seconds back from `to`, 60 to 31,622,400 (366 days). Not with `from`. Default: the `period` of the widget's chart display, or a day. |
+| `filter[points]` | The most points a series may have, 1 to 2,000. Default: 500. |
+
+A value that is not valid, an unknown `filter` key, a period that is not forward and a period longer than 366 days are a `400`, with the parameter in `source.parameter`. An unknown widget or data source, a data source of another widget, and a data source that has no history (a generic one, or one bound to a variable property) are a `404`. A data source bound to a mapped property shows its parent's series, with the parent's unit and data type, as the values are recorded for the parent and are not converted through the mapped property's scale or value transformer. The data source is bound to a property by the Devices module bridge (`Bridge/DevicesModuleUiModule`), which implements the Ui module's `Models\History\Reader`; without it every data source answers `404`. The chart graph display has a `period` setting (seconds, 60 to 31,622,400, a day by default) that the endpoint uses as the default period.
 
 With `history.enabled` off the module registers neither the recorder nor the subscribers, so no listener, flush timer, compaction timer or buffer exists. The compactor, the repository and the command stay registered, because the data outlives the switch.
 

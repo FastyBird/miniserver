@@ -6,6 +6,7 @@ use Doctrine\DBAL;
 use FastyBird\Module\Devices\Entities;
 use FastyBird\Module\Devices\Tests;
 use FastyBird\Module\Devices\Types;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ramsey\Uuid;
@@ -27,6 +28,12 @@ final class CompactorTest extends Tests\Cases\Unit\HistoryTestCase
 {
 
 	private const int DAY = 86_400;
+
+	private const array TABLES = [
+		'connector' => 'fb_devices_module_connectors_properties',
+		'device' => 'fb_devices_module_devices_properties',
+		'channel' => 'fb_devices_module_channels_properties',
+	];
 
 	/**
 	 * @throws Throwable
@@ -435,45 +442,111 @@ final class CompactorTest extends Tests\Cases\Unit\HistoryTestCase
 	}
 
 	/**
-	 * A property of the connector and of the device tables exists as well as one of the channel table
+	 * @return array<string, array{string, string}> the scope of the property, and its id: in that scope's table alone
+	 */
+	public static function scopes(): array
+	{
+		return [
+			'a connector property' => ['connector', '3d2b8a1c-9e4f-4c61-b7a3-5f0e2d8c6b41'],
+			'a device property' => ['device', '7e9c1f40-2a5b-4d83-9c16-8b3d4e5f6a72'],
+			'a channel property' => ['channel', '5a1b2c3d-4e5f-4a6b-8c7d-9e0f1a2b3c4d'],
+		];
+	}
+
+	/**
+	 * A property that is in the table of its scope, and in no other, exists: its history is kept and rolled up,
+	 * whichever of the three tables it is in
 	 *
 	 * @throws Throwable
 	 */
-	public function testPropertiesOfTheOtherTablesAreAlive(): void
+	#[DataProvider('scopes')]
+	public function testPropertyOfEachTableIsAlive(string $scope, string $id): void
 	{
-		$connector = '3d2b8a1c-9e4f-4c61-b7a3-5f0e2d8c6b41';
-		$device = '7e9c1f40-2a5b-4d83-9c16-8b3d4e5f6a72';
+		$this->registerProperty($scope, $id);
 
-		$this->getDb()->executeStatement(
-			'INSERT INTO fb_devices_module_connectors_properties (property_id, connector_id, property_type,'
-			. ' property_identifier, property_name, property_settable, property_queryable, property_data_type,'
-			. ' created_at, updated_at)'
-			. ' SELECT ?, connector_id, \'dynamic\', \'probe\', NULL, 0, 0, \'float\', NOW(), NOW()'
-			. ' FROM fb_devices_module_connectors LIMIT 1',
-			[Uuid\Uuid::fromString($connector)->getBytes()],
-			[DBAL\ParameterType::BINARY],
-		);
-		$this->getDb()->executeStatement(
-			'INSERT INTO fb_devices_module_devices_properties (property_id, device_id, property_type,'
-			. ' property_identifier, property_name, property_settable, property_queryable, property_data_type,'
-			. ' created_at, updated_at)'
-			. ' SELECT ?, device_id, \'dynamic\', \'probe\', NULL, 0, 0, \'float\', NOW(), NOW()'
-			. ' FROM fb_devices_module_devices LIMIT 1',
-			[Uuid\Uuid::fromString($device)->getBytes()],
-			[DBAL\ParameterType::BINARY],
-		);
-
-		$this->insertSample(self::NOW - 1_800, 1.0, $connector);
-		$this->insertSample(self::NOW - 1_800, 2.0, $device);
+		$this->insertSample(self::NOW - 1_800, 1.0, $id);
+		$this->insertSample(self::NOW - 1_800, 2.0, self::DEAD_PROPERTY);
 
 		$compaction = $this->compactor()->compact();
 
-		self::assertSame(0, $compaction->purged);
 		self::assertSame(2, $compaction->properties);
-		self::assertCount(1, $this->rows($connector));
-		self::assertCount(1, $this->rows($device));
-		self::assertNotSame([], $this->rollups(Types\HistoryResolution::FIVE_MINUTES, $connector));
-		self::assertNotSame([], $this->rollups(Types\HistoryResolution::FIVE_MINUTES, $device));
+		// Only the dead one's sample is purged
+		self::assertSame(1, $compaction->purged);
+		self::assertSame([[self::NOW - 1_800, 1.0]], $this->rows($id));
+		self::assertNotSame([], $this->rollups(Types\HistoryResolution::FIVE_MINUTES, $id));
+		self::assertSame([], $this->rows(self::DEAD_PROPERTY));
+	}
+
+	/**
+	 * The same property, once its row is gone from that table alone, is dead
+	 *
+	 * @throws Throwable
+	 */
+	#[DataProvider('scopes')]
+	public function testPropertyIsDeadOnceItsRowIsGone(string $scope, string $id): void
+	{
+		$this->registerProperty($scope, $id);
+
+		$this->insertSample(self::NOW - 1_800, 1.0, $id);
+
+		$this->getDb()->executeStatement(
+			sprintf('DELETE FROM %s WHERE property_id = ?', self::TABLES[$scope]),
+			[Uuid\Uuid::fromString($id)->getBytes()],
+			[DBAL\ParameterType::BINARY],
+		);
+
+		$compaction = $this->compactor()->compact();
+
+		self::assertSame(1, $compaction->purged);
+		self::assertSame([], $this->rows($id));
+	}
+
+	/**
+	 * The names of the tables are the ones the entities map: the compactor reads them from the same constants
+	 *
+	 * @throws Throwable
+	 */
+	public function testTablesAreTheOnesTheEntitiesMap(): void
+	{
+		$manager = $this->getEntityManager();
+
+		foreach (
+			[
+				'connector' => Entities\Connectors\Properties\Property::class,
+				'device' => Entities\Devices\Properties\Property::class,
+				'channel' => Entities\Channels\Properties\Property::class,
+			] as $scope => $class
+		) {
+			self::assertSame(self::TABLES[$scope], $class::TABLE, $scope);
+			self::assertSame($class::TABLE, $manager->getClassMetadata($class)->getTableName(), $scope);
+		}
+	}
+
+	/**
+	 * @throws Throwable
+	 */
+	private function registerProperty(string $scope, string $id): void
+	{
+		$owner = ['connector' => 'connector_id', 'device' => 'device_id', 'channel' => 'channel_id'][$scope];
+		$parent = [
+			'connector' => 'fb_devices_module_connectors',
+			'device' => 'fb_devices_module_devices',
+			'channel' => 'fb_devices_module_channels',
+		][$scope];
+
+		$this->getDb()->executeStatement(
+			sprintf(
+				'INSERT INTO %s (property_id, %s, property_type, property_identifier, property_name, property_settable,'
+				. ' property_queryable, property_data_type, created_at, updated_at)'
+				. ' SELECT ?, %s, \'dynamic\', \'probe\', NULL, 0, 0, \'float\', NOW(), NOW() FROM %s LIMIT 1',
+				self::TABLES[$scope],
+				$owner,
+				$owner,
+				$parent,
+			),
+			[Uuid\Uuid::fromString($id)->getBytes()],
+			[DBAL\ParameterType::BINARY],
+		);
 	}
 
 	/**

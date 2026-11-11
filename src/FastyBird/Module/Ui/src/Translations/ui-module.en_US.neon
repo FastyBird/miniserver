@@ -58,6 +58,15 @@ base:
             heading: "Attribute not unique"
             message: "Provided attribute is not unique"
 
+history:
+    messages:
+        invalidParameter:
+            heading: "Invalid query parameter"
+            message: "The value of the query parameter %parameter% is not valid"
+        invalidRange:
+            heading: "Invalid period"
+            message: "The period has to end after it starts, and be at most %days% days long"
+
 cmd:
     base:
         questions:
