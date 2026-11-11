@@ -422,8 +422,7 @@ branches and a class chooses its branch by what it implements:
 - **Any other class is mapped by Valinor.** A class is migrated by dropping `MappedObject` (and, with it,
   every `Orisai\ObjectMapper` attribute and import) and by giving Valinor what it reads: the native and
   PHPDoc types, and the attributes below. `Documents\Document` does not extend `MappedObject`; each root
-  of a not yet migrated hierarchy declares it itself (`Accounts` and `Ui` documents,
-  `Connector\...\Messages\Message`), and its migration removes that one declaration. A root flips every class beneath
+  of a not yet migrated hierarchy declares it itself (`Connector\...\Messages\Message`), and its migration removes that one declaration. A root flips every class beneath
   it, in every package: `Devices\Documents\Connectors\Connector`, `Devices\Device` and `Channels\Channel` moved with
   their 85 documents of the connectors, the bridges and the addon, none of which declares a constructor, an attribute or a
   property of its own. Valinor also takes a date object for a date and any traversable for a list where orisai refused
@@ -450,6 +449,7 @@ What a migrated class declares, in place of what orisai had:
 | `DateTimeValue(format: ATOM)` | `DateTimeInterface` (ATOM is the only date format the builder supports). `Mapper` registers the date constructor itself, to refuse a string with a NUL byte as an error message of the value: `createFromFormat()` throws a `ValueError` for it, which no union recovers from, and the value of a state, a text or a date, is the text then |
 | `StringValue(pattern: ..., notEmpty: true)` | `#[Documents\Mapping\RequirePattern('/.../')]`: a blank string and a string the pattern does not match, tested with `preg_match()` as the rule did, are refused; `RequirePatternParityTest` holds both to a grid of addresses |
 | `UuidValue()` | `Ramsey\Uuid\UuidInterface`; the builder reads the canonical form only, like the rule |
+| `AnyOf([BoolValue, FloatValue, IntValue, StringValue(notEmpty), NullValue(castEmptyString)])`, a value which keeps its place in the constructor | `#[Documents\Mapping\MapIntToFloat]` with `#[Documents\Mapping\MapBlankToNull]`: the rule tried the float before the int, so a mapped int is a float; the type keeps the `int` for code that passes one to the constructor. Where nothing passes an int to a constructor, leave the `int` out of the union |
 | `AnyOf([FloatValue, IntValue])` | decide per field: `float` turns an int into a float, which is what orisai's rule did; `int\|float` keeps what it is given. Pin the choice in a test |
 | a union of several array shapes, the format of a property | `#[Devices\Documents\Mapping\MapFormat]`: Valinor refuses a union of two array types, so the one converter reads the shapes the rule listed, in its order, and the type is one nested array of scalars |
 | `AnyOf([UuidValue, StringValue(notEmpty), NullValue(castEmptyString)])` | `#[Devices\Documents\Mapping\MapValueTransformer]`: a union of a string and a UUID keeps a UUID as the text it came in, where the rule read it as a UUID first |

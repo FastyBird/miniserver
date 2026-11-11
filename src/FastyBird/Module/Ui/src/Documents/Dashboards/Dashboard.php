@@ -2,14 +2,13 @@
 
 namespace FastyBird\Module\Ui\Documents\Dashboards;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use DateTimeInterface;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Core\Values\Types\Sources;
 use FastyBird\Module\Ui;
 use FastyBird\Module\Ui\Documents as UiDocuments;
 use FastyBird\Module\Ui\Entities;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_map;
@@ -35,42 +34,20 @@ final readonly class Dashboard implements UiDocuments\Document, CoreDocuments\Ow
 	 * @param array<Uuid\UuidInterface> $tabs
 	 */
 	public function __construct(
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $id,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[CoreDocuments\Mapping\RefuseBlank]
 		private string $identifier,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private string|null $name = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		private string|null $comment = null,
-		#[ObjectMapper\Rules\IntValue()]
 		private int $priority = 0,
-		#[ObjectMapper\Rules\ArrayOf(
-			new Rules\UuidValue(),
-		)]
 		private array $tabs = [],
-		#[ObjectMapper\Rules\AnyOf([
-			new Rules\UuidValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		protected Uuid\UuidInterface|null $owner = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('created_at')]
+		#[Configurator\MapFromKey('created_at')]
 		protected DateTimeInterface|null $createdAt = null,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\DateTimeValue(format: DateTimeInterface::ATOM),
-			new ObjectMapper\Rules\NullValue(),
-		])]
-		#[ObjectMapper\Modifiers\FieldName('updated_at')]
+		#[Configurator\MapFromKey('updated_at')]
 		protected DateTimeInterface|null $updatedAt = null,
 	)
 	{
