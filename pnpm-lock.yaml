@@ -356,6 +356,9 @@ importers:
       lodash.isequal:
         specifier: ^4.5
         version: 4.5.0
+      uplot:
+        specifier: 1.6.32
+        version: 1.6.32
       uuid:
         specifier: ^14.0
         version: 14.0.2
@@ -3168,6 +3171,9 @@ packages:
         optional: true
       webpack:
         optional: true
+
+  uplot@1.6.32:
+    resolution: {integrity: sha512-KIMVnG68zvu5XXUbC4LQEPnhwOxBuLyW1AHtpm6IKTXImkbLgkMy+jabjLgSLMasNuGGzQm/ep3tOkyTxpiQIw==}
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
@@ -6124,6 +6130,8 @@ snapshots:
       esbuild: 0.25.12
       rollup: 4.63.1
       vite: 6.4.3(@types/node@24.13.4)(jiti@2.6.1)(sass@1.104.0)(yaml@2.9.0)
+
+  uplot@1.6.32: {}
 
   uri-js@4.4.1:
     dependencies:
