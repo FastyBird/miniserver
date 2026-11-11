@@ -130,7 +130,11 @@ final class TriggerRootsPinTest extends TestCase
 				}
 
 				if (in_array($name, self::CHANGED[$class] ?? [], true)) {
-					self::assertNotSame($pin, $actual[$class][$name], sprintf('%s: %s is no longer changed', $class, $name));
+					self::assertNotSame(
+						$pin,
+						$actual[$class][$name],
+						sprintf('%s: %s is no longer changed', $class, $name),
+					);
 
 					continue;
 				}
@@ -161,7 +165,7 @@ final class TriggerRootsPinTest extends TestCase
 		foreach ([self::CHANNEL_ACTION, self::DEVICE_ACTION] as $class) {
 			$stored = $actual[$class]['the fields of a stored one'];
 
-			self::assertArrayHasKey('json', $stored, $class);
+			self::assertIsString($stored['json'] ?? null, $class);
 			self::assertStringContainsString('"value":"on"', $stored['json']);
 
 			foreach (
@@ -183,10 +187,27 @@ final class TriggerRootsPinTest extends TestCase
 				self::assertArrayHasKey('refused', $actual[$class][$name], sprintf('%s: %s', $class, $name));
 			}
 
-			// The same answer as the condition on the same property for what the two share
-			self::assertArrayHasKey('json', $actual[$class]['owner: null'], $class);
-			self::assertArrayHasKey('json', $actual[$class]['is_triggered: an empty string'], $class);
-			self::assertArrayHasKey('json', $actual[$class]['id: an upper case UUID'], $class);
+			// The same answer as the condition on the same property for what the two share: a blank is a null, an upper case UUID is one
+			foreach (
+				[
+					'owner: null',
+					'owner: an empty string',
+					'owner: spaces',
+					'is_triggered: an empty string',
+					'is_triggered: spaces',
+					'id: an upper case UUID',
+				] as $name
+			) {
+				self::assertArrayHasKey('json', $actual[$class][$name], sprintf('%s: %s', $class, $name));
+			}
+
+			$owner = $actual[$class]['owner: spaces']['json'] ?? null;
+			$triggered = $actual[$class]['is_triggered: spaces']['json'] ?? null;
+
+			self::assertIsString($owner);
+			self::assertIsString($triggered);
+			self::assertStringContainsString('"owner":null', $owner);
+			self::assertStringContainsString('"is_triggered":null', $triggered);
 		}
 	}
 
@@ -221,10 +242,18 @@ final class TriggerRootsPinTest extends TestCase
 				}
 
 				$message = $result['message'] ?? '';
-				$first = (string) preg_replace('/^Could not map data to document: /', '', is_string($message) ? $message : '');
+				$first = (string) preg_replace(
+					'/^Could not map data to document: /',
+					'',
+					is_string($message) ? $message : '',
+				);
 
 				// Only a refusal of the mapping names a path: the factory's own (the discriminator) and what toArray() throws do not
-				if (!is_string($message) || !str_starts_with($message, 'Could not map data to document: ') || str_starts_with($first, '*root*')) {
+				if (
+					!is_string($message)
+					|| !str_starts_with($message, 'Could not map data to document: ')
+					|| str_starts_with($first, '*root*')
+				) {
 					continue;
 				}
 
@@ -280,9 +309,12 @@ final class TriggerRootsPinTest extends TestCase
 
 		$taken = 0;
 		$refused = 0;
+		$counts = [];
 
 		foreach ($report as $class => $cases) {
 			self::assertIsArray($cases, (string) $class);
+
+			$counts[] = count($cases);
 
 			foreach ($cases as $name => $result) {
 				self::assertIsArray($result);
@@ -298,16 +330,12 @@ final class TriggerRootsPinTest extends TestCase
 			}
 		}
 
+		sort($counts);
+
 		self::assertSame(8, $taken);
 		self::assertSame(1, $refused);
-		self::assertSame(
-			[1, 3, 5],
-			[
-				count($report['FastyBird\\Module\\Triggers\\Documents\\Triggers\\Controls\\Action'] ?? []),
-				count($report['FastyBird\\Automator\\DateTime\\Documents\\Conditions\\DateCondition'] ?? []),
-				count($report['FastyBird\\Automator\\DateTime\\Documents\\Conditions\\TimeCondition'] ?? []),
-			],
-		);
+		// The control's action takes an enum, the date condition a date, the time condition a date and three traversables
+		self::assertSame([1, 3, 5], $counts);
 	}
 
 	/**

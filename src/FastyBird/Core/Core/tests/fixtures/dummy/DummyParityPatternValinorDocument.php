@@ -13,7 +13,9 @@ final readonly class DummyParityPatternValinorDocument implements Documents\Docu
 
 	public function __construct(
 		#[Documents\Mapping\RequirePattern('/^[\w\-\.]+@[\w\-\.]+\.+[\w-]{2,63}$/')]
-		private string $email,
+		private string $email = 'a@example.com',
+		#[Documents\Mapping\RequirePattern('/^[a-z ]*$/')]
+		private string $code = 'x',
 	)
 	{
 	}
@@ -21,7 +23,7 @@ final readonly class DummyParityPatternValinorDocument implements Documents\Docu
 	#[Override]
 	public function toArray(): array
 	{
-		return ['email' => $this->email];
+		return ['email' => $this->email, 'code' => $this->code];
 	}
 
 }

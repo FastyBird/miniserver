@@ -15,7 +15,9 @@ final readonly class DummyParityPatternOrisaiDocument implements Documents\Docum
 
 	public function __construct(
 		#[ObjectMapper\Rules\StringValue(pattern: '/^[\w\-\.]+@[\w\-\.]+\.+[\w-]{2,63}$/', notEmpty: true)]
-		private string $email,
+		private string $email = 'a@example.com',
+		#[ObjectMapper\Rules\StringValue(pattern: '/^[a-z ]*$/', notEmpty: true)]
+		private string $code = 'x',
 	)
 	{
 	}
@@ -23,7 +25,7 @@ final readonly class DummyParityPatternOrisaiDocument implements Documents\Docum
 	#[Override]
 	public function toArray(): array
 	{
-		return ['email' => $this->email];
+		return ['email' => $this->email, 'code' => $this->code];
 	}
 
 }

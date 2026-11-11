@@ -24,7 +24,6 @@ final readonly class Action implements Documents\Document
 		private Uuid\UuidInterface $control,
 		#[Documents\Mapping\MapBlankToNull]
 		#[Configurator\MapFromKey('expected_value')]
-		// No int in the union: the rule tried a float before an int, so an int was always a float
 		private bool|float|string|null $expectedValue = null,
 	)
 	{
@@ -45,7 +44,7 @@ final readonly class Action implements Documents\Document
 		return $this->control;
 	}
 
-	public function getExpectedValue(): float|bool|int|string|null
+	public function getExpectedValue(): float|bool|string|null
 	{
 		return $this->expectedValue;
 	}

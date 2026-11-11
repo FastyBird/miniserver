@@ -8,7 +8,7 @@ use Composer\Autoload\ClassLoader;
 use DateTime;
 use DateTimeImmutable;
 use FastyBird\Automator\DateTime\Documents as DateTimeDocuments;
-use FastyBird\Automator\DevicesModule\Documents as DevicesAutomatorDocuments;
+use FastyBird\Automator\DevicesModule\Documents as DevicesModuleDocuments;
 use FastyBird\Core\Boot;
 use FastyBird\Core\Documents as CoreDocuments;
 use FastyBird\Core\Exceptions\InvalidArgument;
@@ -20,6 +20,7 @@ use JsonException;
 use Nette\Utils;
 use Orisai\ObjectMapper\MappedObject;
 use Ramsey\Uuid;
+use Ramsey\Uuid\Exception as UuidExceptions;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass;
@@ -29,7 +30,6 @@ use Throwable;
 use UnexpectedValueException;
 use function array_filter;
 use function array_key_exists;
-use function array_keys;
 use function array_merge;
 use function array_unique;
 use function array_values;
@@ -47,6 +47,7 @@ use function serialize;
 use function sort;
 use function str_contains;
 use function str_ends_with;
+use function str_repeat;
 use function str_replace;
 use function str_starts_with;
 use function strlen;
@@ -196,6 +197,7 @@ final class TriggerRootsProbe
 	}
 
 	/**
+	 * @param class-string<CoreDocuments\Document> $class
 	 * @param array<string, mixed>|string|object $data
 	 *
 	 * @return array<string, mixed>
@@ -208,7 +210,6 @@ final class TriggerRootsProbe
 	): array
 	{
 		try {
-			/** @var class-string<CoreDocuments\Document> $class */
 			$document = $factory->create($class, $data);
 
 			return [
@@ -347,10 +348,13 @@ final class TriggerRootsProbe
 				'fixed' => ['type' => 'email'],
 			],
 			TriggersDocuments\Notifications\Sms::class => [
-				'fields' => array_merge($notification, ['type' => ['sms', 'type'], 'phone' => ['+420603123456', 'phone']]),
+				'fields' => array_merge(
+					$notification,
+					['type' => ['sms', 'type'], 'phone' => ['+420603123456', 'phone']],
+				),
 				'fixed' => ['type' => 'sms'],
 			],
-			DevicesAutomatorDocuments\Actions\ChannelPropertyAction::class => [
+			DevicesModuleDocuments\Actions\ChannelPropertyAction::class => [
 				'fields' => array_merge($action, [
 					'device' => [self::DEVICE, 'uuid'],
 					'channel' => [self::CHANNEL, 'uuid'],
@@ -359,7 +363,7 @@ final class TriggerRootsProbe
 				]),
 				'fixed' => ['type' => 'channel-property'],
 			],
-			DevicesAutomatorDocuments\Actions\DevicePropertyAction::class => [
+			DevicesModuleDocuments\Actions\DevicePropertyAction::class => [
 				'fields' => array_merge($action, [
 					'device' => [self::DEVICE, 'uuid'],
 					'property' => [self::OWNER, 'uuid'],
@@ -367,7 +371,7 @@ final class TriggerRootsProbe
 				]),
 				'fixed' => ['type' => 'device-property'],
 			],
-			DevicesAutomatorDocuments\Conditions\ChannelPropertyCondition::class => [
+			DevicesModuleDocuments\Conditions\ChannelPropertyCondition::class => [
 				'fields' => array_merge($condition, [
 					'device' => [self::DEVICE, 'uuid'],
 					'channel' => [self::CHANNEL, 'uuid'],
@@ -377,7 +381,7 @@ final class TriggerRootsProbe
 				]),
 				'fixed' => ['type' => 'channel-property'],
 			],
-			DevicesAutomatorDocuments\Conditions\DevicePropertyCondition::class => [
+			DevicesModuleDocuments\Conditions\DevicePropertyCondition::class => [
 				'fields' => array_merge($condition, [
 					'device' => [self::DEVICE, 'uuid'],
 					'property' => [self::OWNER, 'uuid'],
@@ -502,6 +506,8 @@ final class TriggerRootsProbe
 	 * Forms a value of this kind can be wrong in, or right in another way
 	 *
 	 * @return array<string, mixed>
+	 *
+	 * @throws UuidExceptions\InvalidArgumentException
 	 */
 	private static function variantsOf(string $kind): array
 	{
@@ -551,7 +557,7 @@ final class TriggerRootsProbe
 				'an address with a plus' => 'a+b@example.com',
 				'an address with a one letter top level domain' => 'a@example.c',
 				'an address with spaces' => 'a b@example.com',
-				'an address with a long top level domain' => 'a@example.' . 'abcdefghij' . 'abcdefghij' . 'abcdefghij' . 'abcdefghij' . 'abcdefghij' . 'abcdefghij' . 'abcdefghij',
+				'an address with a long top level domain' => 'a@example.' . str_repeat('abcdefghij', 7),
 				'an address with a new line at the end' => "a@example.com\n",
 			],
 			'phone' => [
