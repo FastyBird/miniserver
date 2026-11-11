@@ -113,6 +113,7 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 			$eventLoop->stop();
 		});
 
+		$poll = null;
 		$poll = $eventLoop->addPeriodicTimer(
 			0.01,
 			static function () use (&$poll, $guard, $eventLoop, $client, $broker, $queue): void {
@@ -120,7 +121,10 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 					return;
 				}
 
-				$eventLoop->cancelTimer($poll);
+				if ($poll !== null) {
+					$eventLoop->cancelTimer($poll);
+				}
+
 				$eventLoop->cancelTimer($guard);
 
 				$client->disconnect();
