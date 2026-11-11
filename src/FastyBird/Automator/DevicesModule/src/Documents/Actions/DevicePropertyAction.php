@@ -2,11 +2,10 @@
 
 namespace FastyBird\Automator\DevicesModule\Documents\Actions;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use FastyBird\Automator\DevicesModule\Entities;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -23,13 +22,13 @@ final class DevicePropertyAction extends TriggersDocuments\Actions\Action
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $trigger,
 		bool $enabled,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $device,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $property,
-		#[ObjectMapper\Rules\BoolValue()]
 		private readonly string $value,
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('is_triggered')]
 		bool|null $isTriggered = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
 	)
 	{

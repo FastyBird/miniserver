@@ -3,10 +3,8 @@
 namespace FastyBird\Module\Triggers\Documents\Triggers\Controls;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
@@ -20,19 +18,16 @@ use Ramsey\Uuid;
 	Triggers\Types\RoutingKey::TRIGGER_CONTROL_DOCUMENT_UPDATED->value,
 	Triggers\Types\RoutingKey::TRIGGER_CONTROL_DOCUMENT_DELETED->value,
 ])]
-final readonly class Control implements Documents\Document, ObjectMapper\MappedObject, Documents\Owner
+final readonly class Control implements Documents\Document, Documents\Owner
 {
 
 	use Documents\HasOwner;
 
 	public function __construct(
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $id,
-		#[Rules\UuidValue()]
 		private Uuid\UuidInterface $trigger,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[Documents\Mapping\RefuseBlank]
 		private string $name,
-		#[Rules\UuidValue()]
 		protected Uuid\UuidInterface|null $owner = null,
 	)
 	{

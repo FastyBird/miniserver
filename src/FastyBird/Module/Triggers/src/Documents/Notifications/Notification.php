@@ -3,10 +3,8 @@
 namespace FastyBird\Module\Triggers\Documents\Notifications;
 
 use FastyBird\Core\Documents;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers;
 use FastyBird\Module\Triggers\Entities;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 
@@ -23,24 +21,18 @@ use Ramsey\Uuid;
 	Triggers\Types\RoutingKey::NOTIFICATION_DOCUMENT_UPDATED->value,
 	Triggers\Types\RoutingKey::NOTIFICATION_DOCUMENT_DELETED->value,
 ])]
-abstract class Notification implements Documents\Document, ObjectMapper\MappedObject, Documents\Owner
+abstract class Notification implements Documents\Document, Documents\Owner
 {
 
 	use Documents\HasOwner;
 
 	public function __construct(
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $id,
-		#[Rules\UuidValue()]
 		private readonly Uuid\UuidInterface $trigger,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[Documents\Mapping\RefuseBlank]
 		private readonly string $type,
-		#[ObjectMapper\Rules\BoolValue()]
 		private readonly bool $enabled,
-		#[ObjectMapper\Rules\AnyOf([
-			new Rules\UuidValue(),
-			new ObjectMapper\Rules\NullValue(castEmptyString: true),
-		])]
+		#[Documents\Mapping\MapBlankToNull]
 		protected readonly Uuid\UuidInterface|null $owner = null,
 	)
 	{

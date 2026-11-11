@@ -2,11 +2,10 @@
 
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
 use FastyBird\Module\Triggers\Types;
-use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -20,17 +19,15 @@ final class DummyConditionDocument extends TriggersDocuments\Conditions\Conditio
 		Uuid\UuidInterface $trigger,
 		string $type,
 		bool $enabled,
-		#[Rules\UuidValue()]
-		#[ObjectMapper\Modifiers\FieldName('watch_item')]
+		#[Configurator\MapFromKey('watch_item')]
 		private readonly Uuid\UuidInterface $watchItem,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[CoreDocuments\Mapping\RefuseBlank]
 		private readonly string $operand,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BackedEnumValue(class: Types\ConditionOperator::class),
-			new ObjectMapper\Rules\InstanceOfValue(type: Types\ConditionOperator::class),
-		])]
 		private readonly Types\ConditionOperator $operator,
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('is_fulfilled')]
 		bool|null $isFulfilled = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
 	)
 	{

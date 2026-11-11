@@ -2,10 +2,9 @@
 
 namespace FastyBird\Module\Triggers\Tests\Fixtures\Dummy;
 
+use CuyZ\Valinor\Mapper\Configurator;
 use FastyBird\Core\Documents as CoreDocuments;
-use FastyBird\Core\Persistence\Rules;
 use FastyBird\Module\Triggers\Documents as TriggersDocuments;
-use Orisai\ObjectMapper;
 use Ramsey\Uuid;
 use function array_merge;
 
@@ -18,15 +17,14 @@ final class DummyActionDocument extends TriggersDocuments\Actions\Action
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $trigger,
 		bool $enabled,
-		#[Rules\UuidValue()]
-		#[ObjectMapper\Modifiers\FieldName('do_item')]
+		#[Configurator\MapFromKey('do_item')]
 		private readonly Uuid\UuidInterface $doItem,
-		#[ObjectMapper\Rules\AnyOf([
-			new ObjectMapper\Rules\BoolValue(),
-			new ObjectMapper\Rules\StringValue(notEmpty: true),
-		])]
+		#[CoreDocuments\Mapping\RefuseBlank]
 		private readonly string|bool $value,
+		#[CoreDocuments\Mapping\MapBlankToNull]
+		#[Configurator\MapFromKey('is_triggered')]
 		bool|null $isTriggered = null,
+		#[CoreDocuments\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
 	)
 	{

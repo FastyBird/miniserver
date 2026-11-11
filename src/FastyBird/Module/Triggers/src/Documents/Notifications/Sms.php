@@ -6,7 +6,6 @@ use FastyBird\Core\Documents;
 use FastyBird\Core\Phone\Entities as PhoneEntities;
 use FastyBird\Core\Phone\Exceptions;
 use FastyBird\Module\Triggers\Entities as TriggersEntities;
-use Orisai\ObjectMapper;
 use Override;
 use Ramsey\Uuid;
 use function array_merge;
@@ -22,10 +21,12 @@ final class Sms extends Notification
 	public function __construct(
 		Uuid\UuidInterface $id,
 		Uuid\UuidInterface $trigger,
+		#[Documents\Mapping\RefuseBlank]
 		string $type,
 		bool $enabled,
-		#[ObjectMapper\Rules\StringValue(notEmpty: true)]
+		#[Documents\Mapping\RefuseBlank]
 		private readonly string $phone,
+		#[Documents\Mapping\MapBlankToNull]
 		Uuid\UuidInterface|null $owner = null,
 	)
 	{
