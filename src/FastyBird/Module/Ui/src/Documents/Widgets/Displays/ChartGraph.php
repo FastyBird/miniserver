@@ -18,6 +18,7 @@ final class ChartGraph extends UiDocuments\Widgets\Displays\Display
 
 	/**
 	 * @param int<0, max>|null $precision
+	 * @param int<60, 31622400> $period the range of Entities\Widgets\Displays\ChartGraph::MIN_PERIOD and MAX_PERIOD
 	 */
 	public function __construct(
 		Uuid\UuidInterface $id,
@@ -38,10 +39,6 @@ final class ChartGraph extends UiDocuments\Widgets\Displays\Display
 		DateTimeInterface|null $createdAt = null,
 		#[Configurator\MapFromKey('updated_at')]
 		DateTimeInterface|null $updatedAt = null,
-		#[ObjectMapper\Rules\IntValue(
-			min: Entities\Widgets\Displays\ChartGraph::MIN_PERIOD,
-			max: Entities\Widgets\Displays\ChartGraph::MAX_PERIOD,
-		)]
 		private readonly int $period = Entities\Widgets\Displays\ChartGraph::DEFAULT_PERIOD,
 	)
 	{
