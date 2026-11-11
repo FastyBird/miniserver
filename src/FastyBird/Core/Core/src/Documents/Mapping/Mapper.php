@@ -3,6 +3,7 @@
 namespace FastyBird\Core\Documents\Mapping;
 
 use CuyZ\Valinor;
+use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use FastyBird\Core\Documents\Exceptions;
@@ -11,7 +12,10 @@ use Ramsey\Uuid;
 use Throwable;
 use ValueError;
 use function implode;
+use function is_array;
+use function is_string;
 use function is_subclass_of;
+use function mb_check_encoding;
 use function sprintf;
 use function str_contains;
 
@@ -43,23 +47,14 @@ final readonly class Mapper
 		$builder = $builder
 			->supportDateFormats(DateTimeInterface::ATOM)
 			->registerConstructor(
-				// The date constructor of Valinor itself, as it was, but a string that does not parse is an error
-				// message for every string, a NUL byte included: DateTimeImmutable::createFromFormat() throws a
-				// ValueError for it, which no union can recover from, and a union of a date and a string (the value
-				// of a state) has to take the string, as orisai did, which tried the string before the date
+				// The date constructors of Valinor itself, as they were, but a string that does not parse is an error
+				// message for every string, a NUL byte included: createFromFormat() throws a ValueError for it, which no
+				// union can recover from, and a union of a date and a string (the value of a state) has to take the
+				// string, as orisai did, which tried the string before the date. The mutable DateTime has one too
 				/** @param non-empty-string|int|float $value */
-				static function (string|int|float $value): DateTimeImmutable {
-					$text = (string) $value;
-					$date = str_contains($text, "\0")
-						? false
-						: DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $text);
-
-					if ($date === false) {
-						throw self::notADate();
-					}
-
-					return $date;
-				},
+				static fn (string|int|float $value): DateTimeImmutable => self::date(DateTimeImmutable::class, $value),
+				/** @param non-empty-string|int|float $value */
+				static fn (string|int|float $value): DateTime => self::date(DateTime::class, $value),
 				static function (string $value): Uuid\UuidInterface {
 					// What orisai's UuidRule takes, which is what isValid() says: fromString() alone also reads a UUID
 					// written without dashes
@@ -96,11 +91,11 @@ final readonly class Mapper
 		try {
 			return ($options->allowUnknownFields ? $this->lenient : $this->strict)->map($class, $data);
 		} catch (Valinor\Mapper\MappingError $ex) {
-			throw new Exceptions\MappingFailed(self::print($ex), 0, $ex);
+			throw new Exceptions\MappingFailed(self::print($ex, $data), 0, $ex);
 
 			// @phpstan-ignore catch.neverThrown (TreeMapper::map() declares only MappingError, but formatting a message of its own with a key or a value that is not valid UTF-8 throws this)
 		} catch (Valinor\Utility\String\StringFormatterError $ex) {
-			throw new Exceptions\MappingFailed(self::UNPRINTABLE, 0, $ex);
+			throw self::unprintable($data, $ex);
 		}
 	}
 
@@ -135,6 +130,28 @@ final readonly class Mapper
 	}
 
 	/**
+	 * @template T of DateTime|DateTimeImmutable
+	 *
+	 * @param class-string<T> $class
+	 *
+	 * @return T
+	 *
+	 * @throws ValueError
+	 * @phpstan-pure
+	 */
+	private static function date(string $class, string|int|float $value): DateTime|DateTimeImmutable
+	{
+		$text = (string) $value;
+		$date = str_contains($text, "\0") ? false : $class::createFromFormat(DateTimeInterface::ATOM, $text);
+
+		if ($date === false) {
+			throw self::notADate();
+		}
+
+		return $date;
+	}
+
+	/**
 	 * What Valinor says of a date that none of its formats reads
 	 *
 	 * @phpstan-pure
@@ -157,9 +174,11 @@ final readonly class Mapper
 	 * unknown key, a list key, a UUID that is refused), with a StringFormatterError from here or from the mapping itself.
 	 * The input is refused, not the printing
 	 *
+	 * @param array<mixed> $data
+	 *
 	 * @throws Exceptions\MappingFailed
 	 */
-	private static function print(Valinor\Mapper\MappingError $error): string
+	private static function print(Valinor\Mapper\MappingError $error, array $data): string
 	{
 		$lines = [];
 
@@ -168,10 +187,51 @@ final readonly class Mapper
 				$lines[] = sprintf('%s: %s', $message->path(), $message->toString());
 			}
 		} catch (Valinor\Utility\String\StringFormatterError $ex) {
-			throw new Exceptions\MappingFailed(self::UNPRINTABLE, 0, $ex);
+			throw self::unprintable($data, $ex);
 		}
 
 		return implode("\n", $lines);
+	}
+
+	/**
+	 * The same exception is Valinor's answer to a body of a message it cannot parse, which is a defect of whoever wrote
+	 * the message, a constructor that refuses a value, and not a fault of the input: it is blamed on the input only when
+	 * the input holds a key or a value that is not valid UTF-8, and says what it says otherwise
+	 *
+	 * @param array<mixed> $data
+	 */
+	private static function unprintable(
+		array $data,
+		Valinor\Utility\String\StringFormatterError $error,
+	): Exceptions\MappingFailed
+	{
+		return new Exceptions\MappingFailed(
+			self::hasInvalidUtf8($data) ? self::UNPRINTABLE : '*root*: ' . $error->getMessage(),
+			0,
+			$error,
+		);
+	}
+
+	/**
+	 * @param array<mixed> $data
+	 */
+	private static function hasInvalidUtf8(array $data): bool
+	{
+		foreach ($data as $key => $value) {
+			if (is_string($key) && !mb_check_encoding($key, 'UTF-8')) {
+				return true;
+			}
+
+			if (is_string($value) && !mb_check_encoding($value, 'UTF-8')) {
+				return true;
+			}
+
+			if (is_array($value) && self::hasInvalidUtf8($value)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }
