@@ -103,11 +103,35 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 			);
 		});
 
-		$eventLoop->addTimer(1, static function () use ($eventLoop, $client): void {
-			$client->disconnect();
+		$queue = $this->getContainer()->getByType(Queue\Queue::class);
 
+		// The loop is stopped by what it was started for and not by the clock: the client connects, subscribes and asks the
+		// bridge to permit joining, the bridge answers with its devices and the answer is queued. How long that takes depends
+		// on how busy the machine is, so a timer that stops the loop after a second ends a test which ran in a full suite
+		// before the client had connected. The timer below only keeps a test whose bridge never answers from running for ever
+		$guard = $eventLoop->addTimer(60, static function () use ($eventLoop): void {
 			$eventLoop->stop();
 		});
+
+		$poll = null;
+		$poll = $eventLoop->addPeriodicTimer(
+			0.01,
+			static function () use (&$poll, $guard, $eventLoop, $client, $broker, $queue): void {
+				if ($broker->getPublished() === [] || $queue->isEmpty()) {
+					return;
+				}
+
+				if ($poll !== null) {
+					$eventLoop->cancelTimer($poll);
+				}
+
+				$eventLoop->cancelTimer($guard);
+
+				$client->disconnect();
+
+				$eventLoop->stop();
+			},
+		);
 
 		$eventLoop->run();
 
@@ -118,8 +142,6 @@ final class DiscoveryTest extends Tests\Cases\Unit\DbTestCase
 			['zigbee2mqtt/bridge/request/permit_join'],
 			array_map(static fn (array $message): string => $message[0], $broker->getPublished()),
 		);
-
-		$queue = $this->getContainer()->getByType(Queue\Queue::class);
 
 		self::assertFalse($queue->isEmpty());
 
